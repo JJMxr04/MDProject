@@ -1,20 +1,22 @@
 from rest_framework import serializers
 
-from core.user.models import User
+from core.event.models import Event
 
 from core.abstract.serializers import AbstractSerializer
 
 
-class UserSerializer(AbstractSerializer):
+class EventSerializer(AbstractSerializer):
     # Rewriting some fields like the public id to be represented as the id of the object
     id = serializers.UUIDField(source='public_id', read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
 
     class Meta:
-        model = User
-        # List of all the fields that can be included in a request or a response
-        fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email', 'is_active',
-                  'created', 'updated']
+        model = Event
+        fields = '__all__'  # Include all fields
         # List of all the fields that can only be read by the user
-        read_only_field = ['is_active']
+        read_only_field = '__all__'
+        # List of all the fields that can only be read by the user
+class TeamScoreSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    score = serializers.CharField()
