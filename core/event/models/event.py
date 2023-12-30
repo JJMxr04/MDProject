@@ -7,7 +7,7 @@ from django.http import Http404
 
 class EventManager(AbstractManager):
     @classmethod
-    def get_sport_state(cls, event_id, completed, event_scores, score1, score2):
+    def get_event_state(cls, event_id, completed, event_scores, score1, score2):
         event = cls.get_object_by_public_id(event_id)
 
         if event is ObjectDoesNotExist:

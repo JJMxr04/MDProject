@@ -13,8 +13,10 @@ setup()
 
 # Other imports
 import json
-from core.event.serializers import EventSerializer, TeamScoreSerializer
-from core.event.models import Event
+from core.event.serializers.event import EventSerializer, TeamScoreSerializer
+from core.event.models.event import Event
+from core.event.crons.sportUpdate import SportCron
+sport_cron = SportCron()
 
 def write_json_to_file(data, filename):
     """
@@ -84,10 +86,14 @@ def print_hi(name):
 
 
 # Press the green button in the gutter to run the script.
-# if __name__ == '__main__':
-#     print_hi('PyCharm')
-#     test_get_nfl_events('nfl.json')
-print("Starting Testing 1")
-test_get_nfl_events('testfiles/nfl-copy1.json')
-print("Stopped Testing 1")
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == '__main__':
+
+# print("Starting Event Creation Testing 1")
+# test_get_nfl_events('testfiles/nfl-copy1.json')
+# print("Stopped Event Creation Testing 1")
+
+    print("Starting SportCronTesting 1")
+    sport_cron.get_sports()
+    print(sport_cron.get_active_sports())
+    print("Stopped SportCronTesting 1")
+

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.event.models import Event
+from core.event.models.event import Event
 
 from core.abstract.serializers import AbstractSerializer
 

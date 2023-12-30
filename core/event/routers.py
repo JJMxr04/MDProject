@@ -1,5 +1,6 @@
 from rest_framework import routers
-from core.event.viewsets import EventViewSet, SportViewSet
+from core.event.viewsets.event import EventViewSet
+from core.event.viewsets.sport import SportViewSet
 
 
 router = routers.SimpleRouter()

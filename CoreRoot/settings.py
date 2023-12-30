@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
 
     'core',
     'core.user',
@@ -143,3 +144,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
+
+CRONJOBS = [
+    ('* *0 * * *', 'core.event.SportCron.get_sports'),
+    # Add more cron jobs as needed
+]
+
