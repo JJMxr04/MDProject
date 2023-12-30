@@ -7,6 +7,8 @@ from django import setup
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers import serialize
 
+
+
 # Configure Django settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
@@ -15,6 +17,8 @@ setup()
 import json
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
 from core.event.models.event import Event
+from core.event.models.sport import Sport
+sport_model = Sport()
 from core.event.crons.sportUpdate import SportCron
 sport_cron = SportCron()
 
@@ -107,9 +111,15 @@ if __name__ == '__main__':
     # print(events)
     # print("Stopped EventCronTesting 3")
 
-    print("Starting EventCronTesting 4")
-    events = event_cron.update_all_events()
-    # print(events)
-    print("Stopped EventCronTesting 4")
+    # print("Starting EventCronTesting 4")
+    # events = event_cron.update_all_events()
+    # # print(events)
+    # print("Stopped EventCronTesting 4")
+
+    print("Starting Event Creation Testing 5")
+    sports = sport_cron.get_active_sports()
+    for sport in sports:
+        test_get_nfl_events(f'testfiles/originals/{sport}')
+    print("Stopped Event Creation Testing 5")
 
 

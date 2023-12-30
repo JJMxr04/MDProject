@@ -45,13 +45,14 @@ class SportManager(AbstractManager):
 
 
 class Sport(AbstractModel):
-    key = models.CharField(max_length=255)
+    key = models.CharField(max_length=255, primary_key=True)
     group = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     active = models.BooleanField(default=False)
     has_outrights = models.BooleanField(default=False)
+
     objects = SportManager()
 
     class Meta:
-        db_table = "'core.sport'"
+        db_table = 'core_sport'
