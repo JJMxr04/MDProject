@@ -1,0 +1,193 @@
+[
+    {
+        "id": "e2500ba3ac33c016848a41ca1428fb01",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T17:30:59Z",
+        "completed": true,
+        "home_team": "Anadolu Efes",
+        "away_team": "Fenerbahce SK",
+        "scores": [
+            {
+                "name": "Anadolu Efes",
+                "score": "84"
+            },
+            {
+                "name": "Fenerbahce SK",
+                "score": "89"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "02d649c2b43b8ec28f18788b47a7cff0",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T17:33:39Z",
+        "completed": true,
+        "home_team": "KK Partizan NIS",
+        "away_team": "Virtus Segafredo Bologna",
+        "scores": [
+            {
+                "name": "KK Partizan NIS",
+                "score": "75"
+            },
+            {
+                "name": "Virtus Segafredo Bologna",
+                "score": "77"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "c7627372f7d43edcbcf9f0cd843abcae",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T18:01:32Z",
+        "completed": true,
+        "home_team": "\u017dalgiris",
+        "away_team": "Maccabi Tel Aviv",
+        "scores": [
+            {
+                "name": "\u017dalgiris",
+                "score": "70"
+            },
+            {
+                "name": "Maccabi Tel Aviv",
+                "score": "78"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "3ca969d527694bc01e1714ef8138fd86",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T19:00:00Z",
+        "completed": true,
+        "home_team": "ASVEL Lyon Villeurbanne",
+        "away_team": "Real Madrid",
+        "scores": [
+            {
+                "name": "ASVEL Lyon Villeurbanne",
+                "score": "76"
+            },
+            {
+                "name": "Real Madrid",
+                "score": "77"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "425c99e62179ead1fa5e49519476ff3f",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T19:15:00Z",
+        "completed": true,
+        "home_team": "Panathinaikos",
+        "away_team": "KK Crvena zvezda",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "82"
+            },
+            {
+                "name": "KK Crvena zvezda",
+                "score": "65"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "33f58a706552df7abf4e72fc27e8f4db",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T19:30:00Z",
+        "completed": true,
+        "home_team": "FC Bayern M\u00fcnchen",
+        "away_team": "Valencia Basket",
+        "scores": [
+            {
+                "name": "FC Bayern M\u00fcnchen",
+                "score": "85"
+            },
+            {
+                "name": "Valencia Basket",
+                "score": "84"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "bb06ae6379369125d1b23f8940e183a9",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-28T19:30:36Z",
+        "completed": true,
+        "home_team": "Pallacanestro Olimpia Milano",
+        "away_team": "Saski Baskonia",
+        "scores": [
+            {
+                "name": "Pallacanestro Olimpia Milano",
+                "score": "76"
+            },
+            {
+                "name": "Saski Baskonia",
+                "score": "67"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "b40f20e199bc14622cf0fc15cf693c4a",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-29T19:00:08Z",
+        "completed": true,
+        "home_team": "ALBA Berlin",
+        "away_team": "Olympiacos",
+        "scores": [
+            {
+                "name": "ALBA Berlin",
+                "score": "67"
+            },
+            {
+                "name": "Olympiacos",
+                "score": "94"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "2c3f3d0684961d778bdd4c0496252908",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2023-12-29T20:02:02Z",
+        "completed": true,
+        "home_team": "AS Monaco",
+        "away_team": "FC Barcelona B\u00e0squet",
+        "scores": [
+            {
+                "name": "AS Monaco",
+                "score": "91"
+            },
+            {
+                "name": "FC Barcelona B\u00e0squet",
+                "score": "71"
+            }
+        ],
+        "last_update": "2023-12-30T03:29:10Z"
+    },
+    {
+        "id": "01bac6ed4d06954742dfa9e82d3f976d",
+        "sport_key": "basketball_euroleague",
+        "sport_title": "Basketball Euroleague",
+        "commence_time": "2024-01-02T17:45:00Z",
+        "completed": false,
+        "home_team": "Fenerbahce SK",
+        "away_team": "KK Crvena zvezda",
+        "scores": null,
+        "last_update": null
+    }
+]

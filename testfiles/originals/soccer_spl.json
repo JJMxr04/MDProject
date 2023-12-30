@@ -1,0 +1,183 @@
+[
+    {
+        "id": "2c1565004b02acbffc0383e2259f39ef",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-27T19:47:03Z",
+        "completed": true,
+        "home_team": "Livingston",
+        "away_team": "St Johnstone",
+        "scores": [
+            {
+                "name": "St Johnstone",
+                "score": "0"
+            },
+            {
+                "name": "Livingston",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-28T03:05:48Z"
+    },
+    {
+        "id": "f22f86aec5265e15560bb77b1139fe75",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-27T19:48:05Z",
+        "completed": true,
+        "home_team": "St Mirren",
+        "away_team": "Kilmarnock",
+        "scores": [
+            {
+                "name": "Kilmarnock",
+                "score": "1"
+            },
+            {
+                "name": "St Mirren",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-28T03:05:48Z"
+    },
+    {
+        "id": "c6c95846712ef5fd128c92b9b8dfe144",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-27T20:01:16Z",
+        "completed": true,
+        "home_team": "Hibernian",
+        "away_team": "Hearts",
+        "scores": [
+            {
+                "name": "Hearts",
+                "score": "1"
+            },
+            {
+                "name": "Hibernian",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-28T03:05:48Z"
+    },
+    {
+        "id": "1c5f93f8fbc6df34343b45901ed586a9",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-30T12:30:00Z",
+        "completed": false,
+        "home_team": "Celtic",
+        "away_team": "Rangers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5b9f23d82008f9f547308548ef3cbcfe",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-30T15:00:00Z",
+        "completed": false,
+        "home_team": "Aberdeen",
+        "away_team": "St Mirren",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "31f0335060e3bcf5900ad53b49bcfed9",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-30T15:00:00Z",
+        "completed": false,
+        "home_team": "Kilmarnock",
+        "away_team": "Dundee FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7a7f18943197c51890d8a95c6e603dd8",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-30T15:00:00Z",
+        "completed": false,
+        "home_team": "Hearts",
+        "away_team": "Ross County",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "48c5db5b601b74d3391340d9f0e63365",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2023-12-30T15:00:00Z",
+        "completed": false,
+        "home_team": "Motherwell",
+        "away_team": "Livingston",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fcb608cc682ce5cc870e3f6772c77285",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2024-01-02T15:00:00Z",
+        "completed": false,
+        "home_team": "Ross County",
+        "away_team": "Aberdeen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e63dcb1d453345c053f52279183b79f8",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2024-01-02T15:00:00Z",
+        "completed": false,
+        "home_team": "Dundee FC",
+        "away_team": "St Johnstone",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "98ca9589adce33e39776d82d3276d63d",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2024-01-02T15:00:00Z",
+        "completed": false,
+        "home_team": "Livingston",
+        "away_team": "Hearts",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8f03e4b79d2000ea2e60712ae6da609a",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2024-01-02T15:00:00Z",
+        "completed": false,
+        "home_team": "Hibernian",
+        "away_team": "Motherwell",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c157a38b0bb3ba836fee877e4ff84e1c",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2024-01-02T15:00:00Z",
+        "completed": false,
+        "home_team": "Rangers",
+        "away_team": "Kilmarnock",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7ed4f49658b8c3ef85bfcd10b10b2857",
+        "sport_key": "soccer_spl",
+        "sport_title": "Premiership - Scotland",
+        "commence_time": "2024-01-02T17:00:00Z",
+        "completed": false,
+        "home_team": "St Mirren",
+        "away_team": "Celtic",
+        "scores": null,
+        "last_update": null
+    }
+]

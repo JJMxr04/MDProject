@@ -18,6 +18,9 @@ from core.event.models.event import Event
 from core.event.crons.sportUpdate import SportCron
 sport_cron = SportCron()
 
+from core.event.crons.eventUpdate import EventCron
+event_cron = EventCron()
+
 def write_json_to_file(data, filename):
     """
     Write JSON data to a file in a formatted way.
@@ -88,12 +91,25 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-# print("Starting Event Creation Testing 1")
-# test_get_nfl_events('testfiles/nfl-copy1.json')
-# print("Stopped Event Creation Testing 1")
+    # print("Starting Event Creation Testing 1")
+    # test_get_nfl_events('testfiles/nfl-copy1.json')
+    # print("Stopped Event Creation Testing 1")
 
-    print("Starting SportCronTesting 1")
-    sport_cron.get_sports()
-    print(sport_cron.get_active_sports())
-    print("Stopped SportCronTesting 1")
+    # print("Starting SportCronTesting 2")
+    # sport_cron.get_sports()
+    # print(sport_cron.get_active_sports())
+    # print("Stopped SportCronTesting 2")
+    # "americanfootball_nfl.json"
+
+    # print("Starting EventCronTesting 3")
+    # # events = event_cron.get_sport_events("americanfootball_nfl.json")
+    # # pretty = json.dumps(events)
+    # print(events)
+    # print("Stopped EventCronTesting 3")
+
+    print("Starting EventCronTesting 4")
+    events = event_cron.update_all_events()
+    # print(events)
+    print("Stopped EventCronTesting 4")
+
 

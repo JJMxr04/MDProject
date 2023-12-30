@@ -1,0 +1,90 @@
+[
+    {
+        "id": "7625998ba023036ffc7c78186ff4c7d9",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-13T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Copenhagen",
+        "away_team": "Manchester City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "57d51d569d81c452f07be9bb86f38d97",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-13T20:00:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10d64cd8ba9fe7fe0454ff7df19c431c",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-14T20:00:00Z",
+        "completed": false,
+        "home_team": "SS Lazio",
+        "away_team": "Bayern M\u00fcnchen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "012e7735c1e56b18b8d0ffad353c5dfb",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-14T20:00:00Z",
+        "completed": false,
+        "home_team": "Paris Saint Germain",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6c9b73d824e61eec7dfb15d01544417e",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-20T20:00:00Z",
+        "completed": false,
+        "home_team": "Internazionale Milano",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bcb242f6114c094359015194aa52a965",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-20T20:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c3af4bb0e4b8ca1e66de8e2af0dee092",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-21T20:00:00Z",
+        "completed": false,
+        "home_team": "Porto",
+        "away_team": "Arsenal",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e5588eabce4d75aea3b24525b9cf2bef",
+        "sport_key": "soccer_uefa_champs_league",
+        "sport_title": "UEFA Champions League",
+        "commence_time": "2024-02-21T20:00:00Z",
+        "completed": false,
+        "home_team": "Napoli",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    }
+]

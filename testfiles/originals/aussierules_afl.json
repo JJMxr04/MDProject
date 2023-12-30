@@ -1,0 +1,145 @@
+[
+    {
+        "id": "3eecd8d235a0301cc3adedf2299e450e",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-07T08:30:00Z",
+        "completed": false,
+        "home_team": "Sydney Swans",
+        "away_team": "Melbourne Demons",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "143955b7135947dbb89a51f31d3c94ed",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-08T08:40:00Z",
+        "completed": false,
+        "home_team": "Brisbane Lions",
+        "away_team": "Carlton Blues",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "26d60d1bca8e6e1e5b2aeed73730ff28",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-09T05:20:00Z",
+        "completed": false,
+        "home_team": "Gold Coast Suns",
+        "away_team": "Richmond Tigers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "31adbaa6acc3d46bb753cf7c7bccf2a8",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-09T08:30:00Z",
+        "completed": false,
+        "home_team": "Greater Western Sydney Giants",
+        "away_team": "Collingwood Magpies",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7ed942d46baafdf6e2e7b224fefc7567",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-14T08:30:00Z",
+        "completed": false,
+        "home_team": "Carlton Blues",
+        "away_team": "Richmond Tigers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8a39702b5c582bb3cff8d43e5436a7b4",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-15T08:40:00Z",
+        "completed": false,
+        "home_team": "Collingwood Magpies",
+        "away_team": "Sydney Swans",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f6f63a620ce67cd722a70c7f209f0a64",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-16T02:45:00Z",
+        "completed": false,
+        "home_team": "Essendon Bombers",
+        "away_team": "Hawthorn Hawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0a90f7dba410a23573d252acc00637f0",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-16T05:35:00Z",
+        "completed": false,
+        "home_team": "Greater Western Sydney Giants",
+        "away_team": "North Melbourne Kangaroos",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "35672cdb6fbc84644429119e84ab28a9",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-16T08:30:00Z",
+        "completed": false,
+        "home_team": "Geelong Cats",
+        "away_team": "St Kilda Saints",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10a87f9dbf70fe06e429c87fee34475a",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-16T09:10:00Z",
+        "completed": false,
+        "home_team": "Gold Coast Suns",
+        "away_team": "Adelaide Crows",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0c3a20096bbd32bf799b4fa2e02e3129",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-17T02:00:00Z",
+        "completed": false,
+        "home_team": "Melbourne Demons",
+        "away_team": "Western Bulldogs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0b9170c7145067657f070112cd3a607e",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-17T05:00:00Z",
+        "completed": false,
+        "home_team": "Port Adelaide Power",
+        "away_team": "West Coast Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1d1905a35414a53547f2ba992696f49a",
+        "sport_key": "aussierules_afl",
+        "sport_title": "AFL",
+        "commence_time": "2024-03-17T07:50:00Z",
+        "completed": false,
+        "home_team": "Fremantle Dockers",
+        "away_team": "Brisbane Lions",
+        "scores": null,
+        "last_update": null
+    }
+]

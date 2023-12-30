@@ -1,0 +1,548 @@
+[
+    {
+        "id": "0acb786cec1a76fe87811b4b42b4061b",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-28T00:10:00Z",
+        "completed": true,
+        "home_team": "Orlando Magic",
+        "away_team": "Philadelphia 76ers",
+        "scores": [
+            {
+                "name": "Orlando Magic",
+                "score": "92"
+            },
+            {
+                "name": "Philadelphia 76ers",
+                "score": "112"
+            }
+        ],
+        "last_update": "2023-12-29T08:28:08Z"
+    },
+    {
+        "id": "c55ed9921bfce15d20afabb16e7c9069",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-28T00:10:00Z",
+        "completed": true,
+        "home_team": "Washington Wizards",
+        "away_team": "Toronto Raptors",
+        "scores": [
+            {
+                "name": "Washington Wizards",
+                "score": "102"
+            },
+            {
+                "name": "Toronto Raptors",
+                "score": "132"
+            }
+        ],
+        "last_update": "2023-12-29T08:28:08Z"
+    },
+    {
+        "id": "6dae88a707aada220458191e794710e3",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-28T00:40:00Z",
+        "completed": true,
+        "home_team": "Brooklyn Nets",
+        "away_team": "Milwaukee Bucks",
+        "scores": [
+            {
+                "name": "Brooklyn Nets",
+                "score": "122"
+            },
+            {
+                "name": "Milwaukee Bucks",
+                "score": "144"
+            }
+        ],
+        "last_update": "2023-12-29T08:28:08Z"
+    },
+    {
+        "id": "b59d6a3fdfcc30b542c178f27b6496c9",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-28T01:10:00Z",
+        "completed": true,
+        "home_team": "Houston Rockets",
+        "away_team": "Phoenix Suns",
+        "scores": [
+            {
+                "name": "Houston Rockets",
+                "score": "113"
+            },
+            {
+                "name": "Phoenix Suns",
+                "score": "129"
+            }
+        ],
+        "last_update": "2023-12-29T08:28:08Z"
+    },
+    {
+        "id": "57ed0b1714d3d5e6a4c90b46edfa6fca",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-28T01:10:30Z",
+        "completed": true,
+        "home_team": "Oklahoma City Thunder",
+        "away_team": "New York Knicks",
+        "scores": [
+            {
+                "name": "Oklahoma City Thunder",
+                "score": "129"
+            },
+            {
+                "name": "New York Knicks",
+                "score": "120"
+            }
+        ],
+        "last_update": "2023-12-29T08:28:08Z"
+    },
+    {
+        "id": "a2b8a30ff6bd548cd8e7580643099746",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-28T01:40:00Z",
+        "completed": true,
+        "home_team": "Dallas Mavericks",
+        "away_team": "Cleveland Cavaliers",
+        "scores": [
+            {
+                "name": "Dallas Mavericks",
+                "score": "110"
+            },
+            {
+                "name": "Cleveland Cavaliers",
+                "score": "113"
+            }
+        ],
+        "last_update": "2023-12-29T08:28:08Z"
+    },
+    {
+        "id": "0a25fa87e6a970c44bd5770e4b54440f",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T00:40:29Z",
+        "completed": true,
+        "home_team": "Boston Celtics",
+        "away_team": "Detroit Pistons",
+        "scores": [
+            {
+                "name": "Boston Celtics",
+                "score": "128"
+            },
+            {
+                "name": "Detroit Pistons",
+                "score": "122"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "291781e08309934322de7153e4d6a25a",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T01:10:00Z",
+        "completed": true,
+        "home_team": "Chicago Bulls",
+        "away_team": "Indiana Pacers",
+        "scores": [
+            {
+                "name": "Chicago Bulls",
+                "score": "104"
+            },
+            {
+                "name": "Indiana Pacers",
+                "score": "120"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "633814cf1e75b797634fc10ef23011ee",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T01:10:21Z",
+        "completed": true,
+        "home_team": "New Orleans Pelicans",
+        "away_team": "Utah Jazz",
+        "scores": [
+            {
+                "name": "New Orleans Pelicans",
+                "score": "112"
+            },
+            {
+                "name": "Utah Jazz",
+                "score": "105"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "1126fa50abd910e80868523920c4516d",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T01:11:00Z",
+        "completed": true,
+        "home_team": "Minnesota Timberwolves",
+        "away_team": "Dallas Mavericks",
+        "scores": [
+            {
+                "name": "Minnesota Timberwolves",
+                "score": "118"
+            },
+            {
+                "name": "Dallas Mavericks",
+                "score": "110"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "b5680b7e178c6d891de102eaa4adb5d4",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T02:10:49Z",
+        "completed": true,
+        "home_team": "Denver Nuggets",
+        "away_team": "Memphis Grizzlies",
+        "scores": [
+            {
+                "name": "Denver Nuggets",
+                "score": "142"
+            },
+            {
+                "name": "Memphis Grizzlies",
+                "score": "105"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "77aa57de2c6d28b1197bd961fd14bdc6",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T03:10:00Z",
+        "completed": true,
+        "home_team": "Golden State Warriors",
+        "away_team": "Miami Heat",
+        "scores": [
+            {
+                "name": "Golden State Warriors",
+                "score": "102"
+            },
+            {
+                "name": "Miami Heat",
+                "score": "114"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "728dd6e0d122dd411ca2c76d35471cc5",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T03:10:00Z",
+        "completed": true,
+        "home_team": "Portland Trail Blazers",
+        "away_team": "San Antonio Spurs",
+        "scores": [
+            {
+                "name": "Portland Trail Blazers",
+                "score": "105"
+            },
+            {
+                "name": "San Antonio Spurs",
+                "score": "118"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "0cdbb3003d85dc6dacc30ca76b41f408",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-29T03:40:00Z",
+        "completed": true,
+        "home_team": "Los Angeles Lakers",
+        "away_team": "Charlotte Hornets",
+        "scores": [
+            {
+                "name": "Los Angeles Lakers",
+                "score": "133"
+            },
+            {
+                "name": "Charlotte Hornets",
+                "score": "112"
+            }
+        ],
+        "last_update": "2023-12-29T10:56:07Z"
+    },
+    {
+        "id": "fb8f7542c822454c0a32da660c91be9d",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T00:10:00Z",
+        "completed": true,
+        "home_team": "Washington Wizards",
+        "away_team": "Brooklyn Nets",
+        "scores": [
+            {
+                "name": "Washington Wizards",
+                "score": "110"
+            },
+            {
+                "name": "Brooklyn Nets",
+                "score": "104"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "852bcd9da9a5bdd716b28d3590809f87",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T00:10:00Z",
+        "completed": true,
+        "home_team": "Orlando Magic",
+        "away_team": "New York Knicks",
+        "scores": [
+            {
+                "name": "Orlando Magic",
+                "score": "117"
+            },
+            {
+                "name": "New York Knicks",
+                "score": "108"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "03d60dcf62b892e2dc7a4e013c9abeb0",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T00:40:00Z",
+        "completed": true,
+        "home_team": "Cleveland Cavaliers",
+        "away_team": "Milwaukee Bucks",
+        "scores": [
+            {
+                "name": "Cleveland Cavaliers",
+                "score": "111"
+            },
+            {
+                "name": "Milwaukee Bucks",
+                "score": "119"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "05f41c702f32852542143ee87787049b",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T00:40:15Z",
+        "completed": true,
+        "home_team": "Boston Celtics",
+        "away_team": "Toronto Raptors",
+        "scores": [
+            {
+                "name": "Boston Celtics",
+                "score": "120"
+            },
+            {
+                "name": "Toronto Raptors",
+                "score": "118"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "bdaf9d2fef9628808173b856a504ee28",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T00:40:19Z",
+        "completed": true,
+        "home_team": "Atlanta Hawks",
+        "away_team": "Sacramento Kings",
+        "scores": [
+            {
+                "name": "Atlanta Hawks",
+                "score": "110"
+            },
+            {
+                "name": "Sacramento Kings",
+                "score": "117"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "12c7ad357f9d090c1d205b9146cf82e2",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T01:10:00Z",
+        "completed": true,
+        "home_team": "Houston Rockets",
+        "away_team": "Philadelphia 76ers",
+        "scores": [
+            {
+                "name": "Houston Rockets",
+                "score": "127"
+            },
+            {
+                "name": "Philadelphia 76ers",
+                "score": "131"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "109ec3b34be7091714ef54c9f68bfb16",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T02:10:00Z",
+        "completed": true,
+        "home_team": "Phoenix Suns",
+        "away_team": "Charlotte Hornets",
+        "scores": [
+            {
+                "name": "Phoenix Suns",
+                "score": "133"
+            },
+            {
+                "name": "Charlotte Hornets",
+                "score": "119"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "51dbe1a663136d835bd01d86aff4b351",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T02:10:00Z",
+        "completed": true,
+        "home_team": "Denver Nuggets",
+        "away_team": "Oklahoma City Thunder",
+        "scores": [
+            {
+                "name": "Denver Nuggets",
+                "score": "93"
+            },
+            {
+                "name": "Oklahoma City Thunder",
+                "score": "119"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "174186f9d7a4b087e44911a23abc8641",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T03:11:57Z",
+        "completed": true,
+        "home_team": "Portland Trail Blazers",
+        "away_team": "San Antonio Spurs",
+        "scores": [
+            {
+                "name": "Portland Trail Blazers",
+                "score": "134"
+            },
+            {
+                "name": "San Antonio Spurs",
+                "score": "128"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "278637ae0d466211ddc5c15f097cb5ee",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T03:40:37Z",
+        "completed": true,
+        "home_team": "Los Angeles Clippers",
+        "away_team": "Memphis Grizzlies",
+        "scores": [
+            {
+                "name": "Los Angeles Clippers",
+                "score": "117"
+            },
+            {
+                "name": "Memphis Grizzlies",
+                "score": "106"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:36Z"
+    },
+    {
+        "id": "c5557110bef1e8e4ad64ff9e9fa867e2",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "Utah Jazz",
+        "away_team": "Miami Heat",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fc02d1a39b53c20230af13d9b5dd15d1",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-30T23:00:00Z",
+        "completed": false,
+        "home_team": "Detroit Pistons",
+        "away_team": "Toronto Raptors",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "41dfd7e61e0b40fc0f10d98fa473cbef",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Indiana Pacers",
+        "away_team": "New York Knicks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "864b43b398b818e59f51a556ee596044",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Chicago Bulls",
+        "away_team": "Philadelphia 76ers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5642e6bedfa5b46e68ee9ea9ebb7c39d",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Minnesota Timberwolves",
+        "away_team": "Los Angeles Lakers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0dc85ec5e468aca414d3ee313b88186",
+        "sport_key": "basketball_nba",
+        "sport_title": "NBA",
+        "commence_time": "2023-12-31T01:30:00Z",
+        "completed": false,
+        "home_team": "Golden State Warriors",
+        "away_team": "Dallas Mavericks",
+        "scores": null,
+        "last_update": null
+    }
+]

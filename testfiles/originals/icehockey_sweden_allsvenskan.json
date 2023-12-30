@@ -1,0 +1,57 @@
+[
+    {
+        "id": "edd60fa6a486b0467b848c457c05afe8",
+        "sport_key": "icehockey_sweden_allsvenskan",
+        "sport_title": "HockeyAllsvenskan",
+        "commence_time": "2023-12-30T14:00:00Z",
+        "completed": false,
+        "home_team": "Tingsryds AIF",
+        "away_team": "Almtuna IS",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5dfe535c225abc2dca1700998dacf41d",
+        "sport_key": "icehockey_sweden_allsvenskan",
+        "sport_title": "HockeyAllsvenskan",
+        "commence_time": "2024-01-03T18:00:00Z",
+        "completed": false,
+        "home_team": "Djurg\u00e5rdens IF",
+        "away_team": "\u00d6stersunds IK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ec45e38bda4c309fc7e3e2ca8a235b1",
+        "sport_key": "icehockey_sweden_allsvenskan",
+        "sport_title": "HockeyAllsvenskan",
+        "commence_time": "2024-01-05T18:00:00Z",
+        "completed": false,
+        "home_team": "AIK",
+        "away_team": "IF Bj\u00f6rkl\u00f6ven",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "38d6fddfe25ea0bdddf8fcee1266acd7",
+        "sport_key": "icehockey_sweden_allsvenskan",
+        "sport_title": "HockeyAllsvenskan",
+        "commence_time": "2024-01-05T18:00:00Z",
+        "completed": false,
+        "home_team": "Bryn\u00e4s IF",
+        "away_team": "Mora IK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "393cb78d8854a21f5f27e2d93221ce35",
+        "sport_key": "icehockey_sweden_allsvenskan",
+        "sport_title": "HockeyAllsvenskan",
+        "commence_time": "2024-01-05T18:00:00Z",
+        "completed": false,
+        "home_team": "V\u00e4sterviks IK",
+        "away_team": "Kalmar HC",
+        "scores": null,
+        "last_update": null
+    }
+]

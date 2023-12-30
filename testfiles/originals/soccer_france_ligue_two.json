@@ -1,0 +1,112 @@
+[
+    {
+        "id": "82343da90a1c111875d42ac9c67eab9b",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T14:00:00Z",
+        "completed": false,
+        "home_team": "Saint Etienne",
+        "away_team": "Stade Lavallois",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cab75ac4d209893fe1a9216fad3a7f1d",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "Troyes",
+        "away_team": "AC Ajaccio",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b756cb62acf75636a90a379bc1b9f294",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "Valenciennes",
+        "away_team": "Amiens",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1e55c7088d79578228ed02e9e2094f8e",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "SC Bastia",
+        "away_team": "Angers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c7b5a149e146e7477bcd613b52cbd4f0",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "Paris FC",
+        "away_team": "Annecy FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a7a72e06449b9c2b2f59cb29e6a2ee70",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "SM Caen",
+        "away_team": "Concarneau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "88844ffa14375ca40f17f6c4dbaa037b",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "US Quevilly-Rouen",
+        "away_team": "EA Guingamp",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ddc1202d8e89333514950f71d88da918",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "Grenoble",
+        "away_team": "USL Dunkerque",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f541bc6d51727e6791c0417cf46d9035",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-13T18:00:00Z",
+        "completed": false,
+        "home_team": "Rodez AF",
+        "away_team": "Pau FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2987c18cc69b9153904b941bc909c3ca",
+        "sport_key": "soccer_france_ligue_two",
+        "sport_title": "Ligue 2 - France",
+        "commence_time": "2024-01-15T19:45:00Z",
+        "completed": false,
+        "home_team": "Auxerre",
+        "away_team": "Bordeaux",
+        "scores": null,
+        "last_update": null
+    }
+]

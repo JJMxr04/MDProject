@@ -1,0 +1,112 @@
+[
+    {
+        "id": "8787f6e6acf4e813c5bc0b4830aaeba8",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-05T14:00:00Z",
+        "completed": false,
+        "home_team": "Gazi\u015fehir Gaziantep",
+        "away_team": "Pendikspor",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b5b52bad9cb828b604388febd9bbe0e2",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-05T17:00:00Z",
+        "completed": false,
+        "home_team": "Antalyaspor",
+        "away_team": "Alanyaspor",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4bd128f2ac68930f17169a9df741d4d6",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-05T17:00:00Z",
+        "completed": false,
+        "home_team": "Besiktas JK",
+        "away_team": "Kasimpasa SK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "85fd49258b16f1fb19d3ec16084fa55d",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-06T10:30:00Z",
+        "completed": false,
+        "home_team": "\u00c7aykur Rizespor",
+        "away_team": "Hatayspor",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5b45406dadaee98c597eec1700e11a6f",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-06T13:00:00Z",
+        "completed": false,
+        "home_team": "Basaksehir",
+        "away_team": "Adana Demirspor",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "108477473783e4891b774d778b6f3b91",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-06T16:00:00Z",
+        "completed": false,
+        "home_team": "Ankarag\u00fcc\u00fc",
+        "away_team": "Trabzonspor",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "850a15a91eebf94e8bf363395cc5313f",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-06T16:00:00Z",
+        "completed": false,
+        "home_team": "Samsunspor",
+        "away_team": "Fatih Karag\u00fcmr\u00fck",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "db58bd0583bdbbd322292c949d179c61",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-07T10:30:00Z",
+        "completed": false,
+        "home_team": "Kayserispor",
+        "away_team": "Sivasspor",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "406a2eb6ae8b28ed0e24edd0937d6c1a",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-07T13:00:00Z",
+        "completed": false,
+        "home_team": "Istanbulspor",
+        "away_team": "Fenerbahce",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7d68cfcbd6126b91a7325872e2cf446b",
+        "sport_key": "soccer_turkey_super_league",
+        "sport_title": "Turkey Super League",
+        "commence_time": "2024-01-07T16:00:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "Torku Konyaspor",
+        "scores": null,
+        "last_update": null
+    }
+]

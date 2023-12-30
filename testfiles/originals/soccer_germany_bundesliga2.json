@@ -1,0 +1,101 @@
+[
+    {
+        "id": "295b697bdbf1942cf850e8d4214ecddf",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-19T17:30:00Z",
+        "completed": false,
+        "home_team": "Holstein Kiel",
+        "away_team": "Eintracht Braunschweig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91d9ea36768bf32324d221c9fcd7a746",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-19T17:30:00Z",
+        "completed": false,
+        "home_team": "Karlsruher SC",
+        "away_team": "VfL Osnabr\u00fcck",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ed62f7c62ea38b6b9dfc9443726a277f",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-20T12:00:00Z",
+        "completed": false,
+        "home_team": "FC St. Pauli",
+        "away_team": "1. FC Kaiserslautern",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "93db95e028ed85384d3e1ba8d7c85d75",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-20T12:00:00Z",
+        "completed": false,
+        "home_team": "1. FC N\u00fcrnberg",
+        "away_team": "Hansa Rostock",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8cf860d8a98f1fa93479a0261dc7f871",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-20T12:00:00Z",
+        "completed": false,
+        "home_team": "Elversberg",
+        "away_team": "Hannover 96",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bea2a854fe7a375fe4b7403ad3e2bcae",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-20T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Schalke 04",
+        "away_team": "Hamburger SV",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e6b79bda37637fdc4773c2000230dd79",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-21T12:30:00Z",
+        "completed": false,
+        "home_team": "1. FC Magdeburg",
+        "away_team": "Wehen Wiesbaden",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a4c655ccb620e21246e898e3899c3aee",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-21T12:30:00Z",
+        "completed": false,
+        "home_team": "Hertha Berlin",
+        "away_team": "Fortuna D\u00fcsseldorf",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "711e48eb6492e838266801e94ee35c65",
+        "sport_key": "soccer_germany_bundesliga2",
+        "sport_title": "Bundesliga 2 - Germany",
+        "commence_time": "2024-01-21T12:30:00Z",
+        "completed": false,
+        "home_team": "SC Paderborn",
+        "away_team": "Greuther F\u00fcrth",
+        "scores": null,
+        "last_update": null
+    }
+]

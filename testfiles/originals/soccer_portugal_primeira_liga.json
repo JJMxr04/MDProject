@@ -1,0 +1,106 @@
+[
+    {
+        "id": "ce7650d22e79cb5fabf1b04470c6cc61",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-28T20:17:49Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Arouca",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "1"
+            },
+            {
+                "name": "Arouca",
+                "score": "4"
+            }
+        ],
+        "last_update": "2023-12-29T19:01:46Z"
+    },
+    {
+        "id": "49b40e4720aeb1d08ac968e6c9408746",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-29T18:47:44Z",
+        "completed": true,
+        "home_team": "Benfica",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "Famalic\u00e3o",
+                "score": "0"
+            },
+            {
+                "name": "Benfica",
+                "score": "3"
+            }
+        ],
+        "last_update": "2023-12-30T04:12:31Z"
+    },
+    {
+        "id": "0607ceddfa8cc983e61ed8c9eedfa998",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-29T20:47:10Z",
+        "completed": true,
+        "home_team": "FC Porto",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Chaves",
+                "score": "0"
+            },
+            {
+                "name": "FC Porto",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T04:12:31Z"
+    },
+    {
+        "id": "c01a0e8b0d302697165fa0f40a50a5ee",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-30T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c1fb2bdb15d74f0e343f4740b4dfe4ad",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-30T15:30:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10786f9d77aa89bddd21d362074b12aa",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d2c538fd61dd5a39634c66e3482f2083",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2023-12-30T20:30:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    }
+]

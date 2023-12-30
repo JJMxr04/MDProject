@@ -1,0 +1,24 @@
+[
+    {
+        "id": "df44fdab4db2aa4eb3dd1f4d76775e29",
+        "sport_key": "cricket_big_bash",
+        "sport_title": "Big Bash",
+        "commence_time": "2023-12-30T08:15:00Z",
+        "completed": false,
+        "home_team": "Sydney Thunder",
+        "away_team": "Sydney Sixers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62e0a6c6160c0e541e6143f20c7aa02c",
+        "sport_key": "cricket_big_bash",
+        "sport_title": "Big Bash",
+        "commence_time": "2023-12-31T08:15:00Z",
+        "completed": false,
+        "home_team": "Adelaide Strikers",
+        "away_team": "Melbourne Stars",
+        "scores": null,
+        "last_update": null
+    }
+]

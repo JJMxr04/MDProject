@@ -1,9 +1,5 @@
 import json
 import requests
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.core.exceptions import ObjectDoesNotExist
 from core.event.models.sport import Sport
 from core.event.serializers.sport import SportSerializer, TeamScoreSerializer
 

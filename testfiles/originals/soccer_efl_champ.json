@@ -1,0 +1,385 @@
+[
+    {
+        "id": "0f69c1c5c96868c746daabc94f22f009",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T18:00:23Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Plymouth Argyle",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Southampton",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "80e5966eeb1f7c38d23eda9c61f4c8d8",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:45:04Z",
+        "completed": true,
+        "home_team": "Watford",
+        "away_team": "Stoke City",
+        "scores": [
+            {
+                "name": "Stoke City",
+                "score": "1"
+            },
+            {
+                "name": "Watford",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "b03948e3389eeb48f5ad4a9468ecd33b",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:45:32Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Swansea City",
+        "scores": [
+            {
+                "name": "Swansea City",
+                "score": "2"
+            },
+            {
+                "name": "Coventry City",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "e616690fbee0a5b989670a9be2e4ee30",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:46:08Z",
+        "completed": true,
+        "home_team": "Millwall",
+        "away_team": "Norwich City",
+        "scores": [
+            {
+                "name": "Norwich City",
+                "score": "0"
+            },
+            {
+                "name": "Millwall",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "22e23e6deb10f3eda7253b0b69dd146b",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:46:09Z",
+        "completed": true,
+        "home_team": "Birmingham City",
+        "away_team": "Bristol City",
+        "scores": [
+            {
+                "name": "Bristol City",
+                "score": "0"
+            },
+            {
+                "name": "Birmingham City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "507d3ca9bfe1164c08cade434acdea7f",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:46:09Z",
+        "completed": true,
+        "home_team": "Huddersfield Town",
+        "away_team": "Middlesbrough",
+        "scores": [
+            {
+                "name": "Middlesbrough",
+                "score": "2"
+            },
+            {
+                "name": "Huddersfield Town",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "4926a2429e872d75cc4f7a76bdd91d3d",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:46:29Z",
+        "completed": true,
+        "home_team": "Rotherham United",
+        "away_team": "Sunderland",
+        "scores": [
+            {
+                "name": "Sunderland",
+                "score": "1"
+            },
+            {
+                "name": "Rotherham United",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "7df25dba3bda92128ee13e3223be1f42",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:46:59Z",
+        "completed": true,
+        "home_team": "Cardiff City",
+        "away_team": "Leicester City",
+        "scores": [
+            {
+                "name": "Leicester City",
+                "score": "2"
+            },
+            {
+                "name": "Cardiff City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "bb4271742cf378e0191f146e2f8fafc6",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:47:02Z",
+        "completed": true,
+        "home_team": "Hull City",
+        "away_team": "Blackburn Rovers",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "2"
+            },
+            {
+                "name": "Hull City",
+                "score": "3"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "094758300f5b7c32a352f57f93a05f6b",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:47:39Z",
+        "completed": true,
+        "home_team": "Ipswich Town",
+        "away_team": "Queens Park Rangers",
+        "scores": [
+            {
+                "name": "Queens Park Rangers",
+                "score": "0"
+            },
+            {
+                "name": "Ipswich Town",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "7d8b78853df6015441c98419a227c2be",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T19:48:23Z",
+        "completed": true,
+        "home_team": "Preston North End",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            },
+            {
+                "name": "Preston North End",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "e87761d010cb56a6937481fd3d2f7b1d",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2023-12-29T20:16:48Z",
+        "completed": true,
+        "home_team": "West Bromwich",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Leeds United",
+                "score": "0"
+            },
+            {
+                "name": "West Bromwich",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:32:28Z"
+    },
+    {
+        "id": "ed87feacf57f2bbfd11967aba1b5f7d6",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T12:30:00Z",
+        "completed": false,
+        "home_team": "Sunderland",
+        "away_team": "Preston North End",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "83abdb9e17f1c93e61b0c6cca675e109",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Leeds United",
+        "away_team": "Birmingham City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d9dfa18d92b6457b80cb371ffcbdeafb",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Rotherham United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a0e253b98b6e5ad6d14854f6fe3fe00d",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Bristol City",
+        "away_team": "Millwall",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0c59a5d8a6b22f23858cc156e2b27d03",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Queens Park Rangers",
+        "away_team": "Cardiff City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2e8f7ba6e6d5637d75893aace989d461",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Middlesbrough",
+        "away_team": "Coventry City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f9ee55463c87027c83007376489b1719",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Leicester City",
+        "away_team": "Huddersfield Town",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "aa5f3939c2cc2ea15531ada2194838b5",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Stoke City",
+        "away_team": "Ipswich Town",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9278b306a3a938820d3eef044d3a69b8",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Norwich City",
+        "away_team": "Southampton",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "926d24ebd4dac532afa100630392d1e4",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d999610dae7ff3706b47e22decf5ac3b",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Swansea City",
+        "away_team": "West Bromwich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3e61a49a6cde57a7e03236b5d0fca779",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-01T17:15:00Z",
+        "completed": false,
+        "home_team": "Sheffield Wednesday",
+        "away_team": "Hull City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "023c371871f22c1b1a2051f74da989c7",
+        "sport_key": "soccer_efl_champ",
+        "sport_title": "Championship",
+        "commence_time": "2024-01-14T12:00:00Z",
+        "completed": false,
+        "home_team": "Queens Park Rangers",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    }
+]

@@ -1,0 +1,68 @@
+[
+    {
+        "id": "4b22c8024e69e933eb9413cd57eccd29",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2023-12-30T14:15:00Z",
+        "completed": false,
+        "home_team": "F\u00e4rjestad BK",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab9a3069228dba9a4793d1228671d065",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2023-12-30T14:15:00Z",
+        "completed": false,
+        "home_team": "Timr\u00e5 IK",
+        "away_team": "Leksands IF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a160611ce9b7924c93d3ab8c0f4360aa",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2023-12-30T14:15:00Z",
+        "completed": false,
+        "home_team": "Skellefte\u00e5 AIK",
+        "away_team": "Lule\u00e5 HF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c92d6c96f7f97e82bc292b7aac6ab8a8",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "V\u00e4xj\u00f6 Lakers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b215fecf17b0f5e1116fc4f63d9c4289",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "R\u00f6gle BK",
+        "away_team": "Malm\u00f6 Redhawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bb339dabe482581da4a053690258a877",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "\u00d6rebro HK",
+        "scores": null,
+        "last_update": null
+    }
+]

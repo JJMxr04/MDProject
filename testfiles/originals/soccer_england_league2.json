@@ -1,0 +1,374 @@
+[
+    {
+        "id": "32db4425f3af627b7474367d52e107f3",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:44:46Z",
+        "completed": true,
+        "home_team": "Swindon Town",
+        "away_team": "Forest Green Rovers",
+        "scores": [
+            {
+                "name": "Forest Green Rovers",
+                "score": "1"
+            },
+            {
+                "name": "Swindon Town",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "47fff2405cd9cc167d3ee559f4044d4d",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Milton Keynes Dons",
+        "away_team": "Crawley Town",
+        "scores": [
+            {
+                "name": "Crawley Town",
+                "score": "0"
+            },
+            {
+                "name": "Milton Keynes Dons",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "9b61815e50c53059bbaf99240e8ed84a",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Salford City",
+        "away_team": "Grimsby Town",
+        "scores": [
+            {
+                "name": "Grimsby Town",
+                "score": "3"
+            },
+            {
+                "name": "Salford City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "f3f442b212967e7a3acd13bf85035949",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Harrogate Town",
+        "away_team": "Tranmere Rovers",
+        "scores": [
+            {
+                "name": "Tranmere Rovers",
+                "score": "2"
+            },
+            {
+                "name": "Harrogate Town",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "c52ed2d6325ab21f4e71f60a29a50a5b",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Notts County",
+        "away_team": "Morecambe",
+        "scores": [
+            {
+                "name": "Morecambe",
+                "score": "0"
+            },
+            {
+                "name": "Notts County",
+                "score": "5"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "3f5128fac4a7bdebfa367a65fad1fa6c",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Walsall",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            },
+            {
+                "name": "Walsall",
+                "score": "3"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "99165127e7815364a773838091ecb092",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:45:30Z",
+        "completed": true,
+        "home_team": "Mansfield Town",
+        "away_team": "Doncaster Rovers",
+        "scores": [
+            {
+                "name": "Doncaster Rovers",
+                "score": "1"
+            },
+            {
+                "name": "Mansfield Town",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "18c600b5caab479ec8ea3226c3c7ca38",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:46:27Z",
+        "completed": true,
+        "home_team": "Barrow",
+        "away_team": "Accrington Stanley",
+        "scores": [
+            {
+                "name": "Accrington Stanley",
+                "score": "1"
+            },
+            {
+                "name": "Barrow",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "88fb6c3cd81638b73c7ba81453c22a69",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:46:31Z",
+        "completed": true,
+        "home_team": "Bradford City",
+        "away_team": "Stockport County FC",
+        "scores": [
+            {
+                "name": "Stockport County FC",
+                "score": "0"
+            },
+            {
+                "name": "Bradford City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "7ce79add7ffeb7e826477c49e430cfbe",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:47:10Z",
+        "completed": true,
+        "home_team": "AFC Wimbledon",
+        "away_team": "Colchester United",
+        "scores": [
+            {
+                "name": "Colchester United",
+                "score": "3"
+            },
+            {
+                "name": "AFC Wimbledon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "5d828309a8fe0a7f6809d87655545ce4",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:47:14Z",
+        "completed": true,
+        "home_team": "Newport County",
+        "away_team": "Crewe Alexandra",
+        "scores": [
+            {
+                "name": "Crewe Alexandra",
+                "score": "1"
+            },
+            {
+                "name": "Newport County",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "c4b0a807ca2345d8f81ea99035f04e84",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2023-12-29T19:51:38Z",
+        "completed": true,
+        "home_team": "Gillingham",
+        "away_team": "Sutton United",
+        "scores": [
+            {
+                "name": "Sutton United",
+                "score": "0"
+            },
+            {
+                "name": "Gillingham",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T02:46:46Z"
+    },
+    {
+        "id": "44ce259f474aa66a4354a323469ae33f",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Forest Green Rovers",
+        "away_team": "AFC Wimbledon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "53f892835680797a5b2cfdff5f381516",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Accrington Stanley",
+        "away_team": "Salford City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "756598f8303c4a00868005cfd9958211",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Wrexham AFC",
+        "away_team": "Barrow",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "edf360e5aaca3092c0ba4d66d67c0074",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Crewe Alexandra",
+        "away_team": "Bradford City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ddb18adcd8c5f651a2123b640e02ff8",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Colchester United",
+        "away_team": "Gillingham",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "99cfb286e8ebae5c4e70a4b7b0d48411",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Crawley Town",
+        "away_team": "Swindon Town",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e19ec6546d6fe19fcebf8813d9530b2d",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Doncaster Rovers",
+        "away_team": "Milton Keynes Dons",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a9b0c612ec0bb5d935bb24d3764a4488",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Grimsby Town",
+        "away_team": "Walsall",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b590f245c909ecfd05898ca374b6779e",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Morecambe",
+        "away_team": "Harrogate Town",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c303bcd62b5bb4b444ccf75848786785",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Stockport County FC",
+        "away_team": "Mansfield Town",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eb4b7431af06a4a62e9d2dc95d1ce0a9",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Sutton United",
+        "away_team": "Newport County",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ea9d07a016822390deaf2671a2421a59",
+        "sport_key": "soccer_england_league2",
+        "sport_title": "League 2",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Tranmere Rovers",
+        "away_team": "Notts County",
+        "scores": null,
+        "last_update": null
+    }
+]

@@ -145,8 +145,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
-CRONJOBS = [
-    ('* *0 * * *', 'core.event.SportCron.get_sports'),
-    # Add more cron jobs as needed
-]
+# CRONJOBS = [
+#     ('* *0 * * *', 'core.event.SportCron.get_sports'),
+#     # Add more cron jobs as needed
+# ]
 

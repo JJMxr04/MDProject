@@ -1,0 +1,24 @@
+[
+    {
+        "id": "46d312b6257b3127a1e9d928db7d387f",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-01-09T20:00:00Z",
+        "completed": false,
+        "home_team": "Middlesbrough",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5fbeefccdcd9166bb5985f78ccf36c7d",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-01-10T20:00:00Z",
+        "completed": false,
+        "home_team": "Liverpool",
+        "away_team": "Fulham",
+        "scores": null,
+        "last_update": null
+    }
+]

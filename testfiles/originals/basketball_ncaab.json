@@ -1,0 +1,2222 @@
+[
+    {
+        "id": "df2b12758d9ccbd37abef2ef9e32f9ce",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-28T00:01:00Z",
+        "completed": true,
+        "home_team": "Virginia Cavaliers",
+        "away_team": "Morgan St Bears",
+        "scores": [
+            {
+                "name": "Virginia Cavaliers",
+                "score": "79"
+            },
+            {
+                "name": "Morgan St Bears",
+                "score": "44"
+            }
+        ],
+        "last_update": "2023-12-28T10:29:55Z"
+    },
+    {
+        "id": "7282a35eba7ec1813f726b12d4d261dd",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-28T03:00:00Z",
+        "completed": true,
+        "home_team": "Cal Baptist Lancers",
+        "away_team": "Chicago St Cougars",
+        "scores": [
+            {
+                "name": "Cal Baptist Lancers",
+                "score": "74"
+            },
+            {
+                "name": "Chicago St Cougars",
+                "score": "62"
+            }
+        ],
+        "last_update": "2023-12-28T10:29:55Z"
+    },
+    {
+        "id": "1bacbdbcce6e30a752ef20dcc9aeda88",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T00:00:00Z",
+        "completed": true,
+        "home_team": "LIU Sharks",
+        "away_team": "Albany Great Danes",
+        "scores": [
+            {
+                "name": "LIU Sharks",
+                "score": "69"
+            },
+            {
+                "name": "Albany Great Danes",
+                "score": "86"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "22bf13ed38a049b4693df62a09bcb1c5",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T00:00:00Z",
+        "completed": true,
+        "home_team": "Oklahoma Sooners",
+        "away_team": "Central Arkansas Bears",
+        "scores": [
+            {
+                "name": "Oklahoma Sooners",
+                "score": "88"
+            },
+            {
+                "name": "Central Arkansas Bears",
+                "score": "72"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "e72830cbf0251702f1b760068f133b08",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T00:00:00Z",
+        "completed": true,
+        "home_team": "Cleveland St Vikings",
+        "away_team": "Oakland Golden Grizzlies",
+        "scores": [
+            {
+                "name": "Cleveland St Vikings",
+                "score": "75"
+            },
+            {
+                "name": "Oakland Golden Grizzlies",
+                "score": "67"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "9263e077299b075d941318f5aa71dd7f",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T00:00:00Z",
+        "completed": true,
+        "home_team": "Maryland Terrapins",
+        "away_team": "Coppin St Eagles",
+        "scores": [
+            {
+                "name": "Maryland Terrapins",
+                "score": "75"
+            },
+            {
+                "name": "Coppin St Eagles",
+                "score": "53"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "340b39e6db257f514b84795acf4ca937",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T01:00:00Z",
+        "completed": true,
+        "home_team": "UTSA Roadrunners",
+        "away_team": "Prairie View Panthers",
+        "scores": [
+            {
+                "name": "UTSA Roadrunners",
+                "score": "103"
+            },
+            {
+                "name": "Prairie View Panthers",
+                "score": "89"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "849623cc8001ca8af00549f5a038fbde",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T01:00:00Z",
+        "completed": true,
+        "home_team": "Texas Tech Red Raiders",
+        "away_team": "Sam Houston St Bearkats",
+        "scores": [
+            {
+                "name": "Texas Tech Red Raiders",
+                "score": "96"
+            },
+            {
+                "name": "Sam Houston St Bearkats",
+                "score": "60"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "d9e18a81bc4b4ecbdc833033cecec543",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T01:30:00Z",
+        "completed": true,
+        "home_team": "Tennessee Tech Golden Eagles",
+        "away_team": "Arkansas-Little Rock Trojans",
+        "scores": [
+            {
+                "name": "Tennessee Tech Golden Eagles",
+                "score": "75"
+            },
+            {
+                "name": "Arkansas-Little Rock Trojans",
+                "score": "81"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "6e9feca423cbac09a799ef2e2258bd2e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T01:30:00Z",
+        "completed": true,
+        "home_team": "Tennessee St Tigers",
+        "away_team": "Tenn-Martin Skyhawks",
+        "scores": [
+            {
+                "name": "Tennessee St Tigers",
+                "score": "75"
+            },
+            {
+                "name": "Tenn-Martin Skyhawks",
+                "score": "91"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "4d4b896017f8799e6ff6e79b7db1e76c",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T02:00:00Z",
+        "completed": true,
+        "home_team": "Eastern Washington Eagles",
+        "away_team": "Portland St Vikings",
+        "scores": [
+            {
+                "name": "Eastern Washington Eagles",
+                "score": "91"
+            },
+            {
+                "name": "Portland St Vikings",
+                "score": "57"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "6a150c190d9def352ce4c76478f60136",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T02:00:00Z",
+        "completed": true,
+        "home_team": "Idaho State Bengals",
+        "away_team": "Montana St Bobcats",
+        "scores": [
+            {
+                "name": "Idaho State Bengals",
+                "score": "66"
+            },
+            {
+                "name": "Montana St Bobcats",
+                "score": "74"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "9de0f9d97d4224fd65cf38ed91219a53",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T02:00:00Z",
+        "completed": true,
+        "home_team": "Idaho Vandals",
+        "away_team": "Sacramento St Hornets",
+        "scores": [
+            {
+                "name": "Idaho Vandals",
+                "score": "61"
+            },
+            {
+                "name": "Sacramento St Hornets",
+                "score": "58"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "2a8102dd710a6225b995a40366609a25",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T02:00:00Z",
+        "completed": true,
+        "home_team": "Weber State Wildcats",
+        "away_team": "Montana Grizzlies",
+        "scores": [
+            {
+                "name": "Weber State Wildcats",
+                "score": "93"
+            },
+            {
+                "name": "Montana Grizzlies",
+                "score": "63"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "5e4823b8656700debc7ce93a7dca332a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T02:00:00Z",
+        "completed": true,
+        "home_team": "Oregon Ducks",
+        "away_team": "USC Trojans",
+        "scores": [
+            {
+                "name": "Oregon Ducks",
+                "score": "82"
+            },
+            {
+                "name": "USC Trojans",
+                "score": "74"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "b1ac9aef0b018f3e83733e5b02f37bee",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T02:00:00Z",
+        "completed": true,
+        "home_team": "UC Davis Aggies",
+        "away_team": "UC Santa Barbara Gauchos",
+        "scores": [
+            {
+                "name": "UC Davis Aggies",
+                "score": "76"
+            },
+            {
+                "name": "UC Santa Barbara Gauchos",
+                "score": "62"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "71807171c6ff577f44de39936ff14a7b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T03:00:00Z",
+        "completed": true,
+        "home_team": "UC San Diego Tritons",
+        "away_team": "CSU Bakersfield Roadrunners",
+        "scores": [
+            {
+                "name": "UC San Diego Tritons",
+                "score": "76"
+            },
+            {
+                "name": "CSU Bakersfield Roadrunners",
+                "score": "64"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "c4229f48470b1e42d79d2eee5929b38e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T03:00:00Z",
+        "completed": true,
+        "home_team": "Cal Poly Mustangs",
+        "away_team": "CSU Northridge Matadors",
+        "scores": [
+            {
+                "name": "Cal Poly Mustangs",
+                "score": "73"
+            },
+            {
+                "name": "CSU Northridge Matadors",
+                "score": "83"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "bb1744663ed35787a3f752a302e34f3e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T03:00:00Z",
+        "completed": true,
+        "home_team": "UC Irvine Anteaters",
+        "away_team": "UC Riverside Highlanders",
+        "scores": [
+            {
+                "name": "UC Irvine Anteaters",
+                "score": "73"
+            },
+            {
+                "name": "UC Riverside Highlanders",
+                "score": "66"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "99a12727f773ff400ee7b364eb7a2c6f",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T03:02:40Z",
+        "completed": true,
+        "home_team": "CSU Fullerton Titans",
+        "away_team": "Long Beach St 49ers",
+        "scores": [
+            {
+                "name": "CSU Fullerton Titans",
+                "score": "71"
+            },
+            {
+                "name": "Long Beach St 49ers",
+                "score": "81"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "35c4a5f466293de107bccca7ababe49d",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T03:07:05Z",
+        "completed": true,
+        "home_team": "Oregon St Beavers",
+        "away_team": "UCLA Bruins",
+        "scores": [
+            {
+                "name": "Oregon St Beavers",
+                "score": "62"
+            },
+            {
+                "name": "UCLA Bruins",
+                "score": "69"
+            }
+        ],
+        "last_update": "2023-12-29T10:34:23Z"
+    },
+    {
+        "id": "f56d24e788a4481a84d036294c8e9cab",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T17:00:00Z",
+        "completed": true,
+        "home_team": "IUPUI Jaguars",
+        "away_team": "Detroit Mercy Titans",
+        "scores": [
+            {
+                "name": "IUPUI Jaguars",
+                "score": "67"
+            },
+            {
+                "name": "Detroit Mercy Titans",
+                "score": "55"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "0e551006956b19c407375a58b07eacae",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T18:00:00Z",
+        "completed": true,
+        "home_team": "Green Bay Phoenix",
+        "away_team": "Wright St Raiders",
+        "scores": [
+            {
+                "name": "Green Bay Phoenix",
+                "score": "88"
+            },
+            {
+                "name": "Wright St Raiders",
+                "score": "77"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "947bb238d857d1affc28bbab4a240016",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T19:00:00Z",
+        "completed": true,
+        "home_team": "Elon Phoenix",
+        "away_team": "Valparaiso Beacons",
+        "scores": [
+            {
+                "name": "Elon Phoenix",
+                "score": "82"
+            },
+            {
+                "name": "Valparaiso Beacons",
+                "score": "78"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "d3613b53cab2e458c0b9e74b90bae0ad",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T19:00:45Z",
+        "completed": true,
+        "home_team": "Penn State Nittany Lions",
+        "away_team": "Rider Broncs",
+        "scores": [
+            {
+                "name": "Penn State Nittany Lions",
+                "score": "90"
+            },
+            {
+                "name": "Rider Broncs",
+                "score": "63"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "fb0bcd2fa163094a0409a0333de5236b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T23:00:00Z",
+        "completed": true,
+        "home_team": "Indiana Hoosiers",
+        "away_team": "Kennesaw St Owls",
+        "scores": [
+            {
+                "name": "Indiana Hoosiers",
+                "score": "100"
+            },
+            {
+                "name": "Kennesaw St Owls",
+                "score": "87"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "8ac8b8f8f962ed91d441bd110747d5c3",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T23:00:00Z",
+        "completed": true,
+        "home_team": "Miami Hurricanes",
+        "away_team": "North Florida Ospreys",
+        "scores": [
+            {
+                "name": "Miami Hurricanes",
+                "score": "95"
+            },
+            {
+                "name": "North Florida Ospreys",
+                "score": "55"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "0e302d0e8bf65c747c35bbc28342abd7",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-29T23:31:00Z",
+        "completed": true,
+        "home_team": "Stony Brook Seawolves",
+        "away_team": "Brown Bears",
+        "scores": [
+            {
+                "name": "Stony Brook Seawolves",
+                "score": "69"
+            },
+            {
+                "name": "Brown Bears",
+                "score": "65"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "8abb6ebc63f3af8b38e5442e6beb401b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "South Florida Bulls",
+        "away_team": "Alabama St Hornets",
+        "scores": [
+            {
+                "name": "South Florida Bulls",
+                "score": "73"
+            },
+            {
+                "name": "Alabama St Hornets",
+                "score": "70"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "f34846f26c11e03e07f15d0a7588f792",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "UCF Knights",
+        "away_team": "Bethune-Cookman Wildcats",
+        "scores": [
+            {
+                "name": "UCF Knights",
+                "score": "98"
+            },
+            {
+                "name": "Bethune-Cookman Wildcats",
+                "score": "54"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "07db2868e4aa623e9a8718fa1e9e9db4",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Buffalo Bulls",
+        "away_team": "Niagara Purple Eagles",
+        "scores": [
+            {
+                "name": "Buffalo Bulls",
+                "score": "63"
+            },
+            {
+                "name": "Niagara Purple Eagles",
+                "score": "69"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "7945426317b3abbf4e60ff1bbb346c74",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Stetson Hatters",
+        "away_team": "Charlotte 49ers",
+        "scores": [
+            {
+                "name": "Stetson Hatters",
+                "score": "79"
+            },
+            {
+                "name": "Charlotte 49ers",
+                "score": "75"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "e1eeeb9060037611a94019711b344d3e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Cincinnati Bearcats",
+        "away_team": "Evansville Purple Aces",
+        "scores": [
+            {
+                "name": "Cincinnati Bearcats",
+                "score": "76"
+            },
+            {
+                "name": "Evansville Purple Aces",
+                "score": "58"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "82c7cb02eb6e026b0a9ee3177db6231a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Clemson Tigers",
+        "away_team": "Radford Highlanders",
+        "scores": [
+            {
+                "name": "Clemson Tigers",
+                "score": "93"
+            },
+            {
+                "name": "Radford Highlanders",
+                "score": "58"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "bbfc6d87b98bacfe4477b2dce3b12c61",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "East Carolina Pirates",
+        "away_team": "East Tennessee St Buccaneers",
+        "scores": [
+            {
+                "name": "East Carolina Pirates",
+                "score": "70"
+            },
+            {
+                "name": "East Tennessee St Buccaneers",
+                "score": "86"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "2420457b822f3a2c839904d68d42d467",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Purdue Boilermakers",
+        "away_team": "Eastern Kentucky Colonels",
+        "scores": [
+            {
+                "name": "Purdue Boilermakers",
+                "score": "80"
+            },
+            {
+                "name": "Eastern Kentucky Colonels",
+                "score": "53"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "96ddbfb0b237fbabaa803bce42971b5a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Fort Wayne Mastodons",
+        "away_team": "Northern Kentucky Norse",
+        "scores": [
+            {
+                "name": "Fort Wayne Mastodons",
+                "score": "73"
+            },
+            {
+                "name": "Northern Kentucky Norse",
+                "score": "60"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "d0e120e6e8aea1ada6d63aa80c58f347",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Kentucky Wildcats",
+        "away_team": "Illinois St Redbirds",
+        "scores": [
+            {
+                "name": "Kentucky Wildcats",
+                "score": "96"
+            },
+            {
+                "name": "Illinois St Redbirds",
+                "score": "70"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "8b07a926d2fb4dae37db41dda63094af",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Iowa Hawkeyes",
+        "away_team": "Northern Illinois Huskies",
+        "scores": [
+            {
+                "name": "Iowa Hawkeyes",
+                "score": "103"
+            },
+            {
+                "name": "Northern Illinois Huskies",
+                "score": "74"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "9d978dd008658af6559ef23d3fd81c1c",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Saint Joseph's Hawks",
+        "away_team": "Loyola (MD) Greyhounds",
+        "scores": [
+            {
+                "name": "Saint Joseph's Hawks",
+                "score": "97"
+            },
+            {
+                "name": "Loyola (MD) Greyhounds",
+                "score": "56"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "0e917b31b6944d09f7433ce866012e4d",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Minnesota Golden Gophers",
+        "away_team": "Maine Black Bears",
+        "scores": [
+            {
+                "name": "Minnesota Golden Gophers",
+                "score": "80"
+            },
+            {
+                "name": "Maine Black Bears",
+                "score": "62"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "68f3c9ac85c358302f151a2672392c6f",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:00:00Z",
+        "completed": true,
+        "home_team": "Michigan Wolverines",
+        "away_team": "McNeese Cowboys",
+        "scores": [
+            {
+                "name": "Michigan Wolverines",
+                "score": "76"
+            },
+            {
+                "name": "McNeese Cowboys",
+                "score": "87"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "65a0577b6850de87bc4719987e1502b4",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:30:00Z",
+        "completed": true,
+        "home_team": "UMBC Retrievers",
+        "away_team": "American Eagles",
+        "scores": [
+            {
+                "name": "UMBC Retrievers",
+                "score": "85"
+            },
+            {
+                "name": "American Eagles",
+                "score": "87"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "6d3016ecb2d1b1e7ec1ea2d6a5250ec5",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:30:00Z",
+        "completed": true,
+        "home_team": "Stephen F. Austin Lumberjacks",
+        "away_team": "New Orleans Privateers",
+        "scores": [
+            {
+                "name": "Stephen F. Austin Lumberjacks",
+                "score": "80"
+            },
+            {
+                "name": "New Orleans Privateers",
+                "score": "51"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "e5b15b48e7479bf02a7cf701cffeb5cc",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T00:31:10Z",
+        "completed": true,
+        "home_team": "Nebraska Cornhuskers",
+        "away_team": "South Carolina St Bulldogs",
+        "scores": [
+            {
+                "name": "Nebraska Cornhuskers",
+                "score": "91"
+            },
+            {
+                "name": "South Carolina St Bulldogs",
+                "score": "62"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "a11c1e409229066a5379fff6d9825844",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "North Carolina Tar Heels",
+        "away_team": "Charleston Southern Buccaneers",
+        "scores": [
+            {
+                "name": "North Carolina Tar Heels",
+                "score": "105"
+            },
+            {
+                "name": "Charleston Southern Buccaneers",
+                "score": "60"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "bf406fef4145b4a8ab79c22952ff6547",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "Omaha Mavericks",
+        "away_team": "Denver Pioneers",
+        "scores": [
+            {
+                "name": "Omaha Mavericks",
+                "score": "80"
+            },
+            {
+                "name": "Denver Pioneers",
+                "score": "95"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "0efbbef085ede7dcd5d0c41c67204b41",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "Northwestern Wildcats",
+        "away_team": "Jackson St Tigers",
+        "scores": [
+            {
+                "name": "Northwestern Wildcats",
+                "score": "74"
+            },
+            {
+                "name": "Jackson St Tigers",
+                "score": "63"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "f1535d9f041b40c30788bd4146ff96f5",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "Saint Mary's Gaels",
+        "away_team": "Kent State Golden Flashes",
+        "scores": [
+            {
+                "name": "Saint Mary's Gaels",
+                "score": "66"
+            },
+            {
+                "name": "Kent State Golden Flashes",
+                "score": "46"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "151d3557211c2074397546815530b77e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "LSU Tigers",
+        "away_team": "Northwestern St Demons",
+        "scores": [
+            {
+                "name": "LSU Tigers",
+                "score": "96"
+            },
+            {
+                "name": "Northwestern St Demons",
+                "score": "55"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "627f7218827a4c755332e4aa85561b1b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "Milwaukee Panthers",
+        "away_team": "Robert Morris Colonials",
+        "scores": [
+            {
+                "name": "Milwaukee Panthers",
+                "score": "78"
+            },
+            {
+                "name": "Robert Morris Colonials",
+                "score": "75"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "a4fdaf8f6057ff5f160e65d33f50b9ba",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "North Dakota Fighting Hawks",
+        "away_team": "St. Thomas (MN) Tommies",
+        "scores": [
+            {
+                "name": "North Dakota Fighting Hawks",
+                "score": "45"
+            },
+            {
+                "name": "St. Thomas (MN) Tommies",
+                "score": "70"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "9cf818742473e90efd1161e5e3b01da1",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "North Dakota St Bison",
+        "away_team": "South Dakota Coyotes",
+        "scores": [
+            {
+                "name": "North Dakota St Bison",
+                "score": "66"
+            },
+            {
+                "name": "South Dakota Coyotes",
+                "score": "75"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "bcd3a1eb7a6f646030a4e5d315de8d69",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "UMKC Kangaroos",
+        "away_team": "Oral Roberts Golden Eagles",
+        "scores": [
+            {
+                "name": "UMKC Kangaroos",
+                "score": "77"
+            },
+            {
+                "name": "Oral Roberts Golden Eagles",
+                "score": "60"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "17e86d3e0bee8e49e77a363c33fc0946",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "Texas Longhorns",
+        "away_team": "UNC Greensboro Spartans",
+        "scores": [
+            {
+                "name": "Texas Longhorns",
+                "score": "72"
+            },
+            {
+                "name": "UNC Greensboro Spartans",
+                "score": "37"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "e49ba9bb396a934c66de0860ad7c7b8c",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:00:00Z",
+        "completed": true,
+        "home_team": "UAB Blazers",
+        "away_team": "UNC Asheville Bulldogs",
+        "scores": [
+            {
+                "name": "UAB Blazers",
+                "score": "90"
+            },
+            {
+                "name": "UNC Asheville Bulldogs",
+                "score": "85"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "615ce7880fc584e3e08d6bf850adadfe",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:30:00Z",
+        "completed": true,
+        "home_team": "SIU-Edwardsville Cougars",
+        "away_team": "Eastern Illinois Panthers",
+        "scores": [
+            {
+                "name": "SIU-Edwardsville Cougars",
+                "score": "67"
+            },
+            {
+                "name": "Eastern Illinois Panthers",
+                "score": "58"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "896ad734635c520d1b354b1da70283a6",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:30:00Z",
+        "completed": true,
+        "home_team": "SE Missouri St Redhawks",
+        "away_team": "Southern Indiana Screaming Eagles",
+        "scores": [
+            {
+                "name": "SE Missouri St Redhawks",
+                "score": "93"
+            },
+            {
+                "name": "Southern Indiana Screaming Eagles",
+                "score": "91"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "e3df8b3d639034903cfe14d54877dcd9",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T01:30:00Z",
+        "completed": true,
+        "home_team": "Utah Utes",
+        "away_team": "Washington St Cougars",
+        "scores": [
+            {
+                "name": "Utah Utes",
+                "score": "80"
+            },
+            {
+                "name": "Washington St Cougars",
+                "score": "58"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "72fdfe51a9e7105e59dcec6ed8f9a0f6",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T02:00:00Z",
+        "completed": true,
+        "home_team": "Boise State Broncos",
+        "away_team": "Utah Valley Wolverines",
+        "scores": [
+            {
+                "name": "Boise State Broncos",
+                "score": "85"
+            },
+            {
+                "name": "Utah Valley Wolverines",
+                "score": "63"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "f0f3e20600a8a071a01aab955d499d6a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T02:00:00Z",
+        "completed": true,
+        "home_team": "Colorado Buffaloes",
+        "away_team": "Washington Huskies",
+        "scores": [
+            {
+                "name": "Colorado Buffaloes",
+                "score": "73"
+            },
+            {
+                "name": "Washington Huskies",
+                "score": "69"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "8bbf3c8f05c43d75f860877933f25c36",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T02:00:00Z",
+        "completed": true,
+        "home_team": "Illinois Fighting Illini",
+        "away_team": "Fairleigh Dickinson Knights",
+        "scores": [
+            {
+                "name": "Illinois Fighting Illini",
+                "score": "104"
+            },
+            {
+                "name": "Fairleigh Dickinson Knights",
+                "score": "71"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "7dcb1f23636d24f80c6e3208ff33f068",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T02:00:00Z",
+        "completed": true,
+        "home_team": "Gonzaga Bulldogs",
+        "away_team": "San Diego St Aztecs",
+        "scores": [
+            {
+                "name": "Gonzaga Bulldogs",
+                "score": "74"
+            },
+            {
+                "name": "San Diego St Aztecs",
+                "score": "84"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "f0230f9b98f3ac2da552e7c43d74c810",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T03:00:00Z",
+        "completed": true,
+        "home_team": "San Diego Toreros",
+        "away_team": "Fresno St Bulldogs",
+        "scores": [
+            {
+                "name": "San Diego Toreros",
+                "score": "67"
+            },
+            {
+                "name": "Fresno St Bulldogs",
+                "score": "71"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "b831cd1d5ef45b399ba828dd8fd262d0",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T03:00:00Z",
+        "completed": true,
+        "home_team": "Loyola Marymount Lions",
+        "away_team": "Tarleton State Texans",
+        "scores": [
+            {
+                "name": "Loyola Marymount Lions",
+                "score": "66"
+            },
+            {
+                "name": "Tarleton State Texans",
+                "score": "79"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "9745a6a831a9ec16844edcaf43189f25",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T03:30:00Z",
+        "completed": true,
+        "home_team": "California Golden Bears",
+        "away_team": "Arizona Wildcats",
+        "scores": [
+            {
+                "name": "California Golden Bears",
+                "score": "81"
+            },
+            {
+                "name": "Arizona Wildcats",
+                "score": "100"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "a8af092e494823197d3d884cea1c26fd",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T04:05:00Z",
+        "completed": true,
+        "home_team": "Stanford Cardinal",
+        "away_team": "Arizona St Sun Devils",
+        "scores": [
+            {
+                "name": "Stanford Cardinal",
+                "score": "73"
+            },
+            {
+                "name": "Arizona St Sun Devils",
+                "score": "76"
+            }
+        ],
+        "last_update": "2023-12-30T06:09:38Z"
+    },
+    {
+        "id": "91453946ce283e4ac45a1d33970fe406",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Delaware St Hornets",
+        "away_team": "Mt. St. Mary's Mountaineers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "78e628efa640b851a21aa89fba2cb3a6",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Florida St Seminoles",
+        "away_team": "Lipscomb Bisons",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "feaeff333d2618065da97c054e1c1dce",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "St. John's Red Storm",
+        "away_team": "Hofstra Pride",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9ea6c75794d4efe00d249914b3bee9af",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Navy Midshipmen",
+        "away_team": "William & Mary Tribe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5d0ad527187ac2d6fb7f0cebf9ed08cb",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Notre Dame Fighting Irish",
+        "away_team": "Virginia Cavaliers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e1a672f2ca9e27a936e65aec8ef7495",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Syracuse Orange",
+        "away_team": "Pittsburgh Panthers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e27d95fc13842b6b3a04f559f0615499",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T17:00:00Z",
+        "completed": false,
+        "home_team": "Rutgers Scarlet Knights",
+        "away_team": "Stonehill Skyhawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c9aac753b9e96ec07eeac52ec59ab382",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Appalachian St Mountaineers",
+        "away_team": "UL Monroe Warhawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "34eaddacbe72cd08fd44d9ced34f2269",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Fordham Rams",
+        "away_team": "Columbia Lions",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "292676bf80620fa37e63ab060348bf6e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Florida Gators",
+        "away_team": "Quinnipiac Bobcats",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "676402698ca41b5add0337a6f48dc969",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Massachusetts Minutemen",
+        "away_team": "Siena Saints",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4e0ab215f3168fa02888421716922791",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Rhode Island Rams",
+        "away_team": "Northeastern Huskies",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b8b0527549543871ee2560e617725564",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T18:30:00Z",
+        "completed": false,
+        "home_team": "Ohio Bobcats",
+        "away_team": "Davidson Wildcats",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a695a06ee40cd8713198749ffac29a17",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Alabama Crimson Tide",
+        "away_team": "Liberty Flames",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70d660bdf6643e3c9b9da991b3a01adb",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Georgia St Panthers",
+        "away_team": "Arkansas St Red Wolves",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a7489e47934812fab76bf2e9f896e8ee",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Boston Univ. Terriers",
+        "away_team": "Merrimack Warriors",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1654503ee34f1194596e38ebc0585cd4",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Bucknell Bison",
+        "away_team": "Saint Peter's Peacocks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "83e2ce0ba839dca4c57d52155db3589a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Loyola (Chi) Ramblers",
+        "away_team": "Central Michigan Chippewas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10a96245b8d3f30cbb4563cdd097d0c9",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Coastal Carolina Chanticleers",
+        "away_team": "Troy Trojans",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "16653dec752b8eb0895faeaac673b230",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Marquette Golden Eagles",
+        "away_team": "Creighton Bluejays",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a44b90ab4eb1298471c393337f5941d",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Dayton Flyers",
+        "away_team": "Longwood Lancers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6d8ea3fbd47e7d13d864f597ea8c22a3",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Delaware Blue Hens",
+        "away_team": "Princeton Tigers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5cf92bed2f628522202896c4bee3db8b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Duke Blue Devils",
+        "away_team": "Queens University Royals",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3f525328579e0a5dc02fec79933af3b9",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Fairfield Stags",
+        "away_team": "Le Moyne Dolphins",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f39fa5d79c8b3d363806586e32dd9834",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "South Carolina Gamecocks",
+        "away_team": "Florida A&M Rattlers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "998c0beccb9614f0c680bf9a59dec39f",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "VCU Rams",
+        "away_team": "Gardner-Webb Bulldogs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "328de08c2effd00aee8748a35202f630",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "George Mason Patriots",
+        "away_team": "North Carolina A&T Aggies",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2ccddd98959f2fccdcdb115faca99e36",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Harvard Crimson",
+        "away_team": "Iona Gaels",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ef492d4c0ac2cd45ad5b0655660dd56",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "La Salle Explorers",
+        "away_team": "Howard Bison",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "31173bd6dea2ed7e8a8fc02a308be043",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Michigan St Spartans",
+        "away_team": "Indiana St Sycamores",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "65d8d6a6941a1d128030a1e12d40d51f",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "James Madison Dukes",
+        "away_team": "Texas State Bobcats",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "270d9c8f3f9ea70af5422f75338f9865",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Marist Red Foxes",
+        "away_team": "Lehigh Mountain Hawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "50c11d4b466db26e1e71476f4fd982bd",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:00:00Z",
+        "completed": false,
+        "home_team": "Wake Forest Demon Deacons",
+        "away_team": "Virginia Tech Hokies",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5cf6230dde61ce9b5034d6b81c15b952",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T19:30:00Z",
+        "completed": false,
+        "home_team": "Georgia Bulldogs",
+        "away_team": "Alabama A&M Bulldogs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5e9afaa91898228cced2f73bf98d012a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T20:00:00Z",
+        "completed": false,
+        "home_team": "Western Kentucky Hilltoppers",
+        "away_team": "Abilene Christian Wildcats",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5183651f3b8f1e2353328ebd01b6d146",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T20:00:00Z",
+        "completed": false,
+        "home_team": "Missouri Tigers",
+        "away_team": "Central Arkansas Bears",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7f6ff0f289e40b6c68913eec081e43c3",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T20:00:00Z",
+        "completed": false,
+        "home_team": "Georgia Southern Eagles",
+        "away_team": "Southern Miss Golden Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09ecf1ba93526116b30b3698fecd124",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Akron Zips",
+        "away_team": "St. Bonaventure Bonnies",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "328392aaa78967a46c81fdad5bbeefe5",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Long Beach St 49ers",
+        "away_team": "CSU Northridge Matadors",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "262876faab1d347ba6210bf6cd64cc0c",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "St. Francis (PA) Red Flash",
+        "away_team": "Campbell Fighting Camels",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "59b23aae5667f3f20571ce6915adbab0",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "DePaul Blue Demons",
+        "away_team": "Chicago St Cougars",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e5c715d6763c27016a834d82f690e85",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Cornell Big Red",
+        "away_team": "Colgate Raiders",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4a0bfc0bc6c093c2908f7363883350bb",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "George Washington Colonials",
+        "away_team": "Maryland-Eastern Shore Hawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bac1d5fec89e0a067fd3c800d4aceaac",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Kansas Jayhawks",
+        "away_team": "Wichita St Shockers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a9be04f057577d2c64c447f5987ef593",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Richmond Spiders",
+        "away_team": "Lafayette Leopards",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f589c60219997d011e3167e1bab753d7",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Marshall Thundering Herd",
+        "away_team": "Louisiana Ragin' Cajuns",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e45dec9c0d4cc72fc27accfa189c253a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Murray St Racers",
+        "away_team": "Middle Tennessee Blue Raiders",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7090f415ddb2d03b1fd30a151247bc20",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Weber State Wildcats",
+        "away_team": "Montana St Bobcats",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5d63d6aab26e89ffcfdb7918e6974f03",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "N Colorado Bears",
+        "away_team": "Northern Arizona Lumberjacks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "442dc55f9c61efdee424b45704b8e07b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Oregon Ducks",
+        "away_team": "UCLA Bruins",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "11cc67f2ed24f0e950f7e6aaf08bb9d5",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:00:00Z",
+        "completed": false,
+        "home_team": "Tennessee Tech Golden Eagles",
+        "away_team": "Tenn-Martin Skyhawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fd7c6cb942b3a9ea1c90aee8eba591c9",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T21:30:00Z",
+        "completed": false,
+        "home_team": "Tennessee St Tigers",
+        "away_team": "Arkansas-Little Rock Trojans",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9ea855b5e71e8a222324eeca11a4eef9",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "Arkansas Razorbacks",
+        "away_team": "UNC Wilmington Seahawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f19ff463749d4370febd382a29407ef7",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "UC Davis Aggies",
+        "away_team": "Cal Poly Mustangs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fcd747bc28b9976bb5b2b365c93bb664",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "Vanderbilt Commodores",
+        "away_team": "Dartmouth Big Green",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d767b3ec866cfa7d59168eca163c44db",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "Eastern Washington Eagles",
+        "away_team": "Sacramento St Hornets",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0b1c1816a8d4e695f135d4682cf68fb4",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "Utah Tech Trailblazers",
+        "away_team": "Florida Int'l Golden Panthers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2f558b76900074c0372d1b267c3c02d0",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T22:00:00Z",
+        "completed": false,
+        "home_team": "Idaho Vandals",
+        "away_team": "Portland St Vikings",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "948745bd0cfe70027563465fe9265a8b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T23:00:00Z",
+        "completed": false,
+        "home_team": "BYU Cougars",
+        "away_team": "Wyoming Cowboys",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1454bd7637f16784750e3f4a133183fe",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T23:00:00Z",
+        "completed": false,
+        "home_team": "Idaho State Bengals",
+        "away_team": "Montana Grizzlies",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3dc7c8a28a95f1551bc62593b0ffccca",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-30T23:00:00Z",
+        "completed": false,
+        "home_team": "San Francisco Dons",
+        "away_team": "Miss Valley St Delta Devils",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "271ec65be8fdd21a1957f2f82b333a8c",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Memphis Tigers",
+        "away_team": "Austin Peay Governors",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3d476cadf1215dcd39fd55ec1dba36e8",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "High Point Panthers",
+        "away_team": "Bellarmine Knights",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e1e4ddf286577c4f59716335ad9c34f0",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Florida Gulf Coast Eagles",
+        "away_team": "Florida Atlantic Owls",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b4adcab74435aa4fe083f07b2423e832",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Houston Cougars",
+        "away_team": "Pennsylvania Quakers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "27c4fdc7b609708795144c03085d151b",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Manhattan Jaspers",
+        "away_team": "Wagner Seahawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fcd98e1ca6ec1ec2322d5f5c25611765",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Ohio State Buckeyes",
+        "away_team": "West Virginia Mountaineers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0076a17727357c0f892a0c7dfb0073cf",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Old Dominion Monarchs",
+        "away_team": "South Alabama Jaguars",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "77e4cb0ae62a1debaa823a6e5a9d0a8d",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Texas A&M Aggies",
+        "away_team": "Prairie View Panthers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42394908afb31abf4b634552afc47fda",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Santa Clara Broncos",
+        "away_team": "Yale Bulldogs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1eb55cb67833aa36385d521fce37c876",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:00:00Z",
+        "completed": false,
+        "home_team": "Southern Illinois Salukis",
+        "away_team": "UIC Flames",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "89c62e272275a1efa40e31be7abb1e15",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T00:30:00Z",
+        "completed": false,
+        "home_team": "UT Rio Grande Valley Vaqueros",
+        "away_team": "Incarnate Word Cardinals",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "35f174f7c1a3d37761b3d4307ec5ad5e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Grand Canyon Antelopes",
+        "away_team": "Louisiana Tech Bulldogs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7cf1b5d034d34ab7467336b4ea59810e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T01:00:00Z",
+        "completed": false,
+        "home_team": "UC Riverside Highlanders",
+        "away_team": "UC Santa Barbara Gauchos",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "50f2013da61c376e717957969217f92a",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T02:00:00Z",
+        "completed": false,
+        "home_team": "Auburn Tigers",
+        "away_team": "Chattanooga Mocs",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4eb0a52787ac16164a3189a2d60ebe53",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T02:00:00Z",
+        "completed": false,
+        "home_team": "New Mexico St Aggies",
+        "away_team": "Cal Baptist Lancers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c6340cd6fa1eb12dd85d6b88cfc06fb3",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T02:00:00Z",
+        "completed": false,
+        "home_team": "UTEP Miners",
+        "away_team": "Seattle Redhawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f4d7739a30eccfa5b88b2098b221ee32",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T03:00:00Z",
+        "completed": false,
+        "home_team": "CSU Bakersfield Roadrunners",
+        "away_team": "UC Irvine Anteaters",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2c815c6b6929abe5578b193305db420e",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T03:00:00Z",
+        "completed": false,
+        "home_team": "Oregon St Beavers",
+        "away_team": "USC Trojans",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f67f6ca93824b5b0a3ef223f3124bbf8",
+        "sport_key": "basketball_ncaab",
+        "sport_title": "NCAAB",
+        "commence_time": "2023-12-31T05:00:00Z",
+        "completed": false,
+        "home_team": "Hawai'i Rainbow Warriors",
+        "away_team": "CSU Fullerton Titans",
+        "scores": null,
+        "last_update": null
+    }
+]

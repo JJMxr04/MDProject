@@ -1,0 +1,134 @@
+[
+    {
+        "id": "65f91806a2df311aa2b25b72ee2d34d0",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-13T20:00:00Z",
+        "completed": false,
+        "home_team": "Ivory Coast",
+        "away_team": "Guinea-Bissau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "27733fe646d3ddf99ac1efdb8b0c63bb",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-14T14:00:00Z",
+        "completed": false,
+        "home_team": "Nigeria",
+        "away_team": "Equatorial Guinea",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3f116f92d7a92defd65727204e7892c8",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-14T17:00:00Z",
+        "completed": false,
+        "home_team": "Egypt",
+        "away_team": "Mozambique",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "dc57b2058e3afb5b4346204151f9abe2",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-14T20:00:00Z",
+        "completed": false,
+        "home_team": "Ghana",
+        "away_team": "Cape Verde",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "049d14a49d024556204ce2fc89ce236a",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-15T14:00:00Z",
+        "completed": false,
+        "home_team": "Senegal",
+        "away_team": "Gambia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "efdfaa01bf459806b38dc41208ac6efb",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-15T17:00:00Z",
+        "completed": false,
+        "home_team": "Cameroon",
+        "away_team": "Guinea",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "27c7af6d3e6b98d6f23c664d13e19383",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Algeria",
+        "away_team": "Angola",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7f16be054de3e002162a9dd74924424c",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-16T14:00:00Z",
+        "completed": false,
+        "home_team": "Burkina Faso",
+        "away_team": "Mauritania",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8d6b5e04ac953b4e31249f5e20094b9c",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-16T17:00:00Z",
+        "completed": false,
+        "home_team": "Tunisia",
+        "away_team": "Namibia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f63a729420d548a9e0371ad031b0214f",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-16T20:00:00Z",
+        "completed": false,
+        "home_team": "Mali",
+        "away_team": "South Africa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "874128d165450b5483a0531e1655dec0",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-17T17:00:00Z",
+        "completed": false,
+        "home_team": "Morocco",
+        "away_team": "Tanzania",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6c9c8159979507fef6caa01a7a2b1822",
+        "sport_key": "soccer_africa_cup_of_nations",
+        "sport_title": "Africa Cup of Nations",
+        "commence_time": "2024-01-17T20:00:00Z",
+        "completed": false,
+        "home_team": "DR Congo",
+        "away_team": "Gambia",
+        "scores": null,
+        "last_update": null
+    }
+]

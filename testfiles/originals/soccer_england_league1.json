@@ -1,0 +1,354 @@
+[
+    {
+        "id": "0556f34cf520534c05095b15e35cbb77",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:01:34Z",
+        "completed": true,
+        "home_team": "Wigan Athletic",
+        "away_team": "Carlisle United",
+        "scores": [
+            {
+                "name": "Carlisle United",
+                "score": "0"
+            },
+            {
+                "name": "Wigan Athletic",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "b252019c1cc31058abaa344539bfa336",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Port Vale",
+        "away_team": "Blackpool",
+        "scores": [
+            {
+                "name": "Blackpool",
+                "score": "0"
+            },
+            {
+                "name": "Port Vale",
+                "score": "3"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "8b5c9dc6fe2c1b6e22304506c03e7a59",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Fleetwood Town",
+        "away_team": "Bolton",
+        "scores": [
+            {
+                "name": "Bolton",
+                "score": "2"
+            },
+            {
+                "name": "Fleetwood Town",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "eae5e6631f736e5bd0f53ea57cfb8880",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Bristol Rovers",
+        "away_team": "Charlton Athletic",
+        "scores": [
+            {
+                "name": "Charlton Athletic",
+                "score": "1"
+            },
+            {
+                "name": "Bristol Rovers",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "66d57f7f1723792f4fecc33c596f34c0",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Oxford United",
+        "away_team": "Derby County",
+        "scores": [
+            {
+                "name": "Derby County",
+                "score": "3"
+            },
+            {
+                "name": "Oxford United",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "ba30b45d32e6ba1f312e0e034aa90e0a",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Exeter City",
+        "away_team": "Portsmouth",
+        "scores": [
+            {
+                "name": "Portsmouth",
+                "score": "0"
+            },
+            {
+                "name": "Exeter City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "b343dfdc086202e3a3ad3a9935a18a40",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:00Z",
+        "completed": true,
+        "home_team": "Lincoln City",
+        "away_team": "Northampton Town",
+        "scores": [
+            {
+                "name": "Northampton Town",
+                "score": "2"
+            },
+            {
+                "name": "Lincoln City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "413f401348f9af9e39d6af584bcbb6e0",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:03Z",
+        "completed": true,
+        "home_team": "Burton Albion",
+        "away_team": "Shrewsbury Town",
+        "scores": [
+            {
+                "name": "Shrewsbury Town",
+                "score": "0"
+            },
+            {
+                "name": "Burton Albion",
+                "score": "1"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "52a3180082068ffc681247f093c951b4",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:45:50Z",
+        "completed": true,
+        "home_team": "Peterborough United",
+        "away_team": "Barnsley",
+        "scores": [
+            {
+                "name": "Barnsley",
+                "score": "2"
+            },
+            {
+                "name": "Peterborough United",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "17131dbe6628e2db4e27ac2bce8e16d4",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:48:00Z",
+        "completed": true,
+        "home_team": "Cheltenham",
+        "away_team": "Reading",
+        "scores": [
+            {
+                "name": "Reading",
+                "score": "2"
+            },
+            {
+                "name": "Cheltenham",
+                "score": "2"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "bd56acce58b8a31c2a7ada78f177f673",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2023-12-29T19:53:23Z",
+        "completed": true,
+        "home_team": "Leyton Orient",
+        "away_team": "Wycombe Wanderers",
+        "scores": [
+            {
+                "name": "Wycombe Wanderers",
+                "score": "0"
+            },
+            {
+                "name": "Leyton Orient",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T03:15:18Z"
+    },
+    {
+        "id": "b1db814ec9ada2e349ce483995dab714",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Barnsley",
+        "away_team": "Wigan Athletic",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24f3abd8d1e0ed3b47d71f7ae2eec0ac",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Blackpool",
+        "away_team": "Lincoln City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6cfd15591dd3688aa00c3977ad353fd2",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Bolton",
+        "away_team": "Burton Albion",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a3d43792fab532475a861a11d146e892",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Wycombe Wanderers",
+        "away_team": "Bristol Rovers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ffe33528b34e21f7df002fea53747dc",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Cambridge United",
+        "away_team": "Leyton Orient",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3e86a2cfadad415bfee9a1675dfc0a5f",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Carlisle United",
+        "away_team": "Port Vale",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c6e74b11a32b850a959fd5eb816308e4",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Charlton Athletic",
+        "away_team": "Oxford United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "5573e8573256ad3eb6b09ee11f37ef17",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Northampton Town",
+        "away_team": "Cheltenham",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "44efda2e5ac588c123a97a785558ccc0",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Derby County",
+        "away_team": "Peterborough United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "49f9a0385f23bf1d3223ff2bdd36ccec",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Reading",
+        "away_team": "Exeter City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1b98445a07812bd1eb8ee47febc35abd",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Shrewsbury Town",
+        "away_team": "Fleetwood Town",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "55e97a221b19ee72d3897f1bbbb1c146",
+        "sport_key": "soccer_england_league1",
+        "sport_title": "League 1",
+        "commence_time": "2024-01-01T15:00:00Z",
+        "completed": false,
+        "home_team": "Portsmouth",
+        "away_team": "Stevenage",
+        "scores": null,
+        "last_update": null
+    }
+]
