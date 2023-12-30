@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 
 
-class SportManager(AbstractManager):
+class SportManager(models.Manager):
 
     def get_sport_state(self, key, active, has_outrights):
 
@@ -44,13 +44,15 @@ class SportManager(AbstractManager):
 
 
 
-class Sport(AbstractModel):
+class Sport(models.Model):
     key = models.CharField(max_length=255, primary_key=True)
     group = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     active = models.BooleanField(default=False)
     has_outrights = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     objects = SportManager()
 

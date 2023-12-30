@@ -9,6 +9,29 @@ from core.event.models.event import Event
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
 from core.event.models.sport import Sport
 
+def write_json_to_file(data, filename):
+    """
+    Write JSON data to a file in a formatted way.
+
+    Parameters:
+    - data: The data to be written.
+    - filename: The name of the file to write to.
+    """
+    json_data = json.dumps( data, indent=4)
+    with open(filename, 'a') as file:
+        file.write(json_data)
+
+def read_json_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            json_data = file.read()
+            if json_data.strip():
+                return json_data
+            else:
+                return None
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
 
 
 class EventCron:
@@ -31,6 +54,7 @@ class EventCron:
         else:
             print(f"API Request failed with status code: {response.status_code}")
             return Response("API Request failed", status=response.status_code)
+        write_json_to_file(api_data,f'testfiles/originals/{key}.json')
         print(json.dumps(api_data,indent=4))
         for event in api_data:
             event_schema = EventSerializer(data=event)

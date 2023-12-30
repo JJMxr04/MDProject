@@ -37,18 +37,27 @@
                 "score": "1"
             }
         ],
-        "last_update": "2023-12-29T16:06:29Z"
+        "last_update": "2023-12-30T07:17:06Z"
     },
     {
         "id": "c2a372f723e94f703964176c4d2f0171",
         "sport_key": "soccer_australia_aleague",
         "sport_title": "A-League",
-        "commence_time": "2023-12-30T06:30:00Z",
+        "commence_time": "2023-12-30T06:30:16Z",
         "completed": false,
         "home_team": "Newcastle Jets FC",
         "away_team": "Western United FC",
-        "scores": null,
-        "last_update": "2023-12-29T16:06:29Z"
+        "scores": [
+            {
+                "name": "Newcastle Jets FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2023-12-30T07:17:06Z"
     },
     {
         "id": "80411c44e74968dd547fbe374678550e",
@@ -59,7 +68,7 @@
         "home_team": "Melbourne Victory",
         "away_team": "Adelaide United",
         "scores": null,
-        "last_update": "2023-12-29T16:06:29Z"
+        "last_update": "2023-12-30T07:17:06Z"
     },
     {
         "id": "05236c2b389f9a3a360bcdaf201d0f2f",

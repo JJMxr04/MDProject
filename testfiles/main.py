@@ -116,10 +116,13 @@ if __name__ == '__main__':
     # # print(events)
     # print("Stopped EventCronTesting 4")
 
-    print("Starting Event Creation Testing 5")
-    sports = sport_cron.get_active_sports()
-    for sport in sports:
-        test_get_nfl_events(f'testfiles/originals/{sport}')
-    print("Stopped Event Creation Testing 5")
+    # print("Starting Event Creation Testing 5")
+    #
+    # sport_cron.get_sports()
+    # sports = sport_cron.get_active_sports()
+    # # print(sports)
+    # for sport in sports:
+    #     test_get_nfl_events(f'testfiles/originals/{sport}.json')
+    # print("Stopped Event Creation Testing 5")
 
 
