@@ -15,7 +15,7 @@ class SportManager(models.Manager):
         if (sport.active is not active):
             sport.active = active
             sport.has_outrights = has_outrights
-            models.session.commit()
+            Sport.save()
         return True  # There is a sport and Modification successful is completed
 
     def get_active_sports(self):

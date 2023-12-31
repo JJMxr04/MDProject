@@ -29,17 +29,19 @@ class SportCron:
         else:
             print(f"API Request failed with status code: {response.status_code}")
             return False
-        sport_ser = SportSerializer()
         for sport in api_data:
-            data = sport_ser.to_internal_value(sport)
-
-            if Sport.objects.get_sport_state(data.get('key'),data.get('active'),data.get('has_outrights')):
-                #returns true if it was found and modified
-                #returns false if there is no sport with that key
-                continue
+            data = SportSerializer(data=sport)
+            if data.is_valid():
+                data.validated_data()
+                if Sport.objects.get_sport_state(data['key'],data['active'],data['has_outrights']):
+                    #returns true if it was found and modified
+                    #returns false if there is no sport with that key
+                    continue
+                else:
+                    sport_temp = Sport(**data)
+                    sport_temp.save()
             else:
-                sport_temp = Sport(**data)
-                sport_temp.save()
+                continue
         return True
 
     def get_active_sports(self):
