@@ -6,7 +6,7 @@ from core.event.viewsets.sport import SportViewSet
 router = routers.SimpleRouter()
 
 router.register(r'event', EventViewSet, basename='event')
-router.register(r'event/sport', SportViewSet, basename='sport')
+router.register(r'sport', SportViewSet, basename='sport')
 
 urlpatterns = [
     *router.urls,

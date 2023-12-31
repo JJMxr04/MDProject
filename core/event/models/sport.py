@@ -7,6 +7,10 @@ from django.http import Http404
 
 class SportManager(models.Manager):
 
+    def get_active_sports_obj(self):
+        return self.filter(active=True).all()
+
+
     def get_sport_state(self, key, active, has_outrights):
 
         sport = self.filter(key=key).first()

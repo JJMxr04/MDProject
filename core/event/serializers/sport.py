@@ -2,10 +2,9 @@ from rest_framework import serializers
 
 from core.event.models.sport import Sport
 
-from core.abstract.serializers import AbstractSerializer
 
 
-class SportSerializer(AbstractSerializer):
+class SportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sport
         fields = '__all__'
