@@ -113,7 +113,6 @@ def test_get_nfl_events(file):
     # if file == "testfiles/originals/soccer_switzerland_superleague.json":
     #     print(api_data)
     api_data_json = json.loads(api_data)
-    print(api_data_json)
     for event in api_data_json:
         # if file == "testfiles/originals/soccer_switzerland_superleague.json":
         #     print(f"Event: {event}")
@@ -124,14 +123,11 @@ def test_get_nfl_events(file):
         if event_schema.is_valid():
             data = event_schema.validated_data
             data['id'] = event['id']
-            print(f"{data.get('id')}:{event['id']}")
             if (data.get('away_team')) is None or (data.get('away_team') is None):
                 continue
             try:
-                print(4)
                 existing_event = Event.objects.get(id=data.get("id"))
             except ObjectDoesNotExist:
-                print(5)
                 event_game = Event(**data)
                 event_game.save()
                 continue
@@ -218,43 +214,66 @@ if __name__ == '__main__':
     # 369949d6-3b57-4c5e-a021-d30baf3e59e1
 
 
-    print("Starting Game Creation and Update Testing 6")
-    # print(Event.objects.get_active_events())
-    # event1 = Event.objects.get_object_by_id("78d3de14-85d8-ee6d-bac5-f707c907dc08")
-    # print(event1.home_team)
-    # print(event1.away_team)
+    # print("Starting Game Creation and Update Testing 6")
     #
-    # event1 = Event.objects.get_object_by_id("85ccca87e453d00340982559fd50c443")
-    # print(event1.home_team)
-    # print(event1.away_team)
-
-
+    # owner_id = "2e90977e-16b7-4e1d-b17c-1623fad1700a"
+    # player_2_id = "b56e01a2-cb8b-454f-b71a-b8a66ecc2930"
+    # owner = User.objects.get_object_by_id(owner_id)
+    # player_2 = User.objects.get_object_by_id(player_2_id)
+    # # print(owner)
+    # game = Game.objects.create_game(owner,player_2)
     #
+    # data1 = {
+    #     "event_id": "85ccca87e453d00340982559fd50c443",
+    #     "player_choice": "Penn State Nittany Lions"
+    # }
+    # data2 = {
+    #     "event_id": "85ccca87e453d00340982559fd50c443",
+    #     "player_choice": "Ole Miss Rebels"
+    # }
+    #
+    # Game.objects.update_by_id(game.id,owner,data1)
+    # Game.objects.update_by_id(game.id, player_2, data2)
+    # game1 = Game.objects.get_object_by_id(game.id)
+    # print(game1.event)
+    # print(game1.owner_choice)
+    # print(game1.player_2_choice)
+    # # print(GameSerializer(data=game1))
+    #
+    #
+    # print("Stopped Game Creation and Update Testing 6")
+
+    print("Starting Game Creation and Update Testing 7")
+
+    test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
     owner_id = "2e90977e-16b7-4e1d-b17c-1623fad1700a"
     player_2_id = "b56e01a2-cb8b-454f-b71a-b8a66ecc2930"
     owner = User.objects.get_object_by_id(owner_id)
     player_2 = User.objects.get_object_by_id(player_2_id)
     # print(owner)
-    game = Game.objects.create_game(owner,player_2)
+    game = Game.objects.create_game(owner, player_2)
 
     data1 = {
-        "event_id": "85ccca87e453d00340982559fd50c443",
-        "player_choice": "Penn State Nittany Lions"
+        "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+        "player_choice": "Miami Dolphins"
     }
     data2 = {
-        "event_id": "85ccca87e453d00340982559fd50c443",
-        "player_choice": "Ole Miss Rebels"
+        "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+        "player_choice": "Tennessee Titans"
     }
 
-    Game.objects.update_by_id(game.id,owner,data1)
+    Game.objects.update_by_id(game.id, owner, data1)
     Game.objects.update_by_id(game.id, player_2, data2)
+    test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
     game1 = Game.objects.get_object_by_id(game.id)
     print(game1.event)
     print(game1.owner_choice)
     print(game1.player_2_choice)
+    print(game.winner)
     # print(GameSerializer(data=game1))
 
+    print("Stopped Game Creation and Update Testing 7")
 
-    print("Stopped Game Creation and Update Testing 6")
-
+    # uuid = uuid.uuid4()
+    # print(uuid)
 
