@@ -7,6 +7,8 @@ from django import setup
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers import serialize
 import uuid
+from rest_framework.response import Response
+from rest_framework import status
 
 
 
@@ -58,41 +60,32 @@ def test_get_nfl_events(file):
     if api_data is None:
         return False
     # print(api_data)
-    api_data_json = json.loads(api_data)
-    for event_json in api_data_json:
-        event_data = event_json
-        event_data['id'] = uuid.UUID(event_json['id'])
-        event_schema = EventSerializer(data=event_data)
-        print(event_data['id'])
-
+    api_data_json = json.dumps(api_data)
+    for event in api_data_json:
+        event_schema = EventSerializer(data=event)
         if event_schema.is_valid():
-            event_instance = event_schema.validated_data
-            print(event_schema)
-            print(event_instance)
-            if event_instance['home_team'] is None or event_instance["away_team"] is None:
+            data = event_schema.validated_data
+            if data.get('home_team') or data.get('away_team') is None:
                 continue
             try:
-                existing_event = Event.objects.get(id=event_instance.get("id"))
+                existing_event = Event.objects.get(id=data.get("id"))
             except ObjectDoesNotExist:
-                existing_event = None
+                event_game = Event(**data)
+                event_game.save()
+                continue
 
-            if not existing_event:
-                event_instance.save()
+            if data.get('completed'):
+                team_schema = TeamScoreSerializer(data=json.loads(event['scores'])[0])
+                if team_schema.is_valid():
+                    score1 = team_schema.validated_data
+                team_schema = TeamScoreSerializer(data=json.loads(event['scores'])[1])
+                if team_schema.is_valid():
+                    score2 = team_schema.validated_data
 
-            if event_instance.completed:
-                team_schema = TeamScoreSerializer()
-                score1 = team_schema.load(data=json.loads(event_instance['scores'])[0])
-                score2 = team_schema.load(data=json.loads(event_instance['scores'])[1])
-                Event.get_sport_state(
-                    event_instance['id'],
-                    event_instance['completed'],
-                    event_instance['scores'],
-                    score1,
-                    score2
-                )
+                # Assuming get_sport_state is a method of your Event model
+                existing_event.get_sport_state(data.get('completed'), score1, score2)
 
-
-    return True
+    return Response("Success", status=status.HTTP_200_OK)
 
 
 def print_hi(name):
