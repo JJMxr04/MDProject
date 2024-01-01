@@ -18,6 +18,8 @@ import json
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
 from core.event.models.event import Event
 from core.event.models.sport import Sport
+from core.game.models import Game
+from core.user.models import User
 sport_model = Sport()
 from core.event.crons.sportUpdate import SportCron
 sport_cron = SportCron()
@@ -59,13 +61,14 @@ def test_get_nfl_events(file):
     for event_json in api_data_json:
         event_data = event_json
         event_schema = EventSerializer(data=event_data)
-        if event_schema.is_valid():
-            event_instance = event_schema.save()
 
-            if event_instance.home_team is None or event_instance.away_team is None:
+        if event_schema.is_valid():
+            event_instance = event_schema.validated_data
+            print(event_instance)
+            if event_instance['home_team'] is None or event_instance["away_team"] is None:
                 continue
             try:
-                existing_event = Event.objects.get(id=event_instance.id)
+                existing_event = Event.objects.get_object_by_id(id=event_instance['id'])
             except ObjectDoesNotExist:
                 existing_event = None
 
@@ -74,12 +77,12 @@ def test_get_nfl_events(file):
 
             if event_instance.completed:
                 team_schema = TeamScoreSerializer()
-                score1 = team_schema.load(data=json.loads(event_instance.scores)[0])
-                score2 = team_schema.load(data=json.loads(event_instance.scores)[1])
-                event_instance = Event.get_sport_state(
-                    event_instance.id,
-                    event_instance.completed,
-                    event_instance.scores,
+                score1 = team_schema.load(data=json.loads(event_instance['scores'])[0])
+                score2 = team_schema.load(data=json.loads(event_instance['scores'])[1])
+                Event.get_sport_state(
+                    event_instance['id'],
+                    event_instance['completed'],
+                    event_instance['scores'],
                     score1,
                     score2
                 )
@@ -118,13 +121,46 @@ if __name__ == '__main__':
 
     print("Starting Event Creation Testing 5")
 
-    sport_cron.get_sports()
+    # sport_cron.get_sports()
     sports = sport_cron.get_active_sports()
-    print(sports)
+    # print(sports)
     # event_cron.get_sport_events("soccer_switzerland_superleague")
     # print(sports)
-    # for sport in sports:
-    #     test_get_nfl_events(f'testfiles/originals/{sport}.json')
+    for sport in sports:
+        test_get_nfl_events(f'testfiles/originals/{sport}.json')
     print("Stopped Event Creation Testing 5")
+
+    # IDs
+    # 51387afd-c3f3-4750-83fd-db3ff20048b3
+    # acbf40c1-7489-4d49-a2b3-32a6b81a34e4
+    # Public IDs
+    # 8f0c36ae-cc09-4f62-b670-72d94c86f18b
+    # 369949d6-3b57-4c5e-a021-d30baf3e59e1
+
+
+    # print("Starting Game Creation and Update Testing 6")
+    # owner_id = "8f0c36ae-cc09-4f62-b670-72d94c86f18b"
+    # player_2_id = "369949d6-3b57-4c5e-a021-d30baf3e59e1"
+    # owner = User.objects.get_object_by_public_id(owner_id)
+    # player_2 = User.objects.get_object_by_public_id(player_2_id)
+    # # print(owner)
+    # game = Game.objects.create_game(owner,player_2)
+    #
+    # data1 = {
+    #     "event_id": "85ccca87e453d00340982559fd50c443",
+    #     "player_choice": "Penn State Nittany Lions"
+    # }
+    # data2 = {
+    #     "event_id": "85ccca87e453d00340982559fd50c443",
+    #     "player_choice": "Ole Miss Rebels"
+    # }
+    #
+    # Game.objects.update_by_id(game.id,owner,data1)
+    # Game.objects.update_by_id(game.id, player_2, data2)
+    #
+    # print(game)
+    #
+    #
+    # print("Stopped Game Creation and Update Testing 6")
 
 

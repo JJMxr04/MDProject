@@ -3,6 +3,8 @@ from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class EventManager(AbstractManager):
@@ -73,3 +75,7 @@ class Event(AbstractModel):
 
     class meta:
         db_table = "'core.event'"
+
+
+
+

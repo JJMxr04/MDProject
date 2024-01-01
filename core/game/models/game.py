@@ -1,10 +1,11 @@
 import uuid
 from django.db import models
-from django.utils import timezone
 from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+from core.user.models import User
+from core.event.models import Event
 
 class GameManager(AbstractManager):
     # def create_game(self, owner, player_2, match_id, commence_time=None, deadline_time=None, completed=False,
@@ -18,10 +19,51 @@ class GameManager(AbstractManager):
                             deadline_time=deadline_time, completed=completed, home_team=home_team,
                             away_team=away_team, winner=winner)
 
+    def update_by_id(self, id, current_user, data):
+        game = self.filter(id=id).first()
+        new_game = False
+
+        if game is None:
+            # If the game does not exist, create a new instance
+            return False
+        if (current_user != game.owner) and (current_user != game.player_2):
+            return False, False
+
+        if game.event is None:
+            new_game = True
+            event = Event.objects.get_object_by_id(data.get("event_id"))
+            if event is None:
+                return False, False
+            if game.event is None:
+                game.event = event
+            elif event != game.event_id:
+                return False, False
+            commence_time_str = event.commence_time
+            game.home_team = event.home_team
+            game.away_team = event.away_team
+
+            # Convert the commence_time string to a datetime object
+            commence_time = datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ')
+
+            game.commence_time = commence_time
+            game.deadline_time = commence_time - timedelta(hours=8)
+
+        # if game.deadline_time is not None and game.deadline_time < datetime.utcnow():
+        #     return False
+
+        if current_user == game.owner:
+            game.owner_choice = data.get("player_choice")
+
+        if current_user == game.player_2:
+            game.player_2_choice = data.get("player_choice")
+
+        game.save()
+        return new_game, game
+
 class Game(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    owner = models.ForeignKey('User', on_delete=models.CASCADE, related_name='owned_games')
-    player_2 = models.ForeignKey('User', on_delete=models.CASCADE, related_name='games_as_player_2')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_game')
+    player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_game')
     # match_id = models.CharField(max_length=255)
     commence_time = models.DateTimeField(default=None, null=True, blank=True)
     deadline_time = models.DateTimeField(default=None, null=True, blank=True)
@@ -31,7 +73,7 @@ class Game(AbstractModel):
     winner = models.CharField(max_length=200, default=None, null=True, blank=True)
     owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
-    player_2 = models.ForeignKey('User', on_delete=models.CASCADE, related_name='games_as_player_2')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='games', null=True, blank=True)
     objects = GameManager()
 
     class meta:

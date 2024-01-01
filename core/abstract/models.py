@@ -11,7 +11,13 @@ class AbstractManager(models.Manager):
             instance = self.get(public_id=public_id)
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
-            return Http404
+            return None
+    def get_object_by_id(self, id):
+        try:
+            instance = self.get(id=id)
+            return instance
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            return None
 
 
 class AbstractModel(models.Model):
