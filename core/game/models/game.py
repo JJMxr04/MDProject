@@ -24,20 +24,28 @@ class GameManager(AbstractManager):
         new_game = False
 
         if game is None:
+            print("No Game")
             # If the game does not exist, create a new instance
             return False
         if (current_user != game.owner) and (current_user != game.player_2):
+            print("no user")
             return False, False
 
         if game.event is None:
+            print(1)
             new_game = True
-            event = Event.objects.get_object_by_id(data.get("event_id"))
+            print(uuid.UUID(data.get("event_id")))
+            event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
+                print(2)
                 return False, False
             if game.event is None:
+                print(3)
                 game.event = event
             elif event != game.event_id:
+                print(4)
                 return False, False
+            print(5)
             commence_time_str = event.commence_time
             game.home_team = event.home_team
             game.away_team = event.away_team
@@ -52,9 +60,11 @@ class GameManager(AbstractManager):
         #     return False
 
         if current_user == game.owner:
+            print(6)
             game.owner_choice = data.get("player_choice")
 
         if current_user == game.player_2:
+            print(7)
             game.player_2_choice = data.get("player_choice")
 
         game.save()

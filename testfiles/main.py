@@ -19,6 +19,7 @@ setup()
 # Other imports
 import json
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
+from core.game.serializers.game import GameSerializer
 from core.event.models.event import Event
 from core.event.models.sport import Sport
 from core.game.models import Game
@@ -29,6 +30,56 @@ sport_cron = SportCron()
 
 from core.event.crons.eventUpdate import EventCron
 event_cron = EventCron()
+
+
+def read_list_from_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            # Read lines from the file and remove newline characters
+            file_content = [line.strip() for line in file.readlines()]
+
+        print(f"List read from '{file_path}': {file_content}")
+        return file_content
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+        return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+def read_file_and_save_as_list(input_file, output_file):
+    try:
+        with open(input_file, 'r') as file:
+            # Read lines from the file and remove newline characters
+            file_content = [line.strip() for line in file.readlines()]
+
+        # Save the content as a list in another file
+        with open(output_file, 'w') as output:
+            for item in file_content:
+                output.write(f"{item}\n")
+
+        print(f"Content of '{input_file}' saved as a list in '{output_file}'.")
+    except FileNotFoundError:
+        print(f"File '{input_file}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def process_files_in_folder(folder_path, output_file):
+    try:
+        # Get a list of all files in the folder
+        file_list = [file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
+
+        # Save the list to the output text file
+        with open(output_file, 'w') as output_file:
+            for file_name in file_list:
+                output_file.write(f"{file_name}\n")
+
+        print(f"List of files saved to '{output_file.name}'")
+    except FileNotFoundError:
+        print(f"Folder '{folder_path}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 def write_json_to_file(data, filename):
     """
@@ -59,17 +110,28 @@ def test_get_nfl_events(file):
     api_data = read_json_file(file)
     if api_data is None:
         return False
-    # print(api_data)
-    api_data_json = json.dumps(api_data)
+    # if file == "testfiles/originals/soccer_switzerland_superleague.json":
+    #     print(api_data)
+    api_data_json = json.loads(api_data)
+    print(api_data_json)
     for event in api_data_json:
+        # if file == "testfiles/originals/soccer_switzerland_superleague.json":
+        #     print(f"Event: {event}")
+        # print(1)
+        event['id'] = uuid.UUID(event['id'])
+        # print(event['id'])
         event_schema = EventSerializer(data=event)
         if event_schema.is_valid():
             data = event_schema.validated_data
-            if data.get('home_team') or data.get('away_team') is None:
+            data['id'] = event['id']
+            print(f"{data.get('id')}:{event['id']}")
+            if (data.get('away_team')) is None or (data.get('away_team') is None):
                 continue
             try:
+                print(4)
                 existing_event = Event.objects.get(id=data.get("id"))
             except ObjectDoesNotExist:
+                print(5)
                 event_game = Event(**data)
                 event_game.save()
                 continue
@@ -117,16 +179,36 @@ if __name__ == '__main__':
     # # print(events)
     # print("Stopped EventCronTesting 4")
 
-    print("Starting Event Creation Testing 5")
-
+    # print("Starting Event Creation Testing 5")
+    #
     # sport_cron.get_sports()
-    sports = sport_cron.get_active_sports()
-    # print(sports)
-    # event_cron.get_sport_events("soccer_switzerland_superleague")
-    # print(sports)
+    # sports = sport_cron.get_active_sports()
+    # # print(sports)
+    # # event_cron.get_sport_events("soccer_switzerland_superleague")
+    # # print(sports)
+    # for sport in sports:
+    #     test_get_nfl_events(f'testfiles/originals/{sport}.json')
+    # print("Stopped Event Creation Testing 5")
+
+    print("Starting sport Creation Testing 5.5")
+
+    folder_path = 'testfiles/originals'
+    output_file = 'testfiles/sports_list.txt'
+
+
+
+    process_files_in_folder(folder_path, output_file)
+
+    sports = read_list_from_file(output_file)
+    print(sports)
+    # sport_cron.get_sports()
+    # sports = sport_cron.get_active_sports()
+    # # print(sports)
+    # # event_cron.get_sport_events("soccer_switzerland_superleague")
+    # # print(sports)
     for sport in sports:
-        test_get_nfl_events(f'testfiles/originals/{sport}.json')
-    print("Stopped Event Creation Testing 5")
+        test_get_nfl_events(f'testfiles/originals/{sport}')
+    print("Stopped sport Creation Testing 5.5")
 
     # IDs
     # 51387afd-c3f3-4750-83fd-db3ff20048b3
@@ -136,7 +218,18 @@ if __name__ == '__main__':
     # 369949d6-3b57-4c5e-a021-d30baf3e59e1
 
 
-    # print("Starting Game Creation and Update Testing 6")
+    print("Starting Game Creation and Update Testing 6")
+    print(Event.objects.get_active_events())
+    event1 = Event.objects.get_object_by_id("78d3de14-85d8-ee6d-bac5-f707c907dc08")
+    print(event1.home_team)
+    print(event1.away_team)
+
+    event1 = Event.objects.get_object_by_id("85ccca87e453d00340982559fd50c443")
+    print(event1.home_team)
+    print(event1.away_team)
+
+
+    #
     # owner_id = "8f0c36ae-cc09-4f62-b670-72d94c86f18b"
     # player_2_id = "369949d6-3b57-4c5e-a021-d30baf3e59e1"
     # owner = User.objects.get_object_by_public_id(owner_id)
@@ -155,10 +248,11 @@ if __name__ == '__main__':
     #
     # Game.objects.update_by_id(game.id,owner,data1)
     # Game.objects.update_by_id(game.id, player_2, data2)
+    # game1 = Game.objects.get_object_by_id(game.id)
     #
-    # print(game)
+    # print(GameSerializer(data=game1))
     #
     #
-    # print("Stopped Game Creation and Update Testing 6")
+    print("Stopped Game Creation and Update Testing 6")
 
 

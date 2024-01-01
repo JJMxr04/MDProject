@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from core.event.models.event import Event
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
 from core.event.models.sport import Sport
+import uuid
 
 def write_json_to_file(data, filename):
     """
@@ -57,14 +58,23 @@ class EventCron:
         write_json_to_file(api_data,f'testfiles/originals/{key}.json')
         print(json.dumps(api_data,indent=4))
         for event in api_data:
+            # if file == "testfiles/originals/soccer_switzerland_superleague.json":
+            #     print(f"Event: {event}")
+            # print(1)
+            event['id'] = uuid.UUID(event['id'])
+            # print(event['id'])
             event_schema = EventSerializer(data=event)
             if event_schema.is_valid():
                 data = event_schema.validated_data
-                if data.get('home_team') or data.get('away_team') is None:
+                data['id'] = event['id']
+                print(f"{data.get('id')}:{event['id']}")
+                if (data.get('away_team')) is None or (data.get('away_team') is None):
                     continue
                 try:
+                    print(4)
                     existing_event = Event.objects.get(id=data.get("id"))
                 except ObjectDoesNotExist:
+                    print(5)
                     event_game = Event(**data)
                     event_game.save()
                     continue

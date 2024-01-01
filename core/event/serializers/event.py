@@ -7,7 +7,7 @@ from core.abstract.serializers import AbstractSerializer
 
 class EventSerializer(AbstractSerializer):
     # Rewriting some fields like the public id to be represented as the id of the object
-    id = serializers.UUIDField(read_only=True, format='hex')
+    id = serializers.UUIDField( read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
 
