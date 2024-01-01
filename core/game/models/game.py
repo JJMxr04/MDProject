@@ -4,6 +4,7 @@ from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+from django.utils import timezone
 from core.user.models import User
 from core.event.models import Event
 
@@ -24,34 +25,26 @@ class GameManager(AbstractManager):
         new_game = False
 
         if game is None:
-            print("No Game")
             # If the game does not exist, create a new instance
             return False
         if (current_user != game.owner) and (current_user != game.player_2):
-            print("no user")
             return False, False
 
         if game.event is None:
-            print(1)
             new_game = True
-            print(uuid.UUID(data.get("event_id")))
             event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
-                print(2)
                 return False, False
             if game.event is None:
-                print(3)
                 game.event = event
             elif event != game.event_id:
-                print(4)
                 return False, False
-            print(5)
             commence_time_str = event.commence_time
             game.home_team = event.home_team
             game.away_team = event.away_team
 
             # Convert the commence_time string to a datetime object
-            commence_time = datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ')
+            commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
 
             game.commence_time = commence_time
             game.deadline_time = commence_time - timedelta(hours=8)
@@ -60,11 +53,9 @@ class GameManager(AbstractManager):
         #     return False
 
         if current_user == game.owner:
-            print(6)
             game.owner_choice = data.get("player_choice")
 
         if current_user == game.player_2:
-            print(7)
             game.player_2_choice = data.get("player_choice")
 
         game.save()
@@ -88,6 +79,8 @@ class Game(AbstractModel):
 
     class meta:
         db_table = "'core.game'"
+
+
 
 
 # Create your models here.

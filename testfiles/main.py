@@ -190,25 +190,25 @@ if __name__ == '__main__':
     #     test_get_nfl_events(f'testfiles/originals/{sport}.json')
     # print("Stopped Event Creation Testing 5")
 
-    print("Starting sport Creation Testing 5.5")
-
-    folder_path = 'testfiles/originals'
-    output_file = 'testfiles/sports_list.txt'
-
-
-
-    process_files_in_folder(folder_path, output_file)
-
-    sports = read_list_from_file(output_file)
-    print(sports)
-    # sport_cron.get_sports()
-    # sports = sport_cron.get_active_sports()
-    # # print(sports)
-    # # event_cron.get_sport_events("soccer_switzerland_superleague")
-    # # print(sports)
-    for sport in sports:
-        test_get_nfl_events(f'testfiles/originals/{sport}')
-    print("Stopped sport Creation Testing 5.5")
+    # print("Starting sport Creation Testing 5.5")
+    #
+    # folder_path = 'testfiles/originals'
+    # output_file = 'testfiles/sports_list.txt'
+    #
+    #
+    #
+    # process_files_in_folder(folder_path, output_file)
+    #
+    # sports = read_list_from_file(output_file)
+    # print(sports)
+    # # sport_cron.get_sports()
+    # # sports = sport_cron.get_active_sports()
+    # # # print(sports)
+    # # # event_cron.get_sport_events("soccer_switzerland_superleague")
+    # # # print(sports)
+    # for sport in sports:
+    #     test_get_nfl_events(f'testfiles/originals/{sport}')
+    # print("Stopped sport Creation Testing 5.5")
 
     # IDs
     # 51387afd-c3f3-4750-83fd-db3ff20048b3
@@ -219,40 +219,42 @@ if __name__ == '__main__':
 
 
     print("Starting Game Creation and Update Testing 6")
-    print(Event.objects.get_active_events())
-    event1 = Event.objects.get_object_by_id("78d3de14-85d8-ee6d-bac5-f707c907dc08")
-    print(event1.home_team)
-    print(event1.away_team)
+    # print(Event.objects.get_active_events())
+    # event1 = Event.objects.get_object_by_id("78d3de14-85d8-ee6d-bac5-f707c907dc08")
+    # print(event1.home_team)
+    # print(event1.away_team)
+    #
+    # event1 = Event.objects.get_object_by_id("85ccca87e453d00340982559fd50c443")
+    # print(event1.home_team)
+    # print(event1.away_team)
 
-    event1 = Event.objects.get_object_by_id("85ccca87e453d00340982559fd50c443")
-    print(event1.home_team)
-    print(event1.away_team)
-
 
     #
-    # owner_id = "8f0c36ae-cc09-4f62-b670-72d94c86f18b"
-    # player_2_id = "369949d6-3b57-4c5e-a021-d30baf3e59e1"
-    # owner = User.objects.get_object_by_public_id(owner_id)
-    # player_2 = User.objects.get_object_by_public_id(player_2_id)
-    # # print(owner)
-    # game = Game.objects.create_game(owner,player_2)
-    #
-    # data1 = {
-    #     "event_id": "85ccca87e453d00340982559fd50c443",
-    #     "player_choice": "Penn State Nittany Lions"
-    # }
-    # data2 = {
-    #     "event_id": "85ccca87e453d00340982559fd50c443",
-    #     "player_choice": "Ole Miss Rebels"
-    # }
-    #
-    # Game.objects.update_by_id(game.id,owner,data1)
-    # Game.objects.update_by_id(game.id, player_2, data2)
-    # game1 = Game.objects.get_object_by_id(game.id)
-    #
+    owner_id = "2e90977e-16b7-4e1d-b17c-1623fad1700a"
+    player_2_id = "b56e01a2-cb8b-454f-b71a-b8a66ecc2930"
+    owner = User.objects.get_object_by_id(owner_id)
+    player_2 = User.objects.get_object_by_id(player_2_id)
+    # print(owner)
+    game = Game.objects.create_game(owner,player_2)
+
+    data1 = {
+        "event_id": "85ccca87e453d00340982559fd50c443",
+        "player_choice": "Penn State Nittany Lions"
+    }
+    data2 = {
+        "event_id": "85ccca87e453d00340982559fd50c443",
+        "player_choice": "Ole Miss Rebels"
+    }
+
+    Game.objects.update_by_id(game.id,owner,data1)
+    Game.objects.update_by_id(game.id, player_2, data2)
+    game1 = Game.objects.get_object_by_id(game.id)
+    print(game1.event)
+    print(game1.owner_choice)
+    print(game1.player_2_choice)
     # print(GameSerializer(data=game1))
-    #
-    #
+
+
     print("Stopped Game Creation and Update Testing 6")
 
 
