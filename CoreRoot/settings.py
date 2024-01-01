@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     #MDProject Models
     'core.event',
-    'core.game'
+    'core.game',
 ]
 
 MIDDLEWARE = [

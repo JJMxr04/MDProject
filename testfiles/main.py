@@ -24,6 +24,7 @@ from core.event.models.event import Event
 from core.event.models.sport import Sport
 from core.game.models import Game
 from core.user.models import User
+from core.user.serializers import UserSerializer
 sport_model = Sport()
 from core.event.crons.sportUpdate import SportCron
 sport_cron = SportCron()
@@ -153,6 +154,30 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+#     user_1_data = {
+#     "username": "test1",
+#     "first_name": "test1",
+#     "last_name": "test1",
+# 	"password": "password",
+# 	"email": "test1@test.com"
+# }
+#     serializer = UserSerializer(data=user_1_data)
+#
+#     serializer.is_valid(raise_exception=True)
+#     user1 = serializer.save()
+
+
+    # user_2_data = {
+    #     "username": "test2",
+    #     "first_name": "test2",
+    #     "last_name": "test2",
+    #     "password": "password",
+    #     "email": "test2@test.com"
+    # }
+    # serializer = UserSerializer(data=user_2_data)
+    #
+    # serializer.is_valid(raise_exception=True)
+    # user2 = serializer.save()
 
     # print("Starting Event Creation Testing 1")
     # test_get_nfl_events('testfiles/nfl-copy1.json')
@@ -202,8 +227,8 @@ if __name__ == '__main__':
     # # # print(sports)
     # # # event_cron.get_sport_events("soccer_switzerland_superleague")
     # # # print(sports)
-    # for sport in sports:
-    #     test_get_nfl_events(f'testfiles/originals/{sport}')
+    # # for sport in sports:
+    # #     test_get_nfl_events(f'testfiles/originals/{sport}')
     # print("Stopped sport Creation Testing 5.5")
 
     # IDs
@@ -246,8 +271,8 @@ if __name__ == '__main__':
     print("Starting Game Creation and Update Testing 7")
 
     test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
-    owner_id = "2e90977e-16b7-4e1d-b17c-1623fad1700a"
-    player_2_id = "b56e01a2-cb8b-454f-b71a-b8a66ecc2930"
+    owner_id = "cd14eb00-ac56-446d-a475-6eff552e2740"
+    player_2_id = "d009dc91-5ec6-4438-aea8-67ca909a5ba5"
     owner = User.objects.get_object_by_id(owner_id)
     player_2 = User.objects.get_object_by_id(player_2_id)
     # print(owner)

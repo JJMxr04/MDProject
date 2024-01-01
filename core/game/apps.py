@@ -5,3 +5,6 @@ class GameConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'core.game'
     label = 'core_game'
+
+    def ready(self):
+        import core.game.signals
