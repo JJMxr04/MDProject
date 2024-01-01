@@ -6,6 +6,7 @@ import os
 from django import setup
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers import serialize
+import uuid
 
 
 
@@ -60,15 +61,18 @@ def test_get_nfl_events(file):
     api_data_json = json.loads(api_data)
     for event_json in api_data_json:
         event_data = event_json
+        event_data['id'] = uuid.UUID(event_json['id'])
         event_schema = EventSerializer(data=event_data)
+        print(event_data['id'])
 
         if event_schema.is_valid():
             event_instance = event_schema.validated_data
+            print(event_schema)
             print(event_instance)
             if event_instance['home_team'] is None or event_instance["away_team"] is None:
                 continue
             try:
-                existing_event = Event.objects.get_object_by_id(id=event_instance['id'])
+                existing_event = Event.objects.get(id=event_instance.get("id"))
             except ObjectDoesNotExist:
                 existing_event = None
 
@@ -86,6 +90,7 @@ def test_get_nfl_events(file):
                     score1,
                     score2
                 )
+
 
     return True
 
