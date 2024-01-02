@@ -56,7 +56,6 @@ class EventCron:
             print(f"API Request failed with status code: {response.status_code}")
             return Response("API Request failed", status=response.status_code)
         write_json_to_file(api_data,f'testfiles/originals/{key}.json')
-        print(json.dumps(api_data,indent=4))
         for event in api_data:
             event['id'] = uuid.UUID(event['id'])
             event_schema = EventSerializer(data=event)
