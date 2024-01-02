@@ -5,6 +5,7 @@ from django.core.serializers import serialize
 import uuid
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.management import call_command
 
 import json
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
@@ -129,10 +130,10 @@ class Support:
 
         return Response("Success", status=status.HTTP_200_OK)
 
-    def get_test_players(self):
+    def get_test_players():
 
         owner = User.objects.get_object_by_email("test1@test.com")
-        if not owner:
+        if not owner :
             user_1_data = {
                 "username": "test1",
                 "first_name": "test1",
@@ -142,9 +143,10 @@ class Support:
             }
             serializer = UserSerializer(data=user_1_data)
             serializer.is_valid(raise_exception=True)
-            owner = serializer.save()
+            owner = User.objects.create_user(user_1_data['username'],user_1_data['first_name'],user_1_data['last_name'], user_1_data['email'],user_1_data['password'], )
+
         player_2 = User.objects.get_object_by_email("test2@test.com")
-        if not player_2:
+        if not player_2 :
             user_2_data = {
                 "username": "test2",
                 "first_name": "test2",
@@ -155,8 +157,15 @@ class Support:
             serializer = UserSerializer(data=user_2_data)
 
             serializer.is_valid(raise_exception=True)
-            player_2 = serializer.save()
+            serializer.validated_data
+            player_2 = User.objects.create_user(user_2_data['username'],user_2_data['first_name'],user_2_data['last_name'],user_2_data['email'],user_2_data['password'],)
+        owner = User.objects.get_object_by_email("test1@test.com")
+        player_2 = User.objects.get_object_by_email("test2@test.com")
+        print(owner, player_2)
         return owner, player_2
+
+    def flush_database():
+        call_command('flush', interactive=False)
 
 class Test1:
 
@@ -242,7 +251,7 @@ class Test1:
 
     def test7(self):
         print("Starting Game Creation and Signal Update Testing 7")
-
+        Support.flush_database()
         folder_path = 'testfiles/originals'
         output_file = 'testfiles/sports_list.txt'
         Support.process_files_in_folder(folder_path, output_file)
@@ -264,20 +273,20 @@ class Test1:
         Game.objects.update_by_id(game.id, owner, data1)
         Game.objects.update_by_id(game.id, player_2, data2)
         Support.test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
-        game1 = Game.objects.get_object_by_id("f314a94d-fe75-4738-adcd-b97df731c5a7")
-        if game1.event.winner is "Miami Dolphins":
+        game1 = Game.objects.get_object_by_id(game.id)
+        if game1.event.winner == "Miami Dolphins":
             print(f"Event winner:{game1.event.winner} - pass")
         else:
             print(f"Event winner:{game1.event.winner} - fail")
-        if game1.owner_choice is "Miami Dolphins":
+        if game1.owner_choice == "Miami Dolphins":
             print(f"Owner Choice:{game1.owner_choice} - pass")
         else:
             print(f"Owner Choice:{game1.owner_choice} - fail")
-        if game1.play_2_choice is "Tennessee Titans":
+        if game1.play_2_choice == "Tennessee Titans":
             print(f"Player_2 Choice:{game1.play_2_choice} - pass")
         else:
             print(f"Player_2 Choice:{game1.play_2_choice} - fail")
-        if game1.winner is "Miami Dolphins":
+        if game1.winner == "Miami Dolphins":
             print(f"Game winner:{game1.winner} - pass")
         else:
             print(f"Game winner:{game1.winner} - fail")

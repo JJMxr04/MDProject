@@ -14,7 +14,7 @@ class UserManager(BaseUserManager,AbstractManager):
             instance = self.get(public_id=public_id)
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
-            return Http404
+            return None
 
     def get_object_by_email(self, email):
 
@@ -22,9 +22,9 @@ class UserManager(BaseUserManager,AbstractManager):
             instance = self.get(email=email)
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
-            return Http404
+            return None
 
-    def create_user(self, username, email, password=None, **kwargs):
+    def create_user(self, username,first,last, email, password=None, **kwargs):
         """Create and return a `User` with an email, phone number, username and password."""
         if username is None:
             raise TypeError('Users must have a username.')
@@ -33,7 +33,7 @@ class UserManager(BaseUserManager,AbstractManager):
         if password is None:
             raise TypeError('User must have an email.')
 
-        user = self.model(username=username, email=self.normalize_email(email), **kwargs)
+        user = self.model(username=username,first_name=first,last_name=last, email=self.normalize_email(email), **kwargs)
         user.set_password(password)
         user.save(using=self._db)
 
