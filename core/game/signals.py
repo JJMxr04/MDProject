@@ -11,4 +11,6 @@ def update_games_on_event_update(sender, instance, **kwargs):
     # Update the associated games when an event is updated
     games = Game.objects.filter(event=instance)
     for game in games:
+        game.winner = instance.winner
+        game.completed = instance.completed
         game.save()

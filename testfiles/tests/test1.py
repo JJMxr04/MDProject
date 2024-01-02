@@ -282,8 +282,8 @@ class Test1:
             print(f"Owner Choice:{game1.owner_choice} - pass")
         else:
             print(f"Owner Choice:{game1.owner_choice} - fail")
-        if game1.play_2_choice == "Tennessee Titans":
-            print(f"Player_2 Choice:{game1.play_2_choice} - pass")
+        if game1.player_2_choice == "Tennessee Titans":
+            print(f"Player_2 Choice:{game1.player_2_choice} - pass")
         else:
             print(f"Player_2 Choice:{game1.play_2_choice} - fail")
         if game1.winner == "Miami Dolphins":
