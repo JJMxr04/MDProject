@@ -58,37 +58,29 @@ class EventCron:
         write_json_to_file(api_data,f'testfiles/originals/{key}.json')
         print(json.dumps(api_data,indent=4))
         for event in api_data:
-            # if file == "testfiles/originals/soccer_switzerland_superleague.json":
-            #     print(f"Event: {event}")
-            # print(1)
             event['id'] = uuid.UUID(event['id'])
-            # print(event['id'])
             event_schema = EventSerializer(data=event)
             if event_schema.is_valid():
                 data = event_schema.validated_data
                 data['id'] = event['id']
-                print(f"{data.get('id')}:{event['id']}")
                 if (data.get('away_team')) is None or (data.get('away_team') is None):
                     continue
                 try:
-                    print(4)
-                    existing_event = Event.objects.get(id=data.get("id"))
+                    Event.objects.get(id=data.get("id"))
                 except ObjectDoesNotExist:
-                    print(5)
                     event_game = Event(**data)
                     event_game.save()
                     continue
-
                 if data.get('completed'):
-                    team_schema = TeamScoreSerializer(data=json.loads(event['scores'])[0])
+
+                    team_schema = TeamScoreSerializer(data=event['scores'][0])
                     if team_schema.is_valid():
                         score1 = team_schema.validated_data
-                    team_schema = TeamScoreSerializer(data=json.loads(event['scores'])[1])
+                    team_schema = TeamScoreSerializer(data=event['scores'][1])
                     if team_schema.is_valid():
                         score2 = team_schema.validated_data
-
-                    # Assuming get_sport_state is a method of your Event model
-                    existing_event.get_sport_state(data.get('completed'), score1, score2)
+                    Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1,
+                                                           score2)
 
         return Response("Success", status=status.HTTP_200_OK)
 

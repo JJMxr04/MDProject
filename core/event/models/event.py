@@ -10,11 +10,10 @@ from django.dispatch import receiver
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
         event = self.get_object_by_id(event_id)
-
         if event is ObjectDoesNotExist:
-            return Http404
-
+            return None
         if event.completed != completed:
+
             event.completed = completed
             event.scores = event_scores
 
@@ -67,7 +66,7 @@ class Event(AbstractModel):
     completed = models.BooleanField(default=False)
     home_team = models.CharField(max_length=255)
     away_team = models.CharField(max_length=255)
-    scores = models.CharField(max_length=255, null=True)
+    scores = models.CharField(max_length=255, null=True, default=None)
     winner = models.CharField(max_length=255, null=True, default=None)
 
     objects = EventManager()

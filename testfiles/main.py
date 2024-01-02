@@ -111,54 +111,58 @@ def test_get_nfl_events(file):
     api_data = read_json_file(file)
     if api_data is None:
         return False
-    # if file == "testfiles/originals/soccer_switzerland_superleague.json":
-    #     print(api_data)
+
     api_data_json = json.loads(api_data)
-    print(api_data)
+
     for event in api_data_json:
-        # if file == "testfiles/originals/soccer_switzerland_superleague.json":
-        #     print(f"Event: {event}")
-        # print(1)
         event['id'] = uuid.UUID(event['id'])
-        print(event['id'])
-        if event['id'] == "484bc558-2bb4-4ab7-9a1e-942cf8762eda":
-            print(0.2)
-        # print(event['id'])
         event_schema = EventSerializer(data=event)
-        # the event_chema for events that have scores arent gettings validated
+        # if event['id'] == uuid.UUID("484bc558-2bb4-4ab7-9a1e-942cf8762eda"):
+        #     print("starting with the id")
+        #     print(event_schema)
+        #     print(event_schema.is_valid())
+        #     if not event_schema.is_valid():
+        #         errors = event_schema.errors
+        #         print(errors)
+
         if event_schema.is_valid():
-            print(0)
+
             data = event_schema.validated_data
+            # if event['id'] == uuid.UUID("484bc558-2bb4-4ab7-9a1e-942cf8762eda"):
+            #     print("starting with the id 2")
+
             data['id'] = event['id']
+            # if data['id'] == uuid.UUID("484bc558-2bb4-4ab7-9a1e-942cf8762eda"):
+            #     print(data)
             if (data.get('away_team')) is None or (data.get('away_team') is None):
                 continue
             try:
                 existing_event = Event.objects.get(id=data.get("id"))
             except ObjectDoesNotExist:
+                # print("none")
                 event_game = Event(**data)
                 event_game.save()
                 continue
-            print(0.1)
-            if data.get('id') == "484bc558-2bb4-4ab7-9a1e-942cf8762eda":
-                print(0.2)
-                print(data.get('completed'))
+            # print(0.1)
+            # if data['id'] == uuid.UUID("484bc558-2bb4-4ab7-9a1e-942cf8762eda"):
+            #     print(1)
+            #     print(0.3)
+            #     print(data.get('completed'))
 
             if data.get('completed'):
-                print(1)
-                print(event['scores'][0])
+                # print(0.3)
                 # print(json.loads(event['scores'])[0])
                 # team_schema = TeamScoreSerializer(data=json.loads(event['scores'])[0])
                 team_schema = TeamScoreSerializer(data=event['scores'][0])
                 if team_schema.is_valid():
-                    print(2)
                     score1 = team_schema.validated_data
                 team_schema = team_schema = TeamScoreSerializer(data=event['scores'][1])
                 if team_schema.is_valid():
-                    print(3)
                     score2 = team_schema.validated_data
 
-                print("detected change")
-                Event.objects.get_event_state(data.get('id'),data.get('completed'),data.get('scores'), score1, score2)
+                # print("detected change")
+                result = Event.objects.get_event_state(data['id'],data['completed'],data['scores'], score1, score2)
+                # print(result)
                 # existing_event.objects.get_sport_state(data.get('completed'), score1, score2)
 
     return Response("Success", status=status.HTTP_200_OK)
@@ -287,32 +291,51 @@ if __name__ == '__main__':
 
     print("Starting Game Creation and Update Testing 7")
 
+    # folder_path = 'testfiles/originals'
+    # output_file = 'testfiles/sports_list.txt'
+    #
+    #
+    #
+    # process_files_in_folder(folder_path, output_file)
+    #
+    # sports = read_list_from_file(output_file)
+    # #
     # test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
-    # owner_id = "64d685bce1a64c3d8ea0b8f5514073cf"
-    # player_2_id = "02f09cb33ea94a258dd15e8b11aa6388"
-    # owner = User.objects.get_object_by_public_id(owner_id)
-    # player_2 = User.objects.get_object_by_public_id(player_2_id)
+    owner_id = "19ba1aff4de14d20ab875c95694377b6"
+    player_2_id = "35332efbcc9148509ff2d657ae5a605c"
+    owner = User.objects.get_object_by_public_id(owner_id)
+    player_2 = User.objects.get_object_by_public_id(player_2_id)
     # # print(owner)
+    # # print(player_2)
     # game = Game.objects.create_game(owner, player_2)
-    #
-    # data1 = {
-    #     "event_id": "484bc5582bb44ab79a1e942cf8762eda",
-    #     "player_choice": "Miami Dolphins"
-    # }
-    # data2 = {
-    #     "event_id": "484bc5582bb44ab79a1e942cf8762eda",
-    #     "player_choice": "Tennessee Titans"
-    # }
-    #
-    # Game.objects.update_by_id(game.id, owner, data1)
-    # Game.objects.update_by_id(game.id, player_2, data2)
+    # event = Event.objects.get_object_by_id(uuid.UUID("484bc5582bb44ab79a1e942cf8762eda"))
+    # event = Event.objects.get_object_by_id("484bc5582bb44ab79a1e942cf8762eda")
+    # print(event)
+    game = Game.objects.get_object_by_id("f314a94d-fe75-4738-adcd-b97df731c5a7")
+    # print(game)
+
+    data1 = {
+        "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+        "player_choice": "Miami Dolphins"
+    }
+    data2 = {
+        "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+        "player_choice": "Tennessee Titans"
+    }
+
+    update1 = Game.objects.update_by_id(game.id, owner, data1)
+    update2 = Game.objects.update_by_id(game.id, player_2, data2)
+    # print(update1)
+    # print(update2)
+    # game1 = Game.objects.get_object_by_id("4933be40-5f69-491a-a161-d5bdb3a616ff")
+    # print(game1.event)
     test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
-    game1 = Game.objects.get_object_by_id("c5738d1b-1488-40a6-abbe-ec46ebd22f7f")
-    print(game1.event.id)
-    print(game1.owner_choice)
-    print(game1.player_2_choice)
-    print(game1.winner)
-    print(GameSerializer(data=game1))
+    game1 = Game.objects.get_object_by_id("f314a94d-fe75-4738-adcd-b97df731c5a7")
+    print(f"winner:{game1.event.winner}")
+    # print(game1.owner_choice)
+    # print(game1.player_2_choice)
+    # print(game1.winner)
+    # print(GameSerializer(data=game1))
 
     print("Stopped Game Creation and Update Testing 7")
 

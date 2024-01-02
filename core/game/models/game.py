@@ -26,7 +26,7 @@ class GameManager(AbstractManager):
 
         if game is None:
             # If the game does not exist, create a new instance
-            return False
+            return False, False
         if (current_user != game.owner) and (current_user != game.player_2):
             return False, False
 
@@ -34,6 +34,7 @@ class GameManager(AbstractManager):
             new_game = True
             event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
+                # print(1)
                 return False, False
             if game.event is None:
                 game.event = event
