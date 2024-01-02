@@ -8,9 +8,8 @@ from django.dispatch import receiver
 
 
 class EventManager(AbstractManager):
-    @classmethod
-    def get_event_state(cls, event_id, completed, event_scores, score1, score2):
-        event = cls.get_object_by_public_id(event_id)
+    def get_event_state(self, event_id, completed, event_scores, score1, score2):
+        event = self.get_object_by_id(event_id)
 
         if event is ObjectDoesNotExist:
             return Http404

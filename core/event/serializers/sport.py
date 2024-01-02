@@ -9,6 +9,4 @@ class SportSerializer(serializers.ModelSerializer):
         model = Sport
         fields = '__all__'
         # read_only_fields = '__all__'
-class TeamScoreSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    score = serializers.CharField()
+

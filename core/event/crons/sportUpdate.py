@@ -1,7 +1,7 @@
 import json
 import requests
 from core.event.models.sport import Sport
-from core.event.serializers.sport import SportSerializer, TeamScoreSerializer
+from core.event.serializers.sport import SportSerializer
 
 
 class SportCron:
