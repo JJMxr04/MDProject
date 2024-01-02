@@ -16,6 +16,14 @@ class UserManager(BaseUserManager,AbstractManager):
         except (ObjectDoesNotExist, ValueError, TypeError):
             return Http404
 
+    def get_object_by_email(self, email):
+
+        try:
+            instance = self.get(email=email)
+            return instance
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            return Http404
+
     def create_user(self, username, email, password=None, **kwargs):
         """Create and return a `User` with an email, phone number, username and password."""
         if username is None:
