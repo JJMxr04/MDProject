@@ -10,8 +10,8 @@ from core.event.models import Event
 from core.game.models import Game
 
 class MatchManager(AbstractManager):
-    def create_match(self,player_1):
-        return self.create(player_1=player_1)
+    def create_match(self,player_1,player_2 = None):
+        return self.create(player_1=player_1,player_2=player_2)
 
 class Match(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

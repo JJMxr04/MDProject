@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from core.game.models import Game
+from core.match.models import Match
 from core.abstract.serializers import AbstractSerializer
 
-class GameSerializer(AbstractSerializer):
+class MatchSerializer(AbstractSerializer):
     class Meta:
-        model = Game
+        model = Match
         fields = '__all__'
