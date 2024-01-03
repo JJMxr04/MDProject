@@ -7,10 +7,12 @@ from django import setup
 # Configure Django settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
+from core.match.models import Match
 
-from tests.test1 import Test1
+
+from tests.test1 import Test1, Support
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    test1 = Test1()
-    test1.test7()
+    player_1, player_2 = Support.get_test_players()
+    match = Match.objects.create_match(player_1)

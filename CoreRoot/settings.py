@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     #MDProject Models
     'core.event',
     'core.game',
+    'core.match',
 ]
 
 MIDDLEWARE = [
