@@ -1,23 +1,69 @@
 from rest_framework import viewsets
-from rest_framework.response import Response
-from django.core.signing import Signer, BadSignature, SignatureExpired
+from django.core.signing import TimestampSigner, SignatureExpired, BadSignature
 from core.auth.serializers import ActivateSerializer
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from core.auth.serializers import RegisterSerializer
+from rest_framework import viewsets, status
+from core.user.models import User
+from rest_framework.exceptions import ValidationError
+from django.shortcuts import render
+
 
 class ActivateUserViewSet(viewsets.ViewSet):
-    def create(self, request):
-        serializer = ActivateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+    serializer_class = ActivateSerializer
+    permission_classes = (AllowAny,)
+    http_method_names = ['get']
 
-        token = serializer.validated_data['token']
+    def retrieve(self, request, *args, **kwargs):
+        token = kwargs.get('token')
+
+        if not token:
+            return Response({"detail": "Token not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            signer = Signer()
-            email = signer.unsign(token, max_age=60*60*24)  # Token expires after 24 hours
-            # Perform activation logic using the 'email' variable
-            # (e.g., activate the user account in the database)
+            signer = TimestampSigner()
+            email = signer.unsign(token, max_age=60 * 60 * 24)  # Token expires after 24 hours
+            user = User.objects.get(email=email)
+            user.is_active = True
+            user.save()
 
-            return Response({"detail": "Account activated successfully", "email": email})
+            # return Response({"detail": "Account activated successfully", "email": email})
+            return render(request,"activation_email/thank_you.html")
         except BadSignature:
-            return Response({"detail": "Invalid activation link."}, status=400)
+            return Response({"detail": "Invalid activation link."}, status=status.HTTP_400_BAD_REQUEST)
         except SignatureExpired:
-            return Response({"detail": "Activation link has expired."}, status=400)
+            return Response({"detail": "Activation link has expired."}, status=status.HTTP_400_BAD_REQUEST)
+    # def retrieve(self,  *args, **kwargs):
+    #     print(1)
+    #     print(kwargs)
+    #     print(*args)
+    #     serializer = self.serializer_class(data=kwargs)
+    #     print(2)
+    #     # serializer.is_valid(raise_exception=True)
+    #     print(3)
+    #     # try:
+    #     #     serializer.is_valid(raise_exception=True)
+    #     # except ValidationError as e:
+    #     #     errors = e.get_full_details()
+    #     #     print(errors)
+    #     # token = serializer.validated_data
+    #     token = kwargs['token']
+    #     print(token)
+    #     print(4)
+    #     try:
+    #         print(5)
+    #         signer = TimestampSigner()
+    #         email = signer.unsign(token, max_age=60 * 60 * 24)  # Token expires after 24 hours
+    #         print(email)
+    #         user = User.objects.get(email=email)
+    #         user.is_active = True
+    #         user.save()
+    #
+    #         return Response({"detail": "Account activated successfully", "email": email})
+    #     except BadSignature:
+    #         print(6)
+    #         return Response({"detail": "Invalid activation link."}, status=status.HTTP_400_BAD_REQUEST)
+    #     except SignatureExpired:
+    #         print(7)
+    #         return Response({"detail": "Activation link has expired."}, status=status.HTTP_400_BAD_REQUEST)

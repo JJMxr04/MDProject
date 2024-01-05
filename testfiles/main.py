@@ -23,6 +23,6 @@ if __name__ == '__main__':
     # from_email = 'maiaranagaming@gmail.com'
     # recipient_list = ['joemaiarana@gmail.com']
     # views.send_Email(subject,message,from_email,recipient_list)
-
-    email.send_activation_email("maiaranagaming@gmail.com")
+    Support.flush_database()
+    # email.send_activation_email("maiaranagaming@gmail.com")
 

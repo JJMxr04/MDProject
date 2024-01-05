@@ -23,5 +23,6 @@ router.register(r'user', UserViewSet, basename='user')
 
 urlpatterns = [
     *router.urls,
-    path('', include(('core.event.routers', 'core'), namespace="core-api-event"))
+    path('', include(('core.event.routers', 'core'), namespace="core-api-event")),
+    path('activate/<str:token>/', ActivateUserViewSet.as_view({'get': 'retrieve'}), name='activate'),
 ]

@@ -143,7 +143,7 @@ class Support:
             }
             serializer = UserSerializer(data=user_1_data)
             serializer.is_valid(raise_exception=True)
-            owner = User.objects.create_user(user_1_data['username'],user_1_data['first_name'],user_1_data['last_name'], user_1_data['email'],user_1_data['password'], )
+            owner = User.objects.create_user_ex(user_1_data['username'],user_1_data['first_name'],user_1_data['last_name'], user_1_data['email'],user_1_data['password'], )
 
         player_2 = User.objects.get_object_by_email("test2@test.com")
         if not player_2 :
@@ -158,7 +158,7 @@ class Support:
 
             serializer.is_valid(raise_exception=True)
             serializer.validated_data
-            player_2 = User.objects.create_user(user_2_data['username'],user_2_data['first_name'],user_2_data['last_name'],user_2_data['email'],user_2_data['password'],)
+            player_2 = User.objects.create_user_ex(user_2_data['username'],user_2_data['first_name'],user_2_data['last_name'],user_2_data['email'],user_2_data['password'],)
         owner = User.objects.get_object_by_email("test1@test.com")
         player_2 = User.objects.get_object_by_email("test2@test.com")
         print(owner, player_2)
