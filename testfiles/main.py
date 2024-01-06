@@ -13,12 +13,16 @@ from core.auth.models import email
 
 
 from tests.test1 import Test1, Support
+test1 = Test1()
+support = Support()
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    Support.flush_database()
-    player_1, player_2 = Support.get_test_players()
-
-    match = Match.objects.create_match(player_1)
+    support.flush_database()
+    # player_1, player_2 = Support.get_test_players()
+    #
+    # match = Match.objects.create_match(player_1)
+    # test1.test7()
+    test1.test8(1000000)
 
 

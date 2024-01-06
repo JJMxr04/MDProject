@@ -23,8 +23,9 @@ sport_cron = SportCron()
 from core.event.crons.eventUpdate import EventCron
 event_cron = EventCron()
 
+
 class Support:
-    def read_list_from_file(file_path):
+    def read_list_from_file(self,file_path):
         try:
             with open(file_path, 'r') as file:
                 # Read lines from the file and remove newline characters
@@ -39,7 +40,7 @@ class Support:
             print(f"An error occurred: {e}")
             return None
 
-    def read_file_and_save_as_list(input_file, output_file):
+    def read_file_and_save_as_list(self,input_file, output_file):
         try:
             with open(input_file, 'r') as file:
                 # Read lines from the file and remove newline characters
@@ -56,7 +57,7 @@ class Support:
         except Exception as e:
             print(f"An error occurred: {e}")
 
-    def process_files_in_folder(folder_path, output_file):
+    def process_files_in_folder(self,folder_path, output_file):
         try:
             # Get a list of all files in the folder
             file_list = [file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
@@ -72,7 +73,7 @@ class Support:
         except Exception as e:
             print(f"An error occurred: {e}")
 
-    def write_json_to_file(data, filename):
+    def write_json_to_file(self,data, filename):
         """
         Write JSON data to a file in a formatted way.
 
@@ -84,7 +85,7 @@ class Support:
         with open(filename, 'a') as file:
             file.write(json_data)
 
-    def read_json_file(file_path):
+    def read_json_file(self,file_path):
         try:
             with open(file_path, 'r') as file:
                 json_data = file.read()
@@ -96,8 +97,8 @@ class Support:
             print(f"File not found: {file_path}")
             return None
 
-    def test_get_nfl_events(file):
-        api_data = Support.read_json_file(file)
+    def test_get_nfl_events(self,file):
+        api_data = support.read_json_file(file)
         if api_data is None:
             return False
 
@@ -131,7 +132,7 @@ class Support:
 
         return Response("Success", status=status.HTTP_200_OK)
 
-    def get_test_players():
+    def get_test_players(self):
 
         owner = User.objects.get_object_by_email("test1@test.com")
         if owner== Http404:
@@ -165,8 +166,10 @@ class Support:
         # print(owner, player_2)
         return owner, player_2
 
-    def flush_database():
+    def flush_database(self):
         call_command('flush', interactive=False)
+
+support = Support()
 
 class Test1:
 
@@ -215,7 +218,7 @@ class Test1:
 
         folder_path = 'testfiles/originals'
         output_file = 'testfiles/sports_list.txt'
-        Support.process_files_in_folder(folder_path, output_file)
+        support.process_files_in_folder(folder_path, output_file)
         sports = Support.read_list_from_file(output_file)
         print(sports)
         # sport_cron.get_sports()
@@ -224,7 +227,7 @@ class Test1:
         # # event_cron.get_sport_events("soccer_switzerland_superleague")
         # # print(sports)
         for sport in sports:
-            Support.test_get_nfl_events(f'testfiles/originals/{sport}')
+            support.test_get_nfl_events(f'testfiles/originals/{sport}')
         # Needs to add checks
         print("Stopped sport Creation Testing 5.5")
 
@@ -252,13 +255,13 @@ class Test1:
 
     def test7(self):
         print("Starting Game Creation and Signal Update Testing 7")
-        Support.flush_database()
-        folder_path = 'testfiles/originals'
-        output_file = 'testfiles/sports_list.txt'
-        Support.process_files_in_folder(folder_path, output_file)
-        sports = Support.read_list_from_file(output_file)
-        Support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
-        owner, player_2 = Support.get_test_players()
+        support.flush_database()
+        folder_path = 'originals'
+        output_file = 'sports_list.txt'
+        support.process_files_in_folder(folder_path, output_file)
+        sports = support.read_list_from_file(output_file)
+        support.test_get_nfl_events(f'nfl-copy1-1.json')
+        owner, player_2 = support.get_test_players()
 
         game = Game.objects.create_game(owner, player_2)
 
@@ -273,7 +276,7 @@ class Test1:
 
         Game.objects.update_by_id(game.id, owner, data1)
         Game.objects.update_by_id(game.id, player_2, data2)
-        Support.test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
+        support.test_get_nfl_events(f'nfl-copy2-1.json')
         game1 = Game.objects.get_object_by_id(game.id)
         if game1.event.winner == "Miami Dolphins":
             print(f"Event winner:{game1.event.winner} - pass")
@@ -292,3 +295,38 @@ class Test1:
         else:
             print(f"Game winner:{game1.winner} - fail")
         print("Stopped Game Creation and Signal Update Testing 7")
+
+    def test8(self,amount):
+        print(f"Starting Test  8- testing {amount} games being made and updated")
+        support.flush_database()
+        print("Test 8 - first update - Start")
+        folder_path = 'originals'
+        output_file = 'sports_list.txt'
+        support.process_files_in_folder(folder_path, output_file)
+        sports = support.read_list_from_file(output_file)
+        support.test_get_nfl_events(f'nfl-copy1-1.json')
+        print("Test 8 - first update - Finish")
+        print("Test 8 Starting Game creating for loop")
+        for x in range(1,amount):
+            # print(x)
+            owner, player_2 = support.get_test_players()
+
+            game = Game.objects.create_game(owner, player_2)
+
+            data1 = {
+                "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+                "player_choice": "Miami Dolphins"
+            }
+            data2 = {
+                "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+                "player_choice": "Tennessee Titans"
+            }
+
+            Game.objects.update_by_id(game.id, owner, data1)
+            Game.objects.update_by_id(game.id, player_2, data2)
+        print("Test 8 - Second update - Start")
+        support.test_get_nfl_events(f'nfl-copy2-1.json')
+        print("Test 8 - Second update - Finish")
+        print("Finish Test  8- testing 1000000 games being made and updated")
+
+
