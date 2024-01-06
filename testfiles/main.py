@@ -16,13 +16,9 @@ from tests.test1 import Test1, Support
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # # player_1, player_2 = Support.get_test_players()
-    # # match = Match.objects.create_match(player_1)
-    # subject = 'Subject Here'
-    # message = 'Message Here'
-    # from_email = 'maiaranagaming@gmail.com'
-    # recipient_list = ['joemaiarana@gmail.com']
-    # views.send_Email(subject,message,from_email,recipient_list)
     Support.flush_database()
-    # email.send_activation_email("maiaranagaming@gmail.com")
+    player_1, player_2 = Support.get_test_players()
+
+    match = Match.objects.create_match(player_1)
+
 

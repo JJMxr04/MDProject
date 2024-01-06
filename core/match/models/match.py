@@ -12,6 +12,9 @@ from core.game.models import Game
 class MatchManager(AbstractManager):
     def create_match(self,player_1,player_2 = None):
         return self.create(player_1=player_1,player_2=player_2)
+    def accept_match(self,match_id,player_2):
+        match =  self.get_object_by_id(id=match_id)
+
 
 class Match(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

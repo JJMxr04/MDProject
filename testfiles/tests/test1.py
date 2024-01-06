@@ -6,6 +6,7 @@ import uuid
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.management import call_command
+from django.http import Http404
 
 import json
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
@@ -133,7 +134,7 @@ class Support:
     def get_test_players():
 
         owner = User.objects.get_object_by_email("test1@test.com")
-        if not owner :
+        if owner== Http404:
             user_1_data = {
                 "username": "test1",
                 "first_name": "test1",
@@ -146,7 +147,7 @@ class Support:
             owner = User.objects.create_user_ex(user_1_data['username'],user_1_data['first_name'],user_1_data['last_name'], user_1_data['email'],user_1_data['password'], )
 
         player_2 = User.objects.get_object_by_email("test2@test.com")
-        if not player_2 :
+        if player_2 == Http404:
             user_2_data = {
                 "username": "test2",
                 "first_name": "test2",
@@ -161,7 +162,7 @@ class Support:
             player_2 = User.objects.create_user_ex(user_2_data['username'],user_2_data['first_name'],user_2_data['last_name'],user_2_data['email'],user_2_data['password'],)
         owner = User.objects.get_object_by_email("test1@test.com")
         player_2 = User.objects.get_object_by_email("test2@test.com")
-        print(owner, player_2)
+        # print(owner, player_2)
         return owner, player_2
 
     def flush_database():
