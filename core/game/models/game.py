@@ -14,9 +14,9 @@ class GameManager(AbstractManager):
     #     return self.create(owner=owner, player_2=player_2, match_id=match_id, commence_time=commence_time,
     #                         deadline_time=deadline_time, completed=completed, home_team=home_team,
     #                         away_team=away_team, winner=winner)
-    def create_game(self, owner, player_2, commence_time=None, deadline_time=None, completed=False,
-                   home_team=None, away_team=None, winner=None):
-        return self.create(owner=owner, player_2=player_2,  commence_time=commence_time,
+    def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
+                   home_team=None, away_team=None, winner=None, ):
+        return self.create(owner=owner, player_2=player_2,  match_id=match.id,event=event, commence_time=commence_time,
                             deadline_time=deadline_time, completed=completed, home_team=home_team,
                             away_team=away_team, winner=winner)
 
@@ -61,11 +61,16 @@ class GameManager(AbstractManager):
         game.save()
         return new_game, game
 
+    def get_golden_game(self,player_1,player_2,match):
+        event = Event.objects.get_random_golden()
+        return Game.objects.create_game(player_1,player_2,match,event,event.commence_time,None,event.completed,event.home_team,event.away_team)
+
+
 class Game(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_game')
     player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_game')
-    # match_id = models.CharField(max_length=255)
+    match_id = models.CharField(max_length=200, default='0', null=False, blank=False)
     commence_time = models.DateTimeField(default=None, null=True, blank=True)
     deadline_time = models.DateTimeField(default=None, null=True, blank=True)
     completed = models.BooleanField(default=False)

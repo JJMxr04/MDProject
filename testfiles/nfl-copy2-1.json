@@ -369,11 +369,20 @@
     "id": "ea43090cd4cc2eb2fb98ba3847aba986",
     "sport_key": "americanfootball_nfl",
     "sport_title": "NFL",
-    "commence_time": "2023-12-12T01:16:00Z",
-    "completed": false,
+    "commence_time": "2024-01-17T02:07:27Z",
+    "completed": true,
     "home_team": "New York Giants",
     "away_team": "Green Bay Packers",
-    "scores": null,
+    "scores": [
+      {
+        "name": "Green Bay Packers",
+        "score": "34"
+      },
+      {
+        "name": "New York Giants",
+        "score": "37"
+      }
+    ],
     "last_update": null
   },
   {
@@ -387,7 +396,7 @@
     "scores": null,
     "last_update": null
   },
-    {
+  {
     "id": "484bc5582bb44ab79a1e942cf8762eda",
     "sport_key": "americanfootball_nfl",
     "sport_title": "NFL",

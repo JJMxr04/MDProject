@@ -18,11 +18,7 @@ support = Support()
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    support.flush_database()
-    # player_1, player_2 = Support.get_test_players()
-    #
-    # match = Match.objects.create_match(player_1)
-    # test1.test7()
-    test1.test8(1000000)
+    # test1.test9()
 
+    test1.test10()
 

@@ -44,14 +44,13 @@ class EventManager(AbstractManager):
         except (ObjectDoesNotExist, ValueError, TypeError):
             return Http404
 
-    @classmethod
-    def get_random_golden(cls):
+    def get_random_golden(self):
         # Get the current time
         current_time = datetime.utcnow()
         min_commence_time = current_time + timedelta(days=5)
         max_commence_time = current_time + timedelta(days=7)
         try:
-            instance = cls.filter(
+            instance = self.filter(
                 commence_time__range=(min_commence_time, max_commence_time)
             ).first()
             return instance
