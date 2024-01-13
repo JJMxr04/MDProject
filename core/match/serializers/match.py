@@ -9,36 +9,34 @@ from core.game.serializers import GameSerializer
 class MatchSerializer(AbstractSerializer):
 
     player_1 = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='public_id')
-    player_2 = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
+    player_2 = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='public_id',allow_null=True)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         player_1 = User.objects.get_object_by_public_id(rep['player_1'])
-        player_2 = User.objects.get_object_by_public_id(rep['player_2'])
-        player_1_game_1 = Game.objects.get_object_by_id(rep['player_1_game_1'])
-        player_1_game_2 = Game.objects.get_object_by_id(rep['player_1_game_2'])
-        player_1_game_3 = Game.objects.get_object_by_id(rep['player_1_game_3'])
-        player_1_game_4 = Game.objects.get_object_by_id(rep['player_1_game_4'])
-        player_1_game_5 = Game.objects.get_object_by_id(rep['player_1_game_5'])
-        player_2_game_1 = Game.objects.get_object_by_id(rep['player_2_game_1'])
-        player_2_game_2 = Game.objects.get_object_by_id(rep['player_2_game_2'])
-        player_2_game_3 = Game.objects.get_object_by_id(rep['player_2_game_3'])
-        player_2_game_4 = Game.objects.get_object_by_id(rep['player_2_game_4'])
-        player_2_game_5 = Game.objects.get_object_by_id(rep['player_2_game_5'])
-        golden_game = Game.objects.get_object_by_id(rep['golden_game'])
+
+        # Process player_1_game_x fields
+        for i in range(1, 6):
+            player_1_game_key = f'player_1_game_{i}'
+            if rep[player_1_game_key] is not None:
+                rep[player_1_game_key] = GameSerializer(Game.objects.get_object_by_id(rep[player_1_game_key])).data
+
+        if rep['player_2'] is not None:
+            player_2 = User.objects.get_object_by_public_id(rep['player_2'])
+            rep['player_2'] = PublicUserSerializer(player_2).data
+
+            # Process player_2_game_x fields
+            for i in range(1, 6):
+                player_2_game_key = f'player_2_game_{i}'
+                if rep[player_2_game_key] is not None:
+                    rep[player_2_game_key] = GameSerializer(Game.objects.get_object_by_id(rep[player_2_game_key])).data
+
+        # Process golden_game field
+        if rep['golden_game'] is not None:
+            rep['golden_game'] = GameSerializer(Game.objects.get_object_by_id(rep['golden_game'])).data
+
         rep['player_1'] = PublicUserSerializer(player_1).data
-        rep['player_2'] = PublicUserSerializer(player_2).data
-        rep['player_1_game_1'] = GameSerializer(player_1_game_1).data
-        rep['player_1_game_2'] = GameSerializer(player_1_game_2).data
-        rep['player_1_game_3'] = GameSerializer(player_1_game_3).data
-        rep['player_1_game_4'] = GameSerializer(player_1_game_4).data
-        rep['player_1_game_5'] = GameSerializer(player_1_game_5).data
-        rep['player_2_game_1'] = GameSerializer(player_2_game_1).data
-        rep['player_2_game_2'] = GameSerializer(player_2_game_2).data
-        rep['player_2_game_3'] = GameSerializer(player_2_game_3).data
-        rep['player_2_game_4'] = GameSerializer(player_2_game_4).data
-        rep['player_2_game_5'] = GameSerializer(player_2_game_5).data
-        rep['golden_game'] = GameSerializer(golden_game).data
+
         return rep
     class Meta:
         model = Match
