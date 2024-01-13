@@ -300,11 +300,11 @@ class Test1:
     def test7(self):
         print("Starting Game Creation and Signal Update Testing 7")
         support.flush_database()
-        folder_path = 'originals'
-        output_file = 'sports_list.txt'
+        folder_path = 'testfiles/originals'
+        output_file = 'testfiles/sports_list.txt'
         support.process_files_in_folder(folder_path, output_file)
         sports = support.read_list_from_file(output_file)
-        support.test_get_nfl_events(f'nfl-copy1-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
         owner, player_2 = support.get_test_players()
 
         game = Game.objects.create_game(owner, player_2)
@@ -320,7 +320,7 @@ class Test1:
 
         Game.objects.update_by_id(game.id, owner, data1)
         Game.objects.update_by_id(game.id, player_2, data2)
-        support.test_get_nfl_events(f'nfl-copy2-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
         game1 = Game.objects.get_object_by_id(game.id)
         if game1.event.winner == "Miami Dolphins":
             print(f"Event winner:{game1.event.winner} - pass")
@@ -344,11 +344,11 @@ class Test1:
         print(f"Starting Test  8- testing {amount} games being made and updated")
         support.flush_database()
         print("Test 8 - first update - Start")
-        folder_path = 'originals'
-        output_file = 'sports_list.txt'
+        folder_path = 'testfiles/originals'
+        output_file = 'testfiles/sports_list.txt'
         support.process_files_in_folder(folder_path, output_file)
         sports = support.read_list_from_file(output_file)
-        support.test_get_nfl_events(f'nfl-copy1-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
         print("Test 8 - first update - Finish")
         print("Test 8 Starting Game creating for loop")
         for x in range(1, amount):
@@ -369,7 +369,7 @@ class Test1:
             Game.objects.update_by_id(game.id, owner, data1)
             Game.objects.update_by_id(game.id, player_2, data2)
         print("Test 8 - Second update - Start")
-        support.test_get_nfl_events(f'nfl-copy2-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
         print("Test 8 - Second update - Finish")
         print("Finish Test  8- testing 1000000 games being made and updated")
 
@@ -377,14 +377,14 @@ class Test1:
 
         print("Starting Match Creation and Update Testing 9")
         support.flush_database()
-        support.update_golden_game(f'nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
-        support.update_golden_game(f'nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        support.update_golden_game(f'testfiles/nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        support.update_golden_game(f'testfiles/nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
 
-        folder_path = 'originals'
-        output_file = 'sports_list.txt'
+        folder_path = 'testfiles/originals'
+        output_file = 'testfiles/sports_list.txt'
         support.process_files_in_folder(folder_path, output_file)
         sports = support.read_list_from_file(output_file)
-        support.test_get_nfl_events(f'nfl-copy1-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
         owner, player_2 = support.get_test_players()
         match = Match.objects.create_match(owner)
         # print(match)
@@ -435,7 +435,7 @@ class Test1:
         Game.objects.update_by_id(match1.golden_game.id, player_2, data2_gg)
         Game.objects.update_by_id(match1.golden_game.id, owner, data1_gg)
 
-        support.test_get_nfl_events(f'nfl-copy2-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
         match2 = Match.objects.get_object_by_id(match1.id)
         # print(match2)
         games = [match2.player_1_game_1,
@@ -523,14 +523,14 @@ class Test1:
 
         print("Starting Match Creation and Update Testing 10")
         support.flush_database()
-        support.update_golden_game(f'nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
-        support.update_golden_game(f'nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        support.update_golden_game(f'testfiles/nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        support.update_golden_game(f'testfiles/nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
 
-        folder_path = 'originals'
-        output_file = 'sports_list.txt'
+        folder_path = 'testfiles/originals'
+        output_file = 'testfiles/sports_list.txt'
         support.process_files_in_folder(folder_path, output_file)
         sports = support.read_list_from_file(output_file)
-        support.test_get_nfl_events(f'nfl-copy1-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
         owner, player_2 = support.get_test_players()
         match = Match.objects.create_match(owner)
         # print(match)
@@ -581,7 +581,7 @@ class Test1:
         Game.objects.update_by_id(match1.golden_game.id, player_2, data2_gg)
         Game.objects.update_by_id(match1.golden_game.id, owner, data1_gg)
 
-        support.test_get_nfl_events(f'nfl-copy2-1.json')
+        support.test_get_nfl_events(f'testfiles/nfl-copy2-1.json')
         match2 = Match.objects.get_object_by_id(match1.id)
         # print(match2)
         games = [match2.player_1_game_1,

@@ -13,32 +13,32 @@ class RegisterViewSet(ViewSet):
     http_method_names = ['post']
 
 
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.serializer_class(data=request.data)
-    #
-    #     serializer.is_valid(raise_exception=True)
-    #     user = serializer.save()
-    #     refresh = RefreshToken.for_user(user)
-    #     res = {
-    #         "refresh": str(refresh),
-    #         "access": str(refresh.access_token),
-    #     }
-    #
-    #     return Response({
-    #         "user": serializer.data,
-    #         "refresh": res["refresh"],
-    #         "token": res["access"]
-    #     }, status=status.HTTP_201_CREATED)
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
 
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-
-        email.send_activation_email(user,request)
+        refresh = RefreshToken.for_user(user)
+        res = {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }
 
         return Response({
             "user": serializer.data,
-            "refresh": 'confirm your email',
-            "token": 'confirm youremail'
+            "refresh": res["refresh"],
+            "token": res["access"]
         }, status=status.HTTP_201_CREATED)
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.serializer_class(data=request.data)
+    #
+    #     serializer.is_valid(raise_exception=True)
+    #     user = serializer.save()
+    #
+    #     email.send_activation_email(user,request)
+    #
+    #     return Response({
+    #         "user": serializer.data,
+    #         "refresh": 'confirm your email',
+    #         "token": 'confirm youremail'
+    #     }, status=status.HTTP_201_CREATED)

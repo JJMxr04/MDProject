@@ -25,4 +25,6 @@ urlpatterns = [
     *router.urls,
     path('', include(('core.event.routers', 'core'), namespace="core-api-event")),
     path('activate/<str:token>/', ActivateUserViewSet.as_view({'get': 'retrieve'}), name='activate'),
+    path('', include(('core.match.routers', 'core'), namespace="core-api-match")),
+    path('', include(('core.game.routers', 'core'), namespace="core-api-game")),
 ]
