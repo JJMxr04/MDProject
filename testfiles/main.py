@@ -28,5 +28,6 @@ if __name__ == '__main__':
     # sportcron.get_sports()
     # eventcron = EventCron()
     # eventcron.update_all_events()
+    pass
 
 

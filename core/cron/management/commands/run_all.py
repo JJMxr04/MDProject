@@ -9,4 +9,5 @@ class Command(BaseCommand):
         call_command('runserver')
 
         # Run your custom 'runserver' command
-        call_command('runserver1', '--noreload')  # Add any additional options if needed
+        # call_command('runserver1', '--noreload')  # Add any additional options if needed
+        call_command('run_crons', '--noreload')
