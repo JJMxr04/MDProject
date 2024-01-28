@@ -684,3 +684,10 @@ class Test1:
             print(f"Stated =  {match.match_state}- Failed")
             exit()
         print("Stopped Match Creation and Update Testing 10")
+
+    def testFlushAndGetSportsAndEvents(self):
+
+        support.flush_database()
+        owner, player_2 = support.get_test_players()
+        sport_cron.get_sports()
+        event_cron.update_all_events()

@@ -186,4 +186,2138 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "f5c150694939a47afa4a4f26dd87a11e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-21T13:00:02Z",
+        "completed": true,
+        "home_team": "CA Osasuna",
+        "away_team": "Getafe",
+        "scores": [
+            {
+                "name": "Getafe",
+                "score": "2"
+            },
+            {
+                "name": "CA Osasuna",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-22T03:26:01Z"
+    },
+    {
+        "id": "e9a01723c37c128d0c37c47e9ba8d847",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-21T15:16:31Z",
+        "completed": true,
+        "home_team": "Real Madrid",
+        "away_team": "Almer\u00eda",
+        "scores": [
+            {
+                "name": "Almer\u00eda",
+                "score": "2"
+            },
+            {
+                "name": "Real Madrid",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-22T03:26:01Z"
+    },
+    {
+        "id": "a4624c322a69648c3056e0107be8321f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-21T17:32:08Z",
+        "completed": true,
+        "home_team": "Real Betis",
+        "away_team": "Barcelona",
+        "scores": [
+            {
+                "name": "Barcelona",
+                "score": "4"
+            },
+            {
+                "name": "Real Betis",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-22T03:26:01Z"
+    },
+    {
+        "id": "0ca6d38635066a613998f18f8faa6b44",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-21T20:01:14Z",
+        "completed": true,
+        "home_team": "Girona",
+        "away_team": "Sevilla",
+        "scores": [
+            {
+                "name": "Sevilla",
+                "score": "1"
+            },
+            {
+                "name": "Girona",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-22T03:26:01Z"
+    },
+    {
+        "id": "2d2bfa2b9104720e2a64dcbb1c2bedee",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-22T20:00:24Z",
+        "completed": true,
+        "home_team": "Granada CF",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": [
+            {
+                "name": "Atl\u00e9tico Madrid",
+                "score": "1"
+            },
+            {
+                "name": "Granada CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-23T03:22:37Z"
+    },
+    {
+        "id": "8c071619d19911017e4930332e7501e1",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-26T20:00:00Z",
+        "completed": false,
+        "home_team": "Almer\u00eda",
+        "away_team": "Alav\u00e9s",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "225bbe593068e7d9a6a395376e031cea",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T13:00:00Z",
+        "completed": false,
+        "home_team": "Real Sociedad",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cea195ab47fdf42254ee1babb71dbee6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T15:15:00Z",
+        "completed": false,
+        "home_team": "Las Palmas",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "158371c72fa76bb5a1656b249e16825f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T17:30:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "Villarreal",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eef2605b08b43460bd8d45cf9a1125fe",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T20:00:00Z",
+        "completed": false,
+        "home_team": "Mallorca",
+        "away_team": "Real Betis",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "61a9a5784137ff98c1a3f6c14d57a541",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "Celta Vigo",
+        "away_team": "Girona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "64245be06e7581026e75fc9d0443a0e4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Athletic Bilbao",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "04430fb1801eaa9338dc0683e2107265",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b1cbf23294942e91b294c5f01b4933c4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f57e321f441829f9fabcacd5171af565",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-29T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10791fcfbb2bf728d02645d295df5e23",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T18:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "73f5329bee4b778eddddea8f48925958",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "792ffa100b241d0861bfd34d2dfc3bac",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-01T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef442f1ffc5c6039ee258bf6d6962b7b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-02T20:00:00Z",
+        "completed": false,
+        "home_team": "Athletic Bilbao",
+        "away_team": "Mallorca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "122bcd553cbd6589d110cdf4c55dd35b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Valencia",
+        "away_team": "Almer\u00eda",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "790f75e9e13c1dabf99edc9ff28269ae",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70ee9c2f30214dfb14a7a34988606599",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Granada CF",
+        "away_team": "Las Palmas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "75a60547018a27abdbcbb2e073c785f9",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3248132397d74b3a7db80858c55f8053",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Girona",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4c77360cb5a958a5cc83e7a5e616ae6d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "C\u00e1diz CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74af5be61ee3b617736416d03e713cf6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91a5015cf991f0bad171e397edf664e0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Betis",
+        "away_team": "Getafe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a9045e98fb455930eabea786b46f488",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T20:00:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "534d75c694f55ed777277b75b37de12e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-05T20:00:00Z",
+        "completed": false,
+        "home_team": "Rayo Vallecano",
+        "away_team": "Sevilla",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "8c071619d19911017e4930332e7501e1",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-26T20:01:19Z",
+        "completed": true,
+        "home_team": "Almer\u00eda",
+        "away_team": "Alav\u00e9s",
+        "scores": [
+            {
+                "name": "Alav\u00e9s",
+                "score": "3"
+            },
+            {
+                "name": "Almer\u00eda",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T03:26:19Z"
+    },
+    {
+        "id": "225bbe593068e7d9a6a395376e031cea",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T13:02:55Z",
+        "completed": true,
+        "home_team": "Real Sociedad",
+        "away_team": "Rayo Vallecano",
+        "scores": [
+            {
+                "name": "Rayo Vallecano",
+                "score": "0"
+            },
+            {
+                "name": "Real Sociedad",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:14Z"
+    },
+    {
+        "id": "cea195ab47fdf42254ee1babb71dbee6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T15:18:34Z",
+        "completed": true,
+        "home_team": "Las Palmas",
+        "away_team": "Real Madrid",
+        "scores": [
+            {
+                "name": "Real Madrid",
+                "score": "2"
+            },
+            {
+                "name": "Las Palmas",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:14Z"
+    },
+    {
+        "id": "158371c72fa76bb5a1656b249e16825f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T17:32:31Z",
+        "completed": true,
+        "home_team": "Barcelona",
+        "away_team": "Villarreal",
+        "scores": [
+            {
+                "name": "Villarreal",
+                "score": "5"
+            },
+            {
+                "name": "Barcelona",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:14Z"
+    },
+    {
+        "id": "eef2605b08b43460bd8d45cf9a1125fe",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T20:01:26Z",
+        "completed": true,
+        "home_team": "Mallorca",
+        "away_team": "Real Betis",
+        "scores": [
+            {
+                "name": "Real Betis",
+                "score": "1"
+            },
+            {
+                "name": "Mallorca",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:14Z"
+    },
+    {
+        "id": "61a9a5784137ff98c1a3f6c14d57a541",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "Celta Vigo",
+        "away_team": "Girona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "64245be06e7581026e75fc9d0443a0e4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Athletic Bilbao",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "04430fb1801eaa9338dc0683e2107265",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b1cbf23294942e91b294c5f01b4933c4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f57e321f441829f9fabcacd5171af565",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-29T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10791fcfbb2bf728d02645d295df5e23",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T18:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "73f5329bee4b778eddddea8f48925958",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "792ffa100b241d0861bfd34d2dfc3bac",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-01T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef442f1ffc5c6039ee258bf6d6962b7b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-02T20:00:00Z",
+        "completed": false,
+        "home_team": "Athletic Bilbao",
+        "away_team": "Mallorca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "122bcd553cbd6589d110cdf4c55dd35b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Valencia",
+        "away_team": "Almer\u00eda",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70ee9c2f30214dfb14a7a34988606599",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Granada CF",
+        "away_team": "Las Palmas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "75a60547018a27abdbcbb2e073c785f9",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3248132397d74b3a7db80858c55f8053",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Girona",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4c77360cb5a958a5cc83e7a5e616ae6d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "C\u00e1diz CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74af5be61ee3b617736416d03e713cf6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91a5015cf991f0bad171e397edf664e0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Betis",
+        "away_team": "Getafe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a9045e98fb455930eabea786b46f488",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T20:00:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "534d75c694f55ed777277b75b37de12e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-05T20:00:00Z",
+        "completed": false,
+        "home_team": "Rayo Vallecano",
+        "away_team": "Sevilla",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "8c071619d19911017e4930332e7501e1",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-26T20:01:19Z",
+        "completed": true,
+        "home_team": "Almer\u00eda",
+        "away_team": "Alav\u00e9s",
+        "scores": [
+            {
+                "name": "Alav\u00e9s",
+                "score": "3"
+            },
+            {
+                "name": "Almer\u00eda",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T03:26:19Z"
+    },
+    {
+        "id": "225bbe593068e7d9a6a395376e031cea",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T13:02:55Z",
+        "completed": true,
+        "home_team": "Real Sociedad",
+        "away_team": "Rayo Vallecano",
+        "scores": [
+            {
+                "name": "Rayo Vallecano",
+                "score": "0"
+            },
+            {
+                "name": "Real Sociedad",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "cea195ab47fdf42254ee1babb71dbee6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T15:18:34Z",
+        "completed": true,
+        "home_team": "Las Palmas",
+        "away_team": "Real Madrid",
+        "scores": [
+            {
+                "name": "Real Madrid",
+                "score": "2"
+            },
+            {
+                "name": "Las Palmas",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "158371c72fa76bb5a1656b249e16825f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T17:32:31Z",
+        "completed": true,
+        "home_team": "Barcelona",
+        "away_team": "Villarreal",
+        "scores": [
+            {
+                "name": "Villarreal",
+                "score": "5"
+            },
+            {
+                "name": "Barcelona",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "eef2605b08b43460bd8d45cf9a1125fe",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T20:01:26Z",
+        "completed": true,
+        "home_team": "Mallorca",
+        "away_team": "Real Betis",
+        "scores": [
+            {
+                "name": "Real Betis",
+                "score": "1"
+            },
+            {
+                "name": "Mallorca",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "61a9a5784137ff98c1a3f6c14d57a541",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "Celta Vigo",
+        "away_team": "Girona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "64245be06e7581026e75fc9d0443a0e4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Athletic Bilbao",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "04430fb1801eaa9338dc0683e2107265",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b1cbf23294942e91b294c5f01b4933c4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f57e321f441829f9fabcacd5171af565",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-29T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10791fcfbb2bf728d02645d295df5e23",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T18:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "73f5329bee4b778eddddea8f48925958",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "792ffa100b241d0861bfd34d2dfc3bac",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-01T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef442f1ffc5c6039ee258bf6d6962b7b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-02T20:00:00Z",
+        "completed": false,
+        "home_team": "Athletic Bilbao",
+        "away_team": "Mallorca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "122bcd553cbd6589d110cdf4c55dd35b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Valencia",
+        "away_team": "Almer\u00eda",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70ee9c2f30214dfb14a7a34988606599",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Granada CF",
+        "away_team": "Las Palmas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "75a60547018a27abdbcbb2e073c785f9",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3248132397d74b3a7db80858c55f8053",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Girona",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4c77360cb5a958a5cc83e7a5e616ae6d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "C\u00e1diz CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74af5be61ee3b617736416d03e713cf6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91a5015cf991f0bad171e397edf664e0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Betis",
+        "away_team": "Getafe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a9045e98fb455930eabea786b46f488",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T20:00:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "534d75c694f55ed777277b75b37de12e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-05T20:00:00Z",
+        "completed": false,
+        "home_team": "Rayo Vallecano",
+        "away_team": "Sevilla",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "8c071619d19911017e4930332e7501e1",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-26T20:01:19Z",
+        "completed": true,
+        "home_team": "Almer\u00eda",
+        "away_team": "Alav\u00e9s",
+        "scores": [
+            {
+                "name": "Alav\u00e9s",
+                "score": "3"
+            },
+            {
+                "name": "Almer\u00eda",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T03:26:19Z"
+    },
+    {
+        "id": "225bbe593068e7d9a6a395376e031cea",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T13:02:55Z",
+        "completed": true,
+        "home_team": "Real Sociedad",
+        "away_team": "Rayo Vallecano",
+        "scores": [
+            {
+                "name": "Rayo Vallecano",
+                "score": "0"
+            },
+            {
+                "name": "Real Sociedad",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "cea195ab47fdf42254ee1babb71dbee6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T15:18:34Z",
+        "completed": true,
+        "home_team": "Las Palmas",
+        "away_team": "Real Madrid",
+        "scores": [
+            {
+                "name": "Real Madrid",
+                "score": "2"
+            },
+            {
+                "name": "Las Palmas",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "158371c72fa76bb5a1656b249e16825f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T17:32:31Z",
+        "completed": true,
+        "home_team": "Barcelona",
+        "away_team": "Villarreal",
+        "scores": [
+            {
+                "name": "Villarreal",
+                "score": "5"
+            },
+            {
+                "name": "Barcelona",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "eef2605b08b43460bd8d45cf9a1125fe",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T20:01:26Z",
+        "completed": true,
+        "home_team": "Mallorca",
+        "away_team": "Real Betis",
+        "scores": [
+            {
+                "name": "Real Betis",
+                "score": "1"
+            },
+            {
+                "name": "Mallorca",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:48Z"
+    },
+    {
+        "id": "61a9a5784137ff98c1a3f6c14d57a541",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "Celta Vigo",
+        "away_team": "Girona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "64245be06e7581026e75fc9d0443a0e4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Athletic Bilbao",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "04430fb1801eaa9338dc0683e2107265",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b1cbf23294942e91b294c5f01b4933c4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f57e321f441829f9fabcacd5171af565",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-29T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10791fcfbb2bf728d02645d295df5e23",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T18:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "73f5329bee4b778eddddea8f48925958",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "792ffa100b241d0861bfd34d2dfc3bac",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-01T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef442f1ffc5c6039ee258bf6d6962b7b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-02T20:00:00Z",
+        "completed": false,
+        "home_team": "Athletic Bilbao",
+        "away_team": "Mallorca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "122bcd553cbd6589d110cdf4c55dd35b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Valencia",
+        "away_team": "Almer\u00eda",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70ee9c2f30214dfb14a7a34988606599",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Granada CF",
+        "away_team": "Las Palmas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "75a60547018a27abdbcbb2e073c785f9",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3248132397d74b3a7db80858c55f8053",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Girona",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4c77360cb5a958a5cc83e7a5e616ae6d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "C\u00e1diz CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74af5be61ee3b617736416d03e713cf6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91a5015cf991f0bad171e397edf664e0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Betis",
+        "away_team": "Getafe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a9045e98fb455930eabea786b46f488",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T20:00:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "534d75c694f55ed777277b75b37de12e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-05T20:00:00Z",
+        "completed": false,
+        "home_team": "Rayo Vallecano",
+        "away_team": "Sevilla",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "8c071619d19911017e4930332e7501e1",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-26T20:01:19Z",
+        "completed": true,
+        "home_team": "Almer\u00eda",
+        "away_team": "Alav\u00e9s",
+        "scores": [
+            {
+                "name": "Alav\u00e9s",
+                "score": "3"
+            },
+            {
+                "name": "Almer\u00eda",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T03:26:19Z"
+    },
+    {
+        "id": "225bbe593068e7d9a6a395376e031cea",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T13:02:55Z",
+        "completed": true,
+        "home_team": "Real Sociedad",
+        "away_team": "Rayo Vallecano",
+        "scores": [
+            {
+                "name": "Rayo Vallecano",
+                "score": "0"
+            },
+            {
+                "name": "Real Sociedad",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "cea195ab47fdf42254ee1babb71dbee6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T15:18:34Z",
+        "completed": true,
+        "home_team": "Las Palmas",
+        "away_team": "Real Madrid",
+        "scores": [
+            {
+                "name": "Real Madrid",
+                "score": "2"
+            },
+            {
+                "name": "Las Palmas",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "158371c72fa76bb5a1656b249e16825f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T17:32:31Z",
+        "completed": true,
+        "home_team": "Barcelona",
+        "away_team": "Villarreal",
+        "scores": [
+            {
+                "name": "Villarreal",
+                "score": "5"
+            },
+            {
+                "name": "Barcelona",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "eef2605b08b43460bd8d45cf9a1125fe",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T20:01:26Z",
+        "completed": true,
+        "home_team": "Mallorca",
+        "away_team": "Real Betis",
+        "scores": [
+            {
+                "name": "Real Betis",
+                "score": "1"
+            },
+            {
+                "name": "Mallorca",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "61a9a5784137ff98c1a3f6c14d57a541",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T13:03:22Z",
+        "completed": true,
+        "home_team": "Celta Vigo",
+        "away_team": "Girona",
+        "scores": [
+            {
+                "name": "Girona",
+                "score": "1"
+            },
+            {
+                "name": "Celta Vigo",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:52Z"
+    },
+    {
+        "id": "64245be06e7581026e75fc9d0443a0e4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T15:14:40Z",
+        "completed": true,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Athletic Bilbao",
+        "scores": [
+            {
+                "name": "Athletic Bilbao",
+                "score": "0"
+            },
+            {
+                "name": "C\u00e1diz CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:52Z"
+    },
+    {
+        "id": "04430fb1801eaa9338dc0683e2107265",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T17:32:51Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "CA Osasuna",
+        "scores": [
+            {
+                "name": "CA Osasuna",
+                "score": "0"
+            },
+            {
+                "name": "Sevilla",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:52Z"
+    },
+    {
+        "id": "b1cbf23294942e91b294c5f01b4933c4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f57e321f441829f9fabcacd5171af565",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-29T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10791fcfbb2bf728d02645d295df5e23",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T18:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "73f5329bee4b778eddddea8f48925958",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "792ffa100b241d0861bfd34d2dfc3bac",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-01T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef442f1ffc5c6039ee258bf6d6962b7b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-02T20:00:00Z",
+        "completed": false,
+        "home_team": "Athletic Bilbao",
+        "away_team": "Mallorca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "122bcd553cbd6589d110cdf4c55dd35b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Valencia",
+        "away_team": "Almer\u00eda",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70ee9c2f30214dfb14a7a34988606599",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Granada CF",
+        "away_team": "Las Palmas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "75a60547018a27abdbcbb2e073c785f9",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3248132397d74b3a7db80858c55f8053",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Girona",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4c77360cb5a958a5cc83e7a5e616ae6d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "C\u00e1diz CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74af5be61ee3b617736416d03e713cf6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91a5015cf991f0bad171e397edf664e0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Betis",
+        "away_team": "Getafe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a9045e98fb455930eabea786b46f488",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T20:00:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "534d75c694f55ed777277b75b37de12e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-05T20:00:00Z",
+        "completed": false,
+        "home_team": "Rayo Vallecano",
+        "away_team": "Sevilla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7d86904e9753872b4194d9b211b58323",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-09T20:00:00Z",
+        "completed": false,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Real Betis",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a7ce2dce5a019939817d4e01c2fe3168",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T13:00:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Villarreal",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ba117cd91478ff6cd7d1f41770123a4d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T15:15:00Z",
+        "completed": false,
+        "home_team": "Real Sociedad",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6577502969f75858aca9907f4869a9f0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Girona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e4ccbd529111d56ec5caf0d9745f750b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T20:00:00Z",
+        "completed": false,
+        "home_team": "Las Palmas",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a7f908e923cfdf14c50dc23d94bb1f1b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T13:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4bc289f691000caeca08c3081eb4b85f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T15:15:00Z",
+        "completed": false,
+        "home_team": "Mallorca",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c3863cda0e2d90ae567097e712672509",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T17:30:00Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c22de79ee226e5d9fd6dc70d4007972e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T20:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6d270237cb14704fb3a7a7575b1133f4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-12T20:00:00Z",
+        "completed": false,
+        "home_team": "Almer\u00eda",
+        "away_team": "Athletic Bilbao",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "8c071619d19911017e4930332e7501e1",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-26T20:01:19Z",
+        "completed": true,
+        "home_team": "Almer\u00eda",
+        "away_team": "Alav\u00e9s",
+        "scores": [
+            {
+                "name": "Alav\u00e9s",
+                "score": "3"
+            },
+            {
+                "name": "Almer\u00eda",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T03:26:19Z"
+    },
+    {
+        "id": "225bbe593068e7d9a6a395376e031cea",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T13:02:55Z",
+        "completed": true,
+        "home_team": "Real Sociedad",
+        "away_team": "Rayo Vallecano",
+        "scores": [
+            {
+                "name": "Rayo Vallecano",
+                "score": "0"
+            },
+            {
+                "name": "Real Sociedad",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "cea195ab47fdf42254ee1babb71dbee6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T15:18:34Z",
+        "completed": true,
+        "home_team": "Las Palmas",
+        "away_team": "Real Madrid",
+        "scores": [
+            {
+                "name": "Real Madrid",
+                "score": "2"
+            },
+            {
+                "name": "Las Palmas",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "158371c72fa76bb5a1656b249e16825f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T17:32:31Z",
+        "completed": true,
+        "home_team": "Barcelona",
+        "away_team": "Villarreal",
+        "scores": [
+            {
+                "name": "Villarreal",
+                "score": "5"
+            },
+            {
+                "name": "Barcelona",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "eef2605b08b43460bd8d45cf9a1125fe",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-27T20:01:26Z",
+        "completed": true,
+        "home_team": "Mallorca",
+        "away_team": "Real Betis",
+        "scores": [
+            {
+                "name": "Real Betis",
+                "score": "1"
+            },
+            {
+                "name": "Mallorca",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T03:28:07Z"
+    },
+    {
+        "id": "61a9a5784137ff98c1a3f6c14d57a541",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T13:03:22Z",
+        "completed": true,
+        "home_team": "Celta Vigo",
+        "away_team": "Girona",
+        "scores": [
+            {
+                "name": "Girona",
+                "score": "1"
+            },
+            {
+                "name": "Celta Vigo",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:22Z"
+    },
+    {
+        "id": "64245be06e7581026e75fc9d0443a0e4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T15:14:40Z",
+        "completed": true,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Athletic Bilbao",
+        "scores": [
+            {
+                "name": "Athletic Bilbao",
+                "score": "0"
+            },
+            {
+                "name": "C\u00e1diz CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:22Z"
+    },
+    {
+        "id": "04430fb1801eaa9338dc0683e2107265",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T17:32:51Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "CA Osasuna",
+        "scores": [
+            {
+                "name": "CA Osasuna",
+                "score": "0"
+            },
+            {
+                "name": "Sevilla",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:22Z"
+    },
+    {
+        "id": "b1cbf23294942e91b294c5f01b4933c4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f57e321f441829f9fabcacd5171af565",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-29T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10791fcfbb2bf728d02645d295df5e23",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T18:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "73f5329bee4b778eddddea8f48925958",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-01-31T20:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico Madrid",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "792ffa100b241d0861bfd34d2dfc3bac",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-01T20:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Real Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef442f1ffc5c6039ee258bf6d6962b7b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-02T20:00:00Z",
+        "completed": false,
+        "home_team": "Athletic Bilbao",
+        "away_team": "Mallorca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "122bcd553cbd6589d110cdf4c55dd35b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Valencia",
+        "away_team": "Almer\u00eda",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "70ee9c2f30214dfb14a7a34988606599",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Granada CF",
+        "away_team": "Las Palmas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "75a60547018a27abdbcbb2e073c785f9",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Barcelona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3248132397d74b3a7db80858c55f8053",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Girona",
+        "away_team": "Real Sociedad",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4c77360cb5a958a5cc83e7a5e616ae6d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "C\u00e1diz CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74af5be61ee3b617736416d03e713cf6",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "CA Osasuna",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "91a5015cf991f0bad171e397edf664e0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Betis",
+        "away_team": "Getafe",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1a9045e98fb455930eabea786b46f488",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-04T20:00:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "534d75c694f55ed777277b75b37de12e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-05T20:00:00Z",
+        "completed": false,
+        "home_team": "Rayo Vallecano",
+        "away_team": "Sevilla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7d86904e9753872b4194d9b211b58323",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-09T20:00:00Z",
+        "completed": false,
+        "home_team": "C\u00e1diz CF",
+        "away_team": "Real Betis",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a7ce2dce5a019939817d4e01c2fe3168",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T13:00:00Z",
+        "completed": false,
+        "home_team": "Alav\u00e9s",
+        "away_team": "Villarreal",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ba117cd91478ff6cd7d1f41770123a4d",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T15:15:00Z",
+        "completed": false,
+        "home_team": "Real Sociedad",
+        "away_team": "CA Osasuna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6577502969f75858aca9907f4869a9f0",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T17:30:00Z",
+        "completed": false,
+        "home_team": "Real Madrid",
+        "away_team": "Girona",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e4ccbd529111d56ec5caf0d9745f750b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-10T20:00:00Z",
+        "completed": false,
+        "home_team": "Las Palmas",
+        "away_team": "Valencia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a7f908e923cfdf14c50dc23d94bb1f1b",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T13:00:00Z",
+        "completed": false,
+        "home_team": "Getafe",
+        "away_team": "Celta Vigo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4bc289f691000caeca08c3081eb4b85f",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T15:15:00Z",
+        "completed": false,
+        "home_team": "Mallorca",
+        "away_team": "Rayo Vallecano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c3863cda0e2d90ae567097e712672509",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T17:30:00Z",
+        "completed": false,
+        "home_team": "Sevilla",
+        "away_team": "Atl\u00e9tico Madrid",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c22de79ee226e5d9fd6dc70d4007972e",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-11T20:00:00Z",
+        "completed": false,
+        "home_team": "Barcelona",
+        "away_team": "Granada CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6d270237cb14704fb3a7a7575b1133f4",
+        "sport_key": "soccer_spain_la_liga",
+        "sport_title": "La Liga - Spain",
+        "commence_time": "2024-02-12T20:00:00Z",
+        "completed": false,
+        "home_team": "Almer\u00eda",
+        "away_team": "Athletic Bilbao",
+        "scores": null,
+        "last_update": null
+    }
 ]

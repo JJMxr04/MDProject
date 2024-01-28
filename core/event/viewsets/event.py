@@ -13,7 +13,7 @@ class EventViewSet(AbstractViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = EventSerializer
     queryset = Event.objects.all()
-    ordering = ['-commence_time']
+    ordering = ['commence_time']
     # ordering = []
     pagination_class = EventPagination  # Use the custom pagination class
 

@@ -98,4 +98,1482 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "80a2b93de1df87aae96114d2c225316d",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-21T01:08:13Z",
+        "completed": true,
+        "home_team": "Am\u00e9rica",
+        "away_team": "Quer\u00e9taro",
+        "scores": [
+            {
+                "name": "Am\u00e9rica",
+                "score": "2"
+            },
+            {
+                "name": "Quer\u00e9taro",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-21T23:59:38Z"
+    },
+    {
+        "id": "6c14975f1c5a1a0ee8ab0c3fc5397f44",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-21T03:10:24Z",
+        "completed": true,
+        "home_team": "Atlas",
+        "away_team": "Tijuana",
+        "scores": [
+            {
+                "name": "Atlas",
+                "score": "0"
+            },
+            {
+                "name": "Tijuana",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-21T23:59:38Z"
+    },
+    {
+        "id": "6c728ad38f85b65ad95ec7f3536d6617",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-22T00:01:23Z",
+        "completed": true,
+        "home_team": "Tigres",
+        "away_team": "Guadalajara",
+        "scores": [
+            {
+                "name": "Tigres",
+                "score": "1"
+            },
+            {
+                "name": "Guadalajara",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-22T09:32:39Z"
+    },
+    {
+        "id": "65f29f93beb698ad376c1a13fd227e0f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-22T02:06:17Z",
+        "completed": true,
+        "home_team": "Santos Laguna",
+        "away_team": "Monterrey",
+        "scores": [
+            {
+                "name": "Santos Laguna",
+                "score": "0"
+            },
+            {
+                "name": "Monterrey",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-22T09:32:39Z"
+    },
+    {
+        "id": "821ad30dc27de84f51a092f719ee9dea",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-25T01:00:00Z",
+        "completed": false,
+        "home_team": "Atl\u00e9tico San Luis",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b14610e2a9dbd5bb4d033c52e8c9b34e",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-25T01:00:00Z",
+        "completed": false,
+        "home_team": "Monterrey",
+        "away_team": "Quer\u00e9taro",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f3d92277ed074b42601b32062c9068ec",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-25T03:06:00Z",
+        "completed": false,
+        "home_team": "FC Ju\u00e1rez",
+        "away_team": "Am\u00e9rica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "972fb8049e61d8eb97c907f4643a848b",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T01:00:00Z",
+        "completed": false,
+        "home_team": "Puebla",
+        "away_team": "Toluca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e983337bff4dad838b383cb6b273a0c1",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T03:00:00Z",
+        "completed": false,
+        "home_team": "Tijuana",
+        "away_team": "Guadalajara",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8fd8cbe2022d8953459f8e49fefad770",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:00:00Z",
+        "completed": false,
+        "home_team": "Cruz Azul",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0c0de999afa5acdff398b505d2c482dc",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:00:00Z",
+        "completed": false,
+        "home_team": "Le\u00f3n",
+        "away_team": "Santos Laguna",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c8a33a7ac971f3369e9e00cb83b6a642",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T01:00:00Z",
+        "completed": false,
+        "home_team": "Monterrey",
+        "away_team": "Atl\u00e9tico San Luis",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9ccc6588f3dda375f7f1ea8c3b7eef4f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T03:05:00Z",
+        "completed": false,
+        "home_team": "Necaxa",
+        "away_team": "Am\u00e9rica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "94168e7034e50ae81c363813128c302a",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T23:15:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Pachuca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0c55c4ef0c721435a3d462bf95581656",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T01:00:00Z",
+        "completed": false,
+        "home_team": "Atlas",
+        "away_team": "FC Ju\u00e1rez",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a645d3cd42e5c2f00d3a4539b95a2a38",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T03:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f3d92277ed074b42601b32062c9068ec",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-25T03:12:23Z",
+        "completed": true,
+        "home_team": "FC Ju\u00e1rez",
+        "away_team": "Am\u00e9rica",
+        "scores": [
+            {
+                "name": "FC Ju\u00e1rez",
+                "score": "0"
+            },
+            {
+                "name": "Am\u00e9rica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-25T10:33:19Z"
+    },
+    {
+        "id": "972fb8049e61d8eb97c907f4643a848b",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T01:04:37Z",
+        "completed": true,
+        "home_team": "Puebla",
+        "away_team": "Toluca",
+        "scores": [
+            {
+                "name": "Puebla",
+                "score": "1"
+            },
+            {
+                "name": "Toluca",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "e983337bff4dad838b383cb6b273a0c1",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T03:15:23Z",
+        "completed": true,
+        "home_team": "Tijuana",
+        "away_team": "Guadalajara",
+        "scores": [
+            {
+                "name": "Tijuana",
+                "score": "1"
+            },
+            {
+                "name": "Guadalajara",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "8fd8cbe2022d8953459f8e49fefad770",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:01:53Z",
+        "completed": true,
+        "home_team": "Cruz Azul",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": [
+            {
+                "name": "Cruz Azul",
+                "score": "2"
+            },
+            {
+                "name": "Mazatl\u00e1n FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "0c0de999afa5acdff398b505d2c482dc",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:04:02Z",
+        "completed": true,
+        "home_team": "Le\u00f3n",
+        "away_team": "Santos Laguna",
+        "scores": [
+            {
+                "name": "Le\u00f3n",
+                "score": "3"
+            },
+            {
+                "name": "Santos Laguna",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "c8a33a7ac971f3369e9e00cb83b6a642",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T01:02:22Z",
+        "completed": false,
+        "home_team": "Monterrey",
+        "away_team": "Atl\u00e9tico San Luis",
+        "scores": [
+            {
+                "name": "Monterrey",
+                "score": "2"
+            },
+            {
+                "name": "Atl\u00e9tico San Luis",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "9ccc6588f3dda375f7f1ea8c3b7eef4f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T03:05:00Z",
+        "completed": false,
+        "home_team": "Necaxa",
+        "away_team": "Am\u00e9rica",
+        "scores": null,
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "94168e7034e50ae81c363813128c302a",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T23:15:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Pachuca",
+        "scores": null,
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "0c55c4ef0c721435a3d462bf95581656",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T01:00:00Z",
+        "completed": false,
+        "home_team": "Atlas",
+        "away_team": "FC Ju\u00e1rez",
+        "scores": null,
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "a645d3cd42e5c2f00d3a4539b95a2a38",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T03:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": "2024-01-28T02:12:26Z"
+    },
+    {
+        "id": "dd8156861e257a10136f6a6cc3c2b566",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Cruz Azul",
+        "away_team": "Tijuana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d6be33ab306936348d34e184c67a18cd",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Mazatl\u00e1n FC",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f765902a940b58d8ba435388e0355e76",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:00:00Z",
+        "completed": false,
+        "home_team": "Santos Laguna",
+        "away_team": "Puebla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a5542b8587eb9d9b0f3297df4c3d6943",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:05:00Z",
+        "completed": false,
+        "home_team": "Guadalajara",
+        "away_team": "Toluca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fd9820e069ae99f70307a9390bb20eba",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T01:00:00Z",
+        "completed": false,
+        "home_team": "Pachuca",
+        "away_team": "Atlas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "815fb38662e98ce3e2dca7383dc195b8",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T03:00:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f3d92277ed074b42601b32062c9068ec",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-25T03:12:23Z",
+        "completed": true,
+        "home_team": "FC Ju\u00e1rez",
+        "away_team": "Am\u00e9rica",
+        "scores": [
+            {
+                "name": "FC Ju\u00e1rez",
+                "score": "0"
+            },
+            {
+                "name": "Am\u00e9rica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-25T10:33:19Z"
+    },
+    {
+        "id": "972fb8049e61d8eb97c907f4643a848b",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T01:04:37Z",
+        "completed": true,
+        "home_team": "Puebla",
+        "away_team": "Toluca",
+        "scores": [
+            {
+                "name": "Puebla",
+                "score": "1"
+            },
+            {
+                "name": "Toluca",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "e983337bff4dad838b383cb6b273a0c1",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T03:15:23Z",
+        "completed": true,
+        "home_team": "Tijuana",
+        "away_team": "Guadalajara",
+        "scores": [
+            {
+                "name": "Tijuana",
+                "score": "1"
+            },
+            {
+                "name": "Guadalajara",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "8fd8cbe2022d8953459f8e49fefad770",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:01:53Z",
+        "completed": true,
+        "home_team": "Cruz Azul",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": [
+            {
+                "name": "Cruz Azul",
+                "score": "2"
+            },
+            {
+                "name": "Mazatl\u00e1n FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "0c0de999afa5acdff398b505d2c482dc",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:04:02Z",
+        "completed": true,
+        "home_team": "Le\u00f3n",
+        "away_team": "Santos Laguna",
+        "scores": [
+            {
+                "name": "Le\u00f3n",
+                "score": "3"
+            },
+            {
+                "name": "Santos Laguna",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "c8a33a7ac971f3369e9e00cb83b6a642",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T01:02:22Z",
+        "completed": false,
+        "home_team": "Monterrey",
+        "away_team": "Atl\u00e9tico San Luis",
+        "scores": [
+            {
+                "name": "Monterrey",
+                "score": "2"
+            },
+            {
+                "name": "Atl\u00e9tico San Luis",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "9ccc6588f3dda375f7f1ea8c3b7eef4f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T03:05:00Z",
+        "completed": false,
+        "home_team": "Necaxa",
+        "away_team": "Am\u00e9rica",
+        "scores": null,
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "94168e7034e50ae81c363813128c302a",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T23:15:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Pachuca",
+        "scores": null,
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "0c55c4ef0c721435a3d462bf95581656",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T01:00:00Z",
+        "completed": false,
+        "home_team": "Atlas",
+        "away_team": "FC Ju\u00e1rez",
+        "scores": null,
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "a645d3cd42e5c2f00d3a4539b95a2a38",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T03:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": "2024-01-28T02:16:33Z"
+    },
+    {
+        "id": "dd8156861e257a10136f6a6cc3c2b566",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Cruz Azul",
+        "away_team": "Tijuana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d6be33ab306936348d34e184c67a18cd",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Mazatl\u00e1n FC",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f765902a940b58d8ba435388e0355e76",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:00:00Z",
+        "completed": false,
+        "home_team": "Santos Laguna",
+        "away_team": "Puebla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a5542b8587eb9d9b0f3297df4c3d6943",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:05:00Z",
+        "completed": false,
+        "home_team": "Guadalajara",
+        "away_team": "Toluca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fd9820e069ae99f70307a9390bb20eba",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T01:00:00Z",
+        "completed": false,
+        "home_team": "Pachuca",
+        "away_team": "Atlas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "815fb38662e98ce3e2dca7383dc195b8",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T03:00:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f3d92277ed074b42601b32062c9068ec",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-25T03:12:23Z",
+        "completed": true,
+        "home_team": "FC Ju\u00e1rez",
+        "away_team": "Am\u00e9rica",
+        "scores": [
+            {
+                "name": "FC Ju\u00e1rez",
+                "score": "0"
+            },
+            {
+                "name": "Am\u00e9rica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-25T10:33:19Z"
+    },
+    {
+        "id": "972fb8049e61d8eb97c907f4643a848b",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T01:04:37Z",
+        "completed": true,
+        "home_team": "Puebla",
+        "away_team": "Toluca",
+        "scores": [
+            {
+                "name": "Puebla",
+                "score": "1"
+            },
+            {
+                "name": "Toluca",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "e983337bff4dad838b383cb6b273a0c1",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T03:15:23Z",
+        "completed": true,
+        "home_team": "Tijuana",
+        "away_team": "Guadalajara",
+        "scores": [
+            {
+                "name": "Tijuana",
+                "score": "1"
+            },
+            {
+                "name": "Guadalajara",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "8fd8cbe2022d8953459f8e49fefad770",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:01:53Z",
+        "completed": true,
+        "home_team": "Cruz Azul",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": [
+            {
+                "name": "Cruz Azul",
+                "score": "2"
+            },
+            {
+                "name": "Mazatl\u00e1n FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "0c0de999afa5acdff398b505d2c482dc",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:04:02Z",
+        "completed": true,
+        "home_team": "Le\u00f3n",
+        "away_team": "Santos Laguna",
+        "scores": [
+            {
+                "name": "Le\u00f3n",
+                "score": "3"
+            },
+            {
+                "name": "Santos Laguna",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "c8a33a7ac971f3369e9e00cb83b6a642",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T01:02:22Z",
+        "completed": false,
+        "home_team": "Monterrey",
+        "away_team": "Atl\u00e9tico San Luis",
+        "scores": [
+            {
+                "name": "Monterrey",
+                "score": "2"
+            },
+            {
+                "name": "Atl\u00e9tico San Luis",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "9ccc6588f3dda375f7f1ea8c3b7eef4f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T03:05:00Z",
+        "completed": false,
+        "home_team": "Necaxa",
+        "away_team": "Am\u00e9rica",
+        "scores": null,
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "94168e7034e50ae81c363813128c302a",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T23:15:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Pachuca",
+        "scores": null,
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "0c55c4ef0c721435a3d462bf95581656",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T01:00:00Z",
+        "completed": false,
+        "home_team": "Atlas",
+        "away_team": "FC Ju\u00e1rez",
+        "scores": null,
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "a645d3cd42e5c2f00d3a4539b95a2a38",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T03:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": "2024-01-28T02:17:03Z"
+    },
+    {
+        "id": "dd8156861e257a10136f6a6cc3c2b566",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Cruz Azul",
+        "away_team": "Tijuana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d6be33ab306936348d34e184c67a18cd",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Mazatl\u00e1n FC",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f765902a940b58d8ba435388e0355e76",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:00:00Z",
+        "completed": false,
+        "home_team": "Santos Laguna",
+        "away_team": "Puebla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a5542b8587eb9d9b0f3297df4c3d6943",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:05:00Z",
+        "completed": false,
+        "home_team": "Guadalajara",
+        "away_team": "Toluca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fd9820e069ae99f70307a9390bb20eba",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T01:00:00Z",
+        "completed": false,
+        "home_team": "Pachuca",
+        "away_team": "Atlas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "815fb38662e98ce3e2dca7383dc195b8",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T03:00:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "972fb8049e61d8eb97c907f4643a848b",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T01:04:37Z",
+        "completed": true,
+        "home_team": "Puebla",
+        "away_team": "Toluca",
+        "scores": [
+            {
+                "name": "Puebla",
+                "score": "1"
+            },
+            {
+                "name": "Toluca",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "e983337bff4dad838b383cb6b273a0c1",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T03:15:23Z",
+        "completed": true,
+        "home_team": "Tijuana",
+        "away_team": "Guadalajara",
+        "scores": [
+            {
+                "name": "Tijuana",
+                "score": "1"
+            },
+            {
+                "name": "Guadalajara",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "8fd8cbe2022d8953459f8e49fefad770",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:01:53Z",
+        "completed": true,
+        "home_team": "Cruz Azul",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": [
+            {
+                "name": "Cruz Azul",
+                "score": "2"
+            },
+            {
+                "name": "Mazatl\u00e1n FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "0c0de999afa5acdff398b505d2c482dc",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:04:02Z",
+        "completed": true,
+        "home_team": "Le\u00f3n",
+        "away_team": "Santos Laguna",
+        "scores": [
+            {
+                "name": "Le\u00f3n",
+                "score": "3"
+            },
+            {
+                "name": "Santos Laguna",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "c8a33a7ac971f3369e9e00cb83b6a642",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T01:02:22Z",
+        "completed": true,
+        "home_team": "Monterrey",
+        "away_team": "Atl\u00e9tico San Luis",
+        "scores": [
+            {
+                "name": "Monterrey",
+                "score": "3"
+            },
+            {
+                "name": "Atl\u00e9tico San Luis",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "9ccc6588f3dda375f7f1ea8c3b7eef4f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T03:08:58Z",
+        "completed": true,
+        "home_team": "Necaxa",
+        "away_team": "Am\u00e9rica",
+        "scores": [
+            {
+                "name": "Necaxa",
+                "score": "0"
+            },
+            {
+                "name": "Am\u00e9rica",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "94168e7034e50ae81c363813128c302a",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T23:15:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Pachuca",
+        "scores": null,
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "0c55c4ef0c721435a3d462bf95581656",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T01:00:00Z",
+        "completed": false,
+        "home_team": "Atlas",
+        "away_team": "FC Ju\u00e1rez",
+        "scores": null,
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "a645d3cd42e5c2f00d3a4539b95a2a38",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T03:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "dd8156861e257a10136f6a6cc3c2b566",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Cruz Azul",
+        "away_team": "Tijuana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d6be33ab306936348d34e184c67a18cd",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Mazatl\u00e1n FC",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f765902a940b58d8ba435388e0355e76",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:00:00Z",
+        "completed": false,
+        "home_team": "Santos Laguna",
+        "away_team": "Puebla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a5542b8587eb9d9b0f3297df4c3d6943",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:05:00Z",
+        "completed": false,
+        "home_team": "Guadalajara",
+        "away_team": "Toluca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fd9820e069ae99f70307a9390bb20eba",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T01:00:00Z",
+        "completed": false,
+        "home_team": "Pachuca",
+        "away_team": "Atlas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "815fb38662e98ce3e2dca7383dc195b8",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T03:00:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0b1aba6d09ae45eeec18424044bd105f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T01:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Cruz Azul",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "494894912d0898b61ad56dcd780e4d23",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T03:00:00Z",
+        "completed": false,
+        "home_team": "Puebla",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f27ca76f785890a03786a8bef61ce18f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T23:00:00Z",
+        "completed": false,
+        "home_team": "FC Ju\u00e1rez",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d89be585236ea8277af05ad0e9979043",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T23:00:00Z",
+        "completed": false,
+        "home_team": "Toluca",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3e9d1433c56bdd86d44ffa447b827c82",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-04T01:00:00Z",
+        "completed": false,
+        "home_team": "Tigres",
+        "away_team": "Pumas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9ea8cfe6a8459ec9856d5bdda5f4227c",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-04T03:00:00Z",
+        "completed": false,
+        "home_team": "Am\u00e9rica",
+        "away_team": "Monterrey",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "972fb8049e61d8eb97c907f4643a848b",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T01:04:37Z",
+        "completed": true,
+        "home_team": "Puebla",
+        "away_team": "Toluca",
+        "scores": [
+            {
+                "name": "Puebla",
+                "score": "1"
+            },
+            {
+                "name": "Toluca",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "e983337bff4dad838b383cb6b273a0c1",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T03:15:23Z",
+        "completed": true,
+        "home_team": "Tijuana",
+        "away_team": "Guadalajara",
+        "scores": [
+            {
+                "name": "Tijuana",
+                "score": "1"
+            },
+            {
+                "name": "Guadalajara",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T23:59:50Z"
+    },
+    {
+        "id": "8fd8cbe2022d8953459f8e49fefad770",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:01:53Z",
+        "completed": true,
+        "home_team": "Cruz Azul",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": [
+            {
+                "name": "Cruz Azul",
+                "score": "2"
+            },
+            {
+                "name": "Mazatl\u00e1n FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "0c0de999afa5acdff398b505d2c482dc",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-27T23:04:02Z",
+        "completed": true,
+        "home_team": "Le\u00f3n",
+        "away_team": "Santos Laguna",
+        "scores": [
+            {
+                "name": "Le\u00f3n",
+                "score": "3"
+            },
+            {
+                "name": "Santos Laguna",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "c8a33a7ac971f3369e9e00cb83b6a642",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T01:02:22Z",
+        "completed": true,
+        "home_team": "Monterrey",
+        "away_team": "Atl\u00e9tico San Luis",
+        "scores": [
+            {
+                "name": "Monterrey",
+                "score": "3"
+            },
+            {
+                "name": "Atl\u00e9tico San Luis",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "9ccc6588f3dda375f7f1ea8c3b7eef4f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T03:08:58Z",
+        "completed": true,
+        "home_team": "Necaxa",
+        "away_team": "Am\u00e9rica",
+        "scores": [
+            {
+                "name": "Necaxa",
+                "score": "0"
+            },
+            {
+                "name": "Am\u00e9rica",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "94168e7034e50ae81c363813128c302a",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-28T23:15:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Pachuca",
+        "scores": null,
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "0c55c4ef0c721435a3d462bf95581656",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T01:00:00Z",
+        "completed": false,
+        "home_team": "Atlas",
+        "away_team": "FC Ju\u00e1rez",
+        "scores": null,
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "a645d3cd42e5c2f00d3a4539b95a2a38",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-29T03:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Tigres",
+        "scores": null,
+        "last_update": "2024-01-28T10:45:40Z"
+    },
+    {
+        "id": "dd8156861e257a10136f6a6cc3c2b566",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Cruz Azul",
+        "away_team": "Tijuana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d6be33ab306936348d34e184c67a18cd",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T01:00:00Z",
+        "completed": false,
+        "home_team": "Mazatl\u00e1n FC",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f765902a940b58d8ba435388e0355e76",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:00:00Z",
+        "completed": false,
+        "home_team": "Santos Laguna",
+        "away_team": "Puebla",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a5542b8587eb9d9b0f3297df4c3d6943",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-01-31T03:05:00Z",
+        "completed": false,
+        "home_team": "Guadalajara",
+        "away_team": "Toluca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fd9820e069ae99f70307a9390bb20eba",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T01:00:00Z",
+        "completed": false,
+        "home_team": "Pachuca",
+        "away_team": "Atlas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "815fb38662e98ce3e2dca7383dc195b8",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-01T03:00:00Z",
+        "completed": false,
+        "home_team": "Pumas",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0b1aba6d09ae45eeec18424044bd105f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T01:00:00Z",
+        "completed": false,
+        "home_team": "Quer\u00e9taro",
+        "away_team": "Cruz Azul",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "494894912d0898b61ad56dcd780e4d23",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T03:00:00Z",
+        "completed": false,
+        "home_team": "Puebla",
+        "away_team": "Mazatl\u00e1n FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f27ca76f785890a03786a8bef61ce18f",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T23:00:00Z",
+        "completed": false,
+        "home_team": "FC Ju\u00e1rez",
+        "away_team": "Necaxa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d89be585236ea8277af05ad0e9979043",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-03T23:00:00Z",
+        "completed": false,
+        "home_team": "Toluca",
+        "away_team": "Le\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "3e9d1433c56bdd86d44ffa447b827c82",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-04T01:00:00Z",
+        "completed": false,
+        "home_team": "Tigres",
+        "away_team": "Pumas",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9ea8cfe6a8459ec9856d5bdda5f4227c",
+        "sport_key": "soccer_mexico_ligamx",
+        "sport_title": "Liga MX",
+        "commence_time": "2024-02-04T03:00:00Z",
+        "completed": false,
+        "home_team": "Am\u00e9rica",
+        "away_team": "Monterrey",
+        "scores": null,
+        "last_update": null
+    }
 ]

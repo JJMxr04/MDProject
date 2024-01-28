@@ -109,4 +109,1564 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "769a511cc60a72c1ed858071bd21617c",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-21T15:16:22Z",
+        "completed": true,
+        "home_team": "Ascoli",
+        "away_team": "Bari",
+        "scores": [
+            {
+                "name": "Bari",
+                "score": "2"
+            },
+            {
+                "name": "Ascoli",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-21T22:44:01Z"
+    },
+    {
+        "id": "4e15f44b08cfef009b84040c8e71a6b1",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-26T19:30:00Z",
+        "completed": false,
+        "home_team": "US Catanzaro 1929",
+        "away_team": "Palermo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b33c28696ed766a22a289b7f55fc3b71",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:00:00Z",
+        "completed": false,
+        "home_team": "Como",
+        "away_team": "Ascoli",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2a3310abf7842f7bcda044e0844d671a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:00:00Z",
+        "completed": false,
+        "home_team": "Cremonese",
+        "away_team": "Brescia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b630a17196604dff9d116af3ac1d9811",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:00:00Z",
+        "completed": false,
+        "home_team": "S\u00fcdtirol",
+        "away_team": "Cosenza",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a0c6540e6b43f1a1b14e8453069fbb8a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:00:00Z",
+        "completed": false,
+        "home_team": "Modena",
+        "away_team": "Parma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "31f959197a7ccc286a7f39bf90556903",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:00:00Z",
+        "completed": false,
+        "home_team": "Venezia",
+        "away_team": "Ternana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d72ea659fe639496b2c7d933dccac333",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:15:00Z",
+        "completed": false,
+        "home_team": "Bari",
+        "away_team": "Reggiana",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "afc2c671a93ddba9566e79c61af10390",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:15:00Z",
+        "completed": false,
+        "home_team": "Feralpisal\u00f2",
+        "away_team": "Lecco",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ca6a5490dcaa15c3eb502b6dc975ba8d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:15:00Z",
+        "completed": false,
+        "home_team": "Pisa",
+        "away_team": "Spezia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bb9b206a8c612e71a384b73230d4d537",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Cittadella",
+        "away_team": "Sampdoria",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4e15f44b08cfef009b84040c8e71a6b1",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-26T19:32:42Z",
+        "completed": true,
+        "home_team": "US Catanzaro 1929",
+        "away_team": "Palermo",
+        "scores": [
+            {
+                "name": "Palermo",
+                "score": "1"
+            },
+            {
+                "name": "US Catanzaro 1929",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T19:23:02Z"
+    },
+    {
+        "id": "31f959197a7ccc286a7f39bf90556903",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:01:56Z",
+        "completed": true,
+        "home_team": "Venezia",
+        "away_team": "Ternana",
+        "scores": [
+            {
+                "name": "Ternana",
+                "score": "0"
+            },
+            {
+                "name": "Venezia",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "b630a17196604dff9d116af3ac1d9811",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:30Z",
+        "completed": true,
+        "home_team": "S\u00fcdtirol",
+        "away_team": "Cosenza",
+        "scores": [
+            {
+                "name": "Cosenza",
+                "score": "1"
+            },
+            {
+                "name": "S\u00fcdtirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "b33c28696ed766a22a289b7f55fc3b71",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:31Z",
+        "completed": true,
+        "home_team": "Como",
+        "away_team": "Ascoli",
+        "scores": [
+            {
+                "name": "Ascoli",
+                "score": "2"
+            },
+            {
+                "name": "Como",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "a0c6540e6b43f1a1b14e8453069fbb8a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:51Z",
+        "completed": true,
+        "home_team": "Modena",
+        "away_team": "Parma",
+        "scores": [
+            {
+                "name": "Parma",
+                "score": "0"
+            },
+            {
+                "name": "Modena",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "2a3310abf7842f7bcda044e0844d671a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:03:36Z",
+        "completed": true,
+        "home_team": "Cremonese",
+        "away_team": "Brescia",
+        "scores": [
+            {
+                "name": "Brescia",
+                "score": "0"
+            },
+            {
+                "name": "Cremonese",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "d72ea659fe639496b2c7d933dccac333",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:06Z",
+        "completed": true,
+        "home_team": "Bari",
+        "away_team": "Reggiana",
+        "scores": [
+            {
+                "name": "Reggiana",
+                "score": "2"
+            },
+            {
+                "name": "Bari",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "ca6a5490dcaa15c3eb502b6dc975ba8d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:38Z",
+        "completed": true,
+        "home_team": "Pisa",
+        "away_team": "Spezia",
+        "scores": [
+            {
+                "name": "Spezia",
+                "score": "3"
+            },
+            {
+                "name": "Pisa",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "afc2c671a93ddba9566e79c61af10390",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:19:01Z",
+        "completed": true,
+        "home_team": "Feralpisal\u00f2",
+        "away_team": "Lecco",
+        "scores": [
+            {
+                "name": "Lecco",
+                "score": "1"
+            },
+            {
+                "name": "Feralpisal\u00f2",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "bb9b206a8c612e71a384b73230d4d537",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Cittadella",
+        "away_team": "Sampdoria",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "163993e447582d4b62f678e94c0c10b9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Palermo",
+        "away_team": "Bari",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "efa66ae37c02f3bf92f4da9320a41004",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Cosenza",
+        "away_team": "Pisa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "376b02acd619d9eb1e4c83c84ae2d7a4",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Reggiana",
+        "away_team": "Feralpisal\u00f2",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c4d45bdea67a1952d6430daf7e629977",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Parma",
+        "away_team": "Venezia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a6e5bd215c74be78d7c59affb1509d8c",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Spezia",
+        "away_team": "US Catanzaro 1929",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7a12ba4f01dd5cdca5344fcc2404464d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Ternana",
+        "away_team": "Como",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e60a65b208ade2f1957c20b0ddd20d9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Lecco",
+        "away_team": "Cremonese",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4e15f44b08cfef009b84040c8e71a6b1",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-26T19:32:42Z",
+        "completed": true,
+        "home_team": "US Catanzaro 1929",
+        "away_team": "Palermo",
+        "scores": [
+            {
+                "name": "Palermo",
+                "score": "1"
+            },
+            {
+                "name": "US Catanzaro 1929",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T19:23:02Z"
+    },
+    {
+        "id": "31f959197a7ccc286a7f39bf90556903",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:01:56Z",
+        "completed": true,
+        "home_team": "Venezia",
+        "away_team": "Ternana",
+        "scores": [
+            {
+                "name": "Ternana",
+                "score": "0"
+            },
+            {
+                "name": "Venezia",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "b630a17196604dff9d116af3ac1d9811",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:30Z",
+        "completed": true,
+        "home_team": "S\u00fcdtirol",
+        "away_team": "Cosenza",
+        "scores": [
+            {
+                "name": "Cosenza",
+                "score": "1"
+            },
+            {
+                "name": "S\u00fcdtirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "b33c28696ed766a22a289b7f55fc3b71",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:31Z",
+        "completed": true,
+        "home_team": "Como",
+        "away_team": "Ascoli",
+        "scores": [
+            {
+                "name": "Ascoli",
+                "score": "2"
+            },
+            {
+                "name": "Como",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "a0c6540e6b43f1a1b14e8453069fbb8a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:51Z",
+        "completed": true,
+        "home_team": "Modena",
+        "away_team": "Parma",
+        "scores": [
+            {
+                "name": "Parma",
+                "score": "0"
+            },
+            {
+                "name": "Modena",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "2a3310abf7842f7bcda044e0844d671a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:03:36Z",
+        "completed": true,
+        "home_team": "Cremonese",
+        "away_team": "Brescia",
+        "scores": [
+            {
+                "name": "Brescia",
+                "score": "0"
+            },
+            {
+                "name": "Cremonese",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "d72ea659fe639496b2c7d933dccac333",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:06Z",
+        "completed": true,
+        "home_team": "Bari",
+        "away_team": "Reggiana",
+        "scores": [
+            {
+                "name": "Reggiana",
+                "score": "2"
+            },
+            {
+                "name": "Bari",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "ca6a5490dcaa15c3eb502b6dc975ba8d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:38Z",
+        "completed": true,
+        "home_team": "Pisa",
+        "away_team": "Spezia",
+        "scores": [
+            {
+                "name": "Spezia",
+                "score": "3"
+            },
+            {
+                "name": "Pisa",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "afc2c671a93ddba9566e79c61af10390",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:19:01Z",
+        "completed": true,
+        "home_team": "Feralpisal\u00f2",
+        "away_team": "Lecco",
+        "scores": [
+            {
+                "name": "Lecco",
+                "score": "1"
+            },
+            {
+                "name": "Feralpisal\u00f2",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "bb9b206a8c612e71a384b73230d4d537",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Cittadella",
+        "away_team": "Sampdoria",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "163993e447582d4b62f678e94c0c10b9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Palermo",
+        "away_team": "Bari",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "efa66ae37c02f3bf92f4da9320a41004",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Cosenza",
+        "away_team": "Pisa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "376b02acd619d9eb1e4c83c84ae2d7a4",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Reggiana",
+        "away_team": "Feralpisal\u00f2",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c4d45bdea67a1952d6430daf7e629977",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Parma",
+        "away_team": "Venezia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a6e5bd215c74be78d7c59affb1509d8c",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Spezia",
+        "away_team": "US Catanzaro 1929",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7a12ba4f01dd5cdca5344fcc2404464d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Ternana",
+        "away_team": "Como",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e60a65b208ade2f1957c20b0ddd20d9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Lecco",
+        "away_team": "Cremonese",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4e15f44b08cfef009b84040c8e71a6b1",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-26T19:32:42Z",
+        "completed": true,
+        "home_team": "US Catanzaro 1929",
+        "away_team": "Palermo",
+        "scores": [
+            {
+                "name": "Palermo",
+                "score": "1"
+            },
+            {
+                "name": "US Catanzaro 1929",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T19:23:02Z"
+    },
+    {
+        "id": "31f959197a7ccc286a7f39bf90556903",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:01:56Z",
+        "completed": true,
+        "home_team": "Venezia",
+        "away_team": "Ternana",
+        "scores": [
+            {
+                "name": "Ternana",
+                "score": "0"
+            },
+            {
+                "name": "Venezia",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "b630a17196604dff9d116af3ac1d9811",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:30Z",
+        "completed": true,
+        "home_team": "S\u00fcdtirol",
+        "away_team": "Cosenza",
+        "scores": [
+            {
+                "name": "Cosenza",
+                "score": "1"
+            },
+            {
+                "name": "S\u00fcdtirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "b33c28696ed766a22a289b7f55fc3b71",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:31Z",
+        "completed": true,
+        "home_team": "Como",
+        "away_team": "Ascoli",
+        "scores": [
+            {
+                "name": "Ascoli",
+                "score": "2"
+            },
+            {
+                "name": "Como",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "a0c6540e6b43f1a1b14e8453069fbb8a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:51Z",
+        "completed": true,
+        "home_team": "Modena",
+        "away_team": "Parma",
+        "scores": [
+            {
+                "name": "Parma",
+                "score": "0"
+            },
+            {
+                "name": "Modena",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "2a3310abf7842f7bcda044e0844d671a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:03:36Z",
+        "completed": true,
+        "home_team": "Cremonese",
+        "away_team": "Brescia",
+        "scores": [
+            {
+                "name": "Brescia",
+                "score": "0"
+            },
+            {
+                "name": "Cremonese",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "d72ea659fe639496b2c7d933dccac333",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:06Z",
+        "completed": true,
+        "home_team": "Bari",
+        "away_team": "Reggiana",
+        "scores": [
+            {
+                "name": "Reggiana",
+                "score": "2"
+            },
+            {
+                "name": "Bari",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "ca6a5490dcaa15c3eb502b6dc975ba8d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:38Z",
+        "completed": true,
+        "home_team": "Pisa",
+        "away_team": "Spezia",
+        "scores": [
+            {
+                "name": "Spezia",
+                "score": "3"
+            },
+            {
+                "name": "Pisa",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "afc2c671a93ddba9566e79c61af10390",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:19:01Z",
+        "completed": true,
+        "home_team": "Feralpisal\u00f2",
+        "away_team": "Lecco",
+        "scores": [
+            {
+                "name": "Lecco",
+                "score": "1"
+            },
+            {
+                "name": "Feralpisal\u00f2",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-27T22:43:55Z"
+    },
+    {
+        "id": "bb9b206a8c612e71a384b73230d4d537",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Cittadella",
+        "away_team": "Sampdoria",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "163993e447582d4b62f678e94c0c10b9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Palermo",
+        "away_team": "Bari",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "efa66ae37c02f3bf92f4da9320a41004",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Cosenza",
+        "away_team": "Pisa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "376b02acd619d9eb1e4c83c84ae2d7a4",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Reggiana",
+        "away_team": "Feralpisal\u00f2",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c4d45bdea67a1952d6430daf7e629977",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Parma",
+        "away_team": "Venezia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a6e5bd215c74be78d7c59affb1509d8c",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Spezia",
+        "away_team": "US Catanzaro 1929",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7a12ba4f01dd5cdca5344fcc2404464d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Ternana",
+        "away_team": "Como",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e60a65b208ade2f1957c20b0ddd20d9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Lecco",
+        "away_team": "Cremonese",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4e15f44b08cfef009b84040c8e71a6b1",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-26T19:32:42Z",
+        "completed": true,
+        "home_team": "US Catanzaro 1929",
+        "away_team": "Palermo",
+        "scores": [
+            {
+                "name": "US Catanzaro 1929",
+                "score": "1"
+            },
+            {
+                "name": "Palermo",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "31f959197a7ccc286a7f39bf90556903",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:01:56Z",
+        "completed": true,
+        "home_team": "Venezia",
+        "away_team": "Ternana",
+        "scores": [
+            {
+                "name": "Venezia",
+                "score": "1"
+            },
+            {
+                "name": "Ternana",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "b630a17196604dff9d116af3ac1d9811",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:30Z",
+        "completed": true,
+        "home_team": "S\u00fcdtirol",
+        "away_team": "Cosenza",
+        "scores": [
+            {
+                "name": "S\u00fcdtirol",
+                "score": "0"
+            },
+            {
+                "name": "Cosenza",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "b33c28696ed766a22a289b7f55fc3b71",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:31Z",
+        "completed": true,
+        "home_team": "Como",
+        "away_team": "Ascoli",
+        "scores": [
+            {
+                "name": "Como",
+                "score": "0"
+            },
+            {
+                "name": "Ascoli",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "a0c6540e6b43f1a1b14e8453069fbb8a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:51Z",
+        "completed": true,
+        "home_team": "Modena",
+        "away_team": "Parma",
+        "scores": [
+            {
+                "name": "Modena",
+                "score": "3"
+            },
+            {
+                "name": "Parma",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "2a3310abf7842f7bcda044e0844d671a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:03:36Z",
+        "completed": true,
+        "home_team": "Cremonese",
+        "away_team": "Brescia",
+        "scores": [
+            {
+                "name": "Cremonese",
+                "score": "1"
+            },
+            {
+                "name": "Brescia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "d72ea659fe639496b2c7d933dccac333",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:06Z",
+        "completed": true,
+        "home_team": "Bari",
+        "away_team": "Reggiana",
+        "scores": [
+            {
+                "name": "Bari",
+                "score": "0"
+            },
+            {
+                "name": "Reggiana",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "ca6a5490dcaa15c3eb502b6dc975ba8d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:38Z",
+        "completed": true,
+        "home_team": "Pisa",
+        "away_team": "Spezia",
+        "scores": [
+            {
+                "name": "Pisa",
+                "score": "2"
+            },
+            {
+                "name": "Spezia",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "afc2c671a93ddba9566e79c61af10390",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:19:01Z",
+        "completed": true,
+        "home_team": "Feralpisal\u00f2",
+        "away_team": "Lecco",
+        "scores": [
+            {
+                "name": "Feralpisal\u00f2",
+                "score": "5"
+            },
+            {
+                "name": "Lecco",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "bb9b206a8c612e71a384b73230d4d537",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-28T15:25:16Z",
+        "completed": true,
+        "home_team": "Cittadella",
+        "away_team": "Sampdoria",
+        "scores": [
+            {
+                "name": "Sampdoria",
+                "score": "2"
+            },
+            {
+                "name": "Cittadella",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:03Z"
+    },
+    {
+        "id": "163993e447582d4b62f678e94c0c10b9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Palermo",
+        "away_team": "Bari",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "22507208678e59a3a0b2bd6e4b382b3d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Brescia",
+        "away_team": "Cittadella",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "efa66ae37c02f3bf92f4da9320a41004",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Cosenza",
+        "away_team": "Pisa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "376b02acd619d9eb1e4c83c84ae2d7a4",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Reggiana",
+        "away_team": "Feralpisal\u00f2",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c4d45bdea67a1952d6430daf7e629977",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Parma",
+        "away_team": "Venezia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a6e5bd215c74be78d7c59affb1509d8c",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Spezia",
+        "away_team": "US Catanzaro 1929",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7a12ba4f01dd5cdca5344fcc2404464d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Ternana",
+        "away_team": "Como",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e60a65b208ade2f1957c20b0ddd20d9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Lecco",
+        "away_team": "Cremonese",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c3c9cdfc0759857f66256cc9bd26aeea",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Sampdoria",
+        "away_team": "Modena",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fbae57d09de5a819aa2a2e4440e36f66",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "Ascoli",
+        "away_team": "S\u00fcdtirol",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4e15f44b08cfef009b84040c8e71a6b1",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-26T19:32:42Z",
+        "completed": true,
+        "home_team": "US Catanzaro 1929",
+        "away_team": "Palermo",
+        "scores": [
+            {
+                "name": "US Catanzaro 1929",
+                "score": "1"
+            },
+            {
+                "name": "Palermo",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "31f959197a7ccc286a7f39bf90556903",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:01:56Z",
+        "completed": true,
+        "home_team": "Venezia",
+        "away_team": "Ternana",
+        "scores": [
+            {
+                "name": "Venezia",
+                "score": "1"
+            },
+            {
+                "name": "Ternana",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "b630a17196604dff9d116af3ac1d9811",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:30Z",
+        "completed": true,
+        "home_team": "S\u00fcdtirol",
+        "away_team": "Cosenza",
+        "scores": [
+            {
+                "name": "S\u00fcdtirol",
+                "score": "0"
+            },
+            {
+                "name": "Cosenza",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "b33c28696ed766a22a289b7f55fc3b71",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:31Z",
+        "completed": true,
+        "home_team": "Como",
+        "away_team": "Ascoli",
+        "scores": [
+            {
+                "name": "Como",
+                "score": "0"
+            },
+            {
+                "name": "Ascoli",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "a0c6540e6b43f1a1b14e8453069fbb8a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:02:51Z",
+        "completed": true,
+        "home_team": "Modena",
+        "away_team": "Parma",
+        "scores": [
+            {
+                "name": "Modena",
+                "score": "3"
+            },
+            {
+                "name": "Parma",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "2a3310abf7842f7bcda044e0844d671a",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T13:03:36Z",
+        "completed": true,
+        "home_team": "Cremonese",
+        "away_team": "Brescia",
+        "scores": [
+            {
+                "name": "Cremonese",
+                "score": "1"
+            },
+            {
+                "name": "Brescia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "d72ea659fe639496b2c7d933dccac333",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:06Z",
+        "completed": true,
+        "home_team": "Bari",
+        "away_team": "Reggiana",
+        "scores": [
+            {
+                "name": "Bari",
+                "score": "0"
+            },
+            {
+                "name": "Reggiana",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "ca6a5490dcaa15c3eb502b6dc975ba8d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:17:38Z",
+        "completed": true,
+        "home_team": "Pisa",
+        "away_team": "Spezia",
+        "scores": [
+            {
+                "name": "Pisa",
+                "score": "2"
+            },
+            {
+                "name": "Spezia",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "afc2c671a93ddba9566e79c61af10390",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-27T15:19:01Z",
+        "completed": true,
+        "home_team": "Feralpisal\u00f2",
+        "away_team": "Lecco",
+        "scores": [
+            {
+                "name": "Feralpisal\u00f2",
+                "score": "5"
+            },
+            {
+                "name": "Lecco",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T15:36:43Z"
+    },
+    {
+        "id": "bb9b206a8c612e71a384b73230d4d537",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-01-28T15:25:16Z",
+        "completed": true,
+        "home_team": "Cittadella",
+        "away_team": "Sampdoria",
+        "scores": [
+            {
+                "name": "Sampdoria",
+                "score": "2"
+            },
+            {
+                "name": "Cittadella",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:03Z"
+    },
+    {
+        "id": "163993e447582d4b62f678e94c0c10b9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Palermo",
+        "away_team": "Bari",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "22507208678e59a3a0b2bd6e4b382b3d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Brescia",
+        "away_team": "Cittadella",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "efa66ae37c02f3bf92f4da9320a41004",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Cosenza",
+        "away_team": "Pisa",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "376b02acd619d9eb1e4c83c84ae2d7a4",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Reggiana",
+        "away_team": "Feralpisal\u00f2",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c4d45bdea67a1952d6430daf7e629977",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Parma",
+        "away_team": "Venezia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a6e5bd215c74be78d7c59affb1509d8c",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Spezia",
+        "away_team": "US Catanzaro 1929",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7a12ba4f01dd5cdca5344fcc2404464d",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Ternana",
+        "away_team": "Como",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e60a65b208ade2f1957c20b0ddd20d9",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Lecco",
+        "away_team": "Cremonese",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c3c9cdfc0759857f66256cc9bd26aeea",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "Sampdoria",
+        "away_team": "Modena",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fbae57d09de5a819aa2a2e4440e36f66",
+        "sport_key": "soccer_italy_serie_b",
+        "sport_title": "Serie B - Italy",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "Ascoli",
+        "away_team": "S\u00fcdtirol",
+        "scores": null,
+        "last_update": null
+    }
 ]

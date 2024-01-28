@@ -10,6 +10,8 @@ setup()
 from core.match.models import Match
 from core.mail import views
 from core.auth.models import email
+from core.event.crons.eventUpdate import EventCron
+from core.event.crons.sportUpdate import SportCron
 
 
 from tests.test1 import Test1, Support
@@ -20,5 +22,11 @@ support = Support()
 if __name__ == '__main__':
     # test1.test9()
 
-    test1.test10()
+    # test1.test10()
+    # test1.testFlushAndGetSportsAndEvents()
+    # sportcron = SportCron()
+    # sportcron.get_sports()
+    # eventcron = EventCron()
+    # eventcron.update_all_events()
+
 

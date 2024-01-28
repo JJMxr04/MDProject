@@ -65,4 +65,494 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "a0153f102a1c28c5c22fbd3b24ec95d0",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "Fr\u00f6lunda HC",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fa2eeb1ab05a14a1b0dce0e2a6e75101",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "Malm\u00f6 Redhawks",
+        "away_team": "F\u00e4rjestad BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef04bd63e807f46d350087858b534571",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "R\u00f6gle BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d539eb43a296539c57f4401604f9dc61",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "Lule\u00e5 HF",
+        "away_team": "Leksands IF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6ddd5330e9bca60f76fb15bdbe93c2e8",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "Link\u00f6ping HC",
+        "away_team": "V\u00e4xj\u00f6 Lakers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "50a320481965aa6bae833fdc9033d890",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "Timr\u00e5 IK",
+        "away_team": "Modo Hockey",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "74d17995b4bec3547eab1312592a4fc7",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-25T18:00:00Z",
+        "completed": false,
+        "home_team": "Skellefte\u00e5 AIK",
+        "away_team": "\u00d6rebro HK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eedbae110a8fb9a917879bb62b5d6a85",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T14:15:00Z",
+        "completed": false,
+        "home_team": "Fr\u00f6lunda HC",
+        "away_team": "HV71",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b84dbc39e2fc265b66b539493567389e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T14:15:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "Malm\u00f6 Redhawks",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cba44a677d265682107d24aaaf76c4c2",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T14:15:00Z",
+        "completed": false,
+        "home_team": "R\u00f6gle BK",
+        "away_team": "Skellefte\u00e5 AIK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7b2b3e60423f17d540bdfc3e62cfc33b",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T17:00:00Z",
+        "completed": false,
+        "home_team": "F\u00e4rjestad BK",
+        "away_team": "Leksands IF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4d7b6b928a0d0214c52e3c89b2a42e71",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T17:00:00Z",
+        "completed": false,
+        "home_team": "IK Oskarshamn",
+        "away_team": "V\u00e4xj\u00f6 Lakers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "385a8c48359dfc4461e900be00eb126e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T17:00:00Z",
+        "completed": false,
+        "home_team": "Lule\u00e5 HF",
+        "away_team": "Link\u00f6ping HC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6d0d6e95b4fcfe943dea31647788c8d5",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-27T17:00:00Z",
+        "completed": false,
+        "home_team": "\u00d6rebro HK",
+        "away_team": "Timr\u00e5 IK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f5e36d4b13aa2009023cc25151cfb1ad",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "Fr\u00f6lunda HC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eda303942dfc165a3103ba3a4f5e473f",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "F\u00e4rjestad BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ad381d62bf171ce516735a792c814d2a",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Link\u00f6ping HC",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "282c320e6063eec702c003a4a9495b3d",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Leksands IF",
+        "away_team": "Skellefte\u00e5 AIK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6adf5928674fb60beb84d876a2e6b9f7",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "V\u00e4xj\u00f6 Lakers",
+        "away_team": "Lule\u00e5 HF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "929e1a22c91a5a1b94599a310b54946e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "\u00d6rebro HK",
+        "away_team": "R\u00f6gle BK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f5e36d4b13aa2009023cc25151cfb1ad",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "Fr\u00f6lunda HC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eda303942dfc165a3103ba3a4f5e473f",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "F\u00e4rjestad BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ad381d62bf171ce516735a792c814d2a",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Link\u00f6ping HC",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "282c320e6063eec702c003a4a9495b3d",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Leksands IF",
+        "away_team": "Skellefte\u00e5 AIK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6adf5928674fb60beb84d876a2e6b9f7",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "V\u00e4xj\u00f6 Lakers",
+        "away_team": "Lule\u00e5 HF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "929e1a22c91a5a1b94599a310b54946e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "\u00d6rebro HK",
+        "away_team": "R\u00f6gle BK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f5e36d4b13aa2009023cc25151cfb1ad",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "Fr\u00f6lunda HC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eda303942dfc165a3103ba3a4f5e473f",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "F\u00e4rjestad BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ad381d62bf171ce516735a792c814d2a",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Link\u00f6ping HC",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "282c320e6063eec702c003a4a9495b3d",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Leksands IF",
+        "away_team": "Skellefte\u00e5 AIK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6adf5928674fb60beb84d876a2e6b9f7",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "V\u00e4xj\u00f6 Lakers",
+        "away_team": "Lule\u00e5 HF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "929e1a22c91a5a1b94599a310b54946e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "\u00d6rebro HK",
+        "away_team": "R\u00f6gle BK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f5e36d4b13aa2009023cc25151cfb1ad",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "Fr\u00f6lunda HC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eda303942dfc165a3103ba3a4f5e473f",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "F\u00e4rjestad BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ad381d62bf171ce516735a792c814d2a",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Link\u00f6ping HC",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "282c320e6063eec702c003a4a9495b3d",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Leksands IF",
+        "away_team": "Skellefte\u00e5 AIK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6adf5928674fb60beb84d876a2e6b9f7",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "V\u00e4xj\u00f6 Lakers",
+        "away_team": "Lule\u00e5 HF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "929e1a22c91a5a1b94599a310b54946e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "\u00d6rebro HK",
+        "away_team": "R\u00f6gle BK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "f5e36d4b13aa2009023cc25151cfb1ad",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Modo Hockey",
+        "away_team": "Fr\u00f6lunda HC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eda303942dfc165a3103ba3a4f5e473f",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "HV71",
+        "away_team": "F\u00e4rjestad BK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ad381d62bf171ce516735a792c814d2a",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Link\u00f6ping HC",
+        "away_team": "IK Oskarshamn",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "282c320e6063eec702c003a4a9495b3d",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "Leksands IF",
+        "away_team": "Skellefte\u00e5 AIK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6adf5928674fb60beb84d876a2e6b9f7",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "V\u00e4xj\u00f6 Lakers",
+        "away_team": "Lule\u00e5 HF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "929e1a22c91a5a1b94599a310b54946e",
+        "sport_key": "icehockey_sweden_hockey_league",
+        "sport_title": "SHL",
+        "commence_time": "2024-01-30T18:00:00Z",
+        "completed": false,
+        "home_team": "\u00d6rebro HK",
+        "away_team": "R\u00f6gle BK",
+        "scores": null,
+        "last_update": null
+    }
 ]

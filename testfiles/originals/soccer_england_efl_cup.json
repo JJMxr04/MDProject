@@ -21,4 +21,96 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "fe9c4d28901d18fe492590b106606b68",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-01-23T20:00:37Z",
+        "completed": true,
+        "home_team": "Chelsea",
+        "away_team": "Middlesbrough",
+        "scores": [
+            {
+                "name": "Middlesbrough",
+                "score": "1"
+            },
+            {
+                "name": "Chelsea",
+                "score": "6"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:55Z"
+    },
+    {
+        "id": "0061cbc02d51acedfcab89ddbf545629",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-01-24T20:00:00Z",
+        "completed": false,
+        "home_team": "Fulham",
+        "away_team": "Liverpool",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "092b436f3ed4b7827762fb2bf6bfcc17",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-02-25T16:30:00Z",
+        "completed": false,
+        "home_team": "Chelsea",
+        "away_team": "Liverpool",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "092b436f3ed4b7827762fb2bf6bfcc17",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-02-25T16:30:00Z",
+        "completed": false,
+        "home_team": "Chelsea",
+        "away_team": "Liverpool",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "092b436f3ed4b7827762fb2bf6bfcc17",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-02-25T16:30:00Z",
+        "completed": false,
+        "home_team": "Chelsea",
+        "away_team": "Liverpool",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "092b436f3ed4b7827762fb2bf6bfcc17",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-02-25T16:30:00Z",
+        "completed": false,
+        "home_team": "Chelsea",
+        "away_team": "Liverpool",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "092b436f3ed4b7827762fb2bf6bfcc17",
+        "sport_key": "soccer_england_efl_cup",
+        "sport_title": "EFL Cup",
+        "commence_time": "2024-02-25T16:30:00Z",
+        "completed": false,
+        "home_team": "Chelsea",
+        "away_team": "Liverpool",
+        "scores": null,
+        "last_update": null
+    }
 ]

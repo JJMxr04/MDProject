@@ -35,7 +35,7 @@ def read_json_file(file_path):
         return None
 
 
-class EventCron:
+class EventCron():
     sports_data = {}
     events = {}
     domain = "https://odds.p.rapidapi.com/v4/sports"
@@ -84,8 +84,13 @@ class EventCron:
         return Response("Success", status=status.HTTP_200_OK)
 
     def update_all_events(self):
-       active_sports = Sport.objects.get_active_sports()
-       for sport in active_sports:
-           self.get_sport_events(sport)
+        print("Running Event Cron")
+        active_sports = Sport.objects.get_active_sports()
+        for sport in active_sports:
+            self.get_sport_events(sport)
+
+def update_all_events():
+    eventCron = EventCron()
+    eventCron.update_all_events()
 
 

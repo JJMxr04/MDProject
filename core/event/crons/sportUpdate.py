@@ -3,8 +3,7 @@ import requests
 from core.event.models.sport import Sport
 from core.event.serializers.sport import SportSerializer
 
-
-class SportCron:
+class SportCron():
     domain = 'https://odds.p.rapidapi.com/v4/sports'
 
     sports_data = {}
@@ -15,6 +14,7 @@ class SportCron:
     }
 
     def get_sports(self):
+        print("Running Sport Cron")
         # Call your API here
         api_url = self.domain
 
@@ -32,13 +32,13 @@ class SportCron:
         for sport in api_data:
             data = SportSerializer(data=sport)
             if data.is_valid():
-                data.validated_data()
+                data.validated_data
                 if Sport.objects.get_sport_state(data['key'],data['active'],data['has_outrights']):
                     #returns true if it was found and modified
                     #returns false if there is no sport with that key
                     continue
                 else:
-                    sport_temp = Sport(**data)
+                    sport_temp = Sport(**data.validated_data)
                     sport_temp.save()
             else:
                 continue
@@ -46,3 +46,7 @@ class SportCron:
 
     def get_active_sports(self):
         return Sport.objects.get_active_sports()
+
+def get_sports():
+    sportCron = SportCron()
+    sportCron.get_sports()

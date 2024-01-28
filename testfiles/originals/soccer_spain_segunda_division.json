@@ -109,4 +109,1386 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "1592509ca21b1edca842089c288f0ecd",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-21T13:01:00Z",
+        "completed": true,
+        "home_team": "Real Racing Club de Santander",
+        "away_team": "FC Cartagena",
+        "scores": [
+            {
+                "name": "Real Racing Club de Santander",
+                "score": "0"
+            },
+            {
+                "name": "FC Cartagena",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-22T19:51:44Z"
+    },
+    {
+        "id": "5e26982cc9bee00796616d1dd3a4a9f0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-21T15:16:12Z",
+        "completed": true,
+        "home_team": "CD Mirand\u00e9s",
+        "away_team": "Levante",
+        "scores": [
+            {
+                "name": "CD Mirand\u00e9s",
+                "score": "1"
+            },
+            {
+                "name": "Levante",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-22T19:51:44Z"
+    },
+    {
+        "id": "3a779177ecc4524c94be2e78472dedbf",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-21T17:30:28Z",
+        "completed": true,
+        "home_team": "SD Huesca",
+        "away_team": "SD Eibar",
+        "scores": [
+            {
+                "name": "SD Huesca",
+                "score": "2"
+            },
+            {
+                "name": "SD Eibar",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-22T19:51:44Z"
+    },
+    {
+        "id": "f73d77808c6533ba72e9050f0c36046a",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-21T19:59:55Z",
+        "completed": true,
+        "home_team": "Elche",
+        "away_team": "Real Valladolid CF",
+        "scores": [
+            {
+                "name": "Elche",
+                "score": "0"
+            },
+            {
+                "name": "Real Valladolid CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-22T19:51:44Z"
+    },
+    {
+        "id": "81714de5ad90ad1920630899d32ce08e",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-22T19:31:18Z",
+        "completed": true,
+        "home_team": "Legan\u00e9s",
+        "away_team": "Burgos CF",
+        "scores": [
+            {
+                "name": "Burgos CF",
+                "score": "0"
+            },
+            {
+                "name": "Legan\u00e9s",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-23T02:50:21Z"
+    },
+    {
+        "id": "de6f437f83b5c51bf5054fc602cd2181",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-26T19:30:00Z",
+        "completed": false,
+        "home_team": "SD Eibar",
+        "away_team": "CD Mirand\u00e9s",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8cf374d8e9e8f0d1578bd2ba10a15211",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:00Z",
+        "completed": false,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8af39c168b503b4edd2ca8453f7bc009",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:00Z",
+        "completed": false,
+        "home_team": "FC Cartagena",
+        "away_team": "SD Amorebieta",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "798b5c284b69c7b3d40716cece4b70d9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T17:30:00Z",
+        "completed": false,
+        "home_team": "Oviedo",
+        "away_team": "Legan\u00e9s",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "995f432848d1b886b06c796883dae2b9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T20:00:00Z",
+        "completed": false,
+        "home_team": "Levante",
+        "away_team": "Tenerife",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ef50c7bf41bc85345dfbdb1227e7dfe1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "CD Eldense",
+        "away_team": "RCD Espanyol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a501b082bb59b918b165265475a7ba1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Andorra CF",
+        "away_team": "Elche",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "637c39dbdf76af51a3a3f0c9d53e6537",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "SD Huesca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e4b4bca23432abedec41c926edecd2d5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Burgos CF",
+        "away_team": "Albacete",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1e15174fe2a595192cea1d8b12cc1c92",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T19:00:00Z",
+        "completed": false,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a65df86460b988cb280bbba8972c4e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Gij\u00f3n",
+        "away_team": "Racing de Ferrol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f5bf3ad42d4abbccb04b7ea14f624679",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-29T19:30:00Z",
+        "completed": false,
+        "home_team": "Real Valladolid CF",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "de6f437f83b5c51bf5054fc602cd2181",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-26T19:30:56Z",
+        "completed": true,
+        "home_team": "SD Eibar",
+        "away_team": "CD Mirand\u00e9s",
+        "scores": [
+            {
+                "name": "SD Eibar",
+                "score": "1"
+            },
+            {
+                "name": "CD Mirand\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T15:31:09Z"
+    },
+    {
+        "id": "8af39c168b503b4edd2ca8453f7bc009",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:11Z",
+        "completed": true,
+        "home_team": "FC Cartagena",
+        "away_team": "SD Amorebieta",
+        "scores": [
+            {
+                "name": "SD Amorebieta",
+                "score": "0"
+            },
+            {
+                "name": "FC Cartagena",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:35Z"
+    },
+    {
+        "id": "8cf374d8e9e8f0d1578bd2ba10a15211",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:16:44Z",
+        "completed": true,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": [
+            {
+                "name": "Zaragoza",
+                "score": "0"
+            },
+            {
+                "name": "Alcorc\u00f3n",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:35Z"
+    },
+    {
+        "id": "798b5c284b69c7b3d40716cece4b70d9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T17:32:23Z",
+        "completed": true,
+        "home_team": "Oviedo",
+        "away_team": "Legan\u00e9s",
+        "scores": [
+            {
+                "name": "Legan\u00e9s",
+                "score": "0"
+            },
+            {
+                "name": "Oviedo",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:35Z"
+    },
+    {
+        "id": "995f432848d1b886b06c796883dae2b9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T20:01:36Z",
+        "completed": true,
+        "home_team": "Levante",
+        "away_team": "Tenerife",
+        "scores": [
+            {
+                "name": "Tenerife",
+                "score": "0"
+            },
+            {
+                "name": "Levante",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:12:35Z"
+    },
+    {
+        "id": "ef50c7bf41bc85345dfbdb1227e7dfe1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "CD Eldense",
+        "away_team": "RCD Espanyol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a501b082bb59b918b165265475a7ba1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Andorra CF",
+        "away_team": "Elche",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "637c39dbdf76af51a3a3f0c9d53e6537",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "SD Huesca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e4b4bca23432abedec41c926edecd2d5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Burgos CF",
+        "away_team": "Albacete",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a65df86460b988cb280bbba8972c4e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Gij\u00f3n",
+        "away_team": "Racing de Ferrol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f5bf3ad42d4abbccb04b7ea14f624679",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-29T19:30:00Z",
+        "completed": false,
+        "home_team": "Real Valladolid CF",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "de6f437f83b5c51bf5054fc602cd2181",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-26T19:30:56Z",
+        "completed": true,
+        "home_team": "SD Eibar",
+        "away_team": "CD Mirand\u00e9s",
+        "scores": [
+            {
+                "name": "SD Eibar",
+                "score": "1"
+            },
+            {
+                "name": "CD Mirand\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T15:31:09Z"
+    },
+    {
+        "id": "8af39c168b503b4edd2ca8453f7bc009",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:11Z",
+        "completed": true,
+        "home_team": "FC Cartagena",
+        "away_team": "SD Amorebieta",
+        "scores": [
+            {
+                "name": "SD Amorebieta",
+                "score": "0"
+            },
+            {
+                "name": "FC Cartagena",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:37Z"
+    },
+    {
+        "id": "8cf374d8e9e8f0d1578bd2ba10a15211",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:16:44Z",
+        "completed": true,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": [
+            {
+                "name": "Zaragoza",
+                "score": "0"
+            },
+            {
+                "name": "Alcorc\u00f3n",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:37Z"
+    },
+    {
+        "id": "798b5c284b69c7b3d40716cece4b70d9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T17:32:23Z",
+        "completed": true,
+        "home_team": "Oviedo",
+        "away_team": "Legan\u00e9s",
+        "scores": [
+            {
+                "name": "Legan\u00e9s",
+                "score": "0"
+            },
+            {
+                "name": "Oviedo",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:37Z"
+    },
+    {
+        "id": "995f432848d1b886b06c796883dae2b9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T20:01:36Z",
+        "completed": true,
+        "home_team": "Levante",
+        "away_team": "Tenerife",
+        "scores": [
+            {
+                "name": "Tenerife",
+                "score": "0"
+            },
+            {
+                "name": "Levante",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:16:37Z"
+    },
+    {
+        "id": "ef50c7bf41bc85345dfbdb1227e7dfe1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "CD Eldense",
+        "away_team": "RCD Espanyol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a501b082bb59b918b165265475a7ba1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Andorra CF",
+        "away_team": "Elche",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "637c39dbdf76af51a3a3f0c9d53e6537",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "SD Huesca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e4b4bca23432abedec41c926edecd2d5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Burgos CF",
+        "away_team": "Albacete",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a65df86460b988cb280bbba8972c4e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Gij\u00f3n",
+        "away_team": "Racing de Ferrol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f5bf3ad42d4abbccb04b7ea14f624679",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-29T19:30:00Z",
+        "completed": false,
+        "home_team": "Real Valladolid CF",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "de6f437f83b5c51bf5054fc602cd2181",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-26T19:30:56Z",
+        "completed": true,
+        "home_team": "SD Eibar",
+        "away_team": "CD Mirand\u00e9s",
+        "scores": [
+            {
+                "name": "SD Eibar",
+                "score": "1"
+            },
+            {
+                "name": "CD Mirand\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T15:31:09Z"
+    },
+    {
+        "id": "8af39c168b503b4edd2ca8453f7bc009",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:11Z",
+        "completed": true,
+        "home_team": "FC Cartagena",
+        "away_team": "SD Amorebieta",
+        "scores": [
+            {
+                "name": "SD Amorebieta",
+                "score": "0"
+            },
+            {
+                "name": "FC Cartagena",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:07Z"
+    },
+    {
+        "id": "8cf374d8e9e8f0d1578bd2ba10a15211",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:16:44Z",
+        "completed": true,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": [
+            {
+                "name": "Zaragoza",
+                "score": "0"
+            },
+            {
+                "name": "Alcorc\u00f3n",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:07Z"
+    },
+    {
+        "id": "798b5c284b69c7b3d40716cece4b70d9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T17:32:23Z",
+        "completed": true,
+        "home_team": "Oviedo",
+        "away_team": "Legan\u00e9s",
+        "scores": [
+            {
+                "name": "Legan\u00e9s",
+                "score": "0"
+            },
+            {
+                "name": "Oviedo",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:07Z"
+    },
+    {
+        "id": "995f432848d1b886b06c796883dae2b9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T20:01:36Z",
+        "completed": true,
+        "home_team": "Levante",
+        "away_team": "Tenerife",
+        "scores": [
+            {
+                "name": "Tenerife",
+                "score": "0"
+            },
+            {
+                "name": "Levante",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T02:17:07Z"
+    },
+    {
+        "id": "ef50c7bf41bc85345dfbdb1227e7dfe1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T13:00:00Z",
+        "completed": false,
+        "home_team": "CD Eldense",
+        "away_team": "RCD Espanyol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a501b082bb59b918b165265475a7ba1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Andorra CF",
+        "away_team": "Elche",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "637c39dbdf76af51a3a3f0c9d53e6537",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:15:00Z",
+        "completed": false,
+        "home_team": "Villarreal",
+        "away_team": "SD Huesca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e4b4bca23432abedec41c926edecd2d5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Burgos CF",
+        "away_team": "Albacete",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6a65df86460b988cb280bbba8972c4e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Gij\u00f3n",
+        "away_team": "Racing de Ferrol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f5bf3ad42d4abbccb04b7ea14f624679",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-29T19:30:00Z",
+        "completed": false,
+        "home_team": "Real Valladolid CF",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "de6f437f83b5c51bf5054fc602cd2181",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-26T19:30:56Z",
+        "completed": true,
+        "home_team": "SD Eibar",
+        "away_team": "CD Mirand\u00e9s",
+        "scores": [
+            {
+                "name": "SD Eibar",
+                "score": "1"
+            },
+            {
+                "name": "CD Mirand\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "8af39c168b503b4edd2ca8453f7bc009",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:11Z",
+        "completed": true,
+        "home_team": "FC Cartagena",
+        "away_team": "SD Amorebieta",
+        "scores": [
+            {
+                "name": "FC Cartagena",
+                "score": "1"
+            },
+            {
+                "name": "SD Amorebieta",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "8cf374d8e9e8f0d1578bd2ba10a15211",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:16:44Z",
+        "completed": true,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": [
+            {
+                "name": "Alcorc\u00f3n",
+                "score": "0"
+            },
+            {
+                "name": "Zaragoza",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "798b5c284b69c7b3d40716cece4b70d9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T17:32:23Z",
+        "completed": true,
+        "home_team": "Oviedo",
+        "away_team": "Legan\u00e9s",
+        "scores": [
+            {
+                "name": "Oviedo",
+                "score": "1"
+            },
+            {
+                "name": "Legan\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "995f432848d1b886b06c796883dae2b9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T20:01:36Z",
+        "completed": true,
+        "home_team": "Levante",
+        "away_team": "Tenerife",
+        "scores": [
+            {
+                "name": "Levante",
+                "score": "0"
+            },
+            {
+                "name": "Tenerife",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "ef50c7bf41bc85345dfbdb1227e7dfe1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T13:00:47Z",
+        "completed": true,
+        "home_team": "CD Eldense",
+        "away_team": "RCD Espanyol",
+        "scores": [
+            {
+                "name": "RCD Espanyol",
+                "score": "2"
+            },
+            {
+                "name": "CD Eldense",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:44Z"
+    },
+    {
+        "id": "6a501b082bb59b918b165265475a7ba1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:16:46Z",
+        "completed": true,
+        "home_team": "Andorra CF",
+        "away_team": "Elche",
+        "scores": [
+            {
+                "name": "Elche",
+                "score": "1"
+            },
+            {
+                "name": "Andorra CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:44Z"
+    },
+    {
+        "id": "637c39dbdf76af51a3a3f0c9d53e6537",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:24:53Z",
+        "completed": true,
+        "home_team": "Villarreal",
+        "away_team": "SD Huesca",
+        "scores": [
+            {
+                "name": "SD Huesca",
+                "score": "1"
+            },
+            {
+                "name": "Villarreal",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:44Z"
+    },
+    {
+        "id": "e4b4bca23432abedec41c926edecd2d5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Burgos CF",
+        "away_team": "Albacete",
+        "scores": [
+            {
+                "name": "Albacete",
+                "score": "0"
+            },
+            {
+                "name": "Burgos CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:44Z"
+    },
+    {
+        "id": "6a65df86460b988cb280bbba8972c4e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Gij\u00f3n",
+        "away_team": "Racing de Ferrol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f5bf3ad42d4abbccb04b7ea14f624679",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-29T19:30:00Z",
+        "completed": false,
+        "home_team": "Real Valladolid CF",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9bdfe77ee543958ce40d35f2daa8319f",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Elche",
+        "away_team": "Burgos CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9b53f2738a99a54fed0256cade1d9d64",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Albacete",
+        "away_team": "FC Cartagena",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bb54697f942803f57ec5f25505ea7349",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "SD Huesca",
+        "away_team": "Alcorc\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bc4bdb37e6a0dd4f68d84c2c789461c6",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "CD Mirand\u00e9s",
+        "away_team": "Villarreal",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "155de87b47feb747380332bfa652c6a5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Legan\u00e9s",
+        "away_team": "Real Valladolid CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "440ed9280eb77348ed18f2f935fdb259",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Tenerife",
+        "away_team": "Andorra CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4330cccd4c5b363f7c88ffe56f7f89e4",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Racing de Ferrol",
+        "away_team": "SD Eibar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f75f6a95b6a0741896c854764c48b012",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "Oviedo",
+        "away_team": "CD Eldense",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c1951aa36e97ac6f8c93032922931e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "SD Amorebieta",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6d65ce000ec93c9ad21ffef192e07b3b",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "RCD Espanyol",
+        "away_team": "Levante",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "38534dea9abbdcd32ecc633d0f3ed38f",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-05T19:30:00Z",
+        "completed": false,
+        "home_team": "Zaragoza",
+        "away_team": "Sporting Gij\u00f3n",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "de6f437f83b5c51bf5054fc602cd2181",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-26T19:30:56Z",
+        "completed": true,
+        "home_team": "SD Eibar",
+        "away_team": "CD Mirand\u00e9s",
+        "scores": [
+            {
+                "name": "SD Eibar",
+                "score": "1"
+            },
+            {
+                "name": "CD Mirand\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "8af39c168b503b4edd2ca8453f7bc009",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:15:11Z",
+        "completed": true,
+        "home_team": "FC Cartagena",
+        "away_team": "SD Amorebieta",
+        "scores": [
+            {
+                "name": "FC Cartagena",
+                "score": "1"
+            },
+            {
+                "name": "SD Amorebieta",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "8cf374d8e9e8f0d1578bd2ba10a15211",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T15:16:44Z",
+        "completed": true,
+        "home_team": "Alcorc\u00f3n",
+        "away_team": "Zaragoza",
+        "scores": [
+            {
+                "name": "Alcorc\u00f3n",
+                "score": "0"
+            },
+            {
+                "name": "Zaragoza",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "798b5c284b69c7b3d40716cece4b70d9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T17:32:23Z",
+        "completed": true,
+        "home_team": "Oviedo",
+        "away_team": "Legan\u00e9s",
+        "scores": [
+            {
+                "name": "Oviedo",
+                "score": "1"
+            },
+            {
+                "name": "Legan\u00e9s",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "995f432848d1b886b06c796883dae2b9",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-27T20:01:36Z",
+        "completed": true,
+        "home_team": "Levante",
+        "away_team": "Tenerife",
+        "scores": [
+            {
+                "name": "Levante",
+                "score": "0"
+            },
+            {
+                "name": "Tenerife",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:21:55Z"
+    },
+    {
+        "id": "ef50c7bf41bc85345dfbdb1227e7dfe1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T13:00:47Z",
+        "completed": true,
+        "home_team": "CD Eldense",
+        "away_team": "RCD Espanyol",
+        "scores": [
+            {
+                "name": "RCD Espanyol",
+                "score": "2"
+            },
+            {
+                "name": "CD Eldense",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:14Z"
+    },
+    {
+        "id": "6a501b082bb59b918b165265475a7ba1",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:16:46Z",
+        "completed": true,
+        "home_team": "Andorra CF",
+        "away_team": "Elche",
+        "scores": [
+            {
+                "name": "Elche",
+                "score": "1"
+            },
+            {
+                "name": "Andorra CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:14Z"
+    },
+    {
+        "id": "637c39dbdf76af51a3a3f0c9d53e6537",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T15:24:53Z",
+        "completed": true,
+        "home_team": "Villarreal",
+        "away_team": "SD Huesca",
+        "scores": [
+            {
+                "name": "SD Huesca",
+                "score": "1"
+            },
+            {
+                "name": "Villarreal",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:14Z"
+    },
+    {
+        "id": "e4b4bca23432abedec41c926edecd2d5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T17:30:00Z",
+        "completed": false,
+        "home_team": "Burgos CF",
+        "away_team": "Albacete",
+        "scores": [
+            {
+                "name": "Albacete",
+                "score": "0"
+            },
+            {
+                "name": "Burgos CF",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:14Z"
+    },
+    {
+        "id": "6a65df86460b988cb280bbba8972c4e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Gij\u00f3n",
+        "away_team": "Racing de Ferrol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f5bf3ad42d4abbccb04b7ea14f624679",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-01-29T19:30:00Z",
+        "completed": false,
+        "home_team": "Real Valladolid CF",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9bdfe77ee543958ce40d35f2daa8319f",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "Elche",
+        "away_team": "Burgos CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9b53f2738a99a54fed0256cade1d9d64",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Albacete",
+        "away_team": "FC Cartagena",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bb54697f942803f57ec5f25505ea7349",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "SD Huesca",
+        "away_team": "Alcorc\u00f3n",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "bc4bdb37e6a0dd4f68d84c2c789461c6",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T15:15:00Z",
+        "completed": false,
+        "home_team": "CD Mirand\u00e9s",
+        "away_team": "Villarreal",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "155de87b47feb747380332bfa652c6a5",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "Legan\u00e9s",
+        "away_team": "Real Valladolid CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "440ed9280eb77348ed18f2f935fdb259",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-03T20:00:00Z",
+        "completed": false,
+        "home_team": "Tenerife",
+        "away_team": "Andorra CF",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "4330cccd4c5b363f7c88ffe56f7f89e4",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T13:00:00Z",
+        "completed": false,
+        "home_team": "Racing de Ferrol",
+        "away_team": "SD Eibar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f75f6a95b6a0741896c854764c48b012",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "Oviedo",
+        "away_team": "CD Eldense",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c1951aa36e97ac6f8c93032922931e0",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T15:15:00Z",
+        "completed": false,
+        "home_team": "SD Amorebieta",
+        "away_team": "Real Racing Club de Santander",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6d65ce000ec93c9ad21ffef192e07b3b",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-04T17:30:00Z",
+        "completed": false,
+        "home_team": "RCD Espanyol",
+        "away_team": "Levante",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "38534dea9abbdcd32ecc633d0f3ed38f",
+        "sport_key": "soccer_spain_segunda_division",
+        "sport_title": "La Liga 2 - Spain",
+        "commence_time": "2024-02-05T19:30:00Z",
+        "completed": false,
+        "home_team": "Zaragoza",
+        "away_team": "Sporting Gij\u00f3n",
+        "scores": null,
+        "last_update": null
+    }
 ]

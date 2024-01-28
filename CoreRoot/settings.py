@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_crontab',
+    'apscheduler',
 
+    'core.cron',
     'core',
     'core.user',
     'core.auth',
@@ -158,7 +160,17 @@ REST_FRAMEWORK = {
 }
 
 # CRONJOBS = [
-#     ('* *0 * * *', 'core.event.SportCron.get_sports'),
+#     ('0 0 * * *', 'core.event.crons.sportUpdate.get_sports'),
+#     ('0 */4 * * *', 'core.event.cron.eventUpdate.update_all_events')
+#
 #     # Add more cron jobs as needed
 # ]
+
+
+
+
+
+
+
+
 

@@ -1,0 +1,1431 @@
+[
+    {
+        "id": "25bb253a161288d808556fcbff3dd362",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-21T12:33:53Z",
+        "completed": true,
+        "home_team": "SC Preu\u00dfen M\u00fcnster",
+        "away_team": "Arminia Bielefeld",
+        "scores": [
+            {
+                "name": "SC Preu\u00dfen M\u00fcnster",
+                "score": "2"
+            },
+            {
+                "name": "Arminia Bielefeld",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "9c514c12a9e961758baec982089a16eb",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-21T15:32:40Z",
+        "completed": true,
+        "home_team": "SSV Ulm 1846",
+        "away_team": "SpVgg Unterhaching",
+        "scores": [
+            {
+                "name": "SSV Ulm 1846",
+                "score": "2"
+            },
+            {
+                "name": "SpVgg Unterhaching",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "9a3974813ae305f0ab9cbf6fe42df1ec",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-21T18:30:59Z",
+        "completed": true,
+        "home_team": "SC Freiburg II",
+        "away_team": "Borussia Dortmund II",
+        "scores": [
+            {
+                "name": "SC Freiburg II",
+                "score": "0"
+            },
+            {
+                "name": "Borussia Dortmund II",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "bd64237888e0b4beb26de50bd975cc94",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-23T18:00:26Z",
+        "completed": true,
+        "home_team": "VfB L\u00fcbeck",
+        "away_team": "TSV 1860 M\u00fcnchen",
+        "scores": [
+            {
+                "name": "VfB L\u00fcbeck",
+                "score": "1"
+            },
+            {
+                "name": "TSV 1860 M\u00fcnchen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "f47aad2ba70f18e6c73425341da55d8e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-23T18:01:27Z",
+        "completed": true,
+        "home_team": "MSV Duisburg",
+        "away_team": "Hallescher FC",
+        "scores": [
+            {
+                "name": "MSV Duisburg",
+                "score": "2"
+            },
+            {
+                "name": "Hallescher FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "3ecbd3188b459e65735f7656229af319",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-23T18:02:13Z",
+        "completed": true,
+        "home_team": "Rot-Weiss Essen",
+        "away_team": "FC Viktoria K\u00f6ln 1904",
+        "scores": [
+            {
+                "name": "Rot-Weiss Essen",
+                "score": "3"
+            },
+            {
+                "name": "FC Viktoria K\u00f6ln 1904",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "db3c94f73cb79ef2c518b2df4dc88c27",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-23T18:02:49Z",
+        "completed": true,
+        "home_team": "SC Verl",
+        "away_team": "1. FC Saarbr\u00fccken",
+        "scores": [
+            {
+                "name": "SC Verl",
+                "score": "0"
+            },
+            {
+                "name": "1. FC Saarbr\u00fccken",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "2ac566bde3310fb3eb28b112875fb33f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-23T18:03:28Z",
+        "completed": true,
+        "home_team": "Waldhof Mannheim",
+        "away_team": "Dynamo Dresden",
+        "scores": [
+            {
+                "name": "Waldhof Mannheim",
+                "score": "0"
+            },
+            {
+                "name": "Dynamo Dresden",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-24T00:44:49Z"
+    },
+    {
+        "id": "3f49917490ab9770a6e6b13b2926e3cb",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-24T18:00:00Z",
+        "completed": false,
+        "home_team": "Arminia Bielefeld",
+        "away_team": "SSV Ulm 1846",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "28f7b729ff0c6083f55214145d5e3808",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-24T18:00:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund II",
+        "away_team": "Jahn Regensburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "722efd7d353ca7792064330928074a80",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-24T18:00:00Z",
+        "completed": false,
+        "home_team": "SV Sandhausen",
+        "away_team": "Erzgebirge Aue",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "07416fa2e61c6b3971e23488268bc208",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-24T18:00:00Z",
+        "completed": false,
+        "home_team": "FC Ingolstadt 04",
+        "away_team": "SC Preu\u00dfen M\u00fcnster",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ba28ceff6ab07048380ecbfceafd42a5",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-24T18:00:00Z",
+        "completed": false,
+        "home_team": "SpVgg Unterhaching",
+        "away_team": "SC Freiburg II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "57e98c581b759473c4218bb65474425f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-26T18:00:00Z",
+        "completed": false,
+        "home_team": "Hallescher FC",
+        "away_team": "Waldhof Mannheim",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "57e98c581b759473c4218bb65474425f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-26T18:01:01Z",
+        "completed": true,
+        "home_team": "Hallescher FC",
+        "away_team": "Waldhof Mannheim",
+        "scores": [
+            {
+                "name": "Hallescher FC",
+                "score": "1"
+            },
+            {
+                "name": "Waldhof Mannheim",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "f7b0a2e917a88c056e2bc003d57681cd",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:04Z",
+        "completed": true,
+        "home_team": "SSV Ulm 1846",
+        "away_team": "MSV Duisburg",
+        "scores": [
+            {
+                "name": "SSV Ulm 1846",
+                "score": "2"
+            },
+            {
+                "name": "MSV Duisburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "70115b69a368a4ce74ce490824e8e861",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:08Z",
+        "completed": true,
+        "home_team": "SC Freiburg II",
+        "away_team": "SC Verl",
+        "scores": [
+            {
+                "name": "SC Freiburg II",
+                "score": "0"
+            },
+            {
+                "name": "SC Verl",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "4655ca467fdb2fd2bc63ee60ee670e35",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:01:28Z",
+        "completed": true,
+        "home_team": "FC Viktoria K\u00f6ln 1904",
+        "away_team": "SpVgg Unterhaching",
+        "scores": [
+            {
+                "name": "FC Viktoria K\u00f6ln 1904",
+                "score": "2"
+            },
+            {
+                "name": "SpVgg Unterhaching",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "ef9bb73f1500a6ef691bdbe2e595b3e3",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:16Z",
+        "completed": true,
+        "home_team": "Jahn Regensburg",
+        "away_team": "Arminia Bielefeld",
+        "scores": [
+            {
+                "name": "Jahn Regensburg",
+                "score": "2"
+            },
+            {
+                "name": "Arminia Bielefeld",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "a1e4d0b563a9619b03be7a4b3506b507",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:43Z",
+        "completed": true,
+        "home_team": "1. FC Saarbr\u00fccken",
+        "away_team": "FC Ingolstadt 04",
+        "scores": [
+            {
+                "name": "1. FC Saarbr\u00fccken",
+                "score": "0"
+            },
+            {
+                "name": "FC Ingolstadt 04",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "a019dd8d0e79251e7f6507e45dca9377",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T15:29:56Z",
+        "completed": true,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "VfB L\u00fcbeck",
+        "scores": [
+            {
+                "name": "Erzgebirge Aue",
+                "score": "2"
+            },
+            {
+                "name": "VfB L\u00fcbeck",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "4d049d14da12a0a9a8d6a23fcbcb3e15",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T12:30:00Z",
+        "completed": false,
+        "home_team": "SC Preu\u00dfen M\u00fcnster",
+        "away_team": "Rot-Weiss Essen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cf625ac2e48a32f98b1d52d352705e54",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T15:30:00Z",
+        "completed": false,
+        "home_team": "TSV 1860 M\u00fcnchen",
+        "away_team": "SV Sandhausen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7e4044f1f33c643eca27323374a62a7b",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T18:30:00Z",
+        "completed": false,
+        "home_team": "Dynamo Dresden",
+        "away_team": "Borussia Dortmund II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d211a7c5da23c8d9e17838e3b6f3a35e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SpVgg Unterhaching",
+        "away_team": "SC Verl",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "988a9f31015f4a67535d2d932081e06e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "VfB L\u00fcbeck",
+        "away_team": "SSV Ulm 1846",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f29a1bbe590578497eb6eea0c2772170",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Arminia Bielefeld",
+        "away_team": "FC Viktoria K\u00f6ln 1904",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "57e98c581b759473c4218bb65474425f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-26T18:01:01Z",
+        "completed": true,
+        "home_team": "Hallescher FC",
+        "away_team": "Waldhof Mannheim",
+        "scores": [
+            {
+                "name": "Hallescher FC",
+                "score": "1"
+            },
+            {
+                "name": "Waldhof Mannheim",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "f7b0a2e917a88c056e2bc003d57681cd",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:04Z",
+        "completed": true,
+        "home_team": "SSV Ulm 1846",
+        "away_team": "MSV Duisburg",
+        "scores": [
+            {
+                "name": "SSV Ulm 1846",
+                "score": "2"
+            },
+            {
+                "name": "MSV Duisburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "70115b69a368a4ce74ce490824e8e861",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:08Z",
+        "completed": true,
+        "home_team": "SC Freiburg II",
+        "away_team": "SC Verl",
+        "scores": [
+            {
+                "name": "SC Freiburg II",
+                "score": "0"
+            },
+            {
+                "name": "SC Verl",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "4655ca467fdb2fd2bc63ee60ee670e35",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:01:28Z",
+        "completed": true,
+        "home_team": "FC Viktoria K\u00f6ln 1904",
+        "away_team": "SpVgg Unterhaching",
+        "scores": [
+            {
+                "name": "FC Viktoria K\u00f6ln 1904",
+                "score": "2"
+            },
+            {
+                "name": "SpVgg Unterhaching",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "ef9bb73f1500a6ef691bdbe2e595b3e3",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:16Z",
+        "completed": true,
+        "home_team": "Jahn Regensburg",
+        "away_team": "Arminia Bielefeld",
+        "scores": [
+            {
+                "name": "Jahn Regensburg",
+                "score": "2"
+            },
+            {
+                "name": "Arminia Bielefeld",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "a1e4d0b563a9619b03be7a4b3506b507",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:43Z",
+        "completed": true,
+        "home_team": "1. FC Saarbr\u00fccken",
+        "away_team": "FC Ingolstadt 04",
+        "scores": [
+            {
+                "name": "1. FC Saarbr\u00fccken",
+                "score": "0"
+            },
+            {
+                "name": "FC Ingolstadt 04",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "a019dd8d0e79251e7f6507e45dca9377",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T15:29:56Z",
+        "completed": true,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "VfB L\u00fcbeck",
+        "scores": [
+            {
+                "name": "Erzgebirge Aue",
+                "score": "2"
+            },
+            {
+                "name": "VfB L\u00fcbeck",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "4d049d14da12a0a9a8d6a23fcbcb3e15",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T12:30:00Z",
+        "completed": false,
+        "home_team": "SC Preu\u00dfen M\u00fcnster",
+        "away_team": "Rot-Weiss Essen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cf625ac2e48a32f98b1d52d352705e54",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T15:30:00Z",
+        "completed": false,
+        "home_team": "TSV 1860 M\u00fcnchen",
+        "away_team": "SV Sandhausen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7e4044f1f33c643eca27323374a62a7b",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T18:30:00Z",
+        "completed": false,
+        "home_team": "Dynamo Dresden",
+        "away_team": "Borussia Dortmund II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d211a7c5da23c8d9e17838e3b6f3a35e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SpVgg Unterhaching",
+        "away_team": "SC Verl",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "988a9f31015f4a67535d2d932081e06e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "VfB L\u00fcbeck",
+        "away_team": "SSV Ulm 1846",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f29a1bbe590578497eb6eea0c2772170",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Arminia Bielefeld",
+        "away_team": "FC Viktoria K\u00f6ln 1904",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "57e98c581b759473c4218bb65474425f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-26T18:01:01Z",
+        "completed": true,
+        "home_team": "Hallescher FC",
+        "away_team": "Waldhof Mannheim",
+        "scores": [
+            {
+                "name": "Hallescher FC",
+                "score": "1"
+            },
+            {
+                "name": "Waldhof Mannheim",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "f7b0a2e917a88c056e2bc003d57681cd",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:04Z",
+        "completed": true,
+        "home_team": "SSV Ulm 1846",
+        "away_team": "MSV Duisburg",
+        "scores": [
+            {
+                "name": "SSV Ulm 1846",
+                "score": "2"
+            },
+            {
+                "name": "MSV Duisburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "70115b69a368a4ce74ce490824e8e861",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:08Z",
+        "completed": true,
+        "home_team": "SC Freiburg II",
+        "away_team": "SC Verl",
+        "scores": [
+            {
+                "name": "SC Freiburg II",
+                "score": "0"
+            },
+            {
+                "name": "SC Verl",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "4655ca467fdb2fd2bc63ee60ee670e35",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:01:28Z",
+        "completed": true,
+        "home_team": "FC Viktoria K\u00f6ln 1904",
+        "away_team": "SpVgg Unterhaching",
+        "scores": [
+            {
+                "name": "FC Viktoria K\u00f6ln 1904",
+                "score": "2"
+            },
+            {
+                "name": "SpVgg Unterhaching",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "ef9bb73f1500a6ef691bdbe2e595b3e3",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:16Z",
+        "completed": true,
+        "home_team": "Jahn Regensburg",
+        "away_team": "Arminia Bielefeld",
+        "scores": [
+            {
+                "name": "Jahn Regensburg",
+                "score": "2"
+            },
+            {
+                "name": "Arminia Bielefeld",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "a1e4d0b563a9619b03be7a4b3506b507",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:43Z",
+        "completed": true,
+        "home_team": "1. FC Saarbr\u00fccken",
+        "away_team": "FC Ingolstadt 04",
+        "scores": [
+            {
+                "name": "1. FC Saarbr\u00fccken",
+                "score": "0"
+            },
+            {
+                "name": "FC Ingolstadt 04",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "a019dd8d0e79251e7f6507e45dca9377",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T15:29:56Z",
+        "completed": true,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "VfB L\u00fcbeck",
+        "scores": [
+            {
+                "name": "Erzgebirge Aue",
+                "score": "2"
+            },
+            {
+                "name": "VfB L\u00fcbeck",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-27T22:50:37Z"
+    },
+    {
+        "id": "4d049d14da12a0a9a8d6a23fcbcb3e15",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T12:30:00Z",
+        "completed": false,
+        "home_team": "SC Preu\u00dfen M\u00fcnster",
+        "away_team": "Rot-Weiss Essen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cf625ac2e48a32f98b1d52d352705e54",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T15:30:00Z",
+        "completed": false,
+        "home_team": "TSV 1860 M\u00fcnchen",
+        "away_team": "SV Sandhausen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7e4044f1f33c643eca27323374a62a7b",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T18:30:00Z",
+        "completed": false,
+        "home_team": "Dynamo Dresden",
+        "away_team": "Borussia Dortmund II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d211a7c5da23c8d9e17838e3b6f3a35e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SpVgg Unterhaching",
+        "away_team": "SC Verl",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "988a9f31015f4a67535d2d932081e06e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "VfB L\u00fcbeck",
+        "away_team": "SSV Ulm 1846",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f29a1bbe590578497eb6eea0c2772170",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Arminia Bielefeld",
+        "away_team": "FC Viktoria K\u00f6ln 1904",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "57e98c581b759473c4218bb65474425f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-26T18:01:01Z",
+        "completed": true,
+        "home_team": "Hallescher FC",
+        "away_team": "Waldhof Mannheim",
+        "scores": [
+            {
+                "name": "Hallescher FC",
+                "score": "1"
+            },
+            {
+                "name": "Waldhof Mannheim",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "f7b0a2e917a88c056e2bc003d57681cd",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:04Z",
+        "completed": true,
+        "home_team": "SSV Ulm 1846",
+        "away_team": "MSV Duisburg",
+        "scores": [
+            {
+                "name": "SSV Ulm 1846",
+                "score": "2"
+            },
+            {
+                "name": "MSV Duisburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "70115b69a368a4ce74ce490824e8e861",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:08Z",
+        "completed": true,
+        "home_team": "SC Freiburg II",
+        "away_team": "SC Verl",
+        "scores": [
+            {
+                "name": "SC Freiburg II",
+                "score": "0"
+            },
+            {
+                "name": "SC Verl",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "4655ca467fdb2fd2bc63ee60ee670e35",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:01:28Z",
+        "completed": true,
+        "home_team": "FC Viktoria K\u00f6ln 1904",
+        "away_team": "SpVgg Unterhaching",
+        "scores": [
+            {
+                "name": "FC Viktoria K\u00f6ln 1904",
+                "score": "2"
+            },
+            {
+                "name": "SpVgg Unterhaching",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "ef9bb73f1500a6ef691bdbe2e595b3e3",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:16Z",
+        "completed": true,
+        "home_team": "Jahn Regensburg",
+        "away_team": "Arminia Bielefeld",
+        "scores": [
+            {
+                "name": "Jahn Regensburg",
+                "score": "2"
+            },
+            {
+                "name": "Arminia Bielefeld",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "a1e4d0b563a9619b03be7a4b3506b507",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:43Z",
+        "completed": true,
+        "home_team": "1. FC Saarbr\u00fccken",
+        "away_team": "FC Ingolstadt 04",
+        "scores": [
+            {
+                "name": "1. FC Saarbr\u00fccken",
+                "score": "0"
+            },
+            {
+                "name": "FC Ingolstadt 04",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "a019dd8d0e79251e7f6507e45dca9377",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T15:29:56Z",
+        "completed": true,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "VfB L\u00fcbeck",
+        "scores": [
+            {
+                "name": "Erzgebirge Aue",
+                "score": "2"
+            },
+            {
+                "name": "VfB L\u00fcbeck",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "4d049d14da12a0a9a8d6a23fcbcb3e15",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T12:32:02Z",
+        "completed": true,
+        "home_team": "SC Preu\u00dfen M\u00fcnster",
+        "away_team": "Rot-Weiss Essen",
+        "scores": [
+            {
+                "name": "SC Preu\u00dfen M\u00fcnster",
+                "score": "2"
+            },
+            {
+                "name": "Rot-Weiss Essen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "cf625ac2e48a32f98b1d52d352705e54",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T15:30:04Z",
+        "completed": true,
+        "home_team": "TSV 1860 M\u00fcnchen",
+        "away_team": "SV Sandhausen",
+        "scores": [
+            {
+                "name": "TSV 1860 M\u00fcnchen",
+                "score": "1"
+            },
+            {
+                "name": "SV Sandhausen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:40:49Z"
+    },
+    {
+        "id": "7e4044f1f33c643eca27323374a62a7b",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T18:30:00Z",
+        "completed": false,
+        "home_team": "Dynamo Dresden",
+        "away_team": "Borussia Dortmund II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02c6f18358f81bcca420fd15892327c7",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-02T18:00:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund II",
+        "away_team": "1. FC Saarbr\u00fccken",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "84e3445433327bf9f68a2787a6cf96d0",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "TSV 1860 M\u00fcnchen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cf9518a799ada73c5c3ebb12f5b5aecb",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SV Sandhausen",
+        "away_team": "Hallescher FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62792745ce3b5c82f5058672f957fd73",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Rot-Weiss Essen",
+        "away_team": "SC Freiburg II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d211a7c5da23c8d9e17838e3b6f3a35e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SpVgg Unterhaching",
+        "away_team": "SC Verl",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "988a9f31015f4a67535d2d932081e06e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "VfB L\u00fcbeck",
+        "away_team": "SSV Ulm 1846",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f29a1bbe590578497eb6eea0c2772170",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Arminia Bielefeld",
+        "away_team": "FC Viktoria K\u00f6ln 1904",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ebc40c40e963725c5049aeaceb36e26",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-04T12:30:00Z",
+        "completed": false,
+        "home_team": "FC Ingolstadt 04",
+        "away_team": "Dynamo Dresden",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0aa2a486607936c87a549388b0122779",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "Waldhof Mannheim",
+        "away_team": "SC Preu\u00dfen M\u00fcnster",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "57e98c581b759473c4218bb65474425f",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-26T18:01:01Z",
+        "completed": true,
+        "home_team": "Hallescher FC",
+        "away_team": "Waldhof Mannheim",
+        "scores": [
+            {
+                "name": "Hallescher FC",
+                "score": "1"
+            },
+            {
+                "name": "Waldhof Mannheim",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "f7b0a2e917a88c056e2bc003d57681cd",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:04Z",
+        "completed": true,
+        "home_team": "SSV Ulm 1846",
+        "away_team": "MSV Duisburg",
+        "scores": [
+            {
+                "name": "SSV Ulm 1846",
+                "score": "2"
+            },
+            {
+                "name": "MSV Duisburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "70115b69a368a4ce74ce490824e8e861",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:00:08Z",
+        "completed": true,
+        "home_team": "SC Freiburg II",
+        "away_team": "SC Verl",
+        "scores": [
+            {
+                "name": "SC Freiburg II",
+                "score": "0"
+            },
+            {
+                "name": "SC Verl",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "4655ca467fdb2fd2bc63ee60ee670e35",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:01:28Z",
+        "completed": true,
+        "home_team": "FC Viktoria K\u00f6ln 1904",
+        "away_team": "SpVgg Unterhaching",
+        "scores": [
+            {
+                "name": "FC Viktoria K\u00f6ln 1904",
+                "score": "2"
+            },
+            {
+                "name": "SpVgg Unterhaching",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "ef9bb73f1500a6ef691bdbe2e595b3e3",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:16Z",
+        "completed": true,
+        "home_team": "Jahn Regensburg",
+        "away_team": "Arminia Bielefeld",
+        "scores": [
+            {
+                "name": "Jahn Regensburg",
+                "score": "2"
+            },
+            {
+                "name": "Arminia Bielefeld",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "a1e4d0b563a9619b03be7a4b3506b507",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T13:03:43Z",
+        "completed": true,
+        "home_team": "1. FC Saarbr\u00fccken",
+        "away_team": "FC Ingolstadt 04",
+        "scores": [
+            {
+                "name": "1. FC Saarbr\u00fccken",
+                "score": "0"
+            },
+            {
+                "name": "FC Ingolstadt 04",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "a019dd8d0e79251e7f6507e45dca9377",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-27T15:29:56Z",
+        "completed": true,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "VfB L\u00fcbeck",
+        "scores": [
+            {
+                "name": "Erzgebirge Aue",
+                "score": "2"
+            },
+            {
+                "name": "VfB L\u00fcbeck",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "4d049d14da12a0a9a8d6a23fcbcb3e15",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T12:32:02Z",
+        "completed": true,
+        "home_team": "SC Preu\u00dfen M\u00fcnster",
+        "away_team": "Rot-Weiss Essen",
+        "scores": [
+            {
+                "name": "SC Preu\u00dfen M\u00fcnster",
+                "score": "2"
+            },
+            {
+                "name": "Rot-Weiss Essen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "cf625ac2e48a32f98b1d52d352705e54",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T15:30:04Z",
+        "completed": true,
+        "home_team": "TSV 1860 M\u00fcnchen",
+        "away_team": "SV Sandhausen",
+        "scores": [
+            {
+                "name": "TSV 1860 M\u00fcnchen",
+                "score": "1"
+            },
+            {
+                "name": "SV Sandhausen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T17:41:19Z"
+    },
+    {
+        "id": "7e4044f1f33c643eca27323374a62a7b",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-01-28T18:30:00Z",
+        "completed": false,
+        "home_team": "Dynamo Dresden",
+        "away_team": "Borussia Dortmund II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02c6f18358f81bcca420fd15892327c7",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-02T18:00:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund II",
+        "away_team": "1. FC Saarbr\u00fccken",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "84e3445433327bf9f68a2787a6cf96d0",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Erzgebirge Aue",
+        "away_team": "TSV 1860 M\u00fcnchen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cf9518a799ada73c5c3ebb12f5b5aecb",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SV Sandhausen",
+        "away_team": "Hallescher FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62792745ce3b5c82f5058672f957fd73",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "Rot-Weiss Essen",
+        "away_team": "SC Freiburg II",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d211a7c5da23c8d9e17838e3b6f3a35e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "SpVgg Unterhaching",
+        "away_team": "SC Verl",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "988a9f31015f4a67535d2d932081e06e",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T13:00:00Z",
+        "completed": false,
+        "home_team": "VfB L\u00fcbeck",
+        "away_team": "SSV Ulm 1846",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f29a1bbe590578497eb6eea0c2772170",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Arminia Bielefeld",
+        "away_team": "FC Viktoria K\u00f6ln 1904",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ebc40c40e963725c5049aeaceb36e26",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-04T12:30:00Z",
+        "completed": false,
+        "home_team": "FC Ingolstadt 04",
+        "away_team": "Dynamo Dresden",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0aa2a486607936c87a549388b0122779",
+        "sport_key": "soccer_germany_liga3",
+        "sport_title": "3. Liga - Germany",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "Waldhof Mannheim",
+        "away_team": "SC Preu\u00dfen M\u00fcnster",
+        "scores": null,
+        "last_update": null
+    }
+]
