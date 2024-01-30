@@ -1958,4 +1958,3298 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:29Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:29Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "46e9f2f4f95a8ead28dc8034d6d32696",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "VfL Bochum",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c403651545e7a53646be9980548ae69c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T17:30:00Z",
+        "completed": false,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Bayern Munich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:29Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:29Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "46e9f2f4f95a8ead28dc8034d6d32696",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "VfL Bochum",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c403651545e7a53646be9980548ae69c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T17:30:00Z",
+        "completed": false,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Bayern Munich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "ad19fc9dc3ac60e50b999a1d94160200",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-26T19:30:14Z",
+        "completed": true,
+        "home_team": "Eintracht Frankfurt",
+        "away_team": "FSV Mainz 05",
+        "scores": [
+            {
+                "name": "FSV Mainz 05",
+                "score": "0"
+            },
+            {
+                "name": "Eintracht Frankfurt",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-27T02:51:42Z"
+    },
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "225d7e457eea37be6d1d8d9d6c8f1bdd",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:29:59Z",
+        "completed": true,
+        "home_team": "VfB Stuttgart",
+        "away_team": "RB Leipzig",
+        "scores": [
+            {
+                "name": "RB Leipzig",
+                "score": "2"
+            },
+            {
+                "name": "VfB Stuttgart",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "9caa3304a219d748ed618505349efd92",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:15Z",
+        "completed": true,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "FC Koln",
+        "scores": [
+            {
+                "name": "FC Koln",
+                "score": "1"
+            },
+            {
+                "name": "VfL Wolfsburg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "49240ac6bbf9015557ff142cad490c8d",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:20Z",
+        "completed": true,
+        "home_team": "Werder Bremen",
+        "away_team": "SC Freiburg",
+        "scores": [
+            {
+                "name": "SC Freiburg",
+                "score": "1"
+            },
+            {
+                "name": "Werder Bremen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "47b3faa4c8536a22a3804813b38b1ceb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:22Z",
+        "completed": true,
+        "home_team": "Augsburg",
+        "away_team": "Bayern Munich",
+        "scores": [
+            {
+                "name": "Bayern Munich",
+                "score": "3"
+            },
+            {
+                "name": "Augsburg",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a1e71f8da8b110bd1d0590d6f8de32f2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T14:30:38Z",
+        "completed": true,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Heidenheim",
+        "scores": [
+            {
+                "name": "FC Heidenheim",
+                "score": "1"
+            },
+            {
+                "name": "TSG Hoffenheim",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "a73aec4fef6424f8cf50ae1fe621aa38",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-27T17:30:01Z",
+        "completed": true,
+        "home_team": "Bayer Leverkusen",
+        "away_team": "Borussia Monchengladbach",
+        "scores": [
+            {
+                "name": "Borussia Monchengladbach",
+                "score": "0"
+            },
+            {
+                "name": "Bayer Leverkusen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T00:50:38Z"
+    },
+    {
+        "id": "f153d62e99e43494620d002a6f292ec0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T14:30:37Z",
+        "completed": true,
+        "home_team": "Union Berlin",
+        "away_team": "SV Darmstadt 98",
+        "scores": [
+            {
+                "name": "SV Darmstadt 98",
+                "score": "0"
+            },
+            {
+                "name": "Union Berlin",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "7dd82dd96de70290147aaf737cac97b8",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-01-28T16:31:33Z",
+        "completed": true,
+        "home_team": "Borussia Dortmund",
+        "away_team": "VfL Bochum",
+        "scores": [
+            {
+                "name": "VfL Bochum",
+                "score": "1"
+            },
+            {
+                "name": "Borussia Dortmund",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T23:55:35Z"
+    },
+    {
+        "id": "aa841e0cf323f0684171dc0d16f813e6",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-02T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Heidenheim",
+        "away_team": "Borussia Dortmund",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1866a38755b22097201e02136aca7252",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Bochum",
+        "away_team": "Augsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ebe13593d3100a55f5406c8060837053",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SV Darmstadt 98",
+        "away_team": "Bayer Leverkusen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0ecfe167ae92d732800fb768374772c0",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "Bayern Munich",
+        "away_team": "Borussia Monchengladbach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a693308d7bce055c81b07591f2de6067",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Werder Bremen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6fb1acc179cd8f7c912f2e1a505f4506",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T14:30:00Z",
+        "completed": false,
+        "home_team": "SC Freiburg",
+        "away_team": "VfB Stuttgart",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d09cfe34d88a658fc269b51918529a3e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-03T17:30:00Z",
+        "completed": false,
+        "home_team": "FC Koln",
+        "away_team": "Eintracht Frankfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "09fe25676a47ecbe8b930371b5111f99",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T14:30:00Z",
+        "completed": false,
+        "home_team": "VfL Wolfsburg",
+        "away_team": "TSG Hoffenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d4e6d0071eb15efca1e40f19d6edbcc",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-04T16:30:00Z",
+        "completed": false,
+        "home_team": "RB Leipzig",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "730903f1df787b644fcb84b558b3dbeb",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-07T17:30:00Z",
+        "completed": false,
+        "home_team": "FSV Mainz 05",
+        "away_team": "Union Berlin",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2d12b7cc0efd8f21ac81871522d00af2",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-09T19:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Dortmund",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "21d2e99b7af8c9324fa87ff5fd821251",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Augsburg",
+        "away_team": "RB Leipzig",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f477aab92cda72e3ab8a569e71c9fc2c",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Borussia Monchengladbach",
+        "away_team": "SV Darmstadt 98",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "81997862598505fed8e5324292bf17b4",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Werder Bremen",
+        "away_team": "FC Heidenheim",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "459f8d1aac98628ee33c3436af66e59b",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-10T14:30:00Z",
+        "completed": false,
+        "home_team": "Union Berlin",
+        "away_team": "VfL Wolfsburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "51662585938eb00afb86c821c51a28be",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T14:30:00Z",
+        "completed": false,
+        "home_team": "VfB Stuttgart",
+        "away_team": "FSV Mainz 05",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "587e25d018ec38ac24f48dc0f53813fe",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport_title": "Bundesliga - Germany",
+        "commence_time": "2024-02-11T16:30:00Z",
+        "completed": false,
+        "home_team": "TSG Hoffenheim",
+        "away_team": "FC Koln",
+        "scores": null,
+        "last_update": null
+    }
 ]

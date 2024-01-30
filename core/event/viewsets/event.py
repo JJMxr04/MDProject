@@ -5,15 +5,18 @@ from core.event.models.event import Event
 from core.event.pagination.pagination import EventPagination
 from core.abstract.viewsets import AbstractViewSet
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 class EventViewSet(AbstractViewSet):
     http_method_names = 'get'
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
+    filter_backends = [OrderingFilter, SearchFilter]
     serializer_class = EventSerializer
     queryset = Event.objects.all()
     ordering = ['commence_time']
+    search_fields = ['sport_title', 'away_team','home_team','commence_time']
     # ordering = []
     pagination_class = EventPagination  # Use the custom pagination class
 

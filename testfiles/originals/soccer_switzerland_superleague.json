@@ -923,4 +923,1764 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:41Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:41Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T18:40:41Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c247d3dc388d93771a53f3c7011d7734",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "FC Lausanne-Sport",
+        "away_team": "BSC Young Boys",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0f7cf7b229391fffc19f6d15ac900c2c",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Winterthur",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cdf64f0be30e260c8192880fd613cdac",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Basel",
+        "away_team": "FC Lugano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "aa3867c0f64c88d16ce025d92a81eb88",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T13:15:00Z",
+        "completed": false,
+        "home_team": "Yverdon Sport FC",
+        "away_team": "FC Zurich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "15f63265770d8212b9b3ec942a8f71fe",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "FC Luzern",
+        "away_team": "FC St Gallen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2ef32c427eeda7bf03b866820af7a2fc",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "Servette",
+        "away_team": "Stade Lausanne-Ouchy",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c247d3dc388d93771a53f3c7011d7734",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "FC Lausanne-Sport",
+        "away_team": "BSC Young Boys",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0f7cf7b229391fffc19f6d15ac900c2c",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Winterthur",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cdf64f0be30e260c8192880fd613cdac",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Basel",
+        "away_team": "FC Lugano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "aa3867c0f64c88d16ce025d92a81eb88",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T13:15:00Z",
+        "completed": false,
+        "home_team": "Yverdon Sport FC",
+        "away_team": "FC Zurich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "15f63265770d8212b9b3ec942a8f71fe",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "FC Luzern",
+        "away_team": "FC St Gallen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2ef32c427eeda7bf03b866820af7a2fc",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "Servette",
+        "away_team": "Stade Lausanne-Ouchy",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c247d3dc388d93771a53f3c7011d7734",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "FC Lausanne-Sport",
+        "away_team": "BSC Young Boys",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0f7cf7b229391fffc19f6d15ac900c2c",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Winterthur",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cdf64f0be30e260c8192880fd613cdac",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Basel",
+        "away_team": "FC Lugano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "aa3867c0f64c88d16ce025d92a81eb88",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T13:15:00Z",
+        "completed": false,
+        "home_team": "Yverdon Sport FC",
+        "away_team": "FC Zurich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "15f63265770d8212b9b3ec942a8f71fe",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "FC Luzern",
+        "away_team": "FC St Gallen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2ef32c427eeda7bf03b866820af7a2fc",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "Servette",
+        "away_team": "Stade Lausanne-Ouchy",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b1971b773b3d9ae12f3f31665713f065",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:27Z",
+        "completed": true,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Winterthur",
+        "scores": [
+            {
+                "name": "Stade Lausanne-Ouchy",
+                "score": "1"
+            },
+            {
+                "name": "FC Winterthur",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "4c2b4eac5f9a5e71f717767204ec4528",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T17:00:57Z",
+        "completed": true,
+        "home_team": "Servette",
+        "away_team": "Yverdon Sport FC",
+        "scores": [
+            {
+                "name": "Servette",
+                "score": "1"
+            },
+            {
+                "name": "Yverdon Sport FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "67751916e37188c9e9fa78d4375872c8",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-27T19:31:22Z",
+        "completed": true,
+        "home_team": "FC Basel",
+        "away_team": "BSC Young Boys",
+        "scores": [
+            {
+                "name": "FC Basel",
+                "score": "1"
+            },
+            {
+                "name": "BSC Young Boys",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-01-28T13:31:40Z"
+    },
+    {
+        "id": "2f90d23a75ce1a7a0a31ae5e0058f7d4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T13:16:09Z",
+        "completed": true,
+        "home_team": "FC St Gallen",
+        "away_team": "FC Lugano",
+        "scores": [
+            {
+                "name": "FC Lugano",
+                "score": "4"
+            },
+            {
+                "name": "FC St Gallen",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "52f784b434cde6ef268b9fdbeb60df14",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:20Z",
+        "completed": true,
+        "home_team": "FC Luzern",
+        "away_team": "FC Lausanne-Sport",
+        "scores": [
+            {
+                "name": "FC Lausanne-Sport",
+                "score": "1"
+            },
+            {
+                "name": "FC Luzern",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "a367a093069a701e113cc202ec635c2e",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-28T15:30:29Z",
+        "completed": true,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Zurich",
+        "scores": [
+            {
+                "name": "FC Zurich",
+                "score": "1"
+            },
+            {
+                "name": "Grasshopper Z\u00fcrich",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T22:53:54Z"
+    },
+    {
+        "id": "07644ea65255c3f9bfb202b6391c432a",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Yverdon Sport FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d0c943ef834d0178a7f32f6a9a4137f0",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-30T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Winterthur",
+        "away_team": "FC Basel",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ab0f127e95fe1f359d2f2b899b5a3aee",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Zurich",
+        "away_team": "FC Lausanne-Sport",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac335dc5b9478ec20dd94dfab04b87c4",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Lugano",
+        "away_team": "Grasshopper Z\u00fcrich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2eaadc563442898c667ffac8b987c0cf",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-01-31T19:30:00Z",
+        "completed": false,
+        "home_team": "FC St Gallen",
+        "away_team": "Servette",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "90fc7b46fa98ef622b528e92c6128745",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-01T19:30:00Z",
+        "completed": false,
+        "home_team": "Stade Lausanne-Ouchy",
+        "away_team": "FC Luzern",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c247d3dc388d93771a53f3c7011d7734",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "FC Lausanne-Sport",
+        "away_team": "BSC Young Boys",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "0f7cf7b229391fffc19f6d15ac900c2c",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T17:00:00Z",
+        "completed": false,
+        "home_team": "Grasshopper Z\u00fcrich",
+        "away_team": "FC Winterthur",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cdf64f0be30e260c8192880fd613cdac",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-03T19:30:00Z",
+        "completed": false,
+        "home_team": "FC Basel",
+        "away_team": "FC Lugano",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "aa3867c0f64c88d16ce025d92a81eb88",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T13:15:00Z",
+        "completed": false,
+        "home_team": "Yverdon Sport FC",
+        "away_team": "FC Zurich",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "15f63265770d8212b9b3ec942a8f71fe",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "FC Luzern",
+        "away_team": "FC St Gallen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2ef32c427eeda7bf03b866820af7a2fc",
+        "sport_key": "soccer_switzerland_superleague",
+        "sport_title": "Swiss Superleague",
+        "commence_time": "2024-02-04T15:30:00Z",
+        "completed": false,
+        "home_team": "Servette",
+        "away_team": "Stade Lausanne-Ouchy",
+        "scores": null,
+        "last_update": null
+    }
 ]

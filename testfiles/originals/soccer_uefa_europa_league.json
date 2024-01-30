@@ -621,4 +621,716 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "78f4272ff19a21c00344c86b7e979167",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Galatasaray",
+        "away_team": "AC Sparta Prague",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7fe728364cd654abf316009dad5018c4",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "BSC Young Boys",
+        "away_team": "Sporting Lisbon",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f669e2636425d1d64590099e58d02e30",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Roma",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ae9affb03bffe6b5e99832ec2ceacfea",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T17:45:00Z",
+        "completed": false,
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Marseille",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f072db0374d67091eb1500a46ff56188",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "AC Milan",
+        "away_team": "Rennes",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1ce83e0260b9a8cdf71ee91457850308",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Toulouse",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8e9c0cf5e5b89de7743b5f1f6bacf0fd",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "Qaraba\u011f",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "24e4d9a94f5fb90d11ba4ed134553d59",
+        "sport_key": "soccer_uefa_europa_league",
+        "sport_title": "UEFA Europa League",
+        "commence_time": "2024-02-15T20:00:00Z",
+        "completed": false,
+        "home_team": "RC Lens",
+        "away_team": "SC Freiburg",
+        "scores": null,
+        "last_update": null
+    }
 ]

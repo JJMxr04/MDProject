@@ -14,7 +14,7 @@ eventCron = EventCron()
 
 class Command(BaseCommand):
     help = 'Runs the Crons along with the Django development server'
-
+    print("Starting Crons")
     def run(self, *args, **options):
         # Start APScheduler in a separate thread
         scheduler_thread = threading.Thread(target=self.run_apscheduler)
@@ -28,14 +28,15 @@ class Command(BaseCommand):
         scheduler = BackgroundScheduler()
         scheduler.start()
 
-        def my_job():
-            print("Job ran at: {}".format(datetime.now()))
-
         def sport_cron():
             sportCron.get_sports()
 
         def event_cron():
             eventCron.update_all_events()
+
+        def print_cron_jobs():
+            scheduler.print_jobs()
+
 
         scheduler.add_job(
             sport_cron,
@@ -46,16 +47,24 @@ class Command(BaseCommand):
         )
 
         scheduler.add_job(
-            event_cron(),
+            event_cron,
             trigger=IntervalTrigger(seconds=6*60*60),  # Run every 60 seconds
             id='event_cron',
             name='Print current time',
             replace_existing=True,
         )
 
+        scheduler.add_job(
+            print_cron_jobs,
+            trigger=IntervalTrigger(seconds=1*60*60),  # Run every 60 seconds
+            id='print_cron_jobs',
+            name='Print current time',
+            replace_existing=True,
+        )
+
         try:
             while True:
-                scheduler.print_jobs()
+                # scheduler.print_jobs()
                 scheduler._thread.join(1)
         except (KeyboardInterrupt, SystemExit):
             # Shut down the scheduler gracefully

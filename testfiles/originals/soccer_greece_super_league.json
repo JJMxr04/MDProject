@@ -602,4 +602,928 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "62c767836dd435d56036d013be8630ef",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T15:30:08Z",
+        "completed": true,
+        "home_team": "Panetolikos Agrinio",
+        "away_team": "PAS Lamia 1964",
+        "scores": [
+            {
+                "name": "Panetolikos Agrinio",
+                "score": "1"
+            },
+            {
+                "name": "PAS Lamia 1964",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "a83f23fdf511520354e3ce3c72fe042c",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-27T17:31:58Z",
+        "completed": true,
+        "home_team": "Panserraikos FC",
+        "away_team": "Volos FC",
+        "scores": [
+            {
+                "name": "Panserraikos FC",
+                "score": "2"
+            },
+            {
+                "name": "Volos FC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-28T14:20:51Z"
+    },
+    {
+        "id": "ec7909d2462f302bcece6854ffdc5849",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T14:00:06Z",
+        "completed": true,
+        "home_team": "AEK Athens",
+        "away_team": "OFI Crete",
+        "scores": [
+            {
+                "name": "OFI Crete",
+                "score": "0"
+            },
+            {
+                "name": "AEK Athens",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "b242dbf703b9dcf867651ed5ff511ada",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T15:31:43Z",
+        "completed": true,
+        "home_team": "Asteras Tripolis",
+        "away_team": "Atromitos Athens",
+        "scores": [
+            {
+                "name": "Atromitos Athens",
+                "score": "1"
+            },
+            {
+                "name": "Asteras Tripolis",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "84bbeccf9f0fa8ae4f8f490aa48c4229",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T17:31:08Z",
+        "completed": true,
+        "home_team": "Olympiakos Piraeus",
+        "away_team": "PAS Giannina",
+        "scores": [
+            {
+                "name": "PAS Giannina",
+                "score": "1"
+            },
+            {
+                "name": "Olympiakos Piraeus",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "1ad7392a0d0e303bf3db75e3ae63ff03",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-01-28T18:32:47Z",
+        "completed": true,
+        "home_team": "PAOK Thessaloniki",
+        "away_team": "Panathinaikos",
+        "scores": [
+            {
+                "name": "Panathinaikos",
+                "score": "1"
+            },
+            {
+                "name": "PAOK Thessaloniki",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-29T01:59:56Z"
+    },
+    {
+        "id": "af9cf88779970fdf883de19d9616e8fe",
+        "sport_key": "soccer_greece_super_league",
+        "sport_title": "Super League - Greece",
+        "commence_time": "2024-02-03T15:30:00Z",
+        "completed": false,
+        "home_team": "Volos FC",
+        "away_team": "Panetolikos Agrinio",
+        "scores": null,
+        "last_update": null
+    }
 ]

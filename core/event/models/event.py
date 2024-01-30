@@ -61,6 +61,9 @@ class EventManager(AbstractManager):
 class Event(AbstractModel):
     sport_key = models.CharField(max_length=255)
     sport_title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    group = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
     commence_time = models.CharField(max_length=255)
     completed = models.BooleanField(default=False)
     home_team = models.CharField(max_length=255)

@@ -23,14 +23,7 @@ class SportManager(models.Manager):
         return True  # There is a sport and Modification successful is completed
 
     def get_active_sports(self):
-        active_sports = self.filter(active=True).all()
-        keys = []
-        if active_sports:
-            for active_sport in active_sports:
-                keys.append(active_sport.key)
-            return keys  # Modification successful
-        else:
-            return False
+        return self.filter(active=True).all()
 
     def get_all_sport_keys(self):
         try:

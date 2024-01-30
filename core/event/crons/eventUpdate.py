@@ -44,7 +44,8 @@ class EventCron():
         "X-RapidAPI-Host": 'odds.p.rapidapi.com'
     }
 
-    def get_sport_events(self, key):
+    def get_sport_events(self, sport):
+        key = sport.key
         url = f"{self.domain}/{key}/scores"
         querystring = {"daysFrom": "3"}
 
@@ -58,6 +59,9 @@ class EventCron():
         write_json_to_file(api_data,f'testfiles/originals/{key}.json')
         for event in api_data:
             event['id'] = uuid.UUID(event['id'])
+            event['title'] = sport.title
+            event['group'] = sport.group
+            event['description'] = sport.description
             event_schema = EventSerializer(data=event)
             if event_schema.is_valid():
                 data = event_schema.validated_data

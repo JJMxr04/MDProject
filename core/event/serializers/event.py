@@ -17,7 +17,7 @@ class EventSerializer(AbstractSerializer):
     id = serializers.UUIDField(read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
-    scores = TeamScoreSerializer(many=True, required=False, allow_null=True)
+    scores = TeamScoreSerializer(many=False, required=False, allow_null=True)
 
     class Meta:
         model = Event
