@@ -28,5 +28,5 @@ class PublicUserSerializer(AbstractSerializer):
     class Meta:
         model = User
         # List of all the fields that can be included in a request or a response
-        fields = ['id', 'username',  'email']
+        fields = ['id', 'username', 'avatar']
         # List of all the fields that can only be read by the user

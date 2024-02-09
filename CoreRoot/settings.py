@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['localhost',"test.warforaterra.com"]
+ALLOWED_HOSTS = ['localhost',os.environ.get('DOMAIN')]
 
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apscheduler',
 
-    'core.cron',
+    'core.commands',
     'core',
     'core.user',
     'core.auth',
@@ -159,12 +159,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
-# CRONJOBS = [
-#     ('0 0 * * *', 'core.event.crons.sportUpdate.get_sports'),
-#     ('0 */4 * * *', 'core.event.cron.eventUpdate.update_all_events')
-#
-#     # Add more cron jobs as needed
-# ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 

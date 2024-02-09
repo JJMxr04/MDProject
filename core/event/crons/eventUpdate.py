@@ -9,6 +9,9 @@ from core.event.models.event import Event
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
 from core.event.models.sport import Sport
 import uuid
+from core.event.crons.teamUpdate import TeamCron
+from core.event.serializers.team import TeamSerializer
+teamCron = TeamCron()
 
 def write_json_to_file(data, filename):
     """
@@ -56,34 +59,47 @@ class EventCron():
         else:
             print(f"API Request failed with status code: {response.status_code}")
             return Response("API Request failed", status=response.status_code)
-        write_json_to_file(api_data,f'testfiles/originals/{key}.json')
+
+        write_json_to_file(api_data, f'testfiles/originals/{key}.json')
+
         for event in api_data:
+            if (event.get('away_team')) is None or (event.get('home_team') is None):
+
+                continue
+
             event['id'] = uuid.UUID(event['id'])
             event['title'] = sport.title
             event['group'] = sport.group
             event['description'] = sport.description
+            event['home_team_team'] = TeamSerializer(teamCron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
+            event['away_team_team'] = TeamSerializer(teamCron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
             event_schema = EventSerializer(data=event)
+
             if event_schema.is_valid():
                 data = event_schema.validated_data
                 data['id'] = event['id']
-                if (data.get('away_team')) is None or (data.get('away_team') is None):
+                if (data.get('away_team')) is None or (data.get('home_team') is None):
                     continue
                 try:
                     Event.objects.get(id=data.get("id"))
+
                 except ObjectDoesNotExist:
+
                     event_game = Event(**data)
                     event_game.save()
                     continue
                 if data.get('completed'):
-
                     team_schema = TeamScoreSerializer(data=event['scores'][0])
                     if team_schema.is_valid():
                         score1 = team_schema.validated_data
                     team_schema = TeamScoreSerializer(data=event['scores'][1])
                     if team_schema.is_valid():
                         score2 = team_schema.validated_data
-                    Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1,
-                                                           score2)
+                    Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1, score2)
+            else:
+                print("Validation failed:")
+                print(event_schema.errors)
+                print(event)
 
         return Response("Success", status=status.HTTP_200_OK)
 
@@ -91,6 +107,7 @@ class EventCron():
         print("Running Event Cron")
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
+            print(sport)
             self.get_sport_events(sport)
 
 def update_all_events():

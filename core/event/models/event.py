@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from core.event.models.team import Team
 
 
 class EventManager(AbstractManager):
@@ -67,7 +68,9 @@ class Event(AbstractModel):
     commence_time = models.CharField(max_length=255)
     completed = models.BooleanField(default=False)
     home_team = models.CharField(max_length=255)
+    home_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_team_team', null=True, blank=True)
     away_team = models.CharField(max_length=255)
+    away_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_team_team', null=True,blank=True)
     scores = models.CharField(max_length=255, null=True, default=None)
     winner = models.CharField(max_length=255, null=True, default=None)
 

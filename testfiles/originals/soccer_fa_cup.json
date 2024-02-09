@@ -4792,4 +4792,4091 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "bd7f9e4ff9ce855ba98a0ff397a8c379",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-28T11:45:24Z",
+        "completed": true,
+        "home_team": "West Bromwich Albion",
+        "away_team": "Wolverhampton Wanderers",
+        "scores": [
+            {
+                "name": "West Bromwich Albion",
+                "score": "0"
+            },
+            {
+                "name": "Wolverhampton Wanderers",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "32d9aae9363f0e4b1302e8fb4fd40878",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-28T14:01:17Z",
+        "completed": true,
+        "home_team": "Watford",
+        "away_team": "Southampton",
+        "scores": [
+            {
+                "name": "Watford",
+                "score": "1"
+            },
+            {
+                "name": "Southampton",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "94201086520dee086395d92303d1c688",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-28T14:30:18Z",
+        "completed": true,
+        "home_team": "Liverpool",
+        "away_team": "Norwich City",
+        "scores": [
+            {
+                "name": "Liverpool",
+                "score": "5"
+            },
+            {
+                "name": "Norwich City",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "16e05f968b449270c1b1a89ef7de2d9b",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-28T16:30:16Z",
+        "completed": true,
+        "home_team": "Newport County",
+        "away_team": "Manchester United",
+        "scores": [
+            {
+                "name": "Newport County",
+                "score": "2"
+            },
+            {
+                "name": "Manchester United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "23e1a6729cb4eaa46723d024b1314bfa",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-01-29T19:31:35Z",
+        "completed": true,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Wrexham AFC",
+        "scores": [
+            {
+                "name": "Blackburn Rovers",
+                "score": "4"
+            },
+            {
+                "name": "Wrexham AFC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-01-30T02:49:27Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:00Z",
+        "completed": false,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-07T01:30:16Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-07T01:30:16Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-07T01:30:16Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-07T01:30:16Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-07T01:30:16Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-07T01:30:16Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-07T03:04:59Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-07T03:04:59Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-07T03:04:59Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-07T03:04:59Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-07T03:04:59Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-07T03:04:59Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:00Z",
+        "completed": false,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:52Z",
+        "completed": true,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": [
+            {
+                "name": "Nottingham Forest",
+                "score": "6"
+            },
+            {
+                "name": "Bristol City",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:25Z",
+        "completed": true,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": [
+            {
+                "name": "Aston Villa",
+                "score": "1"
+            },
+            {
+                "name": "Chelsea",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:52Z",
+        "completed": true,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": [
+            {
+                "name": "Nottingham Forest",
+                "score": "6"
+            },
+            {
+                "name": "Bristol City",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:25Z",
+        "completed": true,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": [
+            {
+                "name": "Aston Villa",
+                "score": "1"
+            },
+            {
+                "name": "Chelsea",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-08T01:30:17Z"
+    }
+][
+    {
+        "id": "886b9023e50ebb5997b55dd6909739b4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:35Z",
+        "completed": true,
+        "home_team": "Plymouth Argyle",
+        "away_team": "Leeds United",
+        "scores": [
+            {
+                "name": "Plymouth Argyle",
+                "score": "1"
+            },
+            {
+                "name": "Leeds United",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-08T03:06:47Z"
+    },
+    {
+        "id": "3877b399fec04e899e2c622f2bd3778e",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:45:59Z",
+        "completed": true,
+        "home_team": "Coventry City",
+        "away_team": "Sheffield Wednesday",
+        "scores": [
+            {
+                "name": "Coventry City",
+                "score": "4"
+            },
+            {
+                "name": "Sheffield Wednesday",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-08T03:06:47Z"
+    },
+    {
+        "id": "613fc3bc5b5222d0b1417790dda31cd2",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-06T19:47:42Z",
+        "completed": true,
+        "home_team": "Southampton",
+        "away_team": "Watford",
+        "scores": [
+            {
+                "name": "Southampton",
+                "score": "3"
+            },
+            {
+                "name": "Watford",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-08T03:06:47Z"
+    },
+    {
+        "id": "ee813244eab5bce7ec64be35f9c556c5",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T19:45:52Z",
+        "completed": true,
+        "home_team": "Nottingham Forest",
+        "away_team": "Bristol City",
+        "scores": [
+            {
+                "name": "Nottingham Forest",
+                "score": "6"
+            },
+            {
+                "name": "Bristol City",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-08T03:06:47Z"
+    },
+    {
+        "id": "d445def1cd8d83ae7398dcbabc49414c",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-07T20:00:25Z",
+        "completed": true,
+        "home_team": "Aston Villa",
+        "away_team": "Chelsea",
+        "scores": [
+            {
+                "name": "Aston Villa",
+                "score": "1"
+            },
+            {
+                "name": "Chelsea",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-08T03:06:47Z"
+    },
+    {
+        "id": "206174642e10f1dc5307927a86324453",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-26T19:45:00Z",
+        "completed": false,
+        "home_team": "Coventry City",
+        "away_team": "Maidstone United FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "03ee6be8e77a7c4cbe81091900003154",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-27T19:30:00Z",
+        "completed": false,
+        "home_team": "Bournemouth",
+        "away_team": "Leicester City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "970b948adb1a587cd5bee5b6c215be60",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-27T19:45:00Z",
+        "completed": false,
+        "home_team": "Blackburn Rovers",
+        "away_team": "Newcastle United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "04d150355e7d89d6fcc06ccc77296acf",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-27T20:00:00Z",
+        "completed": false,
+        "home_team": "Luton Town",
+        "away_team": "Manchester City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "7be4ce28f1851553559feb61ea552df3",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-28T19:30:00Z",
+        "completed": false,
+        "home_team": "Chelsea",
+        "away_team": "Leeds United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e6e697ab958e3e774ac54929a89706cc",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-28T19:45:00Z",
+        "completed": false,
+        "home_team": "Wolverhampton Wanderers",
+        "away_team": "Brighton and Hove Albion",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "46a918f45527379e9f692e4f56a51dd4",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-28T19:45:00Z",
+        "completed": false,
+        "home_team": "Nottingham Forest",
+        "away_team": "Manchester United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "32e1d9c6d63647c8b2eb1b61b7628374",
+        "sport_key": "soccer_fa_cup",
+        "sport_title": "FA Cup",
+        "commence_time": "2024-02-28T20:00:00Z",
+        "completed": false,
+        "home_team": "Liverpool",
+        "away_team": "Southampton",
+        "scores": null,
+        "last_update": null
+    }
 ]

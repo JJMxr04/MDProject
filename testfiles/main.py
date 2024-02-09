@@ -13,9 +13,13 @@ from core.auth.models import email
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
 
+from core.event.models.event import Event
+from core.event.models.team import Team
+from django.http import Http404
 
 from tests.test1 import Test1, Support
 test1 = Test1()
+team1 = Team()
 support = Support()
 
 # Press the green button in the gutter to run the script.
@@ -23,12 +27,19 @@ if __name__ == '__main__':
     # test1.test9()
 
     # test1.test10()
-    # test1.testFlushAndGetSportsAndEvents()
+    # # test1.testFlushAndGetSportsAndEvents()
     # sportcron = SportCron()
     # sportcron.get_sports()
     # eventcron = EventCron()
     # eventcron.update_all_events()
     # support.flush_database()
+    # test1.testTeams("Dayton Flyers","NCAAB","Basketball")
+    # print(Event.objects.get_object_by_id("8b40c3fc8c994eb271a7980fbc27802e"))
+    #support.flush_database()
+    # print(Team.objects.get_object_by_team_name("Richmond Spiders"))
+    support.datadump()
+    # test1.testCreate20Matches()
+
     pass
 
 

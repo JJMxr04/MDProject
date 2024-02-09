@@ -24,8 +24,10 @@ from core.event.crons.sportUpdate import SportCron
 sport_cron = SportCron()
 
 from core.event.crons.eventUpdate import EventCron
+from core.event.crons.teamUpdate import TeamCron
 
 event_cron = EventCron()
+team_cron = TeamCron()
 
 from datetime import datetime, timedelta
 
@@ -176,7 +178,13 @@ class Support:
         return owner, player_2
 
     def flush_database(self):
-        call_command('flush', interactive=False)
+        # call_command('flush', interactive=False)
+        call_command('flush_except', 'core_event_team','core_sport')
+
+    def datadump(self):
+        # Replace 'app_name.ModelName' with the actual app and model names
+        call_command('dumpdata', 'core_event.Team', exclude=['contenttypes', 'auth.Permission'], indent=2)
+        call_command('dumpdata', 'core_event.Sport', exclude=['contenttypes', 'auth.Permission'], indent=2)
 
     def update_golden_game(self, json_file_path, target_id):
         try:
@@ -686,8 +694,28 @@ class Test1:
         print("Stopped Match Creation and Update Testing 10")
 
     def testFlushAndGetSportsAndEvents(self):
-
+        support.datadump()
         support.flush_database()
         owner, player_2 = support.get_test_players()
         sport_cron.get_sports()
         event_cron.update_all_events()
+        support.datadump()
+
+    def testTeams(self,team_name,title,group):
+
+        team_cron.check_team(team_name, title, group)
+
+    def testCreate20Matches(self):
+        for x in range(1,21):
+            owner, player_2 = support.get_test_players()
+            match = Match.objects.create_match(owner)
+            # print(match)
+            # match1 = Match.objects.accept_match(match, player_2)
+
+    def testCreateAndAccept20Matches(self):
+        for x in range(1,21):
+            owner, player_2 = support.get_test_players()
+            match = Match.objects.create_match(owner)
+            # print(match)
+            match1 = Match.objects.accept_match(match, player_2)
+
