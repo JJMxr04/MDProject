@@ -13709,4 +13709,3577 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T15:51:08Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            },
+            {
+                "name": "SC Farense",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:27Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Chaves",
+                "score": "0"
+            },
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:27Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": false,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Estoril",
+                "score": "1"
+            },
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:27Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:30:00Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T15:51:08Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            },
+            {
+                "name": "SC Farense",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:47:08Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Chaves",
+                "score": "0"
+            },
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:47:08Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Estoril",
+                "score": "1"
+            },
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T03:47:08Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:30:00Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T15:51:08Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            },
+            {
+                "name": "SC Farense",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Chaves",
+                "score": "0"
+            },
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Estoril",
+                "score": "1"
+            },
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:30:00Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T15:51:08Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            },
+            {
+                "name": "SC Farense",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Chaves",
+                "score": "0"
+            },
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Estoril",
+                "score": "1"
+            },
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:30:00Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T15:51:08Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            },
+            {
+                "name": "SC Farense",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Chaves",
+                "score": "0"
+            },
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Estoril",
+                "score": "1"
+            },
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T03:55:17Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:30:00Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:46:37Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:46:37Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:46:37Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:46:37Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Rio Ave FC",
+                "score": "0"
+            },
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:46:37Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": false,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:58:10Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:00:00Z",
+        "completed": false,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:30:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:50Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:50Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "1"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:50Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:00Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:00Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": false,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "1"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:00Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:25:49Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:25:49Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:25:49Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:47:10Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:47:10Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:47:10Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:57:58Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:57:58Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:57:58Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10cdc6c44d666a0ddc1a4602699be4de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-16T20:15:00Z",
+        "completed": false,
+        "home_team": "Famalic\u00e3o",
+        "away_team": "Rio Ave FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "79d10dff84b9c1861fa5d885aa6464b1",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T15:30:00Z",
+        "completed": false,
+        "home_team": "Chaves",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "003f51e5b9219701cc5eb3ef8b5756db",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T18:00:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Vit\u00f3ria SC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02ef29392c4f2e29faf6590a5a22dd36",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T20:30:00Z",
+        "completed": false,
+        "home_team": "FC Porto",
+        "away_team": "CF Estrela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fb1baa4439e74168ed9d37f33676c0a2",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T15:30:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Arouca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d8057e2bef42c4b976e8df92a7ea70c7",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "786d5c93b5e8baf1ab9399d31c4017a8",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "Gil Vicente",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62a479b0e75ea3e21d5bf5cadad984b0",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T20:30:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "4ee737c19c2fa622f3a4fea1c4b85157",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-09T20:17:47Z",
+        "completed": true,
+        "home_team": "CF Estrela",
+        "away_team": "Portimonense",
+        "scores": [
+            {
+                "name": "CF Estrela",
+                "score": "3"
+            },
+            {
+                "name": "Portimonense",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:51:40Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            },
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Braga",
+                "score": "0"
+            },
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Benfica",
+                "score": "2"
+            },
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T03:58:28Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:15:00Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10cdc6c44d666a0ddc1a4602699be4de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-16T20:15:00Z",
+        "completed": false,
+        "home_team": "Famalic\u00e3o",
+        "away_team": "Rio Ave FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "79d10dff84b9c1861fa5d885aa6464b1",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T15:30:00Z",
+        "completed": false,
+        "home_team": "Chaves",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "003f51e5b9219701cc5eb3ef8b5756db",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T18:00:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Vit\u00f3ria SC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02ef29392c4f2e29faf6590a5a22dd36",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T20:30:00Z",
+        "completed": false,
+        "home_team": "FC Porto",
+        "away_team": "CF Estrela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fb1baa4439e74168ed9d37f33676c0a2",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T15:30:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Arouca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d8057e2bef42c4b976e8df92a7ea70c7",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "786d5c93b5e8baf1ab9399d31c4017a8",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "Gil Vicente",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62a479b0e75ea3e21d5bf5cadad984b0",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T20:30:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            },
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            },
+            {
+                "name": "Braga",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            },
+            {
+                "name": "Benfica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:16:16Z",
+        "completed": false,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": [
+            {
+                "name": "FC Porto",
+                "score": "1"
+            },
+            {
+                "name": "Arouca",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T21:58:32Z"
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10cdc6c44d666a0ddc1a4602699be4de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-16T20:15:00Z",
+        "completed": false,
+        "home_team": "Famalic\u00e3o",
+        "away_team": "Rio Ave FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "79d10dff84b9c1861fa5d885aa6464b1",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T15:30:00Z",
+        "completed": false,
+        "home_team": "Chaves",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "003f51e5b9219701cc5eb3ef8b5756db",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T18:00:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Vit\u00f3ria SC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02ef29392c4f2e29faf6590a5a22dd36",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T20:30:00Z",
+        "completed": false,
+        "home_team": "FC Porto",
+        "away_team": "CF Estrela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fb1baa4439e74168ed9d37f33676c0a2",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T15:30:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Arouca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d8057e2bef42c4b976e8df92a7ea70c7",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "786d5c93b5e8baf1ab9399d31c4017a8",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "Gil Vicente",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62a479b0e75ea3e21d5bf5cadad984b0",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T20:30:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            },
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            },
+            {
+                "name": "Braga",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            },
+            {
+                "name": "Benfica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:16:16Z",
+        "completed": true,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": [
+            {
+                "name": "FC Porto",
+                "score": "2"
+            },
+            {
+                "name": "Arouca",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-13T03:46:16Z"
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10cdc6c44d666a0ddc1a4602699be4de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-16T20:15:00Z",
+        "completed": false,
+        "home_team": "Famalic\u00e3o",
+        "away_team": "Rio Ave FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "79d10dff84b9c1861fa5d885aa6464b1",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T15:30:00Z",
+        "completed": false,
+        "home_team": "Chaves",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "003f51e5b9219701cc5eb3ef8b5756db",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T18:00:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Vit\u00f3ria SC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02ef29392c4f2e29faf6590a5a22dd36",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T20:30:00Z",
+        "completed": false,
+        "home_team": "FC Porto",
+        "away_team": "CF Estrela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fb1baa4439e74168ed9d37f33676c0a2",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T15:30:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Arouca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d8057e2bef42c4b976e8df92a7ea70c7",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "786d5c93b5e8baf1ab9399d31c4017a8",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "Gil Vicente",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62a479b0e75ea3e21d5bf5cadad984b0",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T20:30:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            },
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            },
+            {
+                "name": "Braga",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            },
+            {
+                "name": "Benfica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:16:16Z",
+        "completed": true,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": [
+            {
+                "name": "FC Porto",
+                "score": "2"
+            },
+            {
+                "name": "Arouca",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-13T03:46:16Z"
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10cdc6c44d666a0ddc1a4602699be4de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-16T20:15:00Z",
+        "completed": false,
+        "home_team": "Famalic\u00e3o",
+        "away_team": "Rio Ave FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "79d10dff84b9c1861fa5d885aa6464b1",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T15:30:00Z",
+        "completed": false,
+        "home_team": "Chaves",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "003f51e5b9219701cc5eb3ef8b5756db",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T18:00:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Vit\u00f3ria SC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02ef29392c4f2e29faf6590a5a22dd36",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T20:30:00Z",
+        "completed": false,
+        "home_team": "FC Porto",
+        "away_team": "CF Estrela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fb1baa4439e74168ed9d37f33676c0a2",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T15:30:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Arouca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d8057e2bef42c4b976e8df92a7ea70c7",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "786d5c93b5e8baf1ab9399d31c4017a8",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "Gil Vicente",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62a479b0e75ea3e21d5bf5cadad984b0",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T20:30:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2b33cda071c44bd7a17df935a013d87e",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T15:32:18Z",
+        "completed": true,
+        "home_team": "SC Farense",
+        "away_team": "Famalic\u00e3o",
+        "scores": [
+            {
+                "name": "SC Farense",
+                "score": "1"
+            },
+            {
+                "name": "Famalic\u00e3o",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "ed00b775e7e7e8ea2bdc2c2ae9ea34de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T18:02:22Z",
+        "completed": true,
+        "home_team": "Moreirense FC",
+        "away_team": "Chaves",
+        "scores": [
+            {
+                "name": "Moreirense FC",
+                "score": "1"
+            },
+            {
+                "name": "Chaves",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "d9fc9cbf49921840d374ad6ed010d9b9",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-10T20:31:18Z",
+        "completed": true,
+        "home_team": "Boavista Porto",
+        "away_team": "Estoril",
+        "scores": [
+            {
+                "name": "Boavista Porto",
+                "score": "2"
+            },
+            {
+                "name": "Estoril",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "23854c2d3adc012bd02a71bedd8a824b",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T15:32:18Z",
+        "completed": true,
+        "home_team": "Rio Ave FC",
+        "away_team": "Casa Pia",
+        "scores": [
+            {
+                "name": "Rio Ave FC",
+                "score": "1"
+            },
+            {
+                "name": "Casa Pia",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "1c28ba34335a089b3b5d98ec367f95ff",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T18:04:13Z",
+        "completed": true,
+        "home_team": "Sporting Lisbon",
+        "away_team": "Braga",
+        "scores": [
+            {
+                "name": "Sporting Lisbon",
+                "score": "5"
+            },
+            {
+                "name": "Braga",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "2bd0fccdb095d7bab29b7d7dc151ef1c",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-11T20:32:00Z",
+        "completed": true,
+        "home_team": "Vit\u00f3ria SC",
+        "away_team": "Benfica",
+        "scores": [
+            {
+                "name": "Vit\u00f3ria SC",
+                "score": "2"
+            },
+            {
+                "name": "Benfica",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T20:31:35Z"
+    },
+    {
+        "id": "9e2cfad7d95ed3d7b7f4606502c16eab",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-12T20:16:16Z",
+        "completed": true,
+        "home_team": "Arouca",
+        "away_team": "FC Porto",
+        "scores": [
+            {
+                "name": "FC Porto",
+                "score": "2"
+            },
+            {
+                "name": "Arouca",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-13T03:46:16Z"
+    },
+    {
+        "id": "eab94d33aa6dbad8f7f3975fa273792d",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-13T15:30:00Z",
+        "completed": false,
+        "home_team": "Gil Vicente",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "10cdc6c44d666a0ddc1a4602699be4de",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-16T20:15:00Z",
+        "completed": false,
+        "home_team": "Famalic\u00e3o",
+        "away_team": "Rio Ave FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "79d10dff84b9c1861fa5d885aa6464b1",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T15:30:00Z",
+        "completed": false,
+        "home_team": "Chaves",
+        "away_team": "Boavista Porto",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "003f51e5b9219701cc5eb3ef8b5756db",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T18:00:00Z",
+        "completed": false,
+        "home_team": "Portimonense",
+        "away_team": "Vit\u00f3ria SC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "02ef29392c4f2e29faf6590a5a22dd36",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-17T20:30:00Z",
+        "completed": false,
+        "home_team": "FC Porto",
+        "away_team": "CF Estrela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "fb1baa4439e74168ed9d37f33676c0a2",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T15:30:00Z",
+        "completed": false,
+        "home_team": "Casa Pia",
+        "away_team": "Arouca",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d8057e2bef42c4b976e8df92a7ea70c7",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Benfica",
+        "away_team": "Vizela",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "786d5c93b5e8baf1ab9399d31c4017a8",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T18:00:00Z",
+        "completed": false,
+        "home_team": "Estoril",
+        "away_team": "Gil Vicente",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "62a479b0e75ea3e21d5bf5cadad984b0",
+        "sport_key": "soccer_portugal_primeira_liga",
+        "sport_title": "Primeira Liga - Portugal",
+        "commence_time": "2024-02-18T20:30:00Z",
+        "completed": false,
+        "home_team": "Braga",
+        "away_team": "SC Farense",
+        "scores": null,
+        "last_update": null
+    }
 ]

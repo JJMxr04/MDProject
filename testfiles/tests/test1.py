@@ -219,6 +219,18 @@ class Support:
             print(f"Error decoding JSON: {e}")
             return None
 
+    def endEvents(self):
+        events = Event.objects.filter(completed=False)
+        x =0
+        for event in events:
+            current_time = datetime.now()
+            eventTime = datetime.strptime(event.commence_time, "%Y-%m-%dT%H:%M:%SZ")
+            if current_time > eventTime:
+                event.completed = True
+                event.save()
+                x += 1
+                print(f"changed {x} event's time")
+
 
 support = Support()
 

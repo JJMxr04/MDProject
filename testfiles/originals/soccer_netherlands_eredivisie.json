@@ -17860,4 +17860,5281 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            },
+            {
+                "name": "Excelsior",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:10Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            },
+            {
+                "name": "Almere City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:10Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            },
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:10Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:15:00Z",
+        "completed": false,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:00Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            },
+            {
+                "name": "Excelsior",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            },
+            {
+                "name": "Almere City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            },
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:15:00Z",
+        "completed": false,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:00Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            },
+            {
+                "name": "Excelsior",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            },
+            {
+                "name": "Almere City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            },
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:15:00Z",
+        "completed": false,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:00Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            },
+            {
+                "name": "Excelsior",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            },
+            {
+                "name": "Almere City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            },
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:15:00Z",
+        "completed": false,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:00Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            },
+            {
+                "name": "Excelsior",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            },
+            {
+                "name": "Almere City",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            },
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T03:24:09Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:15:00Z",
+        "completed": false,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:00Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:47:04Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T15:47:04Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-11T15:47:04Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:00Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "FC Volendam",
+                "score": "0"
+            },
+            {
+                "name": "PSV Eindhoven",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:58:13Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T15:58:13Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-11T15:58:13Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": false,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "0"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T15:58:13Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:00:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": null,
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:56Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:56Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:56Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:56Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:56Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:11Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:11Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:11Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:11Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T21:58:11Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "2800919f0ca11769a1cddd29712350f7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-09T19:01:03Z",
+        "completed": true,
+        "home_team": "RKC Waalwijk",
+        "away_team": "NEC Nijmegen",
+        "scores": [
+            {
+                "name": "RKC Waalwijk",
+                "score": "2"
+            },
+            {
+                "name": "NEC Nijmegen",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T18:06:42Z"
+    },
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "53777f6a54a44a4725c44280abc988cc",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T17:50:20Z",
+        "completed": true,
+        "home_team": "Excelsior",
+        "away_team": "FC Twente Enschede",
+        "scores": [
+            {
+                "name": "Excelsior",
+                "score": "0"
+            },
+            {
+                "name": "FC Twente Enschede",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "9f4ed9e1bf6be549ed832f0da31b14c9",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T19:03:08Z",
+        "completed": true,
+        "home_team": "Almere City",
+        "away_team": "AZ Alkmaar",
+        "scores": [
+            {
+                "name": "Almere City",
+                "score": "0"
+            },
+            {
+                "name": "AZ Alkmaar",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "ae554785f150094091392fc85575a7a2",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-10T20:01:47Z",
+        "completed": true,
+        "home_team": "Heracles Almelo",
+        "away_team": "Vitesse Arnhem",
+        "scores": [
+            {
+                "name": "Heracles Almelo",
+                "score": "3"
+            },
+            {
+                "name": "Vitesse Arnhem",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T11:36:13Z"
+    },
+    {
+        "id": "5385086c693029547de60329a248b137",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T11:16:48Z",
+        "completed": true,
+        "home_team": "Go Ahead Eagles",
+        "away_team": "FC Zwolle",
+        "scores": [
+            {
+                "name": "FC Zwolle",
+                "score": "1"
+            },
+            {
+                "name": "Go Ahead Eagles",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "8830701f2ec85a67562d70496a0045a4",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:03Z",
+        "completed": true,
+        "home_team": "Heerenveen",
+        "away_team": "Ajax",
+        "scores": [
+            {
+                "name": "Ajax",
+                "score": "2"
+            },
+            {
+                "name": "Heerenveen",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ac6d8efada6b7747e41e4554bfb48e08",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T13:32:59Z",
+        "completed": true,
+        "home_team": "FC Utrecht",
+        "away_team": "Fortuna Sittard",
+        "scores": [
+            {
+                "name": "Fortuna Sittard",
+                "score": "0"
+            },
+            {
+                "name": "FC Utrecht",
+                "score": "4"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "ede284253aa5167a01396fdd6d456504",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T15:45:49Z",
+        "completed": true,
+        "home_team": "FC Volendam",
+        "away_team": "PSV Eindhoven",
+        "scores": [
+            {
+                "name": "PSV Eindhoven",
+                "score": "5"
+            },
+            {
+                "name": "FC Volendam",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "539f5ef0025128d56a8c96eea2995c93",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-11T19:02:12Z",
+        "completed": true,
+        "home_team": "Feyenoord",
+        "away_team": "Sparta Rotterdam",
+        "scores": [
+            {
+                "name": "Sparta Rotterdam",
+                "score": "0"
+            },
+            {
+                "name": "Feyenoord",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-12T02:23:10Z"
+    },
+    {
+        "id": "47323c323b3fef36ecb679627961667b",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-16T19:00:00Z",
+        "completed": false,
+        "home_team": "PSV Eindhoven",
+        "away_team": "Heracles Almelo",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1105376953eadb6d046d2e8b1afc2193",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Fortuna Sittard",
+        "away_team": "AZ Alkmaar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "b0fbd79cf200b41238ac91f31fbd09d0",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T17:45:00Z",
+        "completed": false,
+        "home_team": "Sparta Rotterdam",
+        "away_team": "Excelsior",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "92a9c588d4bc177452c48dbe2e7bbe5a",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "FC Zwolle",
+        "away_team": "Almere City",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8ca072fba19315bc0f70ea21bc7cebfd",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-17T20:00:00Z",
+        "completed": false,
+        "home_team": "Heerenveen",
+        "away_team": "Go Ahead Eagles",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6052c3e85b4a60378de032c6da94cbb7",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T11:15:00Z",
+        "completed": false,
+        "home_team": "FC Twente Enschede",
+        "away_team": "FC Utrecht",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "e8eb8fb34c1576455a71cb63af438bb3",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Ajax",
+        "away_team": "NEC Nijmegen",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a2b6d809ce532053b08b329141167468",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Vitesse Arnhem",
+        "away_team": "FC Volendam",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "cad7efcc8f8526f8005712a578e1d93c",
+        "sport_key": "soccer_netherlands_eredivisie",
+        "sport_title": "Dutch Eredivisie",
+        "commence_time": "2024-02-18T15:45:00Z",
+        "completed": false,
+        "home_team": "Feyenoord",
+        "away_team": "RKC Waalwijk",
+        "scores": null,
+        "last_update": null
+    }
 ]

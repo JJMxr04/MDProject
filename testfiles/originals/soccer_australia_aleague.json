@@ -14706,4 +14706,3737 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:00Z",
+        "completed": false,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:00Z",
+        "completed": false,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:00Z",
+        "completed": false,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": "2024-02-10T16:10:55Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T09:47:03Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T09:47:03Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T09:47:03Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T09:47:03Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T09:47:03Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T09:57:53Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T09:57:53Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T09:57:53Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T09:57:53Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T09:57:53Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "a9b7c11e97b8349a0f835a1da1512ad1",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-09T08:45:16Z",
+        "completed": true,
+        "home_team": "Adelaide United",
+        "away_team": "Perth Glory",
+        "scores": [
+            {
+                "name": "Adelaide United",
+                "score": "3"
+            },
+            {
+                "name": "Perth Glory",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T12:59:40Z"
+    },
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "895bad84f36086f24ae40398b1f25fc7",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T04:45:45Z",
+        "completed": true,
+        "home_team": "Wellington Phoenix FC",
+        "away_team": "Western United FC",
+        "scores": [
+            {
+                "name": "Wellington Phoenix FC",
+                "score": "2"
+            },
+            {
+                "name": "Western United FC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "b77b9c4362e1dac895ee5fd15f7a9206",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T06:30:41Z",
+        "completed": true,
+        "home_team": "Melbourne Victory",
+        "away_team": "Macarthur FC",
+        "scores": [
+            {
+                "name": "Melbourne Victory",
+                "score": "0"
+            },
+            {
+                "name": "Macarthur FC",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "533bec0c44aa34029ac04e6d6b79e141",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T07:00:41Z",
+        "completed": true,
+        "home_team": "Brisbane Roar",
+        "away_team": "Melbourne City",
+        "scores": [
+            {
+                "name": "Brisbane Roar",
+                "score": "5"
+            },
+            {
+                "name": "Melbourne City",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "ca9a03e76876af3e4372ab30171b7078",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-10T08:45:19Z",
+        "completed": true,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Sydney FC",
+        "scores": [
+            {
+                "name": "Central Coast Mariners",
+                "score": "1"
+            },
+            {
+                "name": "Sydney FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T12:59:41Z"
+    },
+    {
+        "id": "99b4fd505e757995913e83c58d15b92b",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-11T06:00:20Z",
+        "completed": true,
+        "home_team": "Western Sydney Wanderers",
+        "away_team": "Newcastle Jets FC",
+        "scores": [
+            {
+                "name": "Western Sydney Wanderers",
+                "score": "3"
+            },
+            {
+                "name": "Newcastle Jets FC",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-11T13:28:09Z"
+    },
+    {
+        "id": "1a82809205d706c3db42651e926b607a",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-16T08:45:00Z",
+        "completed": false,
+        "home_team": "Western United FC",
+        "away_team": "Newcastle Jets FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "1242362337ed2f96532381c5195a0ab5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T07:00:00Z",
+        "completed": false,
+        "home_team": "Sydney FC",
+        "away_team": "Adelaide United",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "52b65fbad6325c20fb1a58931982c521",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T08:45:00Z",
+        "completed": false,
+        "home_team": "Melbourne City",
+        "away_team": "Melbourne Victory",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "00704c9f64df8ecec2f11c1fddd64e19",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-17T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Brisbane Roar",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "105c54c1881003471100604f1b979b89",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Central Coast Mariners",
+        "away_team": "Western Sydney Wanderers",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "42790ed015d67d0b188d6849c06f1e07",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-18T06:00:00Z",
+        "completed": false,
+        "home_team": "Macarthur FC",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "6b5b1d2d050844763e5056631a5c02e5",
+        "sport_key": "soccer_australia_aleague",
+        "sport_title": "A-League",
+        "commence_time": "2024-02-24T10:45:00Z",
+        "completed": false,
+        "home_team": "Perth Glory",
+        "away_team": "Wellington Phoenix FC",
+        "scores": null,
+        "last_update": null
+    }
 ]

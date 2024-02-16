@@ -5023,4 +5023,3192 @@
         "scores": null,
         "last_update": null
     }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:21:44Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            },
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:10Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Hartberg",
+                "score": "1"
+            },
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T22:00:10Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:21:44Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            },
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Hartberg",
+                "score": "1"
+            },
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:21:44Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            },
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Hartberg",
+                "score": "1"
+            },
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:21:44Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            },
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Hartberg",
+                "score": "1"
+            },
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T16:21:44Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            },
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Hartberg",
+                "score": "1"
+            },
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            }
+        ],
+        "last_update": "2024-02-10T23:25:45Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:47:06Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:47:06Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:57:51Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T15:57:51Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:00:00Z",
+        "completed": false,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:45Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:45Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T21:46:45Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T21:57:56Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T21:57:56Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T21:57:56Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "94bb1cbf770763ae212206f3a85d65ea",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-09T19:32:45Z",
+        "completed": true,
+        "home_team": "RB Salzburg",
+        "away_team": "Sturm Graz",
+        "scores": [
+            {
+                "name": "RB Salzburg",
+                "score": "1"
+            },
+            {
+                "name": "Sturm Graz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "75dc8ab4dabf861ae773be144e339871",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:18Z",
+        "completed": true,
+        "home_team": "Rheindorf Altach",
+        "away_team": "FC Blau-Wei\u00df Linz",
+        "scores": [
+            {
+                "name": "Rheindorf Altach",
+                "score": "1"
+            },
+            {
+                "name": "FC Blau-Wei\u00df Linz",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "8edc2177b5332390307b45f27242abbd",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-10T16:00:29Z",
+        "completed": true,
+        "home_team": "Austria Wien",
+        "away_team": "Hartberg",
+        "scores": [
+            {
+                "name": "Austria Wien",
+                "score": "3"
+            },
+            {
+                "name": "Hartberg",
+                "score": "1"
+            }
+        ],
+        "last_update": "2024-02-11T13:51:15Z"
+    },
+    {
+        "id": "c5e7fa56fe4be80a42b1b3fd4c5d1ea1",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:10Z",
+        "completed": true,
+        "home_team": "Wolfsberger AC",
+        "away_team": "Rapid Wien",
+        "scores": [
+            {
+                "name": "Rapid Wien",
+                "score": "2"
+            },
+            {
+                "name": "Wolfsberger AC",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "46b36acdad41f152fc36c86840d3ee8c",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T13:30:18Z",
+        "completed": true,
+        "home_team": "WSG Tirol",
+        "away_team": "Austria Lustenau",
+        "scores": [
+            {
+                "name": "Austria Lustenau",
+                "score": "2"
+            },
+            {
+                "name": "WSG Tirol",
+                "score": "0"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "f505bfc01e722ee6443cfb8fbc2f3aa9",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-11T16:01:33Z",
+        "completed": true,
+        "home_team": "LASK",
+        "away_team": "Austria Klagenfurt",
+        "scores": [
+            {
+                "name": "Austria Klagenfurt",
+                "score": "2"
+            },
+            {
+                "name": "LASK",
+                "score": "2"
+            }
+        ],
+        "last_update": "2024-02-11T23:23:44Z"
+    },
+    {
+        "id": "a359731e673b3e9452028a09b752a57e",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Austria Wien",
+        "away_team": "Rheindorf Altach",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "692f02e25c8ec254a37bb0ec2f29bc39",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "FC Blau-Wei\u00df Linz",
+        "away_team": "RB Salzburg",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "135436b06c7f3761f794645231bd9e80",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-17T16:00:00Z",
+        "completed": false,
+        "home_team": "Wolfsberger AC",
+        "away_team": "WSG Tirol",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "8892e268bc52d247d7f6cfb91fe9ae17",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Austria Lustenau",
+        "away_team": "Austria Klagenfurt",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "c266361546c311f95a466c58f58eb992",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T13:30:00Z",
+        "completed": false,
+        "home_team": "Hartberg",
+        "away_team": "LASK",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "212971818edd4cf99543b802389853ad",
+        "sport_key": "soccer_austria_bundesliga",
+        "sport_title": "Austrian Football Bundesliga",
+        "commence_time": "2024-02-18T16:00:00Z",
+        "completed": false,
+        "home_team": "Sturm Graz",
+        "away_team": "Rapid Wien",
+        "scores": null,
+        "last_update": null
+    }
 ]

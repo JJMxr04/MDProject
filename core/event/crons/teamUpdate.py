@@ -3,12 +3,37 @@
 import os
 #from dotenv import load_dotenv
 #load_dotenv()
+import json
 
 import requests
 
 from django.http import Http404
 from core.event.models  import Team
 team = Team()
+
+def write_json_to_file(data, filename):
+    """
+    Write JSON data to a file in a formatted way.
+
+    Parameters:
+    - data: The data to be written.
+    - filename: The name of the file to write to.
+    """
+    json_data = json.dumps( data, indent=4)
+    with open(filename, 'a') as file:
+        file.write(json_data)
+
+def read_json_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            json_data = file.read()
+            if json_data.strip():
+                return json_data
+            else:
+                return None
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
 
 
 def write_image(content, country, title, team_name, team_id):
@@ -53,6 +78,7 @@ class TeamCron():
 
         if response.status_code == 200:
             data = response.json()
+            # write_json_to_file(data, f'testfiles/teams/teams_json.json')
             if data['teams']:
                 if data['teams'][0]['country']:
                     country = data['teams'][0]['country']['name']
@@ -84,11 +110,11 @@ class TeamCron():
             "X-RapidAPI-Host": "sofascore.p.rapidapi.com"
         }
         response = requests.get(url, headers=headers, params=querystring)
-
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
             # Get the content of the response (image data)
-
+            # data = response.json()
+            # write_json_to_file(data, f'testfiles/teams/teams_logos.json')
             return self.create_save_logo(team_name, title, team_id, country, response.content)
         else:
             print(f"Error: {response.status_code} - {response.text}")
@@ -98,6 +124,7 @@ class TeamCron():
 
     def check_team(self, team_name, title, group):
         try:
+            # print(team_name)
             team_search = Team.objects.get(team_name=team_name)
             return team_search
         except Team.DoesNotExist:
