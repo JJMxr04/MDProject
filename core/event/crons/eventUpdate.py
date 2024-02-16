@@ -81,21 +81,21 @@ class EventCron():
                 if (data.get('away_team')) is None or (data.get('home_team') is None):
                     continue
                 try:
-                    Event.objects.get(id=data.get("id"))
-
+                    existing_event = Event.objects.get(id=data.get("id"))
+                    if existing_event.completed != data['completed']:
+                        # Update the existing event with new data
+                        team_schema = TeamScoreSerializer(data=event['scores'][0])
+                        if team_schema.is_valid():
+                            score1 = team_schema.validated_data
+                        team_schema = TeamScoreSerializer(data=event['scores'][1])
+                        if team_schema.is_valid():
+                            score2 = team_schema.validated_data
+                        Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1, score2)
                 except ObjectDoesNotExist:
-
+                    # If event does not exist, create a new one
                     event_game = Event(**data)
                     event_game.save()
                     continue
-                if data.get('completed'):
-                    team_schema = TeamScoreSerializer(data=event['scores'][0])
-                    if team_schema.is_valid():
-                        score1 = team_schema.validated_data
-                    team_schema = TeamScoreSerializer(data=event['scores'][1])
-                    if team_schema.is_valid():
-                        score2 = team_schema.validated_data
-                    Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1, score2)
             else:
                 print("Validation failed:")
                 print(event_schema.errors)
