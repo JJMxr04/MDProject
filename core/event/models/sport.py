@@ -10,6 +10,9 @@ class SportManager(models.Manager):
     def get_active_sports_obj(self):
         return self.filter(active=True).all()
 
+    def get_by_key(self,key):
+        return self.filter(key=key).first()
+
 
     def get_sport_state(self, key, active, has_outrights):
 

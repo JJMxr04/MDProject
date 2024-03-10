@@ -7,12 +7,15 @@ from django import setup
 # Configure Django settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
+import json
 from core.match.models import Match
 from core.mail import views
 from core.auth.models import email
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
 from core.event.serializers.team import TeamSerializer
+from core.match.serializers.match import MatchSerializer
+
 
 from core.event.models.event import Event
 from core.event.models.team import Team
@@ -23,33 +26,44 @@ test1 = Test1()
 team1 = Team()
 support = Support()
 
+
+def updateEvents():
+    sportcron = SportCron()
+    sportcron.get_sports()
+    eventcron = EventCron()
+    eventcron.update_all_events()
+    # support.datadump()
+
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # test1.test9()
-    # support.datadump()
-    # test1.test10()
-    # test1.testFlushAndGetSportsAndEvents()
-    # sportcron = SportCron()
-    # sportcron.get_sports()
-    # eventcron = EventCron()
-    # eventcron.update_all_events()
-    # Team.objects.get(team_name="Ibraheem Sulaimaan")
-    # teams = Team.objects.all()
-    # for team in teams:
-    #     name = team.team_name
-    #
-    #     teams1 = Team.objects.filter(team_name=name)
-    #     if len(teams1) > 1:
-    #         print(f"{name} has {len(teams1)} item")
-    #         teams1[1].delete()
-    # support.flush_database()
-    # test1.testTeams("Dayton Flyers","NCAAB","Basketball")
-    # print(Event.objects.get_object_by_id("8b40c3fc8c994eb271a7980fbc27802e"))
-    #support.flush_database()
-    # print(Team.objects.get_object_by_team_name("Richmond Spiders"))
-    # support.datadump()
+
+
+    # support.deleteExtraTeams()
+    # updateEvents()
+    # support.checkExtraTeams()
     # support.endEvents()
     # test1.testCreate20Matches()
+    # test1.testCreateMatches(5)
+    # team_name = "Aris Arguello"
+    # team_search = Team.objects.filter(team_name=team_name)
+    # print(team_search[0].team_id)
+
+    # matches = Match.objects.filter(player_1="f7db283a-4cce-4f94-b5ae-096b43ec906f").all()
+    # print(matches)
+    # x = 0
+    # y = 0
+    # for match in matches:
+    #     if match.match_state == "completed":
+    #         x +=1
+    #     else:
+    #         y+=1
+    #
+    # print(x)
+    # print(y)
+    match = Match.objects.get_object_by_id("7c57a214-de9e-4071-be84-312345c4f7f7")
+    print(json.dumps(MatchSerializer(match).data,indent=4))
 
     pass
 

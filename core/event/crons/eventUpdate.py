@@ -99,7 +99,7 @@ class EventCron():
             else:
                 print("Validation failed:")
                 print(event_schema.errors)
-                print(event)
+                # print(event)
 
         return Response("Success", status=status.HTTP_200_OK)
 
@@ -107,7 +107,7 @@ class EventCron():
         print("Running Event Cron")
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
-            print(sport)
+            # print(sport)
             self.get_sport_events(sport)
 
 def update_all_events():

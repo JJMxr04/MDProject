@@ -12,13 +12,24 @@ class TeamManager(AbstractManager):
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
             return Http404
+    def get_object_by_team_id(self, team_id):
+        try:
+            print(team_id)
+            instance = self.filter(team_id=team_id)
+            return instance
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            return False
 
     def create_team(self, team_name, title, group,team_id,logo_url,country,country_code,):
-        """Create and return a `User` with an email, phone number, username and password."""
 
-        team = self.model(team_name=team_name, title=title,group=group,team_id=team_id,logo_url=logo_url,country=country,country_code=country_code)
-        team.save(using=self._db)
-        return team
+        team = self.get_object_by_team_id(team_id)
+        print(len(team))
+        if team:
+            return team
+        else:
+            team = self.model(team_name=team_name, title=title,group=group,team_id=team_id,logo_url=logo_url,country=country,country_code=country_code)
+            team.save(using=self._db)
+            return team
 
 
 class Team(AbstractModel):

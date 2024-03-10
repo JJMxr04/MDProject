@@ -25,6 +25,8 @@ sport_cron = SportCron()
 
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.teamUpdate import TeamCron
+from core.event.serializers.team import TeamSerializer
+from core.event.models import Team
 
 event_cron = EventCron()
 team_cron = TeamCron()
@@ -33,6 +35,20 @@ from datetime import datetime, timedelta
 
 
 class Support:
+    from datetime import datetime, timedelta
+
+    def get_date_for_week_from_now():
+        # Get the current date
+        current_date = datetime.now().date()
+
+        # Calculate the date for a week from now
+        week_from_now = current_date + timedelta(weeks=1)
+
+        return week_from_now
+
+    # Example usage
+    print(get_date_for_week_from_now())
+
     def read_list_from_file(self, file_path):
         try:
             with open(file_path, 'r') as file:
@@ -109,35 +125,42 @@ class Support:
         api_data = support.read_json_file(file)
         if api_data is None:
             return False
-
         api_data_json = json.loads(api_data)
+        sport = Sport.objects.get_by_key("americanfootball_nfl")
 
         for event in api_data_json:
-            event['id'] = uuid.UUID(event['id'])
-            event_schema = EventSerializer(data=event)
-            if event_schema.is_valid():
+            if (event["away_team"]) is None or (event.get('home_team') is None):
+                continue
 
+            event['id'] = uuid.UUID(event['id'])
+            event['title'] = sport.title
+            event['group'] = sport.group
+            event['description'] = sport.description
+            event['home_team_team'] = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
+            event['away_team_team'] = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
+            event_schema = EventSerializer(data=event)
+
+            if event_schema.is_valid():
                 data = event_schema.validated_data
                 data['id'] = event['id']
-                if (data.get('away_team')) is None or (data.get('away_team') is None):
+                if (data.get('away_team')) is None or (data.get('home_team') is None):
                     continue
                 try:
                     existing_event = Event.objects.get(id=data.get("id"))
+                    if existing_event.completed != data['completed']:
+                        # Update the existing event with new data
+                        team_schema = TeamScoreSerializer(data=event['scores'][0])
+                        if team_schema.is_valid():
+                            score1 = team_schema.validated_data
+                        team_schema = TeamScoreSerializer(data=event['scores'][1])
+                        if team_schema.is_valid():
+                            score2 = team_schema.validated_data
+                        Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1, score2)
                 except ObjectDoesNotExist:
+                    # If event does not exist, create a new one
                     event_game = Event(**data)
                     event_game.save()
                     continue
-
-                if data.get('completed'):
-                    team_schema = TeamScoreSerializer(data=event['scores'][0])
-                    if team_schema.is_valid():
-                        score1 = team_schema.validated_data
-                    team_schema = team_schema = TeamScoreSerializer(data=event['scores'][1])
-                    if team_schema.is_valid():
-                        score2 = team_schema.validated_data
-                    Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1, score2)
-
-        return Response("Success", status=status.HTTP_200_OK)
 
     def get_test_players(self):
 
@@ -230,6 +253,26 @@ class Support:
                 event.save()
                 x += 1
                 print(f"changed {x} event's time")
+
+    def deleteExtraTeams(self):
+        teams = Team.objects.all()
+        for team in teams:
+            name = team.team_name
+
+            teams1 = Team.objects.filter(team_name=name)
+            if len(teams1) > 1:
+                print(f"{name} has {len(teams1)} item")
+                teams1[1].delete()
+    def checkExtraTeams(self):
+        teams = Team.objects.all()
+        for team in teams:
+            name = team.team_name
+
+            teams1 = Team.objects.filter(team_name=name)
+            if len(teams1) > 1:
+                print(f"{name} has {len(teams1)} item")
+
+
 
 
 support = Support()
@@ -404,6 +447,7 @@ class Test1:
         output_file = 'testfiles/sports_list.txt'
         support.process_files_in_folder(folder_path, output_file)
         sports = support.read_list_from_file(output_file)
+
         support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
         owner, player_2 = support.get_test_players()
         match = Match.objects.create_match(owner)
@@ -543,14 +587,16 @@ class Test1:
 
         print("Starting Match Creation and Update Testing 10")
         support.flush_database()
+        print("Test10 - started to modify the golden game")
         support.update_golden_game(f'testfiles/nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
         support.update_golden_game(f'testfiles/nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
-
+        print("Test10 - started to  update all the nfl events")
         folder_path = 'testfiles/originals'
         output_file = 'testfiles/sports_list.txt'
         support.process_files_in_folder(folder_path, output_file)
         sports = support.read_list_from_file(output_file)
         support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
+        print("Test10 - started Match Making And Accepting")
         owner, player_2 = support.get_test_players()
         match = Match.objects.create_match(owner)
         # print(match)
@@ -703,7 +749,26 @@ class Test1:
         if match.match_state != "completed":
             print(f"Stated =  {match.match_state}- Failed")
             exit()
+
         print("Stopped Match Creation and Update Testing 10")
+
+    def test10_1(self):
+
+        print("Starting Match Creation and Update Testing 10.1")
+        support.flush_database()
+        support.update_golden_game(f'testfiles/nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        support.update_golden_game(f'testfiles/nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+
+        folder_path = 'testfiles/originals'
+        output_file = 'testfiles/sports_list.txt'
+        support.process_files_in_folder(folder_path, output_file)
+        sports = support.read_list_from_file(output_file)
+        support.test_get_nfl_events(f'testfiles/nfl-copy1-1.json')
+        owner, player_2 = support.get_test_players()
+
+
+        print("Finished Event Update Testing 10.1")
+
 
     def testFlushAndGetSportsAndEvents(self):
         support.datadump()
@@ -717,15 +782,15 @@ class Test1:
 
         team_cron.check_team(team_name, title, group)
 
-    def testCreate20Matches(self):
-        for x in range(1,21):
+    def testCreateMatches(self,num):
+        for x in range(1,num+1):
             owner, player_2 = support.get_test_players()
             match = Match.objects.create_match(owner)
             # print(match)
             # match1 = Match.objects.accept_match(match, player_2)
 
-    def testCreateAndAccept20Matches(self):
-        for x in range(1,21):
+    def testCreateAndAcceptMatches(self,num):
+        for x in range(1,num+1):
             owner, player_2 = support.get_test_players()
             match = Match.objects.create_match(owner)
             # print(match)

@@ -63,6 +63,7 @@ class GameManager(AbstractManager):
 
     def get_golden_game(self,player_1,player_2,match):
         event = Event.objects.get_random_golden()
+        print(event)
         return Game.objects.create_game(player_1,player_2,match,event,event.commence_time,None,event.completed,event.home_team,event.away_team)
 
 
