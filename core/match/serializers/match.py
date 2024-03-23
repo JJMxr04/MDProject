@@ -5,11 +5,16 @@ from core.user.models import  User
 from core.user.serializers import UserSerializer, PublicUserSerializer
 from core.game.models import Game
 from core.game.serializers import GameSerializer
+from rest_framework.exceptions import ValidationError
 
 class MatchSerializer(AbstractSerializer):
 
     player_1 = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='public_id')
     player_2 = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='public_id',allow_null=True)
+
+    def validate_players(self):
+        if (self.context["request"].user != self.player_1) and (self.context["request"] != self.player_2):
+            raise ValidationError("You cannot Update This Game")
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

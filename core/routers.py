@@ -1,7 +1,7 @@
 from rest_framework import routers
 from django.urls import path, include
 from core.user.viewsets import UserViewSet
-from core.auth.viewsets import RegisterViewSet, LoginViewSet, RefreshViewSet, ActivateUserViewSet
+from core.auth.viewsets import RegisterViewSet, LoginViewSet, RefreshViewSet, ActivateUserViewSet, WaitlistEntryViewSet
 
 router = routers.SimpleRouter()
 
@@ -12,6 +12,7 @@ router = routers.SimpleRouter()
 router.register(r'auth/register', RegisterViewSet, basename='auth-register')
 router.register(r'auth/login', LoginViewSet, basename='auth-login')
 router.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
+router.register(r'auth/waitlist', WaitlistEntryViewSet , basename='auth-waitlist')
 router.register(r'activate', ActivateUserViewSet, basename='activate')
 
 

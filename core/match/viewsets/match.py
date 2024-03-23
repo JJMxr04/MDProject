@@ -5,6 +5,7 @@ from core.match.models.match import Match
 from core.match.pagination.pagination import MatchPagination
 from core.abstract.viewsets import AbstractViewSet
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
 from django.db.models import Q
 from django.http import Http404
 from core.game.models import Game
@@ -13,6 +14,7 @@ from core.game.models import Game
 class MatchViewSet(AbstractViewSet):
     http_method_names = ('get','post','patch')
     authentication_classes = (JWTAuthentication,)
+    filter_backends = [OrderingFilter, SearchFilter]
     permission_classes = (IsAuthenticated,)
     serializer_class = MatchSerializer
     queryset = Match.objects.all()
@@ -85,6 +87,7 @@ class MyMatchViewSet(AbstractViewSet):
         data = request.data
         print(data)
         match = Match.objects.get_object_by_id(kwargs['pk'])
+        self.check_object_permissions(self.request, match)
         # if (match.player_1 != player) or (match.player_2 != player):
         #     return Http404
         if match.player_1 == player:

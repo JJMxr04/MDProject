@@ -11,30 +11,31 @@ class TeamManager(AbstractManager):
             instance = self.get(team_name=team_name)
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
-            return Http404
+            raise Http404("Team does not exist")
+
     def get_object_by_team_id(self, team_id):
         try:
-            print(team_id)
-            instance = self.filter(team_id=team_id)
+            instance = self.filter(team_id=team_id).first()  # Add parentheses to call the first method
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
+            print("false")
             return False
 
-    def create_team(self, team_name, title, group,team_id,logo_url,country,country_code,):
-
+    def create_team(self, team_name, title, group, team_id, logo_url, country, country_code):
         team = self.get_object_by_team_id(team_id)
-        print(len(team))
-        if team:
-            return team
-        else:
-            team = self.model(team_name=team_name, title=title,group=group,team_id=team_id,logo_url=logo_url,country=country,country_code=country_code)
+        print(f"creating the team {team_name} from {title}: {group}")
+        if team is None:
+            team = self.model(team_name=team_name, title=title, group=group, team_id=team_id, logo_url=logo_url,
+                              country=country, country_code=country_code)
             team.save(using=self._db)
             return team
+        else:
+            return team  # No need for the second condition, as it's redundant
 
 
 class Team(AbstractModel):
     public_id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False)
-    team_name = models.CharField(max_length=255)
+    team_name = models.CharField(max_length=255, unique=True, null=False, blank=False)
     title = models.CharField(max_length=255)
     group = models.CharField(max_length=255)
     team_id = models.CharField(max_length=255,default=None, null=True, blank=True)

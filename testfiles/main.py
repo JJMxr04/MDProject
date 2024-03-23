@@ -13,8 +13,10 @@ from core.mail import views
 from core.auth.models import email
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
+from core.event.serializers.event import EventSerializer
 from core.event.serializers.team import TeamSerializer
 from core.match.serializers.match import MatchSerializer
+from core.game.models import Game
 
 
 from core.event.models.event import Event
@@ -62,8 +64,29 @@ if __name__ == '__main__':
     #
     # print(x)
     # print(y)
-    match = Match.objects.get_object_by_id("7c57a214-de9e-4071-be84-312345c4f7f7")
-    print(json.dumps(MatchSerializer(match).data,indent=4))
+    # match = Match.objects.get_object_by_id("7c57a214-de9e-4071-be84-312345c4f7f7")
+    # print(json.dumps(MatchSerializer(match).data,indent=4))
+    # team = Team.objects.get_object_by_public_id("01997853-4966-4526-b658-26e4e8a3fe7a")
+    # team_name =  "Isaac Hardman"
+    # team =Team.objects.get_object_by_team_name(team_name)
+    # print(team)
+    # print(json.dumps(TeamSerializer(team).data, indent=4))
+    # team = Team.objects.get_object_by_team_id(338)
+    # if Team.objects.get_object_by_team_id(338).exists():
+    #     print(team)
+    # team = Team.objects.filter(team_name="Isaac Hardman")
+    # print(team)
+    # events = Event.objects.filter(sport_key="mma_mixed_martial_arts").all()
+    # for event in events:
+    #     if event.home_team == "Sean O'Malley" and event.away_team == "Marlon Vera":
+    #         print(event.id)
+    #
+    # event = Event.objects.get_object_by_id("48c8a16b-ddd6-5ebe-2dab-6e9428fff3b3")
+    # event.completed = True
+    # print(json.dumps(EventSerializer(event).data, indent = 4))
+    # event.save()
+    # games = Game.objects.filter(event=event).all()
+    # print(games)
 
     pass
 

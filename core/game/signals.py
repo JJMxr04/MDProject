@@ -97,7 +97,7 @@ def update_games_on_event_update(sender, instance, **kwargs):
                 match.winner = match.player_2
             elif match.player_1_score == match.player_2_score:
                 match.winner = None
-        match.match_state = "completed"
+            match.match_state = "completed"
         match.save()
 
     # if instance.id == uuid.UUID("484bc5582bb44ab79a1e942cf8762eda"):

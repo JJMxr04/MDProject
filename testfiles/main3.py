@@ -24,6 +24,7 @@ test1 = Test1()
 eventTest = eventTest()
 team1 = Team()
 support = Support()
+# from core.auth.models.waitlist import Waitlist
 
 # This is a sample Python script.
 
@@ -50,21 +51,24 @@ def updateEvents():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    sport ={'key':"americanfootball_nfl",
-            "group":"American Football",
-            "title":"NFL",
-            "description":"US Football",
-            "active":True,
-            "has_outrights":False,
-            "created":"2024-01-31 07:15:05.409-05",
-            "updated":"2024-01-31 07:15:05.409-05"
-    }
+    # sport ={'key':"americanfootball_nfl",
+    #         "group":"American Football",
+    #         "title":"NFL",
+    #         "description":"US Football",
+    #         "active":True,
+    #         "has_outrights":False,
+    #         "created":"2024-01-31 07:15:05.409-05",
+    #         "updated":"2024-01-31 07:15:05.409-05"
+    # }
+    #
+    # support.flush_database()
+    # print("starting first")
+    # eventTest.get_sport_events(sport,'nfl-copy1-1.json')
+    # print("starting second")
+    # eventTest.get_sport_events(sport,'nfl-copy2-1.json')
 
     support.flush_database()
-    print("starting first")
-    eventTest.get_sport_events(sport,'nfl-copy1-1.json')
-    print("starting second")
-    eventTest.get_sport_events(sport,'nfl-copy2-1.json')
-    pass
+    support.get_test_players()
+    # pass
 
 

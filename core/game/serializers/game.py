@@ -1,17 +1,26 @@
 from rest_framework import serializers
 from core.game.models import Game
+from core.event.models import Team
+from core.event.models import Event
 from core.abstract.serializers import AbstractSerializer
 from core.user.models import User
 from core.user.serializers import UserSerializer, PublicUserSerializer
+from core.event.serializers.team import TeamSerializer
 from core.event.serializers.event import EventSerializer
+from rest_framework.exceptions import ValidationError
 
-from core.event.models import Event
 
-
+class ChoiceSerlializer(AbstractSerializer):
+        event = serializers.SlugRelatedField(queryset=Event.objects.all(), slug_field='id')
+        player_choice = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
 class GameSerializer(AbstractSerializer):
     owner = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
     player_2 = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
     event = serializers.SlugRelatedField(queryset=Event.objects.all(), slug_field='id')
+
+    def validate_players(self):
+        if (self.context["request"].user != self.owner) and (self.context["request"] != self.player_2):
+            raise ValidationError("You cannot Update This Game")
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

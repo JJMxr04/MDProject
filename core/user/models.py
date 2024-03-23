@@ -71,6 +71,15 @@ class UserManager(BaseUserManager,AbstractManager):
 
         return user
 
+    def make_user_staff(self, user):
+        user.is_staff = True
+        user.save()
+
+    def make_user_admin(self, user):
+        user.is_staff = True
+        user.is_admin = True
+        user.save()
+
 
 class User(AbstractBaseUser,AbstractModel, PermissionsMixin):
     public_id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False)
@@ -81,6 +90,7 @@ class User(AbstractBaseUser,AbstractModel, PermissionsMixin):
     email = models.EmailField(db_index=True, unique=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
 
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True)

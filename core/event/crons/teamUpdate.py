@@ -124,17 +124,18 @@ class TeamCron():
 
     def check_team(self, team_name, title, group):
         try:
-            # print(team_name)
-            team_search = Team.objects.get(team_name=team_name)
+            team_search = Team.objects.get_object_by_team_name(team_name)
             return team_search
-        except Team.DoesNotExist:
-
+        except Http404:
+            print("Team does not exist")
+            # Handle the case where the team does not exist
             country, country_code, team_id = self.get_team_api(team_name)
             if team_id is not None:
-                logo_url = self.get_logo(team_id, team_name, title, country)  # Pass None for content as it's not used
+                logo_url = self.get_logo(team_id, team_name, title, country)
             else:
                 logo_url = None
             return self.create_team(team_name, title, group, team_id, logo_url, country, country_code)
+
 
 
 
