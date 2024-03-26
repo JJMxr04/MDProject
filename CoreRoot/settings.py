@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 # DEBUG = False
 
-ALLOWED_HOSTS = ['localhost',os.environ.get('DOMAIN')]
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apscheduler',
+    'corsheaders',
 
     'core.commands',
     'core',
@@ -68,6 +69,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
+
 ]
 
 ROOT_URLCONF = 'CoreRoot.urls'
@@ -94,12 +99,23 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('DBENGINE'),
+#         'NAME': os.environ.get('DBNAME'),
+#         'USER': os.environ.get('BDUSER'),
+#         'PASSWORD': os.environ.get('DBPASSWORD'),
+#         'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
+#         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DBENGINE'),
-        'NAME': os.environ.get('DBNAME'),
-        'USER': os.environ.get('DBUSER'),
-        'PASSWORD': os.environ.get('DBPASSWORD'),
+        'NAME': 'mdproject',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
         'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
     }
@@ -183,6 +199,12 @@ REST_FRAMEWORK = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CORS_ALLOWED_ORIGINS = [
+
+"http://localhost:8000",
+"http://localhost:54300"
+]
 
 
 
