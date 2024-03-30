@@ -10,6 +10,7 @@ setup()
 from core.match.models import Match
 from core.mail import views
 from core.auth.models import email
+from core.user.models import User
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
 from core.event.serializers.team import TeamSerializer
@@ -66,9 +67,11 @@ if __name__ == '__main__':
     # eventTest.get_sport_events(sport,'nfl-copy1-1.json')
     # print("starting second")
     # eventTest.get_sport_events(sport,'nfl-copy2-1.json')
+    user = User.objects.get_object_by_email("test@test.com")
+    User.objects.make_user_admin(user)
 
-    support.flush_database()
-    support.get_test_players()
+    # support.flush_database()
+    # support.get_test_players()
     # pass
 
 
