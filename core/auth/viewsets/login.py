@@ -12,7 +12,6 @@ class LoginViewSet(ViewSet):
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
         serializer = self.serializer_class(data=request.data)
 
         try:
