@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'core.event',
     'core.game',
     'core.match',
+    'core.admin',
 ]
 
 MIDDLEWARE = [
@@ -203,7 +204,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 CORS_ALLOWED_ORIGINS = [
 
 "http://localhost:8000",
-"http://localhost:54510"
+"http://localhost:63269"
 ]
 
 

@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils import timezone
 import uuid
@@ -14,6 +15,23 @@ class WaitlistEntryManager(models.Manager):
         )
         entry.save(using=self._db)
         return entry
+
+    def approve_waitlist_entry(self, pid):
+        entry = self.get(id=pid)
+        entry.admin_granted_access = True
+        entry.save(using=self._db)
+        return entry
+
+    def get_all_wailtlist_entries(self):
+        return self.filter(admin_granted_access=False)
+
+    def get_object_by_id(self, pid):
+        try:
+            instance = self.get(id=pid)
+            return instance
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            return None
+
 
 class WaitlistEntry(models.Model):
     id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False, primary_key=True)
