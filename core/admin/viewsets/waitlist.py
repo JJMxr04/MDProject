@@ -1,14 +1,19 @@
 from rest_framework import viewsets, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.decorators import action
+
+from core.abstract.pagination import AbstractPagination
 from core.auth.models.waitlist import WaitlistEntry
-from core.admin.serializers.waitlist import WaitlistEntrySerializer
+from core.admin.serializers.waitlist import WaitlistEntrySerializer, WaitlistEntryApprovalSerializer
 
 class WaitlistEntryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,IsAuthenticated)
-    http_method_names = ['get','patch']
+    http_method_names = ['get','post']
     queryset = WaitlistEntry.objects.all()
     serializer_class = WaitlistEntrySerializer
+    pagination_class = AbstractPagination
 
     def get_queryset(self):
         return WaitlistEntry.objects.get_all_wailtlist_entries()
@@ -29,9 +34,27 @@ class WaitlistEntryViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    def update(self, request, *args, **kwargs):
+class WaitlistEntryApprovalViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAdminUser, IsAuthenticated)
+    http_method_names = ['post']
+    # # queryset = WaitlistEntry.objects.all()
+    # serializer_class = WaitlistEntryApprovalSerializer
+    # pagination_class = AbstractPagination
 
-        entry = WaitlistEntry.objects.get_object_by_id(kwargs['pk'])
-        entry = WaitlistEntry.objects.approve_waitlist_entry(entry.id)
-        serializer = self.get_serializer(entry)
-        return Response(serializer.data)
+
+    def create(self, request):
+        try:
+            dataList = request.data
+            if not isinstance(dataList, list):
+                raise ValueError("Invalid data format. Expected a list.")
+
+            for item in dataList:
+                entry = WaitlistEntry.objects.get(id=item.get('id'))
+                # Assuming approve_waitlist_entry returns the modified entry
+                WaitlistEntry.objects.approve_waitlist_entry(entry.id)
+
+            return Response({'message': 'Request was successful'}, status=status.HTTP_200_OK)
+        except WaitlistEntry.DoesNotExist:
+            return Response({'message': 'One or more entries not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': 'Request was not successful', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

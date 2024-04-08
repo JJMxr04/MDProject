@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from core.admin.viewsets.waitlist import WaitlistEntryViewSet
+from core.admin.viewsets.waitlist import WaitlistEntryViewSet, WaitlistEntryApprovalViewSet
 
 
 
@@ -8,6 +8,7 @@ router = routers.SimpleRouter()
 
 # router.register(r'stats', MatchViewSet, basename='adminStats')
 router.register(r'waitlist', WaitlistEntryViewSet, basename='admin-waitlist')
+router.register(r'waitlist-approve', WaitlistEntryApprovalViewSet, basename='admin-waitlist-approval')
 urlpatterns = [
     *router.urls,
 ]

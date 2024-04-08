@@ -6,3 +6,12 @@ class WaitlistEntrySerializer(serializers.ModelSerializer):
         model = WaitlistEntry
         fields = ['email', 'full_name', 'description', 'id', 'admin_granted_access','created','updated']
         read_only_fields = ['email', 'full_name','description','id','admin_granted_access','created','updated']
+
+
+class WaitlistEntryApprovalSerializer(serializers.ModelSerializer):
+    entries = WaitlistEntrySerializer(many=True)
+
+    class Meta:
+        model = WaitlistEntry
+        fields = ['email', 'full_name', 'description', 'id', 'admin_granted_access','created','updated']
+        read_only_fields = ['email', 'full_name','description','id','admin_granted_access','created','updated']
