@@ -42,7 +42,7 @@ def updateEvents():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    for x in range(0,120):
+    for x in range(121,220):
         WaitlistEntry.objects.create_entry(email=f"{x}test{x}@test.com", full_name=f"{x}test{x}")
     pass
 

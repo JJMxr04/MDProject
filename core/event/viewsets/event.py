@@ -16,7 +16,7 @@ class EventViewSet(AbstractViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
     ordering = ['commence_time']
-    search_fields = ['sport_title', 'away_team','home_team','commence_time']
+    search_fields = ['sport_title', 'away_team','home_team','commence_time','created']
     # ordering = []
     pagination_class = EventPagination  # Use the custom pagination class
 

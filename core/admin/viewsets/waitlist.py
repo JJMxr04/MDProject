@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from core.abstract.pagination import AbstractPagination
 from core.auth.models.waitlist import WaitlistEntry
 from core.admin.serializers.waitlist import WaitlistEntrySerializer, WaitlistEntryApprovalSerializer
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 class WaitlistEntryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,IsAuthenticated)
@@ -14,6 +15,9 @@ class WaitlistEntryViewSet(viewsets.ModelViewSet):
     queryset = WaitlistEntry.objects.all()
     serializer_class = WaitlistEntrySerializer
     pagination_class = AbstractPagination
+    filter_backends = [OrderingFilter, SearchFilter]
+    ordering = ['created']
+    search_fields = ['email', 'full_name','description','created']
 
     def get_queryset(self):
         return WaitlistEntry.objects.get_all_wailtlist_entries()
