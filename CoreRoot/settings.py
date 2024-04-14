@@ -204,7 +204,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 CORS_ALLOWED_ORIGINS = [
 
 "http://localhost:8000",
-"http://localhost:54545"
+"http://localhost:63450"
 ]
 
 

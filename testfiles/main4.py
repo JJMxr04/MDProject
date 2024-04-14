@@ -42,8 +42,18 @@ def updateEvents():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    for x in range(121,220):
-        WaitlistEntry.objects.create_entry(email=f"{x}test{x}@test.com", full_name=f"{x}test{x}")
+    for x in range(0,1000):
+        entry = WaitlistEntry.objects.get_object_by_email(f"{x}test{x}@test.com")
+        if ((entry is None)):
+            WaitlistEntry.objects.create_entry(email=f"{x}test{x}@test.com", full_name=f"{x}test{x}")
+            continue
+
+        user = User.objects.get_object_by_email(f"{x}test{x}@test.com")
+
+        if ((user is Http404) and (entry is not None) and (entry.admin_granted_access)):
+            User.objects.create_user(f"{x}test{x}", f"{x}test{x}@test.com", '1')
+            continue
+
     pass
 
 

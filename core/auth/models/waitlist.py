@@ -32,6 +32,13 @@ class WaitlistEntryManager(models.Manager):
         except (ObjectDoesNotExist, ValueError, TypeError):
             return None
 
+    def get_object_by_email(self, email):
+        try:
+            instance = self.get(email=email)
+            return instance
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            return None
+
 
 class WaitlistEntry(models.Model):
     id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False, primary_key=True)
