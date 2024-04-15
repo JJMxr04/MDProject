@@ -6,16 +6,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.utils import timezone
 from core.user.models import User
+from core.match.models import Match
+import math
+from django.db import transaction
 
 class TournamentManager(AbstractManager):
-
-    def create(self,name,start_date,max_accepted_players):
-        end_date = self.get_end_date()
-        return self.create(name=name,start_date=start_date,end_data=None,state="")
-
-    pass
-
-    def get_end_date(date):
+    def get_end_date(self, date):
         # Calculate the next Sunday
         days = (6 - date.weekday() + 7) % 7
         next_week_day = date + timedelta(days=days)
@@ -28,31 +24,40 @@ class TournamentManager(AbstractManager):
 
         return end_date
 
-class InvitedPlayerManager(AbstractManager):
-    def create_invited_player(self, tournament, player, accepted=False, accepted_date=None, invited_date=None):
-        return self.create(tournament=tournament, player=player, accepted=accepted, accepted_date=accepted_date, invited_date=invited_date)
+    def get_tourny_level(self, num):
+        return math.log2(num)
 
-    def update_invited_player(self, invited_player, **kwargs):
-        for key, value in kwargs.items():
-            setattr(invited_player, key, value)
-        invited_player.save()
-        return invited_player
+    @transaction.atomic
+    def create_rounds(self, tournament):
+        # Calculate the number of levels
+        levels = tournament.levels
 
-    def delete_invited_player(self, invited_player):
-        invited_player.delete()
+        # Create the top level round (level 0) containing one match
+        top_level_round = Round.objects.create(tournament=tournament, level_num=0)
 
-class PlayerManager(AbstractManager):
-    def create_player(self, tournament, player, seed):
-        return self.create(tournament=tournament, player=player, seed=seed)
+        # Recursively create rounds for each level from 0 to levels - 1
+        self._create_rounds_recursive(tournament, top_level_round, levels - 1)
 
-    def update_player(self, player, **kwargs):
-        for key, value in kwargs.items():
-            setattr(player, key, value)
-        player.save()
-        return player
+    def _create_rounds_recursive(self, tournament, parent_round, remaining_levels):
+        if remaining_levels <= 0:
+            return
 
-    def delete_player(self, player):
-        player.delete()
+        # Calculate the number of rounds in this level
+        num_rounds = int(tournament.max_accepted_players / 2)
+
+        for i in range(num_rounds):
+            # Create a new round
+            round_num = parent_round.level_num + 1
+            new_round = Round.objects.create(tournament=tournament, level_num=round_num, prev_round_1=parent_round)
+
+            # Recursively create rounds for the next level
+            self._create_rounds_recursive(tournament, new_round, remaining_levels - 1)
+
+
+class RoundManager(AbstractManager):
+    pass
+
+
 
 
 class Tournament(AbstractModel):
@@ -64,6 +69,8 @@ class Tournament(AbstractModel):
     max_accepted_players = models.IntegerField(null=False, blank=False)
     invited_players = models.ManyToManyField(User, related_name='invited_to_tournaments', through='InvitedPlayer')
     players = models.ManyToManyField(User, related_name='participating_in_tournaments', through='Player')
+    levels = models.FloatField(default=0)  # Field to store tournament levels
+    winner = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='won_tournaments', null=True, blank=True)
 
     objects = TournamentManager()
 
@@ -73,16 +80,30 @@ class Tournament(AbstractModel):
     def __str__(self):
         return self.name
 
-class InvitedPlayer(models.Model):
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
-    accepted = models.BooleanField(default=False)
-    accepted_date = models.DateTimeField()
-    invited_date = models.DateTimeField()
-    objects = InvitedPlayerManager()
+    def save(self, *args, **kwargs):
+        # Calculate levels when saving
+        self.levels = self.objects.get_tourny_level(self.max_accepted_players)
+        super().save(*args, **kwargs)
 
-class Player(models.Model):
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
-    seed = models.IntegerField()
-    objects = PlayerManager()
+
+class Round(AbstractModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name='rounds')
+    level_num = models.IntegerField()
+    next_match = models.OneToOneField(Match, related_name='next_match_for_round', on_delete=models.SET_NULL, blank=True, null=True)
+    match_1 = models.ForeignKey(Match, related_name='round_match_1', on_delete=models.SET_NULL, blank=True, null=True)
+    match_2 = models.ForeignKey(Match, related_name='round_match_2', on_delete=models.SET_NULL, blank=True, null=True)
+    next_round = models.ForeignKey('self', related_name='next_rounds_from_prev_round', on_delete=models.SET_NULL, blank=True, null=True)
+    prev_round_1 = models.ForeignKey('self', related_name='prev_round_1_to_next_rounds', on_delete=models.SET_NULL, blank=True, null=True)
+    prev_round_2 = models.ForeignKey('self', related_name='prev_round_2_to_next_rounds', on_delete=models.SET_NULL, blank=True, null=True)
+    completed = models.BooleanField(default=False)
+
+    objects = RoundManager()
+
+    class Meta:
+        db_table = 'core_round'
+
+    def __str__(self):
+        return f"Round {self.level_num} of {self.tournament}"
+
+
