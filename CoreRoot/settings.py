@@ -48,18 +48,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apscheduler',
     'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
 
+    #MDProject Models
     'core.commands',
     'core',
     'core.user',
     'core.auth',
-    'rest_framework',
-    'rest_framework_simplejwt',
-    #MDProject Models
     'core.event',
     'core.game',
     'core.match',
     'core.admin',
+    'core.tournament'
 ]
 
 MIDDLEWARE = [
@@ -204,7 +205,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 CORS_ALLOWED_ORIGINS = [
 
 "http://localhost:8000",
-"http://localhost:63450"
+"http://localhost:55371"
 ]
 
 
