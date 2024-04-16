@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.tournament.models.tournament import Tournament
+from core.tournament.models.tournament import Tournament, Round
 from core.tournament.models.tournament_components import InvitedPlayer, Player
 from core.user.serializers import PublicUserSerializer
 from core.tournament.serializers.tournament_components import InvitedPlayerSerializer, PlayerSerializer
@@ -28,3 +28,10 @@ class TournamentSerializer(serializers.ModelSerializer):
             Player.objects.create(tournament=tournament, **player_data)
 
         return tournament
+
+
+class RoundSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Round
+        fields = '__all__'

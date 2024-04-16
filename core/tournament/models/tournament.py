@@ -6,11 +6,18 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.utils import timezone
 from core.user.models import User
-from core.match.models import Match
+from core.match.models.match import Match
 import math
 from django.db import transaction
 
 class TournamentManager(AbstractManager):
+
+    def create(self, name, start_date, max_accepted_players):
+        end_date = self.get_end_date(start_date)
+        tournament = self.model(name=name, start_date=start_date, end_date=end_date, max_accepted_players=max_accepted_players)
+        tournament.save()
+        return tournament
+
     def get_end_date(self, date):
         # Calculate the next Sunday
         days = (6 - date.weekday() + 7) % 7
@@ -58,8 +65,6 @@ class RoundManager(AbstractManager):
     pass
 
 
-
-
 class Tournament(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
@@ -105,5 +110,3 @@ class Round(AbstractModel):
 
     def __str__(self):
         return f"Round {self.level_num} of {self.tournament}"
-
-
