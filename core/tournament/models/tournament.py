@@ -18,21 +18,51 @@ class TournamentManager(AbstractManager):
         tournament.save()
         return tournament
 
-    def get_end_date(self, date):
+    def get_end_date(self, date, num_weeks):
         # Calculate the next Sunday
-        days = (6 - date.weekday() + 7) % 7
-        next_week_day = date + timedelta(days=days)
+        days_until_sunday = (6 - date.weekday() + 7) % 7
+        next_sunday = date + timedelta(days=days_until_sunday)
 
-        # Set the time to 11:59 PM
-        next_week_day = next_week_day.replace(hour=23, minute=59, second=0, microsecond=0)
+        # Set the time to midnight
+        end_date = next_sunday.replace(hour=0, minute=0, second=0, microsecond=0)
 
-        # Add a week to the date
-        end_date = next_week_day + timedelta(weeks=1)
+        # Add the specified number of weeks (levels) to the date
+        end_date += timedelta(weeks=num_weeks)
 
         return end_date
 
     def get_tourny_level(self, num):
         return math.log2(num)
+
+    def acceptInvite(self, tourney_id, user_email):
+        try:
+            tournament = self.get(pk=tourney_id)
+            user = User.objects.get(email=user_email)
+            # Check if the user has been invited to the tournament
+            if tournament.invited_players.filter(pk=user.pk).exists():
+                # Add the user to the players participating in the tournament
+                tournament.players.add(user)
+                # Remove the user from the invited players list
+                tournament.invited_players.remove(user)
+                return True  # Successfully accepted the invitation
+            else:
+                return False  # User has not been invited to the tournament
+        except ObjectDoesNotExist:
+            return False  # Tournament or User does not exist
+
+    def invitePlayer(self, tourney_id, user_email):
+        try:
+            tournament = self.get(pk=tourney_id)
+            user = User.objects.get(email=user_email)
+            # Check if the user is already participating in the tournament or has been invited
+            if tournament.players.filter(pk=user.pk).exists() or tournament.invited_players.filter(pk=user.pk).exists():
+                return False  # User is already participating in the tournament or has been invited
+            else:
+                # Add the user to the invited players list
+                tournament.invited_players.add(user)
+                return True  # Successfully invited the player
+        except ObjectDoesNotExist:
+            return False  # Tournament or User does not exist
 
     @transaction.atomic
     def create_rounds(self, tournament):
@@ -87,7 +117,7 @@ class Tournament(AbstractModel):
 
     def save(self, *args, **kwargs):
         # Calculate levels when saving
-        self.levels = self.objects.get_tourny_level(self.max_accepted_players)
+        self.levels = self.__class__.objects.get_tourny_level(self.max_accepted_players)
         super().save(*args, **kwargs)
 
 
