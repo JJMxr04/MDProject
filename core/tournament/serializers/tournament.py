@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from core.tournament.models.tournament import Tournament, Round
-from core.tournament.models.tournament_components import InvitedPlayer, Player
+from core.tournament.models.tournament import Tournament, Round, InvitedPlayer,Player
+
 from core.user.serializers import PublicUserSerializer
 from core.tournament.serializers.tournament_components import InvitedPlayerSerializer, PlayerSerializer
 

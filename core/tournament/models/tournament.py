@@ -7,6 +7,7 @@ from django.http import Http404
 from django.utils import timezone
 from core.user.models import User
 from core.match.models.match import Match
+
 import math
 from django.db import transaction
 
@@ -93,6 +94,34 @@ class TournamentManager(AbstractManager):
 
 class RoundManager(AbstractManager):
     pass
+class InvitedPlayerManager(AbstractManager):
+    def create_invited_player(self, tournament, player, accepted=False, accepted_date=None, invited_date=None):
+        return self.create(tournament=tournament, player=player, accepted=accepted, accepted_date=accepted_date, invited_date=invited_date)
+
+    def update_invited_player(self, invited_player, **kwargs):
+        for key, value in kwargs.items():
+            setattr(invited_player, key, value)
+        invited_player.save()
+        return invited_player
+
+    def delete_invited_player(self, invited_player):
+        invited_player.delete()
+
+class PlayerManager(AbstractManager):
+    def create_player(self, tournament, player, seed):
+        return self.create(tournament=tournament, player=player, seed=seed)
+
+    def update_player(self, player, **kwargs):
+        for key, value in kwargs.items():
+            setattr(player, key, value)
+        player.save()
+        return player
+
+    def delete_player(self, player):
+        player.delete()
+
+
+
 
 
 class Tournament(AbstractModel):
@@ -102,10 +131,12 @@ class Tournament(AbstractModel):
     end_date = models.DateTimeField(auto_now_add=False)
     state = models.CharField(max_length=10, default='created', null=False, blank=False)
     max_accepted_players = models.IntegerField(null=False, blank=False)
-    invited_players = models.ManyToManyField(User, related_name='invited_to_tournaments', through='InvitedPlayer')
-    players = models.ManyToManyField(User, related_name='participating_in_tournaments', through='Player')
     levels = models.FloatField(default=0)  # Field to store tournament levels
     winner = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='won_tournaments', null=True, blank=True)
+
+    # Define one-to-many relationships with InvitedPlayer and Player
+    invited_players = models.ForeignKey('InvitedPlayer', on_delete=models.CASCADE, related_name='tournament_invited_players', null=True, blank=True)
+    players = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='tournament_players', null=True, blank=True)
 
     objects = TournamentManager()
 
@@ -120,18 +151,32 @@ class Tournament(AbstractModel):
         self.levels = self.__class__.objects.get_tourny_level(self.max_accepted_players)
         super().save(*args, **kwargs)
 
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        # Calculate levels when saving
+        self.levels = self.__class__.objects.get_tourny_level(self.max_accepted_players)
+        super().save(*args, **kwargs)
+
 
 class Round(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name='rounds')
     level_num = models.IntegerField()
-    next_match = models.OneToOneField(Match, related_name='next_match_for_round', on_delete=models.SET_NULL, blank=True, null=True)
-    match_1 = models.ForeignKey(Match, related_name='round_match_1', on_delete=models.SET_NULL, blank=True, null=True)
-    match_2 = models.ForeignKey(Match, related_name='round_match_2', on_delete=models.SET_NULL, blank=True, null=True)
+    match = models.ForeignKey(Match, related_name='round_match', on_delete=models.SET_NULL, blank=True, null=True)
     next_round = models.ForeignKey('self', related_name='next_rounds_from_prev_round', on_delete=models.SET_NULL, blank=True, null=True)
     prev_round_1 = models.ForeignKey('self', related_name='prev_round_1_to_next_rounds', on_delete=models.SET_NULL, blank=True, null=True)
     prev_round_2 = models.ForeignKey('self', related_name='prev_round_2_to_next_rounds', on_delete=models.SET_NULL, blank=True, null=True)
+
+    player_1 = models.ForeignKey('Player', related_name='round_player_1', on_delete=models.SET_NULL,
+                                     blank=True, null=True)
+    player_2 = models.ForeignKey('Player', related_name='round_player_2', on_delete=models.SET_NULL,
+                                 blank=True, null=True)
+    winner = models.ForeignKey('Player', related_name='round_winner', on_delete=models.SET_NULL,
+                                 blank=True, null=True)
     completed = models.BooleanField(default=False)
+
 
     objects = RoundManager()
 
@@ -140,3 +185,18 @@ class Round(AbstractModel):
 
     def __str__(self):
         return f"Round {self.level_num} of {self.tournament}"
+
+
+class InvitedPlayer(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
+    accepted_date = models.DateTimeField()
+    invited_date = models.DateTimeField()
+    objects = InvitedPlayerManager()
+
+class Player(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    seed = models.IntegerField()
+    objects = PlayerManager()
