@@ -48,14 +48,50 @@ def next_week_start(date):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # start = next_week_start(datetime.now())
-    # tournament = Tournament.objects.create(name="Test1 Tourney", start_date=start,max_accepted_players=128)
-    # tournament = Tournament.objects.get_object_by_id("1d1debb5-86d3-40e6-8f39-0a3a6f6dfb89")
-    # for
-    # serializer = TournamentSerializer(tournament)
-    # print(serializer.data)
+    start_date = next_week_start(datetime.now())
+    tournament = Tournament.objects.create('test1',start_date,128)
+    Tournament.objects.create_rounds(tournament=tournament)
+    print(TournamentSerializer(tournament).data)
+
+    tournament_id = tournament.id
+    rounds = Round.objects.filter(tournament=tournament_id)
+    round0 = 0
+    round1 = 0
+    round2 = 0
+    round3 = 0
+    round4 = 0
+    round5 = 0
+    round6 = 0
+    round7 = 0
+    # print(rounds)
+    for round in rounds:
+        if round.level_num == 0:
+            round0 += 1
+        if round.level_num == 1:
+            round1 += 1
+        if round.level_num == 2:
+            round2 += 1
+        if round.level_num == 3:
+            round3 += 1
+        if round.level_num == 4:
+            round4 += 1
+        if round.level_num == 5:
+            round5 += 1
+        if round.level_num == 6:
+            round6 += 1
+        if round.level_num == 7:
+            round7 += 1
+
+    print(f"round 0:{round0}")
+    print(f"round 1:{round1}")
+    print(f"round 2:{round2}")
+    print(f"round 3:{round3}")
+    print(f"round 4:{round4}")
+    print(f"round 5:{round5}")
+    print(f"round 6:{round6}")
+    print(f"round 7:{round7}")
+
 
 
     pass
-
 
