@@ -40,53 +40,89 @@ class TournamentManager(AbstractManager):
     def acceptInvite(self, tourney_id, user_email):
         try:
             tournament = self.get(pk=tourney_id)
+            if not tournament:
+                print(f"Tournament with ID {tourney_id} not found.")
+                return False
+
             user = User.objects.get(email=user_email)
-            # Check if the user has been invited to the tournament
-            if tournament.invited_players.filter(pk=user.pk).exists():
-                # Add the user to the players participating in the tournament
-                tournament.players.add(user)
-                # Remove the user from the invited players list
-                tournament.invited_players.remove(user)
-                return True  # Successfully accepted the invitation
-            else:
-                return False  # User has not been invited to the tournament
-        except ObjectDoesNotExist:
-            return False  # Tournament or User does not exist
+
+            if tournament.players.filter(player=user.pk).exists() or tournament.invited_players.filter(player=user.pk).exists():
+                print("User is already invited or part of the tournament.")
+                return False
+            player = Player.objects.create_player(tournament,user)
+            tournament.players.add(player)
+            return True
+
+        except ObjectDoesNotExist as e:
+            print(f"Object not found: {e}")
+            return False
+        except AttributeError as e:
+            print(f"Attribute error: {e}")
+            return False
 
     def invitePlayer(self, tourney_id, user_email):
         try:
             tournament = self.get(pk=tourney_id)
-            user = User.objects.get(email=user_email)
+            if not tournament:
+                print(f"Tournament with ID {tourney_id} not found.")
+                return False
+
+            # Try to get the user, handle the exception if not found
+            try:
+                user = User.objects.get(email=user_email)
+            except ObjectDoesNotExist:
+                print(f"User with email {user_email} does not exist.")
+                return False
+
             # Check if the user is already participating in the tournament or has been invited
-            if tournament.players.filter(pk=user.pk).exists() or tournament.invited_players.filter(pk=user.pk).exists():
-                return False  # User is already participating in the tournament or has been invited
-            else:
-                # Add the user to the invited players list
-                tournament.invited_players.add(user)
-                return True  # Successfully invited the player
-        except ObjectDoesNotExist:
-            return False  # Tournament or User does not exist
+            if tournament.participating_tournaments.filter(
+                    player=user).exists() or tournament.invited_tournaments.filter(player=user).exists():
+                print("User is already invited or part of the tournament.")
+                return False
+
+            # Add the user to the invited players list
+            InvitedPlayer.objects.create(tournament=tournament, player=user)
+            return True
+
+        except ObjectDoesNotExist as e:
+            print(f"Object not found: {e}")
+            return False
+        except AttributeError as e:
+            print(f"Attribute error: {e}")
+            return False
 
 
 
-    @transaction.atomic
+    # @transaction.atomic
     def create_rounds(self,tournament):
-        Round.objects.create_bracket(tournament)
-
-
-
+        final_round = Round.objects.create_bracket(tournament)
+        tournament.final_round = final_round
+        tournament.save()
 
 
 class RoundManager(AbstractManager):
-    def create_bracket(self, tournament, current_level = 0,next_round=None):
-        print(f"Remaining levels: {current_level}")
-        if current_level == tournament.levels:
+    def create_bracket(self, tournament, current_level=0, next_round=None):
+        if current_level >= tournament.levels:
             return None
-        round = Round.objects.create(tournament=tournament, level_num=current_level,next_round=next_round)
-        round.previous_round_1 =self.create_bracket(tournament,current_level+1,round)
-        round.previous_round_2 = self.create_bracket(tournament,current_level+1,round)
 
-        return round
+        # Create and save the current round
+        current_round = Round.objects.create(
+            tournament=tournament,
+            level_num=current_level,
+            next_round=next_round,
+        )
+
+        # Recursively create and assign the previous rounds
+        previous_round_1 = self.create_bracket(tournament, current_level + 1, current_round)
+        previous_round_2 = self.create_bracket(tournament, current_level + 1, current_round)
+
+        # Assign the previous rounds and save
+        current_round.prev_round_1 = previous_round_1
+        current_round.prev_round_2 = previous_round_2
+        current_round.save()  # Ensure relationships are persisted
+
+        return current_round
+
     pass
 
 class InvitedPlayerManager(AbstractManager):
@@ -103,7 +139,7 @@ class InvitedPlayerManager(AbstractManager):
         invited_player.delete()
 
 class PlayerManager(AbstractManager):
-    def create_player(self, tournament, player, seed):
+    def create_player(self, tournament, player, seed=None):
         return self.create(tournament=tournament, player=player, seed=seed)
 
     def update_player(self, player, **kwargs):
@@ -116,38 +152,28 @@ class PlayerManager(AbstractManager):
         player.delete()
 
 
-
-
-
-class Tournament(AbstractModel):
+class Tournament(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    start_date = models.DateTimeField(auto_now_add=False)
-    end_date = models.DateTimeField(auto_now_add=False)
-    state = models.CharField(max_length=10, default='created', null=False, blank=False)
-    max_accepted_players = models.IntegerField(null=False, blank=False)
-    levels = models.FloatField(default=0)  # Field to store tournament levels
-    winner = models.ForeignKey('Player', on_delete=models.SET_NULL, related_name='won_tournaments', null=True, blank=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    state = models.CharField(max_length=10, default='created')
+    max_accepted_players = models.IntegerField()
+    levels = models.FloatField(default=0)
+    winner = models.ForeignKey('Player', on_delete=models.SET_NULL, related_name='won_tournaments', null=True,
+                               blank=True)
 
-    # Define one-to-many relationships with InvitedPlayer and Player
-    invited_players = models.ForeignKey('InvitedPlayer', on_delete=models.CASCADE, related_name='tournament_invited_players', null=True, blank=True)
-    players = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='tournament_players', null=True, blank=True)
+    # Change ForeignKey to ManyToManyField with 'through'
+    invited_players = models.ManyToManyField('InvitedPlayer', related_name='invited_tournaments',blank=True)
+    players = models.ManyToManyField('Player', related_name='participating_tournaments', blank=True)
+
+    final_round = models.ForeignKey('Round', on_delete=models.CASCADE, related_name='tournament_final_round', null=True,
+                                    blank=True)
 
     objects = TournamentManager()
 
     class Meta:
         db_table = 'core_tournament'
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        # Calculate levels when saving
-        self.levels = self.__class__.objects.get_tourny_level(self.max_accepted_players)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
     def save(self, *args, **kwargs):
         # Calculate levels when saving
@@ -192,8 +218,8 @@ class Round(AbstractModel):
 
 class InvitedPlayer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)  # Linking to Tournament
+    player = models.ForeignKey(User, on_delete=models.CASCADE)  # Linking to User
     accepted = models.BooleanField(default=False)
     accepted_date = models.DateTimeField()
     invited_date = models.DateTimeField()
@@ -201,8 +227,9 @@ class InvitedPlayer(models.Model):
 
 class Player(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
-    seed = models.IntegerField()
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)  # Linking to Tournament
+    player = models.ForeignKey(User, on_delete=models.CASCADE)  # Linking to User
+    seed = models.IntegerField(null=True)
     division = models.IntegerField(blank=True, null=True)
     objects = PlayerManager()
+

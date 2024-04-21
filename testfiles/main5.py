@@ -14,7 +14,7 @@ from core.user.models import User
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
 from core.event.serializers.team import TeamSerializer
-from core.tournament.serializers.tournament import TournamentSerializer
+from core.tournament.serializers.tournament import TournamentSerializer, RoundSerializer
 from core.event.models.event import Event
 from core.event.models.team import Team
 from core.tournament.models.tournament import Tournament, Round
@@ -27,6 +27,40 @@ eventTest = eventTest()
 team1 = Team()
 support = Support()
 from core.auth.models.waitlist import WaitlistEntry
+
+
+def print_tournament_bracket(current_round, indent=0, level_width=4):
+    """
+    Recursively prints the tournament bracket in a top-down format, resembling a tree structure.
+
+    :param current_round: The current round to start the traversal.
+    :param indent: The initial level of indentation for visualization.
+    :param level_width: Spacing between levels for alignment.
+    """
+    if current_round is None:
+        return
+
+    # If we're not at the root level, add a vertical connector to maintain continuity
+    if indent > 0:
+        connector = "|"
+    else:
+        connector = ""
+
+    # Construct the indentation for proper alignment
+    indentation = " " * (indent - 1) + connector
+    horizontal_connector = "-" * (level_width - 1)  # Horizontal line length based on level width
+
+    # Print the current round with the right spacing and connectors
+    print(f"{indentation}{horizontal_connector} Round {current_round.level_num}: {current_round}")
+
+    # Add the vertical connector to ensure the tree structure remains consistent
+    indentation_with_vertical = " " * indent + "|"
+
+    # Recursive calls for previous rounds with updated indentation and connectors
+    print_tournament_bracket(current_round.prev_round_1, indent + level_width, level_width)
+    print_tournament_bracket(current_round.prev_round_2, indent + level_width, level_width)
+
+
 
 
 
@@ -51,10 +85,11 @@ if __name__ == '__main__':
     start_date = next_week_start(datetime.now())
     tournament = Tournament.objects.create('test1',start_date,128)
     Tournament.objects.create_rounds(tournament=tournament)
-    print(TournamentSerializer(tournament).data)
+    # print(TournamentSerializer(tournament).data)
 
     tournament_id = tournament.id
     rounds = Round.objects.filter(tournament=tournament_id)
+
     round0 = 0
     round1 = 0
     round2 = 0
@@ -81,6 +116,7 @@ if __name__ == '__main__':
             round6 += 1
         if round.level_num == 7:
             round7 += 1
+        # print(f"Level:{round.level_num}: {RoundSerializer(round).data}")
 
     print(f"round 0:{round0}")
     print(f"round 1:{round1}")
@@ -90,6 +126,32 @@ if __name__ == '__main__':
     print(f"round 5:{round5}")
     print(f"round 6:{round6}")
     print(f"round 7:{round7}")
+
+
+
+    for x in range(0,127):
+        entry = WaitlistEntry.objects.get_object_by_email(f"{x}test{x}@test.com")
+        if ((entry is None)):
+            WaitlistEntry.objects.create_entry(email=f"{x}test{x}@test.com", full_name=f"{x}test{x}")
+            continue
+
+        user = User.objects.get_object_by_email(f"{x}test{x}@test.com")
+
+        if ((user is Http404) and (entry is not None) and (entry.admin_granted_access)):
+            User.objects.create_user(f"{x}test{x}", f"{x}test{x}@test.com", '1')
+            continue
+
+    for x in range(0, 127):
+        Tournament.objects.invitePlayer(tournament_id, f"{x}test{x}@test.com" )
+        Tournament.objects.acceptInvite(tournament_id, f"{x}test{x}@test.com" )
+
+
+    print(tournament.invited_players)
+
+    # final_round = tournament.final_round
+    # # print(final_round)
+    #
+    # print_tournament_bracket(final_round, indent=0, level_width=10)
 
 
 

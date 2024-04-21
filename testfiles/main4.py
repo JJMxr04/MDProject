@@ -47,7 +47,7 @@ if __name__ == '__main__':
         if ((entry is None)):
             WaitlistEntry.objects.create_entry(email=f"{x}test{x}@test.com", full_name=f"{x}test{x}")
             continue
-
+        WaitlistEntry.objects.approve_waitlist_entry(entry.id)
         user = User.objects.get_object_by_email(f"{x}test{x}@test.com")
 
         if ((user is Http404) and (entry is not None) and (entry.admin_granted_access)):
