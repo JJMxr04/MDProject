@@ -75,8 +75,8 @@ class TournamentManager(AbstractManager):
                 return False
 
             # Check if the user is already participating in the tournament or has been invited
-            if tournament.participating_tournaments.filter(
-                    player=user).exists() or tournament.invited_tournaments.filter(player=user).exists():
+
+            if InvitedPlayer.objects.check_invited_player(tournament,user):
                 print("User is already invited or part of the tournament.")
                 return False
 
@@ -138,6 +138,18 @@ class InvitedPlayerManager(AbstractManager):
     def delete_invited_player(self, invited_player):
         invited_player.delete()
 
+    def check_invited_player(self,tourney,user):
+        try:
+            invite = self.get(tournament=tourney,player=user)
+            return True
+        except ObjectDoesNotExist as e:
+            # print(1)
+            # print(f"Object not found: {e}")
+            return False
+
+    def get_Invited_Players(self,tournament):
+        return self.filter(tournament=tournament)
+
 class PlayerManager(AbstractManager):
     def create_player(self, tournament, player, seed=None):
         return self.create(tournament=tournament, player=player, seed=seed)
@@ -162,11 +174,6 @@ class Tournament(models.Model):
     levels = models.FloatField(default=0)
     winner = models.ForeignKey('Player', on_delete=models.SET_NULL, related_name='won_tournaments', null=True,
                                blank=True)
-
-    # Change ForeignKey to ManyToManyField with 'through'
-    invited_players = models.ManyToManyField('InvitedPlayer', related_name='invited_tournaments',blank=True)
-    players = models.ManyToManyField('Player', related_name='participating_tournaments', blank=True)
-
     final_round = models.ForeignKey('Round', on_delete=models.CASCADE, related_name='tournament_final_round', null=True,
                                     blank=True)
 
@@ -221,8 +228,8 @@ class InvitedPlayer(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)  # Linking to Tournament
     player = models.ForeignKey(User, on_delete=models.CASCADE)  # Linking to User
     accepted = models.BooleanField(default=False)
-    accepted_date = models.DateTimeField()
-    invited_date = models.DateTimeField()
+    accepted_date = models.DateTimeField(null=True)
+    invited_date = models.DateTimeField(null=True)
     objects = InvitedPlayerManager()
 
 class Player(models.Model):

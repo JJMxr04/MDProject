@@ -17,7 +17,7 @@ from core.event.serializers.team import TeamSerializer
 from core.tournament.serializers.tournament import TournamentSerializer, RoundSerializer
 from core.event.models.event import Event
 from core.event.models.team import Team
-from core.tournament.models.tournament import Tournament, Round
+from core.tournament.models.tournament import Tournament, Round,InvitedPlayer
 from django.http import Http404
 from datetime import datetime, timedelta
 from tests.test1 import Test1, Support
@@ -143,10 +143,10 @@ if __name__ == '__main__':
 
     for x in range(0, 127):
         Tournament.objects.invitePlayer(tournament_id, f"{x}test{x}@test.com" )
-        Tournament.objects.acceptInvite(tournament_id, f"{x}test{x}@test.com" )
+        # Tournament.objects.acceptInvite(tournament_id, f"{x}test{x}@test.com" )
 
 
-    print(tournament.invited_players)
+    print(InvitedPlayer.objects.get_Invited_Players(tournament))
 
     # final_round = tournament.final_round
     # # print(final_round)
