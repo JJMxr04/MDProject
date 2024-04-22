@@ -46,11 +46,11 @@ class TournamentManager(AbstractManager):
 
             user = User.objects.get(email=user_email)
 
-            if tournament.players.filter(player=user.pk).exists() or tournament.invited_players.filter(player=user.pk).exists():
-                print("User is already invited or part of the tournament.")
+            if not InvitedPlayer.objects.check_invited_player(tournament,user):
+                print("User was not invited to this tournament")
                 return False
+
             player = Player.objects.create_player(tournament,user)
-            tournament.players.add(player)
             return True
 
         except ObjectDoesNotExist as e:
@@ -162,6 +162,9 @@ class PlayerManager(AbstractManager):
 
     def delete_player(self, player):
         player.delete()
+
+    def get_Players(self,tournament):
+        return self.filter(tournament=tournament)
 
 
 class Tournament(models.Model):

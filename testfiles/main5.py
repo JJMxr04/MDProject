@@ -17,7 +17,7 @@ from core.event.serializers.team import TeamSerializer
 from core.tournament.serializers.tournament import TournamentSerializer, RoundSerializer
 from core.event.models.event import Event
 from core.event.models.team import Team
-from core.tournament.models.tournament import Tournament, Round,InvitedPlayer
+from core.tournament.models.tournament import Tournament, Round,InvitedPlayer, Player
 from django.http import Http404
 from datetime import datetime, timedelta
 from tests.test1 import Test1, Support
@@ -84,48 +84,47 @@ def next_week_start(date):
 if __name__ == '__main__':
     start_date = next_week_start(datetime.now())
     tournament = Tournament.objects.create('test1',start_date,128)
-    Tournament.objects.create_rounds(tournament=tournament)
-    # print(TournamentSerializer(tournament).data)
-
     tournament_id = tournament.id
-    rounds = Round.objects.filter(tournament=tournament_id)
-
-    round0 = 0
-    round1 = 0
-    round2 = 0
-    round3 = 0
-    round4 = 0
-    round5 = 0
-    round6 = 0
-    round7 = 0
-    # print(rounds)
-    for round in rounds:
-        if round.level_num == 0:
-            round0 += 1
-        if round.level_num == 1:
-            round1 += 1
-        if round.level_num == 2:
-            round2 += 1
-        if round.level_num == 3:
-            round3 += 1
-        if round.level_num == 4:
-            round4 += 1
-        if round.level_num == 5:
-            round5 += 1
-        if round.level_num == 6:
-            round6 += 1
-        if round.level_num == 7:
-            round7 += 1
-        # print(f"Level:{round.level_num}: {RoundSerializer(round).data}")
-
-    print(f"round 0:{round0}")
-    print(f"round 1:{round1}")
-    print(f"round 2:{round2}")
-    print(f"round 3:{round3}")
-    print(f"round 4:{round4}")
-    print(f"round 5:{round5}")
-    print(f"round 6:{round6}")
-    print(f"round 7:{round7}")
+    # Tournament.objects.create_rounds(tournament=tournament)
+    # # print(TournamentSerializer(tournament).data)
+    # rounds = Round.objects.filter(tournament=tournament_id)
+    #
+    # round0 = 0
+    # round1 = 0
+    # round2 = 0
+    # round3 = 0
+    # round4 = 0
+    # round5 = 0
+    # round6 = 0
+    # round7 = 0
+    # # print(rounds)
+    # for round in rounds:
+    #     if round.level_num == 0:
+    #         round0 += 1
+    #     if round.level_num == 1:
+    #         round1 += 1
+    #     if round.level_num == 2:
+    #         round2 += 1
+    #     if round.level_num == 3:
+    #         round3 += 1
+    #     if round.level_num == 4:
+    #         round4 += 1
+    #     if round.level_num == 5:
+    #         round5 += 1
+    #     if round.level_num == 6:
+    #         round6 += 1
+    #     if round.level_num == 7:
+    #         round7 += 1
+    #     # print(f"Level:{round.level_num}: {RoundSerializer(round).data}")
+    #
+    # print(f"round 0:{round0}")
+    # print(f"round 1:{round1}")
+    # print(f"round 2:{round2}")
+    # print(f"round 3:{round3}")
+    # print(f"round 4:{round4}")
+    # print(f"round 5:{round5}")
+    # print(f"round 6:{round6}")
+    # print(f"round 7:{round7}")
 
 
 
@@ -143,10 +142,10 @@ if __name__ == '__main__':
 
     for x in range(0, 127):
         Tournament.objects.invitePlayer(tournament_id, f"{x}test{x}@test.com" )
-        # Tournament.objects.acceptInvite(tournament_id, f"{x}test{x}@test.com" )
+        Tournament.objects.acceptInvite(tournament_id, f"{x}test{x}@test.com" )
 
 
-    print(InvitedPlayer.objects.get_Invited_Players(tournament))
+    print(Player.objects.get_Players(tournament))
 
     # final_round = tournament.final_round
     # # print(final_round)
