@@ -91,6 +91,19 @@ class TournamentManager(AbstractManager):
             print(f"Attribute error: {e}")
             return False
 
+    def make_init_matches(self,tournament):
+        botton_level_rounds = Round.objects.filter(tournament=tournament,level_num=(tournament.levels -1))
+        players = list(Player.objects.get_Players(tournament=tournament))
+        # print(len(players))
+        for round in botton_level_rounds:
+            # if(len(players) ==1 ):
+            #     print("poop")
+            player_1 = players.pop()
+            player_2 = players.pop()
+            Round.objects.assign_players(round=round,player_1=player_1,player_2=player_2)
+            Round.objects.create_tournament_match(round)
+
+
 
 
     # @transaction.atomic
@@ -98,6 +111,8 @@ class TournamentManager(AbstractManager):
         final_round = Round.objects.create_bracket(tournament)
         tournament.final_round = final_round
         tournament.save()
+
+
 
 
 class RoundManager(AbstractManager):
@@ -122,6 +137,26 @@ class RoundManager(AbstractManager):
         current_round.save()  # Ensure relationships are persisted
 
         return current_round
+
+    def create_tournament_match(self,round):
+        round.match = Match.objects.create_match(round.player_1.player,round.player_2.player)
+        round.save()
+
+    def assign_players(self,round,player_1=None,player_2=None):
+        if ((round.player_1 == None) and (player_1 != None) ):
+            round.player_1 = player_1
+        if ((round.player_2 == None) and (player_2 != None) ):
+            round.player_2 = player_2
+        round.save()
+
+    def get_tourney_level_rounds(self,tournament, level):
+        return self.filter(tournament=tournament,level_num=level)
+
+
+
+
+
+
 
     pass
 
