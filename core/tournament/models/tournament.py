@@ -46,10 +46,19 @@ class TournamentManager(AbstractManager):
 
             user = User.objects.get(email=user_email)
 
+
+
             if not InvitedPlayer.objects.check_invited_player(tournament,user):
                 print("User was not invited to this tournament")
                 return False
 
+            if tournament.state != 'created':
+               return False
+            players = list(Player.objects.get_Players(tournament=tournament))
+            if len(players) == tournament.max_accepted_players:
+                return False
+            if not Player.objects.check_player_participating(tournament=tournament,user=user):
+                return False
             player = Player.objects.create_player(tournament,user)
             return True
 
@@ -108,6 +117,7 @@ class TournamentManager(AbstractManager):
 
     # @transaction.atomic
     def create_rounds(self,tournament):
+        tournament.state = 'inprogress'
         final_round = Round.objects.create_bracket(tournament)
         tournament.final_round = final_round
         tournament.save()
@@ -201,13 +211,21 @@ class PlayerManager(AbstractManager):
     def get_Players(self,tournament):
         return self.filter(tournament=tournament)
 
+    def check_player_participating(self,tournament, user):
+        try:
+            player = self.get(tournament=tournament,player=user)
+            return True
+        except ObjectDoesNotExist as e:
+            print(f"Object not found: {e}")
+            return False
+
 
 class Tournament(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    state = models.CharField(max_length=10, default='created')
+    state = models.CharField(max_length=10, default='created') # created, inprogress, completed
     max_accepted_players = models.IntegerField()
     levels = models.FloatField(default=0)
     winner = models.ForeignKey('Player', on_delete=models.SET_NULL, related_name='won_tournaments', null=True,
