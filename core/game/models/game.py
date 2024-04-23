@@ -66,6 +66,11 @@ class GameManager(AbstractManager):
         print(event)
         return Game.objects.create_game(player_1,player_2,match,event,event.commence_time,None,event.completed,event.home_team,event.away_team)
 
+    def game_event_update(self,game,instance):
+        game.winner = instance.winner
+        game.completed = instance.completed
+        game.save()
+
 
 class Game(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
