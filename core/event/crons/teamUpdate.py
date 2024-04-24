@@ -1,6 +1,8 @@
 #This Model does not run on a timer but is used with the crons.
 
 import os
+import pathlib  # Import pathlib to work with filesystem paths
+import logging
 #from dotenv import load_dotenv
 #load_dotenv()
 import json
@@ -36,24 +38,32 @@ def read_json_file(file_path):
         return None
 
 
+logging.basicConfig(level=logging.INFO)
+
 def write_image(content, country, title, team_name, team_id):
-    # Get the root directory of your project
-    project_root = os.path.dirname(os.path.abspath(__file__))  # Top-level project directory
+    try:
+        # Get the top-level project directory
+        project_root = pathlib.Path(__file__).resolve().parent.parent  # Navigate to the top-level project directory
 
-    # Define the directory path relative to the project root
-    directory_path = os.path.join(project_root, 'media', 'teamlogos', country, title, team_name)
+        # Define the complete directory path relative to the project root
+        directory_path = project_root / 'media' / 'teamlogos' / country / title / team_name
 
-    # Create the directories if they don't exist
-    os.makedirs(directory_path, exist_ok=True)
+        # Create the directories if they don't exist
+        os.makedirs(directory_path, exist_ok=True)
 
-    # Specify the filename within the directory
-    filename = os.path.join(directory_path, f"{team_id}.png")  # You can change the filename and extension as needed
+        # Specify the filename within the directory
+        filename = directory_path / f"{team_id}.png"  # Use pathlib for path manipulations
 
-    # Open the file in binary mode and write the image data to it
-    with open(filename, "wb") as file:
-        file.write(content)
+        # Open the file in binary mode and write the image data to it
+        with open(filename, "wb") as file:
+            file.write(content)
 
-    return filename
+        # logging.info(f"Image saved to {filename}")  # Log successful save
+        return filename  # Return the full file path
+
+    except Exception as e:
+        logging.error(f"Error writing image: {e}")  # Log any errors
+        return None  # Return None to indicate failure
 
 
 class TeamCron():
@@ -102,7 +112,7 @@ class TeamCron():
                 return None,None,None
         else:
             print(f"Error: {response.status_code} - {response.text}")
-            print(f"Counld Find {team_name}")
+            # print(f"Counld Find {team_name}")
             return None,None,None
             # raise Http404("Team not found")
 
@@ -131,7 +141,7 @@ class TeamCron():
             team_search = Team.objects.get_object_by_team_name(team_name)
             return team_search
         except Http404:
-            # print("Team does not exist")
+            # print(f"Team {team_name} does not exist")
             # Handle the case where the team does not exist
             country, country_code, team_id = self.get_team_api(team_name)
             if team_id is not None:

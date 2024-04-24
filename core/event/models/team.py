@@ -19,7 +19,7 @@ class TeamManager(AbstractManager):
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
             # print("false")
-            return False
+            return None
 
     def create_team(self, team_name, title, group, team_id, logo_url, country, country_code):
         team = self.get_object_by_team_id(team_id)
@@ -30,6 +30,7 @@ class TeamManager(AbstractManager):
             team.save(using=self._db)
             return team
         else:
+            # print(team)
             return team  # No need for the second condition, as it's redundant
 
 
