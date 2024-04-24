@@ -37,9 +37,11 @@ def read_json_file(file_path):
 
 
 def write_image(content, country, title, team_name, team_id):
-    # Specify the directory path where you want to save the image
-    # print(f"{country}, {title}, {team_name}, {team_id}")
-    directory_path = os.path.join('media', 'teamlogos', country, title, team_name)
+    # Get the root directory of your project
+    project_root = os.path.dirname(os.path.abspath(__file__))  # Top-level project directory
+
+    # Define the directory path relative to the project root
+    directory_path = os.path.join(project_root, 'media', 'teamlogos', country, title, team_name)
 
     # Create the directories if they don't exist
     os.makedirs(directory_path, exist_ok=True)
