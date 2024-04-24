@@ -46,19 +46,17 @@ class TournamentManager(AbstractManager):
 
             user = User.objects.get(email=user_email)
 
-
-
             if not InvitedPlayer.objects.check_invited_player(tournament,user):
                 print("User was not invited to this tournament")
                 return False
-
             if tournament.state != 'created':
-               return False
+                return False
             players = list(Player.objects.get_Players(tournament=tournament))
             if len(players) == tournament.max_accepted_players:
                 return False
-            if not Player.objects.check_player_participating(tournament=tournament,user=user):
+            if Player.objects.check_player_participating(tournament=tournament,user=user):
                 return False
+            #
             player = Player.objects.create_player(tournament,user)
             return True
 
@@ -216,7 +214,6 @@ class PlayerManager(AbstractManager):
             player = self.get(tournament=tournament,player=user)
             return True
         except ObjectDoesNotExist as e:
-            print(f"Object not found: {e}")
             return False
 
 

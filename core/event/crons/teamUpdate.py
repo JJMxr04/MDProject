@@ -100,7 +100,9 @@ class TeamCron():
                 return None,None,None
         else:
             print(f"Error: {response.status_code} - {response.text}")
-            raise Http404("Team not found")
+            print(f"Counld Find {team_name}")
+            return None,None,None
+            # raise Http404("Team not found")
 
     def get_logo(self, team_id, team_name, title, country):
         url = "https://sofascore.p.rapidapi.com/teams/get-logo"
@@ -111,7 +113,7 @@ class TeamCron():
         }
         response = requests.get(url, headers=headers, params=querystring)
         # Check if the request was successful (status code 200)
-        if response.status_code == 200:
+        if response.status_code == 200 or response.status_code == 204:
             # Get the content of the response (image data)
             # data = response.json()
             # write_json_to_file(data, f'testfiles/teams/teams_logos.json')
@@ -119,7 +121,7 @@ class TeamCron():
         else:
             print(f"Error: {response.status_code} - {response.text}")
             #raise Http404("Failed to get logo")
-            print(f"Failed to get logo:{team_name}:{team_id}")
+            # print(f"Failed to get logo:{team_name}:{team_id}")
             return None
 
     def check_team(self, team_name, title, group):
@@ -127,7 +129,7 @@ class TeamCron():
             team_search = Team.objects.get_object_by_team_name(team_name)
             return team_search
         except Http404:
-            print("Team does not exist")
+            # print("Team does not exist")
             # Handle the case where the team does not exist
             country, country_code, team_id = self.get_team_api(team_name)
             if team_id is not None:

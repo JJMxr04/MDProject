@@ -18,12 +18,12 @@ class TeamManager(AbstractManager):
             instance = self.filter(team_id=team_id).first()  # Add parentheses to call the first method
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
-            print("false")
+            # print("false")
             return False
 
     def create_team(self, team_name, title, group, team_id, logo_url, country, country_code):
         team = self.get_object_by_team_id(team_id)
-        print(f"creating the team {team_name} from {title}: {group}")
+        # print(f"creating the team {team_name} from {title}: {group}")
         if team is None:
             team = self.model(team_name=team_name, title=title, group=group, team_id=team_id, logo_url=logo_url,
                               country=country, country_code=country_code)

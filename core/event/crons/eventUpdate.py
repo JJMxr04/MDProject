@@ -60,9 +60,14 @@ class EventCron():
             print(f"API Request failed with status code: {response.status_code}")
             return Response("API Request failed", status=response.status_code)
 
-        write_json_to_file(api_data, f'testfiles/originals/{key}.json')
-
+        # write_json_to_file(api_data, f'testfiles/originals/{key}.json')
+        # print(f"Api_Data Size = {len(api_data)}")
+        # x=0
         for event in api_data:
+            # x+=1
+            # print(f'{x}')
+            # print(event)
+
             if (event.get('away_team')) is None or (event.get('home_team') is None):
 
                 continue
@@ -106,9 +111,14 @@ class EventCron():
     def update_all_events(self):
         print("Running Event Cron")
         active_sports = Sport.objects.get_active_sports()
+        sports_num= len(active_sports)
+        print(print(f"Sport List Size = {sports_num}"))
+        x=0
         for sport in active_sports:
-            # print(sport)
+            x+=1
+            print(f'Percentage Finished:{round((x/sports_num)*100)}%')
             self.get_sport_events(sport)
+            print(f"Finished: {sport}")
 
 def update_all_events():
     eventCron = EventCron()
