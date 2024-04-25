@@ -1,7 +1,7 @@
 #This Model does not run on a timer but is used with the crons.
 
+from django.conf import settings  # Import the Django settings module
 import os
-import pathlib  # Import pathlib to work with filesystem paths
 import logging
 #from dotenv import load_dotenv
 #load_dotenv()
@@ -42,27 +42,27 @@ logging.basicConfig(level=logging.INFO)
 
 def write_image(content, country, title, team_name, team_id):
     try:
-        # Get the top-level project directory
-        project_root = pathlib.Path(__file__).resolve().parent.parent  # Navigate to the top-level project directory
+        # Define the base media directory using Django's MEDIA_ROOT setting
+        media_root = settings.MEDIA_ROOT  # Get MEDIA_ROOT from Django settings
 
-        # Define the complete directory path relative to the project root
-        directory_path = project_root / 'media' / 'teamlogos' / country / title / team_name
+        # Construct the directory path relative to MEDIA_ROOT
+        directory_path = os.path.join(media_root, 'teamlogos', country, title, team_name)
 
         # Create the directories if they don't exist
         os.makedirs(directory_path, exist_ok=True)
 
-        # Specify the filename within the directory
-        filename = directory_path / f"{team_id}.png"  # Use pathlib for path manipulations
+        # Define the filename with the given team_id
+        filename = os.path.join(directory_path, f"{team_id}.png")
 
-        # Open the file in binary mode and write the image data to it
+        # Open the file in binary mode and write the image content
         with open(filename, "wb") as file:
             file.write(content)
 
-        # logging.info(f"Image saved to {filename}")  # Log successful save
-        return filename  # Return the full file path
+        logging.info(f"Image saved to {filename}")  # Log success
+        return filename  # Return the full file path to the saved image
 
     except Exception as e:
-        logging.error(f"Error writing image: {e}")  # Log any errors
+        logging.error(f"Error writing image: {e}")  # Log errors
         return None  # Return None to indicate failure
 
 
@@ -72,11 +72,20 @@ class TeamCron():
     def create_team(self, team_name, title, group, team_id, logo_url, country, country_code):
         return Team.objects.create_team(team_name, title, group, team_id, logo_url, country, country_code)
 
-    def create_save_logo(self, team_name, title, team_id, country, content):
-        domain = os.environ.get('DOMAIN')
+    def create_save_logo(team_name, title, team_id, country, content):
+        # Use MEDIA_ROOT to construct the correct path
+        media_root = settings.MEDIA_ROOT
+
+        # Call the write_image function to save the content
         filename = write_image(content, country, title, team_name, team_id)
-        url = f"https://{domain}/{filename}"  # Adjust the URL format as needed
-        return url
+
+        # Construct the relative URL from MEDIA_URL and the filename
+        relative_url = os.path.relpath(filename, media_root)
+
+        # Create the full URL using MEDIA_URL
+        full_url = os.path.join(settings.MEDIA_URL, relative_url)  # This should not include a domain
+
+        return full_url
 
     def get_team_api(self, team_name):
         url = "https://sofascore.p.rapidapi.com/teams/search"

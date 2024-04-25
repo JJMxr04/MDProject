@@ -111,8 +111,9 @@ class EventCron():
         x=0
         for sport in active_sports:
             x+=1
-            print(f'Percentage Finished:{round((x/sports_num)*100)}%')
+            # print(f'Percentage Finished:{round((x/sports_num)*100)}%')
             self.get_sport_events(sport)
+            print(f'Percentage Finished:{round((x / sports_num) * 100)}%')
             print(f"Finished: {sport}")
 
 def update_all_events():
