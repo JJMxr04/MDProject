@@ -32,7 +32,7 @@ team1 = Team()
 
 
 if __name__ == '__main__':
-    max_players = 129
+    max_players = 128
     test = TourneyTest(max_players=max_players).run_test()
 
 

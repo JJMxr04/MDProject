@@ -13,6 +13,7 @@ from django.db import transaction
 
 class TournamentManager(AbstractManager):
 
+
     def create(self, name, start_date, max_accepted_players):
         start_date_aware = timezone.make_aware(start_date)
         levels = self.get_tourny_level(max_accepted_players)
@@ -167,7 +168,8 @@ class RoundManager(AbstractManager):
         return self.filter(tournament=tournament,level_num=level)
 
 
-
+    def get_round_by_match(self,match):
+        return self.filter(match=match).first()
 
 
 

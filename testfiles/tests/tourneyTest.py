@@ -131,7 +131,7 @@ class TourneyTest:
 
     def tourney_invite_and_accept_players(self):
         tournament = self.tournament_record
-        for x in range(0, tournament.max_accepted_players - 1):
+        for x in range(0, tournament.max_accepted_players):
             Tournament.objects.invitePlayer(tournament.id, f"{x}test{x}@test.com")
             Tournament.objects.acceptInvite(tournament.id, f"{x}test{x}@test.com")
         Tournament.objects.make_init_matches(tournament)
@@ -220,10 +220,11 @@ class TourneyTest:
         init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 1)
 
         for round in init_rounds:
-            print('round')
-            print(RoundSerializer(round).data)
-            print('match')
-            print(MatchSerializer(round.match).data)
+            # print('round')
+            # print(RoundSerializer(round).data)
+            # print('match')
+            # print(MatchSerializer(round.match).data)
+            print(f'match winner:{round.match.winner}, round winner: {round.winner} next round players: {round.next_round.player_1} vs {round.next_round.player_2}')
 
     #  --- Initial Round Event Uploads---
 
@@ -233,12 +234,10 @@ class TourneyTest:
         self.test_setup()
         time.sleep(1)
         self.make_tournament()
-        print(self.tournament_record.max_accepted_players)
-        print(len(list(Tournament.objects.get_players(self.tournament_record))))
-        # time.sleep(1)
-        # self.Simulate_First_Round()
-        # time.sleep(1)
-        # self.update_test_events()
+        time.sleep(1)
+        self.Simulate_First_Round()
+        time.sleep(1)
+        self.update_test_events()
         # time.sleep(1)
         # self.print_init_round()
 
