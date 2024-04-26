@@ -32,7 +32,7 @@ from core.match.serializers.match import MatchSerializer
 
 class TourneyTest:
 
-    def __init__(self,max_players):
+    def __init__(self):
         # Initialize any required instances or variables
         self.support = Support()
         # self.tourney_helper = TourneyTestHelp()
@@ -44,7 +44,7 @@ class TourneyTest:
         self.team = Team()
         self.sport = Sport()
 
-        self.max_players = max_players
+        self.max_players = 128
 
 
     # Non test Functions
@@ -228,6 +228,100 @@ class TourneyTest:
 
     #  --- Initial Round Event Uploads---
 
+    #  --- Second Round Event Uploads---
+    def Simulate_Second_Round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
+        data1 = {
+            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "player_choice": "Miami Dolphins"
+        }
+        data2 = {
+            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "player_choice": "Tennessee Titans"
+        }
+        data1_gg = {
+            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
+            "player_choice": "New York Giants"
+        }
+        data2_gg = {
+            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
+            "player_choice": "Green Bay Packers"
+        }
+
+
+        for round in init_rounds:
+            match = round.match
+            user_1 = round.player_1.player
+            user_2 = round.player_2.player
+            for x in range(0,5):
+                self.update_match(match,data1,user_1)
+                self.update_match(match,data2,user_2)
+            Game.objects.update_by_id(match.player_1_game_1.id,user_2,data2)
+            Game.objects.update_by_id(match.player_1_game_2.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_3.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_4.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_5.id, user_2, data2)
+
+            Game.objects.update_by_id(match.player_2_game_1.id,user_1,data1)
+            Game.objects.update_by_id(match.player_2_game_2.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_3.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_4.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_5.id, user_1, data1)
+
+            Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
+            Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
+
+
+    #  --- Second Round Event Uploads---
+
+    #  --- Third Round Event Uploads---
+    def Simulate_Third_Round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
+        data1 = {
+            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "player_choice": "Miami Dolphins"
+        }
+        data2 = {
+            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "player_choice": "Tennessee Titans"
+        }
+        data1_gg = {
+            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
+            "player_choice": "New York Giants"
+        }
+        data2_gg = {
+            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
+            "player_choice": "Green Bay Packers"
+        }
+
+        for round in init_rounds:
+            match = round.match
+            user_1 = round.player_1.player
+            user_2 = round.player_2.player
+            for x in range(0, 5):
+                self.update_match(match, data1, user_1)
+                self.update_match(match, data2, user_2)
+            Game.objects.update_by_id(match.player_1_game_1.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_2.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_3.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_4.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_5.id, user_2, data2)
+
+            Game.objects.update_by_id(match.player_2_game_1.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_2.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_3.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_4.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_5.id, user_1, data1)
+
+            Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
+            Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
+
+    #  --- Third Round Event Uploads---
+
+
+
     #  --- Run Test---
 
     def run_test(self):
@@ -238,7 +332,7 @@ class TourneyTest:
         self.Simulate_First_Round()
         time.sleep(1)
         self.update_test_events()
-        # time.sleep(1)
-        # self.print_init_round()
+        time.sleep(1)
+        self.print_init_round()
 
 
