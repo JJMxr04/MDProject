@@ -83,9 +83,7 @@ class MyMatchViewSet(AbstractViewSet):
 
     def update(self, request, *args, **kwargs):
         player = request.user
-        print(kwargs['pk'])
         data = request.data
-        print(data)
         match = Match.objects.get_object_by_id(kwargs['pk'])
         self.check_object_permissions(self.request, match)
         # if (match.player_1 != player) or (match.player_2 != player):

@@ -7,8 +7,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.management import call_command
 from django.http import Http404
-
 import json
+
+# Importing various serializers and models from different Django apps
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
 from core.game.serializers.game import GameSerializer
 from core.event.models.event import Event
@@ -18,260 +19,25 @@ from core.user.models import User
 from core.match.models import Match
 from core.user.serializers import UserSerializer
 
+# Instantiating Sport model
 sport_model = Sport()
-from core.event.crons.sportUpdate import SportCron
 
+# Importing cron jobs for scheduled tasks
+from core.event.crons.sportUpdate import SportCron
 sport_cron = SportCron()
 
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.teamUpdate import TeamCron
 from core.event.serializers.team import TeamSerializer
 from core.event.models import Team
-
 event_cron = EventCron()
 team_cron = TeamCron()
 
+# Importing datetime to manipulate date and time
 from datetime import datetime, timedelta
 
-
-class Support:
-    from datetime import datetime, timedelta
-
-    def get_date_for_week_from_now():
-        # Get the current date
-        current_date = datetime.now().date()
-
-        # Calculate the date for a week from now
-        week_from_now = current_date + timedelta(weeks=1)
-
-        return week_from_now
-
-    # Example usage
-    print(get_date_for_week_from_now())
-
-    def read_list_from_file(self, file_path):
-        try:
-            with open(file_path, 'r') as file:
-                # Read lines from the file and remove newline characters
-                file_content = [line.strip() for line in file.readlines()]
-
-            # print(f"List read from '{file_path}': {file_content}")
-            return file_content
-        except FileNotFoundError:
-            print(f"File '{file_path}' not found.")
-            return None
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            return None
-
-    def read_file_and_save_as_list(self, input_file, output_file):
-        try:
-            with open(input_file, 'r') as file:
-                # Read lines from the file and remove newline characters
-                file_content = [line.strip() for line in file.readlines()]
-
-            # Save the content as a list in another file
-            with open(output_file, 'w') as output:
-                for item in file_content:
-                    output.write(f"{item}\n")
-
-            # print(f"Content of '{input_file}' saved as a list in '{output_file}'.")
-        except FileNotFoundError:
-            print(f"File '{input_file}' not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
-    def process_files_in_folder(self, folder_path, output_file):
-        try:
-            # Get a list of all files in the folder
-            file_list = [file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
-
-            # Save the list to the output text file
-            with open(output_file, 'w') as output_file:
-                for file_name in file_list:
-                    output_file.write(f"{file_name}\n")
-
-            # print(f"List of files saved to '{output_file.name}'")
-        except FileNotFoundError:
-            print(f"Folder '{folder_path}' not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
-    def write_json_to_file(self, data, filename):
-        """
-        Write JSON data to a file in a formatted way.
-
-        Parameters:
-        - data: The data to be written.
-        - filename: The name of the file to write to.
-        """
-        json_data = serialize('json', data, indent=2)
-        with open(filename, 'a') as file:
-            file.write(json_data)
-
-    def read_json_file(self, file_path):
-        try:
-            with open(file_path, 'r') as file:
-                json_data = file.read()
-                if json_data.strip():
-                    return json_data
-                else:
-                    return None
-        except FileNotFoundError:
-            print(f"File not found: {file_path}")
-            return None
-
-    def test_get_nfl_events(self, file):
-        api_data = support.read_json_file(file)
-        if api_data is None:
-            return False
-        api_data_json = json.loads(api_data)
-        sport = Sport.objects.get_by_key("americanfootball_nfl")
-
-        for event in api_data_json:
-            if (event["away_team"]) is None or (event.get('home_team') is None):
-                continue
-
-            event['id'] = uuid.UUID(event['id'])
-            event['title'] = sport.title
-            event['group'] = sport.group
-            event['description'] = sport.description
-            event['home_team_team'] = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
-            event['away_team_team'] = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
-            event_schema = EventSerializer(data=event)
-
-            if event_schema.is_valid():
-                data = event_schema.validated_data
-                data['id'] = event['id']
-                if (data.get('away_team')) is None or (data.get('home_team') is None):
-                    continue
-                try:
-                    existing_event = Event.objects.get(id=data.get("id"))
-                    if existing_event.completed != data['completed']:
-                        # Update the existing event with new data
-                        team_schema = TeamScoreSerializer(data=event['scores'][0])
-                        if team_schema.is_valid():
-                            score1 = team_schema.validated_data
-                        team_schema = TeamScoreSerializer(data=event['scores'][1])
-                        if team_schema.is_valid():
-                            score2 = team_schema.validated_data
-                        Event.objects.get_event_state(data['id'], data['completed'], data['scores'], score1, score2)
-                except ObjectDoesNotExist:
-                    # If event does not exist, create a new one
-                    event_game = Event(**data)
-                    event_game.save()
-                    continue
-
-    def get_test_players(self):
-
-        owner = User.objects.get_object_by_email("test1@test.com")
-        if owner == Http404:
-            user_1_data = {
-                "username": "test1",
-                "first_name": "test1",
-                "last_name": "test1",
-                "password": "password",
-                "email": "test1@test.com"
-            }
-            serializer = UserSerializer(data=user_1_data)
-            serializer.is_valid(raise_exception=True)
-            owner = User.objects.create_user_ex(user_1_data['username'], user_1_data['first_name'],
-                                                user_1_data['last_name'], user_1_data['email'],
-                                                user_1_data['password'], )
-
-        player_2 = User.objects.get_object_by_email("test2@test.com")
-        if player_2 == Http404:
-            user_2_data = {
-                "username": "test2",
-                "first_name": "test2",
-                "last_name": "test2",
-                "password": "password",
-                "email": "test2@test.com"
-            }
-            serializer = UserSerializer(data=user_2_data)
-
-            serializer.is_valid(raise_exception=True)
-            serializer.validated_data
-            player_2 = User.objects.create_user_ex(user_2_data['username'], user_2_data['first_name'],
-                                                   user_2_data['last_name'], user_2_data['email'],
-                                                   user_2_data['password'], )
-        owner = User.objects.get_object_by_email("test1@test.com")
-        player_2 = User.objects.get_object_by_email("test2@test.com")
-        # print(owner, player_2)
-        return owner, player_2
-
-    def flush_database(self):
-        # call_command('flush', interactive=False)
-        call_command('flush_except', 'core_event_team','core_sport')
-
-    def datadump(self):
-        # Replace 'app_name.ModelName' with the actual app and model names
-        call_command('dumpdata', 'core_event.Team', exclude=['contenttypes', 'auth.Permission'], indent=2)
-        call_command('dumpdata', 'core_event.Sport', exclude=['contenttypes', 'auth.Permission'], indent=2)
-
-    def update_golden_game(self, json_file_path, target_id):
-        try:
-            # Read the JSON file
-            with open(json_file_path, 'r') as file:
-                data = json.load(file)
-
-            # Iterate through the objects in the JSON array
-            for obj in data:
-                # Check if the current object has the desired "id" value
-                if obj.get("id") == target_id:
-                    current_time = datetime.utcnow()
-                    # Calculate the new commence time (6 days away from now)
-                    new_commence_time = current_time + timedelta(days=6)
-                    # Format the new commence time as a string in the same format
-                    new_commence_time_str = new_commence_time.strftime("%Y-%m-%dT%H:%M:%SZ")
-                    # print(new_commence_time_str)
-                    obj["commence_time"] = new_commence_time_str  # Update the commence_time
-                    break  # Break out of the loop after updating
-
-            # Write the updated data back to the file
-            with open(json_file_path, 'w') as file:
-                json.dump(data, file, indent=2)
-
-            # print(f"Object with id={target_id} updated and written back to {json_file_path}")
-            return obj  # Return the matching object
-
-        except FileNotFoundError:
-            print(f"File not found: {json_file_path}")
-            return None
-        except json.JSONDecodeError as e:
-            print(f"Error decoding JSON: {e}")
-            return None
-
-    def endEvents(self):
-        events = Event.objects.filter(completed=False)
-        x =0
-        for event in events:
-            current_time = datetime.now()
-            eventTime = datetime.strptime(event.commence_time, "%Y-%m-%dT%H:%M:%SZ")
-            if current_time > eventTime:
-                event.completed = True
-                event.save()
-                x += 1
-                print(f"changed {x} event's time")
-
-    def deleteExtraTeams(self):
-        teams = Team.objects.all()
-        for team in teams:
-            name = team.team_name
-
-            teams1 = Team.objects.filter(team_name=name)
-            if len(teams1) > 1:
-                print(f"{name} has {len(teams1)} item")
-                teams1[1].delete()
-    def checkExtraTeams(self):
-        teams = Team.objects.all()
-        for team in teams:
-            name = team.team_name
-
-            teams1 = Team.objects.filter(team_name=name)
-            if len(teams1) > 1:
-                print(f"{name} has {len(teams1)} item")
-
+# Class containing various utility functions
+from Support import Support
 
 
 

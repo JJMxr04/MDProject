@@ -21,8 +21,9 @@ from core.event.models.team import Team
 from core.tournament.models.tournament import Tournament, Round,InvitedPlayer, Player
 from django.http import Http404
 from datetime import datetime, timedelta
-from tests.test1 import Test1, Support
+from tests.test1 import Test1
 from tests.test2 import eventTest
+from tests.Support import Support
 test1 = Test1()
 eventTest = eventTest()
 team1 = Team()
@@ -33,7 +34,7 @@ if __name__ == '__main__':
     max_players = 129
     tourney_helper = TourneyTestHelp()
     tourney_helper.updateEvents()
-    # tournament = tourney_helper.init_tournament(max_players=max_players)
+    tournament = tourney_helper.init_tournament(max_players=max_players)
     # tourney_helper.create_waitlistentry_and_users(max_players=max_players)
     # tourney_helper.tourney_invite_and_accept_players(tournament=tournament)
     # tourney_helper.make_tourney_rounds_matches(tournament=tournament)

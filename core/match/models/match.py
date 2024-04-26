@@ -11,7 +11,11 @@ from core.game.models import Game
 
 class MatchManager(AbstractManager):
     def create_match(self,player_1,player_2 = None):
-        return self.create(player_1=player_1,player_2=player_2)
+        if player_2 is None:
+            return self.create(player_1=player_1,player_2=player_2)
+        else:
+            match =self.create(player_1=player_1,player_2=player_2)
+            return self.accept_match(match,player_2)
     def accept_match(self,match,player_2):
         match =  self.get_object_by_id(id=match.id)
         if match is None:

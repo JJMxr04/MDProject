@@ -72,7 +72,7 @@ class TeamCron():
     def create_team(self, team_name, title, group, team_id, logo_url, country, country_code):
         return Team.objects.create_team(team_name, title, group, team_id, logo_url, country, country_code)
 
-    def create_save_logo(team_name, title, team_id, country, content):
+    def create_save_logo(self,team_name, title, team_id, country, content):
         # Use MEDIA_ROOT to construct the correct path
         media_root = settings.MEDIA_ROOT
 
@@ -138,7 +138,11 @@ class TeamCron():
             # Get the content of the response (image data)
             # data = response.json()
             # write_json_to_file(data, f'testfiles/teams/teams_logos.json')
-            return self.create_save_logo(team_name, title, team_id, country, response.content)
+            if response.content:
+                return self.create_save_logo(team_name, title, team_id, country, response.content)
+            else:
+                print(f"Error: {response.status_code} - {response.text} - data: {response.content}")
+                return None
         else:
             print(f"Error: {response.status_code} - {response.text}")
             #raise Http404("Failed to get logo")
@@ -153,11 +157,15 @@ class TeamCron():
             # print(f"Team {team_name} does not exist")
             # Handle the case where the team does not exist
             country, country_code, team_id = self.get_team_api(team_name)
-            if team_id is not None:
-                logo_url = self.get_logo(team_id, team_name, title, country)
+            team = Team.objects.get_object_by_team_id(team_id)
+            if team is Http404:
+                if team_id is not None:
+                    logo_url = self.get_logo(team_id, team_name, title, country)
+                else:
+                    logo_url = None
+                return self.create_team(team_name, title, group, team_id, logo_url, country, country_code)
             else:
-                logo_url = None
-            return self.create_team(team_name, title, group, team_id, logo_url, country, country_code)
+                return team
 
 
 

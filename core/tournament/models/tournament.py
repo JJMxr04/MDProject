@@ -37,6 +37,12 @@ class TournamentManager(AbstractManager):
     def get_tourny_level(self, num):
         return math.log2(num)
 
+    def get_invited_player(self,tournament):
+        return InvitedPlayer.objects.get_Invited_Players(tournament=tournament)
+
+    def get_players(self,tournament):
+        return Player.objects.get_Players(tournament=tournament)
+
     def acceptInvite(self, tourney_id, user_email):
         try:
             tournament = self.get(pk=tourney_id)

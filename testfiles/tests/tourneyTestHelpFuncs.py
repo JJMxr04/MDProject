@@ -4,7 +4,6 @@ from django import setup
 # Configure Django settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
-
 # Import necessary Django models, serializers, and other modules
 from core.match.models import Match
 from core.mail import views
@@ -19,17 +18,14 @@ from core.event.models.team import Team
 from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
 from django.http import Http404
 from datetime import datetime, timedelta
-from tests.test1 import Test1, Support
-from tests.test2 import eventTest
 from core.auth.models.waitlist import WaitlistEntry
+from Support import Support
 
 
 class TourneyTestHelp:
 
     def __init__(self):
         # Initialize any required instances or variables
-        self.test1 = Test1()
-        self.eventTest = eventTest()
         self.team1 = Team()
         self.support = Support()
 
@@ -122,3 +118,12 @@ class TourneyTestHelp:
 
         for round in init_rounds:
             print(RoundSerializer(round).data)
+
+    def Simulate_First_Round(self,tournament):
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 1)
+
+
+        for round in init_rounds:
+            today = datetime.now()
+
+

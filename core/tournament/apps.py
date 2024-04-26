@@ -5,3 +5,6 @@ class TournamentConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'core.tournament'
     label = 'core_tournament'
+
+    def ready(self):
+        import core.tournament.signals
