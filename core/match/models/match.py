@@ -121,7 +121,6 @@ class MatchManager(AbstractManager):
                 elif match.player_1_score == match.player_2_score:
                     match.winner = None
                 match.match_state = "completed"
-                print(match.match_state)
             match.save()
 
 

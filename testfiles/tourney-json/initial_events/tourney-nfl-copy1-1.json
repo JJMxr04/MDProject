@@ -4,39 +4,21 @@
     "sport_key": "americanfootball_nfl",
     "sport_title": "NFL",
     "commence_time": "2024-01-02T01:19:45Z",
-    "completed": true,
+    "completed": false,
     "home_team": "Miami Dolphins",
     "away_team": "Tennessee Titans",
-    "scores": [
-      {
-        "name": "Tennessee Titans",
-        "score": "34"
-      },
-      {
-        "name": "Miami Dolphins",
-        "score": "37"
-      }
-    ],
+    "scores": null,
     "last_update": null
   },
   {
     "id": "ea43090cd4cc2eb2fb98ba3847aba986",
     "sport_key": "americanfootball_nfl",
     "sport_title": "NFL",
-    "commence_time": "2024-05-02T21:22:36Z",
-    "completed": true,
+    "commence_time": "2024-05-03T12:30:04Z",
+    "completed": false,
     "home_team": "New York Giants",
     "away_team": "Green Bay Packers",
-    "scores": [
-      {
-        "name": "Green Bay Packers",
-        "score": "34"
-      },
-      {
-        "name": "New York Giants",
-        "score": "37"
-      }
-    ],
+    "scores": null,
     "last_update": null
   }
 ]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "6cd4bff8b0950234be09e6c0acda7b95",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-12-03T18:00:00Z",
+    "completed": false,
+    "home_team": "Tennessee Titans",
+    "away_team": "Indianapolis Colts",
+    "scores": null,
+    "last_update": null
+  },
+  {
+    "id": "5e0c5b79c3cb142f3361ade464174b68",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2024-05-03T12:29:03Z",
+    "completed": false,
+    "home_team": "Washington Commanders",
+    "away_team": "Miami Dolphins",
+    "scores": null,
+    "last_update": null
+  }
+]

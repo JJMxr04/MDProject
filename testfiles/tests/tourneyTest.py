@@ -90,12 +90,15 @@ class TourneyTest:
         output_file = 'sports_list.txt'
         self.support.process_files_in_folder(folder_path, output_file)
         sports = self.support.read_list_from_file(output_file)
-        self.support.test_get_nfl_events(f'tourney-json/tourney-nfl-copy1-1.json')
-        self.support.update_golden_game(f'tourney-json/tourney-nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
-    def update_test_events(self):
-        self.support.update_golden_game(f'tourney-json/tourney-nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
-        self.support.test_get_nfl_events(f'tourney-json/tourney-nfl-copy2-1.json')
+        self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-1.json')
+        self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
 
+    def update_test_events(self):
+        self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-2.json')
+        self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-2.json', "c491f05b066449d95732c4f52ac57e66")
+        self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy3-1.json', "c491f05b066449d95732c4f52ac57e66")
+        self.support.test_get_nfl_events(f'tourney-json/update_events/tourney-nfl-copy2-1.json')
     def create_users(self):
         max_players = self.max_players
         for x in range(0, max_players - 1):
@@ -224,7 +227,7 @@ class TourneyTest:
             # print(RoundSerializer(round).data)
             # print('match')
             # print(MatchSerializer(round.match).data)
-            print(f'match winner:{round.match.winner}, round winner: {round.winner} next round players: {round.next_round.player_1} vs {round.next_round.player_2}')
+            print(f'match winner:{round.match.winner}, round winner: {round.winner.player} next round players: {round.next_round.player_1.user} vs {round.next_round.player_2.user}')
 
     #  --- Initial Round Event Uploads---
 
@@ -233,20 +236,20 @@ class TourneyTest:
         tournament = self.tournament_record
         init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
         data1 = {
-            "event_id": "123e4567e89b12d3a456426655440000",
-            "player_choice": "Miami Dolphins"
+            "event_id": "5e766a287ba24d40d9e40aa41efe19de",
+            "player_choice": "Philadelphia Eagles"
         }
         data2 = {
-            "event_id": "123e4567e89b12d3a456426655440000",
-            "player_choice": "Tennessee Titans"
+            "event_id": "5e766a287ba24d40d9e40aa41efe19de",
+            "player_choice": "Buffalo Bills"
         }
         data1_gg = {
-            "event_id": "89b132d3e4567e98a123456755440000",
-            "player_choice": "New York Giants"
+            "event_id": "c491f05b066449d95732c4f52ac57e66",
+            "player_choice": "Kansas City Chiefs"
         }
         data2_gg = {
-            "event_id": "89b132d3e4567e98a123456755440000",
-            "player_choice": "Green Bay Packers"
+            "event_id": "c491f05b066449d95732c4f52ac57e66",
+            "player_choice": "Las Vegas Raiders"
         }
 
 
@@ -278,7 +281,12 @@ class TourneyTest:
             Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
 
     def update_test_2_events(self):
-        self.support.test_get_nfl_events(f'nfl-copy3-1.json')
+        self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-3.json')
+        self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-3.json',
+                                        "c1b7e562062eb3bac053a2f5ecf399f9")
+        self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy4-1.json',
+                                        "c1b7e562062eb3bac053a2f5ecf399f9")
+        self.support.test_get_nfl_events(f'tourney-json/update_events/tourney-nfl-copy3-1.json')
     def print_second_round(self):
         tournament = self.tournament_record
         init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
@@ -288,7 +296,7 @@ class TourneyTest:
             # print(RoundSerializer(round).data)
             # print('match')
             # print(MatchSerializer(round.match).data)
-            print(f'match winner:{round.match.winner}, round winner: {round.winner} next round players: {round.next_round.player_1} vs {round.next_round.player_2}')
+            print(f'match winner:{round.match.winner},  round winner: {round.winner.player} next round players: {round.next_round.player_1.player} vs {round.next_round.player_2.player}')
 
 
     #  --- Second Round Event Uploads---
@@ -296,22 +304,22 @@ class TourneyTest:
     #  --- Third Round Event Uploads---
     def Simulate_Third_Round(self):
         tournament = self.tournament_record
-        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 3)
         data1 = {
-            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "event_id": "eb77c9dad13ef82ba5ff4dcf439d3bab",
             "player_choice": "Miami Dolphins"
         }
         data2 = {
-            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
-            "player_choice": "Tennessee Titans"
+            "event_id": "eb77c9dad13ef82ba5ff4dcf439d3bab",
+            "player_choice": "Baltimore Ravens"
         }
         data1_gg = {
-            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
-            "player_choice": "New York Giants"
+            "event_id": "c1b7e562062eb3bac053a2f5ecf399f9",
+            "player_choice": "Los Angeles Chargers"
         }
         data2_gg = {
-            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
-            "player_choice": "Green Bay Packers"
+            "event_id": "c1b7e562062eb3bac053a2f5ecf399f9",
+            "player_choice": "Minnesota Vikings"
         }
 
         for round in init_rounds:
@@ -336,7 +344,277 @@ class TourneyTest:
             Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
             Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
 
+    def update_test_3_events(self):
+        self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-4.json')
+        self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-4.json',
+                                        "76ae384526017414d68d617bf80b8aab")
+        self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy5-1.json',
+                                        "76ae384526017414d68d617bf80b8aab")
+        self.support.test_get_nfl_events(f'tourney-json/update_events/tourney-nfl-copy4-1.json')
+    def print_third_round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 3)
+
+        for round in init_rounds:
+            # print('round')
+            # print(RoundSerializer(round).data)
+            # print('match')
+            # print(MatchSerializer(round.match).data)
+            print(f'match winner:{round.match.winner}, round winner: {round.winner.player} next round players: {round.next_round.player_1.player} vs {round.next_round.player_2.player}')
+
+
     #  --- Third Round Event Uploads---
+
+    #  --- Forth Round Event Uploads---
+    def Simulate_Fourth_Round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 4)
+        data1 = {
+            "event_id": "b2eeb176fc9adfc63b9098b313905792",
+            "player_choice": "Dallas Cowboys"
+        }
+        data2 = {
+            "event_id": "b2eeb176fc9adfc63b9098b313905792",
+            "player_choice": "Seattle Seahawks"
+        }
+        data1_gg = {
+            "event_id": "76ae384526017414d68d617bf80b8aab",
+            "player_choice": "Pittsburgh Steelers"
+        }
+        data2_gg = {
+            "event_id": "76ae384526017414d68d617bf80b8aab",
+            "player_choice": "Arizona Cardinals"
+        }
+
+        for round in init_rounds:
+            match = round.match
+            user_1 = round.player_1.player
+            user_2 = round.player_2.player
+            for x in range(0, 5):
+                self.update_match(match, data1, user_1)
+                self.update_match(match, data2, user_2)
+            Game.objects.update_by_id(match.player_1_game_1.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_2.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_3.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_4.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_5.id, user_2, data2)
+
+            Game.objects.update_by_id(match.player_2_game_1.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_2.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_3.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_4.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_5.id, user_1, data1)
+
+            Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
+            Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
+
+    def update_test_4_events(self):
+        self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-5.json')
+        self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-5.json',
+                                        "41c4d77b6a910a6b2364fbeb51dba059")
+        self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy6-1.json',
+                                        "41c4d77b6a910a6b2364fbeb51dba059")
+        self.support.test_get_nfl_events(f'tourney-json/update_events/tourney-nfl-copy5-1.json')
+    def print_fourth_round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 4)
+
+        for round in init_rounds:
+            # print('round')
+            # print(RoundSerializer(round).data)
+            # print('match')
+            # print(MatchSerializer(round.match).data)
+            print(f'match winner:{round.match.winner}, round winner: {round.winner.player} next round players: {round.next_round.player_1.player} vs {round.next_round.player_2.player}')
+
+
+    #  --- Fourth Round Event Uploads---
+
+    #  --- Fifth Round Event Uploads---
+    def Simulate_Fifth_Round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 5)
+        data1 = {
+            "event_id": "d9498cb661062746dfc500a20c3a87e8",
+            "player_choice": "New York Jets"
+        }
+        data2 = {
+            "event_id": "d9498cb661062746dfc500a20c3a87e8",
+            "player_choice": "Seattle Seahawks"
+        }
+        data1_gg = {
+            "event_id": "41c4d77b6a910a6b2364fbeb51dba059",
+            "player_choice": "Atlanta Falcons"
+        }
+        data2_gg = {
+            "event_id": "41c4d77b6a910a6b2364fbeb51dba059",
+            "player_choice": "Detroit Lions"
+        }
+
+        for round in init_rounds:
+            match = round.match
+            user_1 = round.player_1.player
+            user_2 = round.player_2.player
+            for x in range(0, 5):
+                self.update_match(match, data1, user_1)
+                self.update_match(match, data2, user_2)
+            Game.objects.update_by_id(match.player_1_game_1.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_2.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_3.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_4.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_5.id, user_2, data2)
+
+            Game.objects.update_by_id(match.player_2_game_1.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_2.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_3.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_4.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_5.id, user_1, data1)
+
+            Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
+            Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
+
+    def update_test_5_events(self):
+        self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-6.json')
+        self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-6.json',
+                                        "5e0c5b79c3cb142f3361ade464174b68")
+        self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy7-1.json',
+                                        "5e0c5b79c3cb142f3361ade464174b68")
+        self.support.test_get_nfl_events(f'tourney-json/update_events/tourney-nfl-copy6-1.json')
+
+    def print_fifth_round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 5)
+
+        for round in init_rounds:
+            # print('round')
+            # print(RoundSerializer(round).data)
+            # print('match')
+            # print(MatchSerializer(round.match).data)
+            print(
+                f'match winner:{round.match.winner}, round winner: {round.winner.player} next round players: {round.next_round.player_1.player} vs {round.next_round.player_2.player}')
+
+    #  --- Fifth Round Event Uploads---
+
+    #  --- Sixth Round Event Uploads---
+    def Simulate_Sixth_Round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 6)
+        data1 = {
+            "event_id": "6cd4bff8b0950234be09e6c0acda7b95",
+            "player_choice": "Tennessee Titans"
+        }
+        data2 = {
+            "event_id": "6cd4bff8b0950234be09e6c0acda7b95",
+            "player_choice": "Indianapolis Colts"
+        }
+        data1_gg = {
+            "event_id": "5e0c5b79c3cb142f3361ade464174b68",
+            "player_choice": "Washington Commanders"
+        }
+        data2_gg = {
+            "event_id": "5e0c5b79c3cb142f3361ade464174b68",
+            "player_choice": "Miami Dolphins"
+        }
+
+        for round in init_rounds:
+            match = round.match
+            user_1 = round.player_1.player
+            user_2 = round.player_2.player
+            for x in range(0, 5):
+                self.update_match(match, data1, user_1)
+                self.update_match(match, data2, user_2)
+            Game.objects.update_by_id(match.player_1_game_1.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_2.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_3.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_4.id, user_2, data2)
+            Game.objects.update_by_id(match.player_1_game_5.id, user_2, data2)
+
+            Game.objects.update_by_id(match.player_2_game_1.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_2.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_3.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_4.id, user_1, data1)
+            Game.objects.update_by_id(match.player_2_game_5.id, user_1, data1)
+
+            Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
+            Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
+
+    def update_test_6_events(self):
+    #     self.support.test_get_nfl_events(f'tourney-json/initial_events/tourney-nfl-copy1-6.json')
+    #     self.support.update_golden_game(f'tourney-json/initial_events/tourney-nfl-copy1-6.json',
+    #                                     "5e0c5b79c3cb142f3361ade464174b68")
+    #     self.support.update_golden_game(f'tourney-json/update_events/tourney-nfl-copy6-1.json',
+    #                                     "5e0c5b79c3cb142f3361ade464174b68")
+        self.support.test_get_nfl_events(f'tourney-json/update_events/tourney-nfl-copy7-1.json')
+
+    def print_sixth_round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 6)
+
+        for round in init_rounds:
+            # print('round')
+            # print(RoundSerializer(round).data)
+            # print('match')
+            # print(MatchSerializer(round.match).data)
+            print(
+                f'match winner:{round.match.winner}, round winner: {round.winner.player} next round players: {round.next_round.player_1.player} vs {round.next_round.player_2.player}')
+
+    #  --- Fifth Round Event Uploads---
+
+
+    # run rounds
+
+
+
+    # run rounds
+
+    def run_round_one(self):
+        time.sleep(1)
+        self.Simulate_First_Round()
+        time.sleep(1)
+        self.update_test_events()
+        # time.sleep(1)
+        # self.print_init_round()
+        # time.sleep(1)
+
+    def run_round_two(self):
+        time.sleep(1)
+        self.Simulate_Second_Round()
+        time.sleep(1)
+        self.update_test_2_events()
+        # time.sleep(1)
+        # self.print_second_round()
+        # time.sleep(1)
+
+    def run_round_three(self):
+        time.sleep(1)
+        self.Simulate_Third_Round()
+        time.sleep(1)
+        self.update_test_3_events()
+        # time.sleep(1)
+        # self.print_third_round()
+
+    def run_round_four(self):
+        time.sleep(1)
+        self.Simulate_Fourth_Round()
+        time.sleep(1)
+        self.update_test_4_events()
+        time.sleep(1)
+        self.print_fourth_round()
+    def run_round_five(self):
+        time.sleep(1)
+        self.Simulate_Fifth_Round()
+        time.sleep(1)
+        self.update_test_5_events()
+        time.sleep(1)
+        self.print_fifth_round()
+
+
+    def run_round_six(self):
+        time.sleep(1)
+        self.Simulate_Sixth_Round()
+        time.sleep(1)
+        self.update_test_6_events()
+        time.sleep(1)
+        self.print_sixth_round()
 
 
 
@@ -346,18 +624,10 @@ class TourneyTest:
         self.test_setup()
         time.sleep(1)
         self.make_tournament()
-        time.sleep(1)
-        self.Simulate_First_Round()
-        time.sleep(1)
-        self.update_test_events()
-        time.sleep(1)
-        self.print_init_round()
-        # time.sleep(1)
-        # self.Simulate_Second_Round()
-        # time.sleep(1)
-        # self.update_test_2_events()
-        # time.sleep(1)
-        # self.print_second_round()
-        # time.sleep(1)
-
+        self.run_round_one()
+        self.run_round_two()
+        self.run_round_three()
+        self.run_round_four()
+        self.run_round_five()
+        self.run_round_six()
 
