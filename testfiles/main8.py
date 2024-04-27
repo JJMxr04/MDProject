@@ -32,7 +32,7 @@ team1 = Team()
 
 
 if __name__ == '__main__':
-    test = TourneyTest.run_test()
+    test = TourneyTest().run_test()
 
 
 

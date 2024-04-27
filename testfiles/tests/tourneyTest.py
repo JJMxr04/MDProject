@@ -233,24 +233,29 @@ class TourneyTest:
         tournament = self.tournament_record
         init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
         data1 = {
-            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "event_id": "123e4567e89b12d3a456426655440000",
             "player_choice": "Miami Dolphins"
         }
         data2 = {
-            "event_id": "484bc5582bb44ab79a1e942cf8762eda",
+            "event_id": "123e4567e89b12d3a456426655440000",
             "player_choice": "Tennessee Titans"
         }
         data1_gg = {
-            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
+            "event_id": "89b132d3e4567e98a123456755440000",
             "player_choice": "New York Giants"
         }
         data2_gg = {
-            "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
+            "event_id": "89b132d3e4567e98a123456755440000",
             "player_choice": "Green Bay Packers"
         }
 
 
         for round in init_rounds:
+            print(RoundSerializer(round).data)
+            print(RoundSerializer(round.prev_round_1).data)
+            print(round.prev_round_1.match.match_state)
+            print(RoundSerializer(round.prev_round_2).data)
+            print(round.prev_round_2.match.match_state)
             match = round.match
             user_1 = round.player_1.player
             user_2 = round.player_2.player
@@ -271,6 +276,19 @@ class TourneyTest:
 
             Game.objects.update_by_id(match.golden_game.id, user_1, data1_gg)
             Game.objects.update_by_id(match.golden_game.id, user_2, data2_gg)
+
+    def update_test_2_events(self):
+        self.support.test_get_nfl_events(f'nfl-copy3-1.json')
+    def print_second_round(self):
+        tournament = self.tournament_record
+        init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 2)
+
+        for round in init_rounds:
+            # print('round')
+            # print(RoundSerializer(round).data)
+            # print('match')
+            # print(MatchSerializer(round.match).data)
+            print(f'match winner:{round.match.winner}, round winner: {round.winner} next round players: {round.next_round.player_1} vs {round.next_round.player_2}')
 
 
     #  --- Second Round Event Uploads---
@@ -333,6 +351,13 @@ class TourneyTest:
         time.sleep(1)
         self.update_test_events()
         time.sleep(1)
-        self.print_init_round()
+        # self.print_init_round()
+        # time.sleep(1)
+        self.Simulate_Second_Round()
+        time.sleep(1)
+        self.update_test_2_events()
+        time.sleep(1)
+        self.print_second_round()
+        # time.sleep(1)
 
 

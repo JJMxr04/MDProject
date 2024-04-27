@@ -32,16 +32,16 @@ def update_round_match(sender, instance, **kwargs):
     # print(1)
     next_round = round.next_round
     if round == next_round.prev_round_1:
-        # print(3)
+        print(3)
         next_round.player_1 = round.winner
     if round == next_round.prev_round_2:
-        # print(4)
+        print(4)
         next_round.player_2 = round.winner
     round.save()
     next_round.save()
     # print(5)
 
     if (next_round.player_1 is not None) and (next_round.player_2 is not None):
-        # print(6)
+        print(6)
         next_round.match = Match.objects.create_match(next_round.player_1.player,next_round.player_2.player)
         next_round.save()
