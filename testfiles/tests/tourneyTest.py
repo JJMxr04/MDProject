@@ -553,7 +553,7 @@ class TourneyTest:
             # print('round')
             # print(RoundSerializer(round).data)
             # print('match')
-            # print(MatchSerializer(round.match).data)
+            print(MatchSerializer(round.match).data)
             print(
                 f'match winner:{round.match.winner}, round winner: {round.winner.player} next round players: {round.next_round.player_1.player} vs {round.next_round.player_2.player}')
 
@@ -597,15 +597,15 @@ class TourneyTest:
         self.Simulate_Fourth_Round()
         time.sleep(1)
         self.update_test_4_events()
-        time.sleep(1)
-        self.print_fourth_round()
+        # time.sleep(1)
+        # self.print_fourth_round()
     def run_round_five(self):
         time.sleep(1)
         self.Simulate_Fifth_Round()
         time.sleep(1)
         self.update_test_5_events()
-        time.sleep(1)
-        self.print_fifth_round()
+        # time.sleep(1)
+        # self.print_fifth_round()
 
 
     def run_round_six(self):
