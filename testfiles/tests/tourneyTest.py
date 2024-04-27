@@ -90,11 +90,11 @@ class TourneyTest:
         output_file = 'sports_list.txt'
         self.support.process_files_in_folder(folder_path, output_file)
         sports = self.support.read_list_from_file(output_file)
-        self.support.test_get_nfl_events(f'nfl-copy1-1.json')
-        self.support.update_golden_game(f'nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
-        self.support.update_golden_game(f'nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        self.support.test_get_nfl_events(f'tourney-json/tourney-nfl-copy1-1.json')
+        self.support.update_golden_game(f'tourney-json/tourney-nfl-copy1-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
     def update_test_events(self):
-        self.support.test_get_nfl_events(f'nfl-copy2-1.json')
+        self.support.update_golden_game(f'tourney-json/tourney-nfl-copy2-1.json', "ea43090cd4cc2eb2fb98ba3847aba986")
+        self.support.test_get_nfl_events(f'tourney-json/tourney-nfl-copy2-1.json')
 
     def create_users(self):
         max_players = self.max_players
@@ -251,11 +251,11 @@ class TourneyTest:
 
 
         for round in init_rounds:
-            print(RoundSerializer(round).data)
-            print(RoundSerializer(round.prev_round_1).data)
-            print(round.prev_round_1.match.match_state)
-            print(RoundSerializer(round.prev_round_2).data)
-            print(round.prev_round_2.match.match_state)
+            # print(RoundSerializer(round).data)
+            # print(RoundSerializer(round.prev_round_1).data)
+            # print(round.prev_round_1.match.match_state)
+            # print(RoundSerializer(round.prev_round_2).data)
+            # print(round.prev_round_2.match.match_state)
             match = round.match
             user_1 = round.player_1.player
             user_2 = round.player_2.player
@@ -351,13 +351,13 @@ class TourneyTest:
         time.sleep(1)
         self.update_test_events()
         time.sleep(1)
-        # self.print_init_round()
+        self.print_init_round()
         # time.sleep(1)
-        self.Simulate_Second_Round()
-        time.sleep(1)
-        self.update_test_2_events()
-        time.sleep(1)
-        self.print_second_round()
+        # self.Simulate_Second_Round()
+        # time.sleep(1)
+        # self.update_test_2_events()
+        # time.sleep(1)
+        # self.print_second_round()
         # time.sleep(1)
 
 
