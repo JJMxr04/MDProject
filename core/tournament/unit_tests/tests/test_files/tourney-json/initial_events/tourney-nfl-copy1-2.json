@@ -1,0 +1,24 @@
+[
+  {
+    "id": "5e766a287ba24d40d9e40aa41efe19de",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-11-26T21:25:29Z",
+    "completed": false,
+    "home_team": "Philadelphia Eagles",
+    "away_team": "Buffalo Bills",
+    "scores": null,
+    "last_update": null
+  },
+  {
+    "id": "c491f05b066449d95732c4f52ac57e66",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2024-05-06T15:05:36Z",
+    "completed": false,
+    "home_team": "Las Vegas Raiders",
+    "away_team": "Kansas City Chiefs",
+    "scores": null,
+    "last_update": null
+  }
+]

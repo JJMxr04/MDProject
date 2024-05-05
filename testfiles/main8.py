@@ -8,32 +8,23 @@ from django import setup
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
 # from tests.tourneyTestHelpFuncs import TourneyTestHelp
-from core.match.models import Match
-from core.mail import views
-from core.auth.models import email
-from core.user.models import User
-from core.event.crons.eventUpdate import EventCron
-from core.event.crons.sportUpdate import SportCron
-from core.event.serializers.team import TeamSerializer
-from core.tournament.serializers.tournament import TournamentSerializer, RoundSerializer
-from core.event.models.event import Event
 from core.event.models.team import Team
-from core.tournament.models.tournament import Tournament, Round,InvitedPlayer, Player
-from django.http import Http404
-from datetime import datetime, timedelta
 # from tests.test1 import Test1
 from tests.test2 import eventTest
-from tests.tourneyTest import TourneyTest
+from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
 # test1 = Test1()
 eventTest = eventTest()
 team1 = Team()
 # from tests.Support import Support
 # support = Support()
 
+from core.event.models.sport import Sport
+from core.event.serializers.sport import SportSerializer
+
 
 if __name__ == '__main__':
-    test = TourneyTest().run_test()
-
+    # test = TourneyTest(max_players=128,tourney_name='test1').run_test()
+    print(SportSerializer(Sport.objects.get_by_key("americanfootball_nfl")).data)
 
 
 

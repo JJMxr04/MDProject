@@ -5,21 +5,16 @@ from django import setup
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
 # Import necessary Django models, serializers, and other modules
-from core.match.models import Match
-from core.mail import views
-from core.auth.models import email
 from core.user.models import User
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
-from core.event.serializers.team import TeamSerializer
-from core.tournament.serializers.tournament import TournamentSerializer, RoundSerializer
-from core.event.models.event import Event
+from core.tournament.serializers.tournament import RoundSerializer
 from core.event.models.team import Team
-from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
+from core.tournament.models.tournament import Tournament, Round
 from django.http import Http404
 from datetime import datetime, timedelta
 from core.auth.models.waitlist import WaitlistEntry
-from Support import Support
+from core.tournament.unit_tests.tests.Support import Support
 
 
 class TourneyTestHelp:

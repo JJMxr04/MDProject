@@ -51,7 +51,7 @@ class EventManager(AbstractManager):
         min_commence_time = current_time + timedelta(days=5)
         max_commence_time = current_time + timedelta(days=7)
         try:
-            instance = self.filter(commence_time__range=(min_commence_time, max_commence_time)).first()
+            instance = self.filter(commence_time__range=(min_commence_time, max_commence_time),completed=False).first()
             return instance
         except (ObjectDoesNotExist, ValueError, TypeError):
             return Http404

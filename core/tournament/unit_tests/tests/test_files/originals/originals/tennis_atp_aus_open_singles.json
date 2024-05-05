@@ -1,0 +1,82 @@
+[
+    {
+        "id": "be3d5cd136b2f414911aaac2c646f75d",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-24T02:30:00Z",
+        "completed": false,
+        "home_team": "Hubert Hurkacz",
+        "away_team": "Daniil Medvedev",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "d6c28e474335c8d299683fbc1da59d36",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-24T09:45:00Z",
+        "completed": false,
+        "home_team": "Alexander Zverev",
+        "away_team": "Carlos Alcaraz",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "db7cd3b48c7a1ceae3be22db621e5466",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-25T00:00:00Z",
+        "completed": false,
+        "home_team": "Novak Djokovic",
+        "away_team": "Jannik Sinner",
+        "scores": null,
+        "last_update": null
+    },
+    {
+        "id": "224d980881928182ca56779b2587e15c",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-26T01:00:00Z",
+        "completed": false,
+        "home_team": "Novak Djokovic",
+        "away_team": "Jannik Sinner",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "c546ee451837ffd529d50acfcc27492c",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-28T08:30:00Z",
+        "completed": false,
+        "home_team": "Jannik Sinner",
+        "away_team": "Daniil Medvedev",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "c546ee451837ffd529d50acfcc27492c",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-28T08:30:00Z",
+        "completed": false,
+        "home_team": "Jannik Sinner",
+        "away_team": "Daniil Medvedev",
+        "scores": null,
+        "last_update": null
+    }
+][
+    {
+        "id": "c546ee451837ffd529d50acfcc27492c",
+        "sport_key": "tennis_atp_aus_open_singles",
+        "sport_title": "ATP Australian Open",
+        "commence_time": "2024-01-28T08:30:00Z",
+        "completed": false,
+        "home_team": "Jannik Sinner",
+        "away_team": "Daniil Medvedev",
+        "scores": null,
+        "last_update": null
+    }
+]

@@ -1,23 +1,9 @@
-import os
-from django import setup
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.serializers import serialize
-import uuid
-from rest_framework.response import Response
-from rest_framework import status
-from django.core.management import call_command
-from django.http import Http404
 import json
 
 # Importing various serializers and models from different Django apps
-from core.event.serializers.event import EventSerializer, TeamScoreSerializer
-from core.game.serializers.game import GameSerializer
-from core.event.models.event import Event
 from core.event.models.sport import Sport
 from core.game.models import Game
-from core.user.models import User
 from core.match.models import Match
-from core.user.serializers import UserSerializer
 
 # Instantiating Sport model
 sport_model = Sport()
@@ -28,16 +14,14 @@ sport_cron = SportCron()
 
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.teamUpdate import TeamCron
-from core.event.serializers.team import TeamSerializer
-from core.event.models import Team
+
 event_cron = EventCron()
 team_cron = TeamCron()
 
 # Importing datetime to manipulate date and time
-from datetime import datetime, timedelta
 
 # Class containing various utility functions
-from Support import Support
+from core.tournament.unit_tests.tests.Support import Support
 
 
 

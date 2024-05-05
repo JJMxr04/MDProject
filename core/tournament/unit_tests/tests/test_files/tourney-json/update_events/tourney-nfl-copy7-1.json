@@ -1,0 +1,42 @@
+[
+  {
+    "id": "6cd4bff8b0950234be09e6c0acda7b95",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-12-03T18:00:00Z",
+    "completed": true,
+    "home_team": "Tennessee Titans",
+    "away_team": "Indianapolis Colts",
+    "scores": [
+      {
+        "name": "Tennessee Titans",
+        "score": "20"
+      },
+      {
+        "name": "Indianapolis Colts",
+        "score": "10"
+      }
+    ],
+    "last_update": "2023-11-28T09:35:31Z"
+  },
+  {
+    "id": "5e0c5b79c3cb142f3361ade464174b68",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2024-05-06T15:06:27Z",
+    "completed": true,
+    "home_team": "Washington Commanders",
+    "away_team": "Miami Dolphins",
+    "scores": [
+      {
+        "name": "Washington Commanders",
+        "score": "12"
+      },
+      {
+        "name": "Miami Dolphins",
+        "score": "10"
+      }
+    ],
+    "last_update": "2023-11-28T09:35:31Z"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "b2eeb176fc9adfc63b9098b313905792",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-12-01T01:15:00Z",
+    "completed": false,
+    "home_team": "Dallas Cowboys",
+    "away_team": "Seattle Seahawks",
+    "scores": null,
+    "last_update": null
+  },
+  {
+    "id": "76ae384526017414d68d617bf80b8aab",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2024-05-06T15:06:13Z",
+    "completed": false,
+    "home_team": "Pittsburgh Steelers",
+    "away_team": "Arizona Cardinals",
+    "scores": null,
+    "last_update": null
+  }
+]
