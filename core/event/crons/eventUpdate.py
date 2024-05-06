@@ -104,17 +104,17 @@ class EventCron():
         return Response("Success", status=status.HTTP_200_OK)
 
     def update_all_events(self):
-        print("Running Event Cron")
+        # print("Running Event Cron")
         active_sports = Sport.objects.get_active_sports()
-        sports_num= len(active_sports)
-        print(print(f"Sport List Size = {sports_num}"))
-        x=0
+        # sports_num= len(active_sports)
+        # print(print(f"Sport List Size = {sports_num}"))
+        # x=0
         for sport in active_sports:
-            x+=1
+            # x+=1
             # print(f'Percentage Finished:{round((x/sports_num)*100)}%')
             self.get_sport_events(sport)
-            print(f'Percentage Finished:{round((x / sports_num) * 100)}%')
-            print(f"Finished: {sport}")
+            # print(f'Percentage Finished:{round((x / sports_num) * 100)}%')
+            # print(f"Finished: {sport}")
 
 def update_all_events():
     eventCron = EventCron()

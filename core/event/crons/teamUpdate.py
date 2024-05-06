@@ -58,7 +58,7 @@ def write_image(content, country, title, team_name, team_id):
         with open(filename, "wb") as file:
             file.write(content)
 
-        logging.info(f"Image saved to {filename}")  # Log success
+        # logging.info(f"Image saved to {filename}")  # Log success
         return filename  # Return the full file path to the saved image
 
     except Exception as e:
@@ -152,13 +152,15 @@ class TeamCron():
     def check_team(self, team_name, title, group):
         try:
             team_search = Team.objects.get_object_by_team_name(team_name)
+            # print(f"Check_team Try, Team :{team_search}")
             return team_search
         except Http404:
             # print(f"Team {team_name} does not exist")
             # Handle the case where the team does not exist
             country, country_code, team_id = self.get_team_api(team_name)
             team = Team.objects.get_object_by_team_id(team_id)
-            if team is Http404:
+            if (team is Http404) or (team is None):
+                # print(f"Team {team_name} does not exist, second HTTP404")
                 if team_id is not None:
                     logo_url = self.get_logo(team_id, team_name, title, country)
                 else:

@@ -14,7 +14,7 @@ class SportCron():
     }
 
     def get_sports(self):
-        print("Running Sport Cron")
+        # print("Running Sport Cron")
         # Call your API here
         api_url = self.domain
 

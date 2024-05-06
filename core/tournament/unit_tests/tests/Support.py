@@ -159,21 +159,6 @@ class Support:
             event['group'] = sport.group
             event['description'] = sport.description
 
-            # home = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data
-            # away = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data
-
-            home = event.get('home_team')
-            away = event.get('away_team')
-
-            print(home)
-            print(away)
-
-            home = team_cron.check_team(event.get('home_team'), sport.title, sport.group)
-            away = team_cron.check_team(event.get('away_team'), sport.title, sport.group)
-
-            print(home)
-            print(away)
-
             # Set the IDs for home and away teams using the TeamSerializer
             event['home_team_team'] = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
             event['away_team_team'] = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
@@ -286,13 +271,25 @@ class Support:
 
     def load_data_sport_team(self):
         """
-        Loads data from serialized JSON files into Django tables.
+        Loads data from serialized JSON files into Django tables if the tables are empty.
         """
-        # Check if files exist in a specific directory, such as a fixtures folder within your Django app.
-        fixtures_dir = os.path.join(settings.BASE_DIR, 'core_event', 'fixtures')
+        # Check if the Sport and Team tables are empty
+        if Sport.objects.exists():
+            print("Sport table is not empty. Data load skipped.")
+            return
+        if Team.objects.exists():
+            print("Team table is not empty. Data load skipped.")
+            return
 
-        sport_data_file = os.path.join(fixtures_dir, 'test_files/table_datadumps/dataSport.json')
-        team_data_file = os.path.join(fixtures_dir, 'test_files/table_datadumps/dataTeam.json')
+        # Determine the file paths
+        current_file_path = __file__
+        current_file_directory = os.path.dirname(current_file_path)
+
+        # Define the base path relative to the test directory
+        base_test_path = os.path.abspath(current_file_directory)
+        fixtures_dir = os.path.join(settings.BASE_DIR, 'core_event', 'fixtures')
+        sport_data_file = os.path.join(base_test_path, 'test_files/table_dumps/dataSport.json')
+        team_data_file = os.path.join(base_test_path, 'test_files/table_dumps/dataTeam.json')
 
         # Ensure the files exist before attempting to load them
         if not os.path.exists(sport_data_file):
