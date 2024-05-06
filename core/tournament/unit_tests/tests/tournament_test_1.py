@@ -7,6 +7,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 logger = logging.getLogger(__name__)
 class tournament_test_1():
+    databases = ['default', 'test_mirror']
 
     first_round_game_picks ={
         'data1' : {
@@ -150,7 +151,6 @@ class tournament_test_1():
         self.tourny_Sim = TourneyTest(max_players=self.max_players,tourney_name=self.tourney_name)
         self.tourny_Sim.run_test()
         self.tournament = self.tourny_Sim.tournament_record
-
         self.test_tourney_name()
         self.test_Max_and_Accepted_Players()
         self.test_levels_amount()

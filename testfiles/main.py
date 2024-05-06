@@ -32,8 +32,8 @@ support = Support()
 def updateEvents():
     sportcron = SportCron()
     sportcron.get_sports()
-    eventcron = EventCron()
-    eventcron.update_all_events()
+    # eventcron = EventCron()
+    # eventcron.update_all_events()
     # support.datadump()
 
 

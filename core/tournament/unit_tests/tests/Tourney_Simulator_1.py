@@ -41,6 +41,7 @@ base_test_path = os.path.abspath(current_file_directory)
 
 
 class TourneyTest:
+    databases = ['default', 'test_mirror']
 
     def __init__(self,max_players,tourney_name):
         # Initialize any required instances or variables
@@ -130,7 +131,7 @@ class TourneyTest:
                 User.objects.create_user(f"{x}test{x}", f"{x}test{x}@test.com", '1')
 
     def test_setup(self):
-        self.flush_tables()
+        self.support.updateSports()
         self.upload_test_events()
         self.create_users()
 
@@ -728,9 +729,12 @@ class TourneyTest:
     #  --- Run Test---
 
     def run_test(self):
+        print("starting test")
         self.test_setup()
         time.sleep(1)
+        print("Making Tourney")
         self.make_tournament()
+        print("Starting Rounds")
         self.run_round_one()
         if self.tournament_record.levels >= 2:
             self.run_round_two()

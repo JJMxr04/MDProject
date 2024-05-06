@@ -112,16 +112,34 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 #     }
 # }
 
+import os
+
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DBENGINE'),
-        'NAME': 'mdproject',
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'mdproject',  # Main database name
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
-        'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
-    }
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'SERIALIZE': True,
+        },
+    },
+    'test_mirror': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'mdproject',  # Mirroring the same main database
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'MIRROR': 'default',  # Mirror the default database
+        },
+    },
 }
+
+
 
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')

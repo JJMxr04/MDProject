@@ -39,10 +39,15 @@ from datetime import datetime, timedelta
 
 from io import StringIO
 from django.core.management import call_command
+from django.core.exceptions import ImproperlyConfigured
+from django.conf import settings
 
 # Class containing various utility functions
 class Support:
+    databases = ['default', 'test_mirror']
 
+    def updateSports(self):
+        sport_cron.get_sports()
     def get_date_for_week_from_now(self):
         """
         Returns the date for a week from now.
@@ -128,20 +133,22 @@ class Support:
             return None
 
     def test_get_nfl_events(self, file):
-        print(SportSerializer(Sport.objects.get_by_key("americanfootball_nfl")).data)
+        # print(SportSerializer(Sport.objects.get_by_key("americanfootball_nfl")).data)
         """
         Reads a JSON file, loads events, and updates Event objects.
         Creates or updates Event objects with appropriate data.
         """
         # Read the file content
         api_data = self.read_json_file(file)
+        # print(Sport.objects.filter())
+        # print(api_data)
         if api_data is None:  # If the file is empty or not found
             return False
         api_data_json = json.loads(api_data)
         # Get the "americanfootball_nfl" sport object
         sport = Sport.objects.get_by_key("americanfootball_nfl")
-        print(sport)
-        print(SportSerializer(Sport.objects.get_by_key("americanfootball_nfl")).data)
+        # print(sport)
+        # print(SportSerializer(Sport.objects.get_by_key("americanfootball_nfl")).data)
         for event in api_data_json:
             if event.get("away_team") is None or event.get("home_team") is None:
                 # Skip if away_team or home_team is missing
@@ -152,11 +159,24 @@ class Support:
             event['group'] = sport.group
             event['description'] = sport.description
 
+            # home = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data
+            # away = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data
+
+            home = event.get('home_team')
+            away = event.get('away_team')
+
+            print(home)
+            print(away)
+
+            home = team_cron.check_team(event.get('home_team'), sport.title, sport.group)
+            away = team_cron.check_team(event.get('away_team'), sport.title, sport.group)
+
+            print(home)
+            print(away)
+
             # Set the IDs for home and away teams using the TeamSerializer
-            event['home_team_team'] = \
-            TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
-            event['away_team_team'] = \
-            TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
+            event['home_team_team'] = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
+            event['away_team_team'] = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
 
             # Validate event schema
             event_schema = EventSerializer(data=event)
@@ -263,6 +283,28 @@ class Support:
 
         # You can still get the serialized data if you need it
         dumped_data = null_output.getvalue()
+
+    def load_data_sport_team(self):
+        """
+        Loads data from serialized JSON files into Django tables.
+        """
+        # Check if files exist in a specific directory, such as a fixtures folder within your Django app.
+        fixtures_dir = os.path.join(settings.BASE_DIR, 'core_event', 'fixtures')
+
+        sport_data_file = os.path.join(fixtures_dir, 'test_files/table_datadumps/dataSport.json')
+        team_data_file = os.path.join(fixtures_dir, 'test_files/table_datadumps/dataTeam.json')
+
+        # Ensure the files exist before attempting to load them
+        if not os.path.exists(sport_data_file):
+            raise ImproperlyConfigured(f"{sport_data_file} does not exist.")
+        if not os.path.exists(team_data_file):
+            raise ImproperlyConfigured(f"{team_data_file} does not exist.")
+
+        # Load the data from the JSON files into the respective tables
+        call_command('loaddata', sport_data_file)  # Loads data into core_sport
+        call_command('loaddata', team_data_file)  # Loads data into core_event_team
+
+        print("Data loaded successfully from dataSport.json and dataTeam.json")
 
     def update_golden_game(self, json_file_path, target_id):
         """
