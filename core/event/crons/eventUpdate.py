@@ -106,11 +106,7 @@ class EventCron():
     def update_all_events(self):
         # print("Running Event Cron")
         active_sports = Sport.objects.get_active_sports()
-<<<<<<< Updated upstream
-        # sports_num= len(active_sports)
-=======
         sports_num= len(active_sports)
->>>>>>> Stashed changes
         # print(print(f"Sport List Size = {sports_num}"))
         # x=0
         for sport in active_sports:

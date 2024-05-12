@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 
 import asyncio
-import aiofiles
+
 logger = logging.getLogger(__name__)
 class tournament_test_1():
     databases = ['default', 'test_mirror']
@@ -152,9 +152,6 @@ class tournament_test_1():
         self.max_players = max_players
         self.tourney_name = tourney_name
         self.tourny_Sim = TourneyTest(max_players=self.max_players,tourney_name=self.tourney_name)
-<<<<<<< Updated upstream
-        # self.tourny_Sim.run_test()
-        # self.tournament = self.tourny_Sim.tournament_record
         self.test_run()
 
     def test_run(self):
@@ -162,63 +159,5 @@ class tournament_test_1():
         asyncio.set_event_loop(loop)
         loop.run_until_complete(self.tourny_Sim.run_test())  # Running the coroutine
         loop.close()
-=======
         self.tourny_Sim.run_test()
         self.tournament = self.tourny_Sim.tournament_record
-
-    # def test_tourney_name(self):
-    #     expected_name = self.tourney_name
-    #     actual_name = self.tournament.name
-    #     try:
-    #         unittest.TestCase.assertEqual(expected_name, actual_name, f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
-    #
-    #     except AssertionError as e:
-    #         logger.error(f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
-    #         # Continue the test even if there's an error
-    #         raise e
-    #
-    # def test_max_and_accepted_players(self):
-    #
-    #
-    #     expected_max_players = self.max_players
-    #     actual_max_players =self.tournament.max_accepted_players
-    #     actual_accepted_players = len(list(Player.objects.get_Players(self.tournament)))
-    #     try:
-    #         unittest.TestCase.assertEqual(expected_max_players, actual_max_players,actual_accepted_players)
-    #
-    #     except AssertionError as e:
-    #         logger.error(f"Max players mismatch: Expected {expected_max_players}, but got {actual_max_players} for max players, and {actual_accepted_players} for accepted players")
-    #         # Continue the test even if there's an error
-    #         raise e
-    #
-    # def test_levels_amount(self):
-    #     expect_levels = math.log2(self.max_players)
-    #     actual_levels = self.tournament.levels
-    #     try:
-    #         unittest.TestCase.assertEqual(expect_levels, actual_levels)
-    #     except AssertionError as e:
-    #         logger.error(f"Tournament Levels mismatch: Expected {expect_levels}, but got {actual_levels}")
-    #         # Continue the test even if there's an error
-    #         raise e
-    #
-    #
-    # def test_start_and_end_dates(self):
-    #     pass
-        # Need to write this
-        # expected_start_date =
-        # expected_end_date =
-        # actual_start_date =
-        # actual_end_date =
-        # try:
-        #     unittest.TestCase.assertEqual(expected_start_date, actual_start_date)
-        # except AssertionError as e:
-        #     logger.error(f"Tournament Start Date mismatch: Expected {expected_start_date}, but got {actual_start_date}")
-        #     # Continue the test even if there's an error
-        #     raise e
-        # try:
-        #     unittest.TestCase.assertEqual(expected_end_date, actual_start_date)
-        # except AssertionError as e:
-        #     logger.error(f"Tournament End Date mismatch: Expected {actual_end_date}, but got {actual_end_date}")
-        #     # Continue the test even if there's an error
-        #     raise e
->>>>>>> Stashed changes
