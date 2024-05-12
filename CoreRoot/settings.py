@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     'core.game',
     'core.match',
     'core.admin',
-    'core.tournament'
+    'core.tournament',
+    'core.ollama'
 ]
 
 MIDDLEWARE = [

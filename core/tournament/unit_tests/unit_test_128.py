@@ -1,19 +1,24 @@
+import uuid
+from datetime import datetime, timedelta
+from django.test import TestCase
+from core.tournament.models.tournament import Tournament, Round, TournamentManager, RoundManager
+# from core.tournament.unit_tests.tests.tournament_test_1 import tournament_test_1
+from core.user.models import User
+from core.event.models.sport import Sport
+from .tests import tournament_test_1
+import logging
+logger = logging.getLogger(__name__)
+from core.tournament.unit_tests.tests.Support import Support
 from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
 import unittest
 from core.tournament.models.tournament import Player
 import logging
 import math
-from django.utils import timezone
-from datetime import datetime, timedelta
-
-import asyncio
-import aiofiles
-logger = logging.getLogger(__name__)
-class tournament_test_1():
+class TournamentCreationTestCase(TestCase):
     databases = ['default', 'test_mirror']
-
-    first_round_game_picks ={
-        'data1' : {
+    # Level 6
+    first_round_game_picks = {
+        'data1': {
             "event_id": "484bc5582bb44ab79a1e942cf8762eda",
             "player_choice": "Miami Dolphins"
         },
@@ -21,16 +26,16 @@ class tournament_test_1():
             "event_id": "484bc5582bb44ab79a1e942cf8762eda",
             "player_choice": "Tennessee Titans"
         },
-        'data1_gg' : {
+        'data1_gg': {
             "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
             "player_choice": "New York Giants"
         },
-        'data2_gg' : {
+        'data2_gg': {
             "event_id": "ea43090cd4cc2eb2fb98ba3847aba986",
             "player_choice": "Green Bay Packers"
         }
     }
-
+    #  Level Five
     second_round_game_picks = {
         'data1': {
             "event_id": "5e766a287ba24d40d9e40aa41efe19de",
@@ -49,7 +54,7 @@ class tournament_test_1():
             "player_choice": "Las Vegas Raiders"
         }
     }
-
+    # Level Four
     third_round_game_picks = {
         'data1': {
             "event_id": "eb77c9dad13ef82ba5ff4dcf439d3bab",
@@ -68,7 +73,7 @@ class tournament_test_1():
             "player_choice": "Minnesota Vikings"
         }
     }
-
+    # Level Three
     fourth_round_game_picks = {
         'data1': {
             "event_id": "b2eeb176fc9adfc63b9098b313905792",
@@ -87,7 +92,7 @@ class tournament_test_1():
             "player_choice": "Arizona Cardinals"
         }
     }
-
+    # Level Two
     fifth_round_game_picks = {
         'data1': {
             "event_id": "d9498cb661062746dfc500a20c3a87e8",
@@ -106,7 +111,7 @@ class tournament_test_1():
             "player_choice": "Detroit Lions"
         }
     }
-
+    # Level One
     sixth_round_game_picks = {
         'data1': {
             "event_id": "6cd4bff8b0950234be09e6c0acda7b95",
@@ -126,7 +131,7 @@ class tournament_test_1():
         }
 
     }
-
+    # Level Zero
     seventh_round_game_picks = {
         'data1': {
             "event_id": "53c6da53a7ba5f06aae182ee5ce38616",
@@ -147,78 +152,17 @@ class tournament_test_1():
 
     }
 
-    def __init__(self,max_players,tourney_name):
-        super().__init__()
-        self.max_players = max_players
-        self.tourney_name = tourney_name
-        self.tourny_Sim = TourneyTest(max_players=self.max_players,tourney_name=self.tourney_name)
-<<<<<<< Updated upstream
-        # self.tourny_Sim.run_test()
-        # self.tournament = self.tourny_Sim.tournament_record
-        self.test_run()
+    def test_tournament_128(self):
+        logger.info('Starting Tournament Simulation test with 128 max and accepted players')
+        Support().load_data_sport_team()
+        expected_max_players = 128
+        expected_name = 'test128'
+        expected_levels = math.log2(expected_max_players)
+        test = tournament_test_1(max_players=expected_max_players, tourney_name=expected_name)
+        actual_name = test.tournament.name
+        actual_levels = test.tournament.levels
+        actual_max_players = test.tournament.max_accepted_players
+        self.assertEqual(expected_name, actual_name,f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
+        self.assertEqual(expected_name, actual_name,f"Tournament Levels mismatch: Expected {expected_levels}, but got {actual_levels}")
+        self.assertEqual(expected_max_players, actual_max_players, f"Tournament Levels mismatch: Expected {expected_levels}, but got {actual_levels}")
 
-    def test_run(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self.tourny_Sim.run_test())  # Running the coroutine
-        loop.close()
-=======
-        self.tourny_Sim.run_test()
-        self.tournament = self.tourny_Sim.tournament_record
-
-    # def test_tourney_name(self):
-    #     expected_name = self.tourney_name
-    #     actual_name = self.tournament.name
-    #     try:
-    #         unittest.TestCase.assertEqual(expected_name, actual_name, f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
-    #
-    #     except AssertionError as e:
-    #         logger.error(f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
-    #         # Continue the test even if there's an error
-    #         raise e
-    #
-    # def test_max_and_accepted_players(self):
-    #
-    #
-    #     expected_max_players = self.max_players
-    #     actual_max_players =self.tournament.max_accepted_players
-    #     actual_accepted_players = len(list(Player.objects.get_Players(self.tournament)))
-    #     try:
-    #         unittest.TestCase.assertEqual(expected_max_players, actual_max_players,actual_accepted_players)
-    #
-    #     except AssertionError as e:
-    #         logger.error(f"Max players mismatch: Expected {expected_max_players}, but got {actual_max_players} for max players, and {actual_accepted_players} for accepted players")
-    #         # Continue the test even if there's an error
-    #         raise e
-    #
-    # def test_levels_amount(self):
-    #     expect_levels = math.log2(self.max_players)
-    #     actual_levels = self.tournament.levels
-    #     try:
-    #         unittest.TestCase.assertEqual(expect_levels, actual_levels)
-    #     except AssertionError as e:
-    #         logger.error(f"Tournament Levels mismatch: Expected {expect_levels}, but got {actual_levels}")
-    #         # Continue the test even if there's an error
-    #         raise e
-    #
-    #
-    # def test_start_and_end_dates(self):
-    #     pass
-        # Need to write this
-        # expected_start_date =
-        # expected_end_date =
-        # actual_start_date =
-        # actual_end_date =
-        # try:
-        #     unittest.TestCase.assertEqual(expected_start_date, actual_start_date)
-        # except AssertionError as e:
-        #     logger.error(f"Tournament Start Date mismatch: Expected {expected_start_date}, but got {actual_start_date}")
-        #     # Continue the test even if there's an error
-        #     raise e
-        # try:
-        #     unittest.TestCase.assertEqual(expected_end_date, actual_start_date)
-        # except AssertionError as e:
-        #     logger.error(f"Tournament End Date mismatch: Expected {actual_end_date}, but got {actual_end_date}")
-        #     # Continue the test even if there's an error
-        #     raise e
->>>>>>> Stashed changes

@@ -29,7 +29,7 @@ def update_round_match(sender, instance, **kwargs):
 
     round.save()
     if round.level_num == 0:
-        print(f'Level 0')
+        # print(f'Level 0')
         round.tournament.winner = round.winner
         round.tournament.state = 'completed'
         round.tournament.save()

@@ -159,6 +159,10 @@ class Support:
             event['group'] = sport.group
             event['description'] = sport.description
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             # Set the IDs for home and away teams using the TeamSerializer
             event['home_team_team'] = TeamSerializer(team_cron.check_team(event.get('home_team'), sport.title, sport.group)).data['id']
             event['away_team_team'] = TeamSerializer(team_cron.check_team(event.get('away_team'), sport.title, sport.group)).data['id']
@@ -273,6 +277,7 @@ class Support:
         """
         Loads data from serialized JSON files into Django tables if the tables are empty.
         """
+<<<<<<< Updated upstream
         # Check if the Sport and Team tables are empty
         if Sport.objects.exists():
             print("Sport table is not empty. Data load skipped.")
@@ -290,7 +295,15 @@ class Support:
         fixtures_dir = os.path.join(settings.BASE_DIR, 'core_event', 'fixtures')
         sport_data_file = os.path.join(base_test_path, 'test_files/table_dumps/dataSport.json')
         team_data_file = os.path.join(base_test_path, 'test_files/table_dumps/dataTeam.json')
+=======
+        # Check if files exist in a specific directory, such as a fixtures folder within your Django app.
+        fixtures_dir = os.path.join(settings.BASE_DIR, 'core','tournament','unit_tests','tests')
+>>>>>>> Stashed changes
 
+        sport_data_file = os.path.join(fixtures_dir, 'test_files','table_dumps','dataSport.json')
+        team_data_file = os.path.join(fixtures_dir, 'test_files', 'table_dumps','dataTeam.json')
+        # print(sport_data_file)
+        # print(team_data_file )
         # Ensure the files exist before attempting to load them
         if not os.path.exists(sport_data_file):
             raise ImproperlyConfigured(f"{sport_data_file} does not exist.")
@@ -301,7 +314,7 @@ class Support:
         call_command('loaddata', sport_data_file)  # Loads data into core_sport
         call_command('loaddata', team_data_file)  # Loads data into core_event_team
 
-        print("Data loaded successfully from dataSport.json and dataTeam.json")
+        # print("Data loaded successfully from dataSport.json and dataTeam.json")
 
     def update_golden_game(self, json_file_path, target_id):
         """

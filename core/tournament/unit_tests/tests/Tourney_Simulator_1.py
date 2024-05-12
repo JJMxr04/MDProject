@@ -100,6 +100,7 @@ class TourneyTest:
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy3-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy2-1.json')
 
+<<<<<<< Updated upstream
         await asyncio.to_thread(self.support.test_get_nfl_events, update_path_1)
         await asyncio.to_thread(self.support.update_golden_game, update_path_2, "c491f05b066449d95732c4f52ac57e66")
         await asyncio.to_thread(self.support.update_golden_game, update_path_3, "c491f05b066449d95732c4f52ac57e66")
@@ -110,6 +111,16 @@ class TourneyTest:
         for x in range(self.max_players):
             email = f"{x}test{x}@test.com"
             entry = await asyncio.to_thread(WaitlistEntry.objects.get_object_by_email, email)
+=======
+        self.support.test_get_nfl_events(update_path_1)
+        self.support.update_golden_game(update_path_2, "c491f05b066449d95732c4f52ac57e66")
+        self.support.update_golden_game(update_path_3, "c491f05b066449d95732c4f52ac57e66")
+        self.support.test_get_nfl_events(update_path_4)
+    def create_users(self):
+        max_players = self.max_players
+        for x in range(0, max_players):
+            entry = WaitlistEntry.objects.get_object_by_email(f"{x}test{x}@test.com")
+>>>>>>> Stashed changes
             if entry is None:
                 entry = await asyncio.to_thread(WaitlistEntry.objects.create_entry, email=email, full_name=f"{x}test{x}")
             await asyncio.to_thread(WaitlistEntry.objects.approve_waitlist_entry, entry.id)
@@ -812,10 +823,20 @@ class TourneyTest:
         )
 
         for round in init_rounds:
+<<<<<<< Updated upstream
             print(f'Round level = {round.level_num}')
             print(RoundSerializer(round).data)
             print(MatchSerializer(round.match).data)
             print(f'match winner: {round.match.winner}, round winner: {round.winner}')
+=======
+            # print(f'Round level = {round.level_num}')
+            # print(RoundSerializer(round).data)
+            # print(MatchSerializer(round.match).data)
+            print( f'match winner:{round.match.winner}, round winner: {round.winner} ')
+            # print(f'match winner:{round.match.winner}, round winner: {round.winner.player} ')
+
+
+>>>>>>> Stashed changes
     #  --- Seventh Round Event Uploads---
 
 
@@ -834,6 +855,7 @@ class TourneyTest:
         # await asyncio.sleep(1)
         # await self.async_print_init_round()
 
+<<<<<<< Updated upstream
     # Run second round
     async def async_run_round_two(self):
         await asyncio.sleep(1)
@@ -905,6 +927,71 @@ class TourneyTest:
             await self.async_print_seventh_round()
         else:
             print("Seventh Round Finished")
+=======
+    def run_round_two(self):
+        time.sleep(2)
+        self.Simulate_Second_Round()
+        time.sleep(2)
+        self.update_test_2_events()
+        # if self.tournament_record.levels == 2:
+        #     time.sleep(1)
+        #     self.print_second_round()
+        # else:
+        #     print(f'Second Round Finished')
+
+    def run_round_three(self):
+        time.sleep(3)
+        self.Simulate_Third_Round()
+        time.sleep(3)
+        self.update_test_3_events()
+        # if self.tournament_record.levels == 3:
+        #     time.sleep(1)
+        #     self.print_third_round()
+        # else:
+        #     print(f'Third Round Finished')
+
+    def run_round_four(self):
+        time.sleep(4)
+        self.Simulate_Fourth_Round()
+        time.sleep(4)
+        self.update_test_4_events()
+        # if self.tournament_record.levels == 4:
+        #     time.sleep(1)
+        #     self.print_fourth_round()
+        # else:
+        #     print(f'Forth Round Finished')
+    def run_round_five(self):
+        time.sleep(6)
+        self.Simulate_Fifth_Round()
+        time.sleep(6)
+        self.update_test_5_events()
+        # if self.tournament_record.levels == 5:
+        #     time.sleep(1)
+        #     self.print_fifth_round()
+        # else:
+        #     print(f'Fifth Round Finished')
+
+
+    def run_round_six(self):
+        time.sleep(10)
+        self.Simulate_Sixth_Round()
+        time.sleep(10)
+        self.update_test_6_events()
+        # if self.tournament_record.levels == 6:
+        #     time.sleep(1)
+        #     self.print_sixth_round()
+        # else:
+        #     print(f'Sixth Round Finished')
+
+    def run_round_seven(self):
+        time.sleep(16)
+        self.Simulate_Seventh_Round()
+        time.sleep(16)
+        self.update_test_7_events()
+        # if self.tournament_record.levels == 7:
+        #     time.sleep(1)
+        #     self.print_seventh_round()
+>>>>>>> Stashed changes
 
     # Asynchronous test run
     async def run_test(self):
@@ -918,6 +1005,19 @@ class TourneyTest:
         await self.async_run_round_one()
         logging.info("Finished Round 1")
 
+<<<<<<< Updated upstream
+=======
+    #  --- Run Test---
+
+    def run_test(self):
+        # print("starting test")
+        self.test_setup()
+        time.sleep(1)
+        # print("Making Tourney")
+        self.make_tournament()
+        # print("Starting Rounds")
+        self.run_round_one()
+>>>>>>> Stashed changes
         if self.tournament_record.levels >= 2:
             await self.async_run_round_two()
             logging.info("Finished Round 2")
