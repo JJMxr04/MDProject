@@ -152,12 +152,5 @@ class tournament_test_1():
         self.max_players = max_players
         self.tourney_name = tourney_name
         self.tourny_Sim = TourneyTest(max_players=self.max_players,tourney_name=self.tourney_name)
-        self.test_run()
-
-    def test_run(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self.tourny_Sim.run_test())  # Running the coroutine
-        loop.close()
         self.tourny_Sim.run_test()
         self.tournament = self.tourny_Sim.tournament_record

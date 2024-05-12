@@ -166,3 +166,4 @@ class TournamentCreationTestCase(TestCase):
         self.assertEqual(expected_name, actual_name,f"Tournament Levels mismatch: Expected {expected_levels}, but got {actual_levels}")
         self.assertEqual(expected_max_players, actual_max_players, f"Tournament Levels mismatch: Expected {expected_levels}, but got {actual_levels}")
 
+        logger.info('Finished Tournament Simulation test with 128 max and accepted players')

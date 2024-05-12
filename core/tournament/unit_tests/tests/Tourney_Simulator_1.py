@@ -672,9 +672,9 @@ class TourneyTest:
         #     print(f'Second Round Finished')
 
     def run_round_three(self):
-        time.sleep(3)
+        time.sleep(4)
         self.Simulate_Third_Round()
-        time.sleep(3)
+        time.sleep(4)
         self.update_test_3_events()
         # if self.tournament_record.levels == 3:
         #     time.sleep(1)
@@ -683,9 +683,9 @@ class TourneyTest:
         #     print(f'Third Round Finished')
 
     def run_round_four(self):
-        time.sleep(4)
+        time.sleep(6)
         self.Simulate_Fourth_Round()
-        time.sleep(4)
+        time.sleep(6)
         self.update_test_4_events()
         # if self.tournament_record.levels == 4:
         #     time.sleep(1)
@@ -693,9 +693,9 @@ class TourneyTest:
         # else:
         #     print(f'Forth Round Finished')
     def run_round_five(self):
-        time.sleep(6)
+        time.sleep(8)
         self.Simulate_Fifth_Round()
-        time.sleep(6)
+        time.sleep(8)
         self.update_test_5_events()
         # if self.tournament_record.levels == 5:
         #     time.sleep(1)
@@ -705,9 +705,9 @@ class TourneyTest:
 
 
     def run_round_six(self):
-        time.sleep(10)
+        time.sleep(12)
         self.Simulate_Sixth_Round()
-        time.sleep(10)
+        time.sleep(12)
         self.update_test_6_events()
         # if self.tournament_record.levels == 6:
         #     time.sleep(1)
@@ -716,9 +716,9 @@ class TourneyTest:
         #     print(f'Sixth Round Finished')
 
     def run_round_seven(self):
-        time.sleep(16)
+        time.sleep(18)
         self.Simulate_Seventh_Round()
-        time.sleep(16)
+        time.sleep(18)
         self.update_test_7_events()
         # if self.tournament_record.levels == 7:
         #     time.sleep(1)
@@ -738,14 +738,20 @@ class TourneyTest:
         self.run_round_one()
         if self.tournament_record.levels >= 2:
             self.run_round_two()
+            # print("Finished Second Round")
         if self.tournament_record.levels >= 3:
             self.run_round_three()
+            # print("Finished Third Round")
         if self.tournament_record.levels >= 4:
             self.run_round_four()
+            # print("Finished Forth Round")
         if self.tournament_record.levels >= 5:
             self.run_round_five()
+            # print("Finished Fifth Round")
         if self.tournament_record.levels >= 6:
             self.run_round_six()
+            # print("Finished Sixth Round")
         if self.tournament_record.levels >= 7:
             self.run_round_seven()
+            # print("Finished Seventh Round")
 
