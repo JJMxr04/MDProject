@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(('core.routers', 'core'), namespace="core-api")),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
+    path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     # Ensure namespace is 'core-web'  # Correct namespace
 ]
 
