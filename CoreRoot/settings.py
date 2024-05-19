@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'core.admin',
     'core.tournament',
     # 'core.ollama',
-    'core.web'
+    'core.web',
+    'core.portal'
 
 ]
 
@@ -228,6 +229,10 @@ CORS_ALLOWED_ORIGINS = [
 "http://localhost:8000",
 "http://localhost:55371"
 ]
+
+LOGIN_REDIRECT_URL = '/portal/dashboard/'  # Replace with your desired success page
+LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
+
 
 
 

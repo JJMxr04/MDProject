@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'public/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/public/main.css' %}">
 
     {% if title %}
         <title>Django Blog - {{ title }}</title>
@@ -19,7 +19,9 @@
     {% endif %}
 </head>
 <body>
-    {% include "public/components/header.html" %}
+    <header>
+        {% include "public/components/navbar.html" %}
+    </header>
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8">
@@ -27,7 +29,7 @@
             </div>
         </div>
     </main>
-    {% include "public/components//footer.html" %}
+    {% include "public/components/footer.html" %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/', include(('core.routers', 'core'), namespace="core-api")),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
+    path('portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
     # Ensure namespace is 'core-web'  # Correct namespace
 ]
 
