@@ -10,7 +10,7 @@ body {
     width: 100%; /* Stretch container to maximum width */
     max-width: 1200px; /* Set a maximum width for the container */
     margin: 10px auto;
-    align: center
+    align: center;
 }
 
 .comp-container {
@@ -71,7 +71,7 @@ h2 {
 /* Navbar styles */
 .navbar {
     background-color: #3D7EAA; /* Ocean blue */
-    overflow: hidden;
+    overflow: visible; /* Ensure dropdowns are visible */
     border-bottom: 3px solid #FFE47A; /* Sand yellow */
     border-radius: 15px; /* Rounded corners */
     border: 2px solid #005A9C; /* Darker ocean blue border */
