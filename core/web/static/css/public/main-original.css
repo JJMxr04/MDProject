@@ -1,80 +1,108 @@
-/* Initial background color of the navbar */
-nav {
-  background-color: #00ffff;
+/* Main styles shared across all pages */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #3D7EAA, #FFE47A);
+    margin-top: 10px;
+    padding: 0;
 }
 
-/* Color of the links and toggler BEFORE scroll */
-.navbar .nav-link,
-.navbar .navbar-toggler .fa-bars {
-  color: #fff;
+.container {
+    width: 100%; /* Stretch container to maximum width */
+    max-width: 1200px; /* Set a maximum width for the container */
+    margin: 10px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
-/* Color of the links AFTER scroll */
-.navbar-scrolled .nav-link,
-.navbar-scrolled .navbar-toggler .fa-bars {
-  color: #4f4f4f;
-}
-
-/* Color of the navbar AFTER scroll */
-.navbar-scrolled {
-  background-color: #fff;
-}
-
-/* An optional height of the navbar AFTER scroll */
-.navbar.navbar-scroll.navbar-scrolled {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.login-container{
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
-.login-form-1{
-    padding: 5%;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-}
-.login-form-1 h3{
+h2 {
     text-align: center;
     color: #333;
 }
-.login-form-2{
-    padding: 5%;
-    background: #0062cc;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+
+.form-group {
+    margin-bottom: 15px;
 }
-.login-form-2 h3{
-    text-align: center;
-    color: #fff;
+
+.form-group label {
+    display: block;
+    color: #666;
 }
-.login-container form{
-    padding: 10%;
+
+.form-group input,
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
 }
-.btnSubmit
-{
-    width: 50%;
-    border-radius: 1rem;
-    padding: 1.5%;
+
+.form-group button {
+    background-color: #5CACEE;
+    color: white;
     border: none;
     cursor: pointer;
 }
-.login-form-1 .btnSubmit{
-    font-weight: 600;
-    color: #fff;
-    background-color: #0062cc;
+
+.form-group button:hover {
+    background-color: #1E90FF;
 }
-.login-form-2 .btnSubmit{
-    font-weight: 600;
-    color: #0062cc;
-    background-color: #fff;
+
+.form-footer {
+    text-align: center;
+    padding-top: 10px;
 }
-.login-form-2 .ForgetPwd{
-    color: #fff;
-    font-weight: 600;
+
+.form-footer a {
+    color: #5CACEE;
     text-decoration: none;
 }
-.login-form-1 .ForgetPwd{
-    color: #0062cc;
-    font-weight: 600;
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #3D7EAA; /* Ocean blue */
+    overflow: hidden;
+    border-bottom: 3px solid #FFE47A; /* Sand yellow */
+    border-radius: 15px; /* Rounded corners */
+    border: 2px solid #005A9C; /* Darker ocean blue border */
+    margin-bottom: 10px; /* Space below navbar */
+    max-width: 1200px; /* Maximum width for the navbar */
+    width: 100%;
+    margin: 0 auto; /* Center the navbar horizontally */
+    box-sizing: border-box;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
     text-decoration: none;
+    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s; /* Smooth transition for hover effects */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    background-color: #1E90FF; /* Darker ocean blue */
+    color: #FFE47A; /* Sand yellow text */
+    font-size: 18px; /* Slightly larger text */
+    text-decoration: underline; /* Underline text */
+}
+
+/* Style for the login button to match other buttons */
+.btn-outline-success {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-success:hover {
+    background-color: #1E90FF; /* Darker ocean blue */
+    color: #FFE47A; /* Sand yellow text */
+    border-color: #1E90FF;
 }

@@ -2,68 +2,19 @@
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to right, #3D7EAA, #FFE47A);
-}
-
-.navbar {
-    background-color: #3D7EAA; /* Ocean blue */
-    overflow: hidden;
-    border-bottom: 3px solid #FFE47A; /* Sand yellow */
-    border-radius: 15px; /* Rounded corners */
-    border: 2px solid #005A9C; /* Darker ocean blue border */
-    margin-bottom: 20px; /* Space below navbar */
-}
-
-.navbar-nav .nav-item .nav-link {
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s; /* Smooth transition for hover effects */
-}
-
-.navbar-nav .nav-item .nav-link:hover {
-    background-color: #1E90FF; /* Darker ocean blue */
-    color: #FFE47A; /* Sand yellow text */
-    font-size: 18px; /* Slightly larger text */
-    text-decoration: underline; /* Underline text */
-}
-
-/* Style for the login button to match other buttons */
-.btn-outline-success {
-    color: white;
-    background-color: transparent;
-    border: 1px solid white;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.btn-outline-success:hover {
-    background-color: #1E90FF; /* Darker ocean blue */
-    color: #FFE47A; /* Sand yellow text */
-    border-color: #1E90FF;
-}
-
-/* Style for the hamburger menu button to match other buttons */
-.navbar-toggler {
-    border: none;
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/ %3E%3C/svg%3E");
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.navbar-toggler:hover .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 228, 122, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/ %3E%3C/svg%3E");
-    transform: scale(1.1);
+    margin-top: 10px;
+    padding: 0;
 }
 
 .container {
-    width: 300px;
-    margin: 100px auto;
+    width: 100%; /* Stretch container to maximum width */
+    max-width: 1200px; /* Set a maximum width for the container */
+    margin: 10px auto;
     background: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 h2 {
@@ -111,4 +62,47 @@ h2 {
 
 .form-footer a:hover {
     text-decoration: underline;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #3D7EAA; /* Ocean blue */
+    overflow: hidden;
+    border-bottom: 3px solid #FFE47A; /* Sand yellow */
+    border-radius: 15px; /* Rounded corners */
+    border: 2px solid #005A9C; /* Darker ocean blue border */
+    margin-bottom: 10px; /* Space below navbar */
+    max-width: 1200px; /* Maximum width for the navbar */
+    width: 100%;
+    margin: 0 auto; /* Center the navbar horizontally */
+    box-sizing: border-box;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s; /* Smooth transition for hover effects */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    background-color: #1E90FF; /* Darker ocean blue */
+    color: #FFE47A; /* Sand yellow text */
+    font-size: 18px; /* Slightly larger text */
+    text-decoration: underline; /* Underline text */
+}
+
+/* Style for the login button to match other buttons */
+.btn-outline-success {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-success:hover {
+    background-color: #1E90FF; /* Darker ocean blue */
+    color: #FFE47A; /* Sand yellow text */
+    border-color: #1E90FF;
 }
