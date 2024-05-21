@@ -3,7 +3,26 @@
 
 {% block content %}
 <div class="container comp-container">
-    <h1>Welcome to PBL</h1>
-    <p>This is the home page content.</p>
+    <!-- Centered h1 -->
+    <h1 class="text-center">Welcome to PBL</h1>
+
+    <!-- Text-Image Block -->
+    <div class="text-image-block">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Add rounded corners to the image -->
+                <img src="static/assets/Images/Home/treasure2.png" class="img-fluid rounded" alt="Image">
+            </div>
+            <div class="col-md-6">
+                <!-- Removed unnecessary content -->
+                <h2 class="text-center">"The house always wins, but it doesn't have to!"</h2>
+                <p class="text-center">Untold riches await you! To add yourself to the wait list click below</p>
+                <!-- Centered and styled waitlist button -->
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary" style="background-color: #3D7EAA;">Wait List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
