@@ -1,0 +1,23 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Waitlist{% endblock title %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card bg-light text-black border-0 rounded-3 register-form-1">
+        <div class="card-body p-5 text-center">
+          <h2 class="fw-bold mb-2 text-uppercase">Thank you for Signing up to Join PBL</h2>
+          <img src="{% static 'images/thank_you_image.jpg' %}" alt="Thank You Image" class="img-fluid mt-4">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
