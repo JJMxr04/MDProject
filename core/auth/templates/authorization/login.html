@@ -19,13 +19,14 @@
           <form method="post" action="{% url 'core-auth:login' %}" class="mb-4">
             {% csrf_token %}
             <div class="form-outline form-black mb-4">
-              <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="Email" />
+              <input type="email" id="typeEmailX" name="username" class="form-control form-control-lg" placeholder="Email" />
             </div>
             <div class="form-outline form-black mb-4">
-              <input type="password" id="typePasswordX" class="form-control form-control-lg" placeholder="Password" />
+              <input type="password" id="typePasswordX" name="password" class="form-control form-control-lg" placeholder="Password" />
             </div>
             <button class="btnSubmit btn-lg px-5" type="submit">Login</button>
           </form>
+
 
 <!--          <div class="d-flex justify-content-center text-center mt-4 pt-1">-->
 <!--            <a href="#!" class="text-black"><i class="fab fa-facebook-f fa-lg"></i></a>-->
