@@ -230,7 +230,7 @@ CORS_ALLOWED_ORIGINS = [
 "http://localhost:55371"
 ]
 
-LOGIN_REDIRECT_URL = '/portal/dashboard/'  # Replace with your desired success page
+LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
 LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
 
 
