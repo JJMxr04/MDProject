@@ -122,3 +122,32 @@ body {
         left: 10px;
     }
 }
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.comp-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease;
+    margin: 0 auto;
+}
+
+.card {
+    margin: 10px auto;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+

@@ -1,9 +1,109 @@
-<!-- templates/portal/dashboard.html -->
 {% extends "admin/base_admin.html" %}
 
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-    <h1>Welcome to the Admin Dashboard</h1>
-    <!-- Dashboard content goes here -->
+    <div class="container">
+        <h1 class="mt-4">Welcome to the Admin Dashboard</h1>
+
+        <div class="row my-4">
+            <div class="col-md-6">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Waitlist Signups</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ waitlist_signups }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">User Registrations</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user_registrations }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Date Range</div>
+                    <div class="card-body">
+                        <form method="get">
+                            <div class="form-group">
+                                <label for="date_range">Select Date Range:</label>
+                                <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
+                                    <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
+                                    <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
+                                    <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
+                                    <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
+                                    <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
+                                </select>
+                                <input type="hidden" name="chart_type" value="{{ chart_type }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Chart Type</div>
+                    <div class="card-body">
+                        <form method="get">
+                            <div class="form-group">
+                                <label for="chart_type">Select Chart Type:</label>
+                                <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
+                                    <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
+                                    <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
+                                </select>
+                                <input type="hidden" name="date_range" value="{{ date_range }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">Chart</div>
+            <div class="card-body">
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: '{{ chart_type }}',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [
+                    {
+                        label: 'Waitlist Signups',
+                        data: {{ waitlist_data|safe }},
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'User Registrations',
+                        data: {{ registration_data|safe }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock content %}
