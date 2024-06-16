@@ -8,6 +8,10 @@ from django.db.models.functions import ExtractMonth, ExtractDay
 import calendar
 from django.contrib.auth.decorators import login_required
 
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from core.auth.models.waitlist import WaitlistEntry
+
 def get_date_range_statistics(date_range):
     now = timezone.now()
     if date_range == 'last_7_days':
@@ -78,3 +82,17 @@ def admin_dashboard(request):
         'registration_data': registration_data,
     }
     return render(request, 'admin/dashboard/dashboard.html', context)
+
+@login_required(login_url='/auth/login/')
+def waitlist_view(request):
+    waitlist_entries = WaitlistEntry.objects.get_all_wailtlist_entries()
+    return render(request, 'admin/pages/waitlist.html', {'waitlist_entries': waitlist_entries})
+
+def approve_waitlist_entry(request, entry_id):
+    if request.method == "POST":
+        try:
+            entry = WaitlistEntry.objects.approve_waitlist_entry(entry_id)
+            return JsonResponse({'status': 'success', 'message': 'Entry approved successfully'})
+        except WaitlistEntry.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Entry not found'}, status=404)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
