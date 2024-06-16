@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.utils.dateparse import parse_date
 from django.db.models.functions import ExtractMonth, ExtractDay
 import calendar
+from django.contrib.auth.decorators import login_required
 
 def get_date_range_statistics(date_range):
     now = timezone.now()
@@ -44,6 +45,7 @@ def get_date_range_statistics(date_range):
 
     return waitlist_signups, user_registrations, date_format
 
+@login_required(login_url='/auth/login/')
 def admin_dashboard(request):
     date_range = request.GET.get('date_range', 'last_7_days')
     chart_type = request.GET.get('chart_type', 'bar')
