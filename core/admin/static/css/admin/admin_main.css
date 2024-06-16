@@ -8,7 +8,6 @@ body {
     min-height: 100vh;
 }
 
-
 .navbar {
     background: linear-gradient(to right, #FFE47A, #3D7EAA);
     border: none;
@@ -110,6 +109,10 @@ body {
     left: 10px;
 }
 
+.navbar .navbar-toggler {
+    margin-left: auto;
+}
+
 @media (max-width: 768px) {
     .navbar {
         width: 100%;
@@ -121,6 +124,12 @@ body {
     .toggle-btn {
         left: 10px;
     }
+    .sidebar {
+        transform: translateX(-250px);
+    }
+    .sidebar.collapsed {
+        transform: translateX(0);
+    }
 }
 
 .container {
@@ -128,16 +137,6 @@ body {
     width: 100%;
     padding: 20px;
     margin-top: 20px;
-}
-
-.comp-container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    transition: margin-left 0.3s ease;
-    margin: 0 auto;
 }
 
 .card {
@@ -150,4 +149,3 @@ body {
     align-items: center;
     flex-wrap: wrap;
 }
-

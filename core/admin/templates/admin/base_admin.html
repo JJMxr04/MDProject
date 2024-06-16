@@ -17,14 +17,14 @@
 <body>
     <header>
         {% include "admin/components/navbar.html" %}
+        <button class="btn btn-primary toggle-btn" id="toggle-btn">☰</button>
     </header>
     <div class="sidebar" id="sidebar">
         {% include 'admin/components/sidebar.html' %}
     </div>
-    <button class="btn btn-primary toggle-btn" id="toggle-btn">☰</button>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-10 offset-2 p-4">
+            <div class="col-12 p-4">
                 <div class="comp-container" id="main-content">
                     {% block content %}{% endblock content %}
                 </div>
@@ -41,11 +41,10 @@
     <script>
         document.getElementById('toggle-btn').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('collapsed');
-            document.querySelector('.navbar').classList.toggle('collapsed');
             document.getElementById('main-content').classList.toggle('collapsed');
-            this.classList.toggle('collapsed');
         });
     </script>
-    {% block scripts %}{% endblock scripts %}
-</body>
+    {% block js %}{% endblock js %}
+
+    </body>
 </html>
