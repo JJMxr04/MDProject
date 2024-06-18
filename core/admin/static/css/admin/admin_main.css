@@ -13,15 +13,16 @@ body {
     border: none;
     margin: 0;
     padding: 0;
-    width: calc(100% - 250px);
+    width: calc(100% - 250px); /* Initial state with sidebar */
     position: fixed;
     top: 0;
     right: 0;
     z-index: 1000;
     transition: width 0.3s ease;
 }
+
 .navbar.collapsed {
-    width: 100%;
+    width: 100%; /* Full width when sidebar is collapsed */
 }
 
 .navbar-nav .nav-item .nav-link {
@@ -31,6 +32,7 @@ body {
     text-decoration: none;
     transition: color 0.3s, font-size 0.3s, text-decoration 0.3s;
 }
+
 .navbar-nav .nav-item .nav-link:hover {
     background-color: #1E90FF;
     color: #3D7EAA;
@@ -49,6 +51,7 @@ body {
     z-index: 1000;
     transition: transform 0.3s ease;
 }
+
 .sidebar.collapsed {
     transform: translateX(-250px);
 }
@@ -56,6 +59,7 @@ body {
 .sidebar .nav-link {
     color: black;
 }
+
 .sidebar .nav-link:hover {
     color: white;
     background-color: #3D7EAA;
@@ -77,12 +81,13 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    margin-left: 270px;
+    margin-left: 270px; /* Initial state with sidebar */
     margin-top: 70px;
     transition: margin-left 0.3s ease;
 }
+
 .comp-container.collapsed {
-    margin-left: 20px;
+    margin-left: 20px; /* Adjusted margin when sidebar is collapsed */
 }
 
 .footer-container {
@@ -92,6 +97,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
+
 .footer {
     background-color: transparent;
     padding: 20px;
@@ -101,16 +107,15 @@ body {
 .toggle-btn {
     position: fixed;
     top: 10px;
-    left: 260px;
+    left: 260px; /* Initial state with sidebar */
     z-index: 1100;
     transition: left 0.3s ease;
 }
-.sidebar.collapsed + .toggle-btn {
-    left: 10px;
-}
 
-.navbar .navbar-toggler {
-    margin-left: auto;
+/* Update to handle toggle button movement */
+.sidebar.collapsed + .toggle-btn,
+.sidebar.collapsed ~ .toggle-btn {
+    left: 10px; /* Adjusted position when sidebar is collapsed */
 }
 
 @media (max-width: 768px) {
@@ -130,22 +135,4 @@ body {
     .sidebar.collapsed {
         transform: translateX(0);
     }
-}
-
-.container {
-    max-width: 1200px;
-    width: 100%;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.card {
-    margin: 10px auto;
-}
-
-.row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
 }
