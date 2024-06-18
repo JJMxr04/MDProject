@@ -99,21 +99,21 @@ def waitlist_view(request):
 @require_POST
 def approve_waitlist_entry(request, entry_id):
     if request.method == "POST":
+        entry = get_object_or_404(WaitlistEntry, id=entry_id)
         try:
-            entry = WaitlistEntry.objects.approve_waitlist_entry(entry_id)
-            # send_mail(
-            #     'Waitlist Approval',
-            #     f'Hi {entry.full_name}, your waitlist request has been approved.',
-            #     'from@example.com',  # Replace with your email address
-            #     [entry.email],
-            #     fail_silently=False,
-            # )
+            # Process approval logic
+            entry.admin_granted_access = True
+            entry.save()
+
+            # Optionally send email notification
+            # send_mail(...)
+
             return JsonResponse({'status': 'success', 'message': 'Entry approved successfully', 'full_name': entry.full_name})
-        except WaitlistEntry.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Entry not found'}, status=404)
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+
 @login_required(login_url='/auth/login/')
 @require_POST
 def mass_approve_waitlist_entries(request):

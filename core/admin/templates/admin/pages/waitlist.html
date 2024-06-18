@@ -24,7 +24,7 @@
                 <td>{{ entry.full_name }}</td>
                 <td>{{ entry.description }}</td>
                 <td>
-                    <button class="btn btn-success approve-btn">Approve</button>
+                    <button class="btn btn-success approve-btn" data-entry-id="{{ entry.id }}">Approve</button>
                 </td>
             </tr>
             {% endfor %}
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchBox = document.getElementById('search-box');
 
     function sendApprovalRequest(entryId, callback) {
-        fetch(`/waitlist/approve/${entryId}/`, {
+        fetch(`/web/admin/waitlist/approve/${entryId}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     approveButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const entryId = this.closest('tr').getAttribute('data-entry-id');
+            const entryId = this.getAttribute('data-entry-id');
             sendApprovalRequest(entryId, function(data) {
                 alert(data.message);
-                location.reload();
+                location.reload(); // Consider removing this line if you want to handle refresh differently
             });
         });
     });
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const approvedNames = [];
             let approvedCount = 0;
 
-            fetch('/waitlist/mass_approve/', {
+            fetch('/web/admin/waitlist/mass_approve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
 
                     new bootstrap.Modal(document.getElementById('confirmationModal')).show();
-                    location.reload();
+                    location.reload(); // Consider removing this line if you want to handle refresh differently
                 } else {
                     alert(data.message);
                 }

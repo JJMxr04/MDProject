@@ -97,5 +97,9 @@
         });
     </script>
     {% block js %}{% endblock js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js" integrity="sha384-n3Bn4eFzssis1n7Ea94pO/u6dKG5/PJ/r05KlN2Z0H2Q6yA7RjtiVXy8q0F1+8+W" crossorigin="anonymous"></script>
+    <script>
+        const csrfToken = "{{ csrf_token }}";
+    </script>
 </body>
 </html>
