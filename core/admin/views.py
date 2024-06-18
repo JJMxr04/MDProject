@@ -12,6 +12,13 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from core.auth.models.waitlist import WaitlistEntry
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from core.auth.models.waitlist import WaitlistEntry
+from core.admin.serializers.waitlist import WaitlistEntrySerializer
+
 def get_date_range_statistics(date_range):
     now = timezone.now()
     if date_range == 'last_7_days':
@@ -85,14 +92,46 @@ def admin_dashboard(request):
 
 @login_required(login_url='/auth/login/')
 def waitlist_view(request):
-    waitlist_entries = WaitlistEntry.objects.get_all_wailtlist_entries()
+    waitlist_entries = WaitlistEntry.objects.get_all_waitlist_entries()
     return render(request, 'admin/pages/waitlist.html', {'waitlist_entries': waitlist_entries})
 
+@login_required(login_url='/auth/login/')
+@require_POST
 def approve_waitlist_entry(request, entry_id):
     if request.method == "POST":
         try:
             entry = WaitlistEntry.objects.approve_waitlist_entry(entry_id)
-            return JsonResponse({'status': 'success', 'message': 'Entry approved successfully'})
+            # send_mail(
+            #     'Waitlist Approval',
+            #     f'Hi {entry.full_name}, your waitlist request has been approved.',
+            #     'from@example.com',  # Replace with your email address
+            #     [entry.email],
+            #     fail_silently=False,
+            # )
+            return JsonResponse({'status': 'success', 'message': 'Entry approved successfully', 'full_name': entry.full_name})
         except WaitlistEntry.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Entry not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+@login_required(login_url='/auth/login/')
+@require_POST
+def mass_approve_waitlist_entries(request):
+    try:
+        data = request.POST.getlist('entry_ids[]')
+        if not data:
+            return JsonResponse({'status': 'error', 'message': 'No entries selected'}, status=400)
+
+        approved_entries = []
+        for entry_id in data:
+            try:
+                entry = WaitlistEntry.objects.get(id=entry_id)
+                entry.admin_granted_access = True
+                entry.save()
+                approved_entries.append(entry.full_name)
+            except WaitlistEntry.DoesNotExist:
+                continue
+
+        return JsonResponse({'status': 'success', 'message': 'Entries approved successfully', 'approved_entries': approved_entries})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)

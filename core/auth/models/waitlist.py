@@ -19,10 +19,10 @@ class WaitlistEntryManager(models.Manager):
     def approve_waitlist_entry(self, pid):
         entry = self.get(id=pid)
         entry.admin_granted_access = True
-        entry.save(using=self._db)
+        entry.save()
         return entry
 
-    def get_all_wailtlist_entries(self):
+    def get_all_waitlist_entries(self):
         return self.filter(admin_granted_access=False)
 
     def get_object_by_id(self, pid):
