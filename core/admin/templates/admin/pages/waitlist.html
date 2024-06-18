@@ -6,6 +6,7 @@
     <div class="mb-3">
         <input type="text" id="search-box" class="form-control" placeholder="Search...">
     </div>
+    <button class="btn btn-primary mb-3" id="mass-approve-btn">Mass Approve</button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -30,7 +31,6 @@
             {% endfor %}
         </tbody>
     </table>
-    <button class="btn btn-primary" id="mass-approve-btn">Mass Approve</button>
 </div>
 
 <!-- Modal -->
@@ -54,19 +54,19 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const approveButtons = document.querySelectorAll('.approve-btn');
     const massApproveBtn = document.getElementById('mass-approve-btn');
     const selectAllCheckbox = document.getElementById('select-all');
     const entryCheckboxes = document.querySelectorAll('.entry-checkbox');
     const searchBox = document.getElementById('search-box');
 
-    function sendApprovalRequest(entryId, callback) {
-        fetch(`/web/admin/waitlist/approve/${entryId}/`, {
+    function sendApprovalRequest(entryIds, callback) {
+        fetch('/web/admin/waitlist/mass_approve/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': '{{ csrf_token }}'
-            }
+            },
+            body: JSON.stringify({ entry_ids: entryIds })
         })
         .then(response => response.json())
         .then(data => {
@@ -78,22 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error:', error));
     }
-
-    approveButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const entryId = this.getAttribute('data-entry-id');
-            sendApprovalRequest(entryId, function(data) {
-                alert(data.message);
-                location.reload(); // Consider removing this line if you want to handle refresh differently
-            });
-        });
-    });
-
-    selectAllCheckbox.addEventListener('change', function() {
-        entryCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-    });
 
     massApproveBtn.addEventListener('click', function() {
         const selectedEntries = [];
@@ -107,41 +91,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const approvedNames = [];
             let approvedCount = 0;
 
-            fetch('/web/admin/waitlist/mass_approve/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ entry_ids: selectedEntries })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    data.approved_entries.forEach(name => {
-                        approvedCount++;
-                        approvedNames.push(name);
-                    });
+            sendApprovalRequest(selectedEntries, function(data) {
+                data.approved_entries.forEach(name => {
+                    approvedCount++;
+                    approvedNames.push(name);
+                });
 
-                    document.getElementById('approved-count').innerText = approvedCount;
-                    const approvedNamesList = document.getElementById('approved-names');
-                    approvedNamesList.innerHTML = '';
-                    approvedNames.forEach(name => {
-                        const li = document.createElement('li');
-                        li.textContent = name;
-                        approvedNamesList.appendChild(li);
-                    });
+                document.getElementById('approved-count').innerText = approvedCount;
+                const approvedNamesList = document.getElementById('approved-names');
+                approvedNamesList.innerHTML = '';
+                approvedNames.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    approvedNamesList.appendChild(li);
+                });
 
-                    new bootstrap.Modal(document.getElementById('confirmationModal')).show();
-                    location.reload(); // Consider removing this line if you want to handle refresh differently
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
+                new bootstrap.Modal(document.getElementById('confirmationModal')).show();
+                location.reload(); // Consider removing this line if you want to handle refresh differently
+            });
         } else {
             alert('Please select at least one entry to approve.');
         }
+    });
+
+    selectAllCheckbox.addEventListener('change', function() {
+        entryCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
     });
 
     searchBox.addEventListener('input', function() {

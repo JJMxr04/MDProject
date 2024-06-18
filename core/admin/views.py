@@ -19,6 +19,9 @@ from django.contrib.auth.decorators import login_required
 from core.auth.models.waitlist import WaitlistEntry
 from core.admin.serializers.waitlist import WaitlistEntrySerializer
 
+from django.http import JsonResponse
+import json
+
 def get_date_range_statistics(date_range):
     now = timezone.now()
     if date_range == 'last_7_days':
@@ -118,12 +121,14 @@ def approve_waitlist_entry(request, entry_id):
 @require_POST
 def mass_approve_waitlist_entries(request):
     try:
-        data = request.POST.getlist('entry_ids[]')
-        if not data:
+        data = json.loads(request.body)
+        entry_ids = data.get('entry_ids', [])
+
+        if not entry_ids:
             return JsonResponse({'status': 'error', 'message': 'No entries selected'}, status=400)
 
         approved_entries = []
-        for entry_id in data:
+        for entry_id in entry_ids:
             try:
                 entry = WaitlistEntry.objects.get(id=entry_id)
                 entry.admin_granted_access = True
