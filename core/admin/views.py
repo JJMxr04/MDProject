@@ -1,26 +1,28 @@
-from django.shortcuts import render
+
 from django.utils import timezone
-from core.auth.models.waitlist import WaitlistEntry
-from core.user.models import User
+
 from django.db.models import Count
-from django.utils.dateparse import parse_date
+
 from django.db.models.functions import ExtractMonth, ExtractDay
 import calendar
-from django.contrib.auth.decorators import login_required
 
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from core.auth.models.waitlist import WaitlistEntry
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
+
 from core.auth.models.waitlist import WaitlistEntry
-from core.admin.serializers.waitlist import WaitlistEntrySerializer
+
+
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from core.user.models import User
 
 from django.http import JsonResponse
 import json
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
 
 def get_date_range_statistics(date_range):
     now = timezone.now()
@@ -140,3 +142,35 @@ def mass_approve_waitlist_entries(request):
         return JsonResponse({'status': 'success', 'message': 'Entries approved successfully', 'approved_entries': approved_entries})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+@login_required(login_url='/auth/login/')
+def user_list(request):
+    search_query = request.GET.get('search', '')
+    page_number = request.GET.get('page', 1)
+
+    users = User.objects.filter(username__icontains=search_query).order_by('username')
+    paginator = Paginator(users, 10)  # 10 users per page
+
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'search_query': search_query
+    }
+    return render(request, 'admin/pages/user_list.html', context)
+
+@login_required(login_url='/auth/login/')
+def user_detail(request, user_id):
+    user = get_object_or_404(User, public_id=user_id)
+
+    context = {
+        'user': user
+    }
+    return render(request, 'admin/pages/user_detail.html', context)
+
+@method_decorator(csrf_protect, name='dispatch')
+def custom_logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('/auth/login/')
+    return redirect('/web/admin/dashboard/')  # Redirect to dashboard if not POST

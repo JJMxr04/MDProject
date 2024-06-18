@@ -1,3 +1,7 @@
+<form id="logout-form" action="{% url 'custom_logout' %}" method="post" style="display: none;">
+    {% csrf_token %}
+</form>
+
 <div class="d-flex flex-column p-3" id="sidebar-menu">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
@@ -11,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link">
+            <a href="/web/admin/users/" class="nav-link">
                 <i class="fas fa-users"></i> Users
             </a>
         </li>
@@ -21,7 +25,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" onclick="document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </li>
