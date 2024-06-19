@@ -23,6 +23,16 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
+from django.shortcuts import render, get_object_or_404
+from core.tournament.models.tournament import Tournament
+
+from django.shortcuts import render, get_object_or_404
+
+from core.tournament.serializers.tournament import TournamentSerializer
+from django.http import JsonResponse
+
+from django.shortcuts import render, get_object_or_404
+from core.tournament.models.tournament import Tournament
 
 def get_date_range_statistics(date_range):
     now = timezone.now()
@@ -168,9 +178,13 @@ def user_detail(request, user_id):
     }
     return render(request, 'admin/pages/user_detail.html', context)
 
-@method_decorator(csrf_protect, name='dispatch')
-def custom_logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('/auth/login/')
-    return redirect('/web/admin/dashboard/')  # Redirect to dashboard if not POST
+@login_required
+def tournament_list(request):
+    tournaments = Tournament.objects.all()
+    return render(request, 'admin/pages/tournament_list.html', {'tournaments': tournaments})
+
+@login_required
+def tournament_detail(request, tournament_id):
+    tournament = get_object_or_404(Tournament, id=tournament_id)
+    return render(request, 'admin/pages/tournament_detail.html', {'tournament': tournament})
+
