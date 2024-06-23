@@ -20,7 +20,7 @@ class WaitlistEntryViewSet(viewsets.ModelViewSet):
     search_fields = ['email', 'full_name','description','created']
 
     def get_queryset(self):
-        return WaitlistEntry.objects.get_all_wailtlist_entries()
+        return WaitlistEntry.objects.get_all_waitlist_entries()
 
     def get_object(self):
         obj = WaitlistEntry.objects.get_object_by_public_id(self.kwargs['pk'])

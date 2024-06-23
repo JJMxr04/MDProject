@@ -227,7 +227,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 CORS_ALLOWED_ORIGINS = [
 
 "http://localhost:8000",
-"http://localhost:55371"
+"http://localhost:3000"
 ]
 
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page

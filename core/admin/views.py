@@ -1,16 +1,38 @@
-from django.shortcuts import render
+
 from django.utils import timezone
-from core.auth.models.waitlist import WaitlistEntry
-from core.user.models import User
+
 from django.db.models import Count
-from django.utils.dateparse import parse_date
+
 from django.db.models.functions import ExtractMonth, ExtractDay
 import calendar
-from django.contrib.auth.decorators import login_required
 
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 from core.auth.models.waitlist import WaitlistEntry
+
+
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from core.user.models import User
+
+from django.http import JsonResponse
+import json
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
+from django.shortcuts import render, get_object_or_404
+from core.tournament.models.tournament import Tournament
+
+from django.shortcuts import render, get_object_or_404
+
+from core.tournament.serializers.tournament import TournamentSerializer
+from django.http import JsonResponse
+
+from django.shortcuts import render, get_object_or_404
+from core.tournament.models.tournament import Tournament
 
 def get_date_range_statistics(date_range):
     now = timezone.now()
@@ -85,14 +107,84 @@ def admin_dashboard(request):
 
 @login_required(login_url='/auth/login/')
 def waitlist_view(request):
-    waitlist_entries = WaitlistEntry.objects.get_all_wailtlist_entries()
+    waitlist_entries = WaitlistEntry.objects.get_all_waitlist_entries()
     return render(request, 'admin/pages/waitlist.html', {'waitlist_entries': waitlist_entries})
 
+@login_required(login_url='/auth/login/')
+@require_POST
 def approve_waitlist_entry(request, entry_id):
     if request.method == "POST":
+        entry = get_object_or_404(WaitlistEntry, id=entry_id)
         try:
-            entry = WaitlistEntry.objects.approve_waitlist_entry(entry_id)
-            return JsonResponse({'status': 'success', 'message': 'Entry approved successfully'})
-        except WaitlistEntry.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Entry not found'}, status=404)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+            # Process approval logic
+            entry.admin_granted_access = True
+            entry.save()
+
+            # Optionally send email notification
+            # send_mail(...)
+
+            return JsonResponse({'status': 'success', 'message': 'Entry approved successfully', 'full_name': entry.full_name})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+
+@login_required(login_url='/auth/login/')
+@require_POST
+def mass_approve_waitlist_entries(request):
+    try:
+        data = json.loads(request.body)
+        entry_ids = data.get('entry_ids', [])
+
+        if not entry_ids:
+            return JsonResponse({'status': 'error', 'message': 'No entries selected'}, status=400)
+
+        approved_entries = []
+        for entry_id in entry_ids:
+            try:
+                entry = WaitlistEntry.objects.get(id=entry_id)
+                entry.admin_granted_access = True
+                entry.save()
+                approved_entries.append(entry.full_name)
+            except WaitlistEntry.DoesNotExist:
+                continue
+
+        return JsonResponse({'status': 'success', 'message': 'Entries approved successfully', 'approved_entries': approved_entries})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+@login_required(login_url='/auth/login/')
+def user_list(request):
+    search_query = request.GET.get('search', '')
+    page_number = request.GET.get('page', 1)
+
+    users = User.objects.filter(username__icontains=search_query).order_by('username')
+    paginator = Paginator(users, 10)  # 10 users per page
+
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'search_query': search_query
+    }
+    return render(request, 'admin/pages/user_list.html', context)
+
+@login_required(login_url='/auth/login/')
+def user_detail(request, user_id):
+    user = get_object_or_404(User, public_id=user_id)
+
+    context = {
+        'user': user
+    }
+    return render(request, 'admin/pages/user_detail.html', context)
+
+@login_required
+def tournament_list(request):
+    tournaments = Tournament.objects.all()
+    return render(request, 'admin/pages/tournament_list.html', {'tournaments': tournaments})
+
+@login_required
+def tournament_detail(request, tournament_id):
+    tournament = get_object_or_404(Tournament, id=tournament_id)
+    return render(request, 'admin/pages/tournament_detail.html', {'tournament': tournament})
+

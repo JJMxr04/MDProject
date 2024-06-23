@@ -3,18 +3,24 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Waitlist Entries</h2>
+    <div class="mb-3">
+        <input type="text" id="search-box" class="form-control" placeholder="Search...">
+    </div>
+    <button class="btn btn-primary mb-3" id="mass-approve-btn">Mass Approve</button>
     <table class="table table-striped">
         <thead>
             <tr>
+                <th><input type="checkbox" id="select-all"></th>
                 <th>Email</th>
                 <th>Full Name</th>
                 <th>Description</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="waitlist-entries">
             {% for entry in waitlist_entries %}
-            <tr>
+            <tr data-entry-id="{{ entry.id }}">
+                <td><input type="checkbox" class="entry-checkbox"></td>
                 <td>{{ entry.email }}</td>
                 <td>{{ entry.full_name }}</td>
                 <td>{{ entry.description }}</td>
@@ -27,31 +33,105 @@
     </table>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Approval Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You have approved <span id="approved-count"></span> people:
+                <ul id="approved-names"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const approveButtons = document.querySelectorAll('.approve-btn');
+    const massApproveBtn = document.getElementById('mass-approve-btn');
+    const selectAllCheckbox = document.getElementById('select-all');
+    const entryCheckboxes = document.querySelectorAll('.entry-checkbox');
+    const searchBox = document.getElementById('search-box');
 
-    approveButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const entryId = this.getAttribute('data-entry-id');
+    function sendApprovalRequest(entryIds, callback) {
+        fetch('/web/admin/waitlist/mass_approve/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ entry_ids: entryIds })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                callback(data);
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
-            fetch(`/waitlist/approve/${entryId}/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert(data.message);
-                    location.reload();
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
+    massApproveBtn.addEventListener('click', function() {
+        const selectedEntries = [];
+        entryCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedEntries.push(checkbox.closest('tr').getAttribute('data-entry-id'));
+            }
+        });
+
+        if (selectedEntries.length > 0) {
+            const approvedNames = [];
+            let approvedCount = 0;
+
+            sendApprovalRequest(selectedEntries, function(data) {
+                data.approved_entries.forEach(name => {
+                    approvedCount++;
+                    approvedNames.push(name);
+                });
+
+                document.getElementById('approved-count').innerText = approvedCount;
+                const approvedNamesList = document.getElementById('approved-names');
+                approvedNamesList.innerHTML = '';
+                approvedNames.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    approvedNamesList.appendChild(li);
+                });
+
+                new bootstrap.Modal(document.getElementById('confirmationModal')).show();
+                location.reload(); // Consider removing this line if you want to handle refresh differently
+            });
+        } else {
+            alert('Please select at least one entry to approve.');
+        }
+    });
+
+    selectAllCheckbox.addEventListener('change', function() {
+        entryCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+
+    searchBox.addEventListener('input', function() {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#waitlist-entries tr');
+
+        rows.forEach(row => {
+            const email = row.children[1].textContent.toLowerCase();
+            const fullName = row.children[2].textContent.toLowerCase();
+            if (email.includes(filter) || fullName.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
         });
     });
 });

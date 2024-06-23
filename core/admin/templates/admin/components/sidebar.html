@@ -1,7 +1,7 @@
-<div class="d-flex flex-column p-3">
+<div class="d-flex flex-column p-3" id="sidebar-menu">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/web/admin/dashboard/" class="nav-link active" aria-current="page">
+            <a href="/web/admin/dashboard/" class="nav-link" aria-current="page">
                 <i class="fas fa-home"></i> Dashboard
             </a>
         </li>
@@ -11,8 +11,13 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link">
+            <a href="/web/admin/users/" class="nav-link">
                 <i class="fas fa-users"></i> Users
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'core_admin:tournament-list' %}" class="nav-link">
+                <i class="fas fa-trophy"></i> Tournaments
             </a>
         </li>
         <li>
@@ -20,10 +25,19 @@
                 <i class="fas fa-cog"></i> Settings
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-        </li>
+        {% if user.is_authenticated %}
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link nav-link"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'login' %}" class="nav-link">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </li>
+            {% endif %}
     </ul>
 </div>
