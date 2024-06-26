@@ -1,43 +1,50 @@
-<div class="d-flex flex-column p-3" id="sidebar-menu">
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="/web/admin/dashboard/" class="nav-link" aria-current="page">
-                <i class="fas fa-home"></i> Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="/web/admin/waitlist/" class="nav-link">
-                <i class="fas fa-users"></i> Waitlist
-            </a>
-        </li>
-        <li>
-            <a href="/web/admin/users/" class="nav-link">
-                <i class="fas fa-users"></i> Users
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'core_admin:tournament-list' %}" class="nav-link">
-                <i class="fas fa-trophy"></i> Tournaments
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link">
-                <i class="fas fa-cog"></i> Settings
-            </a>
-        </li>
-        {% if user.is_authenticated %}
-            <li>
+{% load i18n %}
+
+<div class="sidebar">
+    <div class="d-flex flex-column p-3">
+        <h1 class="site-name border-bottom pb-3">{% trans "PS | ADMIN" %}</h1>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-home me-2"></i> {% trans "Dashboard" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users me-2"></i> {% trans "Waitlist" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users me-2"></i> {% trans "Users" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-trophy me-2"></i> {% trans "Tournaments" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog me-2"></i> {% trans "Settings" %}
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-link nav-link"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    <button type="submit" class="btn btn-link nav-link">
+                        <i class="fas fa-sign-out-alt me-2"></i> {% trans "Logout" %}
+                    </button>
                 </form>
             </li>
             {% else %}
-            <li>
+            <li class="nav-item">
                 <a href="{% url 'login' %}" class="nav-link">
-                    <i class="fas fa-sign-in-alt"></i> Login
+                    <i class="fas fa-sign-in-alt me-2"></i> {% trans "Login" %}
                 </a>
             </li>
             {% endif %}
-    </ul>
+        </ul>
+    </div>
 </div>

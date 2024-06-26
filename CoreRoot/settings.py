@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
 
-    #MDProject Models
+    # MDProject Models
     'core.commands',
     'core',
     'core.user',
@@ -59,13 +59,15 @@ INSTALLED_APPS = [
     'core.event',
     'core.game',
     'core.match',
-    'core.admin',
     'core.tournament',
     # 'core.ollama',
     'core.web',
-    'core.portal'
+    'core.portal',
 
+    # Custom admin app configuration
+    'core.admin.CoreAdminConfig',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,10 +85,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'CoreRoot.urls'
 
+BASE_DIR_TEMPS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR_TEMPS, 'core', 'admin', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,8 +119,6 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 #         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
 #     }
 # }
-
-import os
 
 DATABASES = {
     'default': {

@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: linear-gradient(to right, #FFE47A, #3D7EAA);
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 250px); /* Initial state with sidebar */
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+.navbar.collapsed {
+    width: 100%; /* Full width when sidebar is collapsed */
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    background-color: #1E90FF;
+    color: #3D7EAA;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+.sidebar {
+    background-color: #FFE47A;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-250px);
+}
+
+.sidebar .nav-link {
+    color: black;
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: #3D7EAA;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: white;
+    background-color: #3D7EAA;
+}
+
+.btn-primary {
+    --bs-btn-color: black;
+    --bs-btn-bg: #FFE47E;
+}
+
+.comp-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    margin-left: 270px; /* Initial state with sidebar */
+    margin-top: 70px;
+    transition: margin-left 0.3s ease;
+}
+
+.comp-container.collapsed {
+    margin-left: 20px; /* Adjusted margin when sidebar is collapsed */
+}
+
+.footer-container {
+    background: #3D7EAA;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.footer {
+    background-color: transparent;
+    padding: 20px;
+    margin-top: auto;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 260px; /* Initial state with sidebar */
+    z-index: 1100;
+    transition: left 0.3s ease;
+}
+
+/* Update to handle toggle button movement */
+.sidebar.collapsed + .toggle-btn,
+.sidebar.collapsed ~ .toggle-btn {
+    left: 10px; /* Adjusted position when sidebar is collapsed */
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%;
+    }
+    .comp-container {
+        margin-left: 20px;
+        margin-top: 60px;
+    }
+    .toggle-btn {
+        left: 10px;
+    }
+    .sidebar {
+        transform: translateX(-250px);
+    }
+    .sidebar.collapsed {
+        transform: translateX(0);
+    }
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0;
+}

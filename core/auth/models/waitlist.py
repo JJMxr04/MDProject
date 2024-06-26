@@ -47,6 +47,7 @@ class WaitlistEntry(models.Model):
     email = models.EmailField(unique=True)
     description = models.TextField(blank=True)
     full_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20, blank=True)  # New field
     registered = models.BooleanField(default=False)
     registered_at = models.DateTimeField(null=True, blank=True)
     activated = models.BooleanField(default=False)
