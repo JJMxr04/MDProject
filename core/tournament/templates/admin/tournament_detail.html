@@ -84,7 +84,7 @@
     <!-- Add more fields as needed -->
 
     <div class="tournament-bracket">
-        {% regroup tournament.rounds.all|dictsort:"level_num" by level_num as round_groups %}
+        {% regroup tournament.rounds.all|dictsortreversed:"level_num" by level_num as round_groups %}
         {% for round_group in round_groups %}
             <div class="round-group">
                 <h2>Round {{ round_group.grouper }}</h2>
