@@ -170,10 +170,16 @@ class RoundAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'tournament_name', 'level_num', 'match', 'next_round',
         'prev_round_1', 'prev_round_2', 'player_1', 'player_2',
-        'winner', 'completed'
+        'winner', 'completed', 'view_round_link'
     ]
     list_filter = ['tournament__name', 'level_num', 'completed']
     search_fields = ['tournament__name', 'player_1__player__username', 'player_2__player__username']
+
+    def view_round_link(self, obj):
+        url = reverse('admin:core_tournament_round_change', args=[obj.id])
+        return format_html('<a href="{}">View Round</a>', url)
+
+    view_round_link.short_description = 'Round Actions'
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -182,9 +188,6 @@ class RoundAdmin(admin.ModelAdmin):
             'prev_round_2', 'player_1', 'player_2', 'winner'
         )
         return queryset
-
-    def get_readonly_fields(self, request, obj=None):
-        return [field.name for field in self.model._meta.fields]
 
     def tournament_name(self, obj):
         return obj.tournament.name
