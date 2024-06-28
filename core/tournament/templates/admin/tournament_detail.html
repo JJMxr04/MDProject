@@ -1,0 +1,111 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block extrahead %}
+    <style>
+    .tournament-bracket {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .round-group {
+        flex: 0 0 auto;
+        width: auto;
+        margin-right: 20px; /* Adjust spacing between round groups */
+        display: inline-block;
+        vertical-align: top;
+        border: 1px solid #ccc;
+        padding: 10px;
+        min-width: 400px; /* Minimum width for each round group */
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: 400px; /* Limit height for vertical scrolling */
+    }
+
+    .round-group h2 {
+        margin-top: 0;
+        font-size: 18px;
+        background-color: #f0f0f0;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .round {
+        margin-top: 15px;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+    }
+
+    .match {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .match p {
+        margin: 0 10px; /* Adjust spacing between player names */
+    }
+
+    .match span {
+        margin: 0 10px;
+        font-weight: bold;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="model-detail">
+    <h1>{{ tournament.name }}</h1>
+    <p>Start Date: {{ tournament.start_date }}</p>
+    <p>End Date: {{ tournament.end_date }}</p>
+    <!-- Add more fields as needed -->
+
+    <div class="tournament-bracket">
+        {% regroup tournament.rounds.all|dictsort:"level_num" by level_num as round_groups %}
+        {% for round_group in round_groups %}
+            <div class="round-group">
+                <h2>Round {{ round_group.grouper }}</h2>
+                {% for round in round_group.list %}
+                    {% if forloop.first %}
+                        {% with round.prev_round_1 as prev_round %}
+                            {% if prev_round %}
+                                <h3>From Previous Round {{ prev_round.level_num }}</h3>
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
+                    <div class="round">
+                        <p><strong>Match Status:</strong> {% if round.match %} Completed {% else %} In Progress {% endif %}</p>
+                        <p><strong>Winner:</strong> {% if round.winner %} {{ round.winner.player.username }} {% else %} TBD {% endif %}</p>
+                        {% if round.match %}
+                            <div class="match">
+                                <p>{{ round.player_1.player.username }}</p>
+                                <span>VS</span>
+                                <p>{{ round.player_2.player.username }}</p>
+                            </div>
+                        {% else %}
+                            <p>No match scheduled for this round yet.</p>
+                        {% endif %}
+                    </div>
+                    {% if forloop.last %}
+                        {% with round.prev_round_2 as prev_round %}
+                            {% if prev_round %}
+                                <h3>From Previous Round {{ prev_round.level_num }}</h3>
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
