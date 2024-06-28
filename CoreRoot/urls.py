@@ -2,7 +2,6 @@
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
 
@@ -10,11 +9,7 @@ urlpatterns = [
     path('admin/dashboard/', custom_admin_view, name='custom_dashboard'),
     path('admin/', admin.site.urls),
     path('api/', include(('core.routers', 'core'), namespace="core-api")),
-    path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
-    path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
-    path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
-    path('web/admin/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
     # Ensure namespace is 'core-web'  # Correct namespace
 ]
 

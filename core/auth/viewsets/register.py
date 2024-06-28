@@ -1,3 +1,5 @@
+import os
+
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework.permissions import AllowAny
@@ -18,13 +20,13 @@ class RegisterViewSet(ViewSet):
         serializer.is_valid(raise_exception=True)
 
         user_temp = serializer.validated_data
-
-        # Check if admin has granted access
-        if WaitlistEntry.objects.filter(email=user_temp.get('email'), admin_granted_access=True).exists():
-            # If admin has granted access, set activated to True
-            WaitlistEntry.objects.filter(email=user_temp.get('email')).update(activated=True)
-        else:
-            return Response({"detail": "You have not been approved to register"}, status=status.HTTP_400_BAD_REQUEST)
+        if os.getenv("WAITLIST_BOOL"):
+            # Check if admin has granted access
+            if WaitlistEntry.objects.filter(email=user_temp.get('email'), admin_granted_access=True).exists():
+                # If admin has granted access, set activated to True
+                WaitlistEntry.objects.filter(email=user_temp.get('email')).update(activated=True)
+            else:
+                return Response({"detail": "You have not been approved to register"}, status=status.HTTP_400_BAD_REQUEST)
 
         user = serializer.save()
         email.send_activation_email(user, request)

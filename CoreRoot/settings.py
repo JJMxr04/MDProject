@@ -28,10 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = os.getenv('DEBUG')
 # DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     # MDProject Models
-    'core.commands',
+    # 'core.commands',
     'core',
     'core.user',
     'core.auth',
@@ -61,11 +61,11 @@ INSTALLED_APPS = [
     'core.match',
     'core.tournament',
     # 'core.ollama',
-    'core.web',
-    'core.portal',
+    # 'core.web',
+    # 'core.portal',
 
     # Custom admin app configuration
-    'core.admin.CoreAdminConfig',
+    # 'core.admin.CoreAdminConfig',
 ]
 
 
@@ -122,23 +122,23 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'ENGINE': os.getenv('DBENGINE', 'django.db.backends.postgresql'),
         'NAME': 'mdproject',  # Main database name
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST', 'localhost'),
-        'PORT': os.environ.get('DBPORT', '5432'),
+        'HOST': os.getenv('DBHOST', 'localhost'),
+        'PORT': os.getenv('DBPORT', '5432'),
         'TEST': {
             'SERIALIZE': True,
         },
     },
     'test_mirror': {
-        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'ENGINE': os.getenv('DBENGINE', 'django.db.backends.postgresql'),
         'NAME': 'mdproject',  # Mirroring the same main database
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST', 'localhost'),
-        'PORT': os.environ.get('DBPORT', '5432'),
+        'HOST': os.getenv('DBHOST', 'localhost'),
+        'PORT': os.getenv('DBPORT', '5432'),
         'TEST': {
             'MIRROR': 'default',  # Mirror the default database
         },
@@ -147,12 +147,12 @@ DATABASES = {
 
 
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 # Password validation

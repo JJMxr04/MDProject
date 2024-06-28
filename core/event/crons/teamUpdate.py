@@ -88,11 +88,11 @@ class TeamCron():
         return full_url
 
     def get_team_api(self, team_name):
-        url = "https://sofascore.p.rapidapi.com/teams/search"
+        url = f"https://{os.getenv("RAPID_SOFASCORE_DOMAIN")}/teams/search"
         querystring = {"name": f"{team_name}"}
         headers = {
-            "X-RapidAPI-Key": "5e67f9e23emsh42a3758bd291b0bp1ed121jsnc118f34dcfda",
-            "X-RapidAPI-Host": "sofascore.p.rapidapi.com"
+            "X-RapidAPI-Key": f"{os.getenv("RAPID_API_KEY")}",
+            "X-RapidAPI-Host": f"{os.getenv("RAPID_SOFASCORE_DOMAIN")}"
         }
         response = requests.get(url, headers=headers, params=querystring)
 

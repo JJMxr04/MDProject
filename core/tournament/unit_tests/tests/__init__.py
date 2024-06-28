@@ -1,1 +1,0 @@
-from .tournament_test_1 import tournament_test_1
