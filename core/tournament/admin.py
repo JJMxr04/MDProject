@@ -35,6 +35,8 @@ class TournamentAdmin(admin.ModelAdmin):
 
         context = {
             'tournament': tournament_with_rounds,
+            'opts': self.model._meta,  # Add this line to ensure breadcrumbs are rendered
+            'original': tournament,    # Add this line to ensure breadcrumbs are rendered
         }
 
         return render(request, 'admin/tournament_detail.html', context)
@@ -42,11 +44,43 @@ class TournamentAdmin(admin.ModelAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ['id', 'tournament', 'player', 'seed', 'division']
-    list_filter = ['tournament']
-    search_fields = ['player__username', 'player__email', 'tournament__name']  # Added tournament__name for searching by tournament name
+    list_display = ['tournament_name', 'player', 'seed', 'division']
+    list_filter = ['tournament__name']
+    search_fields = ['tournament__name', 'player__username', 'player__email']
 
-    # Optionally, you can override queryset to prefetch related objects to optimize admin list display
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('player')
+        return super().get_queryset(request).select_related('tournament', 'player')
 
+    def tournament_name(self, obj):
+        return obj.tournament.name
+
+    tournament_name.admin_order_field = 'tournament'  # Allows sorting by tournament name
+
+@admin.register(InvitedPlayer)
+class InvitedPlayerAdmin(admin.ModelAdmin):
+    list_display = ['tournament_name', 'player', 'accepted', 'accepted_date', 'invited_date']
+    list_filter = ['tournament__name', 'accepted']
+    search_fields = ['tournament__name', 'player__username', 'player__email']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('tournament', 'player')
+
+    def tournament_name(self, obj):
+        return obj.tournament.name
+
+    tournament_name.admin_order_field = 'tournament'  # Allows sorting by tournament name
+
+
+@admin.register(Round)
+class RoundAdmin(admin.ModelAdmin):
+    list_display = ['tournament_name', 'level_num', 'player_1', 'player_2', 'winner', 'completed']
+    list_filter = ['tournament__name', 'level_num', 'completed']
+    search_fields = ['tournament__name', 'player_1__player__username', 'player_2__player__username']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('tournament', 'player_1__player', 'player_2__player', 'winner')
+
+    def tournament_name(self, obj):
+        return obj.tournament.name
+
+    tournament_name.admin_order_field = 'tournament'  # Allows sorting by tournament name
