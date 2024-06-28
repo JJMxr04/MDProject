@@ -17,10 +17,10 @@ def custom_admin_view(request):
 
     waitlist_signups, user_registrations, date_format = get_date_range_statistics(date_range)
 
-    # Additional statistics
     total_users = User.objects.count()
     total_tournaments = Tournament.objects.count()
 
+    # Prepare data in the correct format for the template
     context = {
         'waitlist_signups': sum(waitlist_signups.values()),
         'user_registrations': sum(user_registrations.values()),
@@ -33,6 +33,7 @@ def custom_admin_view(request):
         'total_tournaments': total_tournaments,
     }
     return TemplateResponse(request, "admin/dashboard/dashboard.html", context)
+
 
 def get_date_range_statistics(date_range):
     now = timezone.now()

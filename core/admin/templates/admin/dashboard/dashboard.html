@@ -90,7 +90,7 @@
 </style>
 
 <div class="container">
-    <h1 class="mt-4 text-center">Welcome to the Admin Dashboard</h1>
+    <h1 class="mt-4">Welcome to the Admin Dashboard</h1>
 
     <!-- Waitlist Signups card -->
     <div class="kanban-card waitlist">
@@ -133,32 +133,47 @@
     </div>
 
     <!-- Date Range and Chart Type selection -->
-    <div class="card mb-4">
-        <div class="card-header bg-light">
-            <h4 class="mb-0">Date Range and Chart Type</h4>
-        </div>
-        <div class="card-body">
-            <div class="row date-chart-selection">
-                <!-- Date Range card -->
-                <div class="col-lg-6 col-md-12 mb-3">
-                    <label for="date_range">Select Date Range:</label>
-                    <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
-                        <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
-                        <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
-                        <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
-                        <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
-                        <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
-                    </select>
-                    <input type="hidden" name="chart_type" value="{{ chart_type }}">
+    <div class="row mb-4">
+        <!-- Date Range card -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header">Date Range</div>
+                <div class="card-body">
+                    <!-- Date Range form -->
+                    <form method="get">
+                        <!-- Select Date Range dropdown -->
+                        <div class="form-group">
+                            <label for="date_range">Select Date Range:</label>
+                            <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
+                                <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
+                                <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
+                                <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
+                                <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
+                                <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
+                            </select>
+                            <input type="hidden" name="chart_type" value="{{ chart_type }}">
+                        </div>
+                    </form>
                 </div>
-                <!-- Chart Type card -->
-                <div class="col-lg-6 col-md-12 mb-3">
-                    <label for="chart_type">Select Chart Type:</label>
-                    <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
-                        <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
-                        <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
-                    </select>
-                    <input type="hidden" name="date_range" value="{{ date_range }}">
+            </div>
+        </div>
+        <!-- Chart Type card -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header">Chart Type</div>
+                <div class="card-body">
+                    <!-- Chart Type form -->
+                    <form method="get">
+                        <!-- Select Chart Type dropdown -->
+                        <div class="form-group">
+                            <label for="chart_type">Select Chart Type:</label>
+                            <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
+                                <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
+                                <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
+                            </select>
+                            <input type="hidden" name="date_range" value="{{ date_range }}">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -166,9 +181,7 @@
 
     <!-- Chart -->
     <div class="card mb-4">
-        <div class="card-header bg-light">
-            <h4 class="mb-0">Chart</h4>
-        </div>
+        <div class="card-header">Chart</div>
         <div class="card-body">
             <div id="myChartContainer">
                 <canvas id="myChart"></canvas>
