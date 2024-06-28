@@ -1,0 +1,90 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block extrastyle %}
+    <style>
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            margin-bottom: 20px; /* Add margin for better spacing */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Button styles */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Breadcrumb styles */
+        .breadcrumbs {
+            margin-bottom: 10px;
+            background-color: #f3f3f3;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .breadcrumbs a {
+            color: #333;
+            text-decoration: none;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h2>Invite Players to Tournament: {{ tournament.name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button">Invite Selected Players</button><br><br>
+        <label>Select players to invite:</label><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td><input type="checkbox" name="players" value="{{ user.id }}"></td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+    </form>
+{% endblock %}
