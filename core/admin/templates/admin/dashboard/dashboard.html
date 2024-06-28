@@ -1,110 +1,216 @@
-{% extends "admin/base_admin.html" %}
+{% extends "admin/base_site.html" %}
+{% load i18n %}
 
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mt-4">Welcome to the Admin Dashboard</h1>
+<style>
+    .kanban-card {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: calc(50% - 20px); /* Adjust width to fit two cards per row */
+        display: inline-block;
+        vertical-align: top;
+    }
 
-        <div class="row my-4">
-            <div class="col-lg-6 col-md-12">
-                <div class="card text-white bg-danger mb-3">
-                    <div class="card-header">Waitlist Signups</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ waitlist_signups }}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">User Registrations</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ user_registrations }}</h5>
-                    </div>
-                </div>
-            </div>
+    .kanban-card-header {
+        background-color: #f0f0f0;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .kanban-card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .kanban-card-body {
+        padding: 10px 0;
+    }
+
+    .kanban-card-data {
+        font-size: 20px;
+    }
+
+    /* Adjust responsiveness for smaller screens */
+    @media (max-width: 768px) {
+        .kanban-card {
+            width: 100%; /* Full width on smaller screens */
+        }
+    }
+
+    /* Ensure cards fit their content */
+    .kanban-card {
+        width: auto; /* Adjust width to fit content */
+        min-width: 200px; /* Minimum width for cards */
+        max-width: 100%; /* Maximum width to prevent overflow */
+    }
+
+    /* Background colors synced with Chart.js */
+    .kanban-card.waitlist {
+        background-color: rgba(255, 99, 132, 0.1); /* Match with 'Waitlist Signups' graph color */
+    }
+
+    .kanban-card.user-registrations {
+        background-color: rgba(54, 162, 235, 0.1); /* Match with 'User Registrations' graph color */
+    }
+
+    /* Adjust chart size */
+    #myChartContainer {
+        width: 100%;
+        max-width: 800px; /* Adjust maximum width as needed */
+        height: 400px; /* Adjust height as needed */
+        margin: auto; /* Center align the chart */
+    }
+
+    /* Center align the form elements */
+    .date-chart-selection {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Card style */
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background-color: #f0f0f0;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="mt-4 text-center">Welcome to the Admin Dashboard</h1>
+
+    <!-- Waitlist Signups card -->
+    <div class="kanban-card waitlist">
+        <div class="kanban-card-header bg-danger">
+            <span class="kanban-card-title text-white">Waitlist Signups</span>
         </div>
-
-        <div class="row mb-4">
-            <div class="col-lg-6 col-md-12">
-                <div class="card">
-                    <div class="card-header">Date Range</div>
-                    <div class="card-body">
-                        <form method="get">
-                            <div class="form-group">
-                                <label for="date_range">Select Date Range:</label>
-                                <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
-                                    <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
-                                    <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
-                                    <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
-                                    <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
-                                    <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
-                                </select>
-                                <input type="hidden" name="chart_type" value="{{ chart_type }}">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="card">
-                    <div class="card-header">Chart Type</div>
-                    <div class="card-body">
-                        <form method="get">
-                            <div class="form-group">
-                                <label for="chart_type">Select Chart Type:</label>
-                                <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
-                                    <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
-                                    <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
-                                </select>
-                                <input type="hidden" name="date_range" value="{{ date_range }}">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="kanban-card-body">
+            <div class="kanban-card-data text-danger">{{ waitlist_signups }}</div>
         </div>
+    </div>
 
-        <div class="card mb-4">
-            <div class="card-header">Chart</div>
-            <div class="card-body">
-                <canvas id="myChart"></canvas>
+    <!-- User Registrations card -->
+    <div class="kanban-card user-registrations">
+        <div class="kanban-card-header bg-primary">
+            <span class="kanban-card-title text-white">User Registrations</span>
+        </div>
+        <div class="kanban-card-body">
+            <div class="kanban-card-data text-primary">{{ user_registrations }}</div>
+        </div>
+    </div>
+
+    <!-- Total Users card -->
+    <div class="kanban-card">
+        <div class="kanban-card-header bg-success">
+            <span class="kanban-card-title text-white">Total Users</span>
+        </div>
+        <div class="kanban-card-body">
+            <div class="kanban-card-data text-success">{{ total_users }}</div>
+        </div>
+    </div>
+
+    <!-- Total Tournaments card -->
+    <div class="kanban-card">
+        <div class="kanban-card-header bg-info">
+            <span class="kanban-card-title text-white">Total Tournaments</span>
+        </div>
+        <div class="kanban-card-body">
+            <div class="kanban-card-data text-info">{{ total_tournaments }}</div>
+        </div>
+    </div>
+
+    <!-- Date Range and Chart Type selection -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h4 class="mb-0">Date Range and Chart Type</h4>
+        </div>
+        <div class="card-body">
+            <div class="row date-chart-selection">
+                <!-- Date Range card -->
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label for="date_range">Select Date Range:</label>
+                    <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
+                        <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
+                        <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
+                        <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
+                        <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
+                        <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
+                    </select>
+                    <input type="hidden" name="chart_type" value="{{ chart_type }}">
+                </div>
+                <!-- Chart Type card -->
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label for="chart_type">Select Chart Type:</label>
+                    <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
+                        <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
+                        <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
+                    </select>
+                    <input type="hidden" name="date_range" value="{{ date_range }}">
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: '{{ chart_type }}',
-            data: {
-                labels: {{ labels|safe }},
-                datasets: [
-                    {
-                        label: 'Waitlist Signups',
-                        data: {{ waitlist_data|safe }},
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'User Registrations',
-                        data: {{ registration_data|safe }},
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    <!-- Chart -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h4 class="mb-0">Chart</h4>
+        </div>
+        <div class="card-body">
+            <div id="myChartContainer">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: '{{ chart_type }}',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [
+                {
+                    label: 'Waitlist Signups',
+                    data: {{ waitlist_data|safe }},
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'User Registrations',
+                    data: {{ registration_data|safe }},
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Allow the chart to resize based on container size
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
 {% endblock content %}

@@ -1,133 +1,38 @@
 from django.contrib import admin
 from django.urls import path
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
+from django.template.response import TemplateResponse
+from django.utils import timezone
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth, ExtractDay
-from django.utils import timezone
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
-from core.auth.models.waitlist import WaitlistEntry
 from core.user.models import User
 from core.tournament.models.tournament import Tournament
 import calendar
-import json
+from core.auth.models.waitlist import WaitlistEntry
 
-# Custom admin view for dashboard
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-@method_decorator(csrf_protect, name='dispatch')
-def admin_dashboard(request):
+@staff_member_required
+def custom_admin_view(request):
     date_range = request.GET.get('date_range', 'last_7_days')
     chart_type = request.GET.get('chart_type', 'bar')
 
     waitlist_signups, user_registrations, date_format = get_date_range_statistics(date_range)
 
-    now = timezone.now()
-
-    if date_range == 'last_7_days':
-        days = [(now - timezone.timedelta(days=i)).strftime(date_format) for i in range(6, -1, -1)]
-        waitlist_data = [waitlist_signups.get((now - timezone.timedelta(days=i)).day, 0) for i in range(6, -1, -1)]
-        registration_data = [user_registrations.get((now - timezone.timedelta(days=i)).day, 0) for i in range(6, -1, -1)]
-    elif date_range == 'monthly':
-        days_in_month = (now - timezone.timedelta(days=now.day)).day
-        days = [str(i).zfill(2) for i in range(1, days_in_month + 1)]
-        waitlist_data = [waitlist_signups.get(i, 0) for i in range(1, days_in_month + 1)]
-        registration_data = [user_registrations.get(i, 0) for i in range(1, days_in_month + 1)]
-    else:
-        months = [calendar.month_abbr[i] for i in range(1, 13)]
-        waitlist_data = [waitlist_signups.get(i, 0) for i in range(1, 13)]
-        registration_data = [user_registrations.get(i, 0) for i in range(1, 13)]
+    # Additional statistics
+    total_users = User.objects.count()
+    total_tournaments = Tournament.objects.count()
 
     context = {
-        'waitlist_signups': sum(waitlist_data),
-        'user_registrations': sum(registration_data),
+        'waitlist_signups': sum(waitlist_signups.values()),
+        'user_registrations': sum(user_registrations.values()),
         'date_range': date_range,
         'chart_type': chart_type,
-        'labels': days if date_range in ['last_7_days', 'monthly'] else months,
-        'waitlist_data': waitlist_data,
-        'registration_data': registration_data,
+        'labels': get_labels(date_range),
+        'waitlist_data': get_waitlist_data(waitlist_signups, date_range),
+        'registration_data': get_registration_data(user_registrations, date_range),
+        'total_users': total_users,
+        'total_tournaments': total_tournaments,
     }
-    return render(request, 'admin/dashboard/dashboard.html', context)
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-def waitlist_view(request):
-    waitlist_entries = WaitlistEntry.objects.get_all_waitlist_entries()
-    return render(request, 'admin/pages/waitlist.html', {'waitlist_entries': waitlist_entries})
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-@require_POST
-def approve_waitlist_entry(request, entry_id):
-    if request.method == "POST":
-        entry = get_object_or_404(WaitlistEntry, id=entry_id)
-        try:
-            entry.admin_granted_access = True
-            entry.save()
-            return JsonResponse({'status': 'success', 'message': 'Entry approved successfully', 'full_name': entry.full_name})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-@require_POST
-def mass_approve_waitlist_entries(request):
-    try:
-        data = json.loads(request.body)
-        entry_ids = data.get('entry_ids', [])
-
-        if not entry_ids:
-            return JsonResponse({'status': 'error', 'message': 'No entries selected'}, status=400)
-
-        approved_entries = []
-        for entry_id in entry_ids:
-            try:
-                entry = WaitlistEntry.objects.get(id=entry_id)
-                entry.admin_granted_access = True
-                entry.save()
-                approved_entries.append(entry.full_name)
-            except WaitlistEntry.DoesNotExist:
-                continue
-
-        return JsonResponse({'status': 'success', 'message': 'Entries approved successfully', 'approved_entries': approved_entries})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-def user_list(request):
-    search_query = request.GET.get('search', '')
-    page_number = request.GET.get('page', 1)
-
-    users = User.objects.filter(username__icontains=search_query).order_by('username')
-    paginator = Paginator(users, 10)
-
-    page_obj = paginator.get_page(page_number)
-
-    context = {
-        'page_obj': page_obj,
-        'search_query': search_query
-    }
-    return render(request, 'admin/pages/user_list.html', context)
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-def user_detail(request, user_id):
-    user = get_object_or_404(User, public_id=user_id)
-
-    context = {
-        'user': user
-    }
-    return render(request, 'admin/pages/user_detail.html', context)
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-def tournament_list(request):
-    tournaments = Tournament.objects.all()
-    return render(request, 'admin/pages/tournament_list.html', {'tournaments': tournaments})
-
-@method_decorator(login_required(login_url='/auth/login/'), name='dispatch')
-def tournament_detail(request, tournament_id):
-    tournament = get_object_or_404(Tournament, id=tournament_id)
-    return render(request, 'admin/pages/tournament_detail.html', {'tournament': tournament})
+    return TemplateResponse(request, "admin/dashboard/dashboard.html", context)
 
 def get_date_range_statistics(date_range):
     now = timezone.now()
@@ -166,24 +71,48 @@ def get_date_range_statistics(date_range):
 
     return waitlist_signups, user_registrations, date_format
 
-class MyAdminSite(admin.AdminSite):
-    site_header = 'My Administration'
+def get_labels(date_range):
+    now = timezone.now()
+    if date_range == 'last_7_days':
+        return [(now - timezone.timedelta(days=i)).strftime('%b %d') for i in range(6, -1, -1)]
+    elif date_range == 'monthly':
+        days_in_month = (now - timezone.timedelta(days=now.day)).day
+        return [str(i).zfill(2) for i in range(1, days_in_month + 1)]
+    else:
+        return [calendar.month_abbr[i] for i in range(1, 13)]
+
+def get_waitlist_data(waitlist_signups, date_range):
+    now = timezone.now()
+    if date_range == 'last_7_days':
+        return [waitlist_signups.get((now - timezone.timedelta(days=i)).day, 0) for i in range(6, -1, -1)]
+    elif date_range == 'monthly':
+        days_in_month = (now - timezone.timedelta(days=now.day)).day
+        return [waitlist_signups.get(i, 0) for i in range(1, days_in_month + 1)]
+    else:
+        return [waitlist_signups.get(i, 0) for i in range(1, 13)]
+
+def get_registration_data(user_registrations, date_range):
+    now = timezone.now()
+    if date_range == 'last_7_days':
+        return [user_registrations.get((now - timezone.timedelta(days=i)).day, 0) for i in range(6, -1, -1)]
+    elif date_range == 'monthly':
+        days_in_month = (now - timezone.timedelta(days=now.day)).day
+        return [user_registrations.get(i, 0) for i in range(1, days_in_month + 1)]
+    else:
+        return [user_registrations.get(i, 0) for i in range(1, 13)]
+
+# Custom admin site
+class CustomAdminSite(admin.AdminSite):
+    site_header = 'Custom Admin Dashboard'
 
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
-            path('dashboard/', self.admin_view(admin_dashboard), name='admin-dashboard'),
-            path('waitlist/', self.admin_view(waitlist_view), name='admin-waitlist'),
-            path('waitlist/approve/<int:entry_id>/', self.admin_view(approve_waitlist_entry), name='admin-approve-waitlist-entry'),
-            path('waitlist/mass-approve/', self.admin_view(mass_approve_waitlist_entries), name='admin-mass-approve-waitlist-entries'),
-            path('users/', self.admin_view(user_list), name='admin-user-list'),
-            path('users/<int:user_id>/', self.admin_view(user_detail), name='admin-user-detail'),
-            path('tournaments/', self.admin_view(tournament_list), name='admin-tournament-list'),
-            path('tournaments/<int:tournament_id>/', self.admin_view(tournament_detail), name='admin-tournament-detail'),
+            path('custom_dashboard/', self.admin_view(custom_admin_view), name='custom-dashboard'),
         ]
         return custom_urls + urls
 
-admin_site = MyAdminSite(name='myadmin')
+admin_site = CustomAdminSite(name='custom_admin')
 
 # Register your models with the custom admin site
 

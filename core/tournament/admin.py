@@ -10,7 +10,8 @@ from uuid import UUID  # Import UUID for type checking
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'start_date', 'end_date', 'view_detail_link', 'invite_players_link']
+    list_display = ['name', 'start_date', 'end_date', 'state', 'max_accepted_players', 'levels', 'winner', 'final_round',
+                    'view_detail_link', 'invite_players_link']
 
     def view_detail_link(self, obj):
         url = reverse('admin:%s_%s_custom_detail' % (self.model._meta.app_label, self.model._meta.model_name),
@@ -118,8 +119,9 @@ class TournamentAdmin(admin.ModelAdmin):
         return fieldsets
 
     def get_readonly_fields(self, request, obj=None):
-        readonly_fields = super().get_readonly_fields(request, obj=obj)
-        # Add or modify readonly_fields as needed
+        readonly_fields = list(super().get_readonly_fields(request, obj=obj))
+        if obj:  # If editing an existing object
+            readonly_fields.extend([field.name for field in obj._meta.fields if field.name not in ['name', 'start_date']])
         return readonly_fields
 
     def get_ordering(self, request):
@@ -131,7 +133,6 @@ class TournamentAdmin(admin.ModelAdmin):
         actions = super().get_actions(request)
         # Add or modify actions as needed
         return actions
-
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ['tournament_name', 'player', 'seed', 'division']
@@ -166,16 +167,27 @@ class InvitedPlayerAdmin(admin.ModelAdmin):
 
 @admin.register(Round)
 class RoundAdmin(admin.ModelAdmin):
-    list_display = ['tournament_name', 'level_num', 'player_1', 'player_2', 'winner', 'completed']
+    list_display = [
+        'id', 'tournament_name', 'level_num', 'match', 'next_round',
+        'prev_round_1', 'prev_round_2', 'player_1', 'player_2',
+        'winner', 'completed'
+    ]
     list_filter = ['tournament__name', 'level_num', 'completed']
     search_fields = ['tournament__name', 'player_1__player__username', 'player_2__player__username']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        # Customize queryset as needed, e.g., prefetch related fields
+        queryset = queryset.select_related(
+            'tournament', 'match', 'next_round', 'prev_round_1',
+            'prev_round_2', 'player_1', 'player_2', 'winner'
+        )
         return queryset
+
+    def get_readonly_fields(self, request, obj=None):
+        return [field.name for field in self.model._meta.fields]
 
     def tournament_name(self, obj):
         return obj.tournament.name
 
     tournament_name.admin_order_field = 'tournament'  # Allows sorting by tournament name
+
