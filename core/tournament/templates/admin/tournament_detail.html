@@ -3,63 +3,76 @@
 
 {% block extrahead %}
     <style>
-    .tournament-bracket {
-        display: flex;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding: 10px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
+        .tournament-bracket {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
 
-    .round-group {
-        flex: 0 0 auto;
-        width: auto;
-        margin-right: 20px; /* Adjust spacing between round groups */
-        display: inline-block;
-        vertical-align: top;
-        border: 1px solid #ccc;
-        padding: 10px;
-        min-width: 400px; /* Minimum width for each round group */
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        overflow-y: auto; /* Enable vertical scrolling */
-        max-height: 400px; /* Limit height for vertical scrolling */
-    }
+        .round-group {
+            flex: 0 0 auto;
+            width: auto;
+            margin-right: 20px; /* Adjust spacing between round groups */
+            display: inline-block;
+            vertical-align: top;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-width: 400px; /* Minimum width for each round group */
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 400px; /* Limit height for vertical scrolling */
+        }
 
-    .round-group h2 {
-        margin-top: 0;
-        font-size: 18px;
-        background-color: #f0f0f0;
-        padding: 8px;
-        border-bottom: 1px solid #ccc;
-        border-radius: 5px 5px 0 0;
-    }
+        .round-group h2 {
+            margin-top: 0;
+            font-size: 18px;
+            background-color: #f0f0f0;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+            border-radius: 5px 5px 0 0;
+        }
 
-    .round {
-        margin-top: 15px;
-        border-top: 1px solid #eee;
-        padding-top: 10px;
-    }
+        .round {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
 
-    .match {
-        margin-top: 8px;
-        display: flex;
-        align-items: center;
-    }
+        .match {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 8px; /* Rounded corners for each match entry */
+        }
 
-    .match p {
-        margin: 0 10px; /* Adjust spacing between player names */
-    }
+        .match p {
+            margin: 0 10px; /* Adjust spacing between player names */
+        }
 
-    .match span {
-        margin: 0 10px;
-        font-weight: bold;
-    }
+        .match span {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .winner {
+            color: green;
+            text-decoration: none;
+        }
+
+        .loser {
+            color: red;
+            text-decoration: line-through;
+        }
     </style>
 {% endblock %}
 
@@ -84,13 +97,15 @@
                         {% endwith %}
                     {% endif %}
                     <div class="round">
-                        <p><strong>Match Status:</strong> {% if round.match %} Completed {% else %} In Progress {% endif %}</p>
-                        <p><strong>Winner:</strong> {% if round.winner %} {{ round.winner.player.username }} {% else %} TBD {% endif %}</p>
                         {% if round.match %}
                             <div class="match">
-                                <p>{{ round.player_1.player.username }}</p>
+                                <p class="{% if round.winner == round.player_1 %} winner {% elif round.winner == round.player_2 %} loser {% endif %}">
+                                    {{ round.player_1.player.username }}
+                                </p>
                                 <span>VS</span>
-                                <p>{{ round.player_2.player.username }}</p>
+                                <p class="{% if round.winner == round.player_2 %} winner {% elif round.winner == round.player_1 %} loser {% endif %}">
+                                    {{ round.player_2.player.username }}
+                                </p>
                             </div>
                         {% else %}
                             <p>No match scheduled for this round yet.</p>
