@@ -32,8 +32,8 @@ support = Support()
 def updateEvents():
     sportcron = SportCron()
     sportcron.get_sports()
-    # eventcron = EventCron()
-    # eventcron.update_all_events()
+    eventcron = EventCron()
+    eventcron.update_all_events()
     # support.datadump()
 
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
 
     # support.deleteExtraTeams()
-    # updateEvents()
+    updateEvents()
     # support.checkExtraTeams()
     # support.endEvents()
     # test1.testCreate20Matches()

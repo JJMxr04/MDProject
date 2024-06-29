@@ -1,0 +1,264 @@
+/* Base styles */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #FFE47A;
+    height: 100vh;
+    width: 200px; /* Fixed width for sidebar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px 10px;
+    z-index: 1000;
+    text-align: center;
+}
+
+/* Header Styles */
+#header {
+    background: linear-gradient(to right, #FFE47A, #3D7EAA);
+    color: #fff;
+    height: 78px;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 200px); /* Adjusted width to match sidebar */
+    position: fixed;
+    top: 0;
+    left: 200px; /* Adjusted left to match sidebar */
+    z-index: 1000;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: firebrick;
+    margin-top: 78px; /* Adjusted margin to clear header */
+    padding: 10px; /* Added padding for breadcrumbs */
+}
+
+div.breadcrumbs a.active {
+    color: #c4dce8 !important;
+    font-weight: 300;
+}
+
+div.breadcrumbs a:focus, div.breadcrumbs a:hover {
+    color: #c4dce8 !important;
+    font-weight: 300;
+}
+
+/* Select2 Styles */
+.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected] {
+    background-color: #292D32;
+}
+
+/* Paginator */
+.paginator a:link, .paginator a:visited {
+    background: #292D32;
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #78afc8;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #878787;
+}
+
+/* Module */
+.module caption {
+    background: crimson;
+}
+
+.module p {
+    background: crimson;
+}
+
+.module h2, .inline-group h2 {
+    background: #78afc8;
+}
+
+/* User Tools */
+#user-tools a:focus, #user-tools a:hover {
+    border: 0;
+    color: #ddd;
+}
+
+/* Selector Chosen */
+.selector-chosen h2 {
+    background: #78afc8 !important;
+}
+
+/* Calendar and Timelist */
+.calendar td.selected a {
+    background: #78afc8 !important;
+}
+
+.calendar td a:focus, .timelist a:focus, .calendar td a:hover, .timelist a:hover {
+    background: #78afc8 !important;
+}
+
+/* Change List */
+#changelist-filter li.selected a {
+    color: #444;
+}
+
+fieldset.collapsed .collapse-toggle {
+    color: #444;
+}
+
+/* Links */
+a:link, a:visited {
+    color: #777;
+}
+
+a:focus, a:hover {
+    color: #999;
+}
+
+/* Table Sorting */
+table thead th.sorted .sortoptions a.sortremove:focus:after,
+table thead th.sorted .sortoptions a.sortremove:hover:after {
+    color: #444;
+}
+
+/* Active Links */
+a.active.selector-chooseall:focus, a.active.selector-clearall:focus,
+a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
+    color: #999;
+}
+
+/* Active Calendar and Timelist */
+.calendar td a:active, .timelist a:active {
+    background: #444;
+}
+
+/* Change List Toplinks */
+.change-list ul.toplinks .date-back a:focus,
+.change-list ul.toplinks .date-back a:hover {
+    color: #222;
+}
+
+/* Paginator Showall */
+.paginator a.showall:focus, .paginator a.showall:hover {
+    color: #222;
+}
+
+/* Paginator Links */
+.paginator a:focus, .paginator a:hover {
+    background: #222;
+}
+
+/* Changelist Filter */
+#changelist-filter a:focus, #changelist-filter a:hover,
+#changelist-filter li.selected a:focus,
+#changelist-filter li.selected a:hover {
+    color: #222;
+}
+
+/* Calendar and Timelist Active */
+.calendar td a:active, .timelist a:active {
+    background: #292D32;
+}
+
+/* Calendar and Calendarbox Caption */
+.calendar caption, .calendarbox h2 {
+    background: #999;
+}
+
+/* Default Button */
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: #417690;
+}
+
+.button.default:hover, input[type=submit].default:hover {
+    background: #191D22;
+}
+
+/* Object Tools */
+.object-tools a:focus, .object-tools a:hover {
+    background-color: #292D32;
+}
+
+/* File Upload Button */
+input[type=file]::-webkit-file-upload-button:hover {
+    border: 0;
+    background: #292D32;
+}
+
+/* Changelist Filter */
+#changelist-filter {
+    top: -250px;
+    right: 15px;
+}
+
+#changelist-filter h2 {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+/* Text Color */
+p {
+    color: wheat;
+}
+
+/* Content Header */
+#content h1 {
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 32px;
+}
+
+/* Additional Text Color */
+h2, li {
+    color: wheat;
+}
+
+/* Links Color */
+.addlink, .changelink, .deletelink {
+    color: black;
+}
+
+/* Date Time Background */
+div .datetime {
+    background: white;
+}
+
+@media (max-width: 768px) {
+    /* Responsive Header */
+    #header {
+        width: 100%;
+        left: 0; /* Adjusted to remove gap between sidebar and header */
+    }
+
+    /* Responsive Breadcrumbs */
+    div.breadcrumbs {
+        margin-top: 78px; /* Adjusted margin to clear header */
+        padding: 10px; /* Added padding for breadcrumbs */
+    }
+
+    /* Responsive Content Container */
+    main {
+        margin-top: 78px; /* Adjusted margin to clear header */
+        padding: 20px; /* Added padding for content area */
+    }
+
+    /* Responsive Toggle Button */
+    .toggle-btn {
+        display: none; /* Hide toggle button on small screens */
+    }
+
+    /* Responsive Sidebar */
+    .sidebar {
+        display: none; /* Hide sidebar on small screens */
+    }
+}

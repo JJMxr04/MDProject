@@ -1,0 +1,35 @@
+/* sidebar.css */
+
+.sidebar {
+    background-color: #FFE47A;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-250px);
+}
+
+.sidebar .nav-link {
+    color: black;
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: #3D7EAA;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-250px);
+    }
+    .sidebar.collapsed {
+        transform: translateX(0);
+    }
+}

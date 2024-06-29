@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'admin/js/custom_button.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="change-form" data-custom-detail-url="{{ custom_detail_url }}">
+        {{ block.super }}
+    </div>
+{% endblock %}
