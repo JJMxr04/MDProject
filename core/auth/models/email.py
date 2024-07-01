@@ -24,7 +24,6 @@ def send_activation_email(user, request):
     template_path = "activation_email/activation.html"
 
     html_content = render_to_string(template_path, {'activation_link': link})
-    print(link)
 
     text_content = strip_tags(html_content)
 
