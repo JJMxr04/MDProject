@@ -25,7 +25,7 @@ class ActivateUserViewSet(viewsets.ViewSet):
             signer = TimestampSigner()
             email = signer.unsign(token, max_age=60 * 60 * 24)  # Token expires after 24 hours
             user = User.objects.get(email=email)
-            user.is_active = True
+            user.activated_link = True
             user.save()
 
             # return Response({"detail": "Account activated successfully", "email": email})
@@ -34,36 +34,4 @@ class ActivateUserViewSet(viewsets.ViewSet):
             return Response({"detail": "Invalid activation link."}, status=status.HTTP_400_BAD_REQUEST)
         except SignatureExpired:
             return Response({"detail": "Activation link has expired."}, status=status.HTTP_400_BAD_REQUEST)
-    # def retrieve(self,  *args, **kwargs):
-    #     print(1)
-    #     print(kwargs)
-    #     print(*args)
-    #     serializer = self.serializer_class(data=kwargs)
-    #     print(2)
-    #     # serializer.is_valid(raise_exception=True)
-    #     print(3)
-    #     # try:
-    #     #     serializer.is_valid(raise_exception=True)
-    #     # except ValidationError as e:
-    #     #     errors = e.get_full_details()
-    #     #     print(errors)
-    #     # token = serializer.validated_data
-    #     token = kwargs['token']
-    #     print(token)
-    #     print(4)
-    #     try:
-    #         print(5)
-    #         signer = TimestampSigner()
-    #         email = signer.unsign(token, max_age=60 * 60 * 24)  # Token expires after 24 hours
-    #         print(email)
-    #         user = User.objects.get(email=email)
-    #         user.is_active = True
-    #         user.save()
     #
-    #         return Response({"detail": "Account activated successfully", "email": email})
-    #     except BadSignature:
-    #         print(6)
-    #         return Response({"detail": "Invalid activation link."}, status=status.HTTP_400_BAD_REQUEST)
-    #     except SignatureExpired:
-    #         print(7)
-    #         return Response({"detail": "Activation link has expired."}, status=status.HTTP_400_BAD_REQUEST)
