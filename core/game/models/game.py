@@ -2,23 +2,16 @@ import uuid
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 from django.utils import timezone
 from core.user.models import User
 from core.event.models import Event
 
 class GameManager(AbstractManager):
-    # def create_game(self, owner, player_2, match_id, commence_time=None, deadline_time=None, completed=False,
-    #                home_team=None, away_team=None, winner=None):
-    #     return self.create(owner=owner, player_2=player_2, match_id=match_id, commence_time=commence_time,
-    #                         deadline_time=deadline_time, completed=completed, home_team=home_team,
-    #                         away_team=away_team, winner=winner)
     def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
-                   home_team=None, away_team=None, winner=None, ):
-        return self.create(owner=owner, player_2=player_2,  match_id=match.id,event=event, commence_time=commence_time,
-                            deadline_time=deadline_time, completed=completed, home_team=home_team,
-                            away_team=away_team, winner=winner)
+                    home_team=None, away_team=None, winner=None):
+        return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
+                           deadline_time=deadline_time, completed=completed, home_team=home_team,
+                           away_team=away_team, winner=winner)
 
     def update_by_id(self, id, current_user, data):
         game = self.filter(id=id).first()
@@ -35,22 +28,27 @@ class GameManager(AbstractManager):
             event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
                 return False, False
-            if game.event is None:
-                game.event = event
-            elif event != game.event_id:
-                return False, False
+
             commence_time_str = event.commence_time
-            game.home_team = event.home_team
-            game.away_team = event.away_team
 
             # Convert the commence_time string to a datetime object
             commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
 
+            # Check if the commence time is at least 8 hours from now
+            current_time = timezone.now()
+            if commence_time < current_time + timedelta(hours=8):
+                return False, False
+
+            game.event = event
+            game.home_team = event.home_team
+            game.away_team = event.away_team
             game.commence_time = commence_time
             game.deadline_time = commence_time - timedelta(hours=8)
 
-        # if game.deadline_time is not None and game.deadline_time < datetime.utcnow():
-        #     return False
+        # Check if the event has already started
+        current_time = timezone.now()
+        if game.commence_time and game.commence_time <= current_time:
+            return False, False
 
         if current_user == game.owner:
             game.owner_choice = data.get("player_choice")
@@ -61,12 +59,12 @@ class GameManager(AbstractManager):
         game.save()
         return new_game, game
 
-    def get_golden_game(self,player_1,player_2,match):
+    def get_golden_game(self, player_1, player_2, match):
         event = Event.objects.get_random_golden()
-        # print(event)
-        return Game.objects.create_game(player_1,player_2,match,event,event.commence_time,None,event.completed,event.home_team,event.away_team)
+        return Game.objects.create_game(player_1, player_2, match, event, event.commence_time, None, event.completed,
+                                        event.home_team, event.away_team)
 
-    def game_event_update(self,game,instance):
+    def game_event_update(self, game, instance):
         game.winner = instance.winner
         game.completed = instance.completed
         game.save()
@@ -83,15 +81,10 @@ class Game(AbstractModel):
     home_team = models.CharField(max_length=200, default=None, null=True, blank=True)
     away_team = models.CharField(max_length=200, default=None, null=True, blank=True)
     winner = models.CharField(max_length=200, default=None, null=True, blank=True)
-    owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
-    player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
+    owner_choice = models.CharField(maxlength=200, default=None, null=True, blank=True)
+    player_2_choice = models.CharField(maxlength=200, default=None, null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='games', null=True, blank=True)
     objects = GameManager()
 
-    class meta:
-        db_table = "'core.game'"
-
-
-
-
-# Create your models here.
+    class Meta:
+        db_table = 'core.game'
