@@ -5,5 +5,5 @@ from core.admin.admin import custom_admin_view
 app_name = 'core_admin'
 
 urlpatterns = [
-    path('admin/dashboard/', custom_admin_view, name='custom_dashboard'),
+    path('dashboard/', custom_admin_view, name='custom_dashboard'),
 ]

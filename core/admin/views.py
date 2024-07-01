@@ -9,6 +9,6 @@ def custom_admin_view(request):
         admin.site.each_context(request),
         title='Custom Dashboard',
     )
-    return TemplateResponse(request, "admin/dashboard.html", context)
+    return TemplateResponse(request, "admin/dashboard/dashboard.html", context)
 
 
