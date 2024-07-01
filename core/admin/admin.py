@@ -17,7 +17,6 @@ def custom_admin_view(request):
 
     waitlist_signups, user_registrations, date_format = get_date_range_statistics(date_range)
 
-    # Additional statistics
     total_users = User.objects.count()
     total_tournaments = Tournament.objects.count()
 
@@ -101,18 +100,14 @@ def get_registration_data(user_registrations, date_range):
     else:
         return [user_registrations.get(i, 0) for i in range(1, 13)]
 
-# Custom admin site
 class CustomAdminSite(admin.AdminSite):
     site_header = 'Custom Admin Dashboard'
 
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
-            path('custom_dashboard/', self.admin_view(custom_admin_view), name='custom-dashboard'),
+            path('dashboard/', self.admin_view(custom_admin_view), name='custom-dashboard'),
         ]
         return custom_urls + urls
 
 admin_site = CustomAdminSite(name='custom_admin')
-
-# Register your models with the custom admin site
-

@@ -141,24 +141,28 @@
             <div class="row date-chart-selection">
                 <!-- Date Range card -->
                 <div class="col-lg-6 col-md-12 mb-3">
-                    <label for="date_range">Select Date Range:</label>
-                    <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
-                        <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
-                        <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
-                        <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
-                        <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
-                        <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
-                    </select>
-                    <input type="hidden" name="chart_type" value="{{ chart_type }}">
+                    <form method="get">
+                        <label for="date_range">Select Date Range:</label>
+                        <select class="form-control" name="date_range" id="date_range" onchange="this.form.submit()">
+                            <option value="last_7_days" {% if date_range == 'last_7_days' %}selected{% endif %}>Last 7 Days</option>
+                            <option value="monthly" {% if date_range == 'monthly' %}selected{% endif %}>Monthly</option>
+                            <option value="yearly" {% if date_range == 'yearly' %}selected{% endif %}>Yearly</option>
+                            <option value="ytd" {% if date_range == 'ytd' %}selected{% endif %}>Year to Date</option>
+                            <option value="all_time" {% if date_range == 'all_time' %}selected{% endif %}>All Time</option>
+                        </select>
+                        <input type="hidden" name="chart_type" value="{{ chart_type }}">
+                    </form>
                 </div>
                 <!-- Chart Type card -->
                 <div class="col-lg-6 col-md-12 mb-3">
-                    <label for="chart_type">Select Chart Type:</label>
-                    <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
-                        <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
-                        <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
-                    </select>
-                    <input type="hidden" name="date_range" value="{{ date_range }}">
+                    <form method="get">
+                        <label for="chart_type">Select Chart Type:</label>
+                        <select class="form-control" name="chart_type" id="chart_type" onchange="this.form.submit()">
+                            <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
+                            <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
+                        </select>
+                        <input type="hidden" name="date_range" value="{{ date_range }}">
+                    </form>
                 </div>
             </div>
         </div>
