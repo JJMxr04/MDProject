@@ -81,8 +81,8 @@ class Game(AbstractModel):
     home_team = models.CharField(max_length=200, default=None, null=True, blank=True)
     away_team = models.CharField(max_length=200, default=None, null=True, blank=True)
     winner = models.CharField(max_length=200, default=None, null=True, blank=True)
-    owner_choice = models.CharField(maxlength=200, default=None, null=True, blank=True)
-    player_2_choice = models.CharField(maxlength=200, default=None, null=True, blank=True)
+    owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
+    player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='games', null=True, blank=True)
     objects = GameManager()
 

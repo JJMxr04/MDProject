@@ -52,6 +52,13 @@ class TournamentManager(AbstractManager):
             if tournament.state != 'created':
                 return False
 
+            # Check if the current date is within three days of the tournament start date
+            current_date = timezone.now()
+            three_days_prior = tournament.start_date - timedelta(days=3)
+            if current_date < three_days_prior:
+                print("Invites can only be accepted within three days prior to the event start date.")
+                return False
+
             players = list(Player.objects.get_players(tournament=tournament))
             if len(players) == tournament.max_accepted_players:
                 return False
@@ -233,7 +240,7 @@ class Tournament(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    # end_date = models.DateTimeField()
     state = models.CharField(max_length=10, default='created')  # created, inprogress, completed
     max_accepted_players = models.IntegerField()
     levels = models.FloatField(default=0)
