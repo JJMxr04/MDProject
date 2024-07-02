@@ -9,6 +9,7 @@ from core.user.models import User
 from core.match.models.match import Match
 from core.abstract.models import AbstractModel, AbstractManager
 from core.user.models import User
+from core.mail.models import Emails
 
 class TournamentManager(AbstractManager):
     def create(self, name, start_date, max_accepted_players):
@@ -36,7 +37,8 @@ class TournamentManager(AbstractManager):
     def get_players(self, tournament):
         return Player.objects.filter(tournament=tournament)
 
-    def accept_invite(self, tourney_id, user_email):
+    def accept_invite(self, tourney_id, invited_player):
+        user_email= invited_player.player.email
         try:
             tournament = self.get(pk=tourney_id)
             if not tournament:
@@ -50,23 +52,27 @@ class TournamentManager(AbstractManager):
                 return False
 
             if tournament.state != 'created':
+                print("not created")
                 return False
 
             # Check if the current date is within three days of the tournament start date
             current_date = timezone.now()
             three_days_prior = tournament.start_date - timedelta(days=3)
-            if current_date < three_days_prior:
+            if current_date > three_days_prior:
                 print("Invites can only be accepted within three days prior to the event start date.")
                 return False
 
             players = list(Player.objects.get_players(tournament=tournament))
             if len(players) == tournament.max_accepted_players:
+                print("Max players")
                 return False
 
             if Player.objects.check_player_participating(tournament=tournament, user=user):
+                print("Already a player")
                 return False
 
             Player.objects.create_player(tournament, user)
+            InvitedPlayer.objects.accept_invite(invited_player=invited_player)
             return True
 
         except ObjectDoesNotExist as e:
@@ -90,6 +96,7 @@ class TournamentManager(AbstractManager):
                 return False
 
             InvitedPlayer.objects.create_invited_player(tournament, user)
+            Emails.send_tournament_invite(user,tournament)
             return True
 
         except ObjectDoesNotExist as e:
@@ -203,12 +210,24 @@ class InvitedPlayerManager(AbstractManager):
     def get_invited_players(self, tournament):
         return self.filter(tournament=tournament)
 
+    def accept_invite(self, invited_player):
+        try:
+            player = self.get(pk=invited_player.id)
+            player.accepted = True
+            player.accepted_date = timezone.now()
+            player.state = "accepted"
+            player.save()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def invite_player(self, tournament_id, player_id):
 
         try:
             tournament = Tournament.objects.get(id=tournament_id)
             player = User.objects.get(id=player_id)
             invited_player = self.create(tournament=tournament, player=player)
+            Emails.send_tournament_invite(player, tournament)
             return invited_player
         except (Tournament.DoesNotExist, Player.DoesNotExist):
             return None
@@ -301,7 +320,9 @@ class InvitedPlayer(models.Model):
     accepted = models.BooleanField(default=False)
     accepted_date = models.DateTimeField(null=True)
     invited_date = models.DateTimeField(null=True)
+    state= models.CharField(max_length=20, default='sent') # sent, expired, accepted, declined
     objects = InvitedPlayerManager()
+
 
     class Meta:
         db_table = 'core_invited_player'

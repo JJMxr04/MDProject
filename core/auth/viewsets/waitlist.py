@@ -31,6 +31,6 @@ class WaitlistEntryViewSet(viewsets.ModelViewSet):
             )
             # Serialize the created entry
             serialized_entry = WaitlistEntrySerializer(entry)
-            Emails.send_waitlist_thank_you(email=email)
+            Emails.send_waitlist_thank_you(email=email) # Sending an email
             return Response(serialized_entry.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

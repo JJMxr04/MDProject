@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models.waitlist import WaitlistEntry
+from core.mail.models import Emails
+
 
 class WaitlistEntryAdmin(admin.ModelAdmin):
     list_display = ('email', 'full_name', 'phone_number', 'registered', 'activated', 'admin_granted_access', 'created', 'updated')
@@ -15,7 +17,10 @@ class WaitlistEntryAdmin(admin.ModelAdmin):
                 entry.admin_granted_access = True
                 entry.save()
                 updated_count += 1
+                Emails.send_waitlist_granted(email=entry.email) # Sending an email
         self.message_user(request, f'{updated_count} entry(s) approved successfully.')
+
+
 
     def revoke_entries(self, request, queryset):
         updated_count = 0

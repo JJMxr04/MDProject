@@ -24,7 +24,6 @@ class LoginViewSet(ViewSet):
         user = serializer.validated_data.get('user')
         if not user:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-        print(user)
         if not user.get("activated_link"):
             return Response({"message": "User has not activated their account"}, status=status.HTTP_401_UNAUTHORIZED)
 
