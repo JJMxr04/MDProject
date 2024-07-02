@@ -212,7 +212,7 @@ class InvitedPlayerManager(AbstractManager):
 
     def accept_invite(self, invited_player):
         try:
-            player = self.get(pk=invited_player.id)
+            player = invited_player
             player.accepted = True
             player.accepted_date = timezone.now()
             player.state = "accepted"
