@@ -17,6 +17,14 @@ class LoginViewSet(ViewSet):
         try:
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
-            raise InvalidToken(e.args[0])
+            return Response({"detail": "Invalid token", "message": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except InvalidToken as e:
+            return Response({"detail": "Invalid token", "message": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
+        user = serializer.validated_data.get('user')
+        if not user:
+            return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not user.get("activated_link"):
+            return Response({"message": "User has not activated their account"}, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)

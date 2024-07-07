@@ -92,6 +92,7 @@ class User(AbstractBaseUser,AbstractModel, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    activated_link = models.BooleanField(default=False)
 
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True)

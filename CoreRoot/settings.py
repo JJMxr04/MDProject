@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'core',
     'core.user',
     'core.auth',
+    'core.blog',
+    'core.crons',
     'core.event',
     'core.game',
     'core.match',
@@ -90,7 +92,7 @@ BASE_DIR_TEMPS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR_TEMPS, 'core', 'admin', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR_TEMPS,'core', 'admin', 'templates',)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

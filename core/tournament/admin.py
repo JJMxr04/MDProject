@@ -10,7 +10,7 @@ from uuid import UUID  # Import UUID for type checking
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'start_date', 'end_date', 'state', 'max_accepted_players', 'levels', 'winner', 'final_round',
+    list_display = ['name', 'start_date', 'state', 'max_accepted_players', 'levels', 'winner', 'final_round',
                     'view_detail_link', 'invite_players_link']
 
     def view_detail_link(self, obj):

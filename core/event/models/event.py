@@ -77,6 +77,9 @@ class Event(AbstractModel):
     class meta:
         db_table = "'core.event'"
 
+    def __str__(self):
+        return f"{self.home_team} Vs {self.away_team}"
+
 
 
 

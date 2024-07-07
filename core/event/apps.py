@@ -9,7 +9,7 @@ class EventConfig(AppConfig):
 
     def ready(self):
         if settings.DEBUG:
-            from .crons.scheduler import start_scheduler
+            from core.crons.scheduler import start_scheduler
             import threading
             scheduler_thread = threading.Thread(target=start_scheduler)
             scheduler_thread.daemon = True
