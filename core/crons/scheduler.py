@@ -5,11 +5,16 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from core.event.crons.sportUpdate import SportCron
 from core.event.crons.eventUpdate import EventCron
+from core.tournament.crons.BracketMaker import BracketMaker
 
 sportCron = SportCron()
 eventCron = EventCron()
 
 scheduler = BackgroundScheduler()
+
+def tournament_cron_bracketMaker():
+    BracketMaker.create_brackets()
+
 
 def sport_cron():
     sportCron.get_sports()
@@ -21,6 +26,14 @@ def print_cron_jobs():
     scheduler.print_jobs()
 
 def start_scheduler():
+    scheduler.add_job(
+        tournament_cron_bracketMaker,
+        trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
+        id='tournament_cron_bracketMaker',
+        name='Tournament Cron Bracket Maker',
+        replace_existing=True,
+    )
+
     scheduler.add_job(
         sport_cron,
         trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
