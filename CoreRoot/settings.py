@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'core',
     'core.user',
     'core.auth',
+    'core.blog',
     'core.event',
     'core.game',
     'core.match',
