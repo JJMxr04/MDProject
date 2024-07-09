@@ -11,6 +11,7 @@ from core.game.models import Game
 from core.game.serializers import GameSerializer
 from django.utils import timezone
 import uuid
+from core.mail.models import Emails
 
 
 @receiver(post_save, sender=Match)
@@ -33,6 +34,10 @@ def update_round_match(sender, instance, **kwargs):
         round.tournament.winner = round.winner
         round.tournament.state = 'completed'
         round.tournament.save()
+        tournament = round.tournament
+        winner = round.tournament.winner
+        #Email
+        Emails.send_tournament_victory_notification(winner,tournament)
         return
 
     next_round = round.next_round
