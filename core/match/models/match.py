@@ -8,6 +8,7 @@ from django.utils import timezone
 from core.user.models import User
 from core.event.models import Event
 from core.game.models import Game
+from core.mail.models import Emails
 
 class MatchManager(AbstractManager):
     def create_match(self,player_1,player_2 = None):
@@ -122,6 +123,20 @@ class MatchManager(AbstractManager):
                     match.winner = None
                 match.match_state = "completed"
             match.save()
+
+        #email
+        if match.match_state == "completed":
+            if match.winner == match.player_1:
+                Emails.send_match_victory_notification(match.player_1,match.player_2.username)
+                Emails.send_match_lost_notification(match.player_2,match.player_1.username)
+            elif match.winner == match.player_2:
+                Emails.send_match_victory_notification(match.player_2, match.player_1.username)
+                Emails.send_match_lost_notification(match.player_1, match.player_2.username)
+            else:
+                Emails.send_match_tie_notification(match.player_1,match.player_2.username)
+                Emails.send_match_tie_notification(match.player_2, match.player_1.username)
+
+
 
 
 

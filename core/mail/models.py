@@ -128,3 +128,127 @@ class Emails:
 
         # Send email
         email.send()
+
+    @classmethod
+    def send_opponent_pick_notification(cls, user, opponent_name):
+        subject = f"Your Opponent {opponent_name} Has Uploaded a Pick"
+        recipient = [user.email]
+        template_path = "game/upload.html"
+
+        context = {
+            'username': user.username,
+            'opponent_name': opponent_name,
+        }
+
+        # Render the HTML content of the email template with context
+        html_content = render_to_string(template_path, context)
+
+        # Strip the HTML tags to create a plaintext version of the email
+        text_content = strip_tags(html_content)
+
+        # Create EmailMultiAlternatives object
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
+            to=recipient,  # Recipient's email
+        )
+
+        # Attach the HTML content as email body
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send()
+
+    @classmethod
+    def send_match_victory_notification(cls, user, opponent_name):
+        subject = "Congratulations, You Won the Match!"
+        recipient = [user.email]
+        template_path = "match/matchVictory.html"
+
+        context = {
+            'username': user.usernamename,
+            'opponent_name': opponent_name,
+        }
+
+        # Render the HTML content of the email template with context
+        html_content = render_to_string(template_path, context)
+
+        # Strip the HTML tags to create a plaintext version of the email
+        text_content = strip_tags(html_content)
+
+        # Create EmailMultiAlternatives object
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
+            to=recipient,  # Recipient's email
+        )
+
+        # Attach the HTML content as email body
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send()
+
+    @classmethod
+    def send_match_tie_notification(cls, user, opponent_name):
+        subject = "Your Match Ended in a Tie"
+        recipient = [user.email]
+        template_path = "match/matchTie.html"
+
+        context = {
+            'username': user.name,
+            'opponent_name': opponent_name,
+        }
+
+        # Render the HTML content of the email template with context
+        html_content = render_to_string(template_path, context)
+
+        # Strip the HTML tags to create a plaintext version of the email
+        text_content = strip_tags(html_content)
+
+        # Create EmailMultiAlternatives object
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
+            to=recipient,  # Recipient's email
+        )
+
+        # Attach the HTML content as email body
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send()
+
+    @classmethod
+    def send_match_lost_notification(cls, user, opponent_name):
+        subject = "Match Result: You Lost"
+        recipient = [user.email]
+        template_path = "tournamentInvite/matchLostNotification.html"
+
+        context = {
+            'username': user.name,
+            'opponent_name': opponent_name,
+        }
+
+        # Render the HTML content of the email template with context
+        html_content = render_to_string(template_path, context)
+
+        # Strip the HTML tags to create a plaintext version of the email
+        text_content = strip_tags(html_content)
+
+        # Create EmailMultiAlternatives object
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
+            to=recipient,  # Recipient's email
+        )
+
+        # Attach the HTML content as email body
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send()

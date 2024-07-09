@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from core.user.models import User
 from core.event.models import Event
+from core.mail.models import Emails
 
 class GameManager(AbstractManager):
     def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
@@ -57,6 +58,12 @@ class GameManager(AbstractManager):
             game.player_2_choice = data.get("player_choice")
 
         game.save()
+        # Email
+        if current_user == game.player_1:
+            Emails.send_opponent_pick_notification(current_user,game.player_2.username)
+        if current_user == game.player_2:
+            Emails.send_opponent_pick_notification(current_user,game.player_1.username)
+
         return new_game, game
 
     def get_golden_game(self, player_1, player_2, match):
