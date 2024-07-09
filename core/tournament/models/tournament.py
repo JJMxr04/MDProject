@@ -11,12 +11,15 @@ from core.abstract.models import AbstractModel, AbstractManager
 from core.user.models import User
 from core.mail.models import Emails
 
+
 class TournamentManager(AbstractManager):
     def create(self, name, start_date, max_accepted_players):
         start_date_aware = timezone.make_aware(start_date)
         levels = self.get_tourny_level(max_accepted_players)
         end_date = self.get_end_date(start_date_aware, levels)
-        tournament = self.model(name=name, start_date=start_date_aware, end_date=end_date,
+        # tournament = self.model(name=name, start_date=start_date_aware, end_date=end_date,
+        #                         max_accepted_players=max_accepted_players, levels=levels)
+        tournament = self.model(name=name, start_date=start_date_aware,
                                 max_accepted_players=max_accepted_players, levels=levels)
         tournament.save()
         return tournament
@@ -38,7 +41,7 @@ class TournamentManager(AbstractManager):
         return Player.objects.filter(tournament=tournament)
 
     def accept_invite(self, tourney_id, invited_player):
-        user_email= invited_player.player.email
+        user_email = invited_player.player.email
         try:
             tournament = self.get(pk=tourney_id)
             if not tournament:
@@ -96,7 +99,7 @@ class TournamentManager(AbstractManager):
                 return False
 
             InvitedPlayer.objects.create_invited_player(tournament, user)
-            Emails.send_tournament_invite(user,tournament)
+            Emails.send_tournament_invite(user, tournament)
             return True
 
         except ObjectDoesNotExist as e:
@@ -106,9 +109,22 @@ class TournamentManager(AbstractManager):
             print(f"Attribute error: {e}")
             return False
 
+    def next_power_of_2(self, num):
+        if num < 1:
+            return 1
+        return 2 ** (num - 1).bit_length()
+
     def make_init_matches(self, tournament):
         bottom_level_rounds = Round.objects.filter(tournament=tournament, level_num=(tournament.levels - 1))
         players = list(Player.objects.get_players(tournament=tournament))
+
+        # Calculate the next power of 2
+        total_players = len(players)
+        next_power = self.next_power_of_2(total_players)
+
+        # Add dummy players if needed
+        while len(players) < next_power:
+            players.append(None)  # None represents a dummy player or bye
 
         for round_obj in bottom_level_rounds:
             player_1 = players.pop() if players else None
@@ -119,6 +135,7 @@ class TournamentManager(AbstractManager):
     def create_rounds(self, tournament):
         tournament.state = 'inprogress'
         final_round = Round.objects.create_bracket(tournament)
+        self.make_init_matches(tournament)
         tournament.final_round = final_round
         tournament.save()
 
@@ -148,6 +165,7 @@ class TournamentManager(AbstractManager):
         except ObjectDoesNotExist:
             return None
 
+
 class RoundManager(AbstractManager):
     def create_bracket(self, tournament, current_level=0, next_round=None):
         if current_level >= tournament.levels:
@@ -169,16 +187,22 @@ class RoundManager(AbstractManager):
         return current_round
 
     def create_tournament_match(self, round_obj):
-        if round_obj.player_1 and round_obj.player_2:
+        if round_obj.player_1 and not round_obj.player_2:
+            round_obj.winner = round_obj.player_1
+            round_obj.completed = True
+        elif not round_obj.player_1 and round_obj.player_2:
+            round_obj.winner = round_obj.player_2
+            round_obj.completed = True
+        elif round_obj.player_1 and round_obj.player_2:
             round_obj.match = Match.objects.create_match(round_obj.player_1.player, round_obj.player_2.player)
-            round_obj.save()
-
-    def assign_players(self, round_obj, player_1=None, player_2=None):
-        if not round_obj.player_1 and player_1:
-            round_obj.player_1 = player_1
-        if not round_obj.player_2 and player_2:
-            round_obj.player_2 = player_2
         round_obj.save()
+
+    def assign_players(self, round, player_1, player_2):
+        if player_1:
+            round.player_1 = player_1
+        if player_2:
+            round.player_2 = player_2
+        round.save()
 
     def get_tourney_level_rounds(self, tournament, level):
         return self.filter(tournament=tournament, level_num=level)

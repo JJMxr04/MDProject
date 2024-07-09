@@ -124,17 +124,17 @@ class MatchManager(AbstractManager):
                 match.match_state = "completed"
             match.save()
 
-        #email
-        if match.match_state == "completed":
-            if match.winner == match.player_1:
-                Emails.send_match_victory_notification(match.player_1,match.player_2.username)
-                Emails.send_match_lost_notification(match.player_2,match.player_1.username)
-            elif match.winner == match.player_2:
-                Emails.send_match_victory_notification(match.player_2, match.player_1.username)
-                Emails.send_match_lost_notification(match.player_1, match.player_2.username)
-            else:
-                Emails.send_match_tie_notification(match.player_1,match.player_2.username)
-                Emails.send_match_tie_notification(match.player_2, match.player_1.username)
+            #email
+            if match.match_state == "completed":
+                if match.winner == match.player_1:
+                    Emails.send_match_victory_notification(match.player_1,match.player_2.username)
+                    Emails.send_match_lost_notification(match.player_2,match.player_1.username)
+                elif match.winner == match.player_2:
+                    Emails.send_match_victory_notification(match.player_2, match.player_1.username)
+                    Emails.send_match_lost_notification(match.player_1, match.player_2.username)
+                else:
+                    Emails.send_match_tie_notification(match.player_1,match.player_2.username)
+                    Emails.send_match_tie_notification(match.player_2, match.player_1.username)
 
 
 
