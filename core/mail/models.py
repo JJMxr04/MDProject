@@ -39,7 +39,7 @@ class Emails:
 
         context = {
             'tournament_name': tournament.name,
-            'username': user.name,
+            'username': user.username,
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',  # Replace with actual location if available
             # 'tournament_prize': 'Tournament Prize',  # Uncomment if prize information is available
@@ -101,7 +101,7 @@ class Emails:
 
         context = {
             'tournament_name': tournament.name,
-            'username': user.name,
+            'username': user.username,
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',  # Replace with actual location if available
             # 'tournament_prize': 'Tournament Prize',  # Uncomment if prize information is available
@@ -167,7 +167,7 @@ class Emails:
         template_path = "match/matchVictory.html"
 
         context = {
-            'username': user.usernamename,
+            'username': user.username,
             'opponent_name': opponent_name,
         }
 
@@ -198,7 +198,7 @@ class Emails:
         template_path = "match/matchTie.html"
 
         context = {
-            'username': user.name,
+            'username': user.username,
             'opponent_name': opponent_name,
         }
 
@@ -229,7 +229,7 @@ class Emails:
         template_path = "match/matchLost.html"
 
         context = {
-            'username': user.name,
+            'username': user.username,
             'opponent_name': opponent_name,
         }
 
@@ -261,7 +261,7 @@ class Emails:
 
         context = {
             'tournament_name': tournament.name,
-            'username': user.name,
+            'username': user.username,
         }
 
         # Render the HTML content of the email template with context
@@ -292,7 +292,7 @@ class Emails:
 
         context = {
             'tournament_name': tournament.name,
-            'username': user.name,
+            'username': user.username,
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',  # Replace with actual location if available
         }
