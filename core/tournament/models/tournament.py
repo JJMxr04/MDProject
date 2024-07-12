@@ -129,15 +129,45 @@ class TournamentManager(AbstractManager):
         for round_obj in bottom_level_rounds:
             player_1 = players.pop() if players else None
             player_2 = players.pop() if players else None
-            Round.objects.assign_players(round=round_obj, player_1=player_1, player_2=player_2)
+            Round.objects.assign_players(round_obj=round_obj, player_1=player_1, player_2=player_2)
             Round.objects.create_tournament_match(round_obj)
 
     def create_rounds(self, tournament):
         tournament.state = 'inprogress'
         final_round = Round.objects.create_bracket(tournament)
-        self.make_init_matches(tournament)
         tournament.final_round = final_round
         tournament.save()
+        self.assign_byes(tournament)
+
+    def assign_byes(self, tournament):
+        """
+        Assigns byes to players if the number of players is not an exact power of 2.
+        """
+        players = list(Player.objects.get_players(tournament=tournament))
+        total_players = len(players)
+        if total_players & (total_players - 1) == 0:
+            # Number of players is a power of 2, no need for byes
+            return
+
+        next_power_of_2 = 1 << (total_players - 1).bit_length()
+        num_byes = next_power_of_2 - total_players
+
+        bottom_level_rounds = Round.objects.filter(tournament=tournament, level_num=tournament.levels - 1)
+        for round_obj in bottom_level_rounds:
+            if num_byes == 0:
+                break
+            if not round_obj.player_1:
+                round_obj.player_1 = players.pop()
+                round_obj.completed = True
+                round_obj.winner = round_obj.player_1
+                num_byes -= 1
+            elif not round_obj.player_2:
+                round_obj.player_2 = players.pop()
+                round_obj.completed = True
+                round_obj.winner = round_obj.player_2
+                num_byes -= 1
+            round_obj.save()
+
 
     def get_tournament_with_rounds(self, object_id):
         try:
@@ -187,22 +217,16 @@ class RoundManager(AbstractManager):
         return current_round
 
     def create_tournament_match(self, round_obj):
-        if round_obj.player_1 and not round_obj.player_2:
-            round_obj.winner = round_obj.player_1
-            round_obj.completed = True
-        elif not round_obj.player_1 and round_obj.player_2:
-            round_obj.winner = round_obj.player_2
-            round_obj.completed = True
-        elif round_obj.player_1 and round_obj.player_2:
+        if round_obj.player_1 and round_obj.player_2:
             round_obj.match = Match.objects.create_match(round_obj.player_1.player, round_obj.player_2.player)
-        round_obj.save()
+            round_obj.save()
 
-    def assign_players(self, round, player_1, player_2):
-        if player_1:
-            round.player_1 = player_1
-        if player_2:
-            round.player_2 = player_2
-        round.save()
+    def assign_players(self, round_obj, player_1=None, player_2=None):
+        if not round_obj.player_1 and player_1:
+            round_obj.player_1 = player_1
+        if not round_obj.player_2 and player_2:
+            round_obj.player_2 = player_2
+        round_obj.save()
 
     def get_tourney_level_rounds(self, tournament, level):
         return self.filter(tournament=tournament, level_num=level)
