@@ -5,15 +5,17 @@ from core.tournament.models.tournament import Tournament, Round, TournamentManag
 # from core.tournament.unit_tests.tests.tournament_test_1 import tournament_test_1
 from core.user.models import User
 from core.event.models.sport import Sport
-from .tests import tournament_test_1
+from .tests import tournament_test_2
 import logging
 logger = logging.getLogger(__name__)
 from core.tournament.unit_tests.tests.Support import Support
 from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
+from core.tournament.unit_tests.tests.tourney_checks import TournamentChecks
 import unittest
 from core.tournament.models.tournament import Player
 import logging
 import math
+import time
 class TournamentCreationTestCase(TestCase):
     databases = ['default', 'test_mirror']
     # Level 6
@@ -153,17 +155,14 @@ class TournamentCreationTestCase(TestCase):
     }
 
     def test_tournament_2(self):
-        logger.info('Starting Tournament Simulation test with 2 max and accepted players')
-        Support().load_data_sport_team()
         expected_max_players = 2
+        logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
+        Support().load_data_sport_team()
         expected_name = 'test2'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_1(max_players=expected_max_players, tourney_name=expected_name)
-        actual_name = test.tournament.name
-        actual_levels = test.tournament.levels
-        actual_max_players = test.tournament.max_accepted_players
-        self.assertEqual(expected_name, actual_name,f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
-        self.assertEqual(expected_name, actual_name,f"Tournament Levels mismatch: Expected {expected_levels}, but got {actual_levels}")
-        self.assertEqual(expected_max_players, actual_max_players, f"Tournament Levels mismatch: Expected {expected_levels}, but got {actual_levels}")
+        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        time.sleep(30)
+        tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
-        logger.info('Finished Tournament Simulation test with 2 max and accepted players')
+        tournament_check = TournamentChecks(test_case=self,tournament=tournament,name=expected_name,max_players=expected_max_players)
+        logger.info(f'Finished Tournament Simulation test with {expected_max_players} max and accepted players')

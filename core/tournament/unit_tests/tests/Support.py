@@ -141,7 +141,7 @@ class Support:
         # Read the file content
         api_data = self.read_json_file(file)
         # print(Sport.objects.filter())
-        # print(api_data)
+        print(api_data)
         if api_data is None:  # If the file is empty or not found
             return False
         api_data_json = json.loads(api_data)
@@ -327,6 +327,36 @@ class Support:
                 json.dump(data, file, indent=2)
 
             return obj  # Return the updated object
+
+        except FileNotFoundError:
+            print(f"File not found: {json_file_path}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+            return None
+
+    def modify_commencement_times(self,json_file_path):
+        """
+        Updates the commencement time of all events in a JSON file to 2 days from today.
+        """
+        try:
+            # Read the JSON file
+            with open(json_file_path, 'r') as file:
+                data = json.load(file)
+
+            # Calculate new commence time 2 days from now
+            new_commence_time = datetime.utcnow() + timedelta(days=2)
+            new_commence_time_str = new_commence_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+            # Iterate through all objects to update the commence time
+            for obj in data:
+                obj["commence_time"] = new_commence_time_str
+
+            # Write updated data back to the file
+            with open(json_file_path, 'w') as file:
+                json.dump(data, file, indent=2)
+
+            return data  # Return the updated data
 
         except FileNotFoundError:
             print(f"File not found: {json_file_path}")

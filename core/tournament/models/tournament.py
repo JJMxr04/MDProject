@@ -116,6 +116,7 @@ class TournamentManager(AbstractManager):
 
     def make_init_matches(self, tournament):
         bottom_level_rounds = Round.objects.filter(tournament=tournament, level_num=(tournament.levels - 1))
+        # print(f'initial first levels check {bottom_level_rounds}')
         players = list(Player.objects.get_players(tournament=tournament))
 
         # Calculate the next power of 2
@@ -125,19 +126,24 @@ class TournamentManager(AbstractManager):
         # Add dummy players if needed
         while len(players) < next_power:
             players.append(None)  # None represents a dummy player or bye
-
         for round_obj in bottom_level_rounds:
             player_1 = players.pop() if players else None
             player_2 = players.pop() if players else None
             Round.objects.assign_players(round_obj=round_obj, player_1=player_1, player_2=player_2)
+            # print(round_obj)
             Round.objects.create_tournament_match(round_obj)
+            # print(round_obj)
+            round_obj.save()
+        # print(f'initial second levels check {bottom_level_rounds}')
+        # print(f'make init tournament final round: {tournament.final_round}')
 
     def create_rounds(self, tournament):
         tournament.state = 'inprogress'
         final_round = Round.objects.create_bracket(tournament)
+        # print(f'create rounds: {final_round}')
         tournament.final_round = final_round
         tournament.save()
-        self.assign_byes(tournament)
+        # self.assign_byes(tournament)
 
     def assign_byes(self, tournament):
         """
@@ -213,7 +219,7 @@ class RoundManager(AbstractManager):
         current_round.prev_round_1 = previous_round_1
         current_round.prev_round_2 = previous_round_2
         current_round.save()
-
+        # print(f'create bracket: {current_round}')
         return current_round
 
     def create_tournament_match(self, round_obj):
@@ -227,6 +233,7 @@ class RoundManager(AbstractManager):
         if not round_obj.player_2 and player_2:
             round_obj.player_2 = player_2
         round_obj.save()
+        # print(f'assign players{round_obj}')
 
     def get_tourney_level_rounds(self, tournament, level):
         return self.filter(tournament=tournament, level_num=level)
