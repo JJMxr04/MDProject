@@ -141,7 +141,7 @@ class Support:
         # Read the file content
         api_data = self.read_json_file(file)
         # print(Sport.objects.filter())
-        print(api_data)
+        # print(api_data)
         if api_data is None:  # If the file is empty or not found
             return False
         api_data_json = json.loads(api_data)
@@ -335,9 +335,9 @@ class Support:
             print(f"Error decoding JSON: {e}")
             return None
 
-    def modify_commencement_times(self,json_file_path):
+    def modify_commencement_time_for_event(self,json_file_path, target_id):
         """
-        Updates the commencement time of all events in a JSON file to 2 days from today.
+        Updates the commencement time of a specific event in a JSON file to 2 days from today.
         """
         try:
             # Read the JSON file
@@ -348,21 +348,35 @@ class Support:
             new_commence_time = datetime.utcnow() + timedelta(days=2)
             new_commence_time_str = new_commence_time.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-            # Iterate through all objects to update the commence time
+            # Flag to check if the target event is found
+            event_found = False
+
+            # Iterate through objects to find the one with the target ID
             for obj in data:
-                obj["commence_time"] = new_commence_time_str
+                if obj.get("id") == target_id:
+                    # Update commence time for the target event
+                    obj["commence_time"] = new_commence_time_str
+                    event_found = True
+                    break  # Stop loop after updating
+
+            # If event not found, raise an exception
+            if not event_found:
+                raise ValueError(f"Event with ID {target_id} not found.")
 
             # Write updated data back to the file
             with open(json_file_path, 'w') as file:
                 json.dump(data, file, indent=2)
 
-            return data  # Return the updated data
+            return obj  # Return the updated object
 
         except FileNotFoundError:
             print(f"File not found: {json_file_path}")
             return None
         except json.JSONDecodeError as e:
             print(f"Error decoding JSON: {e}")
+            return None
+        except ValueError as e:
+            print(e)
             return None
 
     def endEvents(self):

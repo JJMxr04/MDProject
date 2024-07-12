@@ -35,7 +35,7 @@ def update_round_match(sender, instance, **kwargs):
         round.tournament.state = 'completed'
         round.tournament.save()
         tournament = round.tournament
-        winner = round.tournament.winner
+        winner = round.tournament.winner.player
         #Email
         Emails.send_tournament_victory_notification(winner,tournament)
         return

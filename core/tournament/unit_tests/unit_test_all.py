@@ -154,11 +154,24 @@ class TournamentCreationTestCase(TestCase):
 
     }
 
-    def test_tournament_2(self):
-        expected_max_players = 2
+    # def test_tournament_2(self):
+    #     expected_max_players = 2
+    #     logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
+    #     Support().load_data_sport_team()
+    #     expected_name = 'test2'
+    #     expected_levels = math.log2(expected_max_players)
+    #     test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+    #     time.sleep(30)
+    #     tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
+    #
+    #     tournament_check = TournamentChecks(test_case=self,tournament=tournament,name=expected_name,max_players=expected_max_players)
+    #     logger.info(f'Finished Tournament Simulation test with {expected_max_players} max and accepted players')
+
+    def test_tournament_3(self):
+        expected_max_players = 3
         logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
         Support().load_data_sport_team()
-        expected_name = 'test2'
+        expected_name = 'test4'
         expected_levels = math.log2(expected_max_players)
         test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(30)
@@ -166,3 +179,16 @@ class TournamentCreationTestCase(TestCase):
 
         tournament_check = TournamentChecks(test_case=self,tournament=tournament,name=expected_name,max_players=expected_max_players)
         logger.info(f'Finished Tournament Simulation test with {expected_max_players} max and accepted players')
+
+    # def test_tournament_4(self):
+    #     expected_max_players = 4
+    #     logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
+    #     Support().load_data_sport_team()
+    #     expected_name = 'test4'
+    #     expected_levels = math.log2(expected_max_players)
+    #     test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+    #     time.sleep(30)
+    #     tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
+    #
+    #     tournament_check = TournamentChecks(test_case=self,tournament=tournament,name=expected_name,max_players=expected_max_players)
+    #     logger.info(f'Finished Tournament Simulation test with {expected_max_players} max and accepted players')

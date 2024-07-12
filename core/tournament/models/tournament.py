@@ -143,7 +143,7 @@ class TournamentManager(AbstractManager):
         # print(f'create rounds: {final_round}')
         tournament.final_round = final_round
         tournament.save()
-        # self.assign_byes(tournament)
+        self.assign_byes(tournament)
 
     def assign_byes(self, tournament):
         """
