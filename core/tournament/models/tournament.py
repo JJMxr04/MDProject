@@ -154,7 +154,6 @@ class TournamentManager(AbstractManager):
         if total_players & (total_players - 1) == 0:
             # Number of players is a power of 2, no need for byes
             return
-
         next_power_of_2 = 1 << (total_players - 1).bit_length()
         num_byes = next_power_of_2 - total_players
 

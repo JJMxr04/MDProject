@@ -345,7 +345,6 @@ class TournamentChecks(TestCase):
         self.test_case.assertEqual(expected_level, actual_level,
                                    f"Round Level mismatch: Expected {expected_tournament}, but got {actual_tournament}")
 
-        #
 
         if (not round.player_1) or (not round.player_2):
             actual_winner = round.winner
