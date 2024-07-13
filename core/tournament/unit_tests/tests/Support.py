@@ -360,8 +360,8 @@ class Support:
                     break  # Stop loop after updating
 
             # If event not found, raise an exception
-            if not event_found:
-                raise ValueError(f"Event with ID {target_id} not found.")
+            # if not event_found:
+            #     raise ValueError(f"Event with ID {target_id} not found.")
 
             # Write updated data back to the file
             with open(json_file_path, 'w') as file:

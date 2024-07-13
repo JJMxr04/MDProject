@@ -106,6 +106,45 @@ class TourneyTest:
         self.support.datadump()
         self.support.flush_database()
 
+    def update_file_commentment_times(self):
+        #initial upload
+        update_path_1 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-1.json')
+        self.support.modify_commencement_time_for_event(update_path_1, '484bc5582bb44ab79a1e942cf8762eda')
+        # First Update
+        update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-2.json')
+        update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy2-1.json')
+        self.support.modify_commencement_time_for_event(update_path_2,'5e766a287ba24d40d9e40aa41efe19de')
+        self.support.modify_commencement_time_for_event(update_path_3,'5e766a287ba24d40d9e40aa41efe19de')
+        # Second Update
+        update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-3.json')
+        update_path_5 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy3-1.json')
+        self.support.modify_commencement_time_for_event(update_path_4,'eb77c9dad13ef82ba5ff4dcf439d3bab')
+        self.support.modify_commencement_time_for_event(update_path_5,'eb77c9dad13ef82ba5ff4dcf439d3bab')
+        # Third Update
+        update_path_6 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-4.json')
+        update_path_7 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy4-1.json')
+        self.support.modify_commencement_time_for_event(update_path_6,'b2eeb176fc9adfc63b9098b313905792')
+        self.support.modify_commencement_time_for_event(update_path_7,'b2eeb176fc9adfc63b9098b313905792')
+        # Forth Update
+        update_path_8 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-5.json')
+        update_path_9 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy5-1.json')
+        self.support.modify_commencement_time_for_event(update_path_8,'d9498cb661062746dfc500a20c3a87e8')
+        self.support.modify_commencement_time_for_event(update_path_9,'d9498cb661062746dfc500a20c3a87e8')
+        #Fifth Update
+        update_path_10 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-6.json')
+        update_path_11 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy6-1.json')
+        self.support.modify_commencement_time_for_event(update_path_10,'6cd4bff8b0950234be09e6c0acda7b95')
+        self.support.modify_commencement_time_for_event(update_path_11,'6cd4bff8b0950234be09e6c0acda7b95')
+        #Sixth Update
+        update_path_12 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-7.json')
+        update_path_13 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy7-1.json')
+        self.support.modify_commencement_time_for_event(update_path_12,'53c6da53a7ba5f06aae182ee5ce38616')
+        self.support.modify_commencement_time_for_event(update_path_13,'53c6da53a7ba5f06aae182ee5ce38616')
+        # Seventh Update
+        update_path_14 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy8-1.json')
+        self.support.modify_commencement_time_for_event(update_path_14,'53c6da53a7ba5f06aae182ee5ce38616')
+
+
     def upload_test_events(self):
         # folder_path = os.path.join(base_test_path, 'test_files/originals')
         # output_file = os.path.join(base_test_path, 'test_files/sports_list.txt')
@@ -114,7 +153,6 @@ class TourneyTest:
         update_path_1 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-1.json')
         update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-1.json')
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy2-1.json')
-        self.support.modify_commencement_time_for_event(update_path_1,'484bc5582bb44ab79a1e942cf8762eda')
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2, "ea43090cd4cc2eb2fb98ba3847aba986")
         self.support.update_golden_game(update_path_3, "ea43090cd4cc2eb2fb98ba3847aba986")
@@ -125,8 +163,6 @@ class TourneyTest:
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy3-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy2-1.json')
 
-        self.support.modify_commencement_time_for_event(update_path_1,'484bc5582bb44ab79a1e942cf8762eda')
-        self.support.modify_commencement_time_for_event(update_path_4,'484bc5582bb44ab79a1e942cf8762eda')
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2, "c491f05b066449d95732c4f52ac57e66")
         self.support.update_golden_game(update_path_3, "c491f05b066449d95732c4f52ac57e66")
@@ -144,6 +180,7 @@ class TourneyTest:
 
     def test_setup(self):
         self.support.updateSports()
+        self.update_file_commentment_times()
         self.upload_test_events()
         self.create_users()
 
@@ -292,6 +329,8 @@ class TourneyTest:
         }
 
 
+
+
         for round in init_rounds:
             # print(RoundSerializer(round).data)
             # print(RoundSerializer(round.prev_round_1).data)
@@ -324,8 +363,7 @@ class TourneyTest:
         update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-3.json')
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy4-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy3-1.json')
-        self.support.modify_commencement_time_for_event(update_path_1,'5e766a287ba24d40d9e40aa41efe19de')
-        self.support.modify_commencement_time_for_event(update_path_4,'5e766a287ba24d40d9e40aa41efe19de')
+
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2,
                                         "c1b7e562062eb3bac053a2f5ecf399f9")
@@ -349,15 +387,15 @@ class TourneyTest:
         init_rounds = Round.objects.get_tourney_level_rounds(tournament=tournament, level=tournament.levels - 3)
         data1 = {
             "event_id": "eb77c9dad13ef82ba5ff4dcf439d3bab",
-            "player_choice": "Miami Dolphins"
+            "player_choice": "Baltimore Ravens"
         }
         data2 = {
             "event_id": "eb77c9dad13ef82ba5ff4dcf439d3bab",
-            "player_choice": "Baltimore Ravens"
+            "player_choice": "Los Angeles Chargers"
         }
         data1_gg = {
             "event_id": "c1b7e562062eb3bac053a2f5ecf399f9",
-            "player_choice": "Los Angeles Chargers"
+            "player_choice": "Chicago Bears"
         }
         data2_gg = {
             "event_id": "c1b7e562062eb3bac053a2f5ecf399f9",
@@ -391,9 +429,6 @@ class TourneyTest:
         update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-4.json')
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy5-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy4-1.json')
-
-        self.support.modify_commencement_time_for_event(update_path_1,'eb77c9dad13ef82ba5ff4dcf439d3bab')
-        self.support.modify_commencement_time_for_event(update_path_4,'eb77c9dad13ef82ba5ff4dcf439d3bab')
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2,
                                         "76ae384526017414d68d617bf80b8aab")
@@ -459,9 +494,6 @@ class TourneyTest:
         update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-5.json')
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy6-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy5-1.json')
-
-        self.support.modify_commencement_time_for_event(update_path_1,'b2eeb176fc9adfc63b9098b313905792')
-        self.support.modify_commencement_time_for_event(update_path_4,'b2eeb176fc9adfc63b9098b313905792')
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2,
                                         "41c4d77b6a910a6b2364fbeb51dba059")
@@ -527,9 +559,6 @@ class TourneyTest:
         update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-6.json')
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy7-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy6-1.json')
-
-        self.support.modify_commencement_time_for_event(update_path_1,'d9498cb661062746dfc500a20c3a87e8')
-        self.support.modify_commencement_time_for_event(update_path_4,'d9498cb661062746dfc500a20c3a87e8')
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2,
                                         "5e0c5b79c3cb142f3361ade464174b68")
@@ -595,9 +624,6 @@ class TourneyTest:
         update_path_2 = os.path.join(base_test_path, 'test_files/tourney-json/initial_events/tourney-nfl-copy1-7.json')
         update_path_3 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy8-1.json')
         update_path_4 = os.path.join(base_test_path, 'test_files/tourney-json/update_events/tourney-nfl-copy7-1.json')
-
-        self.support.modify_commencement_time_for_event(update_path_1,'6cd4bff8b0950234be09e6c0acda7b95')
-        self.support.modify_commencement_time_for_event(update_path_4,'6cd4bff8b0950234be09e6c0acda7b95')
         self.support.test_get_nfl_events(update_path_1)
         self.support.update_golden_game(update_path_2,
                                         "ad1bbe3e94716ca03c3059092cbd1eee")
@@ -704,9 +730,9 @@ class TourneyTest:
         #     print(f'Second Round Finished')
 
     def run_round_three(self):
-        time.sleep(4)
+        time.sleep(6)
         self.Simulate_Third_Round()
-        time.sleep(4)
+        time.sleep(6)
         self.update_test_3_events()
         # if self.tournament_record.levels == 3:
         #     time.sleep(1)

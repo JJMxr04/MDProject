@@ -56,8 +56,9 @@ class GameManager(AbstractManager):
         current_time = timezone.now()
         # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
-            # print(f'game.commence_time = {game.commence_time}, game.commence_time <= current_time = {game.commence_time <= current_time}')
-            # print('check 9')
+            print(f'game.commence_time = {game.commence_time}, game.commence_time <= current_time = {game.commence_time <= current_time}')
+            print(f'Game Event = {event}')
+            print('check 9')
             return False, False
         # print('check 10')
         if current_user == game.owner:

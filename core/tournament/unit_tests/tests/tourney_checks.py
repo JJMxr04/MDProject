@@ -329,9 +329,12 @@ class TournamentChecks(TestCase):
             return
         self.roundRecusion(round.prev_round_1,level +1,tournament=tournament)
         self.roundRecusion(round.prev_round_2,level+1,tournament=tournament)
-
-        print(json.dumps(RoundSerializer(round).data,indent=4, cls=UUIDEncoder))
-        print(f'Round Recursion {round}')
+        # print(f'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        # print(f'Round Recursion {round}')
+        # print(json.dumps(RoundSerializer(round).data,indent=4, cls=UUIDEncoder))
+        # print(f'Round Recursion - Match {round}')
+        # print(json.dumps(MatchSerializer(round.match).data, indent=4, cls=UUIDEncoder))
+        # print(f'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
         expected_level = level
         actual_level = round.level_num
@@ -346,24 +349,33 @@ class TournamentChecks(TestCase):
 
         if (not round.player_1) or (not round.player_2):
             actual_winner = round.winner
-            expected_winner = round.player_1
-            expected_completed = True
-            actual_completed = round.completed
-
-            self.test_case.assertEqual(expected_winner, actual_winner,
-                                       f"Round Winner mismatch: Expected {expected_winner}, but got {actual_winner}")
-            # self.test_case.assertEqual(expected_completed, actual_completed, f"Round completed mismatch: Expected {expected_completed}, but got {actual_completed}")
-            match = round.match
-            print(json.dumps(RoundSerializer(round).data, indent=4, cls=UUIDEncoder))
-            self.matchChecks(round,match,tournament.levels)
-        else:
-            actual_winner = round.winner
             if not round.player_1:
                 expected_winner = round.player_2
             if not round.player_2:
                 expected_winner = round.player_1
             self.test_case.assertEqual(expected_winner, actual_winner,
                                        f"Round Winner mismatch: Expected {expected_winner}, but got {actual_winner}")
+        else:
+
+            actual_winner = round.winner
+            expected_winner = round.player_1
+            expected_completed = True
+            actual_completed = round.completed
+            # print(f'player 1: {round.player_1}')
+            # print(f'player 2: {round.player_2}')
+            # print(f'round winner: {round.winner}')
+            # print(f'match 1: {round.match.player_1}')
+            # print(f'match 2: {round.match.player_2}')
+            # print(f'match winmner: {round.match.winner}')
+            # if round.level_num ==0:
+            #     print(f'Match: {json.dumps(MatchSerializer(round.match).data, indent=4, cls=UUIDEncoder)}')
+
+
+            self.test_case.assertEqual(expected_winner, actual_winner,
+                                       f"Round Winner mismatch: Expected {expected_winner}, but got {actual_winner}")
+            self.test_case.assertEqual(expected_completed, actual_completed, f"Round completed mismatch: Expected {expected_completed}, but got {actual_completed}")
+            match = round.match
+        # print(json.dumps(RoundSerializer(round).data, indent=4, cls=UUIDEncoder))
 
 
 
@@ -375,6 +387,8 @@ class TournamentChecks(TestCase):
 
 
     def tournamentCheck(self,tournament,name, max_players):
+
+        # print(json.dumps(TournamentSerializer(tournament).data,indent=4, cls=UUIDEncoder))
 
         expected_name = name
         actual_name = name
@@ -395,9 +409,9 @@ class TournamentChecks(TestCase):
         expected_final_round_level = 0
         actual_final_round_level = tournament.final_round.level_num
         self.test_case.assertEqual(expected_max_players, actual_max_players, f"Tournament Final Round Level mismatch: Expected {expected_final_round_level}, but got {actual_final_round_level}")
-        print(json.dumps(TournamentSerializer(tournament).data,indent=4, cls=UUIDEncoder))
+        # print(json.dumps(TournamentSerializer(tournament).data,indent=4, cls=UUIDEncoder))
 
-        time.sleep(20)
+        # time.sleep(20)
         self.roundRecusion(round=final_round,level=expected_final_round_level,tournament=tournament)
 
 
