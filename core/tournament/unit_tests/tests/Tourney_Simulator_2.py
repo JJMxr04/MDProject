@@ -274,7 +274,8 @@ class TourneyTest:
 
         for round in init_rounds:
             match = round.match
-
+            if not match:
+                continue
             if (not round.player_1) or (not round.player_2):
                 print(json.dumps(RoundSerializer(round).data, indent=4, cls=UUIDEncoder))
             user_1 = round.player_1.player
@@ -338,6 +339,8 @@ class TourneyTest:
             # print(RoundSerializer(round.prev_round_2).data)
             # print(round.prev_round_2.match.match_state)
             match = round.match
+            if not match:
+                continue
             user_1 = round.player_1.player
             user_2 = round.player_2.player
             for x in range(0,5):
@@ -404,6 +407,8 @@ class TourneyTest:
 
         for round in init_rounds:
             match = round.match
+            if not match:
+                continue
             user_1 = round.player_1.player
             user_2 = round.player_2.player
             for x in range(0, 5):
@@ -469,6 +474,8 @@ class TourneyTest:
 
         for round in init_rounds:
             match = round.match
+            if not match:
+                continue
             user_1 = round.player_1.player
             user_2 = round.player_2.player
             for x in range(0, 5):
@@ -534,6 +541,8 @@ class TourneyTest:
 
         for round in init_rounds:
             match = round.match
+            if not match:
+                continue
             user_1 = round.player_1.player
             user_2 = round.player_2.player
             for x in range(0, 5):
@@ -599,6 +608,8 @@ class TourneyTest:
 
         for round in init_rounds:
             match = round.match
+            if not match:
+                continue
             user_1 = round.player_1.player
             user_2 = round.player_2.player
             for x in range(0, 5):
@@ -662,6 +673,8 @@ class TourneyTest:
 
         for round in init_rounds:
             match = round.match
+            if not match:
+                continue
             user_1 = round.player_1.player
             user_2 = round.player_2.player
             for x in range(0, 5):

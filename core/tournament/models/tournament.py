@@ -129,10 +129,12 @@ class TournamentManager(AbstractManager):
         for round_obj in bottom_level_rounds:
             player_1 = players.pop() if players else None
             player_2 = players.pop() if players else None
+
             Round.objects.assign_players(round_obj=round_obj, player_1=player_1, player_2=player_2)
             # print(round_obj)
-            Round.objects.create_tournament_match(round_obj)
-            # print(round_obj)
+            if player_1 and player_2:
+                Round.objects.create_tournament_match(round_obj)
+            print(round_obj)
             round_obj.save()
         # print(f'initial second levels check {bottom_level_rounds}')
         # print(f'make init tournament final round: {tournament.final_round}')
@@ -144,7 +146,6 @@ class TournamentManager(AbstractManager):
         tournament.final_round = final_round
         tournament.save()
         self.assign_byes(tournament)
-
     def assign_byes(self, tournament):
         """
         Assigns byes to players if the number of players is not an exact power of 2.
@@ -231,6 +232,19 @@ class RoundManager(AbstractManager):
             round_obj.player_1 = player_1
         if not round_obj.player_2 and player_2:
             round_obj.player_2 = player_2
+
+        if not round_obj.player_1 and not round_obj.player_2:
+            print("both players assigned are None")
+            exit()
+        if not round_obj.player_1 or not round_obj.player_1:
+            print(f'Bye round, Player 1 :{round_obj.player_1}, Player_2: {round_obj.player_2}')
+            round_obj.completed = True
+            if not round_obj.player_1:
+                round_obj.winner = round_obj.player_2
+            if not round_obj.player_2:
+                round_obj.winner = round_obj.player_1
+
+            round_obj.save()
         round_obj.save()
         # print(f'assign players{round_obj}')
 
