@@ -16,7 +16,7 @@ from core.tournament.models.tournament import Player
 import logging
 import math
 import time
-class TournamentCreationTestCase(TestCase):
+class TournamentCreationMissingPlayersTestCase(TestCase):
     databases = ['default', 'test_mirror']
     # Level 6
     first_round_game_picks = {
