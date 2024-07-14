@@ -31,8 +31,8 @@ class TournamentManager(AbstractManager):
         end_date += timedelta(weeks=num_weeks)
         return end_date
 
-    def get_tourny_level(self, num):
-        return math.log2(num)
+    def get_tourny_level(self,num):
+        return math.ceil(math.log2(num))
 
     def get_invited_players(self, tournament):
         return InvitedPlayer.objects.filter(tournament=tournament)
@@ -131,13 +131,11 @@ class TournamentManager(AbstractManager):
             player_2 = players.pop() if players else None
 
             Round.objects.assign_players(round_obj=round_obj, player_1=player_1, player_2=player_2)
-            # print(round_obj)
+
             if player_1 and player_2:
                 Round.objects.create_tournament_match(round_obj)
-            print(round_obj)
             round_obj.save()
-        # print(f'initial second levels check {bottom_level_rounds}')
-        # print(f'make init tournament final round: {tournament.final_round}')
+
 
     def create_rounds(self, tournament):
         tournament.state = 'inprogress'
@@ -145,7 +143,7 @@ class TournamentManager(AbstractManager):
         # print(f'create rounds: {final_round}')
         tournament.final_round = final_round
         tournament.save()
-        self.assign_byes(tournament)
+        # self.assign_byes(tournament)
     def assign_byes(self, tournament):
         """
         Assigns byes to players if the number of players is not an exact power of 2.
@@ -167,12 +165,22 @@ class TournamentManager(AbstractManager):
                 round_obj.completed = True
                 round_obj.winner = round_obj.player_1
                 num_byes -= 1
+
             elif not round_obj.player_2:
                 round_obj.player_2 = players.pop()
                 round_obj.completed = True
                 round_obj.winner = round_obj.player_2
                 num_byes -= 1
             round_obj.save()
+            next_round = round_obj.next_round
+            if next_round:
+                if round_obj == next_round.prev_round_1:
+                    next_round.player_1 = round_obj.winner
+                if round_obj == next_round.prev_round_2:
+                    next_round.player_2 = round_obj.winner
+                next_round.save()
+
+
 
 
     def get_tournament_with_rounds(self, object_id):
@@ -200,6 +208,22 @@ class TournamentManager(AbstractManager):
 
         except ObjectDoesNotExist:
             return None
+
+    def bracket_maker(self,tournament):
+        players_num = len(Player.objects.get_players(tournament))
+        tournament_players_num = tournament.max_accepted_players
+        missing_players = tournament_players_num - players_num
+        # print(f'players_num: {players_num}')
+        # print(f'tournament_players_num: {tournament_players_num}')
+        # print(f'missing_players: {missing_players}')
+
+        if missing_players > 2:
+            tournament.state = ("aborted")
+            tournament.save()
+            return
+        Tournament.objects.create_rounds(tournament)
+        Tournament.objects.make_init_matches(tournament)
+        Tournament.objects.assign_byes(tournament)
 
 
 class RoundManager(AbstractManager):
@@ -233,18 +257,19 @@ class RoundManager(AbstractManager):
         if not round_obj.player_2 and player_2:
             round_obj.player_2 = player_2
 
-        if not round_obj.player_1 and not round_obj.player_2:
+        if (not round_obj.player_1) and (not round_obj.player_2):
             print("both players assigned are None")
             exit()
-        if not round_obj.player_1 or not round_obj.player_1:
-            print(f'Bye round, Player 1 :{round_obj.player_1}, Player_2: {round_obj.player_2}')
+        if not round_obj.player_1 or not round_obj.player_2:
+            # print(f'Bye round level:{round_obj.level_num}, Player 1 :{round_obj.player_1}, Player_2: {round_obj.player_2}')
             round_obj.completed = True
             if not round_obj.player_1:
                 round_obj.winner = round_obj.player_2
             if not round_obj.player_2:
                 round_obj.winner = round_obj.player_1
-
             round_obj.save()
+
+
         round_obj.save()
         # print(f'assign players{round_obj}')
 
@@ -328,7 +353,7 @@ class Tournament(models.Model):
     name = models.CharField(max_length=255)
     start_date = models.DateTimeField()
     # end_date = models.DateTimeField()
-    state = models.CharField(max_length=10, default='created')  # created, inprogress, completed
+    state = models.CharField(max_length=10, default='created')  # created, inprogress, completed,aborted
     max_accepted_players = models.IntegerField()
     levels = models.FloatField(default=0)
     winner = models.ForeignKey('Player', on_delete=models.SET_NULL, related_name='won_tournaments', null=True,

@@ -390,13 +390,12 @@ class TournamentChecks(TestCase):
         # print(json.dumps(TournamentSerializer(tournament).data,indent=4, cls=UUIDEncoder))
 
 
-
         expected_name = name
         actual_name = name
 
         self.test_case.assertEqual(expected_name, actual_name, f"Tournament Name mismatch: Expected {expected_name}, but got {actual_name}")
 
-        expected_state = "completed"
+        expected_state = "aborted"
         actual_state = tournament.state
 
         self.test_case.assertEqual(expected_state, actual_state, f"Tournament State mismatch: Expected {expected_state}, but got {actual_state}")
@@ -406,14 +405,14 @@ class TournamentChecks(TestCase):
 
         self.test_case.assertEqual(expected_max_players, actual_max_players, f"Tournament Max Accepted Players mismatch: Expected {expected_max_players}, but got {actual_max_players}")
 
-        final_round = tournament.final_round
-        expected_final_round_level = 0
-        actual_final_round_level = tournament.final_round.level_num
-        self.test_case.assertEqual(expected_max_players, actual_max_players, f"Tournament Final Round Level mismatch: Expected {expected_final_round_level}, but got {actual_final_round_level}")
-        # print(json.dumps(TournamentSerializer(tournament).data,indent=4, cls=UUIDEncoder))
+        expected_final_round = None
+        actual_final_round =tournament.final_round
 
-        time.sleep(20)
-        self.roundRecusion(round=final_round,level=expected_final_round_level,tournament=tournament)
+        self.test_case.assertEqual(expected_final_round, actual_final_round, f"Tournament Final Round : Expected {expected_final_round}, but got {actual_final_round}")
+        # print(json.dumps(TournamentSerializer(tournament).data,indent=4, cls=UUIDEncoder))
+        # expected_final_round_level = actual_final_round.level_num
+        # time.sleep(20)
+        # self.roundRecusion(round=actual_final_round,level=expected_final_round_level,tournament=tournament)
 
 
 

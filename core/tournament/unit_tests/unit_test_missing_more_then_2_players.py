@@ -5,12 +5,12 @@ from core.tournament.models.tournament import Tournament, Round, TournamentManag
 # from core.tournament.unit_tests.tests.tournament_test_1 import tournament_test_1
 from core.user.models import User
 from core.event.models.sport import Sport
-from .tests import tournament_test_2
+from .tests import tournament_test_3
 import logging
 logger = logging.getLogger(__name__)
 from core.tournament.unit_tests.tests.Support import Support
 from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
-from core.tournament.unit_tests.tests.tourney_checks import TournamentChecks
+from core.tournament.unit_tests.tests.tourney_checks_missing_more_then_2_Players import TournamentChecks
 import unittest
 from core.tournament.models.tournament import Player
 import logging
@@ -154,39 +154,26 @@ class TournamentCreationTestCase(TestCase):
 
     }
 
-    def test_tournament_2(self):
-        expected_max_players = 2
-        logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
-        Support().load_data_sport_team()
-        expected_name = f'test{expected_max_players}'
-        expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
-        time.sleep(30)
-        tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
-
-        tournament_check = TournamentChecks(test_case=self,tournament=tournament,name=expected_name,max_players=expected_max_players)
-        logger.info(f'Finished Tournament Simulation test with {expected_max_players} max and accepted players')
-
     def test_tournament_3(self):
         expected_max_players = 3
         logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(30)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
         tournament_check = TournamentChecks(test_case=self,tournament=tournament,name=expected_name,max_players=expected_max_players)
         logger.info(f'Finished Tournament Simulation test with {expected_max_players} max and accepted players')
-
+    #
     def test_tournament_4(self):
         expected_max_players = 4
         logger.info(f'Starting Tournament Simulation test with {expected_max_players} max and accepted players')
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(30)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
@@ -199,7 +186,7 @@ class TournamentCreationTestCase(TestCase):
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(60)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
@@ -212,7 +199,7 @@ class TournamentCreationTestCase(TestCase):
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(60)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
@@ -225,7 +212,7 @@ class TournamentCreationTestCase(TestCase):
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(60)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
@@ -238,7 +225,7 @@ class TournamentCreationTestCase(TestCase):
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(60)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 
@@ -252,7 +239,7 @@ class TournamentCreationTestCase(TestCase):
         Support().load_data_sport_team()
         expected_name = f'test{expected_max_players}'
         expected_levels = math.log2(expected_max_players)
-        test = tournament_test_2(max_players=expected_max_players, tourney_name=expected_name)
+        test = tournament_test_3(max_players=expected_max_players, tourney_name=expected_name)
         time.sleep(60)
         tournament = Tournament.objects.get_object_by_id(id = test.tournament.id)
 

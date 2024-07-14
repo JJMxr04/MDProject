@@ -203,7 +203,7 @@ class TourneyTest:
 
     def tourney_invite_and_accept_players(self):
         tournament = self.tournament_record
-        for x in range(0, tournament.max_accepted_players):
+        for x in range(0, tournament.max_accepted_players-3):
             Tournament.objects.invite_player(tournament.id, f"{x}test{x}@test.com")
             user=User.objects.get_object_by_email(f"{x}test{x}@test.com")
             invitedPlayer = InvitedPlayer.objects.get(player=user,tournament=tournament)

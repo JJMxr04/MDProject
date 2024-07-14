@@ -1,4 +1,4 @@
-from core.tournament.unit_tests.tests.Tourney_Simulator_2 import TourneyTest
+from core.tournament.unit_tests.tests.Tourney_Simulator_3 import TourneyTest
 import unittest
 from core.tournament.models.tournament import Player
 import logging
@@ -152,10 +152,5 @@ class tournament_test_3():
         self.max_players = max_players
         self.tourney_name = tourney_name
         self.tourny_Sim = TourneyTest(max_players=self.max_players,tourney_name=self.tourney_name)
-        players_num = len(Player.objects.get_players(self.tourny_Sim.tournament))
-        tournament_players_num = self.tourny_Sim.tournament.max_accepted_players
-        missing_players = tournament_players_num - players_num
-        if missing_players > 2:
-            return
         self.tourny_Sim.run_test()
         self.tournament = self.tourny_Sim.tournament_record
