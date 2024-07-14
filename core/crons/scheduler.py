@@ -6,6 +6,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from core.event.crons.sportUpdate import SportCron
 from core.event.crons.eventUpdate import EventCron
 from core.tournament.crons.BracketMaker import BracketMaker
+from core.tournament.crons.TournamentReminder import Tournament2DayReminder
 
 sportCron = SportCron()
 eventCron = EventCron()
@@ -14,6 +15,9 @@ scheduler = BackgroundScheduler()
 
 def tournament_cron_bracketMaker():
     BracketMaker.create_brackets()
+
+def tournament_cron_2_day_reminder():
+    Tournament2DayReminder.get_tournments_send_player_email()
 
 
 def sport_cron():
@@ -31,6 +35,14 @@ def start_scheduler():
         trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
         id='tournament_cron_bracketMaker',
         name='Tournament Cron Bracket Maker',
+        replace_existing=True,
+    )
+
+    scheduler.add_job(
+        tournament_cron_2_day_reminder,
+        trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
+        id='tournament_cron_2_day_reminder',
+        name='Tournament Cron 2 Day Reminder',
         replace_existing=True,
     )
 

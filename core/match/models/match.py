@@ -8,6 +8,7 @@ from django.utils import timezone
 from core.user.models import User
 from core.event.models import Event
 from core.game.models import Game
+from core.mail.models import Emails
 
 class MatchManager(AbstractManager):
     def create_match(self,player_1,player_2 = None):
@@ -28,11 +29,11 @@ class MatchManager(AbstractManager):
         match.player_1_game_4 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_1_game_5 = Game.objects.create_game(match.player_1, match.player_2, match)
 
-        match.player_2_game_1 = Game.objects.create_game(match.player_1,match.player_2, match)
-        match.player_2_game_2 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_3 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_4 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_5 = Game.objects.create_game(match.player_1, match.player_2, match)
+        match.player_2_game_1 = Game.objects.create_game(match.player_2,match.player_1, match)
+        match.player_2_game_2 = Game.objects.create_game(match.player_2, match.player_1, match)
+        match.player_2_game_3 = Game.objects.create_game(match.player_2, match.player_1, match)
+        match.player_2_game_4 = Game.objects.create_game(match.player_2, match.player_1, match)
+        match.player_2_game_5 = Game.objects.create_game(match.player_2, match.player_1, match)
 
         match.golden_game = Game.objects.get_golden_game(match.player_1,match.player_2,match)
         match.save()
@@ -123,6 +124,20 @@ class MatchManager(AbstractManager):
                 match.match_state = "completed"
             match.save()
 
+            #email
+            if match.match_state == "completed":
+                if match.winner == match.player_1:
+                    Emails.send_match_victory_notification(match.player_1,match.player_2.username)
+                    Emails.send_match_lost_notification(match.player_2,match.player_1.username)
+                elif match.winner == match.player_2:
+                    Emails.send_match_victory_notification(match.player_2, match.player_1.username)
+                    Emails.send_match_lost_notification(match.player_1, match.player_2.username)
+                else:
+                    Emails.send_match_tie_notification(match.player_1,match.player_2.username)
+                    Emails.send_match_tie_notification(match.player_2, match.player_1.username)
+
+
+
 
 
 class Match(AbstractModel):
@@ -130,7 +145,7 @@ class Match(AbstractModel):
     player_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_1_match')
     player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_match',null=True,default=None)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match',null=True,default=None)
-    match_state = models.CharField(max_length=10, default='created', null=False, blank=False)
+    match_state = models.CharField(max_length=10, default='created', null=False, blank=False) #created, completed
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)
 
     player_1_score = models.IntegerField(default=0, null=False, blank=False)
