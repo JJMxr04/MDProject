@@ -7,12 +7,16 @@ from core.event.crons.sportUpdate import SportCron
 from core.event.crons.eventUpdate import EventCron
 from core.tournament.crons.BracketMaker import BracketMaker
 from core.tournament.crons.TournamentReminder import Tournament2DayReminder
+from core.match.crons.matchUpdate import MatchCron
 
 sportCron = SportCron()
 eventCron = EventCron()
-
+matchCron = MatchCron()
 scheduler = BackgroundScheduler()
 
+
+def complete_matches_cron():
+    MatchCron.completeMatches()
 def tournament_cron_bracketMaker():
     BracketMaker.create_brackets()
 
@@ -30,6 +34,15 @@ def print_cron_jobs():
     scheduler.print_jobs()
 
 def start_scheduler():
+
+    scheduler.add_job(
+        complete_matches_cron(),
+        trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
+        id='complete_matches_cron',
+        name='Complete Matches Cron',
+        replace_existing=True,
+    )
+
     scheduler.add_job(
         tournament_cron_bracketMaker,
         trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
