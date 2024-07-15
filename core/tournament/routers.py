@@ -16,4 +16,6 @@ urlpatterns = [
     path('tournaments/<uuid:pk>/', TournamentViewSet.as_view({'get': 'retrieve'}), name='tournament-detail'),
     path('invited-players/<uuid:pk>/', InvitedPlayerViewSet.as_view({'get': 'retrieve', 'patch': 'update'}), name='invited-player-detail'),
     path('rounds/<uuid:pk>/', RoundViewSet.as_view({'get': 'retrieve', 'patch': 'update'}), name='round-detail'),
+    path('rounds/tournament/<uuid:tournament_id>/', RoundViewSet.as_view({'get': 'tournament_rounds'}), name='tournament-rounds'),
+    path('rounds/user-rounds/', RoundViewSet.as_view({'get': 'user_rounds'}), name='user-rounds'),
 ]

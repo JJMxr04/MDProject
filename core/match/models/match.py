@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.utils import timezone
@@ -152,8 +152,8 @@ class Match(AbstractModel):
     match_state = models.CharField(max_length=10, default='created', null=False, blank=False)
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)
     tiebreaker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, default=None)
-    start_date = models.DateTimeField(null=False, blank=False)
-    end_date = models.DateTimeField(null=True, blank=True)
+    start_date = models.DateTimeField(auto_now=False)
+    end_date = models.DateTimeField(auto_now=False)
     player_1_score = models.IntegerField(default=0, null=False, blank=False)
     player_2_score = models.IntegerField(default=0, null=False, blank=False)
 
@@ -202,6 +202,7 @@ class Match(AbstractModel):
         if self.start_date and not self.end_date:
             self.start_date = timezone.make_aware(self.start_date, timezone.get_current_timezone())
             self.end_date = self.start_date + timedelta(weeks=1)
+            self.end_date = timezone.make_aware(self.end_date, timezone.get_current_timezone())
         super().save(*args, **kwargs)
 
     def __str__(self):

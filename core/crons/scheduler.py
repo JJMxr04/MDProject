@@ -36,7 +36,7 @@ def print_cron_jobs():
 def start_scheduler():
 
     scheduler.add_job(
-        complete_matches_cron(),
+        complete_matches_cron,
         trigger=IntervalTrigger(seconds=24*60*60),  # Run every 24 hours
         id='complete_matches_cron',
         name='Complete Matches Cron',
