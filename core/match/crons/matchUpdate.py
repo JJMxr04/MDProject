@@ -15,7 +15,7 @@ class MatchCron():
 
     def completeMatches(self):
         today = timezone.now().date()
-        matches = Match.objects.filter(end_date__lt=today, match_state__ne='completed')
+        matches = Match.objects.filter(end_date=today, match_state='completed')
 
         for match in matches:
             Match.objects.calcutate_winner(match)

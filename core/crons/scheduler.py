@@ -16,7 +16,7 @@ scheduler = BackgroundScheduler()
 
 
 def complete_matches_cron():
-    MatchCron.completeMatches()
+    matchCron.completeMatches()
 def tournament_cron_bracketMaker():
     BracketMaker.create_brackets()
 

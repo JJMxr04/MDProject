@@ -9,6 +9,7 @@ from core.user.models import User
 from core.event.models import Event
 from core.game.models import Game
 from core.mail.models import Emails
+from core.match.models import TieBreaker
 
 
 class MatchManager(AbstractManager):
@@ -25,7 +26,8 @@ class MatchManager(AbstractManager):
         elif match.player_2_score > match.player_1_score:
             match.winner = match.player_2
         elif match.player_1_score == match.player_2_score:
-            match.winner = None
+            match.tiebreaker = TieBreaker.objects.create()
+            match.winner = TieBreaker.objects.calculate_winner(match.tiebreaker,match.player_1,match.player_2)
         match.match_state = "completed"
         match.save()
 
@@ -35,9 +37,9 @@ class MatchManager(AbstractManager):
         elif match.winner == match.player_2:
             Emails.send_match_victory_notification(match.player_2, match.player_1.username)
             Emails.send_match_lost_notification(match.player_1, match.player_2.username)
-        else:
-            Emails.send_match_tie_notification(match.player_1, match.player_2.username)
-            Emails.send_match_tie_notification(match.player_2, match.player_1.username)
+        # else:
+        #     Emails.send_match_tie_notification(match.player_1, match.player_2.username)
+        #     Emails.send_match_tie_notification(match.player_2, match.player_1.username)
 
 
     def accept_match(self, match, player_2):
@@ -149,6 +151,7 @@ class Match(AbstractModel):
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match', null=True, default=None)
     match_state = models.CharField(max_length=10, default='created', null=False, blank=False)
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)
+    tiebreaker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, default=None)
     start_date = models.DateTimeField(null=False, blank=False)
     end_date = models.DateTimeField(null=True, blank=True)
     player_1_score = models.IntegerField(default=0, null=False, blank=False)
@@ -197,6 +200,7 @@ class Match(AbstractModel):
 
     def save(self, *args, **kwargs):
         if self.start_date and not self.end_date:
+            self.start_date = timezone.make_aware(self.start_date, timezone.get_current_timezone())
             self.end_date = self.start_date + timedelta(weeks=1)
         super().save(*args, **kwargs)
 
