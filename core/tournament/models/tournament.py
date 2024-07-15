@@ -217,7 +217,7 @@ class TournamentManager(AbstractManager):
         # print(f'tournament_players_num: {tournament_players_num}')
         # print(f'missing_players: {missing_players}')
 
-        if missing_players > 2:
+        if missing_players > 1:
             tournament.state = ("aborted")
             tournament.save()
             return
