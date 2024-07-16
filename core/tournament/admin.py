@@ -12,6 +12,7 @@ from uuid import UUID  # Import UUID for type checking
 class TournamentAdmin(admin.ModelAdmin):
     list_display = ['name', 'start_date', 'state', 'max_accepted_players', 'levels', 'winner', 'final_round',
                     'view_detail_link', 'invite_players_link']
+    actions = ['create_bracket_action']
 
     def view_detail_link(self, obj):
         url = reverse('admin:%s_%s_custom_detail' % (self.model._meta.app_label, self.model._meta.model_name),
@@ -133,6 +134,12 @@ class TournamentAdmin(admin.ModelAdmin):
         actions = super().get_actions(request)
         # Add or modify actions as needed
         return actions
+
+    def create_bracket_action(self, request, queryset):
+        for tournament in queryset:
+            Tournament.objects.bracket_maker(tournament)
+        self.message_user(request, "Bracket creation process has been initiated successfully.")
+        return
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ['tournament_name', 'player', 'seed', 'division']

@@ -9,7 +9,7 @@ from core.user.models import User
 from core.event.models import Event
 from core.game.models import Game
 from core.mail.models import Emails
-from core.match.models import TieBreaker
+from core.match.models.TieBreaker import TieBreaker
 
 
 class MatchManager(AbstractManager):
@@ -156,16 +156,15 @@ class Match(AbstractModel):
 
     player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_match', null=True, default=None)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match', null=True, default=None)
-    match_state = models.CharField(max_length=10, default='created', null=False, blank=False)
 
     player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_match',null=True,default=None)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match',null=True,default=None)
     match_state = models.CharField(max_length=10, default='created', null=False, blank=False) #created, completed
 
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)
-    tiebreaker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, default=None)
-    start_date = models.DateTimeField(auto_now=False)
-    end_date = models.DateTimeField(auto_now=False)
+    tiebreaker = models.ForeignKey(TieBreaker, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, default=None)
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(null=True, blank=True, default=None)
     player_1_score = models.IntegerField(default=0, null=False, blank=False)
     player_2_score = models.IntegerField(default=0, null=False, blank=False)
 

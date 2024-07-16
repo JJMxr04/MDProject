@@ -1,0 +1,223 @@
+[
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_cfl",
+  "fields": {
+    "group": "American Football",
+    "title": "CFL",
+    "description": "Canadian Football League",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.377Z",
+    "updated": "2024-01-31T12:15:05.377Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_ncaaf",
+  "fields": {
+    "group": "American Football",
+    "title": "NCAAF",
+    "description": "US College Football",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.385Z",
+    "updated": "2024-01-31T12:15:05.385Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_ncaaf_championship_winner",
+  "fields": {
+    "group": "American Football",
+    "title": "NCAAF Championship Winner",
+    "description": "US College Football Championship Winner",
+    "active": false,
+    "has_outrights": true,
+    "created": "2024-01-31T12:15:05.400Z",
+    "updated": "2024-01-31T12:15:05.400Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_nfl",
+  "fields": {
+    "group": "American Football",
+    "title": "NFL",
+    "description": "US Football",
+    "active": true,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.409Z",
+    "updated": "2024-01-31T12:15:05.409Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_nfl_preseason",
+  "fields": {
+    "group": "American Football",
+    "title": "NFL Preseason",
+    "description": "US Football",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.416Z",
+    "updated": "2024-01-31T12:15:05.416Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_nfl_super_bowl_winner",
+  "fields": {
+    "group": "American Football",
+    "title": "NFL Super Bowl Winner",
+    "description": "Super Bowl Winner 2023/2024",
+    "active": true,
+    "has_outrights": true,
+    "created": "2024-01-31T12:15:05.423Z",
+    "updated": "2024-01-31T12:15:05.423Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "americanfootball_xfl",
+  "fields": {
+    "group": "American Football",
+    "title": "XFL",
+    "description": "US Football",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.430Z",
+    "updated": "2024-01-31T12:15:05.430Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "aussierules_afl",
+  "fields": {
+    "group": "Aussie Rules",
+    "title": "AFL",
+    "description": "Aussie Football",
+    "active": true,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.441Z",
+    "updated": "2024-01-31T12:15:05.441Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "baseball_mlb",
+  "fields": {
+    "group": "Baseball",
+    "title": "MLB",
+    "description": "Major League Baseball",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.449Z",
+    "updated": "2024-01-31T12:15:05.449Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "baseball_mlb_preseason",
+  "fields": {
+    "group": "Baseball",
+    "title": "MLB Preseason",
+    "description": "Major League Baseball",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.457Z",
+    "updated": "2024-01-31T12:15:05.457Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "baseball_mlb_world_series_winner",
+  "fields": {
+    "group": "Baseball",
+    "title": "MLB World Series Winner",
+    "description": "World Series Winner 2023",
+    "active": false,
+    "has_outrights": true,
+    "created": "2024-01-31T12:15:05.464Z",
+    "updated": "2024-01-31T12:15:05.464Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "baseball_ncaa",
+  "fields": {
+    "group": "Baseball",
+    "title": "NCAA Baseball",
+    "description": "US College Baseball",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.471Z",
+    "updated": "2024-01-31T12:15:05.471Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "basketball_euroleague",
+  "fields": {
+    "group": "Basketball",
+    "title": "Basketball Euroleague",
+    "description": "Basketball Euroleague",
+    "active": true,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.478Z",
+    "updated": "2024-01-31T12:15:05.478Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "basketball_nba",
+  "fields": {
+    "group": "Basketball",
+    "title": "NBA",
+    "description": "US Basketball",
+    "active": true,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.484Z",
+    "updated": "2024-01-31T12:15:05.484Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "basketball_nba_championship_winner",
+  "fields": {
+    "group": "Basketball",
+    "title": "NBA Championship Winner",
+    "description": "Championship Winner 2023/2024",
+    "active": true,
+    "has_outrights": true,
+    "created": "2024-01-31T12:15:05.489Z",
+    "updated": "2024-01-31T12:15:05.489Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "basketball_nba_preseason",
+  "fields": {
+    "group": "Basketball",
+    "title": "NBA Preseason",
+    "description": "US Basketball",
+    "active": false,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.494Z",
+    "updated": "2024-01-31T12:15:05.494Z"
+  }
+},
+{
+  "model": "core_event.sport",
+  "pk": "basketball_ncaab",
+  "fields": {
+    "group": "Basketball",
+    "title": "NCAAB",
+    "description": "US College Basketball",
+    "active": true,
+    "has_outrights": false,
+    "created": "2024-01-31T12:15:05.500Z",
+    "updated": "2024-01-31T12:15:05.500Z"
+  }
+}
+]
