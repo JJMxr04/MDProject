@@ -4,14 +4,14 @@ from .models import Match
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
     list_display = [
-        'id', 'player_1', 'player_2', 'winner', 'match_state', 'match_type',
+        'id', 'player_1', 'player_2', 'winner', 'match_state', 'match_type', 'start_date', 'end_date',
         'player_1_game_1_completed', 'player_1_game_2_completed', 'player_1_game_3_completed',
         'player_1_game_4_completed', 'player_1_game_5_completed',
         'player_2_game_1_completed', 'player_2_game_2_completed', 'player_2_game_3_completed',
         'player_2_game_4_completed', 'player_2_game_5_completed',
         'golden_game_completed'
     ]
-    list_filter = ['match_state', 'match_type']
+    list_filter = ['match_state', 'match_type', 'start_date', 'end_date']
     search_fields = ['player_1__username', 'player_2__username', 'winner__username']
     readonly_fields = [
         'id', 'player_1', 'player_2', 'winner', 'match_state', 'match_type',

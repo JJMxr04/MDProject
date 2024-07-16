@@ -7,10 +7,10 @@ class EventConfig(AppConfig):
     name = 'core.event'
     label = 'core_event'
 
-    def ready(self):
-        if settings.DEBUG:
-            from core.crons.scheduler import start_scheduler
-            import threading
-            scheduler_thread = threading.Thread(target=start_scheduler)
-            scheduler_thread.daemon = True
-            scheduler_thread.start()
+    # def ready(self):
+    #     if settings.DEBUG:
+    #         from core.crons.scheduler import start_scheduler
+    #         import threading
+    #         scheduler_thread = threading.Thread(target=start_scheduler)
+    #         scheduler_thread.daemon = True
+    #         scheduler_thread.start()

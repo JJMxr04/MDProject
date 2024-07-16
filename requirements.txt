@@ -12,3 +12,8 @@ tqdm==4.66.2
 aiofiles==23.2.1
 ollama==0.2.0
 langchain==0.1.20
+redis==5.0.7
+celery==5.4.0
+django-celery-results==2.5.1
+django-celery-beat==2.6.0
+django-redis==5.4.0
