@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apscheduler',
+    # 'apscheduler',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    "django_celery_results",
+    "django_celery_beat",
 
     # MDProject Models
     'core.commands',
@@ -237,13 +239,27 @@ CORS_ALLOWED_ORIGINS = [
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
 LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
 
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'UTC'
 
 
-
-
-
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+CELERY_BEAT_SCHEDULE = {}
 
 
 
