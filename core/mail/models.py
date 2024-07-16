@@ -7,6 +7,8 @@ import os
 class Emails:
     @classmethod
     def send_waitlist_thank_you(cls, email):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = "Thank You for Signing Up for the Waitlist"
         recipient = [email]
         template_path = "waitlist/waitlist_thank_you.html"
@@ -33,6 +35,8 @@ class Emails:
 
     @classmethod
     def send_tournament_invite(cls, user, tournament):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = f"You're Invited to Join the {tournament.name} Tournament!"
         recipient = [user.email]
         template_path = "tournament/tournamentInvite/tournamentInvite.html"
@@ -69,6 +73,8 @@ class Emails:
 
     @classmethod
     def send_waitlist_granted(cls, email):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = "Thank You for Signing Up for the Waitlist"
         recipient = [email]
         template_path = "waitlist/waitlist_granted.html"
@@ -95,6 +101,8 @@ class Emails:
 
     @classmethod
     def send_tournament_acceptance_confirmation(cls, user, tournament):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = f"You're Invited to Join the {tournament.name} Tournament!"
         recipient = [user.email]
         template_path = "torunament/tournamentInvite/tournamentAcceptance.html"
@@ -131,6 +139,8 @@ class Emails:
 
     @classmethod
     def send_opponent_pick_notification(cls, user, opponent_name):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = f"Your Opponent {opponent_name} Has Uploaded a Pick"
         recipient = [user.email]
         template_path = "game/upload.html"
@@ -162,6 +172,8 @@ class Emails:
 
     @classmethod
     def send_match_victory_notification(cls, user, opponent_name):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = "Congratulations, You Won the Match!"
         recipient = [user.email]
         template_path = "match/matchVictory.html"
@@ -193,6 +205,8 @@ class Emails:
 
     @classmethod
     def send_match_tie_notification(cls, user, opponent_name):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = "Your Match Ended in a Tie"
         recipient = [user.email]
         template_path = "match/matchTie.html"
@@ -224,6 +238,8 @@ class Emails:
 
     @classmethod
     def send_match_lost_notification(cls, user, opponent_name):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = "Match Result: You Lost"
         recipient = [user.email]
         template_path = "match/matchLost.html"
@@ -255,9 +271,11 @@ class Emails:
 
     @classmethod
     def send_tournament_victory_notification(cls, user, tournament):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = f"Congratulations! You Won the {tournament.name} Tournament!"
         recipient = [user.email]
-        template_path = "tournamentInvite/tournamentVictory.html"
+        template_path = "tournament/tournamentVictory.html"
 
         context = {
             'tournament_name': tournament.name,
@@ -286,6 +304,8 @@ class Emails:
 
     @classmethod
     def send_tournament_starting_notification(cls, user, tournament):
+        if os.getenv('DEBUG') ==True:
+            return
         subject = f"The {tournament.name} Tournament Starts in 2 Days!"
         recipient = [user.email]
         template_path = "tournamentInvite/tournamentStartingNotification.html"

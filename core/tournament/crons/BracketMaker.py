@@ -14,5 +14,5 @@ class BracketMaker():
         tournaments = self.get_upcoming_tournaments()
 
         for tournament in tournaments:
-            Tournament.objects.create_rounds(tournament)
+            Tournament.objects.bracket_maker(tournament)
 

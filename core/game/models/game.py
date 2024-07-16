@@ -15,30 +15,36 @@ class GameManager(AbstractManager):
                            away_team=away_team, winner=winner)
 
     def update_by_id(self, id, current_user, data):
+        # print(data)
         game = self.filter(id=id).first()
         new_game = False
-
+        # print('Starting Game Check')
         if game is None:
+            # print('check 1')
             # If the game does not exist, create a new instance
             return False, False
+        # print('check 2')
         if (current_user != game.owner) and (current_user != game.player_2):
+            # print('check 3')
             return False, False
-
+        # print('check 4')
         if game.event is None:
+            # print('check 5')
             new_game = True
             event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
+                # print('check 6')
                 return False, False
-
+            # print('check 7')
             commence_time_str = event.commence_time
 
             # Convert the commence_time string to a datetime object
             commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
 
             # Check if the commence time is at least 8 hours from now
-            current_time = timezone.now()
-            if commence_time < current_time + timedelta(hours=8):
-                return False, False
+            # current_time = timezone.now()
+            # if commence_time < current_time + timedelta(hours=8):
+            #     return False, False
 
             game.event = event
             game.home_team = event.home_team
@@ -48,14 +54,21 @@ class GameManager(AbstractManager):
 
         # Check if the event has already started
         current_time = timezone.now()
+        # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
+            print(f'game.commence_time = {game.commence_time}, game.commence_time <= current_time = {game.commence_time <= current_time}')
+            print(f'Game Event = {event}')
+            print('check 9')
             return False, False
-
+        # print('check 10')
         if current_user == game.owner:
+            # print('check 11')
             game.owner_choice = data.get("player_choice")
-
+        # print('check 12')
         if current_user == game.player_2:
+            # print('check 13')
             game.player_2_choice = data.get("player_choice")
+        # print('check 14')
 
         game.save()
         # Email
@@ -63,6 +76,8 @@ class GameManager(AbstractManager):
             Emails.send_opponent_pick_notification(current_user,game.player_2.username)
         if current_user == game.player_2:
             Emails.send_opponent_pick_notification(current_user,game.owner.username)
+
+        # print('check 15')
 
         return new_game, game
 

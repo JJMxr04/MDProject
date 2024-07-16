@@ -54,11 +54,19 @@ class MatchManager(AbstractManager):
         match.player_1_game_4 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_1_game_5 = Game.objects.create_game(match.player_1, match.player_2, match)
 
+<<<<<<< HEAD
         match.player_2_game_1 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_2_game_2 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_2_game_3 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_2_game_4 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_2_game_5 = Game.objects.create_game(match.player_1, match.player_2, match)
+=======
+        match.player_2_game_1 = Game.objects.create_game(match.player_2,match.player_1, match)
+        match.player_2_game_2 = Game.objects.create_game(match.player_2, match.player_1, match)
+        match.player_2_game_3 = Game.objects.create_game(match.player_2, match.player_1, match)
+        match.player_2_game_4 = Game.objects.create_game(match.player_2, match.player_1, match)
+        match.player_2_game_5 = Game.objects.create_game(match.player_2, match.player_1, match)
+>>>>>>> 33bcee8177a250a6e41f593e28f29a90b3a26af1
 
         match.golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
         match.save()
@@ -147,9 +155,15 @@ class MatchManager(AbstractManager):
 class Match(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     player_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_1_match')
+<<<<<<< HEAD
     player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_match', null=True, default=None)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match', null=True, default=None)
     match_state = models.CharField(max_length=10, default='created', null=False, blank=False)
+=======
+    player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_match',null=True,default=None)
+    winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match',null=True,default=None)
+    match_state = models.CharField(max_length=10, default='created', null=False, blank=False) #created, completed
+>>>>>>> 33bcee8177a250a6e41f593e28f29a90b3a26af1
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)
     tiebreaker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, default=None)
     start_date = models.DateTimeField(auto_now=False)
