@@ -1,338 +1,137 @@
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-import os
+# yourapp/emails.py
 
+from .tasks import send_email
+import os
 
 class Emails:
     @classmethod
     def send_waitlist_thank_you(cls, email):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = "Thank You for Signing Up for the Waitlist"
-        recipient = [email]
         template_path = "waitlist/waitlist_thank_you.html"
+        context = {}
 
-        # Render the HTML content of the email template
-        html_content = render_to_string(template_path)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, email, template_path, context)
 
     @classmethod
     def send_tournament_invite(cls, user, tournament):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = f"You're Invited to Join the {tournament.name} Tournament!"
-        recipient = [user.email]
         template_path = "tournament/tournamentInvite/tournamentInvite.html"
-
         context = {
             'tournament_name': tournament.name,
             'username': user.username,
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
-            'tournament_location': 'Tournament Location',  # Replace with actual location if available
-            # 'tournament_prize': 'Tournament Prize',  # Uncomment if prize information is available
-            # 'registration_link': 'Registration Link',  # Uncomment if registration link is available
-            # 'support_url': 'Support URL',  # Uncomment if support URL is available
+            'tournament_location': 'Tournament Location',
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+    # Similarly refactor other methods in the Emails class
 
     @classmethod
     def send_waitlist_granted(cls, email):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
-        subject = "Thank You for Signing Up for the Waitlist"
-        recipient = [email]
+        subject = "Your Waitlist Request Has Been Granted"
         template_path = "waitlist/waitlist_granted.html"
+        context = {}
 
-        # Render the HTML content of the email template
-        html_content = render_to_string(template_path)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, email, template_path, context)
 
     @classmethod
     def send_tournament_acceptance_confirmation(cls, user, tournament):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
-        subject = f"You're Have Accepted the Invite for the {tournament.name} Tournament!"
-        recipient = [user.email]
+        subject = f"You Have Accepted the Invite for the {tournament.name} Tournament!"
         template_path = "tournament/tournamentInvite/tournamentAcceptance.html"
-
         context = {
             'tournament_name': tournament.name,
             'username': user.username,
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
-            'tournament_location': 'Tournament Location',  # Replace with actual location if available
-            # 'tournament_prize': 'Tournament Prize',  # Uncomment if prize information is available
-            # 'registration_link': 'Registration Link',  # Uncomment if registration link is available
-            # 'support_url': 'Support URL',  # Uncomment if support URL is available
+            'tournament_location': 'Tournament Location',
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_opponent_pick_notification(cls, user, opponent_name):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = f"Your Opponent {opponent_name} Has Uploaded a Pick"
-        recipient = [user.email]
         template_path = "game/upload.html"
-
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_victory_notification(cls, user, opponent_name):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = "Congratulations, You Won the Match!"
-        recipient = [user.email]
         template_path = "match/matchVictory.html"
-
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_tie_notification(cls, user, opponent_name):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = "Your Match Ended in a Tie"
-        recipient = [user.email]
         template_path = "match/matchTie.html"
-
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_lost_notification(cls, user, opponent_name):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = "Match Result: You Lost"
-        recipient = [user.email]
         template_path = "match/matchLost.html"
-
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_tournament_victory_notification(cls, user, tournament):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = f"Congratulations! You Won the {tournament.name} Tournament!"
-        recipient = [user.email]
         template_path = "tournament/tournamentVictory.html"
-
         context = {
             'tournament_name': tournament.name,
             'username': user.username,
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_tournament_starting_notification(cls, user, tournament):
-        if os.environ.get('DEBUG') ==True:
+        if os.environ.get('DEBUG') == True:
             return
         subject = f"The {tournament.name} Tournament Starts in 2 Days!"
-        recipient = [user.email]
         template_path = "tournamentInvite/tournamentStartingNotification.html"
-
         context = {
             'tournament_name': tournament.name,
             'username': user.username,
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
-            'tournament_location': 'Tournament Location',  # Replace with actual location if available
+            'tournament_location': 'Tournament Location',
         }
 
-        # Render the HTML content of the email template with context
-        html_content = render_to_string(template_path, context)
-
-        # Strip the HTML tags to create a plaintext version of the email
-        text_content = strip_tags(html_content)
-
-        # Create EmailMultiAlternatives object
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=os.environ.get('EMAIL_HOST_USER'),  # Sender's email
-            to=recipient,  # Recipient's email
-        )
-
-        # Attach the HTML content as email body
-        email.attach_alternative(html_content, "text/html")
-
-        # Send email
-        email.send()
+        send_email.delay(subject, user.email, template_path, context)
