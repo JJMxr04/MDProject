@@ -21,7 +21,7 @@ class EventViewSet(AbstractViewSet):
 
     def get_queryset(self):
         queryset = Event.objects.get_active_events()
-        allowed_params = ['sport_key', 'search','commence_time']  # Define the allowed parameters
+        allowed_params = ['sport_key', 'search', 'commence_time_start', 'commence_time_end']  # Define the allowed parameters
         filter_kwargs = {}
 
         for param in allowed_params:
@@ -35,6 +35,10 @@ class EventViewSet(AbstractViewSet):
                         Q(home_team__icontains=value) |
                         Q(sport_key__icontains=value)
                     )
+                elif param == 'commence_time_start':
+                    filter_kwargs['commence_time__gte'] = value
+                elif param == 'commence_time_end':
+                    filter_kwargs['commence_time__lte'] = value
                 else:
                     filter_kwargs[param] = value
 
