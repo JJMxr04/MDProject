@@ -58,3 +58,6 @@ class Sport(models.Model):
 
     class Meta:
         db_table = 'core_sport'
+
+    def __str__(self):
+        return f"{self.title}"

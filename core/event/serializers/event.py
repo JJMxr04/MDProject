@@ -16,7 +16,7 @@ class TeamScoreSerializer(serializers.Serializer):
 
 
 class EventSerializer(AbstractSerializer):
-    id = serializers.UUIDField(read_only=True, format='hex')
+    id = serializers.UUIDField(required=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
     scores = TeamScoreSerializer(many=True, required=False, allow_null=True)
@@ -29,9 +29,9 @@ class EventSerializer(AbstractSerializer):
         away_team_team = Team.objects.get_object_by_public_id(rep['away_team_team'])
         rep['home_team_team'] = TeamSerializer(home_team_team).data
         rep['away_team_team'] = TeamSerializer(away_team_team).data
-        return rep  # Added return statement
+        return rep
 
     class Meta:
         model = Event
         fields = '__all__'
-        read_only_fields = ['id', 'created', 'updated']
+        read_only_fields = ['created', 'updated']

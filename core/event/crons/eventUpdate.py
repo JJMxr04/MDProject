@@ -11,17 +11,11 @@ from core.event.models.sport import Sport
 import uuid
 from core.event.crons.teamUpdate import TeamCron
 from core.event.serializers.team import TeamSerializer
+
 teamCron = TeamCron()
 
 def write_json_to_file(data, filename):
-    """
-    Write JSON data to a file in a formatted way.
-
-    Parameters:
-    - data: The data to be written.
-    - filename: The name of the file to write to.
-    """
-    json_data = json.dumps( data, indent=4)
+    json_data = json.dumps(data, indent=4)
     with open(filename, 'a') as file:
         file.write(json_data)
 
@@ -36,7 +30,6 @@ def read_json_file(file_path):
     except FileNotFoundError:
         print(f"File not found: {file_path}")
         return None
-
 
 class EventCron():
     sports_data = {}
@@ -64,13 +57,13 @@ class EventCron():
                 continue
 
             event_id = uuid.UUID(event_data.get("id"))
+            eventID = f'{event_data.get("id")}'
             existing_event = None
+
             try:
-                existing_event = Event.objects.get(id=event_id)
-                # The event exists, no need to reformat. Just update scores or other details.
+                existing_event = Event.objects.get(id=eventID)
                 event_schema = EventSerializer(existing_event, data=event_data, partial=True)
-            except ObjectDoesNotExist:
-                # Event does not exist, format and create a new one.
+            except Event.DoesNotExist:
                 event_data['id'] = event_id
                 event_data['title'] = sport.title
                 event_data['group'] = sport.group
@@ -79,11 +72,9 @@ class EventCron():
                 event_data['away_team_team'] = TeamSerializer(teamCron.check_team(event_data.get("away_team"), sport.title, sport.group)).data['id']
                 event_schema = EventSerializer(data=event_data)
 
-            # Validate and save
             if event_schema.is_valid():
                 event_instance = event_schema.save()
 
-                # Update scores or other details if needed
                 if "scores" in event_data and existing_event and event_instance.completed != event_data.get("completed"):
                     score_data = event_data["scores"]
                     if score_data:
@@ -100,24 +91,13 @@ class EventCron():
                             )
             else:
                 print("Validation failed:", event_schema.errors)
-
         return Response("Success", status=status.HTTP_200_OK)
 
     def update_all_events(self):
-        # print("Running Event Cron")
         active_sports = Sport.objects.get_active_sports()
-        sports_num= len(active_sports)
-        # print(print(f"Sport List Size = {sports_num}"))
-        # x=0
         for sport in active_sports:
-            # x+=1
-            # print(f'Percentage Finished:{round((x/sports_num)*100)}%')
             self.get_sport_events(sport)
-            # print(f'Percentage Finished:{round((x / sports_num) * 100)}%')
-            # print(f"Finished: {sport}")
 
 def update_all_events():
     eventCron = EventCron()
     eventCron.update_all_events()
-
-
