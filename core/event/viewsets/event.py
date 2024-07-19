@@ -46,7 +46,7 @@ class EventViewSet(AbstractViewSet):
         return queryset
 
     def get_object(self):
-        obj = Event.objects.get_object_by_public_id(self.kwargs['pk'])
+        obj = Event.objects.get_object_by_id(self.kwargs['pk'])
         self.check_object_permissions(self.request, obj)
         return obj
 
