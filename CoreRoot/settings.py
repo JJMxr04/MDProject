@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'core.event',
     'core.game',
     'core.match',
+    'core.mail',
     'core.tournament',
     # 'core.ollama',
     'core.web',

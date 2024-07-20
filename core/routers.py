@@ -36,5 +36,6 @@ urlpatterns = [
     path('', include(('core.match.routers', 'core'), namespace="core-api-match")),
     path('', include(('core.game.routers', 'core'), namespace="core-api-game")),
     path('admin/', include(('core.admin.routers', 'core'), namespace="core-api-core-admin")),
-    path('tournament/', include('core.tournament.routers'))  # Add this line
+    path('tournament/', include('core.tournament.routers')),  # Add this line
+    path('mail/', include('core.mail.urls')),
 ]

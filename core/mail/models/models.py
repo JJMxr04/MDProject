@@ -1,6 +1,6 @@
 # yourapp/emails.py
 
-from .tasks import send_email
+from core.mail.tasks import send_email
 import os
 DEBUG = True
 
