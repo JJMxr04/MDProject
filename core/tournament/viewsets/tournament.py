@@ -1,44 +1,58 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from core.tournament.models.tournament import Tournament, Player
-from core.tournament.serializers.tournament import TournamentSerializer
-from django.utils import timezone
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.filters import SearchFilter, OrderingFilter
 from django.db.models import Q
+from core.tournament.models.tournament import Tournament
+from core.tournament.serializers.tournament import TournamentSerializer
+from core.tournament.pagination.pagination import TournamentPagination  # Assuming a custom pagination class
 
 class TournamentViewSet(viewsets.ModelViewSet):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    filter_backends = [OrderingFilter, SearchFilter]
     serializer_class = TournamentSerializer
-    permission_classes = [IsAuthenticated]
+    queryset = Tournament.objects.all()
+    ordering = ['start_date']
+    search_fields = ['name', 'state', 'start_date']
+    pagination_class = TournamentPagination  # Use the custom pagination class
 
     def get_queryset(self):
         user = self.request.user
-        now = timezone.now()
+        queryset = Tournament.objects.filter(player__player=user).distinct()
+        allowed_params = ['state', 'search', 'start_date_start', 'start_date_end']  # Define the allowed parameters
+        filter_kwargs = {}
 
-        # Filter tournaments where the player is associated with the user
-        in_progress_tournaments = Tournament.objects.filter(
-            Q(player__player=user) & (Q(start_date__lte=now) | Q(state='inprogress') | Q(state='created'))
-        ).order_by('start_date')
+        for param in allowed_params:
+            value = self.request.query_params.get(param, None)
+            if value:
+                if param == 'search':
+                    queryset = queryset.filter(
+                        Q(name__icontains=value) |
+                        Q(state__icontains=value) |
+                        Q(start_date__icontains=value)
+                    )
+                elif param == 'start_date_start':
+                    filter_kwargs['start_date__gte'] = value
+                elif param == 'start_date_end':
+                    filter_kwargs['start_date__lte'] = value
+                else:
+                    filter_kwargs[param] = value
 
-        completed_tournaments = Tournament.objects.filter(
-            Q(player__player=user) & Q(state='completed')
-        )
-
-        # Combine the two querysets
-        queryset = (in_progress_tournaments | completed_tournaments).distinct()
+        queryset = queryset.filter(**filter_kwargs)
         return queryset
 
+    def get_object(self):
+        obj = Tournament.objects.get(pk=self.kwargs['pk'], player__player=self.request.user)
+        self.check_object_permissions(self.request, obj)
+        return obj
+
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-
-        in_progress_tournaments = queryset.filter(state__in=['inprogress', 'created']).order_by('start_date')
-        completed_tournaments = queryset.filter(state='completed')
-
-        in_progress_data = self.get_serializer(in_progress_tournaments, many=True).data
-        completed_data = self.get_serializer(completed_tournaments, many=True).data
-
-        formatted_data = {
-            'inprogress': in_progress_data,
-            'completed': completed_data,
-        }
-
-        return Response(formatted_data, status=status.HTTP_200_OK)
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
