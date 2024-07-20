@@ -1,11 +1,13 @@
-# myapp/viewsets.py
+# mail/viewsets.py
 
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.mail.models import Notification
 from core.mail.serializers.notification import NotificationSerializer
+
 
 class NotificationViewSet(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)
@@ -13,7 +15,6 @@ class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
 
     def get_queryset(self):
-        # Return only unread notifications for the authenticated user
         return Notification.objects.filter(user=self.request.user, read=False).order_by('-created_at')
 
     def update(self, request, *args, **kwargs):
@@ -25,3 +26,9 @@ class NotificationViewSet(viewsets.ModelViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+    # @action(detail=False, methods=['patch'])
+    # def mark_all_as_read(self, request, *args, **kwargs):
+    #     notifications = Notification.objects.filter(user=request.user, read=False)
+    #     notifications.update(read=True)
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
