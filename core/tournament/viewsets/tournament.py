@@ -7,6 +7,8 @@ from django.db.models import Q
 from core.tournament.models.tournament import Tournament
 from core.tournament.serializers.tournament import TournamentSerializer
 from core.tournament.pagination.pagination import TournamentPagination  # Assuming a custom pagination class
+from django.utils import timezone
+from datetime import datetime
 
 class TournamentViewSet(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)
@@ -34,9 +36,19 @@ class TournamentViewSet(viewsets.ModelViewSet):
                         Q(start_date__icontains=value)
                     )
                 elif param == 'start_date_start':
-                    filter_kwargs['start_date__gte'] = value
+                    try:
+                        start_date = datetime.strptime(value, '%Y-%m-%d')
+                        start_date = timezone.make_aware(start_date, timezone.get_current_timezone())
+                        filter_kwargs['start_date__gte'] = start_date
+                    except ValueError:
+                        pass  # Handle the error or log it
                 elif param == 'start_date_end':
-                    filter_kwargs['start_date__lte'] = value
+                    try:
+                        end_date = datetime.strptime(value, '%Y-%m-%d')
+                        end_date = timezone.make_aware(end_date, timezone.get_current_timezone())
+                        filter_kwargs['start_date__lte'] = end_date
+                    except ValueError:
+                        pass  # Handle the error or log it
                 else:
                     filter_kwargs[param] = value
 
