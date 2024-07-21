@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
 from core.user.serializers import PublicUserSerializer
+from core.match.serializers.match import MatchSerializer
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -20,7 +21,7 @@ class InvitedPlayerSerializer(serializers.ModelSerializer):
 
 
 class RoundSerializer(serializers.ModelSerializer):
-    match = serializers.StringRelatedField()
+    match = MatchSerializer()
     next_round = serializers.PrimaryKeyRelatedField(read_only=True)
     prev_round_1 = serializers.PrimaryKeyRelatedField(read_only=True)
     prev_round_2 = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -35,7 +36,7 @@ class RoundSerializer(serializers.ModelSerializer):
             'prev_round_1', 'prev_round_2', 'player_1', 'player_2',
             'winner', 'completed'
         ]
-        read_only = [
+        read_only_fields = [
             'id', 'tournament', 'level_num', 'match', 'next_round',
             'prev_round_1', 'prev_round_2', 'player_1', 'player_2',
             'winner', 'completed'

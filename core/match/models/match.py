@@ -216,4 +216,4 @@ class Match(AbstractModel):
 
 
     def __str__(self):
-        return f'{self.player_1} vs {self.player_2} - {self.match_state}'
+        return f'{self.player_1} vs {self.player_2} '
