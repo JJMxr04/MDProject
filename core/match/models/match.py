@@ -13,12 +13,16 @@ from core.match.models.TieBreaker import TieBreaker
 
 
 class MatchManager(AbstractManager):
-    def create_match(self, player_1, player_2=None):
+    def create_match(self, player_1, player_2=None, start_date = timezone.now()):
+        start_date = timezone.now()
+        end_date = start_date + timedelta(weeks=1)
+
         if player_2 is None:
-            return self.create(player_1=player_1, player_2=player_2)
+            return self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
         else:
-            match = self.create(player_1=player_1, player_2=player_2)
+            match = self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
             return self.accept_match(match, player_2)
+
 
     def calcutate_winner(self, match):
         if match.player_1_score > match.player_2_score:
@@ -209,12 +213,7 @@ class Match(AbstractModel):
     class meta:
         db_table = "'core.match'"
 
-    def save(self, *args, **kwargs):
-        if self.start_date and not self.end_date:
-            self.start_date = timezone.make_aware(self.start_date, timezone.get_current_timezone())
-            self.end_date = self.start_date + timedelta(weeks=1)
-            self.end_date = timezone.make_aware(self.end_date, timezone.get_current_timezone())
-        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f'{self.player_1} vs {self.player_2} - {self.match_state}'
