@@ -61,6 +61,7 @@ class MatchViewSet(AbstractViewSet):
         return Response(serializer.data)
 
 
+
 class MyMatchViewSet(AbstractViewSet):
     http_method_names = ('get', 'post', 'patch')
     authentication_classes = (JWTAuthentication,)
@@ -70,8 +71,7 @@ class MyMatchViewSet(AbstractViewSet):
     queryset = Match.objects.all()
     ordering = ['-created']
     pagination_class = MatchPagination  # Use the custom pagination class
-    search_fields = ['player_1__username', 'player_2__username', 'match_state',
-                     'match_type']  # Add more fields if needed
+    search_fields = ['player_1__username', 'player_2__username', 'match_state', 'match_type']  # Add more fields if needed
 
     def get_queryset(self):
         user = self.request.user
@@ -79,7 +79,7 @@ class MyMatchViewSet(AbstractViewSet):
             Q(player_1=user) | Q(player_2=user)
         ).distinct()
 
-        allowed_params = ['state', 'search', 'start_date_start', 'start_date_end']  # Define the allowed parameters
+        allowed_params = ['match_state', 'search', 'start_date_start', 'start_date_end']  # Define the allowed parameters
         filter_kwargs = {}
 
         for param in allowed_params:
@@ -106,8 +106,8 @@ class MyMatchViewSet(AbstractViewSet):
                         filter_kwargs['start_date__lte'] = end_date
                     except ValueError:
                         pass  # Handle the error or log it
-                else:
-                    filter_kwargs[param] = value
+                elif param == 'match_state':
+                    filter_kwargs['match_state'] = value
 
         queryset = queryset.filter(**filter_kwargs)
         return queryset

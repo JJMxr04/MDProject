@@ -27,37 +27,39 @@ class MatchViewSet(AbstractViewSet):
             Q(player_1=user) | Q(player_2=user)
         ).distinct()
 
-        allowed_params = ['state', 'search', 'start_date_start', 'start_date_end']  # Define the allowed parameters
-        filter_kwargs = {}
+        # Define the allowed parameters and default values
+        match_state = self.request.query_params.get('match_state', None)
+        search_query = self.request.query_params.get('search', None)
+        start_date_start = self.request.query_params.get('start_date_start', None)
+        start_date_end = self.request.query_params.get('start_date_end', None)
 
-        for param in allowed_params:
-            value = self.request.query_params.get(param, None)
-            if value:
-                if param == 'search':
-                    queryset = queryset.filter(
-                        Q(player_1__username__icontains=value) |
-                        Q(player_2__username__icontains=value) |
-                        Q(match_state__icontains=value) |
-                        Q(match_type__icontains=value)
-                    )
-                elif param == 'start_date_start':
-                    try:
-                        start_date = datetime.strptime(value, '%Y-%m-%d')
-                        start_date = timezone.make_aware(start_date, timezone.get_current_timezone())
-                        filter_kwargs['start_date__gte'] = start_date
-                    except ValueError:
-                        pass  # Handle the error or log it
-                elif param == 'start_date_end':
-                    try:
-                        end_date = datetime.strptime(value, '%Y-%m-%d')
-                        end_date = timezone.make_aware(end_date, timezone.get_current_timezone())
-                        filter_kwargs['start_date__lte'] = end_date
-                    except ValueError:
-                        pass  # Handle the error or log it
-                else:
-                    filter_kwargs[param] = value
+        if search_query:
+            queryset = queryset.filter(
+                Q(player_1__username__icontains=search_query) |
+                Q(player_2__username__icontains=search_query) |
+                Q(match_state__icontains=search_query) |
+                Q(match_type__icontains=search_query)
+            )
 
-        queryset = queryset.filter(**filter_kwargs)
+        if start_date_start:
+            try:
+                start_date = datetime.strptime(start_date_start, '%Y-%m-%d')
+                start_date = timezone.make_aware(start_date, timezone.get_current_timezone())
+                queryset = queryset.filter(start_date__gte=start_date)
+            except ValueError:
+                pass  # Handle the error or log it
+
+        if start_date_end:
+            try:
+                end_date = datetime.strptime(start_date_end, '%Y-%m-%d')
+                end_date = timezone.make_aware(end_date, timezone.get_current_timezone())
+                queryset = queryset.filter(start_date__lte=end_date)
+            except ValueError:
+                pass  # Handle the error or log it
+
+        if match_state:
+            queryset = queryset.filter(match_state=match_state)
+
         return queryset
 
     def get_object(self):
