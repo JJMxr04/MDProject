@@ -134,12 +134,7 @@ class MyMatchViewSet(AbstractViewSet):
         serializer = self.get_serializer(match)
         return Response(serializer.data)
 
-    def update(self, request, *args, **kwargs):
-        player_2 = request.user
-        match = Match.objects.get_object_by_id(kwargs['pk'])
-        match = Match.objects.accept_match(match, player_2)
-        serializer = self.get_serializer(match)
-        return Response(serializer.data)
+
 #     http_method_names = ('post','patch')
 #     authentication_classes = (JWTAuthentication,)
 #     permission_classes = (IsAuthenticated,)
@@ -162,48 +157,49 @@ class MyMatchViewSet(AbstractViewSet):
 #         serializer = self.get_serializer(queryset, many=True)
 #         return Response(serializer.data)
 #
-#     def update(self, request, *args, **kwargs):
-#         player = request.user
-#         data = request.data
-#         match = Match.objects.get_object_by_id(kwargs['pk'])
-#         self.check_object_permissions(self.request, match)
-#         # if (match.player_1 != player) or (match.player_2 != player):
-#         #     return Http404
-#         if match.player_1 == player:
-#             if match.player_1_game_1.event == None:
-#                 Game.objects.update_by_id(match.player_1_game_1.id,player,data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_1_game_2.event == None:
-#                 Game.objects.update_by_id(match.player_1_game_2.id, player, data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_1_game_3.event == None:
-#                 Game.objects.update_by_id(match.player_1_game_3.id,player,data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_1_game_4.event == None:
-#                 Game.objects.update_by_id(match.player_1_game_4.id, player, data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_1_game_5.event == None:
-#                 Game.objects.update_by_id(match.player_1_game_5.id, player, data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#         if match.player_2 == player:
-#             if match.player_2_game_1.event == None:
-#                 Game.objects.update_by_id(match.player_2_game_1.id,player,data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_2_game_2.event == None:
-#                 Game.objects.update_by_id(match.player_2_game_2.id, player, data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_2_game_3.event == None:
-#                 Game.objects.update_by_id(match.player_2_game_3.id,player,data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_2_game_4.event == None:
-#                 Game.objects.update_by_id(match.player_2_game_4.id, player, data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#             if match.player_2_game_5.event == None:
-#                 Game.objects.update_by_id(match.player_2_game_5.id, player, data)
-#                 return Response({'message': 'Request was successful'}, status=200)
-#
-#         return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
-#         # return Response(serializer.data)
+    def update(self, request, *args, **kwargs):
+        player = request.user
+        data = request.data
+        match = Match.objects.get_object_by_id(kwargs['pk'])
+        self.check_object_permissions(self.request, match)
+        if (match.player_1 != player) and (match.player_2 != player):
+            print(f"player: {player}, player_1:{match.player_1}, player_2:{match.player_2}")
+            return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
+        if match.player_1 == player:
+            if match.player_1_game_1.event == None:
+                Game.objects.update_by_id(match.player_1_game_1.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_2.event == None:
+                Game.objects.update_by_id(match.player_1_game_2.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_3.event == None:
+                Game.objects.update_by_id(match.player_1_game_3.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_4.event == None:
+                Game.objects.update_by_id(match.player_1_game_4.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_5.event == None:
+                Game.objects.update_by_id(match.player_1_game_5.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+        if match.player_2 == player:
+            if match.player_2_game_1.event == None:
+                Game.objects.update_by_id(match.player_2_game_1.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_2.event == None:
+                Game.objects.update_by_id(match.player_2_game_2.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_3.event == None:
+                Game.objects.update_by_id(match.player_2_game_3.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_4.event == None:
+                Game.objects.update_by_id(match.player_2_game_4.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_5.event == None:
+                Game.objects.update_by_id(match.player_2_game_5.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+
+        return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
+        # return Response(serializer.data)
 #
 #     # def get_object(self):
 #     #     print(1)
