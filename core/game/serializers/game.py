@@ -8,11 +8,21 @@ from core.user.serializers import UserSerializer, PublicUserSerializer
 from core.event.serializers.team import TeamSerializer
 from core.event.serializers.event import EventSerializer
 from rest_framework.exceptions import ValidationError
+from rest_framework import serializers
+  # Import your models here
 
+class ChoiceSerializer(serializers.Serializer):
+    event = serializers.SlugRelatedField(queryset=Event.objects.all(), slug_field='id')
+    player_choice = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
 
-class ChoiceSerlializer(AbstractSerializer):
-        event = serializers.SlugRelatedField(queryset=Event.objects.all(), slug_field='id')
-        player_choice = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
+    # Add any additional validation methods if needed
+    def validate_event(self, value):
+        # Add custom validation for event if necessary
+        return value
+
+    def validate_player_choice(self, value):
+        # Add custom validation for player_choice if necessary
+        return value
 class GameSerializer(AbstractSerializer):
     owner = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
     player_2 = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')

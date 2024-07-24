@@ -63,11 +63,11 @@ class GameManager(AbstractManager):
         # print('check 10')
         if current_user == game.owner:
             # print('check 11')
-            game.owner_choice = data.get("player_choice")
+            game.owner_choice = data.get("player_choice").team_name
         # print('check 12')
         if current_user == game.player_2:
             # print('check 13')
-            game.player_2_choice = data.get("player_choice")
+            game.player_2_choice = data.get("player_choice").team_name
         # print('check 14')
 
         game.save()
