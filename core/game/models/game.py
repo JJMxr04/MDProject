@@ -56,19 +56,17 @@ class GameManager(AbstractManager):
         current_time = timezone.now()
         # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
-            print(f'game.commence_time = {game.commence_time}, game.commence_time <= current_time = {game.commence_time <= current_time}')
-            print(f'Game Event = {event}')
-            print('check 9')
             return False, False
         # print('check 10')
-        if current_user == game.owner:
-            # print('check 11')
-            game.owner_choice = data.get("player_choice").team_name
-        # print('check 12')
-        if current_user == game.player_2:
-            # print('check 13')
-            game.player_2_choice = data.get("player_choice").team_name
-        # print('check 14')
+        if data.get("player_choice"):
+            if current_user == game.owner:
+                # print('check 11')
+                game.owner_choice = data.get("player_choice").team_name
+            # print('check 12')
+            if current_user == game.player_2:
+                # print('check 13')
+                game.player_2_choice = data.get("player_choice").team_name
+            # print('check 14')
 
         game.save()
         # Email

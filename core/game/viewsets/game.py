@@ -32,10 +32,12 @@ class GameViewSet(AbstractViewSet):
 
             # Update the game instance with validated data
             instance = Game.objects.update_by_id(kwargs['pk'], player, validated_data)[1]
-
+            print(f'Instanse:{instance}')
             # Ensure the instance is valid and serialize it
-            game_serializer = self.get_serializer(instance)
+            game_serializer = self.get_serializer(data=instance)
+            print(game_serializer)
             if not game_serializer.is_valid():
+                print(game_serializer)
                 raise ValidationError("Game serializer data is not valid.")
 
             return Response(game_serializer.data)
