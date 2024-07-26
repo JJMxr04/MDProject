@@ -71,9 +71,9 @@ class GameManager(AbstractManager):
         game.save()
         # Email
         if current_user == game.owner:
-            Emails.send_opponent_pick_notification(current_user,game.player_2.username)
+            Emails.send_opponent_pick_notification(game.player_2,game.owner.username)
         if current_user == game.player_2:
-            Emails.send_opponent_pick_notification(current_user,game.owner.username)
+            Emails.send_opponent_pick_notification(game.owner,game.player_2.username)
 
         # print('check 15')
 
