@@ -42,9 +42,9 @@ class GameManager(AbstractManager):
             commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
 
             # Check if the commence time is at least 8 hours from now
-            # current_time = timezone.now()
-            # if commence_time < current_time + timedelta(hours=8):
-            #     return False, False
+            current_time = timezone.now()
+            if commence_time < current_time + timedelta(hours=8):
+                return False, False
 
             game.event = event
             game.home_team = event.home_team
