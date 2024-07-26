@@ -12,7 +12,7 @@ from core.game.models import Game
 from django.db.models import Q
 from django.utils import timezone
 from datetime import datetime
-
+import uuid
 
 class MatchViewSet(AbstractViewSet):
     http_method_names = ('get','post','patch')
@@ -162,6 +162,36 @@ class MyMatchViewSet(AbstractViewSet):
         data = request.data
         match = Match.objects.get_object_by_id(kwargs['pk'])
         self.check_object_permissions(self.request, match)
+        print(data)
+        eventList = []
+
+        if match.golden_game.event !=None:
+            eventList.append(match.golden_game.event.id)
+        if match.player_1_game_1.event !=None:
+            eventList.append(match.player_1_game_1.event.id)
+        if match.player_1_game_2.event !=None:
+            eventList.append(match.player_1_game_2.event.id)
+        if match.player_1_game_3.event !=None:
+            eventList.append(match.player_1_game_3.event.id)
+        if match.player_1_game_4.event !=None:
+            eventList.append(match.player_1_game_4.event.id)
+        if match.player_1_game_5.event !=None:
+            eventList.append(match.player_1_game_5.event.id)
+        if match.player_2_game_1.event !=None:
+            eventList.append(match.player_2_game_1.event.id)
+        if match.player_2_game_2.event !=None:
+            eventList.append(match.player_2_game_2.event.id)
+        if match.player_2_game_3.event !=None:
+            eventList.append(match.player_2_game_3.event.id)
+        if match.player_2_game_4.event !=None:
+            eventList.append(match.player_2_game_4.event.id)
+        if match.player_2_game_5.event !=None:
+            eventList.append(match.player_2_game_5.event.id)
+        print(eventList)
+        if uuid.UUID(data.get("event_id")) in eventList:
+            return Response(
+                {'error': "This game is already been selected"},
+                status=400)
         if (match.player_1 != player) and (match.player_2 != player):
             print(f"player: {player}, player_1:{match.player_1}, player_2:{match.player_2}")
             return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
