@@ -7,7 +7,6 @@ from core.abstract.viewsets import AbstractViewSet
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-
 class GameViewSet(AbstractViewSet):
     http_method_names = ('get', 'post', 'patch')
     authentication_classes = (JWTAuthentication,)
@@ -32,15 +31,14 @@ class GameViewSet(AbstractViewSet):
 
             # Update the game instance with validated data
             instance = Game.objects.update_by_id(kwargs['pk'], player, validated_data)[1]
-            print(f'Instanse:{instance}')
             # Ensure the instance is valid and serialize it
-            game_serializer = self.get_serializer(data=instance)
-            print(game_serializer)
-            if not game_serializer.is_valid():
-                print(game_serializer)
-                raise ValidationError("Game serializer data is not valid.")
+            game_serializer = GameSerializer(instance)
 
-            return Response(game_serializer.data)
+            # Return a custom success response
+            return Response({
+                'status': 'success',
+                'message': 'Game choice updated successfully.',
+            }, status=200)
 
         # If ChoiceSerializer data is not valid, raise a ValidationError
         raise ValidationError("ChoiceSerializer data is not valid")
