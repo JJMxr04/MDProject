@@ -42,9 +42,9 @@ class GameManager(AbstractManager):
             commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
 
             # Check if the commence time is at least 8 hours from now
-            # current_time = timezone.now()
-            # if commence_time < current_time + timedelta(hours=8):
-            #     return False, False
+            current_time = timezone.now()
+            if commence_time < current_time + timedelta(hours=8):
+                return False, False
 
             game.event = event
             game.home_team = event.home_team
@@ -56,26 +56,24 @@ class GameManager(AbstractManager):
         current_time = timezone.now()
         # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
-            print(f'game.commence_time = {game.commence_time}, game.commence_time <= current_time = {game.commence_time <= current_time}')
-            print(f'Game Event = {event}')
-            print('check 9')
             return False, False
         # print('check 10')
-        if current_user == game.owner:
-            # print('check 11')
-            game.owner_choice = data.get("player_choice")
-        # print('check 12')
-        if current_user == game.player_2:
-            # print('check 13')
-            game.player_2_choice = data.get("player_choice")
-        # print('check 14')
+        if data.get("player_choice"):
+            if current_user == game.owner:
+                # print('check 11')
+                game.owner_choice = data.get("player_choice").team_name
+            # print('check 12')
+            if current_user == game.player_2:
+                # print('check 13')
+                game.player_2_choice = data.get("player_choice").team_name
+            # print('check 14')
 
         game.save()
         # Email
         if current_user == game.owner:
-            Emails.send_opponent_pick_notification(current_user,game.player_2.username)
+            Emails.send_opponent_pick_notification(game.player_2,game.owner.username)
         if current_user == game.player_2:
-            Emails.send_opponent_pick_notification(current_user,game.owner.username)
+            Emails.send_opponent_pick_notification(game.owner,game.player_2.username)
 
         # print('check 15')
 

@@ -248,7 +248,7 @@ class RoundManager(AbstractManager):
 
     def create_tournament_match(self, round_obj):
         if round_obj.player_1 and round_obj.player_2:
-            round_obj.match = Match.objects.create_match(round_obj.player_1.player, round_obj.player_2.player)
+            round_obj.match = Match.objects.create_match(round_obj.player_1.player, round_obj.player_2.player,start_date=round_obj.tournament.start_date)
             round_obj.save()
 
     def assign_players(self, round_obj, player_1=None, player_2=None):
@@ -358,7 +358,7 @@ class Tournament(models.Model):
     levels = models.FloatField(default=0)
     winner = models.ForeignKey('Player', on_delete=models.SET_NULL, related_name='won_tournaments', null=True,
                                blank=True)
-    final_round = models.ForeignKey('Round', on_delete=models.CASCADE, related_name='tournament_final_round', null=True,
+    final_round = models.ForeignKey('Round', on_delete=models.SET_NULL, related_name='tournament_final_round', null=True,
                                     blank=True)
 
     objects = TournamentManager()

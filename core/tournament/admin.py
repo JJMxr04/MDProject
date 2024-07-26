@@ -120,7 +120,7 @@ class TournamentAdmin(admin.ModelAdmin):
         return fieldsets
 
     def get_readonly_fields(self, request, obj=None):
-        readonly_fields = list(super().get_readonly_fields(request, obj=obj))
+        readonly_fields = list(super().get_readonly_fields(request, obj))
         if obj:  # If editing an existing object
             readonly_fields.extend([field.name for field in obj._meta.fields if field.name not in ['name', 'start_date']])
         return readonly_fields
@@ -140,6 +140,9 @@ class TournamentAdmin(admin.ModelAdmin):
             Tournament.objects.bracket_maker(tournament)
         self.message_user(request, "Bracket creation process has been initiated successfully.")
         return
+
+    create_bracket_action.short_description = "Create Bracket for selected Tournaments"
+
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ['tournament_name', 'player', 'seed', 'division']
@@ -197,4 +200,3 @@ class RoundAdmin(admin.ModelAdmin):
         return obj.tournament.name
 
     tournament_name.admin_order_field = 'tournament'  # Allows sorting by tournament name
-
