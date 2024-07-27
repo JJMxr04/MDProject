@@ -15,6 +15,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import django_heroku
+import dj_database_url
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
     return CustomTokenObtainPairSerializer
@@ -127,29 +128,28 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': f'{os.environ.get('DBENGINE')}',
+#         'NAME': f'{os.environ.get('DBNAME')}',  # Main database name
+#         'USER': f'{os.environ.get('DBUSER')}',
+#         'PASSWORD': f'{os.environ.get('DBPASSWORD')}',
+#         'HOST': f'{os.environ.get('DBHOST')}',
+#         'PORT': f'{os.environ.get('DBPORT')}',
+#         'TEST': {
+#             'SERIALIZE': True,
+#         },
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': f'{os.environ.get('DBENGINE')}',
-        'NAME': f'{os.environ.get('DBNAME')}',  # Main database name
-        'USER': f'{os.environ.get('DBUSER')}',
-        'PASSWORD': f'{os.environ.get('DBPASSWORD')}',
-        'HOST': f'{os.environ.get('DBHOST')}',
-        'PORT': f'{os.environ.get('DBPORT')}',
-        'TEST': {
-            'SERIALIZE': True,
-        },
-    },
-    'test_mirror': {
-        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-        'NAME': 'mdproject',  # Mirroring the same main database
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST', 'localhost'),
-        'PORT': os.environ.get('DBPORT', '5432'),
-        'TEST': {
-            'MIRROR': 'default',  # Mirror the default database
-        },
-    },
+    'default': dj_database_url.config(
+        default=f"postgres://{os.environ.get('DBUSER')}:{os.environ.get('DBPASSWORD')}@{os.environ.get('DBHOST')}:{os.environ.get('DBPORT')}/{os.environ.get('DBNAME')}"
+    )
+}
+
+# Optional: Add test settings if needed
+DATABASES['default']['TEST'] = {
+    'SERIALIZE': True,
 }
 
 
