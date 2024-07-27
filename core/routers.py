@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.urls import path, include
-from core.user.viewsets import UserViewSet
+from core.user.viewsets import UserViewSet, UserMeViewSet
 from core.auth.viewsets import RegisterViewSet, LoginViewSet, RefreshViewSet, ActivateUserViewSet, WaitlistEntryViewSet
 from core.tournament.viewsets.tournament import TournamentViewSet  # Add this import
 
@@ -31,6 +31,7 @@ router.register(r'tournaments', TournamentViewSet, basename='tournament')
 
 urlpatterns = [
     *router.urls,
+    path('me/user/', UserMeViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update'}), name='user-me'),
     path('', include(('core.event.routers', 'core'), namespace="core-api-event")),
     path('activate/<str:token>/', ActivateUserViewSet.as_view({'get': 'retrieve'}), name='activate'),
     path('', include(('core.match.routers', 'core'), namespace="core-api-match")),

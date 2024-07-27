@@ -43,3 +43,20 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["role"] = "admin" if user.is_staff else "user"
 
         return token
+
+class UserMeSerializer(AbstractSerializer):
+    id = serializers.UUIDField(source='public_id', read_only=True, format='hex')
+    created = serializers.DateTimeField(read_only=True)
+    updated = serializers.DateTimeField(read_only=True)
+
+    def update(self, instance, validated_data):
+        avatar = validated_data.pop('avatar', None)
+        if avatar:
+            instance.avatar.save(avatar.name, avatar, save=True)
+        return super().update(instance, validated_data)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email',
+                  'created', 'updated']
+        read_only_field = ['id','created', 'updated','is_active', 'is_admin', 'id', 'is_staff', 'activated_link']

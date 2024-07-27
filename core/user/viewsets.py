@@ -1,17 +1,19 @@
 from rest_framework.permissions import IsAuthenticated
-from core.user.serializers import UserSerializer
+from core.user.serializers import UserSerializer,PublicUserSerializer, UserMeSerializer
 from core.user.models import User
 from core.abstract.viewsets import AbstractViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class UserViewSet(AbstractViewSet):
     http_method_names = ('patch', 'get')
     permission_classes = (IsAuthenticated,)
-    serializer_class = UserSerializer
+    serializer_class = PublicUserSerializer
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -24,22 +26,27 @@ class UserViewSet(AbstractViewSet):
         self.check_object_permissions(self.request, obj)
         return obj
 
-class AdminUserViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+class UserMeViewSet(viewsets.ViewSet):
+    http_method_names = ('patch', 'get')
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JWTAuthentication,)
+    parser_classes = (MultiPartParser, FormParser)  # Ensure multipart data is parsed
+    serializer_class = UserMeSerializer
 
-    def make_user_staff(self, request, pk):
-        user = User.objects.get_object_by_public_id(pk)
-        if user:
-            User.objects.make_user_staff(user)
-            return Response({"message": "User is now staff."}, status=status.HTTP_200_OK)
-        else:
-            return Response({"message": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    def retrieve(self, request):
+        # Get the current user's data
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
-    def make_user_admin(self, request, pk):
-        user = User.objects.get_object_by_public_id(pk)
-        if user:
-            User.objects.make_user_admin(user)
-            return Response({"message": "User is now admin."}, status=status.HTTP_200_OK)
-        else:
-            return Response({"message": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    def partial_update(self, request):
+        # Print data for debugging
+        print(request.data)
+
+        # Ensure the user is editing their own data
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
