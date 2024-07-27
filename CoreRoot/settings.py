@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = os.getenv('DEBUG')
 DEBUG = False
 
-# ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","https://paradise-sports-aaebe242ce78.herokuapp.com/")
 
 
 # Application definition
