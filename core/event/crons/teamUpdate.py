@@ -91,7 +91,7 @@ class TeamCron():
         url = "https://sofascore.p.rapidapi.com/teams/search"
         querystring = {"name": f"{team_name}"}
         headers = {
-            "X-RapidAPI-Key": "5e67f9e23emsh42a3758bd291b0bp1ed121jsnc118f34dcfda",
+            "X-RapidAPI-Key": os.getenv("RAPID_API_KEY"),
             "X-RapidAPI-Host": "sofascore.p.rapidapi.com"
         }
         response = requests.get(url, headers=headers, params=querystring)
@@ -129,7 +129,7 @@ class TeamCron():
         url = "https://sofascore.p.rapidapi.com/teams/get-logo"
         querystring = {"teamId": team_id}
         headers = {
-            "X-RapidAPI-Key": "5e67f9e23emsh42a3758bd291b0bp1ed121jsnc118f34dcfda",
+            "X-RapidAPI-Key": os.getenv("RAPID_API_KEY"),
             "X-RapidAPI-Host": "sofascore.p.rapidapi.com"
         }
         response = requests.get(url, headers=headers, params=querystring)

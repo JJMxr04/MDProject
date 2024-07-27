@@ -1,4 +1,6 @@
 import json
+import os
+
 import requests
 from django.core.serializers import serialize
 from rest_framework.views import APIView
@@ -36,7 +38,7 @@ class EventCron():
     events = {}
     domain = "https://odds.p.rapidapi.com/v4/sports"
     headers = {
-        "X-RapidAPI-Key": "5e67f9e23emsh42a3758bd291b0bp1ed121jsnc118f34dcfda",
+        "X-RapidAPI-Key": os.getenv("RAPID_API_KEY"),
         "X-RapidAPI-Host": 'odds.p.rapidapi.com'
     }
 
