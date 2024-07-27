@@ -129,12 +129,12 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DBNAME'),  # Main database name
-        'USER': os.environ.get('DBENGINE'),
-        'PASSWORD': os.environ.get('DBENGINE'),
-        'HOST': os.environ.get('DBHOST'),
-        'PORT': os.environ.get('DBPORT'),
+        'ENGINE': f'{os.environ.get('DBENGINE')}',
+        'NAME': f'{os.environ.get('DBNAME')}',  # Main database name
+        'USER': f'{os.environ.get('DBUSER')}',
+        'PASSWORD': f'{os.environ.get('DBPASSWORD')}',
+        'HOST': f'{os.environ.get('DBHOST')}',
+        'PORT': f'{os.environ.get('DBPORT')}',
         'TEST': {
             'SERIALIZE': True,
         },
