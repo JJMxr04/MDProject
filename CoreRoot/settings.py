@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = os.getenv('DEBUG')
 DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","https://paradise-sports-aaebe242ce78.herokuapp.com/")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -130,11 +130,11 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-        'NAME': 'mdproject',  # Main database name
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST', 'localhost'),
-        'PORT': os.environ.get('DBPORT', '5432'),
+        'NAME': os.environ.get('DBNAME'),  # Main database name
+        'USER': os.environ.get('DBENGINE'),
+        'PASSWORD': os.environ.get('DBENGINE'),
+        'HOST': os.environ.get('DBHOST'),
+        'PORT': os.environ.get('DBPORT'),
         'TEST': {
             'SERIALIZE': True,
         },
