@@ -182,7 +182,7 @@ CELERY_TIMEZONE = 'UTC'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{os.environ.get('REDIS_URL')}",
+        "LOCATION": f"{os.environ.get('REDIS_URL')}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             
