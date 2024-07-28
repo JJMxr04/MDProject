@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "django_celery_results",
     "django_celery_beat",
+    'storages',
 
     # MDProject Models
     'core.commands',
