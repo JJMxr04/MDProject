@@ -11,8 +11,7 @@ app.conf.enable_utc = False
 
 app.config_from_object(settings, namespace='CELERY')
 
-app.conf.update(BROKER_URL=os.environ.get['REDIS_URL'],
-                CELERY_RESULT_BACKEND=os.environ.get['REDIS_URL'])
+
 
 app.autodiscover_tasks()
 
