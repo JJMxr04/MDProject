@@ -244,7 +244,7 @@ LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-django_heroku.settings(locals())
+
 
 # Celery Configuration
 CELERY_BROKER_URL = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')
@@ -267,7 +267,7 @@ CACHES = {
 }
 CELERY_BEAT_SCHEDULE = {}
 
-
+django_heroku.settings(locals())
 
 
 
