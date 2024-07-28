@@ -35,6 +35,10 @@ def sport_cron():
 @shared_task
 def event_cron():
     eventCron.update_all_events()
+
+@shared_task
+def event_test_cron():
+    eventCron.get_sport_events("soccer_spain_la_liga")
 @shared_task
 def print_cron_jobs():
 #     scheduler.print_jobs()
