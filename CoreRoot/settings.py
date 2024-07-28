@@ -173,7 +173,7 @@ LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}"
-CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}"
+CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
