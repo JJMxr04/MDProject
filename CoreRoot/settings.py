@@ -158,9 +158,9 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 # AWS_QUERYSTRING_AUTH = False
-# AWS_QUERYSTRING_AUTH = False
+AWS_QUERYSTRING_AUTH = False
 # Additional optional settings
-# AWS_S3_FILE_OVERWRITE = True
+AWS_S3_FILE_OVERWRITE = True
 AWS_DEFAULT_ACL = 'public-read'
 # AWS_S3_SIGNATURE_VERSION = 's3v4'
 
