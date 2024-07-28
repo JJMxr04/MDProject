@@ -265,7 +265,6 @@ CACHES = {
         },
     }
 }
-REDIS_TLS_URL
 CELERY_BEAT_SCHEDULE = {}
 
 
