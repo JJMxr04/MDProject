@@ -146,7 +146,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (user-uploaded files)
-MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/public/'
+MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
