@@ -172,8 +172,8 @@ REST_FRAMEWORK = {
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
-CELERY_BROKER_URL = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379/0')
+CELERY_BROKER_URL = os.environ.get('REDIS_TLS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_TLS_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
@@ -182,9 +182,12 @@ CELERY_TIMEZONE = 'UTC'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379/1')}",
+        "LOCATION": f"{os.environ.get('REDIS_TLS_URL')}",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": False,  # This line disables SSL certificate verification
+            },
         },
     }
 }
