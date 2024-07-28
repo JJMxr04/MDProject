@@ -247,8 +247,8 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 django_heroku.settings(locals())
 
 # Celery Configuration
-CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+CELERY_BROKER_URL = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
@@ -259,12 +259,13 @@ CELERY_TIMEZONE = 'UTC'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://127.0.0.1:6379/1",
+        "LOCATION": f"{os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
     }
 }
+REDIS_TLS_URL
 CELERY_BEAT_SCHEDULE = {}
 
 
