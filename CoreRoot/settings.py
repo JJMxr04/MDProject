@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import django_heroku
 import dj_database_url
+
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
     return CustomTokenObtainPairSerializer
@@ -25,7 +26,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -33,11 +33,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DEBUG')
-DEBUG = False
+DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
-
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
 
 # Application definition
 
@@ -48,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'apscheduler',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -67,14 +64,12 @@ INSTALLED_APPS = [
     'core.match',
     'core.mail',
     'core.tournament',
-    # 'core.ollama',
     'core.web',
     'core.portal',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,10 +80,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware'
-
-
 ]
 
 ROOT_URLCONF = 'CoreRoot.urls'
@@ -98,7 +90,7 @@ BASE_DIR_TEMPS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR_TEMPS,'core', 'admin', 'templates',)],
+        'DIRS': [os.path.join(BASE_DIR_TEMPS, 'core', 'admin', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,34 +105,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get('DBENGINE'),
-#         'NAME': os.environ.get('DBNAME'),
-#         'USER': os.environ.get('BDUSER'),
-#         'PASSWORD': os.environ.get('DBPASSWORD'),
-#         'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
-#         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': f'{os.environ.get('DBENGINE')}',
-#         'NAME': f'{os.environ.get('DBNAME')}',  # Main database name
-#         'USER': f'{os.environ.get('DBUSER')}',
-#         'PASSWORD': f'{os.environ.get('DBPASSWORD')}',
-#         'HOST': f'{os.environ.get('DBHOST')}',
-#         'PORT': f'{os.environ.get('DBPORT')}',
-#         'TEST': {
-#             'SERIALIZE': True,
-#         },
-#     }
-# }
 DATABASES = {
     'default': dj_database_url.config(
         default=f"postgres://{os.environ.get('DBUSER')}:{os.environ.get('DBPASSWORD')}@{os.environ.get('DBHOST')}:{os.environ.get('DBPORT')}/{os.environ.get('DBNAME')}"
@@ -152,58 +117,35 @@ DATABASES['default']['TEST'] = {
     'SERIALIZE': True,
 }
 
-
-
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL') == 'True'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 AUTH_USER_MODEL = 'core_user.User'
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configure Django REST Framework settings
 REST_FRAMEWORK = {
@@ -222,52 +164,31 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    # Use a function to import the token serializer
     'DEFAULT_TOKEN_CLASSES': (
         'settings.get_token_serializer',
     ),
 }
 
+LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# CORS_ALLOWED_ORIGINS = [
-#
-# "http://localhost:8000",
-# "http://localhost:3000"
-# ]
-
-LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
-LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
-
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
-
-
-# Celery Configuration
-CELERY_BROKER_URL = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')
-
-CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_BROKER_URL = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
-
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379')}/1",
+        "LOCATION": f"{os.environ.get('REDIS_TLS_URL', 'redis://localhost:6379/1')}",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
     }
 }
+
 CELERY_BEAT_SCHEDULE = {}
 
 django_heroku.settings(locals())
-
-
-
