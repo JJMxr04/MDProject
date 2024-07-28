@@ -11,6 +11,7 @@ app.conf.enable_utc = False
 
 app.config_from_object(settings, namespace='CELERY')
 
+app.loader.override_backends['django-db'] = 'django_celery_results.backends.database:DatabaseBackend'
 
 
 app.autodiscover_tasks()
