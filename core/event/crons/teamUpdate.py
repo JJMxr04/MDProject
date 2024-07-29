@@ -155,26 +155,13 @@ class TeamCron():
             # print(f"Failed to get logo:{team_name}:{team_id}")
             return None
 
-    def check_team(self, team_name, title, group):
+    def check_team(self, team_name, title, group, team_id, logo_content, country, country_code):
         try:
             team_search = Team.objects.get_object_by_team_name(team_name)
-            # print(f"Team {team_name} exists1")
-            return team_search
         except Http404:
-            # print(f"Team {team_name} does not exist")
-            # Handle the case where the team does not exist
-            country, country_code, team_id = self.get_team_api(team_name)
-            team = Team.objects.get_object_by_team_id(team_id)
-            if team is None:
-                # print(f"Team {team_name} does not exist")
-                if team_id is not None:
-                    logo_url = self.get_logo(team_id, team_name, title, country)
-                else:
-                    logo_url = None
-                return Team.objects.create(team_name=team_name,title=title,group=group,team_id=team_id,logo_url=logo_url,country=country,country_code=country_code)
-            else:
-                # print(f"Team {team} exists 1")
-                return team
+            team_search = Team.objects.create_team(team_name, title, group, team_id, logo_content, country,
+                                                   country_code)
+        return team_search
 
 
 

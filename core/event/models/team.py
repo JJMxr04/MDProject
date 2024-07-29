@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 import uuid
 import os
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 def upload_to_path(instance, filename):
     return os.path.join('teamLogos', instance.country, instance.title, instance.team_name, filename)
@@ -26,10 +27,17 @@ class TeamManager(AbstractManager):
     def create_team(self, team_name, title, group, team_id, logo_content, country, country_code):
         team = self.get_object_by_team_id(team_id)
         if team is None:
-            team = self.model(team_name=team_name, title=title, group=group, team_id=team_id,
-                              country=country, country_code=country_code)
+            team = self.model(
+                team_name=team_name,
+                title=title,
+                group=group,
+                team_id=team_id,
+                country=country,
+                country_code=country_code
+            )
             if logo_content:
-                team.logo_url.save(f"{team_id}.png", logo_content)
+                logo_file = SimpleUploadedFile(f"{team_id}.png", logo_content)
+                team.logo_url = logo_file
             team.save(using=self._db)
             return team
         else:
