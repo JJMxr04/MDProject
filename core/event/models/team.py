@@ -35,9 +35,6 @@ class TeamManager(AbstractManager):
         else:
             return team
 
-    def create(self,team_name,title,group,team_id,logo_url,country,country_code):
-        self.create(team_name=team_name,title=title,group=group,team_id=team_id,logo_url=logo_url,country=country,country_code=country_code)
-
 class Team(AbstractModel):
     public_id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False)
     team_name = models.CharField(max_length=255, unique=True, null=False, blank=False)
