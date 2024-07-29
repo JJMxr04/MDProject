@@ -59,11 +59,12 @@ class TeamCron:
             "X-RapidAPI-Host": "sofascore.p.rapidapi.com"
         }
         response = requests.get(url, headers=headers, params=querystring)
-        if response.status_code == 200 and response.content:
-            return ContentFile(response.content)
-        else:
-            print(f"Error: {response.status_code} - {response.text}")
-            return None
+        return None
+        # if response.status_code == 200 and response.content:
+        #     return ContentFile(response.content)
+        # else:
+        #     print(f"Error: {response.status_code} - {response.text}")
+        #     return None
 
     def check_team(self, team_name, title, group):
         try:
