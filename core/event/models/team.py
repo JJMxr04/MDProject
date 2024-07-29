@@ -35,7 +35,7 @@ class TeamManager(AbstractManager):
         else:
             return team
 
-    def create(self,team_name,,title,group,team_id,logo_url,country,country_code):
+    def create(self,team_name,title,group,team_id,logo_url,country,country_code):
         self.create(team_name=team_name,title=title,group=group,team_id=team_id,logo_url=logo_url,country=country,country_code=country_code)
 
 class Team(AbstractModel):
