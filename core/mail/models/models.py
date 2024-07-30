@@ -4,7 +4,7 @@ from core.mail.tasks import send_email
 
 from core.mail.models.notifications import Notification
 import os
-DEBUG = True
+
 
 class Emails:
     @classmethod
@@ -51,7 +51,6 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-
         send_email(subject, user.email, template_path, context)
 
 
@@ -65,7 +64,6 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-
 
         send_email(subject, user.email, template_path, context)
 
@@ -131,4 +129,6 @@ class Emails:
             'tournament_location': 'Tournament Location',
         }
         Notification.objects.create_notification(user,subject)
+
         send_email(subject, user.email, template_path, context)
+

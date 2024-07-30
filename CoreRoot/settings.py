@@ -133,12 +133,12 @@ DATABASES['default']['TEST'] = {
     'SERIALIZE': True,
 }
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL') == 'True'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = f'{os.environ.get('EMAIL_BACKEND')}'
+EMAIL_HOST = f'{os.environ.get('EMAIL_HOST')}'
+EMAIL_PORT = f'{os.environ.get('EMAIL_PORT')}'
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = f'{os.environ.get('EMAIL_HOST_USER')}'
+EMAIL_HOST_PASSWORD = f'{os.environ.get('EMAIL_HOST_PASSWORD')}'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
