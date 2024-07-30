@@ -4,7 +4,7 @@ from core.mail.tasks import send_email
 
 from core.mail.models.notifications import Notification
 import os
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 class Emails:
     @classmethod
