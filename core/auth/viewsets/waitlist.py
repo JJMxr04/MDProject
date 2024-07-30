@@ -19,6 +19,8 @@ class WaitlistEntryViewSet(viewsets.ModelViewSet):
                 return Response({'detail': 'An entry with this email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = self.get_serializer(data=request.data)
+        print(request.data)
+        print(serializer.is_valid())
         if serializer.is_valid():
             # Create the entry using the custom manager method
             entry = WaitlistEntry.objects.create_entry(
@@ -32,5 +34,5 @@ class WaitlistEntryViewSet(viewsets.ModelViewSet):
             # Serialize the created entry
             serialized_entry = WaitlistEntrySerializer(entry)
             Emails.send_waitlist_thank_you(email=email) # Sending an email
-            return Response(serialized_entry.data, status=status.HTTP_201_CREATED)
+            return Response(serialized_entry.data, status=status.HTTP_200_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
