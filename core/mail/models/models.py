@@ -4,13 +4,11 @@ from core.mail.tasks import send_email
 
 from core.mail.models.notifications import Notification
 import os
-DEBUG = os.getenv('DEBUG')
+
 
 class Emails:
     @classmethod
     def send_waitlist_thank_you(cls, email):
-        if DEBUG:
-            return
         subject = "Thank You for Signing Up for the Waitlist"
         template_path = "waitlist/waitlist_thank_you.html"
         context = {}
@@ -28,8 +26,6 @@ class Emails:
             'tournament_location': 'Tournament Location',
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email.delay(subject, user.email, template_path, context)
 
@@ -37,8 +33,6 @@ class Emails:
 
     @classmethod
     def send_waitlist_granted(cls, email):
-        if DEBUG:
-            return
         subject = "Your Waitlist Request Has Been Granted"
         template_path = "waitlist/waitlist_granted.html"
         context = {}
@@ -56,8 +50,6 @@ class Emails:
             'tournament_location': 'Tournament Location',
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email(subject, user.email, template_path, context)
 
@@ -72,8 +64,6 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email(subject, user.email, template_path, context)
 
@@ -87,9 +77,6 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
-
         send_email(subject, user.email, template_path, context)
 
     @classmethod
@@ -101,8 +88,6 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email.delay(subject, user.email, template_path, context)
 
@@ -115,8 +100,6 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email(subject, user.email, template_path, context)
 
@@ -130,8 +113,6 @@ class Emails:
             'username': user.username,
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email(subject, user.email, template_path, context)
 
@@ -147,7 +128,5 @@ class Emails:
             'tournament_location': 'Tournament Location',
         }
         Notification.objects.create_notification(user,subject)
-        if DEBUG:
-            return
 
         send_email.delay(subject, user.email, template_path, context)
