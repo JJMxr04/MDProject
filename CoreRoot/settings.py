@@ -37,7 +37,7 @@ DEBUG = os.getenv('DEBUG') == False
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", '').split(',')
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
-CORS_ALLOWED_ORIGINS = [os.getenv("CORS_HOSTS", '').split(',')]
+CORS_ALLOWED_ORIGINS = [f'{os.getenv("CORS_HOSTS", '').split(',')}']
 
 CORS_ALLOW_HEADERS = [
     'access-control-allow-origin',
