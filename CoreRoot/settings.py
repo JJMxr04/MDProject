@@ -36,22 +36,19 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == False
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
+# CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
+CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
 
 CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
 ]
 
-# CORS settings
-CORS_ALLOW_HEADERS = [
-    'content-type',
-    'authorization',
-]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 CORS_ALLOW_ALL_ORIGINS = False
+
 
 # Application definition
 
