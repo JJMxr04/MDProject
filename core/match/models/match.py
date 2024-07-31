@@ -228,3 +228,15 @@ class Match(AbstractModel):
 
     def __str__(self):
         return f'{self.player_1} vs {self.player_2} '
+
+    def create(self, *args, **kwargs):
+        if self._state.adding:
+            if not self.start_date:
+                self.start_date = timezone.now()
+            self.end_date = self.start_date + timedelta(weeks=1)
+            if self.player_2:
+                Match.objects.accept_match(self, self.player_2)
+            else:
+                super().create(*args, **kwargs)
+        else:
+            super().create(*args, **kwargs)
