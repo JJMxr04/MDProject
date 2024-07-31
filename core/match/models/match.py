@@ -23,17 +23,6 @@ class MatchManager(AbstractManager):
             match = self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
             return self.accept_match(match, player_2)
 
-    def create(self, player_1, player_2=None, start_date=None):
-        if start_date is None:
-            start_date = timezone.now()
-        end_date = start_date + timedelta(weeks=1)
-
-        if player_2 is None:
-            return super().create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
-        else:
-            match = super().create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
-            return self.accept_match(match, player_2)
-
 
     def calcutate_winner(self, match):
         if match.player_1_score > match.player_2_score:
