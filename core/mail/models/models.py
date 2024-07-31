@@ -13,7 +13,7 @@ class Emails:
         template_path = "waitlist/waitlist_thank_you.html"
         context = {}
 
-        send_email(subject, email, template_path, context)
+        send_email.delay(subject, email, template_path, context)
 
     @classmethod
     def send_tournament_invite(cls, user, tournament):
@@ -27,7 +27,7 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     # Similarly refactor other methods in the Emails class
 
@@ -37,7 +37,7 @@ class Emails:
         template_path = "waitlist/waitlist_granted.html"
         context = {}
 
-        send_email(subject, email, template_path, context)
+        send_email.delay(subject, email, template_path, context)
 
     @classmethod
     def send_tournament_acceptance_confirmation(cls, user, tournament):
@@ -51,7 +51,7 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
 
     @classmethod
@@ -65,7 +65,7 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_victory_notification(cls, user, opponent_name):
@@ -77,7 +77,7 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_tie_notification(cls, user, opponent_name):
@@ -90,7 +90,7 @@ class Emails:
         Notification.objects.create_notification(user,subject)
 
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_lost_notification(cls, user, opponent_name):
@@ -102,7 +102,7 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_tournament_victory_notification(cls, user, tournament):
@@ -115,7 +115,7 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_tournament_starting_notification(cls, user, tournament):
@@ -130,5 +130,5 @@ class Emails:
         }
         Notification.objects.create_notification(user,subject)
 
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
