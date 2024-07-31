@@ -221,9 +221,13 @@ class TournamentManager(AbstractManager):
             tournament.state = ("aborted")
             tournament.save()
             return
+        print("create rounds")
         Tournament.objects.create_rounds(tournament)
+        print("matches")
         Tournament.objects.make_init_matches(tournament)
+        print("byes")
         Tournament.objects.assign_byes(tournament)
+        print("after")
 
 
 class RoundManager(AbstractManager):
