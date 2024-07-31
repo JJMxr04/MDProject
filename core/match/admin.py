@@ -14,7 +14,7 @@ class MatchAdmin(admin.ModelAdmin):
     list_filter = ['match_state', 'match_type', 'start_date', 'end_date']
     search_fields = ['player_1__username', 'player_2__username', 'winner__username']
     readonly_fields = [
-        'id', 'winner', 'match_state', 'match_type',
+        'id', 'winner',  'match_type',
         'player_1_score', 'player_2_score',
         'player_1_game_1', 'player_1_game_1_completed',
         'player_1_game_2', 'player_1_game_2_completed',

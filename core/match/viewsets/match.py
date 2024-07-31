@@ -167,7 +167,7 @@ class MyMatchViewSet(AbstractViewSet):
 
         if match.golden_game.event !=None:
             eventList.append(match.golden_game.event.id)
-            print(1)
+        print(1)
         if match.player_1_game_1.event !=None:
             eventList.append(match.player_1_game_1.event.id)
         print(2)
