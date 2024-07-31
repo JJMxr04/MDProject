@@ -54,7 +54,6 @@ class MatchViewSet(AbstractViewSet):
 
     def update(self, request, *args, **kwargs):
         player_2 = request.user
-        print(kwargs['pk'])
         match = Match.objects.get_object_by_id(kwargs['pk'])
         match = Match.objects.accept_match(match, player_2)
         serializer = self.get_serializer(match)
@@ -167,45 +166,32 @@ class MyMatchViewSet(AbstractViewSet):
 
         if match.golden_game.event !=None:
             eventList.append(match.golden_game.event.id)
-        print(1)
         if match.player_1_game_1.event !=None:
             eventList.append(match.player_1_game_1.event.id)
-        print(2)
         if match.player_1_game_2.event !=None:
             eventList.append(match.player_1_game_2.event.id)
-        print(3)
         if match.player_1_game_3.event !=None:
             eventList.append(match.player_1_game_3.event.id)
-        print(4)
         if match.player_1_game_4.event !=None:
             eventList.append(match.player_1_game_4.event.id)
-        print(5)
         if match.player_1_game_5.event !=None:
             eventList.append(match.player_1_game_5.event.id)
-        print(6)
         if match.player_2_game_1.event !=None:
             eventList.append(match.player_2_game_1.event.id)
-        print(7)
         if match.player_2_game_2.event !=None:
             eventList.append(match.player_2_game_2.event.id)
-        print(8)
         if match.player_2_game_3.event !=None:
             eventList.append(match.player_2_game_3.event.id)
-        print(9)
         if match.player_2_game_4.event !=None:
             eventList.append(match.player_2_game_4.event.id)
-        print(10)
         if match.player_2_game_5.event !=None:
             eventList.append(match.player_2_game_5.event.id)
-        print(11)
         if uuid.UUID(data.get("event_id")) in eventList:
             return Response(
                 {'error': "This game is already been selected"},
                 status=400)
-        print(12)
         if (match.player_1 != player) and (match.player_2 != player):
             return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
-        print(13)
         if match.player_1 == player:
             if match.player_1_game_1.event == None:
                 Game.objects.update_by_id(match.player_1_game_1.id,player,data)
@@ -222,7 +208,6 @@ class MyMatchViewSet(AbstractViewSet):
             if match.player_1_game_5.event == None:
                 Game.objects.update_by_id(match.player_1_game_5.id, player, data)
                 return Response({'message': 'Request was successful'}, status=200)
-        print(14)
         if match.player_2 == player:
             if match.player_2_game_1.event == None:
                 Game.objects.update_by_id(match.player_2_game_1.id,player,data)
@@ -239,6 +224,4 @@ class MyMatchViewSet(AbstractViewSet):
             if match.player_2_game_5.event == None:
                 Game.objects.update_by_id(match.player_2_game_5.id, player, data)
                 return Response({'message': 'Request was successful'}, status=200)
-        print(15)
-
         return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
