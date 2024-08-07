@@ -73,22 +73,35 @@ class EventCron():
                 event_schema = EventSerializer(data=event_data)
 
             if event_schema.is_valid():
-                event_instance = event_schema.save()
+                event = event_schema.save()
+                data = event_schema.validated_data
 
-                if "scores" in event_data and existing_event and event_instance.completed != event_data.get("completed"):
-                    score_data = event_data["scores"]
-                    if score_data:
-                        score1 = TeamScoreSerializer(data=score_data[0])
-                        score2 = TeamScoreSerializer(data=score_data[1])
+                if data.get("away_team") is None or data.get("home_team") is None:
+                    continue
 
-                        if score1.is_valid() and score2.is_valid():
-                            Event.objects.get_event_state(
-                                event_instance.id,
-                                event_data.get("completed"),
-                                score_data,
-                                score1.validated_data,
-                                score2.validated_data,
-                            )
+                try:
+                    existing_event = Event.objects.get(id=data.get("id"))
+                    if existing_event.completed != data['completed']:
+                        # If completed status changed, update the event
+                        team_schema = TeamScoreSerializer(data=event['scores'][0])
+                        if team_schema.is_valid():
+                            score1 = team_schema.validated_data
+
+                        team_schema = TeamScoreSerializer(data=event['scores'][1])
+                        if team_schema.is_valid():
+                            score2 = team_schema.validated_data
+
+                        Event.objects.get_event_state(
+                            data['id'],
+                            data['completed'],
+                            data['scores'],
+                            score1,
+                            score2
+                        )
+                except ObjectDoesNotExist:
+                    # If event does not exist, create a new one
+                    event_game = Event(**data)
+                    event_game.save()
             else:
                 print("Validation failed:", event_schema.errors)
         return Response("Success", status=status.HTTP_200_OK)
