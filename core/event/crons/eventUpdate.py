@@ -84,8 +84,8 @@ class EventCron():
                     continue
 
                 try:
-                    existing_event = Event.objects.get(id=event_instance.get("id"))
-                    if existing_event.completed != event_instance['completed']:
+                    existing_event = Event.objects.get(id=event_instance.id)
+                    if existing_event.completed != event_instance.completed:
                         # If completed status changed, update the event
                         team_schema = TeamScoreSerializer(data=event_data['scores'][0])
                         if team_schema.is_valid():
@@ -96,9 +96,9 @@ class EventCron():
                             score2 = team_schema.validated_data
 
                         Event.objects.get_event_state(
-                            event_instance['id'],
-                            event_instance['completed'],
-                            event_instance['scores'],
+                            event_instance.id,
+                            event_instance.completed,
+                            event_instance.scores,
                             score1,
                             score2
                         )
