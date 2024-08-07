@@ -80,7 +80,7 @@ class EventCron():
             if event_schema.is_valid():
                 event_instance = event_schema.save()
 
-                if event_instance["away_team"] is None or event_instance["home_team"] is None:
+                if event_instance.away_team is None or event_instance.home_team is None:
                     continue
 
                 try:
