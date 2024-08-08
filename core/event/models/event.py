@@ -15,7 +15,7 @@ class EventManager(AbstractManager):
         if event is ObjectDoesNotExist:
             print(2)
             return None
-        if event.completed != completed:
+        if event.completed == True:
             print(3)
 
             event.completed = completed
