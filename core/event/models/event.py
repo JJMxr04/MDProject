@@ -10,10 +10,13 @@ from core.event.models.team import Team
 
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
+        print(1)
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
+            print(2)
             return None
         if event.completed != completed:
+            print(3)
 
             event.completed = completed
             event.scores = event_scores
@@ -26,7 +29,7 @@ class EventManager(AbstractManager):
                 event.winner = 'Tie'
 
             event.save()
-
+        print(4)
         return event
 
     @classmethod
