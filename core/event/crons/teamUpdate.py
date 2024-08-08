@@ -135,14 +135,20 @@ class TeamCron():
         response = requests.get(url, headers=headers, params=querystring)
         # Check if the request was successful (status code 200)
         if response.status_code == 200 or response.status_code == 204:
-            # Get the content of the response (image data)
-            # data = response.json()
-            # write_json_to_file(data, f'testfiles/teams/teams_logos.json')
             if response.content:
-                return self.create_save_logo(team_name, title, team_id, country, response.content)
+                return response.content
             else:
                 print(f"Error: {response.status_code} - {response.text} - data: {response.content}")
                 return None
+            # return None
+            # Get the content of the response (image data)
+            # data = response.json()
+            # write_json_to_file(data, f'testfiles/teams/teams_logos.json')
+            # if response.content:
+            #     return self.create_save_logo(team_name, title, team_id, country, response.content)
+            # else:
+            #     print(f"Error: {response.status_code} - {response.text} - data: {response.content}")
+            #     return None
         else:
             print(f"Error: {response.status_code} - {response.text}")
             #raise Http404("Failed to get logo")
@@ -165,11 +171,10 @@ class TeamCron():
                     logo_url = self.get_logo(team_id, team_name, title, country)
                 else:
                     logo_url = None
-                return self.create_team(team_name, title, group, team_id, logo_url, country, country_code)
+                return Team.objects.create_team(team_name=team_name,title=title,group=group,team_id=team_id,logo_content=logo_url,country=country,country_code=country_code)
             else:
                 # print(f"Team {team} exists 1")
                 return team
-
 
 
 

@@ -166,7 +166,7 @@ class Match(AbstractModel):
     match_state = models.CharField(max_length=10, default='created', null=False, blank=False) #created, completed
 
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)
-    tiebreaker = models.ForeignKey(TieBreaker, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, default=None)
+    tiebreaker = models.ForeignKey(TieBreaker, on_delete=models.CASCADE, related_name='match_tiebreaker', null=True, blank=True, default=None)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(null=True, blank=True, default=None)
     player_1_score = models.IntegerField(default=0, null=False, blank=False)
@@ -217,3 +217,4 @@ class Match(AbstractModel):
 
     def __str__(self):
         return f'{self.player_1} vs {self.player_2} '
+

@@ -1,9 +1,10 @@
+from django.utils.html import format_html
 from django.contrib import admin
 from .models import User
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['email', 'username', 'first_name', 'last_name', 'is_staff', 'is_admin', 'activated_link']
+    list_display = ['avatar_image', 'email', 'username', 'first_name', 'last_name', 'is_staff', 'is_admin', 'activated_link']
     search_fields = ['email', 'username', 'first_name', 'last_name']
     list_filter = ['is_staff', 'is_admin', 'is_active', 'activated_link']
     fieldsets = [
@@ -18,3 +19,10 @@ class UserAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
         # Customize queryset as needed, e.g., prefetch related fields
         return queryset
+
+    def avatar_image(self, obj):
+        if obj.avatar:
+            return format_html('<img src="{}" style="width: 45px; height: 45px;" />', obj.avatar.url)
+        return format_html('<img src="/path/to/default/avatar.png" style="width: 45px; height: 45px;" />')
+
+    avatar_image.short_description = 'Avatar'

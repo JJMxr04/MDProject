@@ -54,7 +54,6 @@ class MatchViewSet(AbstractViewSet):
 
     def update(self, request, *args, **kwargs):
         player_2 = request.user
-        print(kwargs['pk'])
         match = Match.objects.get_object_by_id(kwargs['pk'])
         match = Match.objects.accept_match(match, player_2)
         serializer = self.get_serializer(match)
@@ -162,7 +161,7 @@ class MyMatchViewSet(AbstractViewSet):
         data = request.data
         match = Match.objects.get_object_by_id(kwargs['pk'])
         self.check_object_permissions(self.request, match)
-        print(data)
+
         eventList = []
 
         if match.golden_game.event !=None:
@@ -187,13 +186,11 @@ class MyMatchViewSet(AbstractViewSet):
             eventList.append(match.player_2_game_4.event.id)
         if match.player_2_game_5.event !=None:
             eventList.append(match.player_2_game_5.event.id)
-        print(eventList)
         if uuid.UUID(data.get("event_id")) in eventList:
             return Response(
                 {'error': "This game is already been selected"},
                 status=400)
         if (match.player_1 != player) and (match.player_2 != player):
-            print(f"player: {player}, player_1:{match.player_1}, player_2:{match.player_2}")
             return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
         if match.player_1 == player:
             if match.player_1_game_1.event == None:
@@ -227,38 +224,4 @@ class MyMatchViewSet(AbstractViewSet):
             if match.player_2_game_5.event == None:
                 Game.objects.update_by_id(match.player_2_game_5.id, player, data)
                 return Response({'message': 'Request was successful'}, status=200)
-
         return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
-        # return Response(serializer.data)
-#
-#     # def get_object(self):
-#     #     print(1)
-#     #     print(self.kwargs['pk'])
-#     #     queryset = self.filter_queryset(self.get_queryset(self.kwargs['pk'], self.request.user))
-#     #     page = self.paginate_queryset(queryset)
-#     #     print(2)
-#     #     if page is not None:
-#     #         serializer = self.get_serializer(page, many=True)
-#     #         print(serializer.data)
-#     #
-#     #         return self.get_paginated_response(serializer.data)
-#     #     serializer = self.get_serializer(queryset, many=True)
-#     #     print(6)
-#     #     return Response(serializer.data)
-#
-#     # def list(self, request, *args, **kwargs):
-#     #     queryset = self.filter_queryset(self.get_queryset(self.request.data['match_state'], self.request.user))
-#     #     page = self.paginate_queryset(queryset)
-#     #     if page is not None:
-#     #         serializer = self.get_serializer(page, many=True)
-#     #         return self.get_paginated_response(serializer.data)
-#     #
-#     #     serializer = self.get_serializer(queryset, many=True)
-#     #     return Response(serializer.data)
-
-
-
-
-
-
-
