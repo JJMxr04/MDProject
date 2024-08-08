@@ -50,8 +50,7 @@ class EventCron():
         response = requests.get(url, headers=self.headers, params=querystring)
 
         if response.status_code != 200:
-            return Response(f"API Request failed with status code: {response.status_code}",
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(f"API Request failed with status code: {response.status_code}", status=status.HTTP_400_BAD_REQUEST)
 
         api_data = response.json()
 
@@ -71,45 +70,31 @@ class EventCron():
                 event_data['title'] = sport.title
                 event_data['group'] = sport.group
                 event_data['description'] = sport.description
-                event_data['home_team_team'] = \
-                TeamSerializer(teamCron.check_team(event_data.get("home_team"), sport.title, sport.group)).data['id']
-                event_data['away_team_team'] = \
-                TeamSerializer(teamCron.check_team(event_data.get("away_team"), sport.title, sport.group)).data['id']
+                event_data['home_team_team'] = TeamSerializer(teamCron.check_team(event_data.get("home_team"), sport.title, sport.group)).data['id']
+                event_data['away_team_team'] = TeamSerializer(teamCron.check_team(event_data.get("away_team"), sport.title, sport.group)).data['id']
                 event_schema = EventSerializer(data=event_data)
 
             if event_schema.is_valid():
                 event_instance = event_schema.save()
 
-                if event_instance.away_team is None or event_instance.home_team is None:
-                    continue
+                if event_data["scores"] and existing_event and event_instance.completed != event_data.get("completed"):
+                    score_data = event_data["scores"]
+                    if score_data:
+                        score1 = TeamScoreSerializer(data=score_data[0])
+                        score2 = TeamScoreSerializer(data=score_data[1])
 
-                try:
-                    existing_event = Event.objects.get(id=event_instance.id)
-                    if existing_event.completed != event_instance.completed:
-                        # If completed status changed, update the event
-                        team_schema = TeamScoreSerializer(data=event_data['scores'][0])
-                        if team_schema.is_valid():
-                            score1 = team_schema.validated_data
-
-                        team_schema = TeamScoreSerializer(data=event_data['scores'][1])
-                        if team_schema.is_valid():
-                            score2 = team_schema.validated_data
-
-                        Event.objects.get_event_state(
-                            event_instance.id,
-                            event_instance.completed,
-                            event_instance.scores,
-                            score1,
-                            score2
-                        )
-                except ObjectDoesNotExist:
-                    # If event does not exist, create a new one
-                    event_game = Event(**event_instance)
-                    event_game.save()
-
+                        if score1.is_valid() and score2.is_valid():
+                            Event.objects.get_event_state(
+                                event_instance.id,
+                                event_data.get("completed"),
+                                score_data,
+                                score1.validated_data,
+                                score2.validated_data,
+                            )
             else:
                 print("Validation failed:", event_schema.errors)
         return Response("Success", status=status.HTTP_200_OK)
+
     def update_all_events(self):
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
