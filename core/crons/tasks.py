@@ -39,7 +39,7 @@ def event_cron():
 
 @shared_task
 def event_test_cron():
-    sport = Sport.objects.get(key="soccer_spain_la_liga")
+    sport = Sport.objects.get(key="baseball_mlb")
     eventCron.get_sport_events(sport)
 @shared_task
 def print_cron_jobs():
