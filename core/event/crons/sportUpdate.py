@@ -2,6 +2,7 @@ import json
 import requests
 from core.event.models.sport import Sport
 from core.event.serializers.sport import SportSerializer
+import os
 
 class SportCron():
     domain = 'https://odds.p.rapidapi.com/v4/sports'
@@ -9,7 +10,7 @@ class SportCron():
     sports_data = {}
     events = {}
     headers = {
-        "X-RapidAPI-Key": "5e67f9e23emsh42a3758bd291b0bp1ed121jsnc118f34dcfda",
+        "X-RapidAPI-Key": os.getenv("RAPID_API_KEY"),
         "X-RapidAPI-Host": 'odds.p.rapidapi.com'
     }
 
