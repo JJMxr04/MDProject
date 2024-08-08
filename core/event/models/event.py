@@ -6,6 +6,7 @@ from django.http import Http404
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from core.event.models.team import Team
+from .bookmaker import Bookmaker
 
 
 class EventManager(AbstractManager):
@@ -74,6 +75,7 @@ class Event(AbstractModel):
     away_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_team_team', null=True,blank=True)
     scores = models.CharField(max_length=255, null=True, default=None)
     winner = models.CharField(max_length=255, null=True, default=None)
+    bookmakers = models.ManyToManyField(Bookmaker, related_name="events",null=True, default=None)
 
     objects = EventManager()
 

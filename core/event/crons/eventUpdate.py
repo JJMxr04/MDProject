@@ -13,6 +13,7 @@ from core.event.models.sport import Sport
 import uuid
 from core.event.crons.teamUpdate import TeamCron
 from core.event.serializers.team import TeamSerializer
+from core.event.serializers.bookmaker import BookmakerSerializer
 
 teamCron = TeamCron()
 
@@ -38,7 +39,7 @@ class EventCron():
     events = {}
     domain = "https://odds.p.rapidapi.com/v4/sports"
     headers = {
-        "X-RapidAPI-Key": os.getenv("RAPID_API_KEY"),
+        "X-RapidAPI-Key": f"{os.environ.get("RAPID_API_KEY")}",
         "X-RapidAPI-Host": 'odds.p.rapidapi.com'
     }
 
@@ -115,6 +116,43 @@ class EventCron():
 
 
         return Response("Success", status=status.HTTP_200_OK)
+
+    def get_upcoming_odds(self):
+
+        url = f"{self.domain}/upcoming/odds"
+        querystring = {"daysFrom": "3"}
+
+        response = requests.get(url, headers=self.headers, params=querystring)
+
+        if response.status_code != 200:
+            return Response(f"API Request failed with status code: {response.status_code}", status=status.HTTP_400_BAD_REQUEST)
+
+        api_data = response.json()
+
+        for event_data in api_data:
+            if event_data.get("away_team") is None or event_data.get("home_team") is None:
+                continue
+            event_id = uuid.UUID(event_data.get("id"))
+            eventID = f'{event_data.get("id")}'
+            existing_event = None
+            try:
+
+                existing_event = Event.objects.get(id=eventID)
+                event_schema = EventSerializer(existing_event, data=event_data, partial=True)
+
+
+                if event_schema.is_valid():
+                    event_instance = event_schema.save()
+                    bookmakers = BookmakerSerializer
+                    event_instance.bookmakers = event_data['bookmakers']
+                    event_instance.save()
+            except :
+                print("Validation failed:", event_schema.errors)
+
+
+
+
+
 
     def update_all_events(self):
         active_sports = Sport.objects.get_active_sports()

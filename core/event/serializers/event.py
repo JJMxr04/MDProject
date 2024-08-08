@@ -5,10 +5,13 @@ from core.event.models import Team
 
 from core.abstract.serializers import AbstractSerializer
 from core.event.serializers.team import TeamSerializer
+from .bookmaker import BookmakerSerializer
+
 
 class TeamScoreSerializer(serializers.Serializer):
     name = serializers.CharField(required=False, allow_null=True)
     score = serializers.CharField(required=False, allow_null=True)
+    bookmakers = BookmakerSerializer(many=True)
     class Meta:
         fields = '__all__'  # Include all fields
         # List of all the fields that can only be read by the user
