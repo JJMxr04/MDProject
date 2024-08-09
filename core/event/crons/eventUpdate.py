@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 import requests
 from django.core.serializers import serialize
@@ -168,6 +169,29 @@ class EventCron():
             event_id = uuid.UUID(event_data.get("id"))
             eventID = f'{event_data.get("id")}'
             existing_event = None
+
+            bookmakers = event_data['bookmakers']
+            # print(json.dumps(bookmakers, indent=4))
+            for bookmaker in bookmakers:
+                # Create the serializer instance
+                bookmaker_serializer = BookmakerSerializer(data=bookmaker)
+
+                # Check if the data is valid
+                if not bookmaker_serializer.is_valid():
+                    # Print detailed validation errors
+                    print("Validation errors:")
+                    print(json.dumps(bookmaker_serializer.errors, indent=4))
+                else:
+                    # If valid, print the serialized data
+                    print("Validation succeeded:")
+                    print(json.dumps(bookmaker_serializer.data, indent=4))
+
+                sys.exit()
+
+            sys.exit()
+
+
+
             try:
 
                 existing_event = Event.objects.get(id=eventID)

@@ -6,18 +6,16 @@ from django.http import Http404
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from core.event.models.team import Team
-from .bookmaker import Bookmaker
+
 
 
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
-        print(1)
+
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
-            print(2)
             return None
         if event.completed == True:
-            print(3)
 
             event.completed = completed
             event.scores = event_scores
@@ -60,7 +58,6 @@ class EventManager(AbstractManager):
         except (ObjectDoesNotExist, ValueError, TypeError):
             return Http404
 
-
 class Event(AbstractModel):
     sport_key = models.CharField(max_length=255)
     sport_title = models.CharField(max_length=255)
@@ -72,19 +69,17 @@ class Event(AbstractModel):
     home_team = models.CharField(max_length=255)
     home_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_team_team', null=True, blank=True)
     away_team = models.CharField(max_length=255)
-    away_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_team_team', null=True,blank=True)
+    away_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_team_team', null=True, blank=True)
     scores = models.CharField(max_length=255, null=True, default=None)
     winner = models.CharField(max_length=255, null=True, default=None)
-    bookmakers = models.ManyToManyField(Bookmaker, related_name="events",null=True, default=None)
 
     objects = EventManager()
 
-    class meta:
+    class Meta:
         db_table = "'core.event'"
 
     def __str__(self):
         return f"{self.home_team} Vs {self.away_team}"
-
 
 
 
