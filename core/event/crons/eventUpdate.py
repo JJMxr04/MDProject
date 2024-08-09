@@ -15,6 +15,8 @@ import uuid
 from core.event.crons.teamUpdate import TeamCron
 from core.event.serializers.team import TeamSerializer
 from core.event.serializers.bookmaker import BookmakerSerializer
+from core.event.serializers.market import MarketSerializer
+from core.event.serializers.outcome import OutcomeSerializer
 
 teamCron = TeamCron()
 
@@ -151,15 +153,14 @@ class EventCron():
             except :
                 print("Validation failed:", event_schema.errors)
 
-    def get_sport_odds(self,sport):
-
+    def get_sport_odds(self, sport):
         url = f"{self.domain}/{sport.key}/odds"
-        querystring = {"daysFrom": "3", "regions": {"us"},
-                       "markets": {"h2h,spreads,totals"}}
+        querystring = {"daysFrom": "3", "regions": {"us"}, "markets": {"h2h,spreads,totals"}}
 
         response = requests.get(url, headers=self.headers, params=querystring)
         if response.status_code != 200:
-            return Response(f"API Request failed with status code: {response.status_code}", status=status.HTTP_400_BAD_REQUEST)
+            return Response(f"API Request failed with status code: {response.status_code}",
+                            status=status.HTTP_400_BAD_REQUEST)
 
         api_data = response.json()
 
@@ -168,47 +169,44 @@ class EventCron():
                 continue
             event_id = uuid.UUID(event_data.get("id"))
             eventID = f'{event_data.get("id")}'
-            existing_event = None
 
-            bookmakers = event_data['bookmakers']
-            # print(json.dumps(bookmakers, indent=4))
-            for bookmaker in bookmakers:
-                # Create the serializer instance
-                bookmaker_serializer = BookmakerSerializer(data=bookmaker)
+            # Fetch or create the event instance
+            event_instance, created = Event.objects.get_or_create(id=eventID)
 
-                # Check if the data is valid
-                if not bookmaker_serializer.is_valid():
-                    # Print detailed validation errors
-                    print("Validation errors:")
-                    print(json.dumps(bookmaker_serializer.errors, indent=4))
+            # Update or create bookmakers, markets, and outcomes
+            for bookmaker_data in event_data['bookmakers']:
+                bookmaker_serializer = BookmakerSerializer(data=bookmaker_data)
+                if bookmaker_serializer.is_valid():
+                    bookmaker_instance = bookmaker_serializer.save(event=event_instance)
+
+                    # Now process the markets
+                    for market_data in bookmaker_data.get('markets', []):
+                        # Assign the bookmaker instance to market_data
+                        market_data['bookmaker'] = bookmaker_instance.id
+
+                        market_serializer = MarketSerializer(data=market_data)
+                        if market_serializer.is_valid():
+                            market_instance = market_serializer.save()
+
+                            # Now process the outcomes for each market
+                            for outcome_data in market_data.get('outcomes', []):
+                                outcome_data['market'] = market_instance.id  # Assign the market instance to outcome_data
+                                outcome_serializer = OutcomeSerializer(data=outcome_data)
+                                if outcome_serializer.is_valid():
+                                    outcome_instance = outcome_serializer.save()
+                                else:
+                                    print("Validation errors in outcome:")
+                                    print(outcome_serializer.errors)
+                        else:
+                            print("Validation errors in market:")
+                            print(market_serializer.errors)
                 else:
-                    # If valid, print the serialized data
-                    print("Validation succeeded:")
-                    print(json.dumps(bookmaker_serializer.data, indent=4))
+                    print("Validation errors in bookmaker:")
+                    print(bookmaker_serializer.errors)
 
-                sys.exit()
+            event_instance.save()
 
-            sys.exit()
-
-
-
-            try:
-
-                existing_event = Event.objects.get(id=eventID)
-                event_schema = EventSerializer(existing_event, data=event_data, partial=True)
-
-
-                if event_schema.is_valid():
-                    event_instance = event_schema.save()
-                    bookmakers = BookmakerSerializer
-                    event_instance.bookmakers = event_data['bookmakers']
-                    event_instance.save()
-            except :
-                print("Validation failed:", event_schema.errors)
-
-
-
-
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def update_all_events(self):
         active_sports = Sport.objects.get_active_sports()

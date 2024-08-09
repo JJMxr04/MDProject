@@ -5,6 +5,7 @@ from core.event.models import Team
 
 from core.abstract.serializers import AbstractSerializer
 from core.event.serializers.team import TeamSerializer
+from .bookmaker import BookmakerSerializer
 
 
 
@@ -24,6 +25,7 @@ class EventSerializer(AbstractSerializer):
     scores = TeamScoreSerializer(many=True, required=False, allow_null=True)
     home_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
     away_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
+    bookmakers = BookmakerSerializer(many=True)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

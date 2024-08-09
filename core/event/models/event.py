@@ -28,7 +28,6 @@ class EventManager(AbstractManager):
                 event.winner = 'Tie'
 
             event.save()
-        print(4)
         return event
 
     @classmethod

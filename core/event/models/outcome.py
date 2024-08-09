@@ -7,7 +7,7 @@ class OutcomeManager(AbstractManager):
 
 class Outcome(AbstractModel):
     market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='outcomes')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     price = models.FloatField()
     point = models.FloatField(null=True)
 

@@ -73,4 +73,5 @@ class Migration(migrations.Migration):
                 'db_table': "'core.event'",
             },
         ),
+
     ]
