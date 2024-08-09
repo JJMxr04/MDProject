@@ -120,10 +120,43 @@ class EventCron():
     def get_upcoming_odds(self):
 
         url = f"{self.domain}/upcoming/odds"
-        querystring = {"daysFrom": "3"}
+        querystring = {"daysFrom": "3", "regions": {"us"},
+                       "markets": {"h2h,spreads,totals"}}
 
         response = requests.get(url, headers=self.headers, params=querystring)
 
+        if response.status_code != 200:
+            return Response(f"API Request failed with status code: {response.status_code}", status=status.HTTP_400_BAD_REQUEST)
+
+        api_data = response.json()
+
+        for event_data in api_data:
+            if event_data.get("away_team") is None or event_data.get("home_team") is None:
+                continue
+            event_id = uuid.UUID(event_data.get("id"))
+            eventID = f'{event_data.get("id")}'
+            existing_event = None
+            try:
+
+                existing_event = Event.objects.get(id=eventID)
+                event_schema = EventSerializer(existing_event, data=event_data, partial=True)
+
+
+                if event_schema.is_valid():
+                    event_instance = event_schema.save()
+                    bookmakers = BookmakerSerializer
+                    event_instance.bookmakers = event_data['bookmakers']
+                    event_instance.save()
+            except :
+                print("Validation failed:", event_schema.errors)
+
+    def get_sport_odds(self,sport):
+
+        url = f"{self.domain}/{sport.key}/odds"
+        querystring = {"daysFrom": "3", "regions": {"us"},
+                       "markets": {"h2h,spreads,totals"}}
+
+        response = requests.get(url, headers=self.headers, params=querystring)
         if response.status_code != 200:
             return Response(f"API Request failed with status code: {response.status_code}", status=status.HTTP_400_BAD_REQUEST)
 
@@ -153,11 +186,12 @@ class EventCron():
 
 
 
-
     def update_all_events(self):
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
             self.get_sport_events(sport)
+            print("get odds")
+            self.get_sport_odds(sport)
 
 def update_all_events():
     eventCron = EventCron()
