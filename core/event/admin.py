@@ -22,7 +22,7 @@ class EventAdmin(admin.ModelAdmin):
         }),
     )
 
-    readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'completed', 'winner', 'home_team', 'home_team_team', 'away_team', 'away_team_team', 'formatted_scores', 'scores')
+    readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'winner', 'home_team', 'home_team_team', 'away_team', 'away_team_team', 'formatted_scores', 'scores')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
