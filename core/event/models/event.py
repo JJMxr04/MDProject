@@ -75,8 +75,3 @@ class Event(AbstractModel):
 
     def __str__(self):
         return f"{self.home_team} Vs {self.away_team}"
-
-
-
-
-
