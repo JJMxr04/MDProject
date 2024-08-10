@@ -73,7 +73,7 @@ class EventCron():
 
             try:
                 existing_event = Event.objects.get(id=eventID)
-                print(f'existing_event.completed:{existing_event}')
+                print(f'existing_event.completed:{existing_event.completed}')
                 event_schema = EventSerializer(existing_event, data=event_data, partial=True)
                 print("eventExists-1")
                 if event_schema.is_valid():
