@@ -79,7 +79,7 @@ class EventCron():
                     print("eventExists-2")
                     print(f'scores:{event_data["scores"]}')
                     print(f'event_instance.completed:{event_instance.completed}')
-                    print(f'event_data["completed"]:{event_data["completed"]')
+                    print(f'event_data["completed"]:{event_data["completed"]}')
                     event_instance = event_schema.save()
                     if event_data["scores"] and (not event_instance.completed) and event_data["completed"]:
                         print("eventExists-3")
