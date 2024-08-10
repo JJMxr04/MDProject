@@ -1,14 +1,11 @@
 from django.contrib import admin
-from .models import Event
-from .models import Sport
-from .models import Team
-import json
+from .models import Event, Sport, Team, Bookmaker, Market, Outcome
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores','home_team_team','away_team_team']
+    list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores', 'home_team_team', 'away_team_team']
     list_filter = ['sport_title', 'group', 'completed']
-    search_fields = ['title', 'description', 'sport_title', 'group', 'winner','commence_time', 'completed', 'winner', 'home_team_team__team_name','away_team_team__team_name']
+    search_fields = ['title', 'description', 'sport_title', 'group', 'winner', 'commence_time', 'completed', 'winner', 'home_team_team__team_name', 'away_team_team__team_name']
 
     fieldsets = (
         (None, {
@@ -32,29 +29,8 @@ class EventAdmin(admin.ModelAdmin):
 
     def formatted_scores(self, obj):
         return "WIP"
-        # try:
-        #     scores = obj.scores
-        #     if scores:
-        #         scores_data = json.loads(scores)
-        #         if isinstance(scores_data, list):
-        #             team_scores = []
-        #             for score in scores_data:
-        #                 if isinstance(score, dict) and 'name' in score and 'score' in score:
-        #                     team_scores.append(f"{score['name']}: {score['score']}")
-        #                 else:
-        #                     return f"Invalid score format: {score}"
-        #             return ", ".join(team_scores)
-        #         else:
-        #             return "Invalid scores data"
-        #     else:
-        #         return "No scores available"
-        # except json.JSONDecodeError as e:
-        #     return f"Error parsing scores: {e}"
-        # except Exception as e:
-        #     return f"Unexpected error: {e}"
-
+        # Add your logic for formatted scores here
     formatted_scores.short_description = 'Scores'
-
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
@@ -72,7 +48,6 @@ class TeamAdmin(admin.ModelAdmin):
         }),
     )
 
-
 @admin.register(Sport)
 class SportAdmin(admin.ModelAdmin):
     list_display = ['key', 'title', 'group', 'active', 'has_outrights', 'created', 'updated']
@@ -87,5 +62,46 @@ class SportAdmin(admin.ModelAdmin):
         ('Timestamps', {
             'fields': ('created', 'updated'),
             'classes': ('collapse',),
+        }),
+    )
+
+# Register Bookmaker model
+@admin.register(Bookmaker)
+@admin.register(Bookmaker)
+class BookmakerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'event', 'last_update']
+    search_fields = ['name', 'event__title', 'event__id']  # Added event__id for searching by event_id
+    readonly_fields = ['id', 'last_update']
+
+    fieldsets = (
+        (None, {
+            'fields': ('id', 'name', 'event', 'last_update')
+        }),
+    )
+
+
+# Register Market model
+@admin.register(Market)
+class MarketAdmin(admin.ModelAdmin):
+    list_display = ['key', 'bookmaker', 'last_update']
+    search_fields = ['key', 'bookmaker__name']
+    readonly_fields = ['last_update']
+
+    fieldsets = (
+        (None, {
+            'fields': ('key', 'bookmaker', 'last_update')
+        }),
+    )
+
+# Register Outcome model
+@admin.register(Outcome)
+class OutcomeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'market', 'price']
+    search_fields = ['name', 'market__key']
+    readonly_fields = ['price']
+
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'market', 'price')
         }),
     )
