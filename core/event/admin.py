@@ -67,7 +67,6 @@ class SportAdmin(admin.ModelAdmin):
 
 # Register Bookmaker model
 @admin.register(Bookmaker)
-@admin.register(Bookmaker)
 class BookmakerAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'event', 'last_update']
     search_fields = ['name', 'event__title', 'event__id']  # Added event__id for searching by event_id
