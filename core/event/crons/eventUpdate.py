@@ -17,6 +17,11 @@ from core.event.serializers.team import TeamSerializer
 from core.event.serializers.bookmaker import BookmakerSerializer
 from core.event.serializers.market import MarketSerializer
 from core.event.serializers.outcome import OutcomeSerializer
+from core.event.models.bookmaker import Bookmaker
+from core.event.models.market import Market
+from core.event.models.outcome import Outcome
+
+from datetime import datetime, timezone
 
 teamCron = TeamCron()
 
@@ -124,9 +129,9 @@ class EventCron():
                        "markets": {"h2h,spreads,totals"}}
 
         response = requests.get(url, headers=self.headers, params=querystring)
-
         if response.status_code != 200:
-            return Response(f"API Request failed with status code: {response.status_code}", status=status.HTTP_400_BAD_REQUEST)
+            return Response(f"API Request failed with status code: {response.status_code}",
+                            status=status.HTTP_400_BAD_REQUEST)
 
         api_data = response.json()
 
@@ -135,20 +140,68 @@ class EventCron():
                 continue
             event_id = uuid.UUID(event_data.get("id"))
             eventID = f'{event_data.get("id")}'
-            existing_event = None
-            try:
 
-                existing_event = Event.objects.get(id=eventID)
-                event_schema = EventSerializer(existing_event, data=event_data, partial=True)
+            # Fetch or create the event instance
+            event_instance, created = Event.objects.get_or_create(id=eventID)
 
+            for bookmaker_data in event_data['bookmakers']:
+                bookmaker_id = bookmaker_data.get('id')
 
-                if event_schema.is_valid():
-                    event_instance = event_schema.save()
-                    bookmakers = BookmakerSerializer
-                    event_instance.bookmakers = event_data['bookmakers']
-                    event_instance.save()
-            except :
-                print("Validation failed:", event_schema.errors)
+                # Handle last_update to ensure it's in the correct format
+                last_update = bookmaker_data.get('last_update')
+                if isinstance(last_update, datetime):
+                    last_update_str = last_update.isoformat()
+                else:
+                    last_update_str = last_update or timezone.now().isoformat()
+
+                bookmaker_instance, _ = Bookmaker.objects.get_or_create(
+                    id=bookmaker_id,
+                    defaults={'event': event_instance, 'last_update': last_update_str}
+                )
+
+                # Process markets - Ensure only one market with the same key and bookmaker
+                for market_data in bookmaker_data.get('markets', []):
+                    market_key = market_data.get('key')
+
+                    try:
+                        market_instance = Market.objects.get(key=market_key, bookmaker=bookmaker_instance)
+                    except Market.MultipleObjectsReturned:
+                        market_instance = Market.objects.filter(key=market_key, bookmaker=bookmaker_instance).first()
+                    except Market.DoesNotExist:
+                        market_instance = Market.objects.create(
+                            key=market_key,
+                            bookmaker=bookmaker_instance,
+                            last_update=last_update_str  # Ensure last_update is set
+                        )
+
+                    # Update the market instance
+                    market_serializer = MarketSerializer(market_instance, data=market_data, partial=True)
+                    if market_serializer.is_valid():
+                        market_serializer.save()
+                    else:
+                        print("Validation errors in market:")
+                        print(market_serializer.errors)
+
+                    # Process outcomes for the market
+                    for outcome_data in market_data.get('outcomes', []):
+                        outcome_name = outcome_data.get('name')
+                        outcome_instance, _ = Outcome.objects.get_or_create(
+                            name=outcome_name,
+                            market=market_instance,
+                            defaults=outcome_data
+                        )
+
+                        # Update the outcome instance if needed
+                        outcome_serializer = OutcomeSerializer(outcome_instance, data=outcome_data, partial=True)
+                        if outcome_serializer.is_valid():
+                            outcome_serializer.save()
+                        else:
+                            print("Validation errors in outcome:")
+                            print(outcome_serializer.errors)
+
+                event_instance.save()
+            sys.exit()
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def get_sport_odds(self, sport):
         url = f"{self.domain}/{sport.key}/odds"
@@ -170,48 +223,72 @@ class EventCron():
             # Fetch or create the event instance
             event_instance, created = Event.objects.get_or_create(id=eventID)
 
-            # Update or create bookmakers, markets, and outcomes
             for bookmaker_data in event_data['bookmakers']:
-                bookmaker_serializer = BookmakerSerializer(data=bookmaker_data)
-                if bookmaker_serializer.is_valid():
-                    bookmaker_instance = bookmaker_serializer.save(event=event_instance)
+                bookmaker_id = bookmaker_data.get('id')
 
-                    # Now process the markets
-                    for market_data in bookmaker_data.get('markets', []):
-                        # Assign the bookmaker instance to market_data
-                        market_data['bookmaker'] = bookmaker_instance.id
-
-                        market_serializer = MarketSerializer(data=market_data)
-                        if market_serializer.is_valid():
-                            market_instance = market_serializer.save()
-
-                            # Now process the outcomes for each market
-                            for outcome_data in market_data.get('outcomes', []):
-                                outcome_data['market'] = market_instance.id  # Assign the market instance to outcome_data
-                                outcome_serializer = OutcomeSerializer(data=outcome_data)
-                                if outcome_serializer.is_valid():
-                                    outcome_instance = outcome_serializer.save()
-                                else:
-                                    print("Validation errors in outcome:")
-                                    print(outcome_serializer.errors)
-                        else:
-                            print("Validation errors in market:")
-                            print(market_serializer.errors)
+                # Handle last_update to ensure it's in the correct format
+                last_update = bookmaker_data.get('last_update')
+                if isinstance(last_update, datetime):
+                    last_update_str = last_update.isoformat()
                 else:
-                    print("Validation errors in bookmaker:")
-                    print(bookmaker_serializer.errors)
+                    last_update_str = last_update or timezone.now().isoformat()
 
-            event_instance.save()
+                bookmaker_instance, _ = Bookmaker.objects.get_or_create(
+                    id=bookmaker_id,
+                    defaults={'event': event_instance, 'last_update': last_update_str}
+                )
 
+                # Process markets - Ensure only one market with the same key and bookmaker
+                for market_data in bookmaker_data.get('markets', []):
+                    market_key = market_data.get('key')
+
+                    try:
+                        market_instance = Market.objects.get(key=market_key, bookmaker=bookmaker_instance)
+                    except Market.MultipleObjectsReturned:
+                        market_instance = Market.objects.filter(key=market_key, bookmaker=bookmaker_instance).first()
+                    except Market.DoesNotExist:
+                        market_instance = Market.objects.create(
+                            key=market_key,
+                            bookmaker=bookmaker_instance,
+                            last_update=last_update_str  # Ensure last_update is set
+                        )
+
+                    # Update the market instance
+                    market_serializer = MarketSerializer(market_instance, data=market_data, partial=True)
+                    if market_serializer.is_valid():
+                        market_serializer.save()
+                    else:
+                        print("Validation errors in market:")
+                        print(market_serializer.errors)
+
+                    # Process outcomes for the market
+                    for outcome_data in market_data.get('outcomes', []):
+                        outcome_name = outcome_data.get('name')
+                        outcome_instance, _ = Outcome.objects.get_or_create(
+                            name=outcome_name,
+                            market=market_instance,
+                            defaults=outcome_data
+                        )
+
+                        # Update the outcome instance if needed
+                        outcome_serializer = OutcomeSerializer(outcome_instance, data=outcome_data, partial=True)
+                        if outcome_serializer.is_valid():
+                            outcome_serializer.save()
+                        else:
+                            print("Validation errors in outcome:")
+                            print(outcome_serializer.errors)
+
+                event_instance.save()
+            sys.exit()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def update_all_events(self):
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
             self.get_sport_events(sport)
-            print("get odds")
-            self.get_sport_odds(sport)
+            # self.get_sport_odds(sport)
 
 def update_all_events():
     eventCron = EventCron()
     eventCron.update_all_events()
+    eventCron.get_upcoming_odds()
