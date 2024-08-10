@@ -15,14 +15,19 @@ class EventManager(AbstractManager):
         if event is ObjectDoesNotExist:
             return None
         if completed :
+            print('completed')
             event.completed = completed
             event.scores = event_scores
             if score1['score'] > score2['score']:
+                print('score1')
                 event.winner = score1['name']
             if score1['score'] < score2['score']:
+                print('score2')
                 event.winner = score2['name']
             if score1['score'] == score2['score']:
+                print('tie')
                 event.winner = 'Tie'
+            print('finished')
             event.save()
         return event
 
