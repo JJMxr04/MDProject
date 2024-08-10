@@ -11,24 +11,15 @@ from core.event.models.team import Team
 
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
-        print("get_event_state")
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
-            print(1)
             return None
-        print(2)
-        print(f'score1:{score1['score']}')
-        print(f'score2:{score2['score']}')
         if score1['score'] > score2['score']:
-            print(3)
             event.winner = score1['name']
         elif score1['score'] < score2['score']:
-            print(4)
             event.winner = score2['name']
         else:
-            print(5)
             event.winner = 'Tie'
-
         event.save()
         return event
 
