@@ -17,14 +17,12 @@ class EventManager(AbstractManager):
         if event.completed == True:
             event.completed = completed
             event.scores = event_scores
-
             if score1['score'] > score2['score']:
                 event.winner = score1['name']
-            elif score1['score'] < score2['score']:
+            if score1['score'] < score2['score']:
                 event.winner = score2['name']
-            else:
+            if score1['score'] == score2['score']:
                 event.winner = 'Tie'
-
             event.save()
         return event
 
