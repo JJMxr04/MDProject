@@ -14,7 +14,7 @@ class Outcome(AbstractModel):
     objects = OutcomeManager()
 
     class Meta:
-        db_table = "'core.outcome'"
+        db_table = 'core.outcome'
 
     def __str__(self):
         return f"{self.name} - {self.price}"

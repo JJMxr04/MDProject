@@ -13,7 +13,7 @@ class Market(AbstractModel):
     objects = MarketManager()
 
     class Meta:
-        db_table = "'core.market'"
+        db_table = 'core.market'
 
     def __str__(self):
         return f"{self.key} - {self.last_update}"

@@ -14,7 +14,7 @@ class Bookmaker(AbstractModel):
     objects = BookmakerManager()
 
     class Meta:
-        db_table = "'core.bookmaker'"
+        db_table = 'core.bookmaker'
 
     def __str__(self):
         return f"{self.title}"

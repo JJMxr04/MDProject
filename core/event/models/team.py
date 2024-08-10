@@ -56,7 +56,7 @@ class Team(AbstractModel):
     objects = TeamManager()
 
     class Meta:
-        db_table = "'core.team'"
+        db_table = 'core.team'
 
     def __str__(self):
         return f"{self.team_name}"

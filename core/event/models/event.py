@@ -11,12 +11,10 @@ from core.event.models.team import Team
 
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
-
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
             return None
         if event.completed == True:
-
             event.completed = completed
             event.scores = event_scores
 
@@ -75,7 +73,7 @@ class Event(AbstractModel):
     objects = EventManager()
 
     class Meta:
-        db_table = "'core.event'"
+        db_table = 'core.event'
 
     def __str__(self):
         return f"{self.home_team} Vs {self.away_team}"
