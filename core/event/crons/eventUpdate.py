@@ -66,7 +66,7 @@ class EventCron():
         for event_data in api_data:
             if event_data.get("away_team") is None or event_data.get("home_team") is None:
                 continue
-
+            # fixed the event updates that calcualte the winner but now the api is broken
             event_id = uuid.UUID(event_data.get("id"))
             eventID = f'{event_data.get("id")}'
             existing_event = None
