@@ -69,7 +69,7 @@ class EventCron():
                 if event_schema.is_valid():
                     event_instance = event_schema.save()
 
-                    if event_data["scores"] and (existing_event) and event_instance.completed != event_data.get(
+                    if event_data["scores"] and (existing_event) and event_instance.completed and not event_data.get(
                             "completed"):
                         score_data = event_data["scores"]
                         if score_data:
