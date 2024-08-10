@@ -17,8 +17,6 @@ class EventManager(AbstractManager):
             print(1)
             return None
         print(2)
-        event.completed = completed
-        event.scores = event_scores
         print(f'score1:{score1['score']}')
         print(f'score2:{score2['score']}')
         if score1['score'] > score2['score']:
