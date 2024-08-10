@@ -11,6 +11,7 @@ from core.event.models.team import Team
 
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
+        print('start')
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
             return None
