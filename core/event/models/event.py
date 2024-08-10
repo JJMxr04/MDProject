@@ -11,24 +11,20 @@ from core.event.models.team import Team
 
 class EventManager(AbstractManager):
     def get_event_state(self, event_id, completed, event_scores, score1, score2):
-        print('start')
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
             return None
-        if completed :
-            print('completed')
+        if event.completed == True:
             event.completed = completed
             event.scores = event_scores
+
             if score1['score'] > score2['score']:
-                print('score1')
                 event.winner = score1['name']
-            if score1['score'] < score2['score']:
-                print('score2')
+            elif score1['score'] < score2['score']:
                 event.winner = score2['name']
-            if score1['score'] == score2['score']:
-                print('tie')
+            else:
                 event.winner = 'Tie'
-            print('finished')
+
             event.save()
         return event
 
