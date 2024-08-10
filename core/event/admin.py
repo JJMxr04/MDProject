@@ -5,7 +5,7 @@ from .models import Event, Sport, Team, Bookmaker, Market, Outcome
 class EventAdmin(admin.ModelAdmin):
     list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores', 'home_team_team', 'away_team_team']
     list_filter = ['sport_title', 'group', 'completed']
-    search_fields = ['title', 'description', 'sport_title', 'group', 'winner', 'commence_time', 'completed', 'winner', 'home_team_team__team_name', 'away_team_team__team_name']
+    search_fields = ['title', 'description', 'sport_title', 'group', 'winner', 'commence_time', 'completed', 'home_team_team__team_name', 'away_team_team__team_name']
 
     fieldsets = (
         (None, {
@@ -65,25 +65,22 @@ class SportAdmin(admin.ModelAdmin):
         }),
     )
 
-# Register Bookmaker model
 @admin.register(Bookmaker)
 class BookmakerAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'event', 'last_update']
-    search_fields = ['name', 'event__title', 'event__id']  # Added event__id for searching by event_id
+    list_display = ['id', 'key', 'title', 'event', 'last_update']
+    search_fields = ['id', 'key', 'title', 'event__title', 'event__id']  # Added event__id for searching by event_id
     readonly_fields = ['id', 'last_update']
 
     fieldsets = (
         (None, {
-            'fields': ('id', 'name', 'event', 'last_update')
+            'fields': ('id', 'event', 'last_update')  # Added missing comma here
         }),
     )
 
-
-# Register Market model
 @admin.register(Market)
 class MarketAdmin(admin.ModelAdmin):
     list_display = ['key', 'bookmaker', 'last_update']
-    search_fields = ['key', 'bookmaker__name']
+    search_fields = ['key', 'bookmaker__title']  # Assuming 'name' field was a typo and should be 'title'
     readonly_fields = ['last_update']
 
     fieldsets = (
@@ -92,7 +89,6 @@ class MarketAdmin(admin.ModelAdmin):
         }),
     )
 
-# Register Outcome model
 @admin.register(Outcome)
 class OutcomeAdmin(admin.ModelAdmin):
     list_display = ['name', 'market', 'price']
