@@ -16,23 +16,22 @@ class EventManager(AbstractManager):
         if event is ObjectDoesNotExist:
             print(1)
             return None
-        if event.completed == False:
-            print(2)
-            event.completed = completed
-            event.scores = event_scores
-            print(f'score1:{score1['score']}')
-            print(f'score2:{score2['score']}')
-            if score1['score'] > score2['score']:
-                print(3)
-                event.winner = score1['name']
-            elif score1['score'] < score2['score']:
-                print(4)
-                event.winner = score2['name']
-            else:
-                print(5)
-                event.winner = 'Tie'
+        print(2)
+        event.completed = completed
+        event.scores = event_scores
+        print(f'score1:{score1['score']}')
+        print(f'score2:{score2['score']}')
+        if score1['score'] > score2['score']:
+            print(3)
+            event.winner = score1['name']
+        elif score1['score'] < score2['score']:
+            print(4)
+            event.winner = score2['name']
+        else:
+            print(5)
+            event.winner = 'Tie'
 
-            event.save()
+        event.save()
         return event
 
     @classmethod
