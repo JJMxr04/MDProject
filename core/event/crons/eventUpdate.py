@@ -201,7 +201,6 @@ class EventCron():
                             print(outcome_serializer.errors)
 
                 event_instance.save()
-            sys.exit()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def get_sport_odds(self, sport):
@@ -280,7 +279,6 @@ class EventCron():
                             print(outcome_serializer.errors)
 
                 event_instance.save()
-            sys.exit()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def update_all_events(self):
