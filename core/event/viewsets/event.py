@@ -52,6 +52,24 @@ class EventViewSet(AbstractViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
+        include_bookmakers = request.query_params.get('include_bookmakers', 'true').lower() == 'true'
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, include_bookmakers=include_bookmakers)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True, include_bookmakers=include_bookmakers)
+        return Response(serializer.data)
+
+
+    def get_object(self):
+        obj = Event.objects.get_object_by_id(self.kwargs['pk'])
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
