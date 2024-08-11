@@ -232,6 +232,7 @@ class EventCron():
                     last_update_str = last_update.isoformat()
                 else:
                     last_update_str = last_update or timezone.now().isoformat()
+                print(bookmaker_data.get('key'))
 
                 bookmaker_instance, _ = Bookmaker.objects.get_or_create(
                     id=bookmaker_id,
