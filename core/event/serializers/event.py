@@ -27,7 +27,7 @@ class EventSerializer(AbstractSerializer):
 
     def __init__(self, *args, **kwargs):
         # Retrieve the 'include_bookmakers' flag, defaulting to True if not provided
-        self.include_bookmakers = kwargs.pop('include_bookmakers', True)
+        self.include_bookmakers = kwargs.pop('include_bookmakers', False)
         super().__init__(*args, **kwargs)
 
     def get_bookmakers(self, obj):
@@ -44,11 +44,6 @@ class EventSerializer(AbstractSerializer):
         rep['away_team_team'] = TeamSerializer(away_team_team).data
 
         return rep
-
-    class Meta:
-        model = Event
-        fields = '__all__'
-        read_only_fields = ['created', 'updated']
 
     class Meta:
         model = Event
