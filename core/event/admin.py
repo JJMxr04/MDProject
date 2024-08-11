@@ -91,12 +91,12 @@ class MarketAdmin(admin.ModelAdmin):
 
 @admin.register(Outcome)
 class OutcomeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'market', 'price']
+    list_display = ['name', 'market', 'price','point']
     search_fields = ['name', 'market__key']
     readonly_fields = ['price']
 
     fieldsets = (
         (None, {
-            'fields': ('name', 'market', 'price')
+            'fields': ('name', 'market', 'price','point')
         }),
     )
