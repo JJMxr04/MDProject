@@ -1,0 +1,42 @@
+[
+  {
+    "id": "484bc5582bb44ab79a1e942cf8762eda",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2024-07-15T02:45:21Z",
+    "completed": true,
+    "home_team": "Miami Dolphins",
+    "away_team": "Tennessee Titans",
+    "scores": [
+      {
+        "name": "Tennessee Titans",
+        "score": "34"
+      },
+      {
+        "name": "Miami Dolphins",
+        "score": "37"
+      }
+    ],
+    "last_update": null
+  },
+  {
+    "id": "ea43090cd4cc2eb2fb98ba3847aba986",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2024-07-20T19:16:36Z",
+    "completed": true,
+    "home_team": "New York Giants",
+    "away_team": "Green Bay Packers",
+    "scores": [
+      {
+        "name": "Green Bay Packers",
+        "score": "34"
+      },
+      {
+        "name": "New York Giants",
+        "score": "37"
+      }
+    ],
+    "last_update": null
+  }
+]
