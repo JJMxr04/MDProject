@@ -67,5 +67,6 @@ class EventViewSet(AbstractViewSet):
         obj = self.get_object()
         include_bookmakers = request.query_params.get('include_bookmakers', 'false').lower() == 'true'
 
-        serializer = EventWithBookmakersSerializer(obj, include_bookmakers=include_bookmakers)
+        # serializer = EventWithBookmakersSerializer(obj, include_bookmakers=include_bookmakers)
+        serializer = EventWithBookmakersSerializer(obj)
         return Response(serializer.data)
