@@ -1,6 +1,6 @@
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
-from core.event.models.market import Market
+from .market import Market
 
 class OutcomeManager(AbstractManager):
     pass

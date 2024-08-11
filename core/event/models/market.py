@@ -1,6 +1,6 @@
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
-from core.event.models.bookmaker import Bookmaker
+from .bookmaker import Bookmaker
 
 class MarketManager(AbstractManager):
     pass

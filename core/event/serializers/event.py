@@ -5,7 +5,7 @@ from core.event.models import Team
 
 from core.abstract.serializers import AbstractSerializer
 from core.event.serializers.team import TeamSerializer
-from .bookmaker import BookmakerSerializer
+# from .bookmaker import BookmakerSerializer
 
 
 

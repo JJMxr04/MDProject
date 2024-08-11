@@ -21,7 +21,7 @@ class OutcomeSerializer(AbstractSerializer):
         return super().create(validated_data)
 
     def validate_name(self, value):
-        # Ensure the name field has no more than 20 characters
+        # Ensure the name field has no more than 50 characters
         if len(value) > 50:
             raise serializers.ValidationError("Ensure this field has no more than 50 characters.")
         return value

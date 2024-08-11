@@ -8,7 +8,7 @@ class MarketSerializer(AbstractSerializer):
     id = serializers.UUIDField(required=False, format='hex', allow_null=True)
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
-    outcomes = OutcomeSerializer(many=True, read_only=True)
+    outcomes = OutcomeSerializer(many=True, read_only=True)  # Include outcomes associated with this market
 
     class Meta:
         model = Market
