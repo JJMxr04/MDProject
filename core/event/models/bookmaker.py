@@ -17,4 +17,4 @@ class Bookmaker(AbstractModel):
         db_table = 'core.bookmaker'
 
     def __str__(self):
-        return f"{self.title} - {self.event}"
+        return f"{self.key} - {self.event}"
