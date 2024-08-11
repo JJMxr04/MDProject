@@ -260,6 +260,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'UTC'
 CELERY_RESULT_EXTENDED = True
+broker_connection_retry_on_startup= True
 
 CACHES = {
     "default": {
