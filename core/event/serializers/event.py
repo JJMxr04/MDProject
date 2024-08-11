@@ -23,11 +23,11 @@ class EventSerializer(AbstractSerializer):
     scores = TeamScoreSerializer(many=True, required=False, allow_null=True)
     home_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
     away_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
-    bookmakers = BookmakerSerializer(many=True, required=False)
+    # bookmakers = BookmakerSerializer(many=True, required=False)
 
     def __init__(self, *args, **kwargs):
         # Retrieve the 'include_bookmakers' flag, defaulting to True if not provided
-        self.include_bookmakers = kwargs.pop('include_bookmakers', True)
+        # self.include_bookmakers = kwargs.pop('include_bookmakers', True)
         super().__init__(*args, **kwargs)
 
     def to_representation(self, instance):
@@ -37,10 +37,10 @@ class EventSerializer(AbstractSerializer):
         rep['home_team_team'] = TeamSerializer(home_team_team).data
         rep['away_team_team'] = TeamSerializer(away_team_team).data
 
-        if self.include_bookmakers:
-            rep['bookmakers'] = BookmakerSerializer(instance.bookmakers.all(), many=True).data
-        else:
-            rep.pop('bookmakers', None)
+        # if self.include_bookmakers:
+        #     rep['bookmakers'] = BookmakerSerializer(instance.bookmakers.all(), many=True).data
+        # else:
+        #     rep.pop('bookmakers', None)
 
         return rep
 
