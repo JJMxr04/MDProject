@@ -2,7 +2,6 @@ from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.event.serializers.event import EventSerializer
-from core.event.serializers.event import EventWithBookmakersSerializer
 from core.event.models.event import Event
 from core.event.pagination.pagination import EventPagination
 from core.abstract.viewsets import AbstractViewSet
@@ -53,7 +52,7 @@ class EventViewSet(AbstractViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        include_bookmakers = request.query_params.get('include_bookmakers', 'false').lower() == 'true'
+        include_bookmakers = request.query_params.get('include_bookmakers', 'true').lower() == 'true'
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -63,10 +62,3 @@ class EventViewSet(AbstractViewSet):
         serializer = self.get_serializer(queryset, many=True, include_bookmakers=include_bookmakers)
         return Response(serializer.data)
 
-    def retrieve(self, request, *args, **kwargs):
-        obj = self.get_object()
-        include_bookmakers = request.query_params.get('include_bookmakers', 'false').lower() == 'true'
-
-        # serializer = EventWithBookmakersSerializer(obj, include_bookmakers=include_bookmakers)
-        serializer = EventWithBookmakersSerializer(obj)
-        return Response(serializer.data)
