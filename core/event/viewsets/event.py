@@ -1,7 +1,7 @@
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from core.event.serializers.event import EventSerializer
+from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
 from core.event.models.event import Event
 from core.event.pagination.pagination import EventPagination
 from core.abstract.viewsets import AbstractViewSet
@@ -13,7 +13,6 @@ class EventViewSet(AbstractViewSet):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     filter_backends = [OrderingFilter, SearchFilter]
-    serializer_class = EventSerializer
     queryset = Event.objects.all()
     ordering = ['commence_time']
     search_fields = ['sport_title', 'away_team', 'home_team', 'commence_time', 'created', 'sport_key']
@@ -44,6 +43,11 @@ class EventViewSet(AbstractViewSet):
 
         queryset = queryset.filter(**filter_kwargs)
         return queryset
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return EventBookmakerSerializer
+        return EventSerializer
 
     def get_object(self):
         obj = Event.objects.get_object_by_id(self.kwargs['pk'])
