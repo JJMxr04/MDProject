@@ -287,9 +287,9 @@ class EventCron():
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
             self.get_sport_events(sport)
-            # self.get_sport_odds(sport)
+            self.get_sport_odds(sport)
 
 def update_all_events():
     eventCron = EventCron()
     eventCron.update_all_events()
-    eventCron.get_upcoming_odds()
+    # eventCron.get_upcoming_odds()
