@@ -52,9 +52,3 @@ class EventSerializer(AbstractSerializer):
         model = Event
         fields = '__all__'
         read_only_fields = ['created', 'updated']
-
-class EventWithBookmakersSerializer(EventSerializer):
-    bookmakers = serializers.SerializerMethodField()
-
-    def get_bookmakers(self, instance):
-        return BookmakerSerializer(instance.bookmakers.all(), many=True).data
