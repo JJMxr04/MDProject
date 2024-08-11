@@ -235,7 +235,7 @@ class EventCron():
 
                 bookmaker_instance, _ = Bookmaker.objects.get_or_create(
                     id=bookmaker_id,
-                    defaults={'event': event_instance, 'last_update': last_update_str}
+                    defaults={'event': event_instance, 'last_update': last_update_str,'key':bookmaker_data.get('key'),'title':bookmaker_data.get('title')}
                 )
 
                 # Process markets - Ensure only one market with the same key and bookmaker
