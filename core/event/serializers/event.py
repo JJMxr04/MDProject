@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from core.event.models import Event, Team, Bookmaker
+
+from core.event.models.event import Event
+from core.event.models import Team, Bookmaker
+
 from core.abstract.serializers import AbstractSerializer
 from core.event.serializers.team import TeamSerializer
 from .bookmaker import BookmakerSerializer
@@ -20,21 +23,12 @@ class EventSerializer(AbstractSerializer):
     scores = TeamScoreSerializer(many=True, required=False, allow_null=True)
     home_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
     away_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
-    # bookmakers = serializers.SerializerMethodField()
+    # bookmakers = BookmakerSerializer(many=True, required=False)
 
     def __init__(self, *args, **kwargs):
         # Retrieve the 'include_bookmakers' flag, defaulting to True if not provided
         # self.include_bookmakers = kwargs.pop('include_bookmakers', True)
         super().__init__(*args, **kwargs)
-
-        # if not self.include_bookmakers:
-        #     # Remove the 'bookmakers' field if not needed
-        #     self.fields.pop('bookmakers')
-
-    # def get_bookmakers(self, instance):
-    #     if self.include_bookmakers:
-    #         return BookmakerSerializer(instance.bookmakers.all(), many=True).data
-    #     return None
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -43,7 +37,9 @@ class EventSerializer(AbstractSerializer):
         rep['home_team_team'] = TeamSerializer(home_team_team).data
         rep['away_team_team'] = TeamSerializer(away_team_team).data
 
-        # if not self.include_bookmakers:
+        # if self.include_bookmakers:
+        #     rep['bookmakers'] = BookmakerSerializer(instance.bookmakers.all(), many=True).data
+        # else:
         #     rep.pop('bookmakers', None)
 
         return rep
@@ -52,3 +48,4 @@ class EventSerializer(AbstractSerializer):
         model = Event
         fields = '__all__'
         read_only_fields = ['created', 'updated']
+
