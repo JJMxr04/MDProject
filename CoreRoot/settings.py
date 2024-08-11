@@ -240,6 +240,17 @@ LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
 
 
 
+CORS_ALLOW_HEADERS = [
+    'access-control-allow-origin',
+    'content-type',
+    'authorization',
+    'x-csrftoken',
+]
+
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH']
+CORS_ALLOW_ALL_ORIGINS = False
 
 
 
