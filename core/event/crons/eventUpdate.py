@@ -288,7 +288,7 @@ class EventCron():
             if (sport.sport_key == 'cricket_the_hundred') or (sport.sport_key == 'baseball_milb') or (sport.sport_key == 'soccer_sweden_allsvenskan'):
                 continue
             self.get_sport_events(sport)
-            # self.get_sport_odds(sport)
+            self.get_sport_odds(sport)
 
 def update_all_events():
     eventCron = EventCron()
