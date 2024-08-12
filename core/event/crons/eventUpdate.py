@@ -285,7 +285,7 @@ class EventCron():
     def update_all_events(self):
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
-            if (sport.sport_key == 'cricket_the_hundred') or (sport.sport_key == 'baseball_milb') or (sport.sport_key == 'soccer_sweden_allsvenskan'):
+            if (sport.key == 'cricket_the_hundred') or (sport.key == 'baseball_milb') or (sport.key == 'soccer_sweden_allsvenskan'):
                 continue
             self.get_sport_events(sport)
             self.get_sport_odds(sport)
