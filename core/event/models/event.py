@@ -14,6 +14,8 @@ class EventManager(AbstractManager):
         event = self.get_object_by_id(event_id)
         if event is ObjectDoesNotExist:
             return None
+        event.completed = completed
+        event.scores = event_scores
         if score1['score'] > score2['score']:
             event.winner = score1['name']
         elif score1['score'] < score2['score']:
