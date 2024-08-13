@@ -287,7 +287,6 @@ class EventCron():
             'tennis_atp_cincinnati_open',
             'cricket_the_hundred',
             'baseball_milb',
-            'soccer_sweden_allsvenskan',
             'tennis_wta_cincinnati_open',
             'tennis_wta_canadian_open',
             'tennis_atp_canadian_open',
