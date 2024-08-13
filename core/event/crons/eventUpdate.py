@@ -288,7 +288,10 @@ class EventCron():
             'cricket_the_hundred',
             'baseball_milb',
             'soccer_sweden_allsvenskan',
-            'tennis_wta_cincinnati_open']
+            'tennis_wta_cincinnati_open',
+            'tennis_wta_canadian_open',
+            'tennis_atp_canadian_open',
+        ]
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
             if sport.key in broken_leagues:
