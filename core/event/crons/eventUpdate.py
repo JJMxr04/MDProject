@@ -283,7 +283,12 @@ class EventCron():
         return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def update_all_events(self):
-        broken_leagues=['tennis_atp_cincinnati_open','cricket_the_hundred','baseball_milb','soccer_sweden_allsvenskan']
+        broken_leagues=[
+            'tennis_atp_cincinnati_open',
+            'cricket_the_hundred',
+            'baseball_milb',
+            'soccer_sweden_allsvenskan',
+            'tennis_wta_cincinnati_open']
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
             if sport.key in broken_leagues:
