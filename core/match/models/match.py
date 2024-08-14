@@ -143,7 +143,7 @@ class MatchManager(AbstractManager):
                     if game != match.golden_game:
                         match.player_1_score += 1
                     else:
-                        match.player_2_score += 2
+                        match.player_1_score += 2
                 if game.player_2 == match.player_2:
                     if game != match.golden_game:
                         match.player_2_score += 1
