@@ -4,9 +4,14 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
 from core.user.serializers import UserSerializer
+from core.user.models import User
 
 class LoginSerializer(TokenObtainPairSerializer):
     portal_password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'portal_password']
 
     def validate(self, attrs):
         # Print the attributes for debugging
