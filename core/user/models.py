@@ -5,6 +5,7 @@ from django.db import models
 from django.http import Http404
 from core.abstract.models import AbstractModel, AbstractManager
 import os
+from django.contrib.auth.hashers import make_password, check_password
 
 def user_avatar_upload_path(instance, filename):
     # File will be uploaded to MEDIA_ROOT/avatars/<username>/<filename>
@@ -25,16 +26,16 @@ class UserManager(BaseUserManager, AbstractManager):
         except (ObjectDoesNotExist, ValueError, TypeError):
             return Http404
 
-    def create_user(self, username, email, password=None, **kwargs):
+    def create_user(self, username, email, password=None,portal_password=None, **kwargs):
         if username is None:
             raise TypeError('Users must have a username.')
         if email is None:
             raise TypeError('Users must have an email.')
-        if password is None:
-            raise TypeError('User must have an email.')
+        if portal_password is None:
+            raise TypeError('User must have an password.')
 
         user = self.model(username=username, email=self.normalize_email(email), **kwargs)
-        user.set_password(password)
+        user.set_portal_password(portal_password)
         user.save(using=self._db)
 
         return user
@@ -92,7 +93,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
-
+    portal_password = models.CharField(max_length=128, null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -104,3 +105,10 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def set_portal_password(self, raw_password):
+        self.portal_password = make_password(raw_password)
+        self.save(update_fields=['portal_password'])
+
+    def check_portal_password(self, raw_password):
+        return check_password(raw_password, self.portal_password)

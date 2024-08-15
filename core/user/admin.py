@@ -1,15 +1,36 @@
+
+# Admin registration
 from django.utils.html import format_html
 from django.contrib import admin
+from django import forms
+from django.contrib.auth.hashers import make_password, check_password
 from .models import User
+
+class UserAdminForm(forms.ModelForm):
+    portal_password = forms.CharField(widget=forms.PasswordInput, required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar', 'is_staff', 'is_admin', 'is_active', 'activated_link', 'portal_password']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if 'portal_password' in self.changed_data:
+            user.portal_password = make_password(self.cleaned_data['portal_password'])
+        if commit:
+            user.save()
+        return user
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+    form = UserAdminForm
     list_display = ['avatar_image', 'email', 'username', 'first_name', 'last_name', 'is_staff', 'is_admin', 'activated_link']
     search_fields = ['email', 'username', 'first_name', 'last_name']
     list_filter = ['is_staff', 'is_admin', 'is_active', 'activated_link']
     fieldsets = [
         ('Personal Information', {'fields': ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']}),
-        ('Permissions', {'fields': ['is_staff', 'is_admin', 'is_active', 'activated_link', 'is_superuser']}),
+        ('Permissions', {'fields': ['is_staff', 'is_admin', 'is_active', 'activated_link']}),
+        ('Security', {'fields': ['portal_password']}),
         ('Important Dates', {'fields': ['created', 'updated']}),
     ]
     readonly_fields = ['created', 'updated', 'is_superuser', 'is_active']

@@ -249,8 +249,11 @@ REST_FRAMEWORK = {
     ),
 }
 
-LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
-LOGOUT_REDIRECT_URL = '/'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default model backend
+    'core.auth.portal_authentication.PortalPasswordBackend',  # Add your custom backend
+]
 
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
 CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
