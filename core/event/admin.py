@@ -1,14 +1,11 @@
 from django.contrib import admin
-from .models import Event
-from .models import Sport
-from .models import Team
-import json
+from .models import Event, Sport, Team, Bookmaker, Market, Outcome
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores','home_team_team','away_team_team']
+    list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores', 'home_team_team', 'away_team_team']
     list_filter = ['sport_title', 'group', 'completed']
-    search_fields = ['title', 'description', 'sport_title', 'group', 'winner','commence_time', 'completed', 'winner', 'home_team_team__team_name','away_team_team__team_name']
+    search_fields = ['title', 'description', 'sport_title', 'group', 'winner', 'commence_time', 'completed', 'home_team_team__team_name', 'away_team_team__team_name']
 
     fieldsets = (
         (None, {
@@ -22,7 +19,7 @@ class EventAdmin(admin.ModelAdmin):
         }),
     )
 
-    readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'completed', 'winner', 'home_team', 'home_team_team', 'away_team', 'away_team_team', 'formatted_scores', 'scores')
+    readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'winner', 'home_team', 'home_team_team', 'away_team', 'away_team_team', 'formatted_scores', 'scores')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
@@ -32,29 +29,8 @@ class EventAdmin(admin.ModelAdmin):
 
     def formatted_scores(self, obj):
         return "WIP"
-        # try:
-        #     scores = obj.scores
-        #     if scores:
-        #         scores_data = json.loads(scores)
-        #         if isinstance(scores_data, list):
-        #             team_scores = []
-        #             for score in scores_data:
-        #                 if isinstance(score, dict) and 'name' in score and 'score' in score:
-        #                     team_scores.append(f"{score['name']}: {score['score']}")
-        #                 else:
-        #                     return f"Invalid score format: {score}"
-        #             return ", ".join(team_scores)
-        #         else:
-        #             return "Invalid scores data"
-        #     else:
-        #         return "No scores available"
-        # except json.JSONDecodeError as e:
-        #     return f"Error parsing scores: {e}"
-        # except Exception as e:
-        #     return f"Unexpected error: {e}"
-
+        # Add your logic for formatted scores here
     formatted_scores.short_description = 'Scores'
-
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
@@ -72,7 +48,6 @@ class TeamAdmin(admin.ModelAdmin):
         }),
     )
 
-
 @admin.register(Sport)
 class SportAdmin(admin.ModelAdmin):
     list_display = ['key', 'title', 'group', 'active', 'has_outrights', 'created', 'updated']
@@ -87,5 +62,41 @@ class SportAdmin(admin.ModelAdmin):
         ('Timestamps', {
             'fields': ('created', 'updated'),
             'classes': ('collapse',),
+        }),
+    )
+
+@admin.register(Bookmaker)
+class BookmakerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'key', 'title', 'event', 'last_update']
+    search_fields = ['id', 'key', 'title', 'event__title', 'event__id']  # Added event__id for searching by event_id
+    readonly_fields = ['id', 'last_update']
+
+    fieldsets = (
+        (None, {
+            'fields': ('id', 'event', 'last_update')  # Added missing comma here
+        }),
+    )
+
+@admin.register(Market)
+class MarketAdmin(admin.ModelAdmin):
+    list_display = ['key', 'bookmaker', 'last_update']
+    search_fields = ['key', 'bookmaker__title']  # Assuming 'name' field was a typo and should be 'title'
+    readonly_fields = ['last_update']
+
+    fieldsets = (
+        (None, {
+            'fields': ('key', 'bookmaker', 'last_update')
+        }),
+    )
+
+@admin.register(Outcome)
+class OutcomeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'market', 'price','point']
+    search_fields = ['name', 'market__key']
+    readonly_fields = ['price']
+
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'market', 'price','point')
         }),
     )
