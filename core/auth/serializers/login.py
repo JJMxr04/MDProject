@@ -15,7 +15,6 @@ class LoginSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
         # Print the attributes for debugging
-        print(attrs)
 
         # Extract the email and portal_password from the incoming data
         email = attrs.get('email')
