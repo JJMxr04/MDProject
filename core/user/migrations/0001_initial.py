@@ -1,4 +1,3 @@
-
 import core.user.models
 import uuid
 from django.db import migrations, models
@@ -33,7 +32,6 @@ class Migration(migrations.Migration):
                 ('avatar', models.ImageField(null=True, upload_to=core.user.models.user_avatar_upload_path)),
                 ('created', models.DateTimeField(auto_now=True)),
                 ('updated', models.DateTimeField(auto_now_add=True)),
-                ('portal_password', models.CharField(blank=True, max_length=128, null=True)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
             ],
