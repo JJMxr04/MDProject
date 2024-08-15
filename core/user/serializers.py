@@ -15,9 +15,23 @@ class UserSerializer(AbstractSerializer):
         model = User
         # List of all the fields that can be included in a request or a response
         fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email', 'is_active',
-                  'created', 'updated', 'is_admin', 'is_staff','activated_link']
+                  'created', 'updated', 'is_admin', 'is_staff', 'activated_link']
+
         # List of all the fields that can only be read by the user
         read_only_field = ['is_active', 'is_admin', 'id', 'is_staff','activated_link']
+
+    def create(self, validated_data):
+        portal_password = validated_data.pop('portal_password', None)
+        user = super().create(validated_data)
+        if portal_password:
+            user.set_portal_password(portal_password)
+        return user
+
+    def update(self, instance, validated_data):
+        portal_password = validated_data.pop('portal_password', None)
+        if portal_password:
+            instance.set_portal_password(portal_password)
+        return super().update(instance, validated_data)
 
 class PublicUserSerializer(AbstractSerializer):
     # Rewriting some fields like the public id to be represented as the id of the object
