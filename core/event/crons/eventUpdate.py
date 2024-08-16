@@ -290,6 +290,7 @@ class EventCron():
             'tennis_wta_cincinnati_open',
             'tennis_wta_canadian_open',
             'tennis_atp_canadian_open',
+            'mma_mixed_martial_arts'
         ]
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
