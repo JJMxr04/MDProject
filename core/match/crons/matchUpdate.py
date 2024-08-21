@@ -16,7 +16,7 @@ class MatchCron:
     def completeMatches(self):
         today = timezone.now().date()
         # Use __date to extract the date part from end_date for comparison
-        matches = Match.objects.filter(end_date__date__lte=today, match_state='completed')
+        matches = Match.objects.filter(end_date__date__lte=today, match_state='accepted')
 
         if not matches.exists():
             print("No matches found.")
