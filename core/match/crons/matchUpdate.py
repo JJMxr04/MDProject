@@ -21,6 +21,5 @@ class MatchCron:
         if not matches.exists():
             print("No matches found.")
         else:
-            print(f"{matches.count()} matches found.")
             for match in matches:
                 Match.objects.calculate_winner(match)
