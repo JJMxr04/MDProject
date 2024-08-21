@@ -24,7 +24,7 @@ class MatchManager(AbstractManager):
             return self.accept_match(match, player_2)
 
 
-    def calcutate_winner(self, match):
+    def calculate_winner(self, match):
         if match.player_1_score > match.player_2_score:
             match.winner = match.player_1
         elif match.player_2_score > match.player_1_score:
