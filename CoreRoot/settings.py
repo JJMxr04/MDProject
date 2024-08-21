@@ -14,9 +14,6 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
-import django_heroku
-import dj_database_url
-
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
     return CustomTokenObtainPairSerializer
@@ -26,6 +23,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -33,15 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') == False
+DEBUG = os.environ.get('DEBUG')
+# DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
-# CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
-CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
-
-
-from datetime import timedelta
-...
+ALLOWED_HOSTS = ['localhost']
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
@@ -95,22 +88,20 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH']
 CORS_ALLOW_ALL_ORIGINS = False
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apscheduler',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    "django_celery_results",
-    "django_celery_beat",
-    "storages",
 
     # MDProject Models
     'core.commands',
@@ -122,8 +113,8 @@ INSTALLED_APPS = [
     'core.event',
     'core.game',
     'core.match',
-    'core.mail',
     'core.tournament',
+    # 'core.ollama',
     'core.web',
     'core.portal',
 
@@ -131,8 +122,8 @@ INSTALLED_APPS = [
     'core.admin.CoreAdminConfig',
 ]
 
+
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,7 +131,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
+
 ]
 
 ROOT_URLCONF = 'CoreRoot.urls'
@@ -150,7 +144,7 @@ BASE_DIR_TEMPS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR_TEMPS, 'core', 'admin', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR_TEMPS,'core', 'admin', 'templates',)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -165,67 +159,98 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
+
 # Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('DBENGINE'),
+#         'NAME': os.environ.get('DBNAME'),
+#         'USER': os.environ.get('BDUSER'),
+#         'PASSWORD': os.environ.get('DBPASSWORD'),
+#         'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
+#         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
+#     }
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"postgres://{os.environ.get('DBUSER')}:{os.environ.get('DBPASSWORD')}@{os.environ.get('DBHOST')}:{os.environ.get('DBPORT')}/{os.environ.get('DBNAME')}"
-    )
+    'default': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'mdproject',  # Main database name
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'SERIALIZE': True,
+        },
+    },
+    'test_mirror': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'mdproject',  # Mirroring the same main database
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'MIRROR': 'default',  # Mirror the default database
+        },
+    },
 }
 
-# Optional: Add test settings if needed
-DATABASES['default']['TEST'] = {
-    'SERIALIZE': True,
-}
 
-EMAIL_BACKEND = f'{os.environ.get('EMAIL_BACKEND')}'
-EMAIL_HOST = f'{os.environ.get('EMAIL_HOST')}'
-EMAIL_PORT = f'{os.environ.get('EMAIL_PORT')}'
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = f'{os.environ.get('EMAIL_HOST_USER')}'
-EMAIL_HOST_PASSWORD = f'{os.environ.get('EMAIL_HOST_PASSWORD')}'
+
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
 
 # Password validation
+# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 AUTH_USER_MODEL = 'core_user.User'
 
+
 # Internationalization
+# https://docs.djangoproject.com/en/5.0/topics/i18n/
+
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files (user-uploaded files)
-if not os.environ.get("DEBUG"):
-    MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
-else:
-    MEDIA_URL = f'/media/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-# AWS_QUERYSTRING_AUTH = False
-# AWS_QUERYSTRING_AUTH = False
-# Additional optional settings
-AWS_S3_FILE_OVERWRITE = True
-# AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-CELERY_RESULT_EXTENDED = True
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configure Django REST Framework settings
 REST_FRAMEWORK = {
@@ -244,49 +269,179 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+    # Use a function to import the token serializer
     'DEFAULT_TOKEN_CLASSES': (
         'settings.get_token_serializer',
     ),
 }
-
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Keep the default model backend
     'core.auth.portal_authentication.PortalPasswordBackend',  # Add your custom backend
 ]
 
-CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
-CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_TIMEZONE = 'UTC'
-CELERY_RESULT_EXTENDED = True
-broker_connection_retry_on_startup= True
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{os.environ.get('REDIS_URL')}/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
 
-        },
-    }
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CORS_ALLOWED_ORIGINS = [
+
+"http://localhost:8000",
+"http://localhost:3000"
+]
+
+LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
+LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
+
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Paradise Sports Admin",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Paradise Sports",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Paradise Sports",
+
+    # Logo to use for your site, must be present in static files, used for brand on top left
+    # "site_logo": "books/img/logo.png",
+
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": None,
+
+    # Logo to use for login form in dark themes (defaults to login_logo)
+    "login_logo_dark": None,
+
+    # CSS classes that are applied to the logo above
+    # "site_logo_classes": "img-circle",
+
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": None,
+
+    # Welcome text on the login screen
+    "welcome_sign": "Welcome to Paradise Sports",
+
+    # Copyright on the footer
+    "copyright": "Paradise Sports: Media and entertainment",
+
+    # List of model admins to search from the search bar, search bar omitted if excluded
+    # If you want to use a single search field you dont need to use a list, you can use a simple string
+    # "search_model": ["auth.User", "auth.Group"],
+
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
+    "user_avatar": 'avatar',
+
+    ############
+    # Top Menu #
+    ############
+
+    # Links to put along the top menu
+    "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # external url that opens in a new window (Permissions can be added)
+        # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+
+        # model admin to link to (Permissions checked against model)
+        # {"model": "auth.User"},
+
+        {"name": "Analytics Dashboard", "url":"/admin/dashboard", "permissions":["auth.is_admin"]},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        # {"app": "books"},
+    ],
+
+    #############
+    # User Menu #
+    #############
+
+    # # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    # "usermenu_links": [
+    #     {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+    #     {"model": "auth.user"}
+    # ],
+
+    #############
+    # Side Menu #
+    #############
+
+    # Whether to display the side menu
+    "show_sidebar": True,
+
+    # Whether to aut expand the menu
+    "navigation_expanded": True,
+
+    # Hide these apps when generating side menu e.g (auth)
+    "hide_apps": [],
+
+    # Hide these models when generating side menu (e.g auth.user)
+    "hide_models": [],
+
+    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+    # "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+
+    # Custom links to append to app groups, keyed on app name
+    # "custom_links": {
+    #     "books": [{
+    #         "name": "Make Messages",
+    #         "url": "make_messages",
+    #         "icon": "fas fa-comments",
+    #         "permissions": ["books.view_book"]
+    #     }]
+    # },
+
+    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # for the full list of 5.13.0 free icon classes
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    # Icons that are used when one is not manually specified
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    "related_modal_active": False,
+
+    #############
+    # UI Tweaks #
+    #############
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    "custom_css": None,
+    "custom_js": None,
+    # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
+    "use_google_fonts_cdn": True,
+    # Whether to show the UI customizer on the sidebar
+    "show_ui_builder": False,
+
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    # "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    # Add a language dropdown into the admin
+    # "language_chooser": True,
 }
 
-CELERY_BEAT_SCHEDULE = {}
 
-# SSL/TLS settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
-django_heroku.settings(locals())
+
+
+
+
