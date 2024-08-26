@@ -9,4 +9,4 @@ def portal_dashboard(request):
 
 
     # If the request method is not POST, render the login page normally
-    return render(request, 'portal/dashboard/dashboard.html')
+    return render(request, 'portal/dashboard/dashboard.html',  {'user': request.user})

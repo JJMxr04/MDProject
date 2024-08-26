@@ -10,13 +10,13 @@ from core.views import robots_txt
 urlpatterns = [
     path('admin/dashboard/', custom_admin_view, name='custom_dashboard'),
     path('admin/', admin.site.urls),
-    path('api/', include(('core.routers', 'core'), namespace="core-api")),
-    # path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
+    # path('api/', include(('core.routers', 'core'), namespace="core-api")),
+    path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),
-    # path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
+    path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
     # path('admin/web/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),
-    # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     # Ensure namespace is 'core-web'  # Correct namespace
 ]
 

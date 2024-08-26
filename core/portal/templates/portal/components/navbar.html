@@ -1,22 +1,72 @@
-<nav class="navbar navbar-expand-lg">
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container-fluid">
-<!--        <a class="navbar-brand" href="#">Portal</a>-->
+        <a class="navbar-brand" href="#">Paradise Sports</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        News
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/web/portal/blog/upcoming-events/">Sports Events</a></li>
+                        <li><a class="dropdown-item" href="#">Tournament Updates</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">Blog</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Tournaments
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">My Tournaments</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Matches
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">My Matches</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="notificationBell">
+                        <i class="bi bi-bell"></i>
+                        <!-- Notification Badge -->
+                        <span id="notificationBadge" class="notification-badge" style="display: none;">!</span>
+                    </a>
+                    <ul class="dropdown-menu notification-dropdown" id="notificationDropdown">
+                        <li class="dropdown-item">No new notifications</li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                        {% else %}
+                            <img src="{% static 'images/avatar-placeholder.png' %}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Invites</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

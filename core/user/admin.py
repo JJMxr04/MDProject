@@ -1,9 +1,10 @@
-
 # Admin registration
 from django.utils.html import format_html
 from django.contrib import admin
 from django import forms
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
+from django.contrib import messages
+from django.shortcuts import render
 from .models import User
 
 class UserAdminForm(forms.ModelForm):
@@ -36,10 +37,7 @@ class UserAdmin(admin.ModelAdmin):
     readonly_fields = ['created', 'updated', 'is_superuser', 'is_active']
     ordering = ['-created']
 
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        # Customize queryset as needed, e.g., prefetch related fields
-        return queryset
+    actions = ['set_new_password']
 
     def avatar_image(self, obj):
         if obj.avatar:
@@ -47,3 +45,25 @@ class UserAdmin(admin.ModelAdmin):
         return format_html('<img src="/path/to/default/avatar.png" style="width: 45px; height: 45px;" />')
 
     avatar_image.short_description = 'Avatar'
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset
+
+    # Custom action to set a new password for selected users
+    def set_new_password(self, request, queryset):
+        # Set a fixed new password
+        new_password = 'password'
+        hashed_password = make_password(new_password)
+
+        # Update the password for each selected user
+        for user in queryset:
+            user.password = hashed_password
+            user.save()
+
+        # Notify the admin that the action was successful
+        self.message_user(request, f"Password updated to 'password' for {queryset.count()} users.")
+
+    set_new_password.short_description = 'Set password to "password" for selected users'
+
+

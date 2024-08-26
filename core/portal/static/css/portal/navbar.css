@@ -1,0 +1,75 @@
+/* Navbar styles */
+.navbar {
+    background-color: #3D7EAA; /* Ocean blue */
+    border: 3px solid #275d81; /* Sand yellow */
+    border-radius: 15px; /* Rounded corners */
+    margin: 10px;
+    padding: 10px;
+    height: 75px; /* Adjust height as needed */
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s; /* Smooth transition for hover effects */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #FFE47A; /* Sand yellow text */
+    font-size: 18px; /* Slightly larger text */
+    text-decoration: underline; /* Underline text */
+}
+
+.dropdown-menu {
+    display: none; /* Hide dropdowns by default */
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure dropdown appears above other content */
+}
+
+/* Show dropdown on hover */
+.navbar-nav .nav-item:hover .dropdown-menu {
+    display: block;
+}
+
+/* Adjust dropdown alignment for user avatar and notification bell */
+.navbar-nav .nav-item .dropdown-menu {
+    right: 0; /* Align dropdown menu to the right of the parent */
+    left: auto; /* Prevent the dropdown from stretching to the left */
+}
+
+/* Center the login button in collapsed state */
+@media (max-width: 991.98px) {
+    .navbar-collapse .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-collapse .navbar-nav .nav-item {
+        margin-bottom: 10px;
+    }
+
+    .navbar-collapse .navbar-nav .nav-item:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.notification-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.notification-dropdown {
+    max-height: 300px;
+    overflow-y: auto;
+}
