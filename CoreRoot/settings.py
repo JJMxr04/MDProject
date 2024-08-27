@@ -277,7 +277,6 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Keep the default model backend
-    'core.auth.portal_authentication.PortalPasswordBackend',  # Add your custom backend
 ]
 
 

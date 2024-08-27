@@ -103,7 +103,6 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
-    portal_password = models.CharField(max_length=128, null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -115,10 +114,6 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
-
-    def set_portal_password(self, raw_password):
-        self.portal_password = make_password(raw_password)
-        self.save(update_fields=['portal_password'])
 
     def check_portal_password(self, raw_password):
         return check_password(raw_password, self.portal_password)

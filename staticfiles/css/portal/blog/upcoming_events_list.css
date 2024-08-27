@@ -1,157 +1,211 @@
+/* Main container for the events page */
 .events-container {
     display: flex;
     flex-direction: column;
     align-items: stretch; /* Ensure items stretch to fill container width */
-  }
+}
 
-  .events-content {
+/* Wrapper for the content of the events section */
+.events-content {
     display: flex;
     flex-direction: column;
-  }
+}
 
-  .filter-and-events {
+/* Container that holds both the sidebar and the list of events */
+.filter-and-events {
     display: flex;
     width: 100%; /* Ensure the container takes the full width */
     align-items: flex-start; /* Align the items at the top */
-  }
+}
 
-  .sidebar {
+/* Sidebar styles */
+.sidebar {
     width: 200px; /* Adjust width as needed */
     background-color: #f0f0f0;
     padding: 20px;
     margin-right: 20px;
     border-radius: 10px;
-    height: 600px;
-  }
+    height: 600px; /* Fixed height for sidebar */
+}
 
-  .sidebar h2 {
+.sidebar h2 {
     margin-bottom: 10px;
-  }
+}
 
-  .filter-container {
+/* Filter container inside the sidebar */
+.filter-container {
     display: flex;
     flex-direction: column;
-  }
+}
 
-  .filter-container .search-bar {
+.filter-container .search-bar {
     margin-bottom: 10px;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
-  }
+}
 
-  .filter-container select {
+.filter-container select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
-  }
+}
 
-  .events-list-container {
+/* Events list container */
+.events-list-container {
     display: flex;
     flex: 1; /* Fill remaining space */
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 20px; /* Gap between event cards */
     overflow-y: auto; /* Enable scrolling if necessary */
-  }
+}
 
-  .event-card {
+/* Individual event card styles */
+.event-card {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
-    width: calc(33.333% - 30px);
+    width: calc(33.333% - 30px); /* Adjusted width with gap compensation */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-  }
+}
 
-  .event-card:hover {
+.event-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  .event-card h2 {
+.event-card h2 {
     margin: 15px 15px 10px; /* Adjust margin for better spacing */
     font-size: 1.5em;
     color: #333;
     overflow: hidden; /* Ensure text does not overflow */
     text-overflow: ellipsis; /* Truncate text with ellipsis if needed */
     white-space: nowrap; /* Prevent text from wrapping */
-  }
+}
 
-  .event-card p {
+.event-card p {
     margin: 5px 15px; /* Adjust margin for better spacing */
     color: #666;
     overflow: hidden; /* Ensure text does not overflow */
     text-overflow: ellipsis; /* Truncate text with ellipsis if needed */
-  }
+}
 
-  .teams {
+/* Teams section within event cards */
+.teams {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #f0f0f0;
     padding: 10px;
-  }
+}
 
-  .team {
+.team {
     text-align: center;
     flex: 1;
-  }
+}
 
-  .team img {
+.team img {
     max-width: 100%; /* Ensure images fit within their container */
     height: auto; /* Maintain aspect ratio */
     border-radius: 50%; /* Optionally apply border radius for circular images */
-  }
+}
 
-  .team p {
+.team p {
     margin: 0;
     font-weight: bold;
     color: #333;
-  }
+}
 
-  .vs {
+/* Versus text between teams */
+.vs {
     font-size: 1.2em;
     font-weight: bold;
     color: #999;
     padding: 0 10px;
-  }
+}
 
-  .commence-time {
+/* Event commencement time */
+.commence-time {
     margin-top: 15px;
     font-weight: bold;
     color: #444;
-  }
+}
 
-  .pagination {
+/* Pagination styles */
+.pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-  }
+}
 
-  .pagination button {
+.pagination button {
     padding: 10px;
     margin: 0 5px;
     border: none;
-    background: #007bff;
+    background: #007bff; /* Primary blue */
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
-  }
+}
 
-  .pagination button.active {
+.pagination button.active {
+    background: #0056b3; /* Darker blue for active buttons */
+}
+
+.pagination button:hover:not(.active) {
     background: #0056b3;
-  }
+}
 
-  .pagination button:hover:not(.active) {
-    background: #0056b3;
-  }
-
-  .offset-2 {
+/* Center content using an offset */
+.offset-2 {
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Media Queries for responsiveness */
+
+/* Small devices (phones) */
+@media (max-width: 767px) {
+    .filter-and-events {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .event-card {
+        width: 100%;
+    }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .event-card {
+        width: calc(50% - 20px); /* 2 cards per row */
+    }
+
+    .sidebar {
+        width: 180px; /* Slightly smaller sidebar for tablets */
+    }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 1025px) {
+    .event-card {
+        width: calc(33.333% - 30px); /* 3 cards per row */
+    }
+
+    .sidebar {
+        width: 200px;
+    }
 }
