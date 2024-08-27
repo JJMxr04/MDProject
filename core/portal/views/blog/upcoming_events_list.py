@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from core.event.models import Event,Sport  # Adjust import according to your project's structure
+from core.event.models import Event, Sport  # Adjust import according to your project's structure
 from django.utils.dateparse import parse_date
+from django.core.paginator import Paginator
 
 @login_required(login_url='/auth/login/')
 def upcoming_events_list(request):
@@ -26,16 +27,14 @@ def upcoming_events_list(request):
     # Fetch events with filtering and pagination
     events_per_page = 10
     events = Event.objects.filter(**filters).order_by('-commence_time')
-    total_events = events.count()
-    events = events[(page - 1) * events_per_page: page * events_per_page]
-
-    # Prepare pagination data
-    total_pages = (total_events + events_per_page - 1) // events_per_page
+    paginator = Paginator(events, events_per_page)
+    page_obj = paginator.get_page(page)
 
     context = {
-        'events': events,
-        'total_pages': total_pages,
-        'current_page': page,
+        'events': page_obj.object_list,
+        'total_pages': paginator.num_pages,
+        'current_page': page_obj.number,
+        'page_range': paginator.page_range,
         'sports': list(Sport.objects.all()),  # Assuming you have a Sport model
         'search_query': search_query,
         'selected_sport': selected_sport,
