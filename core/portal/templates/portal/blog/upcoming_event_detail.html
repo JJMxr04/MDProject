@@ -1,0 +1,60 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block title %}Event Details{% endblock title %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/portal/blog/upcoming_event_detail.css' %}">
+    
+    <div class="event-detail-container">
+        <div class="teams">
+            <div class="team">
+                <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
+                <p>{{ event.home_team_team.team_name }}</p>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team">
+                <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.team_name }} logo" />
+                <p>{{ event.away_team_team.team_name }}</p>
+            </div>
+        </div>
+
+        <h1>{{ event.title }}</h1>
+        <p>{{ event.description }}</p>
+        <p class="commence-time">Commence Time: {{ event.commence_time|date:"F j, Y, g:i a" }}</p>
+
+        <!-- Bookmakers Section -->
+        <div class="bookmakers-section">
+            <h2>Bookmakers</h2>
+            {% if event.bookmakers %}
+                {% for bookmaker in event.bookmakers %}
+                    <div class="bookmaker">
+                        <h3>{{ bookmaker.title }}</h3>
+                        {% for market in bookmaker.markets %}
+                            <div class="market">
+                                <h4>{{ market.title }}</h4>
+                                <ul>
+                                    {% for outcome in market.outcomes %}
+                                        <li class="outcome">
+                                            <div class="outcome-name-container">
+                                                <span class="outcome-name">{{ outcome.name }}</span>
+                                            </div>
+                                            <div class="point-container">
+                                                <span class="point">{{ outcome.point }}</span>
+                                            </div>
+                                            <div class="price-container">
+                                                <span class="price">{{ outcome.price }}</span>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No bookmakers found for this event.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

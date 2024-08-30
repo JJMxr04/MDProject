@@ -1,0 +1,2 @@
+from .myTournamentsList import my_tournaments
+from .myTournamentDetail import my_tournament_detail

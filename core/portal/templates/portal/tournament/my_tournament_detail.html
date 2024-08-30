@@ -1,0 +1,65 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/portal/tournament/my_tournament_detail.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="tournament-detail-container">
+    <div class="tournament-detail-bubble offset-2">
+        <h1>{{ tournament.name }}</h1>
+        <p><strong>Start Date:</strong> {{ tournament.start_date|date:"F j, Y" }}</p>
+        <p><strong>State:</strong>
+            {% if tournament.state == 'created' %}
+                Upcoming
+            {% elif tournament.state == 'inprogress' %}
+                In Progress
+            {% elif tournament.state == 'completed' %}
+                Completed
+            {% else %}
+                {{ tournament.state }}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="tournament-bracket-container">
+        <div class="tournament-bracket">
+            {% for level, level_rounds in grouped_rounds.items %}
+                <div class="bracket-level">
+                    <h2>Level {{ level }}</h2>
+                    <div class="bracket-rounds">
+                        {% for round in level_rounds %}
+                            <div class="bracket-match {% if not round.player_1 or not round.player_2 %}not-selectable{% endif %}"
+                                 onclick="window.location.href='{% url 'tournament_round_detail' round.id %}'">
+                                <p>
+                                    {% if round.player_1 %}
+                                        {{ round.player_1.player.username }}
+                                    {% else %}
+                                        TBD
+                                    {% endif %}
+                                    vs
+                                    {% if round.player_2 %}
+                                        {{ round.player_2.player.username }}
+                                    {% else %}
+                                        TBD
+                                    {% endif %}
+                                </p>
+                                {% if round.player_1 %}
+                                    <img src="{{ round.player_1.player.avatar.url }}" alt="{{ round.player_1.player.username }}">
+                                {% endif %}
+                                <p>Vs.</p>
+                                {% if round.player_2 %}
+                                    <img src="{{ round.player_2.player.avatar.url }}" alt="{{ round.player_2.player.username }}">
+                                {% endif %}
+                                <p>{{ round.completed|yesno:"Completed,In Progress" }}</p>
+                                <p>{{ round.winner|default:"No winner yet" }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
