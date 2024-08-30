@@ -10,6 +10,6 @@ urlpatterns = [
     path('blog/upcoming-events/<int:event_id>/', views.upcoming_event_detail, name='portal-upcoming-events-detail'),
     path('my/tournaments/', views.my_tournaments, name='portal-my-tournaments'),
     path('my/tournaments/<uuid:tournament_id>/', views.my_tournament_detail, name='portal-my-tournament-detail'),
-    path('tournament/round/<uuid:round_id>/', views.tournament_round_detail, name='tournament_round_detail'),
+    path('tournament/round/<uuid:round_id>/', views.my_round_detail_view, name='portal-my-tournament-round-detail'),
     path('profile/', UserProfileUpdateView.as_view(), name='profile'),
 ]

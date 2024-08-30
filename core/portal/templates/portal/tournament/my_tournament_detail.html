@@ -31,7 +31,7 @@
                     <div class="bracket-rounds">
                         {% for round in level_rounds %}
                             <div class="bracket-match {% if not round.player_1 or not round.player_2 %}not-selectable{% endif %}"
-                                 onclick="window.location.href='{% url 'tournament_round_detail' round.id %}'">
+                                 onclick="window.location.href='{% url 'core-portal:portal-my-tournament-round-detail' round.id %}'">
                                 <p>
                                     {% if round.player_1 %}
                                         {{ round.player_1.player.username }}
