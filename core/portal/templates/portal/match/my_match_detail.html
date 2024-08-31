@@ -1,4 +1,8 @@
 {% extends "portal/base_portal.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
+{% endblock css %}
 
 {% block content %}
 <div class="match-detail">
@@ -6,10 +10,12 @@
     <p>Match ID: {{ match.id }}</p>
     <div class="player-cards">
         <div class="player-card">
+            <img src="{{ match.player_1.avatar_url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
             <h2>{{ match.player_1.username }}</h2>
             <p>Score: {{ match.player_1_score }}</p>
         </div>
         <div class="player-card">
+            <img src="{{ match.player_2.avatar_url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
             <h2>{{ match.player_2.username }}</h2>
             <p>Score: {{ match.player_2_score }}</p>
         </div>
@@ -23,7 +29,13 @@
         <h2>Match Information</h2>
         <p><strong>Start Date:</strong> {{ match.start_date }}</p>
         <p><strong>End Date:</strong> {{ match.end_date }}</p>
-        <p><strong>Winner:</strong> {{ match.winner.username if match.winner else 'TBD' }}</p>
+        <p><strong>Winner:</strong>
+            {% if match.winner %}
+                {{ match.winner.username }}
+            {% else %}
+                TBD
+            {% endif %}
+        </p>
     </div>
 
     {% if match.golden_game %}

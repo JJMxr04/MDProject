@@ -1,0 +1,58 @@
+x.match-detail {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.match-detail h1, .match-detail h2, .match-detail h3 {
+    color: #333;
+}
+
+.match-detail p {
+    margin: 8px 0;
+}
+
+.player-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.upload-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+.player-games-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.small-game-event {
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.gold-game-card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.offset-2 {
+    margin-left: 16.6667%; /* Equivalent to 2/12 columns for Bootstrap grid */
+    margin-right: auto;
+}

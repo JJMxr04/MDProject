@@ -14,7 +14,7 @@ def my_match_detail_view(request, match_id):
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
-        'player_1_games': match.player_1_games.all(),
-        'player_2_games': match.player_2_games.all(),
+        # 'player_1_games': match.player_1_games.all(),
+        # 'player_2_games': match.player_2_games.all(),
     }
     return render(request, 'portal/match/my_match_detail.html', context)
