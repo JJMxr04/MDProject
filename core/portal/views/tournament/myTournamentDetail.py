@@ -4,9 +4,10 @@ from core.tournament.models.tournament import Round, Player
 from django.utils.timezone import now
 from itertools import groupby
 from operator import attrgetter
+from django.contrib.auth.decorators import login_required
 
 from django.core.exceptions import PermissionDenied
-
+@login_required(login_url='/auth/login/')
 def my_tournament_detail(request, tournament_id):
     tournament = get_object_or_404(Tournament, id=tournament_id)
 

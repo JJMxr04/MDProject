@@ -11,5 +11,6 @@ urlpatterns = [
     path('my/tournaments/', views.my_tournaments, name='portal-my-tournaments'),
     path('my/tournaments/<uuid:tournament_id>/', views.my_tournament_detail, name='portal-my-tournament-detail'),
     path('tournament/round/<uuid:round_id>/', views.my_round_detail_view, name='portal-my-tournament-round-detail'),
-    path('profile/', UserProfileUpdateView.as_view(), name='profile'),
+    path('profile/', UserProfileUpdateView, name='profile'),
+    path('match/<int:match_id>/', views.my_match_detail_view, name='portal-my-match-detail'),
 ]

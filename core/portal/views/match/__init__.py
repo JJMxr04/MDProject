@@ -1,0 +1,1 @@
+from .myMatchDetail import my_match_detail_view

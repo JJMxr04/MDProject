@@ -40,7 +40,11 @@
         <div class="game-info">
             <h2>Match Information</h2>
             <p>
-                <strong>Match:</strong> <a href="{% url 'portal-match-detail' round_details.match.id %}">{{ round_details.match.id }}</a>
+                {% if round_details.match and round_details.match.id %}
+                    <strong>Match:</strong> <a href="{% url 'core-portal:portal-my-match-detail' round_details.match.id %}">{{ round_details.match.id }}</a>
+                {% else %}
+                    <strong>Match:</strong> Not available
+                {% endif %}
             </p>
             <p><strong>Start Date:</strong> {{ round_details.match.start_date }}</p>
             <p><strong>End Date:</strong> {{ round_details.match.end_date }}</p>

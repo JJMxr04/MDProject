@@ -1,0 +1,88 @@
+{% extends "portal/base_portal.html" %}
+
+{% block content %}
+<div class="match-detail">
+    <h1><strong>Match Details</strong></h1>
+    <p>Match ID: {{ match.id }}</p>
+    <div class="player-cards">
+        <div class="player-card">
+            <h2>{{ match.player_1.username }}</h2>
+            <p>Score: {{ match.player_1_score }}</p>
+        </div>
+        <div class="player-card">
+            <h2>{{ match.player_2.username }}</h2>
+            <p>Score: {{ match.player_2_score }}</p>
+        </div>
+    </div>
+
+    {% if is_player_in_match %}
+    <button class="upload-button" onclick="openPopup()">Upload A Pick</button>
+    {% endif %}
+
+    <div class="game-info">
+        <h2>Match Information</h2>
+        <p><strong>Start Date:</strong> {{ match.start_date }}</p>
+        <p><strong>End Date:</strong> {{ match.end_date }}</p>
+        <p><strong>Winner:</strong> {{ match.winner.username if match.winner else 'TBD' }}</p>
+    </div>
+
+    {% if match.golden_game %}
+    <div class="golden-game-card">
+        <h3>Golden Game</h3>
+        <!-- Golden Game details here -->
+        <button class="upload-button" onclick="openGoldenGamePopup()">Choose Winner</button>
+    </div>
+    {% endif %}
+
+    <div class="player-games-container">
+        <div class="player-games">
+            <h3>Player 1 Games</h3>
+            {% for game in player_1_games %}
+            <div class="small-game-event">
+                <p>{{ game.name }}</p>
+                <button onclick="openSmallGameEventPopup({{ game.id }})">View Details</button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="player-games">
+            <h3>Player 2 Games</h3>
+            {% for game in player_2_games %}
+            <div class="small-game-event">
+                <p>{{ game.name }}</p>
+                <button onclick="openSmallGameEventPopup({{ game.id }})">View Details</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Event popup -->
+    <div id="event-popup" style="display: none;">
+        <!-- Popup content -->
+    </div>
+
+    <!-- Golden Game popup -->
+    <div id="golden-game-popup" style="display: none;">
+        <!-- Popup content -->
+    </div>
+
+    <!-- Small Game Event popup -->
+    <div id="small-game-event-popup" style="display: none;">
+        <!-- Popup content -->
+    </div>
+</div>
+
+<script>
+function openPopup() {
+    document.getElementById("event-popup").style.display = "block";
+}
+
+function openGoldenGamePopup() {
+    document.getElementById("golden-game-popup").style.display = "block";
+}
+
+function openSmallGameEventPopup(gameId) {
+    document.getElementById("small-game-event-popup").style.display = "block";
+}
+</script>
+{% endblock %}
