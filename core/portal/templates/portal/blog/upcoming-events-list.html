@@ -49,7 +49,7 @@
                 </div>
                 <div class="events-list-container">
                     {% for event in events %}
-                        <div key="{{ event.id }}" class="event-card">
+                        <div key="{{ event.id }}" class="event-card" onclick="goToEventDetail({{ event.id }})">
                             <div class="teams">
                                 <div class="team">
                                     <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
@@ -117,6 +117,11 @@
                 page: page
             });
             window.location.search = params.toString();
+        }
+
+        function goToEventDetail(eventId) {
+            const url = "{% url 'core-portal:portal-upcoming-events-detail' 0 %}".replace("0", eventId);
+            window.location.href = url;
         }
     </script>
 {% endblock content %}

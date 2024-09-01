@@ -1,11 +1,10 @@
 /* Navbar styles */
 .navbar {
     background-color: #3D7EAA; /* Ocean blue */
-    border: 3px solid #275d81; /* Sand yellow */
+    border: 3px solid #275d81; /* Border */
     border-radius: 15px; /* Rounded corners */
     margin: 10px;
     padding: 10px;
-    height: 75px; /* Adjust height as needed */
     display: flex;
     align-items: center;
 }
@@ -14,6 +13,14 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: white;
+}
+
+/* Responsive image logo */
+.navbar-logo {
+    max-width: 150px; /* Maximum width */
+    max-height: 50px; /* Maximum height */
+    width: 100%; /* Responsive width */
+    height: auto; /* Maintain aspect ratio */
 }
 
 .navbar-nav {
@@ -30,7 +37,7 @@
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-    color: #FFE47A; /* Sand yellow text */
+    color: #FFE47A; /* Highlight text */
     font-size: 18px; /* Slightly larger text */
     text-decoration: underline; /* Underline text */
 }

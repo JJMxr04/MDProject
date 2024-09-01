@@ -14,4 +14,4 @@ def upcoming_event_detail(request, event_id):
         'event': event,
     }
 
-    return render(request, 'portal/blog/event_detail.html', context)
+    return render(request, 'portal/blog/upcoming_event_detail.html', context)
