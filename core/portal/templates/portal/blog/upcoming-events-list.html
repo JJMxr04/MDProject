@@ -49,24 +49,26 @@
                 </div>
                 <div class="events-list-container">
                     {% for event in events %}
-                        <div key="{{ event.id }}" class="event-card">
-                            <div class="teams">
-                                <div class="team">
-                                    <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
-                                    <p>{{ event.home_team_team.team_name }}</p>
+                        <a href="{% url 'core-portal:portal-upcoming-events-detail' event.id %}" class="event-link">
+                            <div key="{{ event.id }}" class="event-card">
+                                <div class="teams">
+                                    <div class="team">
+                                        <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
+                                        <p>{{ event.home_team_team.team_name }}</p>
+                                    </div>
+                                    <div class="vs">VS</div>
+                                    <div class="team">
+                                        <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.team_name }} logo" />
+                                        <p>{{ event.away_team_team.team_name }}</p>
+                                    </div>
                                 </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.team_name }} logo" />
-                                    <p>{{ event.away_team_team.team_name }}</p>
-                                </div>
+                                <h2>{{ event.title }}</h2>
+                                <p>{{ event.description }}</p>
+                                <p class="commence-time">
+                                    Commence Time: {{ event.commence_time|date:"F j, Y, g:i a" }}
+                                </p>
                             </div>
-                            <h2>{{ event.title }}</h2>
-                            <p>{{ event.description }}</p>
-                            <p class="commence-time">
-                                Commence Time: {{ event.commence_time|date:"F j, Y, g:i a" }}
-                            </p>
-                        </div>
+                        </a>
                     {% empty %}
                         <p>No events found.</p>
                     {% endfor %}
