@@ -2,7 +2,7 @@
 .events-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Ensure items stretch to fill container width */
+    align-items: stretch;
 }
 
 /* Wrapper for the content of the events section */
@@ -14,18 +14,18 @@
 /* Container that holds both the sidebar and the list of events */
 .filter-and-events {
     display: flex;
-    width: 100%; /* Ensure the container takes the full width */
-    align-items: flex-start; /* Align the items at the top */
+    width: 100%;
+    align-items: flex-start;
 }
 
 /* Sidebar styles */
 .sidebar {
-    width: 200px; /* Adjust width as needed */
+    width: 200px;
     background-color: #f0f0f0;
     padding: 20px;
     margin-right: 20px;
     border-radius: 10px;
-    height: 600px; /* Fixed height for sidebar */
+    height: auto;
 }
 
 .sidebar h2 {
@@ -57,10 +57,10 @@
 /* Events list container */
 .events-list-container {
     display: flex;
-    flex: 1; /* Fill remaining space */
     flex-wrap: wrap;
-    gap: 20px; /* Gap between event cards */
-    overflow-y: auto; /* Enable scrolling if necessary */
+    justify-content: space-between;
+    gap: 20px;
+    flex: 1;
 }
 
 /* Individual event card styles */
@@ -68,13 +68,14 @@
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
-    width: calc(33.333% - 30px);
+    width: calc(33.333% - 20px); /* Adjusted for 3 columns */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    position: relative; /* Add this to ensure the link can fill the card */
+    position: relative;
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Inherits the text color from the parent element */
 }
-
 
 .event-card:hover {
     transform: translateY(-5px);
@@ -82,30 +83,30 @@
 }
 
 .event-card h2 {
-    margin: 15px 15px 10px; /* Adjust margin for better spacing */
+    margin: 15px;
     font-size: 1.5em;
     color: #333;
-    overflow: hidden; /* Ensure text does not overflow */
-    text-overflow: ellipsis; /* Truncate text with ellipsis if needed */
-    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .event-card p {
-    margin: 5px 15px; /* Adjust margin for better spacing */
+    margin: 5px 15px;
     color: #666;
-    overflow: hidden; /* Ensure text does not overflow */
-    text-overflow: ellipsis; /* Truncate text with ellipsis if needed */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* Link that wraps the event card */
 .event-link {
-    display: block; /* Ensure the link behaves like a block element */
-    text-decoration: none; /* Remove underline from link text */
-    color: inherit; /* Ensure link text color inherits from the parent element */
-    width: 100%; /* Make the link fill the full width of the card */
-    height: 100%; /* Make the link fill the full height of the card */
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
 }
-
 
 /* Teams section within event cards */
 .teams {
@@ -122,9 +123,9 @@
 }
 
 .team img {
-    max-width: 100%; /* Ensure images fit within their container */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 50%; /* Optionally apply border radius for circular images */
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
 }
 
 .team p {
@@ -159,7 +160,7 @@
     padding: 10px;
     margin: 0 5px;
     border: none;
-    background: #007bff; /* Primary blue */
+    background: #007bff;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
@@ -167,20 +168,20 @@
 }
 
 .pagination button.active {
-    background: #0056b3; /* Darker blue for active buttons */
+    background: #0056b3;
 }
 
 .pagination button:hover:not(.active) {
     background: #0056b3;
 }
 
-/* Center content using an offset */
 .offset-2 {
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Media Queries for responsiveness */
+
+/* Media Queries */
 
 /* Small devices (phones) */
 @media (max-width: 767px) {
@@ -190,7 +191,6 @@
 
     .sidebar {
         width: 100%;
-        height: auto;
         margin-right: 0;
         margin-bottom: 20px;
     }
@@ -205,19 +205,11 @@
     .event-card {
         width: calc(50% - 20px); /* 2 cards per row */
     }
-
-    .sidebar {
-        width: 180px; /* Slightly smaller sidebar for tablets */
-    }
 }
 
 /* Large devices (desktops) */
 @media (min-width: 1025px) {
     .event-card {
-        width: calc(33.333% - 30px); /* 3 cards per row */
-    }
-
-    .sidebar {
-        width: 200px;
+        width: calc(33.333% - 20px); /* 3 cards per row */
     }
 }
