@@ -50,7 +50,7 @@
                 <div class="events-list-container">
                     {% for event in events %}
                         <a href="{% url 'core-portal:portal-upcoming-events-detail' event.id %}" class="event-card">
-                            <div key="{{ event.id }}" s>
+                            <div key="{{ event.id }}" >
                                 <div class="teams">
                                     <div class="team">
                                         <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
@@ -65,7 +65,7 @@
                                 <h2>{{ event.title }}</h2>
                                 <p>{{ event.description }}</p>
                                 <p class="commence-time">
-                                    Commence Time: {{ event.commence_time|date:"F j, Y, g:i a" }}
+                                    Commence Time: {{ event.commence_time }}
                                 </p>
                             </div>
                         </a>
@@ -77,7 +77,7 @@
         </div>
         <div class="pagination">
             {% if current_page > 1 %}
-                <button onclick="changePage({{ current_page|add:'-1' }})">Previous</button>
+                <button onclick="changePage({{ current_page }} - 1)">Previous</button>
             {% endif %}
 
             <!-- Display the first 3 pages -->
@@ -103,6 +103,7 @@
             {% if current_page < total_pages %}
                 <button onclick="changePage({{ current_page|add:'1' }})">Next</button>
             {% endif %}
+            
         </div>
 
 
@@ -144,5 +145,21 @@ function changePage(page) {
             changePage(page);
         }
     }
+
+    function debugEvents() {
+        console.log("Debugging events:");
+        console.log("{% if events %}Events found:{% else %}No events found in the template context.{% endif %}");
+        {% for event in events %}
+            console.log({
+                id: "{{ event.id }}",
+                title: "{{ event.title }}",
+                homeTeam: "{{ event.home_team_team.team_name }}",
+                awayTeam: "{{ event.away_team_team.team_name }}",
+                commenceTime: "{{ event.commence_time|date:"c" }}"
+            });
+        {% endfor %}
+    }
+
+    document.addEventListener('DOMContentLoaded', debugEvents);
     </script>
 {% endblock content %}
