@@ -13,29 +13,17 @@
             <div class="player-card">
                 <img src="{{ round_details.player_1.player.avatar.url|default:'placeholder.jpg' }}" alt="{{ round_details.player_1.player.username }}">
                 <h3>{{ round_details.player_1.player.username }}</h3>
-                <p>
-                    <strong>Games:</strong>
-                    {% if round_details.player_1.games %}
-                        {{ round_details.player_1.games|join:", " }}
-                    {% else %}
-                        To be determined
-                    {% endif %}
-                </p>
             </div>
 
-            <div class="player-card">
-                <img src="{{ round_details.player_2.player.avatar.url|default:'placeholder.jpg' }}" alt="{{ round_details.player_2.player.username }}">
-                <h3>{{ round_details.player_2.player.username }}</h3>
-                <p>
-                    <strong>Games:</strong>
-                    {% if round_details.player_2.games %}
-                        {{ round_details.player_2.games|join:", " }}
-                    {% else %}
-                        To be determined
-                    {% endif %}
-                </p>
-            </div>
+         <div class="player-card">
+            {% if round_details.player_2.player.avatar %}
+                <img src="{{ round_details.player_2.player.avatar.url }}" alt="{{ round_details.player_2.player.username }}">
+            {% else %}
+                <img src="{% static 'placeholder.jpg' %}" alt="Placeholder">
+            {% endif %}
+            <h3>{{ round_details.player_2.player.username }}</h3>
         </div>
+
 
         <div class="game-info">
             <h2>Match Information</h2>
@@ -51,7 +39,7 @@
             <p><strong>Winner:</strong> {{ round_details.match.winner.username|default:"Not decided yet" }}</p>
         </div>
 
-        {% if round_details.match.golden_game.event %}
+        {% if round_details.match.golden_game and round_details.match.golden_game.event %}
             <div class="golden-game">
                 <div class="team">
                     {% if round_details.match.golden_game.event.home_team_team.logo_url %}

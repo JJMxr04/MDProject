@@ -46,11 +46,11 @@
                                     {% endif %}
                                 </p>
                                 {% if round.player_1 %}
-                                    <img src="{{ round.player_1.player.avatar.url }}" alt="{{ round.player_1.player.username }}">
+                                    <img src="{% if round.player_1.player.avatar %}{{ round.player_1.player.avatar.url }}{% else %}placeholder.jpg{% endif %}" alt="{{ round.player_1.player.username }}">
                                 {% endif %}
                                 <p>Vs.</p>
                                 {% if round.player_2 %}
-                                    <img src="{{ round.player_2.player.avatar.url }}" alt="{{ round.player_2.player.username }}">
+                                    <img src="{% if round.player_2.player.avatar %}{{ round.player_2.player.avatar.url }}{% else %}placeholder.jpg{% endif %}" alt="{{ round.player_2.player.username }}">
                                 {% endif %}
                                 <p>{{ round.completed|yesno:"Completed,In Progress" }}</p>
                                 <p>{{ round.winner|default:"No winner yet" }}</p>
