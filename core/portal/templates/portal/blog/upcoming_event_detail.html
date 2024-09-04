@@ -25,7 +25,7 @@
 
         <h1>{{ event.title }}</h1>
         <p>{{ event.description }}</p>
-        <p class="commence-time">Commence Time: {{ event.commence_time|date:"F j, Y, g:i a" }}</p>
+        <p class="commence-time" data-time="{{ event.commence_time }}">Commence Time: {{ event.commence_time }}</p>
 
         <!-- Bookmakers Section -->
         <div class="bookmakers-section">
@@ -35,8 +35,8 @@
                     <div class="bookmaker">
                         <h3>{{ bookmaker.title }}</h3>
                         {% for market in bookmaker.markets.all %}
-                            <div class="market">
-                                <h4>{{ market.title }}</h4>
+                            <div class="market" data-key="{{ market.key }}">
+                                <h4 class="market-title">{{ market.title }}</h4>
                                 <ul>
                                     {% for outcome in market.outcomes.all %}
                                         <li class="outcome">
@@ -59,7 +59,49 @@
             {% else %}
                 <p>No bookmakers found for this event.</p>
             {% endif %}
-
         </div>
     </div>
+
+    <script>
+        // JavaScript function to get the market title
+        const getMarketTitle = (key) => {
+            switch (key.toLowerCase()) {
+                case 'h2h':
+                    return 'Head 2 Head';
+                case 'spreads':
+                    return 'Spreads';
+                case 'totals':
+                    return 'Over/Under';
+                default:
+                    return key;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update commence time formatting
+            const timeElements = document.querySelectorAll('.commence-time');
+            timeElements.forEach(function(element) {
+                const timeString = element.getAttribute('data-time');
+                const date = new Date(timeString);  // Convert the string to a JavaScript Date object
+                const options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                const formattedDate = date.toLocaleString('en-US', options);
+                element.textContent = formattedDate;
+            });
+
+            // Update market titles using the getMarketTitle function
+            const marketElements = document.querySelectorAll('.market');
+            marketElements.forEach(function(element) {
+                const marketKey = element.getAttribute('data-key');
+                const marketTitleElement = element.querySelector('.market-title');
+                marketTitleElement.textContent = getMarketTitle(marketKey);
+            });
+        });
+    </script>
 {% endblock content %}
