@@ -64,9 +64,12 @@
                                 </div>
                                 <h2>{{ event.title }}</h2>
                                 <p>{{ event.description }}</p>
-                                <p class="commence-time">
-                                    Commence Time: {{ event.commence_time }}
+                                <p class="commence-time" data-time="{{ event.commence_time }}">
+                                    {{ event.commence_time }}
                                 </p>
+
+
+
                             </div>
                         </a>
                     {% empty %}
@@ -161,5 +164,28 @@ function changePage(page) {
     }
 
     document.addEventListener('DOMContentLoaded', debugEvents);
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const timeElements = document.querySelectorAll('.commence-time');
+
+        timeElements.forEach(function(element) {
+            const timeString = element.getAttribute('data-time');
+            const date = new Date(timeString);  // Convert the string to a JavaScript Date object
+
+            // Format the date and time to a readable format
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            };
+            const formattedDate = date.toLocaleString('en-US', options);
+
+            // Replace the text content with the formatted date
+            element.textContent = formattedDate;
+        });
+    });
     </script>
 {% endblock content %}

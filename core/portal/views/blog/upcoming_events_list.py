@@ -39,7 +39,7 @@ def upcoming_events_list(request):
     # Serialize events
     
     # Convert to JSON using custom encoder
-
+    print(type(events[1].commence_time))
 
     context = {
         'events': events,
