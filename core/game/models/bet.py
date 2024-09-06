@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
-from core.event.models import Outcome
+from core.event.models import Outcome, Market
 from datetime import datetime, timedelta
 from django.utils import timezone
 from core.user.models import User
@@ -106,9 +106,8 @@ class BetManager(AbstractManager):
     def set_player_2_outcome(self,bet,outcome):
         bet.player_2_outcome = outcome
         bet.save()
-    def set_selected_outcome(self,bet,outcome,market):
-        bet.selected_outcome = outcome
-        bet.type = market.key
+    def set_market(self,bet,market):
+        bet.market = market
         bet.save()
 
 
@@ -116,15 +115,11 @@ class BetManager(AbstractManager):
 
 
 
-
 class Bet(AbstractModel):
-    type= models.CharField(max_length=15, null=True, blank=True)
-    selected_outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, related_name='bet_selected_outcome', null=True,
+    market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='bet_market', null=True,
                                       blank=True)
     owner_outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, related_name='bet_owner_outcome', null=True, blank=True)
     player_2_outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, related_name='bet_player_2_outcome', null=True,
-                                      blank=True)
-    correct_outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, related_name='bet_correct_outcome', null=True,
                                       blank=True)
 
 

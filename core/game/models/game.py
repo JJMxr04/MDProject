@@ -82,7 +82,7 @@ class GameManager(AbstractManager):
             if Outcome is None:
                 return False, False
             if current_user == game.owner:
-                Bet.objects.set_selected_outcome(game.bet,outcome,outcome.market)
+                Bet.objects.set_market(game.bet,outcome.market)
                 Bet.objects.set_owner_outcome(game.bet,outcome)
             if current_user == game.player_2:
                 Bet.objects.set_player_2_outcome(game.bet,outcome)
