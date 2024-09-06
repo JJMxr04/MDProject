@@ -8,23 +8,27 @@
 <div class="match-detail">
     <h1><strong>Match Details</strong></h1>
     <p>Match ID: {{ match.id }}</p>
+    
+    <!-- Player Cards -->
     <div class="player-cards">
         <div class="player-card">
-            <img src="{{ match.player_1.avatar_url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
+            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
             <h2>{{ match.player_1.username }}</h2>
             <p>Score: {{ match.player_1_score }}</p>
         </div>
         <div class="player-card">
-            <img src="{{ match.player_2.avatar_url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
+            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
             <h2>{{ match.player_2.username }}</h2>
             <p>Score: {{ match.player_2_score }}</p>
         </div>
     </div>
 
+    <!-- Upload Button -->
     {% if is_player_in_match %}
-    <button class="upload-button" onclick="openPopup()">Upload A Pick</button>
+    <button class="upload-button" onclick="openUploadPopup()">Upload A Pick</button>
     {% endif %}
 
+    <!-- Match Information -->
     <div class="game-info">
         <h2>Match Information</h2>
         <p><strong>Start Date:</strong> {{ match.start_date }}</p>
@@ -38,14 +42,31 @@
         </p>
     </div>
 
+    <!-- Golden Game Section -->
     {% if match.golden_game %}
-    <div class="golden-game-card">
+    <div class="golden-game-card" onclick="openGoldenGamePopup()">
         <h3>Golden Game</h3>
-        <!-- Golden Game details here -->
-        <button class="upload-button" onclick="openGoldenGamePopup()">Choose Winner</button>
+        <div class="golden-game">
+            <div class="team">
+                {% if match.golden_game.event.home_team.logo_url %}
+                    <img src="{{ match.golden_game.event.home_team.logo_url }}" alt="{{ match.golden_game.event.home_team }}">
+                {% endif %}
+                <h4>{{ match.golden_game.event.home_team }}</h4>
+                <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
+            </div>
+
+            <div class="team">
+                {% if match.golden_game.event.away_team.logo_url %}
+                    <img src="{{ match.golden_game.event.away_team.logo_url }}" alt="{{ match.golden_game.event.away_team }}">
+                {% endif %}
+                <h4>{{ match.golden_game.event.away_team }}</h4>
+                <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
+            </div>
+        </div>
     </div>
     {% endif %}
 
+    <!-- Player 1 and 2 Games -->
     <div class="player-games-container">
         <div class="player-games">
             <h3>Player 1 Games</h3>
@@ -68,33 +89,135 @@
         </div>
     </div>
 
-    <!-- Event popup -->
+    <!-- Event Popup -->
     <div id="event-popup" style="display: none;">
-        <!-- Popup content -->
+        <!-- Add dynamic event content here -->
     </div>
 
-    <!-- Golden Game popup -->
+    <!-- Golden Game Popup -->
     <div id="golden-game-popup" style="display: none;">
-        <!-- Popup content -->
+        <!-- Add dynamic golden game content here -->
     </div>
 
-    <!-- Small Game Event popup -->
+    <!-- Small Game Event Popup -->
     <div id="small-game-event-popup" style="display: none;">
-        <!-- Popup content -->
+        <!-- Add dynamic small game event content here -->
+    </div>
+
+    <!-- Upload Popup -->
+    <div id="upload-popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeUploadPopup()">&times;</span>
+            <h2>Upload Your Pick</h2>
+            <hr class="divider">
+            <div id="event-list">
+                {% if available_events %}
+                    {% for event in available_events %}
+                        <button class="event-card" data-event-id="{{ event.id }}">
+                            <div className="team">
+                                {% if event.home_team_team.logo_url %}
+                                <img
+                                    src="{{ event.home_team_team.logo_url }}"
+                                    alt="{{ event.home_team_team.name }}"
+                                />
+                                <h4>"{{ event.home_team_team.team_name }}"</h4>
+                            {% else %}
+                                <h4>{{ event.home_team_team.team_name }}</h4>
+                            {% endif %}
+                            </div>
+                            
+                            <div className="vs-text">
+                                <h4>Vs</h4>
+                            </div>
+                            
+                            <div className="team">
+                                {% if event.away_team_team.logo_url %}
+                                <img
+                                    src="{{ event.away_team_team.logo_url }}"
+                                    alt="{{ event.away_team_team.name }}"
+                                />
+                                <h4>{{ event.away_team_team.team_name }}</h4>
+                                
+                            {% else %}
+                                <h4>{{ event.away_team_team.team_name }}</h4>
+                            {% endif %}
+                            </div>
+                            
+                            <div className="event-body">
+                                <p><strong>Sport:</strong> {{event.sport_title}}</p>
+                                <p><strong>Description:</strong> {{event.description}}</p>
+                                <p><strong>Commence Time:</strong> {{event.commence_time}}</p>
+                            </div>                            
+                        </button>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-events-message">No events available for this match period.</p>
+                {% endif %}
+            </div>
+            <hr class="divider">
+            <form id="upload-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
-function openPopup() {
-    document.getElementById("event-popup").style.display = "block";
-}
+    function openPopup() {
+        document.getElementById("event-popup").style.display = "block";
+    }
 
-function openGoldenGamePopup() {
-    document.getElementById("golden-game-popup").style.display = "block";
-}
+    function openGoldenGamePopup() {
+        document.getElementById("golden-game-popup").style.display = "block";
+    }
 
-function openSmallGameEventPopup(gameId) {
-    document.getElementById("small-game-event-popup").style.display = "block";
-}
+    function openSmallGameEventPopup(gameId) {
+        document.getElementById("small-game-event-popup").style.display = "block";
+    }
+
+    function openUploadPopup() {
+        document.getElementById("upload-popup").style.display = "block";
+    }
+
+    function closeUploadPopup() {
+        document.getElementById("upload-popup").style.display = "none";
+    }
+
+    // Close the popup if the user clicks outside of it
+    window.onclick = function(event) {
+        var popup = document.getElementById("upload-popup");
+        if (event.target == popup) {
+            popup.style.display = "none";
+        }
+    }
+
+    // Handle event card click
+    document.querySelectorAll('.event-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const eventId = this.getAttribute('data-event-id');
+            console.log('Selected Event ID:', eventId);
+            // Add logic to handle event selection, such as sending it to a server or updating the UI.
+        });
+    });
+
+    // Handle form submission
+    document.getElementById("upload-form").onsubmit = function(e) {
+        e.preventDefault();
+        // Add your AJAX code here to handle the file upload
+        // For example:
+        // var formData = new FormData(this);
+        // fetch('/upload-pick-url/', {method: 'POST', body: formData})
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (data.success) {
+        //             alert('Pick uploaded successfully!');
+        //             closeUploadPopup();
+        //         } else {
+        //             alert('Error uploading pick: ' + data.error);
+        //         }
+        //     });
+    }
 </script>
 {% endblock %}
+

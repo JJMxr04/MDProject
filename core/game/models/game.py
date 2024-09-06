@@ -67,25 +67,22 @@ class GameManager(AbstractManager):
         # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
             return False, False
-        # print('check 10')
-        # if data.get("player_choice"):
-        #     if current_user == game.owner:
-        #         # print('check 11')
-        #         game.owner_choice = data.get("player_choice").team_name
-        #     # print('check 12')
-        #     if current_user == game.player_2:
-        #         # print('check 13')
-        #         game.player_2_choice = data.get("player_choice").team_name
-        #     # print('check 14')
         if data.get("player_choice"):
+
             outcome=Outcome.filter(id=data.get("player_choice").id).first()
-            if Outcome is None:
+            if Outcome is None and current_user != game.owner:
                 return False, False
-            if current_user == game.owner:
+            if Outcome is None and current_user == game.owner:
                 Bet.objects.set_market(game.bet,outcome.market)
+                return True, True
+            if outcome.market!=game.bet.market:
+                return False,False
+            if current_user == game.owner:
                 Bet.objects.set_owner_outcome(game.bet,outcome)
+                return True, True
             if current_user == game.player_2:
                 Bet.objects.set_player_2_outcome(game.bet,outcome)
+                return True, True
 
 
         game.save()
