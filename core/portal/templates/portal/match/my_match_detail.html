@@ -110,49 +110,75 @@
             <span class="close" onclick="closeUploadPopup()">&times;</span>
             <h2>Upload Your Pick</h2>
             <hr class="divider">
-            <div id="event-list">
-                {% if available_events %}
+            <div class="upload-flex-container">
+                <div id="event-list">
+                    {% if available_events %}
                     {% for event in available_events %}
-                        <button class="event-card" data-event-id="{{ event.id }}">
-                            <div className="team">
-                                {% if event.home_team_team.logo_url %}
-                                <img
-                                    src="{{ event.home_team_team.logo_url }}"
-                                    alt="{{ event.home_team_team.name }}"
-                                />
-                                <h4>"{{ event.home_team_team.team_name }}"</h4>
-                            {% else %}
-                                <h4>{{ event.home_team_team.team_name }}</h4>
-                            {% endif %}
-                            </div>
-                            
-                            <div className="vs-text">
-                                <h4>Vs</h4>
-                            </div>
-                            
-                            <div className="team">
-                                {% if event.away_team_team.logo_url %}
-                                <img
-                                    src="{{ event.away_team_team.logo_url }}"
-                                    alt="{{ event.away_team_team.name }}"
-                                />
-                                <h4>{{ event.away_team_team.team_name }}</h4>
-                                
-                            {% else %}
-                                <h4>{{ event.away_team_team.team_name }}</h4>
-                            {% endif %}
-                            </div>
-                            
-                            <div className="event-body">
-                                <p><strong>Sport:</strong> {{event.sport_title}}</p>
-                                <p><strong>Description:</strong> {{event.description}}</p>
-                                <p><strong>Commence Time:</strong> {{event.commence_time}}</p>
-                            </div>                            
-                        </button>
-                    {% endfor %}
-                {% else %}
-                    <p class="no-events-message">No events available for this match period.</p>
-                {% endif %}
+                    <button class="event-card"  data-event-id="{{ event.id }}" data-event="{{ event|safe }}" 
+                        data-bookmakers='{{ event.bookmakers.all}}'> <!-- Store the bookmakers in data-bookmakers -->
+                
+                        <div class="team">
+                            <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.name }}">
+                            <h4>{{ event.home_team_team.team_name }}</h4>
+                        </div>
+                        <div class="vs-text">
+                            <h4>Vs</h4>
+                        </div>
+                        <div class="team">
+                            <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.name }}">
+                            <h4>{{ event.away_team_team.team_name }}</h4>
+                        </div>
+                
+                        <div class="event-body">
+                            <p><strong>Sport:</strong> {{ event.sport_title }}</p>
+                            <p><strong>Description:</strong> {{ event.description }}</p>
+                            <p><strong>Commence Time:</strong> {{ event.commence_time }}</p>
+                        </div>
+                    </button>
+                {% endfor %}
+                
+                    {% else %}
+                        <p class="no-events-message">No events available for this match period.</p>
+                    {% endif %}
+                </div>
+                <div class="bookmakers-section" id="bookmakers-section" style="display: True;">
+                    <h2>Bookmakers</h2>
+                    {% if selected_event %}
+
+                                {% if selected_event.bookmakers.all %}
+                                    {% for bookmaker in selected_event.bookmakers.all %}
+                                        <div class="bookmaker">
+                                            <h3>{{ bookmaker.title }}</h3>
+                                            {% for market in bookmaker.markets.all %}
+                                            <div class="market" data-key="{{ market.key }}">
+                                                <h4 class="market-title">{{ market.title }}</h4>
+                                                <ul>
+                                                    {% for outcome in market.outcomes.all %}
+                                                        <li class="outcome">
+                                                            <div class="outcome-name-container">
+                                                                <span class="outcome-name">{{ outcome.name }}</span>
+                                                            </div>
+                                                            <div class="point-container">
+                                                                <span class="point">{{ outcome.point }}</span>
+                                                            </div>
+                                                            <div class="price-container">
+                                                                <span class="price">{{ outcome.price }}</span>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No bookmakers found for this event.</p>
+                                {% endif %}
+
+                    {% else %}
+                        <p>No available Bookmakers for Event.</p>
+                    {% endif %}
+                </div>
             </div>
             <hr class="divider">
             <form id="upload-form" enctype="multipart/form-data">
@@ -164,6 +190,8 @@
 </div>
 
 <script>
+    let selected_event = null; // Add selected_event variable
+
     function openPopup() {
         document.getElementById("event-popup").style.display = "block";
     }
@@ -196,10 +224,94 @@
     document.querySelectorAll('.event-card').forEach(card => {
         card.addEventListener('click', function() {
             const eventId = this.getAttribute('data-event-id');
-            console.log('Selected Event ID:', eventId);
-            // Add logic to handle event selection, such as sending it to a server or updating the UI.
+            const event = this.getAttribute('data-event');
+            const bookmakers = document.getElementById('data-bookmakers');
+            selected_event = event; // Populate selected_event
+            console.log('Selected Event Bookmakers:', selected_event);
+            // Hide other events
+            document.querySelectorAll('.event-card').forEach(otherCard => {
+                if (otherCard !== this) {
+                    otherCard.style.display = 'none';  // Hide other events
+                }
+            });
+
+            // Highlight the selected event
+            this.classList.add('selected');
+
+           displayMarketsAndOutcomes(selected_event.bookmakers);
         });
     });
+
+    function displayMarketsAndOutcomes(data) {
+        const bookmakersSection = document.getElementById('bookmakers-section');
+        bookmakersSection.innerHTML = '';  // Clear any previous content
+        console.log(data);
+        if (data.bookmakers && data.bookmakers.length > 0) {
+            data.bookmakers.forEach(bookmaker => {
+                const bookmakerDiv = document.createElement('div');
+                bookmakerDiv.classList.add('bookmaker');
+
+                const bookmakerTitle = document.createElement('h3');
+                bookmakerTitle.textContent = bookmaker.title;
+                bookmakerDiv.appendChild(bookmakerTitle);
+
+                bookmaker.markets.forEach(market => {
+                    const marketDiv = document.createElement('div');
+                    marketDiv.classList.add('market');
+                    marketDiv.setAttribute('data-key', market.key);
+
+                    const marketTitle = document.createElement('h4');
+                    marketTitle.classList.add('market-title');
+                    marketTitle.textContent = market.title;
+                    marketDiv.appendChild(marketTitle);
+
+                    const outcomeList = document.createElement('ul');
+                    market.outcomes.forEach(outcome => {
+                        const outcomeItem = document.createElement('li');
+                        outcomeItem.classList.add('outcome');
+
+                        const outcomeNameContainer = document.createElement('div');
+                        outcomeNameContainer.classList.add('outcome-name-container');
+                        const outcomeName = document.createElement('span');
+                        outcomeName.classList.add('outcome-name');
+                        outcomeName.textContent = outcome.name;
+                        outcomeNameContainer.appendChild(outcomeName);
+
+                        const pointContainer = document.createElement('div');
+                        pointContainer.classList.add('point-container');
+                        const point = document.createElement('span');
+                        point.classList.add('point');
+                        point.textContent = outcome.point;
+                        pointContainer.appendChild(point);
+
+                        const priceContainer = document.createElement('div');
+                        priceContainer.classList.add('price-container');
+                        const price = document.createElement('span');
+                        price.classList.add('price');
+                        price.textContent = outcome.price;
+                        priceContainer.appendChild(price);
+
+                        outcomeItem.appendChild(outcomeNameContainer);
+                        outcomeItem.appendChild(pointContainer);
+                        outcomeItem.appendChild(priceContainer);
+                        outcomeList.appendChild(outcomeItem);
+                    });
+
+                    marketDiv.appendChild(outcomeList);
+                    bookmakerDiv.appendChild(marketDiv);
+                });
+
+                bookmakersSection.appendChild(bookmakerDiv);
+            });
+        } else {
+            const noBookmakersMessage = document.createElement('p');
+            noBookmakersMessage.textContent = 'No bookmakers found for this event.';
+            bookmakersSection.appendChild(noBookmakersMessage);
+        }
+
+        // Show the container after populating it
+        bookmakersSection.style.display = 'block';
+    }
 
     // Handle form submission
     document.getElementById("upload-form").onsubmit = function(e) {

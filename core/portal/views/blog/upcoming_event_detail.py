@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from core.event.models import Event  # Adjust import according to your project's structure
+from core.event.models import Event 
+
 
 
 @login_required(login_url='/auth/login/')

@@ -163,7 +163,7 @@
 }
 
 #event-list {
-    max-height: 300px; /* Set a max-height for the container */
+
     overflow-y: auto;  /* Enable vertical scrolling */
     padding-right: 10px; /* Add padding to avoid clipping the scrollbar */
 }
@@ -198,8 +198,8 @@
 }
 
 .event-card.selected {
-    outline: 3px solid #007bff; /* Outline color when selected */
-    background-color: #FFE47A; /* Change background when selected */
+    outline: 3px solid #007bff;
+    background-color: #FFE47A;
 }
 
 .event-card:hover {
@@ -263,5 +263,50 @@
 .event-card .event-info .event-time {
     font-size: 0.9em;
     color: #666;
+}
+
+#market-outcomes-container {
+    border: 1px solid #ddd;
+    padding: 15px;
+    background-color: #fff;
+    margin-top: 20px;
+    max-width: 300px;
+}
+
+#market-outcomes-container .market {
+    margin-bottom: 20px;
+}
+
+#market-outcomes-container .market h3 {
+    margin-bottom: 10px;
+}
+
+.upload-flex-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Add space between the two sections */
+}
+
+#event-list {
+    flex: 1; /* Take up equal space */
+    max-width: 45%; /* Limit width */
+}
+
+.bookmakers-section {
+    flex: 1; /* Take up equal space */
+    max-width: 45%; /* Limit width */
+}
+
+/* Adjust styling of event cards and bookmaker items */
+.event-card, .bookmaker {
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookmaker h3 {
+    margin-bottom: 10px;
 }
 
