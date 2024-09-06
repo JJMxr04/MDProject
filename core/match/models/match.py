@@ -82,73 +82,37 @@ class MatchManager(AbstractManager):
 
             if (game == match.player_1_game_1) and (not match.player_1_game_1_completed):
                 match.player_1_game_1_completed = True
-            elif (game == match.player_1_game_1) and (match.player_1_game_1_completed):
-                continue
             if (game == match.player_1_game_2) and (not match.player_1_game_2_completed):
                 match.player_1_game_2_completed = True
-            elif (game == match.player_1_game_2) and (match.player_1_game_2_completed):
-                continue
 
             if (game == match.player_1_game_3) and not match.player_1_game_3_completed:
                 match.player_1_game_3_completed = True
-
-            elif (game == match.player_1_game_3) and match.player_1_game_3_completed:
-                continue
             if (game == match.player_1_game_4) and not match.player_1_game_4_completed:
                 match.player_1_game_4_completed = True
-            elif (game == match.player_1_game_4) and match.player_1_game_4_completed:
-                continue
             if (game == match.player_1_game_5) and not match.player_1_game_5_completed:
                 match.player_1_game_5_completed = True
-            elif (game == match.player_1_game_5) and match.player_1_game_5_completed:
-                continue
             if (game == match.player_2_game_1) and not match.player_2_game_1_completed:
                 match.player_2_game_1_completed = True
-            elif (game == match.player_2_game_1) and match.player_2_game_1_completed:
-                continue
             if (game == match.player_2_game_2) and not match.player_2_game_2_completed:
                 match.player_2_game_2_completed = True
-            elif (game == match.player_2_game_2) and match.player_2_game_2_completed:
-                continue
             if (game == match.player_2_game_3) and not match.player_2_game_3_completed:
                 match.player_2_game_3_completed = True
-            elif (game == match.player_2_game_3) and match.player_2_game_3_completed:
-                continue
             if (game == match.player_2_game_4) and not match.player_2_game_4_completed:
                 match.player_2_game_4_completed = True
-            elif (game == match.player_2_game_4) and match.player_2_game_4_completed:
-                continue
             if (game == match.player_2_game_5) and not match.player_2_game_5_completed:
                 match.player_2_game_5_completed = True
-            elif (game == match.player_2_game_5) and match.player_2_game_5_completed:
-                continue
             if (game == match.golden_game) and not match.golden_game_completed:
                 match.golden_game_completed = True
-            elif (game == match.golden_game) and match.golden_game_completed:
-                continue
-            if game.owner_choice == game.winner:
-                if game.owner == match.player_1:
-                    if game != match.golden_game:
-                        match.player_1_score += 1
-                    else:
-                        match.player_1_score += 2
-
-                if game.owner == match.player_2:
-                    if game != match.golden_game:
-                        match.player_2_score += 1
-                    else:
-                        match.player_2_score += 2
-            if game.player_2_choice == game.winner:
-                if game.player_2 == match.player_1:
-                    if game != match.golden_game:
-                        match.player_1_score += 1
-                    else:
-                        match.player_1_score += 2
-                if game.player_2 == match.player_2:
-                    if game != match.golden_game:
-                        match.player_2_score += 1
-                    else:
-                        match.player_2_score += 2
+            if (game == match.golden_game):
+                if Game.objects.get_owner_correctness(game):
+                    match.player_1_score += 2
+                if Game.objects.get_player_2_correctness(game):
+                    match.player_2_score += 2
+            else:
+                if Game.objects.get_owner_correctness(game):
+                    match.player_1_score += 1
+                if Game.objects.get_player_2_correctness(game):
+                    match.player_2_score += 1
             match.save()
             if match.golden_game_completed and match.player_1_game_1_completed and match.player_1_game_2_completed and match.player_1_game_3_completed and match.player_1_game_4_completed and match.player_1_game_5_completed and match.player_2_game_1_completed and match.player_2_game_2_completed and match.player_2_game_3_completed and match.player_2_game_4_completed and match.player_2_game_5_completed:
                 self.calcutate_winner(match)

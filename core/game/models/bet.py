@@ -12,6 +12,9 @@ class BetManager(AbstractManager):
 
 
     def calculate_owner_choice(self,bet,event):
+
+        if not bet.owner_outcome :
+            return False
         if bet.type == 'h2h':
             if event.winner == 'tie':
                 if bet.owner_outcome.name== 'draw':
@@ -54,6 +57,8 @@ class BetManager(AbstractManager):
                     return True
                 else: return False
     def calculate_player_2_choice(self,bet,outcome):
+        if not bet.player_2_outcome :
+            return False
         if bet.type == 'h2h':
             if event.winner == 'tie':
                 if bet.player_2_outcome.name== 'draw':

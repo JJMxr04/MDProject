@@ -13,6 +13,15 @@ class GameManager(AbstractManager):
         return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
                            deadline_time=deadline_time, completed=completed, home_team=home_team,
                            away_team=away_team, winner=winner)
+    
+    def get_owner_correctness(self, game):
+        bet= game.bet
+        event= game.event
+        return Bet.objects.calculate_owner_choice(bet,event)
+    def get_player_2_correctness(self, game):
+        bet= game.bet
+        event= game.event
+        return Bet.objects.calculate_player_2_choice(bet,event)
 
     def update_by_id(self, id, current_user, data):
         # print(data)
