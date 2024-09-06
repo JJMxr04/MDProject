@@ -4,15 +4,16 @@ from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
 from django.utils import timezone
 from core.user.models import User
-from core.event.models import Event
+# from core.event.models import Event
 from core.mail.models import Emails
+from core.game.models.bet import Bet,Outcome, Event,Market
 
 class GameManager(AbstractManager):
     def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
                     home_team=None, away_team=None, winner=None):
         return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
                            deadline_time=deadline_time, completed=completed, home_team=home_team,
-                           away_team=away_team, winner=winner)
+                           away_team=away_team, winner=winner,bet=Bet.objects.create())
     
     def get_owner_correctness(self, game):
         bet= game.bet
@@ -67,15 +68,25 @@ class GameManager(AbstractManager):
         if game.commence_time and game.commence_time <= current_time:
             return False, False
         # print('check 10')
+        # if data.get("player_choice"):
+        #     if current_user == game.owner:
+        #         # print('check 11')
+        #         game.owner_choice = data.get("player_choice").team_name
+        #     # print('check 12')
+        #     if current_user == game.player_2:
+        #         # print('check 13')
+        #         game.player_2_choice = data.get("player_choice").team_name
+        #     # print('check 14')
         if data.get("player_choice"):
+            outcome=Outcome.filter(id=data.get("player_choice").id).first()
+            if Outcome is None:
+                return False, False
             if current_user == game.owner:
-                # print('check 11')
-                game.owner_choice = data.get("player_choice").team_name
-            # print('check 12')
+                Bet.objects.set_selected_outcome(game.bet,outcome,outcome.market)
+                Bet.objects.set_owner_outcome(game.bet,outcome)
             if current_user == game.player_2:
-                # print('check 13')
-                game.player_2_choice = data.get("player_choice").team_name
-            # print('check 14')
+                Bet.objects.set_player_2_outcome(game.bet,outcome)
+
 
         game.save()
         # Email
@@ -113,6 +124,7 @@ class Game(AbstractModel):
     owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='games', null=True, blank=True)
+    bet = models.ForeignKey(Bet, on_delete=models.CASCADE, related_name='game_bet', null=True, blank=True)
     objects = GameManager()
 
     class Meta:
