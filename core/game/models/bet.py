@@ -25,21 +25,76 @@ class BetManager(AbstractManager):
         if bet.type == 'totals':
             scores = event.scores
             points = scores[0]['score']+scores[1]['score']
-            bet_points= bet.owner.outcome.point
-            if bet.owner.outcome.name == 'over':
+            bet_points= bet.owner_outcome.point
+            if bet.owner_outcome.name == 'over':
                 if bet_points > points:
                     return True
                 else:
                     return False
-            if bet.owner.outcome.name == 'under':
+            if bet.owner_outcome.name == 'under':
                 if bet_points < points:
                     return True
                 else:
                     return False
         if bet.type == 'spreads':
-            pass
+            winner = event.winner
+            points_diff = event.scores[0]['score'] - event.scores[1]['score']
+            if bet.owner_outcome.point < 0:
+                if winner != bet.owner_outcome.name:
+                    return False
+                else:
+                    if abs(points_diff) < abs(bet.owner_outcome.point):
+                        return False
+                    else:
+                        return True
+            else:
+                if winner == bet.owner_outcome.name:
+                    return True
+                elif abs(points_diff) < abs(bet.owner_outcome.point):
+                    return True
+                else: return False
     def calculate_player_2_choice(self,bet,outcome):
-        pass
+        if bet.type == 'h2h':
+            if event.winner == 'tie':
+                if bet.player_2_outcome.name== 'draw':
+                    return True
+                else:
+                    return False
+            elif event.winner == bet.player_2_outcome.name:
+                return True
+            else:
+                return False
+        if bet.type == 'totals':
+            scores = event.scores
+            points = scores[0]['score']+scores[1]['score']
+            bet_points= bet.player_2_outcome.point
+            if bet.player_2_outcome.name == 'over':
+                if bet_points > points:
+                    return True
+                else:
+                    return False
+            if bet.player_2_outcome.name == 'under':
+                if bet_points < points:
+                    return True
+                else:
+                    return False
+        if bet.type == 'spreads':
+            winner = event.winner
+            points_diff = event.scores[0]['score'] - event.scores[1]['score']
+            if bet.player_2_outcome.point < 0:
+                if winner != bet.player_2_outcome.name:
+                    return False
+                else:
+                    if abs(points_diff) < abs(bet.player_2_outcome.point):
+                        return False
+                    else:
+                        return True
+            else:
+                if winner == bet.player_2_outcome.name:
+                    return True
+                elif abs(points_diff) < abs(bet.player_2_outcome.point):
+                    return True
+                else: return False
     def set_owner_outcome(self,bet,outcome):
         bet.owner_outcome = outcome
         bet.save()

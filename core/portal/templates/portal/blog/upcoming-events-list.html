@@ -94,7 +94,6 @@
             <input type="number" id="pageInput" placeholder="Page #"
                    min="1" max="{{ total_pages }}" value="{{ current_page }}"
                    onkeydown="if (event.key === 'Enter') { goToPage(); }" />
-
             <!-- Display the last page if not already in the range -->
             {% if total_pages > 3 %}
                 <span>...</span>
