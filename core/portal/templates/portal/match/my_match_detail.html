@@ -114,7 +114,7 @@
                 <div id="event-list">
                     {% if available_events %}
                     {% for event in available_events %}
-                    <button class="event-card"  data-event-id="{{ event.id }}" data-event="{{ event|safe }}" 
+                    <button class="event-card" data-event-id="{{ event.id }}" data-event="{{ event }}" 
                         data-bookmakers='{{ event.bookmakers.all}}'> <!-- Store the bookmakers in data-bookmakers -->
                 
                         <div class="team">
@@ -226,6 +226,7 @@
             const eventId = this.getAttribute('data-event-id');
             const event = this.getAttribute('data-event');
             const bookmakers = document.getElementById('data-bookmakers');
+
             selected_event = event; // Populate selected_event
             console.log('Selected Event Bookmakers:', selected_event);
             // Hide other events
