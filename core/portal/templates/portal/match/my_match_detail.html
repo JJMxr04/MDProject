@@ -226,7 +226,7 @@
             // Show the back button
             document.getElementById('back-to-events').style.display = 'block';
 
-            console.log('Selected Event ID:', selected_event);
+            // console.log('Selected Event ID:', selected_event);
         });
     });
 
@@ -244,7 +244,7 @@
             // Select the clicked outcome
             this.classList.add('selected');
 
-            console.log('Selected Outcome ID:', selected_outcome);
+            // console.log('Selected Outcome ID:', selected_outcome);
         });
     });
 
@@ -279,25 +279,46 @@
         selected_outcome = null;
     });
 
-    // Function to submit the selected event and outcome
-    function submitSelection() {
+    // Modify the existing form submission
+    document.getElementById('upload-form').addEventListener('submit', function(e) {
+        e.preventDefault();
         if (selected_event && selected_outcome) {
-            console.log('Submitting selection:');
-            console.log('Event ID:', selected_event);
-            console.log('Outcome ID:', selected_outcome);
-            // Add your submission logic here
+            // console.log('Submitting selection:');
+            // console.log('Event ID:', selected_event);
+            // console.log('Outcome ID:', selected_outcome);
+            
+            // Add the selected event and outcome to the form data
+            const formData = new FormData(this);
+            formData.append('event_id', selected_event);
+            formData.append('outcome_id', selected_outcome);
+
+            // Here you would typically send the formData to your server
+            // For example, using fetch:
+            /*
+            fetch('/your-submission-url/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Handle successful submission
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Handle errors
+            });
+            */
+
+            // For now, we'll just log the formData
+            // for (let [key, value] of formData.entries()) {
+            //     console.log(key, value);
+            // }
         } else {
             console.log('Please select both an event and an outcome before submitting.');
+            // You might want to show an error message to the user here
         }
-    }
-
-    // Add a submit button
-    const submitButton = document.createElement('button');
-    submitButton.textContent = 'Submit Selection';
-    submitButton.id = 'submit-selection';
-    document.querySelector('#event-list').insertAdjacentElement('afterend', submitButton);
-
-    submitButton.addEventListener('click', submitSelection);
+    });
 
     function openPopup() {
         document.getElementById("event-popup").style.display = "block";
