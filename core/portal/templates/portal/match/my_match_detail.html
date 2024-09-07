@@ -151,7 +151,7 @@
                                                         <h4 class="market-title">{{ market.title }}</h4>
                                                         <ul>
                                                             {% for outcome in market.outcomes %}
-                                                                <li class="outcome">
+                                                                <li class="outcome" data-outcome-id="{{ outcome.id }}">
                                                                     <span class="outcome-name">{{ outcome.name }}</span>
                                                                     <span class="point">{{ outcome.point }}</span>
                                                                     <span class="price">{{ outcome.price }}</span>
@@ -186,7 +186,118 @@
 </div>
 
 <script>
-    let selected_event = null; // Add selected_event variable
+    let selected_event = null;
+    let selected_outcome = null;
+
+    document.querySelectorAll('.event-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const eventId = this.dataset.eventId;
+            selected_event = eventId;
+            selected_outcome = null; // Reset selected outcome when a new event is selected
+            const selectedEventContainer = this.closest('.event-container');
+            const selectedBookmakerSection = document.getElementById(`bookmakers-section-${eventId}`);
+            
+            // Hide all event containers except the selected one
+            document.querySelectorAll('.event-container').forEach(container => {
+                if (container !== selectedEventContainer) {
+                    container.style.display = 'none';
+                }
+            });
+
+            // Show the selected event container
+            selectedEventContainer.style.display = 'block';
+
+            // Hide all bookmaker sections
+            document.querySelectorAll('.bookmakers-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show the selected bookmaker section
+            selectedBookmakerSection.style.display = 'block';
+
+            // Deselect all event cards
+            document.querySelectorAll('.event-card').forEach(otherCard => {
+                otherCard.classList.remove('selected');
+            });
+
+            // Select the clicked event card
+            this.classList.add('selected');
+
+            // Show the back button
+            document.getElementById('back-to-events').style.display = 'block';
+
+            console.log('Selected Event ID:', selected_event);
+        });
+    });
+
+    // Make outcomes selectable
+    document.querySelectorAll('.outcome').forEach(outcome => {
+        outcome.addEventListener('click', function() {
+            const outcomeId = this.dataset.outcomeId;
+            selected_outcome = outcomeId;
+
+            // Deselect all outcomes
+            document.querySelectorAll('.outcome').forEach(otherOutcome => {
+                otherOutcome.classList.remove('selected');
+            });
+
+            // Select the clicked outcome
+            this.classList.add('selected');
+
+            console.log('Selected Outcome ID:', selected_outcome);
+        });
+    });
+
+    // Add a "Back" button to return to the list of events
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to All Events';
+    backButton.id = 'back-to-events';
+    backButton.style.display = 'none';
+    document.querySelector('#event-list').insertAdjacentElement('beforebegin', backButton);
+
+    backButton.addEventListener('click', function() {
+        // Show all event containers
+        document.querySelectorAll('.event-container').forEach(container => {
+            container.style.display = 'block';
+        });
+
+        // Hide all bookmaker sections
+        document.querySelectorAll('.bookmakers-section').forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Deselect all event cards and outcomes
+        document.querySelectorAll('.event-card, .outcome').forEach(element => {
+            element.classList.remove('selected');
+        });
+
+        // Hide the back button
+        this.style.display = 'none';
+
+        // Reset selected event and outcome
+        selected_event = null;
+        selected_outcome = null;
+    });
+
+    // Function to submit the selected event and outcome
+    function submitSelection() {
+        if (selected_event && selected_outcome) {
+            console.log('Submitting selection:');
+            console.log('Event ID:', selected_event);
+            console.log('Outcome ID:', selected_outcome);
+            // Add your submission logic here
+        } else {
+            console.log('Please select both an event and an outcome before submitting.');
+        }
+    }
+
+    // Add a submit button
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Submit Selection';
+    submitButton.id = 'submit-selection';
+    document.querySelector('#event-list').insertAdjacentElement('afterend', submitButton);
+
+    submitButton.addEventListener('click', submitSelection);
 
     function openPopup() {
         document.getElementById("event-popup").style.display = "block";
@@ -215,30 +326,6 @@
             popup.style.display = "none";
         }
     }
-
-    // Handle event card click
-    document.querySelectorAll('.event-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const eventId = this.dataset.eventId;
-            const selectedBookmakerSection = document.getElementById(`bookmakers-section-${eventId}`);
-            
-            // Hide all bookmaker sections
-            document.querySelectorAll('.bookmakers-section').forEach(section => {
-                section.style.display = 'none';
-            });
-
-            // Show the selected bookmaker section
-            selectedBookmakerSection.style.display = 'block';
-
-            // Deselect all event cards
-            document.querySelectorAll('.event-card').forEach(otherCard => {
-                otherCard.classList.remove('selected');
-            });
-
-            // Select the clicked event card
-            this.classList.add('selected');
-        });
-    });
 
     function displayMarketsAndOutcomes(bookmakers){
         document.querySelectorAll('.bookmaker').forEach(function(bookmakerElement){

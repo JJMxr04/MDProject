@@ -241,9 +241,19 @@
 }
 
 .outcome {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.outcome:hover {
+    background-color: #f0f0f0;
+}
+
+.outcome.selected {
+    background-color: #e6f2ff;
+    border: 1px solid #007bff;
 }
 
 /* Event card checkbox styling */
@@ -336,7 +346,32 @@
 }
 
 .outcome {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.outcome:hover {
+    background-color: #f0f0f0;
+}
+
+.outcome.selected {
+    background-color: #e6f2ff;
+    border: 1px solid #007bff;
+}
+
+#submit-selection {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#submit-selection:hover {
+    background-color: #218838;
 }
