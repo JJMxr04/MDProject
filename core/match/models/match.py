@@ -10,6 +10,9 @@ from core.event.models import Event
 from core.game.models import Game
 from core.mail.models import Emails
 from core.match.models.TieBreaker import TieBreaker
+from datetime import datetime
+import uuid
+from rest_framework.response import Response
 
 
 class MatchManager(AbstractManager):
@@ -116,6 +119,75 @@ class MatchManager(AbstractManager):
             match.save()
             if match.golden_game_completed and match.player_1_game_1_completed and match.player_1_game_2_completed and match.player_1_game_3_completed and match.player_1_game_4_completed and match.player_1_game_5_completed and match.player_2_game_1_completed and match.player_2_game_2_completed and match.player_2_game_3_completed and match.player_2_game_4_completed and match.player_2_game_5_completed:
                 self.calcutate_winner(match)
+
+    def upload_pick(self, player, match, data):
+
+        if (match.player_1 != player) and (match.player_2 != player):
+            return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
+
+        eventList = []
+
+        if match.golden_game.event !=None:
+            eventList.append(match.golden_game.event.id)
+        if match.player_1_game_1.event !=None:
+            eventList.append(match.player_1_game_1.event.id)
+        if match.player_1_game_2.event !=None:
+            eventList.append(match.player_1_game_2.event.id)
+        if match.player_1_game_3.event !=None:
+            eventList.append(match.player_1_game_3.event.id)
+        if match.player_1_game_4.event !=None:
+            eventList.append(match.player_1_game_4.event.id)
+        if match.player_1_game_5.event !=None:
+            eventList.append(match.player_1_game_5.event.id)
+        if match.player_2_game_1.event !=None:
+            eventList.append(match.player_2_game_1.event.id)
+        if match.player_2_game_2.event !=None:
+            eventList.append(match.player_2_game_2.event.id)
+        if match.player_2_game_3.event !=None:
+            eventList.append(match.player_2_game_3.event.id)
+        if match.player_2_game_4.event !=None:
+            eventList.append(match.player_2_game_4.event.id)
+        if match.player_2_game_5.event !=None:
+            eventList.append(match.player_2_game_5.event.id)
+        if uuid.UUID(data.get("event_id")) in eventList:
+            return Response(
+                {'error': "This game is already been selected"},
+                status=400)
+
+        if match.player_1 == player:
+            if match.player_1_game_1.event == None:
+                Game.objects.update_by_id(match.player_1_game_1.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_2.event == None:
+                Game.objects.update_by_id(match.player_1_game_2.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_3.event == None:
+                Game.objects.update_by_id(match.player_1_game_3.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_4.event == None:
+                Game.objects.update_by_id(match.player_1_game_4.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_1_game_5.event == None:
+                Game.objects.update_by_id(match.player_1_game_5.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+        if match.player_2 == player:
+            if match.player_2_game_1.event == None:
+                Game.objects.update_by_id(match.player_2_game_1.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_2.event == None:
+                Game.objects.update_by_id(match.player_2_game_2.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_3.event == None:
+                Game.objects.update_by_id(match.player_2_game_3.id,player,data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_4.event == None:
+                Game.objects.update_by_id(match.player_2_game_4.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+            if match.player_2_game_5.event == None:
+                Game.objects.update_by_id(match.player_2_game_5.id, player, data)
+                return Response({'message': 'Request was successful'}, status=200)
+        return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
+
 
 
 class Match(AbstractModel):

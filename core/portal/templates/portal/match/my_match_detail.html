@@ -283,40 +283,39 @@
     document.getElementById('upload-form').addEventListener('submit', function(e) {
         e.preventDefault();
         if (selected_event && selected_outcome) {
-            // console.log('Submitting selection:');
-            // console.log('Event ID:', selected_event);
-            // console.log('Outcome ID:', selected_outcome);
+            console.log('Submitting selection:');
+            console.log('Event ID:', selected_event);
+            console.log('Outcome ID:', selected_outcome);
             
-            // Add the selected event and outcome to the form data
-            const formData = new FormData(this);
-            formData.append('event_id', selected_event);
-            formData.append('outcome_id', selected_outcome);
+            // Prepare the data to send
+            const data = {
+                event_id: selected_event,
+                player_choice: selected_outcome
+            };
 
-            // Here you would typically send the formData to your server
-            // For example, using fetch:
-            /*
-            fetch('/your-submission-url/', {
+            // Send the data to the server
+            fetch('{% url "core-portal:portal-upload_pick" match.id %}', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                // Handle successful submission
+                // Handle successful submission (e.g., show a success message)
+                alert('Pick uploaded successfully!');
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // Handle errors
+                // Handle errors (e.g., show an error message)
+                alert('Error uploading pick. Please try again.');
             });
-            */
-
-            // For now, we'll just log the formData
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(key, value);
-            // }
         } else {
             console.log('Please select both an event and an outcome before submitting.');
-            // You might want to show an error message to the user here
+            alert('Please select both an event and an outcome before submitting.');
         }
     });
 
@@ -353,5 +352,7 @@
             bookmakerElement.style.display='block';
         })
     }
+
+    
 </script>
 {% endblock %}

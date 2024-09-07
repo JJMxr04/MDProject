@@ -8,6 +8,11 @@ from core.game.models import Game
 from django.contrib.auth.decorators import login_required
 import json
 
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404
+import json
+
 
 
 @login_required(login_url='/auth/login/')
@@ -25,3 +30,17 @@ def my_match_detail_view(request, match_id):
     }
     
     return render(request, 'portal/match/my_match_detail.html', context)
+
+@require_POST
+@login_required(login_url='/auth/login/')
+def upload_pick(request, match_id):
+    match = get_object_or_404(Match, id=match_id)
+    data = json.loads(request.body)
+    event_id = data.get('event_id')
+    player_choice = data.get('player_choice')
+
+    try:
+        match.upload_pick(event_id=event_id, player_choice=player_choice)
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
