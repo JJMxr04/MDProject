@@ -112,70 +112,76 @@
             <span class="close" onclick="closeUploadPopup()">&times;</span>
             <h2>Upload Your Pick</h2>
             <hr class="divider">
-
+            <div class="upload-flex-container">
                 <div id="event-list">
                     {% if available_events %}
                         {% for event in available_events %}
-                            <div class="event-container">
-                                <button class="event-card" data-event-id="{{ event.id }}">
-                                    <div class="event-info">
-                                        <div class="team">
-                                            <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.name }}">
-                                            <h4>{{ event.home_team_team.team_name }}</h4>
-                                        </div>
-                                        <div class="vs-text">
-                                            <h4>Vs</h4>
-                                        </div>
-                                        <div class="team">
-                                            <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.name }}">
-                                            <h4>{{ event.away_team_team.team_name }}</h4>
-                                        </div>
+                            <button class="event-card" data-event-id="{{ event.id }}" data-event="{{ event }}" 
+                                data-bookmakers='{{ event.bookmakers.all}}'> <!-- Store the bookmakers in data-bookmakers -->
                         
-                                        <div class="event-body">
-                                            <p><strong>Sport:</strong> {{ event.sport_title }}</p>
-                                            <p><strong>Description:</strong> {{ event.description }}</p>
-                                            <p><strong>Commence Time:</strong> {{ event.commence_time }}</p>
-                                        </div>
-                                    </div>
-                                </button>
-
-                                <div class="bookmakers-section" id="bookmakers-section-{{ event.id }}">
-                                    <h2>Bookmakers</h2>
-                                    <div class="bookmakers-container">
-                                        {% if event.bookmakers %}
-                                            {% for bookmaker in event.bookmakers %}
-                                                <div class="bookmaker">
-                                                    <h3>{{ bookmaker.title }}</h3>
-                                                    {% for market in bookmaker.markets %}
-                                                    <div class="market" data-key="{{ market.key }}">
-                                                        <h4 class="market-title">{{ market.title }}</h4>
-                                                        <ul>
-                                                            {% for outcome in market.outcomes %}
-                                                                <li class="outcome">
-                                                                    <span class="outcome-name">{{ outcome.name }}</span>
-                                                                    <span class="point">{{ outcome.point }}</span>
-                                                                    <span class="price">{{ outcome.price }}</span>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            <p>No bookmakers found for this event.</p>
-                                        {% endif %}
-                                    </div>
+                                <div class="team">
+                                    <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.name }}">
+                                    <h4>{{ event.home_team_team.team_name }}</h4>
                                 </div>
-                            </div>
+                                <div class="vs-text">
+                                    <h4>Vs</h4>
+                                </div>
+                                <div class="team">
+                                    <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.name }}">
+                                    <h4>{{ event.away_team_team.team_name }}</h4>
+                                </div>
+                        
+                                <div class="event-body">
+                                    <p><strong>Sport:</strong> {{ event.sport_title }}</p>
+                                    <p><strong>Description:</strong> {{ event.description }}</p>
+                                    <p><strong>Commence Time:</strong> {{ event.commence_time }}</p>
+                                </div>
+                            </button>
                         {% endfor %}
                     
                     {% else %}
                         <p class="no-events-message">No events available for this match period.</p>
                     {% endif %}
                 </div>
-                
+                <div class="bookmakers-section" id="bookmakers-section" style="display: True;">
+                    <h2>Bookmakers</h2>
+                    {% if selected_event %}
 
+                                {% if selected_event.bookmakers.all %}
+                                    {% for bookmaker in selected_event.bookmakers.all %}
+                                        <div class="bookmaker">
+                                            <h3>{{ bookmaker.title }}</h3>
+                                            {% for market in bookmaker.markets.all %}
+                                            <div class="market" data-key="{{ market.key }}">
+                                                <h4 class="market-title">{{ market.title }}</h4>
+                                                <ul>
+                                                    {% for outcome in market.outcomes.all %}
+                                                        <li class="outcome">
+                                                            <div class="outcome-name-container">
+                                                                <span class="outcome-name">{{ outcome.name }}</span>
+                                                            </div>
+                                                            <div class="point-container">
+                                                                <span class="point">{{ outcome.point }}</span>
+                                                            </div>
+                                                            <div class="price-container">
+                                                                <span class="price">{{ outcome.price }}</span>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No bookmakers found for this event.</p>
+                                {% endif %}
+
+                    {% else %}
+                        <p>No available Bookmakers for Event.</p>
+                    {% endif %}
+                </div>
+            </div>
             <hr class="divider">
             <form id="upload-form" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -219,24 +225,23 @@
     // Handle event card click
     document.querySelectorAll('.event-card').forEach(card => {
         card.addEventListener('click', function() {
-            const eventId = this.dataset.eventId;
-            const selectedBookmakerSection = document.getElementById(`bookmakers-section-${eventId}`);
-            
-            // Hide all bookmaker sections
-            document.querySelectorAll('.bookmakers-section').forEach(section => {
-                section.style.display = 'none';
-            });
+            const eventId = this.getAttribute('data-event-id');
+            const event = this.getAttribute('data-event');
+            const bookmakers = document.getElementById('data-bookmakers');
 
-            // Show the selected bookmaker section
-            selectedBookmakerSection.style.display = 'block';
-
-            // Deselect all event cards
+            selected_event = event; // Populate selected_event
+            console.log('Selected Event Bookmakers:', selected_event);
+            // Hide other events
             document.querySelectorAll('.event-card').forEach(otherCard => {
-                otherCard.classList.remove('selected');
+                if (otherCard !== this) {
+                    otherCard.style.display = 'none';  // Hide other events
+                }
             });
 
-            // Select the clicked event card
+            // Highlight the selected event
             this.classList.add('selected');
+
+           displayMarketsAndOutcomes(selected_event.bookmakers);
         });
     });
 
