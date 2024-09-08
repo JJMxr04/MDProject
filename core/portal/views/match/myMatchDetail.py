@@ -40,7 +40,7 @@ def upload_pick(request, match_id):
     player_choice = data.get('player_choice')
 
     try:
-        match.upload_pick(event_id=event_id, player_choice=player_choice)
+        Match.objects.upload_pick(match=match, player=request.user, data=data)
         return JsonResponse({'status': 'success'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)

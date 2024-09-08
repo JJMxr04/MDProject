@@ -121,7 +121,7 @@ class MatchManager(AbstractManager):
                 self.calcutate_winner(match)
 
     def upload_pick(self, player, match, data):
-
+        print(1)
         if (match.player_1 != player) and (match.player_2 != player):
             return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
 
@@ -149,11 +149,13 @@ class MatchManager(AbstractManager):
             eventList.append(match.player_2_game_4.event.id)
         if match.player_2_game_5.event !=None:
             eventList.append(match.player_2_game_5.event.id)
+
+        print(2)
         if uuid.UUID(data.get("event_id")) in eventList:
             return Response(
                 {'error': "This game is already been selected"},
                 status=400)
-
+        print(3)
         if match.player_1 == player:
             if match.player_1_game_1.event == None:
                 Game.objects.update_by_id(match.player_1_game_1.id,player,data)
@@ -170,6 +172,7 @@ class MatchManager(AbstractManager):
             if match.player_1_game_5.event == None:
                 Game.objects.update_by_id(match.player_1_game_5.id, player, data)
                 return Response({'message': 'Request was successful'}, status=200)
+        print(4)
         if match.player_2 == player:
             if match.player_2_game_1.event == None:
                 Game.objects.update_by_id(match.player_2_game_1.id,player,data)
@@ -186,6 +189,7 @@ class MatchManager(AbstractManager):
             if match.player_2_game_5.event == None:
                 Game.objects.update_by_id(match.player_2_game_5.id, player, data)
                 return Response({'message': 'Request was successful'}, status=200)
+        print(5)
         return Response({'error': "Either you are not a participant of this match or You already uploaded your games"}, status=400)
 
 

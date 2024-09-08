@@ -26,72 +26,88 @@ class GameManager(AbstractManager):
 
     def update_by_id(self, id, current_user, data):
         # print(data)
+        print(6)
         game = self.filter(id=id).first()
         new_game = False
-        # print('Starting Game Check')
+
         if game is None:
-            # print('check 1')
+
             # If the game does not exist, create a new instance
             return False, False
-        # print('check 2')
+        print(7)
         if (current_user != game.owner) and (current_user != game.player_2):
-            # print('check 3')
+
             return False, False
-        # print('check 4')
+        print(8)
         if game.event is None:
-            # print('check 5')
+            print(8.1)
             new_game = True
             event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
-                # print('check 6')
-                return False, False
-            # print('check 7')
-            commence_time_str = event.commence_time
 
+                return False, False
+            print(8.2)
+            commence_time_str = event.commence_time
+            print(8.3)
             # Convert the commence_time string to a datetime object
             commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
-
+            print(8.4)
             # Check if the commence time is at least 8 hours from now
             current_time = timezone.now()
+            print(8.5)
             if commence_time < current_time + timedelta(hours=8):
+                print(8.6)
                 return False, False
-
+            print(8.7)
             game.event = event
             game.home_team = event.home_team
             game.away_team = event.away_team
             game.commence_time = commence_time
             game.deadline_time = commence_time - timedelta(hours=8)
-
+            print(8.8)
+        print(9)
         # Check if the event has already started
         current_time = timezone.now()
         # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
             return False, False
+        print(10)
         if data.get("player_choice"):
-
-            outcome=Outcome.filter(id=data.get("player_choice").id).first()
+            player_choice = data.get("player_choice")
+            print(10.1)
+            print(player_choice)
+            outcome=Outcome.objects.filter(id=player_choice).first()
+            print(outcome)
+            print("10.1.1")
             if Outcome is None and current_user != game.owner:
+                print("10.2.1")
                 return False, False
+            print(10.2)
             if Outcome is None and current_user == game.owner:
                 Bet.objects.set_market(game.bet,outcome.market)
-                return True, True
+            print(10.3)
+            game = self.filter(id=id).first()
+            print(game.bet)
+            print("10.3.1")
             if outcome.market!=game.bet.market:
                 return False,False
+            print(10.4)
             if current_user == game.owner:
                 Bet.objects.set_owner_outcome(game.bet,outcome)
-                return True, True
+
+            print(10.5)
             if current_user == game.player_2:
                 Bet.objects.set_player_2_outcome(game.bet,outcome)
-                return True, True
-
+        print(11)
 
         game.save()
+        print(12)
         # Email
         if current_user == game.owner:
             Emails.send_opponent_pick_notification(game.player_2,game.owner.username)
         if current_user == game.player_2:
             Emails.send_opponent_pick_notification(game.owner,game.player_2.username)
-
+        print(13)
         # print('check 15')
 
         return new_game, game
