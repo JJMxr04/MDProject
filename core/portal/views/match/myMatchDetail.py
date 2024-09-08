@@ -12,6 +12,9 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 import json
+from django.utils import timezone
+
+from datetime import datetime, timedelta
 
 
 
@@ -19,7 +22,7 @@ import json
 def my_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     is_player_in_match = request.user.id in [match.player_1.id, match.player_2.id]
-    events = EventBookmakerSerializer(Event.objects.filter(commence_time__gte=match.start_date, commence_time__lte=match.end_date), many=True).data
+    events = EventBookmakerSerializer(Event.objects.filter(commence_time__gte=timezone.now() + timedelta(hours=8.25), commence_time__lte=match.end_date), many=True).data
 
     context = {
         'match': match,

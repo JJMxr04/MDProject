@@ -13,7 +13,7 @@ class GameManager(AbstractManager):
                     home_team=None, away_team=None, winner=None):
         return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
                            deadline_time=deadline_time, completed=completed, home_team=home_team,
-                           away_team=away_team, winner=winner,bet=Bet.objects.create())
+                           away_team=away_team, winner=winner,bet=Bet.objects.create_bet())
     
     def get_owner_correctness(self, game):
         bet= game.bet
@@ -32,39 +32,42 @@ class GameManager(AbstractManager):
 
         if game is None:
 
-            # If the game does not exist, create a new instance
+            # If the game does not exist, return false
             return False, False
         print(7)
         if (current_user != game.owner) and (current_user != game.player_2):
 
             return False, False
         print(8)
-        if game.event is None:
-            print(8.1)
+        if current_user == game.owner:
+            if game.event is None:
+                print(8.1)
             new_game = True
             event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
             if event is None:
 
                 return False, False
-            print(8.2)
-            commence_time_str = event.commence_time
-            print(8.3)
-            # Convert the commence_time string to a datetime object
-            commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
-            print(8.4)
-            # Check if the commence time is at least 8 hours from now
-            current_time = timezone.now()
-            print(8.5)
-            if commence_time < current_time + timedelta(hours=8):
-                print(8.6)
-                return False, False
-            print(8.7)
-            game.event = event
-            game.home_team = event.home_team
-            game.away_team = event.away_team
-            game.commence_time = commence_time
-            game.deadline_time = commence_time - timedelta(hours=8)
-            print(8.8)
+                print(8.2)
+                commence_time_str = event.commence_time
+                print(8.3)
+                # Convert the commence_time string to a datetime object
+                commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
+                print(8.4)
+                # Check if the commence time is at least 8 hours from now
+                current_time = timezone.now()
+                print(8.5)
+                if commence_time < current_time + timedelta(hours=8):
+                    print(8.6)
+                    return False, False
+                print(8.7)
+                game.event = event
+                game.home_team = event.home_team
+                game.away_team = event.away_team
+                game.commence_time = commence_time
+                game.deadline_time = commence_time - timedelta(hours=8)
+                print(8.8)
+        if current_user == game.player_2 and game.bet.owner_outcome is None:
+            return False, False
         print(9)
         # Check if the event has already started
         current_time = timezone.now()
@@ -77,7 +80,6 @@ class GameManager(AbstractManager):
             print(10.1)
             print(player_choice)
             outcome=Outcome.objects.filter(id=player_choice).first()
-            print(outcome)
             print("10.1.1")
             if Outcome is None and current_user != game.owner:
                 print("10.2.1")
@@ -87,17 +89,17 @@ class GameManager(AbstractManager):
                 Bet.objects.set_market(game.bet,outcome.market)
             print(10.3)
             game = self.filter(id=id).first()
-            print(game.bet)
+
             print("10.3.1")
-            if outcome.market!=game.bet.market:
-                return False,False
             print(10.4)
             if current_user == game.owner:
-                Bet.objects.set_owner_outcome(game.bet,outcome)
+                if game.bet.owner_outcome is None:
+                    Bet.objects.set_owner_outcome(game.bet,outcome)
 
             print(10.5)
             if current_user == game.player_2:
-                Bet.objects.set_player_2_outcome(game.bet,outcome)
+                if game.bet.player_2_outcome is None:
+                    Bet.objects.set_player_2_outcome(game.bet,outcome)
         print(11)
 
         game.save()

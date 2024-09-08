@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.utils import timezone
+from datetime import datetime, timedelta
 from core.user.models import User
 from core.event.models import Event
 from core.game.models import Game
