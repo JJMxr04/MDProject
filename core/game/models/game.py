@@ -42,31 +42,31 @@ class GameManager(AbstractManager):
         if current_user == game.owner:
             if game.event is None:
                 print(8.1)
-            new_game = True
-            event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
-            if event is None:
+                new_game = True
+                event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
+                if event is None:
 
-                return False, False
-                print(8.2)
-                commence_time_str = event.commence_time
-                print(8.3)
-                # Convert the commence_time string to a datetime object
-                commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
-                print(8.4)
-                # Check if the commence time is at least 8 hours from now
-                current_time = timezone.now()
-                print(8.5)
-                if commence_time < current_time + timedelta(hours=8):
-                    print(8.6)
                     return False, False
-                print(8.7)
-                game.event = event
-                game.home_team = event.home_team
-                game.away_team = event.away_team
-                game.commence_time = commence_time
-                game.deadline_time = commence_time - timedelta(hours=8)
-                game.save()
-                print(8.8)
+                    print(8.2)
+                    commence_time_str = event.commence_time
+                    print(8.3)
+                    # Convert the commence_time string to a datetime object
+                    commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
+                    print(8.4)
+                    # Check if the commence time is at least 8 hours from now
+                    current_time = timezone.now()
+                    print(8.5)
+                    if commence_time < current_time + timedelta(hours=8):
+                        print(8.6)
+                        return False, False
+                    print(8.7)
+                    game.event = event
+                    game.home_team = event.home_team
+                    game.away_team = event.away_team
+                    game.commence_time = commence_time
+                    game.deadline_time = commence_time - timedelta(hours=8)
+                    game.save()
+                    print(8.8)
         if current_user == game.player_2 and game.bet.owner_outcome is None:
             return False, False
         print(9)
