@@ -83,12 +83,12 @@ class MatchManager(AbstractManager):
         for game in games:
             match = Match.objects.get_object_by_id(game.match_id)
             Game.objects.game_event_update(game=game, instance=instance)
-
+        
             if (game == match.player_1_game_1) and (not match.player_1_game_1_completed):
                 match.player_1_game_1_completed = True
             if (game == match.player_1_game_2) and (not match.player_1_game_2_completed):
                 match.player_1_game_2_completed = True
-
+        
             if (game == match.player_1_game_3) and not match.player_1_game_3_completed:
                 match.player_1_game_3_completed = True
             if (game == match.player_1_game_4) and not match.player_1_game_4_completed:

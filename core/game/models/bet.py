@@ -7,6 +7,8 @@ from django.utils import timezone
 from core.user.models import User
 from core.event.models import Event
 from core.mail.models import Emails
+import ast
+import json
 
 class BetManager(AbstractManager):
 
@@ -14,55 +16,68 @@ class BetManager(AbstractManager):
         return self.create(market=None,owner_outcome=None,player_2_outcome=None)
 
 
-    def calculate_owner_choice(self,bet,event):
+    def calculate_owner_choice(self, bet, event):
+        print("calculating owner bet choice")
 
-        if not bet.owner_outcome :
+        # If no owner outcome is present, return False
+        if not bet.owner_outcome:
             return False
-        if bet.type == 'h2h':
+
+        # Handle 'h2h' market
+        if bet.market.key == 'h2h':
             if event.winner == 'tie':
-                if bet.owner_outcome.name== 'draw':
-                    return True
-                else:
-                    return False
-            elif event.winner == bet.owner_outcome.name:
-                return True
-            else:
+                return bet.owner_outcome.name == 'draw'
+            return event.winner == bet.owner_outcome.name
+
+        # Handle 'totals' market
+        if bet.market.key == 'totals':
+            try:
+                # Parse scores from string
+                try:
+                    scores = json.loads(event.scores)
+                except json.JSONDecodeError:
+                    scores = ast.literal_eval(event.scores)
+
+                points = int(scores[0]['score']) + int(scores[1]['score'])
+                bet_points = bet.owner_outcome.point
+
+                if bet.owner_outcome.name == 'over':
+                    return bet_points < points
+                if bet.owner_outcome.name == 'under':
+                    return bet_points > points
+            except (ValueError, TypeError, IndexError) as e:
+                print(f"Error calculating totals bet: {e}")
                 return False
-        if bet.type == 'totals':
-            scores = event.scores
-            points = scores[0]['score']+scores[1]['score']
-            bet_points= bet.owner_outcome.point
-            if bet.owner_outcome.name == 'over':
-                if bet_points > points:
-                    return True
-                else:
-                    return False
-            if bet.owner_outcome.name == 'under':
-                if bet_points < points:
-                    return True
-                else:
-                    return False
-        if bet.type == 'spreads':
-            winner = event.winner
-            points_diff = event.scores[0]['score'] - event.scores[1]['score']
-            if bet.owner_outcome.point < 0:
-                if winner != bet.owner_outcome.name:
-                    return False
-                else:
-                    if abs(points_diff) < abs(bet.owner_outcome.point):
+
+        # Handle 'spreads' market
+        if bet.market.key == 'spreads':
+            try:
+                # Parse scores from string
+                try:
+                    scores = json.loads(event.scores)
+                except json.JSONDecodeError:
+                    scores = ast.literal_eval(event.scores)
+
+                points_diff = int(scores[0]['score']) - int(scores[1]['score'])
+                print("Points Difference:", points_diff)
+                winner = event.winner
+
+                if bet.owner_outcome.point < 0:
+                    if winner != bet.owner_outcome.name:
                         return False
-                    else:
+                    return abs(points_diff) >= abs(bet.owner_outcome.point)
+                else:
+                    if winner == bet.owner_outcome.name:
                         return True
-            else:
-                if winner == bet.owner_outcome.name:
-                    return True
-                elif abs(points_diff) < abs(bet.owner_outcome.point):
-                    return True
-                else: return False
-    def calculate_player_2_choice(self,bet,outcome):
+                    return abs(points_diff) < abs(bet.owner_outcome.point)
+            except (ValueError, TypeError, IndexError) as e:
+                print(f"Error calculating spreads bet: {e}")
+                return False
+    def calculate_player_2_choice(self,bet,event):
+        print("calculating player 2 bet choice")
         if not bet.player_2_outcome :
             return False
-        if bet.type == 'h2h':
+        if bet.market.key == 'h2h':
             if bet.event.winner == 'tie':
                 if bet.player_2_outcome.name== 'draw':
                     return True
@@ -72,8 +87,8 @@ class BetManager(AbstractManager):
                 return True
             else:
                 return False
-        if bet.type == 'totals':
-            scores = bet.event.scores
+        if bet.market.key == 'totals':
+            scores = ast.literal_eval(event.scores)
             points = scores[0]['score']+scores[1]['score']
             bet_points= bet.player_2_outcome.point
             if bet.player_2_outcome.name == 'over':
@@ -86,9 +101,10 @@ class BetManager(AbstractManager):
                     return True
                 else:
                     return False
-        if bet.type == 'spreads':
-            winner = bet.event.winner
-            points_diff = bet.event.scores[0]['score'] - bet.event.scores[1]['score']
+        if bet.market.key == 'spreads':
+            winner = event.winner
+            scores = ast.literal_eval(event.scores)
+            points_diff = scores[0]['score'] - scores[1]['score']
             if bet.player_2_outcome.point < 0:
                 if winner != bet.player_2_outcome.name:
                     return False

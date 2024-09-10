@@ -23,8 +23,7 @@ class BetAdmin(admin.ModelAdmin):
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
     list_display = [
-        'id', 'owner', 'player_2', 'match_id', 'commence_time', 'deadline_time', 'completed',
-        'home_team', 'away_team', 'winner', 'owner_choice', 'player_2_choice', 'event_link', 'bet_link'
+        'id', 'owner', 'player_2',  'commence_time', 'deadline_time', 'completed', 'winner',
     ]
     list_filter = ['completed']
     search_fields = ['owner__username', 'player_2__username', 'match_id']
