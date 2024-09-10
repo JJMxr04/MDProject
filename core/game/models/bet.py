@@ -21,16 +21,19 @@ class BetManager(AbstractManager):
 
         # If no owner outcome is present, return False
         if not bet.owner_outcome:
+            print("no owner outcome")
             return False
 
         # Handle 'h2h' market
         if bet.market.key == 'h2h':
+            print("h2h market")
             if event.winner == 'tie':
                 return bet.owner_outcome.name == 'draw'
             return event.winner == bet.owner_outcome.name
 
         # Handle 'totals' market
         if bet.market.key == 'totals':
+            print("totals market")
             try:
                 # Parse scores from string
                 try:
@@ -51,6 +54,7 @@ class BetManager(AbstractManager):
 
         # Handle 'spreads' market
         if bet.market.key == 'spreads':
+            print("spreads market")
             try:
                 # Parse scores from string
                 try:
