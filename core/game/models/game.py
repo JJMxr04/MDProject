@@ -65,6 +65,7 @@ class GameManager(AbstractManager):
                 game.away_team = event.away_team
                 game.commence_time = commence_time
                 game.deadline_time = commence_time - timedelta(hours=8)
+                game.save()
                 print(8.8)
         if current_user == game.player_2 and game.bet.owner_outcome is None:
             return False, False
@@ -82,7 +83,7 @@ class GameManager(AbstractManager):
             outcome=Outcome.objects.filter(id=player_choice).first()
             print("10.1.1")
             if Outcome is None and current_user != game.owner:
-                print("10.2.1")
+                print("10.1.2")
                 return False, False
             print(10.2)
             if Outcome is None and current_user == game.owner:
