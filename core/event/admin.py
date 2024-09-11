@@ -21,11 +21,11 @@ class EventAdmin(admin.ModelAdmin):
 
     readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'home_team', 'home_team_team', 'away_team', 'away_team_team')
 
-    def get_readonly_fields(self, request, obj=None):
-        readonly_fields = super().get_readonly_fields(request, obj)
-        if obj and obj.completed:
-            readonly_fields += ('scores',)
-        return readonly_fields
+    # def get_readonly_fields(self, request, obj=None):
+    #     readonly_fields = super().get_readonly_fields(request, obj)
+    #     if obj and obj.completed:
+    #         readonly_fields += ('scores',)
+    #     return readonly_fields
 
     def formatted_scores(self, obj):
         return "WIP"

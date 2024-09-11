@@ -6,6 +6,7 @@ from django.http import Http404
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from core.event.models.team import Team
+from django.contrib.postgres.fields import JSONField 
 
 
 
@@ -64,7 +65,7 @@ class Event(AbstractModel):
     home_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_team_team', null=True, blank=True)
     away_team = models.CharField(max_length=255)
     away_team_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_team_team', null=True, blank=True)
-    scores = models.CharField(max_length=255, null=True, default=None)
+    scores = models.JSONField(null=True, blank=True, default=dict) 
     winner = models.CharField(max_length=255, null=True, default=None)
 
     objects = EventManager()

@@ -9,6 +9,8 @@ from core.event.models import Event
 from core.mail.models import Emails
 import ast
 import json
+import re
+import ast
 
 class BetManager(AbstractManager):
 
@@ -57,11 +59,9 @@ class BetManager(AbstractManager):
             print("spreads market")
             try:
                 # Parse scores from string
-                try:
-                    scores = json.loads(event.scores)
-                except json.JSONDecodeError:
-                    scores = ast.literal_eval(event.scores)
 
+
+                scores = list(event.scores)
                 points_diff = int(scores[0]['score']) - int(scores[1]['score'])
                 print("Points Difference:", points_diff)
                 winner = event.winner
