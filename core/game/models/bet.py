@@ -15,55 +15,33 @@ import ast
 class BetManager(AbstractManager):
 
     def create_bet(self):
-        return self.create(market=None,owner_outcome=None,player_2_outcome=None)
-
+        return self.create(market=None, owner_outcome=None, player_2_outcome=None)
 
     def calculate_owner_choice(self, bet, event):
-        print("calculating owner bet choice")
-
-        # If no owner outcome is present, return False
         if not bet.owner_outcome:
-            print("no owner outcome")
             return False
 
-        # Handle 'h2h' market
         if bet.market.key == 'h2h':
-            print("h2h market")
             if event.winner == 'tie':
                 return bet.owner_outcome.name == 'draw'
             return event.winner == bet.owner_outcome.name
 
-        # Handle 'totals' market
         if bet.market.key == 'totals':
-            print("totals market")
             try:
-                # Parse scores from string
-                try:
-                    scores = json.loads(event.scores)
-                except json.JSONDecodeError:
-                    scores = ast.literal_eval(event.scores)
-
+                scores = event.scores
                 points = int(scores[0]['score']) + int(scores[1]['score'])
                 bet_points = bet.owner_outcome.point
-
-                if bet.owner_outcome.name == 'over':
-                    return bet_points < points
-                if bet.owner_outcome.name == 'under':
+                if bet.owner_outcome.name == 'Over':
+                    return (points > bet_points)
+                if bet.owner_outcome.name == 'Under':
                     return bet_points > points
             except (ValueError, TypeError, IndexError) as e:
-                print(f"Error calculating totals bet: {e}")
                 return False
 
-        # Handle 'spreads' market
         if bet.market.key == 'spreads':
-            print("spreads market")
             try:
-                # Parse scores from string
-
-
                 scores = list(event.scores)
                 points_diff = int(scores[0]['score']) - int(scores[1]['score'])
-                print("Points Difference:", points_diff)
                 winner = event.winner
 
                 if bet.owner_outcome.point < 0:
@@ -75,69 +53,58 @@ class BetManager(AbstractManager):
                         return True
                     return abs(points_diff) < abs(bet.owner_outcome.point)
             except (ValueError, TypeError, IndexError) as e:
-                print(f"Error calculating spreads bet: {e}")
                 return False
-    def calculate_player_2_choice(self,bet,event):
-        print("calculating player 2 bet choice")
-        if not bet.player_2_outcome :
+
+    def calculate_player_2_choice(self, bet, event):
+        if not bet.player_2_outcome:
             return False
+
         if bet.market.key == 'h2h':
-            if bet.event.winner == 'tie':
-                if bet.player_2_outcome.name== 'draw':
-                    return True
-                else:
-                    return False
-            elif bet.event.winner == bet.player_2_outcome.name:
-                return True
-            else:
-                return False
+            if event.winner == 'tie':
+                return bet.player_2_outcome.name == 'draw'
+            return event.winner == bet.player_2_outcome.name
+
         if bet.market.key == 'totals':
-            scores = ast.literal_eval(event.scores)
-            points = scores[0]['score']+scores[1]['score']
-            bet_points= bet.player_2_outcome.point
-            if bet.player_2_outcome.name == 'over':
-                if bet_points > points:
-                    return True
-                else:
-                    return False
-            if bet.player_2_outcome.name == 'under':
-                if bet_points < points:
-                    return True
-                else:
-                    return False
+            try:
+                scores = event.scores
+                points = int(scores[0]['score']) + int(scores[1]['score'])
+                bet_points = bet.player_2_outcome.point
+                if bet.player_2_outcome.name == 'Over':
+                    return (points > bet_points)
+                if bet.player_2_outcome.name == 'Under':
+                    return bet_points > points
+            except (ValueError, TypeError, IndexError) as e:
+                return False
+
         if bet.market.key == 'spreads':
-            winner = event.winner
-            scores = ast.literal_eval(event.scores)
-            points_diff = scores[0]['score'] - scores[1]['score']
-            if bet.player_2_outcome.point < 0:
-                if winner != bet.player_2_outcome.name:
-                    return False
-                else:
-                    if abs(points_diff) < abs(bet.player_2_outcome.point):
+            try:
+                scores = list(event.scores)
+                points_diff = int(scores[0]['score']) - int(scores[1]['score'])
+                winner = event.winner
+
+                if bet.player_2_outcome.point < 0:
+                    if winner != bet.player_2_outcome.name:
                         return False
-                    else:
+                    return abs(points_diff) >= abs(bet.player_2_outcome.point)
+                else:
+                    if winner == bet.player_2_outcome.name:
                         return True
-            else:
-                if winner == bet.player_2_outcome.name:
-                    return True
-                elif abs(points_diff) < abs(bet.player_2_outcome.point):
-                    return True
-                else: return False
-    def set_owner_outcome(self,bet,outcome):
-        bet.market=outcome.market
+                    return abs(points_diff) < abs(bet.player_2_outcome.point)
+            except (ValueError, TypeError, IndexError) as e:
+                return False
+
+    def set_owner_outcome(self, bet, outcome):
+        bet.market = outcome.market
         bet.owner_outcome = outcome
         bet.save()
-    def set_player_2_outcome(self,bet,outcome):
+
+    def set_player_2_outcome(self, bet, outcome):
         bet.player_2_outcome = outcome
         bet.save()
-    def set_market(self,bet,market):
+
+    def set_market(self, bet, market):
         bet.market = market
         bet.save()
-
-
-
-
-
 
 class Bet(AbstractModel):
     market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='bet_market', null=True,
