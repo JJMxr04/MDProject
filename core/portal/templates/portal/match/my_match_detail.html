@@ -2,6 +2,38 @@
 {% load static %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
+    <style>
+        .bookmaker {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .market {
+            margin-top: 10px;
+        }
+        .market-title {
+            font-weight: bold;
+        }
+        .outcome {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            cursor: pointer;
+        }
+        .outcome:hover {
+            background-color: #f0f0f0;
+        }
+        .outcome.selected {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        .no-bookmakers {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
 {% endblock css %}
 
 {% block content %}
@@ -142,29 +174,7 @@
                                 <div class="bookmakers-section" id="bookmakers-section-{{ event.id }}">
                                     <h2>Bookmakers</h2>
                                     <div class="bookmakers-container">
-                                        {% if event.bookmakers %}
-                                            {% for bookmaker in event.bookmakers %}
-                                                <div class="bookmaker">
-                                                    <h3>{{ bookmaker.title }}</h3>
-                                                    {% for market in bookmaker.markets %}
-                                                    <div class="market" data-key="{{ market.key }}">
-                                                        <h4 class="market-title">{{ market.title }}</h4>
-                                                        <ul>
-                                                            {% for outcome in market.outcomes %}
-                                                                <li class="outcome" data-outcome-id="{{ outcome.id }}">
-                                                                    <span class="outcome-name">{{ outcome.name }}</span>
-                                                                    <span class="point">{{ outcome.point }}</span>
-                                                                    <span class="price">{{ outcome.price }}</span>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            <p>No bookmakers found for this event.</p>
-                                        {% endif %}
+                                        <!-- Bookmakers will be loaded dynamically here -->
                                     </div>
                                 </div>
                             </div>
@@ -226,27 +236,113 @@
             // Show the back button
             document.getElementById('back-to-events').style.display = 'block';
 
-            // console.log('Selected Event ID:', selected_event);
+            // Fetch and display bookmakers for the selected event
+            fetchBookmakers(eventId);
+
+            console.log('Selected Event ID:', selected_event);
         });
     });
 
-    // Make outcomes selectable
-    document.querySelectorAll('.outcome').forEach(outcome => {
-        outcome.addEventListener('click', function() {
-            const outcomeId = this.dataset.outcomeId;
-            selected_outcome = outcomeId;
+    function fetchBookmakers(eventId) {
+        console.log('Fetching bookmakers for event:', eventId);
+        
+        // Convert eventId to UUID format
+        const uuidEventId = convertToUUID(eventId);
+        
+        const url = `{% url "core-portal:portal-match-event-outcomes" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', uuidEventId);
+        
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => {
+            console.log('Response received:', response);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const bookmakers = data['event_bookmakers']['bookmakers']
+            const bookmakerContainer = document.querySelector(`#bookmakers-section-${eventId} .bookmakers-container`);
+            
+            if (!bookmakers || bookmakers.length === 0) {
+                bookmakerContainer.innerHTML = '<p class="no-bookmakers">No Bookmakers</p>';
+                return;
+            }
 
-            // Deselect all outcomes
-            document.querySelectorAll('.outcome').forEach(otherOutcome => {
-                otherOutcome.classList.remove('selected');
+            bookmakerContainer.innerHTML = ''; // Clear existing content
+            bookmakers.forEach(bookmaker => {
+                const bookmakerElement = document.createElement('div');
+                bookmakerElement.className = 'bookmaker';
+                bookmakerElement.innerHTML = `
+                    <h3>${bookmaker.title}</h3>
+                    ${bookmaker.markets.map(market => `
+                        <div class="market" data-key="${market.key}">
+                            <h4 class="market-title">${market.title}</h4>
+                            <ul>
+                                ${market.outcomes.map(outcome => `
+                                    <li class="outcome" data-outcome-id="${outcome.id}">
+                                        <span class="outcome-name">${outcome.name}</span>
+                                        <span class="point">${outcome.point || ''}</span>
+                                        <span class="price">${outcome.price}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                `;
+                bookmakerContainer.appendChild(bookmakerElement);
             });
 
-            // Select the clicked outcome
-            this.classList.add('selected');
-
-            // console.log('Selected Outcome ID:', selected_outcome);
+            // Add event listeners to the newly created outcomes
+            addOutcomeEventListeners();
+        })
+        .catch(error => {
+            console.error('Error in fetchBookmakers:', error);
+            const bookmakerContainer = document.querySelector(`#bookmakers-section-${eventId} .bookmakers-container`);
+            if (bookmakerContainer) {
+                bookmakerContainer.innerHTML = `<p class="error-message">Error loading bookmakers: ${error.message}. Please try again.</p>`;
+            } else {
+                console.error(`Bookmaker container not found for event ${eventId} during error handling`);
+            }
         });
-    });
+    }
+
+    function convertToUUID(id) {
+        // Remove any non-hexadecimal characters
+        id = id.replace(/[^0-9a-f]/gi, '');
+        
+        // Pad the string to ensure it's long enough
+        while (id.length < 32) {
+            id += '0';
+        }
+        
+        // Insert hyphens to create UUID format
+        return id.substr(0,8) + '-' + id.substr(8,4) + '-' + id.substr(12,4) + '-' + id.substr(16,4) + '-' + id.substr(20);
+    }
+
+    function addOutcomeEventListeners() {
+        document.querySelectorAll('.outcome').forEach(outcome => {
+            outcome.addEventListener('click', function() {
+                const outcomeId = this.dataset.outcomeId;
+                selected_outcome = outcomeId;
+
+                // Deselect all outcomes
+                document.querySelectorAll('.outcome').forEach(otherOutcome => {
+                    otherOutcome.classList.remove('selected');
+                });
+
+                // Select the clicked outcome
+                this.classList.add('selected');
+
+                console.log('Selected Outcome ID:', selected_outcome);
+            });
+        });
+    }
 
     // Add a "Back" button to return to the list of events
     const backButton = document.createElement('button');
@@ -294,7 +390,7 @@
             };
 
             // Send the data to the server
-            fetch('{% url "core-portal:portal-upload_pick" match.id %}', {
+            fetch('{% url "core-portal:portal-my-match-detail" match.id %}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

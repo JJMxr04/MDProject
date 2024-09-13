@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 def my_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     is_player_in_match = request.user.id in [match.player_1.id, match.player_2.id]
-    events = EventBookmakerSerializer(Event.objects.filter(commence_time__gte=timezone.now() + timedelta(hours=8.25), commence_time__lte=match.end_date)[:5], many=True).data
+    events = EventSerializer(Event.objects.filter(commence_time__gte=timezone.now() + timedelta(hours=8.25), commence_time__lte=match.end_date)[:5], many=True).data
 
     context = {
         'match': match,
