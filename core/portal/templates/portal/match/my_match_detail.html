@@ -106,6 +106,31 @@
                 {% endif %}
                 <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
             </div>
+
+            <div class="bet-info">
+                <h4>Bet Details:</h4>
+                <p><strong>Market:</strong> 
+                    {% if match.golden_game.bet.market.key == 'h2h' %}
+                        Head to Head
+                    {% elif match.golden_game.bet.market.key == 'spreads' %}
+                        Spread
+                    {% elif match.golden_game.bet.market.key == 'totals' %}
+                        Totals
+                    {% else %}
+                        {{ match.golden_game.bet.market.key }}
+                    {% endif %}
+                </p>
+                <p><strong>{{ match.golden_game.owner.username }}'s Selection:</strong> {{ match.golden_game.bet.owner_outcome}}</p>
+                <p><strong>{{ match.golden_game.player_2.username }}'s Selection:</strong> {{ match.golden_game.bet.player_2_outcome}}</p>
+
+                <p><strong>Status:</strong> 
+                    {% if match.golden_game_completed %}
+                        Completed
+                    {% else %}
+                        Pending
+                    {% endif %}
+                </p>
+            </div>
         </div>
     </div>
     {% endif %}

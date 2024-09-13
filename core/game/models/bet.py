@@ -14,8 +14,8 @@ import ast
 
 class BetManager(AbstractManager):
 
-    def create_bet(self):
-        return self.create(market=None, owner_outcome=None, player_2_outcome=None)
+    def create_bet(self,market=None):
+        return self.create(market=market, owner_outcome=None, player_2_outcome=None)
 
     def calculate_owner_choice(self, bet, event):
         if not bet.owner_outcome:

@@ -1,8 +1,10 @@
+import random
 import uuid
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
 from django.utils import timezone
+from core.event.models.bookmaker import Bookmaker
 from core.user.models import User
 # from core.event.models import Event
 from core.mail.models import Emails
@@ -10,10 +12,10 @@ from core.game.models.bet import Bet,Outcome, Event,Market
 
 class GameManager(AbstractManager):
     def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
-                    home_team=None, away_team=None, winner=None):
+                    home_team=None, away_team=None, winner=None,bet_market=None):
         return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
                            deadline_time=deadline_time, completed=completed, home_team=home_team,
-                           away_team=away_team, winner=winner,bet=Bet.objects.create_bet())
+                           away_team=away_team, winner=winner,bet=Bet.objects.create_bet(bet_market))
     
     def get_owner_correctness(self, game):
         bet= game.bet
@@ -93,8 +95,11 @@ class GameManager(AbstractManager):
 
     def get_golden_game(self, player_1, player_2, match):
         event = Event.objects.get_random_golden()
+        bookmaker = Bookmaker.objects.filter(event=event).first()
+        markets = Market.objects.filter(bookmaker=bookmaker)
+        market = random.choice(markets)
         return Game.objects.create_game(player_1, player_2, match, event, event.commence_time, None, event.completed,
-                                        event.home_team, event.away_team)
+                                        event.home_team, event.away_team,bet_market=market)
 
     def game_event_update(self, game, instance):
         game.winner = instance.winner
