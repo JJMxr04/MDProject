@@ -80,17 +80,17 @@
         <h3>Golden Game</h3>
         <div class="golden-game">
             <div class="team">
-                {% if match.golden_game.event.home_team.logo_url %}
-                    <img src="{{ match.golden_game.event.home_team.logo_url }}" alt="{{ match.golden_game.event.home_team }}">
+                {% if match.golden_game.event.home_team_team.logo_url %}
+                    <img src="{{ match.golden_game.event.home_team_team.logo_url }}" alt="{{ match.golden_game.event.home_team_team }}">
                 {% else %}
-                    <h4>{{ match.golden_game.event.home_team }}</h4>
+                    <h4>{{ match.golden_game.event.home_team_team }}</h4>
                 {% endif %}
                 <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
             </div>
 
             <div class="team">
-                {% if match.golden_game.event.away_team.logo_url %}
-                    <img src="{{ match.golden_game.event.away_team.logo_url }}" alt="{{ match.golden_game.event.away_team }}">
+                {% if match.golden_game.event.away_team_team.logo_url %}
+                    <img src="{{ match.golden_game.event.away_team_team.logo_url }}" alt="{{ match.golden_game.event.away_team }}">
                 {% else %}
                     <h4>{{ match.golden_game.event.away_team }}</h4>
                 {% endif %}
@@ -104,24 +104,262 @@
     <div class="player-games-container">
         <div class="player-games">
             <h3>Player 1 Games</h3>
-            {% for game in player_1_games %}
+            {% if match.player_1_game_1.event %}
+                <div class="small-game-event">
+                    <div class="golden-game">
+                        <div class="team">
+                            {% if match.player_1_game_1.event.home_team.logo_url %}
+                                <img src="{{ match.player_1_game_1.event.home_team.logo_url }}" alt="{{ match.player_1_game_1.event.home_team }}">
+                            {% else %}
+                                <h4>{{ match.player_1_game_1.event.home_team }}</h4>
+                            {% endif %}
+                            <p><strong>Sport:</strong> {{ match.player_1_game_1.event.sport_title }}</p>
+                        </div>
+            
+                        <div class="team">
+                            {% if match.player_1_game_1.event.away_team.logo_url %}
+                                <img src="{{ match.player_1_game_1.event.away_team.logo_url }}" alt="{{ match.player_1_game_1.event.away_team }}">
+                            {% else %}
+                                <h4>{{ match.player_1_game_1.event.away_team }}</h4>
+                            {% endif %}
+                            <p><strong>Sport:</strong> {{ match.player_1_game_1_game.event.sport_title }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No pick for Game 1</p>
+            {% endif %}
+            {% if match.player_1_game_2.event %}
             <div class="small-game-event">
-                <p>{{ game.name }}</p>
-                <button onclick="openSmallGameEventPopup({{ game.id }})">View Details</button>
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_1_game_2.event.home_team.logo_url %}
+                            <img src="{{ match.player_1_game_2.event.home_team.logo_url }}" alt="{{ match.player_1_game_2.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_2.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_2.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_1_game_2.event.away_team.logo_url %}
+                            <img src="{{ match.player_1_game_2.event.away_team.logo_url }}" alt="{{ match.player_1_game_2.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_2.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_2.event.sport_title }}</p>
+                    </div>
+                </div>
             </div>
-            {% endfor %}
+            {% else %}
+                <p>No pick for Game 2</p>
+            {% endif %}
+            {% if match.player_1_game_3.event %}
+            <div class="small-game-event">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_1_game_3.event.home_team.logo_url %}
+                            <img src="{{ match.player_1_game_3.event.home_team.logo_url }}" alt="{{ match.player_1_game_3.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_3.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_3.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_1_game_3.event.away_team.logo_url %}
+                            <img src="{{ match.player_1_game_3.event.away_team.logo_url }}" alt="{{ match.player_1_game_3.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_3.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_3.event.sport_title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No pick for Game 3</p>
+            {% endif %}
+            {% if match.player_1_game_4.event %}
+            <div class="small-game-event">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_1_game_4.event.home_team.logo_url %}
+                            <img src="{{ match.player_1_game_4.event.home_team.logo_url }}" alt="{{ match.player_1_game_4.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_4.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_4.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_1_game_4.event.away_team.logo_url %}
+                            <img src="{{ match.player_1_game_4.event.away_team.logo_url }}" alt="{{ match.player_1_game_4.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_4.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_4.event.sport_title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No pick for Game 4</p>
+            {% endif %}
+            {% if match.player_1_game_5.event %}
+            <div class="small-game-event">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_1_game_5.event.home_team.logo_url %}
+                            <img src="{{ match.player_1_game_5.event.home_team.logo_url }}" alt="{{ match.player_1_game_5.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_5.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_5.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_1_game_5.event.away_team.logo_url %}
+                            <img src="{{ match.player_1_game_5.event.away_team.logo_url }}" alt="{{ match.player_1_game_5.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_1_game_5.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_1_game_5.event.sport_title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No pick for Game 5</p>
+            {% endif %}
         </div>
-
         <div class="player-games">
             <h3>Player 2 Games</h3>
-            {% for game in player_2_games %}
+            {% if match.player_2_game_1.event %}
+                <div class="small-game-event">
+                    <div class="golden-game">
+                        <div class="team">
+                            {% if match.player_2_game_1.event.home_team_team.logo_url %}
+                                <img src="{{ match.player_2_game_1.event.home_team_team.logo_url }}" alt="{{ match.player_2_game_1.event.home_team }}">
+                            {% else %}
+                                <h4>{{ match.player_2_game_1.event.home_team }}</h4>
+                            {% endif %}
+                            <p><strong>Sport:</strong> {{ match.player_2_game_1.event.sport_title }}</p>
+                        </div>
+            
+                        <div class="team">
+                            {% if match.player_2_game_1.event.away_team_team.logo_url %}
+                                <img src="{{ match.player_2_game_1.event.away_team_team.logo_url }}" alt="{{ match.player_2_game_1.event.away_team }}">
+                            {% else %}
+                                <h4>{{ match.player_2_game_1.event.away_team }}</h4>
+                            {% endif %}
+                            <p><strong>Sport:</strong> {{ match.player_2_game_1.event.sport_title }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No pick for Game 1</p>
+            {% endif %}
+            {% if match.player_2_game_2.event %}
             <div class="small-game-event">
-                <p>{{ game.name }}</p>
-                <button onclick="openSmallGameEventPopup({{ game.id }})">View Details</button>
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_2_game_2.event.home_team.logo_url %}
+                            <img src="{{ match.player_2_game_2.event.home_team.logo_url }}" alt="{{ match.player_2_game_2.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_2.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_2.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_2_game_2.event.away_team.logo_url %}
+                            <img src="{{ match.player_2_game_2.event.away_team.logo_url }}" alt="{{ match.player_2_game_2.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_2.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_2.event.sport_title }}</p>
+                    </div>
+                </div>
             </div>
-            {% endfor %}
+            {% else %}
+                <p>No pick for Game 2</p>
+            {% endif %}
+            {% if match.player_2_game_3.event %}
+            <div class="small-game-event">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_2_game_3.event.home_team.logo_url %}
+                            <img src="{{ match.player_2_game_3.event.home_team.logo_url }}" alt="{{ match.player_2_game_3.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_3.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_3.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_2_game_3.event.away_team.logo_url %}
+                            <img src="{{ match.player_2_game_3.event.away_team.logo_url }}" alt="{{ match.player_2_game_3.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_3.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_3.event.sport_title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No pick for Game 3</p>
+            {% endif %}
+            {% if match.player_2_game_4.event %}
+            <div class="small-game-event">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_2_game_4.event.home_team.logo_url %}
+                            <img src="{{ match.player_2_game_4.event.home_team.logo_url }}" alt="{{ match.player_2_game_4.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_4.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_4.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_2_game_4.event.away_team.logo_url %}
+                            <img src="{{ match.player_2_game_4.event.away_team.logo_url }}" alt="{{ match.player_2_game_4.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_4.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_4.event.sport_title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No pick for Game 4</p>
+            {% endif %}
+            {% if match.player_2_game_5.event %}
+            <div class="small-game-event">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.player_2_game_5.event.home_team.logo_url %}
+                            <img src="{{ match.player_2_game_5.event.home_team.logo_url }}" alt="{{ match.player_2_game_5.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_5.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_5.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.player_2_game_5.event.away_team.logo_url %}
+                            <img src="{{ match.player_2_game_5.event.away_team.logo_url }}" alt="{{ match.player_2_game_5.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.player_2_game_5.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.player_2_game_5.event.sport_title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No pick for Game 5</p>
+            {% endif %}
         </div>
     </div>
+
 
     <!-- Event Popup -->
     <div id="event-popup" style="display: none;">
@@ -266,23 +504,29 @@
             return response.json();
         })
         .then(data => {
-            const bookmakers = data['event_bookmakers']['bookmakers']
+            console.log('Data received:', data);
             const bookmakerContainer = document.querySelector(`#bookmakers-section-${eventId} .bookmakers-container`);
             
-            if (!bookmakers || bookmakers.length === 0) {
+            if (!data.bookmakers || data.bookmakers.length === 0) {
                 bookmakerContainer.innerHTML = '<p class="no-bookmakers">No Bookmakers</p>';
                 return;
             }
 
             bookmakerContainer.innerHTML = ''; // Clear existing content
-            bookmakers.forEach(bookmaker => {
+
+            data.bookmakers.forEach(bookmaker => {
                 const bookmakerElement = document.createElement('div');
                 bookmakerElement.className = 'bookmaker';
                 bookmakerElement.innerHTML = `
                     <h3>${bookmaker.title}</h3>
                     ${bookmaker.markets.map(market => `
                         <div class="market" data-key="${market.key}">
-                            <h4 class="market-title">${market.title}</h4>
+                            <h4 class="market-title">
+                                ${market.key === 'h2h' ? 'Head 2 Head' :
+                                  market.key === 'totals' ? 'Over / Under' :
+                                  market.key === 'spreads' ? 'Spreads' :
+                                  market.title}
+                            </h4>
                             <ul>
                                 ${market.outcomes.map(outcome => `
                                     <li class="outcome" data-outcome-id="${outcome.id}">
@@ -388,9 +632,10 @@
                 event_id: selected_event,
                 player_choice: selected_outcome
             };
+            console.log('data ', data)
 
             // Send the data to the server
-            fetch('{% url "core-portal:portal-my-match-detail" match.id %}', {
+            fetch('{% url "core-portal:portal-upload_pick" match.id %}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
