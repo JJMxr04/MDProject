@@ -81,7 +81,7 @@
         <div class="golden-game">
             <div class="team">
                 {% if match.golden_game.event.home_team_team.logo_url %}
-                    <img src="{{ match.golden_game.event.home_team_team.logo_url }}" alt="{{ match.golden_game.event.home_team_team }}">
+                    <img src="{{ match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ match.golden_game.event.home_team_team }}">
                 {% else %}
                     <h4>{{ match.golden_game.event.home_team_team }}</h4>
                 {% endif %}
@@ -90,9 +90,9 @@
 
             <div class="team">
                 {% if match.golden_game.event.away_team_team.logo_url %}
-                    <img src="{{ match.golden_game.event.away_team_team.logo_url }}" alt="{{ match.golden_game.event.away_team }}">
+                    <img src="{{ match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ match.golden_game.event.away_team_team }}">
                 {% else %}
-                    <h4>{{ match.golden_game.event.away_team }}</h4>
+                    <h4>{{ match.golden_game.event.away_team_team }}</h4>
                 {% endif %}
                 <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
             </div>
@@ -108,8 +108,8 @@
                 <div class="small-game-event">
                     <div class="golden-game">
                         <div class="team">
-                            {% if match.player_1_game_1.event.home_team.logo_url %}
-                                <img src="{{ match.player_1_game_1.event.home_team.logo_url }}" alt="{{ match.player_1_game_1.event.home_team }}">
+                            {% if match.player_1_game_1.event.home_team_team.logo_url %}
+                                <img src="{{ match.player_1_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.home_team }}">
                             {% else %}
                                 <h4>{{ match.player_1_game_1.event.home_team }}</h4>
                             {% endif %}
@@ -117,12 +117,12 @@
                         </div>
             
                         <div class="team">
-                            {% if match.player_1_game_1.event.away_team.logo_url %}
-                                <img src="{{ match.player_1_game_1.event.away_team.logo_url }}" alt="{{ match.player_1_game_1.event.away_team }}">
+                            {% if match.player_1_game_1.event.away_team_team.logo_url %}
+                                <img src="{{ match.player_1_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.away_team }}">
                             {% else %}
                                 <h4>{{ match.player_1_game_1.event.away_team }}</h4>
                             {% endif %}
-                            <p><strong>Sport:</strong> {{ match.player_1_game_1_game.event.sport_title }}</p>
+                            <p><strong>Sport:</strong> {{ match.player_1_game_1.event.sport_title }}</p>
                         </div>
                     </div>
                 </div>
@@ -133,8 +133,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_1_game_2.event.home_team.logo_url %}
-                            <img src="{{ match.player_1_game_2.event.home_team.logo_url }}" alt="{{ match.player_1_game_2.event.home_team }}">
+                        {% if match.player_1_game_2.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_2.event.home_team }}</h4>
                         {% endif %}
@@ -142,8 +142,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_1_game_2.event.away_team.logo_url %}
-                            <img src="{{ match.player_1_game_2.event.away_team.logo_url }}" alt="{{ match.player_1_game_2.event.away_team }}">
+                        {% if match.player_1_game_2.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_2.event.away_team }}</h4>
                         {% endif %}
@@ -158,8 +158,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_1_game_3.event.home_team.logo_url %}
-                            <img src="{{ match.player_1_game_3.event.home_team.logo_url }}" alt="{{ match.player_1_game_3.event.home_team }}">
+                        {% if match.player_1_game_3.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_3.event.home_team }}</h4>
                         {% endif %}
@@ -167,8 +167,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_1_game_3.event.away_team.logo_url %}
-                            <img src="{{ match.player_1_game_3.event.away_team.logo_url }}" alt="{{ match.player_1_game_3.event.away_team }}">
+                        {% if match.player_1_game_3.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_3.event.away_team }}</h4>
                         {% endif %}
@@ -183,8 +183,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_1_game_4.event.home_team.logo_url %}
-                            <img src="{{ match.player_1_game_4.event.home_team.logo_url }}" alt="{{ match.player_1_game_4.event.home_team }}">
+                        {% if match.player_1_game_4.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_4.event.home_team }}</h4>
                         {% endif %}
@@ -192,8 +192,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_1_game_4.event.away_team.logo_url %}
-                            <img src="{{ match.player_1_game_4.event.away_team.logo_url }}" alt="{{ match.player_1_game_4.event.away_team }}">
+                        {% if match.player_1_game_4.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_4.event.away_team }}</h4>
                         {% endif %}
@@ -208,8 +208,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_1_game_5.event.home_team.logo_url %}
-                            <img src="{{ match.player_1_game_5.event.home_team.logo_url }}" alt="{{ match.player_1_game_5.event.home_team }}">
+                        {% if match.player_1_game_5.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_5.event.home_team }}</h4>
                         {% endif %}
@@ -217,8 +217,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_1_game_5.event.away_team.logo_url %}
-                            <img src="{{ match.player_1_game_5.event.away_team.logo_url }}" alt="{{ match.player_1_game_5.event.away_team }}">
+                        {% if match.player_1_game_5.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_1_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_1_game_5.event.away_team }}</h4>
                         {% endif %}
@@ -237,7 +237,7 @@
                     <div class="golden-game">
                         <div class="team">
                             {% if match.player_2_game_1.event.home_team_team.logo_url %}
-                                <img src="{{ match.player_2_game_1.event.home_team_team.logo_url }}" alt="{{ match.player_2_game_1.event.home_team }}">
+                                <img src="{{ match.player_2_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.home_team }}">
                             {% else %}
                                 <h4>{{ match.player_2_game_1.event.home_team }}</h4>
                             {% endif %}
@@ -246,7 +246,7 @@
             
                         <div class="team">
                             {% if match.player_2_game_1.event.away_team_team.logo_url %}
-                                <img src="{{ match.player_2_game_1.event.away_team_team.logo_url }}" alt="{{ match.player_2_game_1.event.away_team }}">
+                                <img src="{{ match.player_2_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.away_team }}">
                             {% else %}
                                 <h4>{{ match.player_2_game_1.event.away_team }}</h4>
                             {% endif %}
@@ -261,8 +261,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_2_game_2.event.home_team.logo_url %}
-                            <img src="{{ match.player_2_game_2.event.home_team.logo_url }}" alt="{{ match.player_2_game_2.event.home_team }}">
+                        {% if match.player_2_game_2.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.home_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_2.event.home_team }}</h4>
                         {% endif %}
@@ -270,8 +270,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_2_game_2.event.away_team.logo_url %}
-                            <img src="{{ match.player_2_game_2.event.away_team.logo_url }}" alt="{{ match.player_2_game_2.event.away_team }}">
+                        {% if match.player_2_game_2.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_2.event.away_team }}</h4>
                         {% endif %}
@@ -286,8 +286,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_2_game_3.event.home_team.logo_url %}
-                            <img src="{{ match.player_2_game_3.event.home_team.logo_url }}" alt="{{ match.player_2_game_3.event.home_team }}">
+                        {% if match.player_2_game_3.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_3.event.home_team }}</h4>
                         {% endif %}
@@ -295,8 +295,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_2_game_3.event.away_team.logo_url %}
-                            <img src="{{ match.player_2_game_3.event.away_team.logo_url }}" alt="{{ match.player_2_game_3.event.away_team }}">
+                        {% if match.player_2_game_3.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_3.event.away_team }}</h4>
                         {% endif %}
@@ -311,8 +311,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_2_game_4.event.home_team.logo_url %}
-                            <img src="{{ match.player_2_game_4.event.home_team.logo_url }}" alt="{{ match.player_2_game_4.event.home_team }}">
+                        {% if match.player_2_game_4.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_4.event.home_team }}</h4>
                         {% endif %}
@@ -320,8 +320,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_2_game_4.event.away_team.logo_url %}
-                            <img src="{{ match.player_2_game_4.event.away_team.logo_url }}" alt="{{ match.player_2_game_4.event.away_team }}">
+                        {% if match.player_2_game_4.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_4.event.away_team }}</h4>
                         {% endif %}
@@ -336,8 +336,8 @@
             <div class="small-game-event">
                 <div class="golden-game">
                     <div class="team">
-                        {% if match.player_2_game_5.event.home_team.logo_url %}
-                            <img src="{{ match.player_2_game_5.event.home_team.logo_url }}" alt="{{ match.player_2_game_5.event.home_team }}">
+                        {% if match.player_2_game_5.event.home_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.home_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_5.event.home_team }}</h4>
                         {% endif %}
@@ -345,8 +345,8 @@
                     </div>
         
                     <div class="team">
-                        {% if match.player_2_game_5.event.away_team.logo_url %}
-                            <img src="{{ match.player_2_game_5.event.away_team.logo_url }}" alt="{{ match.player_2_game_5.event.away_team }}">
+                        {% if match.player_2_game_5.event.away_team_team.logo_url %}
+                            <img src="{{ match.player_2_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.away_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_5.event.away_team }}</h4>
                         {% endif %}
@@ -504,17 +504,18 @@
             return response.json();
         })
         .then(data => {
-            console.log('Data received:', data);
+
+
             const bookmakerContainer = document.querySelector(`#bookmakers-section-${eventId} .bookmakers-container`);
+            const bookmakers=data.event_bookmakers.bookmakers;
             
-            if (!data.bookmakers || data.bookmakers.length === 0) {
+            if (!bookmakers || bookmakers.length === 0) {
                 bookmakerContainer.innerHTML = '<p class="no-bookmakers">No Bookmakers</p>';
                 return;
             }
 
-            bookmakerContainer.innerHTML = ''; // Clear existing content
 
-            data.bookmakers.forEach(bookmaker => {
+            bookmakers.forEach(bookmaker => {
                 const bookmakerElement = document.createElement('div');
                 bookmakerElement.className = 'bookmaker';
                 bookmakerElement.innerHTML = `
@@ -626,6 +627,7 @@
             console.log('Submitting selection:');
             console.log('Event ID:', selected_event);
             console.log('Outcome ID:', selected_outcome);
+        
             
             // Prepare the data to send
             const data = {
@@ -643,11 +645,18 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Success:', data);
-                // Handle successful submission (e.g., show a success message)
+                // Handle successful submission
                 alert('Pick uploaded successfully!');
+                // Reload the page
+                window.location.reload();
             })
             .catch((error) => {
                 console.error('Error:', error);
