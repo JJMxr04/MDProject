@@ -20,5 +20,5 @@ class Outcome(AbstractModel):
         ]
 
     def __str__(self):
-        return f"{self.name} - {self.price}"
+        return f"{self.name} - Point: {self.point} - Price: {self.price}"
 

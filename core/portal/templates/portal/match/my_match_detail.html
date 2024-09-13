@@ -33,6 +33,16 @@
             font-style: italic;
             color: #666;
         }
+        .bet-info {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .bet-info h4 {
+            margin-bottom: 5px;
+        }
     </style>
 {% endblock css %}
 
@@ -125,6 +135,32 @@
                             <p><strong>Sport:</strong> {{ match.player_1_game_1.event.sport_title }}</p>
                         </div>
                     </div>
+                    
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_1_game_1.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_1_game_1.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_1_game_1.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_1_game_1.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_1_game_1.owner.username }}'s Selection:</strong> {{ match.player_1_game_1.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_1_game_1.player_2.username }}'s Selection:</strong> {{ match.player_1_game_1.bet.player_2_outcome}}</p>
+
+                        <p><strong>Status:</strong> 
+                            {% if match.player_1_game_1_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
             {% else %}
                 <p>No pick for Game 1</p>
@@ -150,6 +186,32 @@
                         <p><strong>Sport:</strong> {{ match.player_1_game_2.event.sport_title }}</p>
                     </div>
                 </div>
+                
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_1_game_2.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_1_game_2.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_1_game_2.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_1_game_2.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_1_game_2.owner.username }}'s Selection:</strong> {{ match.player_1_game_2.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_1_game_2.player_2.username }}'s Selection:</strong> {{ match.player_1_game_2.bet.player_2_outcome}}</p>
+
+                        <p><strong>Status:</strong> 
+                            {% if match.player_1_game_2_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 2</p>
@@ -175,6 +237,33 @@
                         <p><strong>Sport:</strong> {{ match.player_1_game_3.event.sport_title }}</p>
                     </div>
                 </div>
+                
+                <!-- Bet Information -->
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_1_game_3.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_1_game_3.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_1_game_3.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_1_game_3.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_1_game_3.owner.username }}'s Selection:</strong> {{ match.player_1_game_3.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_1_game_3.player_2.username }}'s Selection:</strong> {{ match.player_1_game_3.bet.player_2_outcome}}</p>
+
+                        <p><strong>Status:</strong> 
+                            {% if match.player_1_game_3_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 3</p>
@@ -200,6 +289,33 @@
                         <p><strong>Sport:</strong> {{ match.player_1_game_4.event.sport_title }}</p>
                     </div>
                 </div>
+                
+                <!-- Bet Information -->
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_1_game_4.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_1_game_4.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_1_game_4.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_1_game_4.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_1_game_4.owner.username }}'s Selection:</strong> {{ match.player_1_game_4.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_1_game_4.player_2.username }}'s Selection:</strong> {{ match.player_1_game_4.bet.player_2_outcome}}</p>
+
+                        <p><strong>Status:</strong> 
+                            {% if match.player_1_game_4_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 4</p>
@@ -225,6 +341,32 @@
                         <p><strong>Sport:</strong> {{ match.player_1_game_5.event.sport_title }}</p>
                     </div>
                 </div>
+                
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_1_game_5.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_1_game_5.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_1_game_5.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_1_game_5.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_1_game_5.owner.username }}'s Selection:</strong> {{ match.player_1_game_5.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_1_game_5.player_2.username }}'s Selection:</strong> {{ match.player_1_game_5.bet.player_2_outcome}}</p>
+
+                        <p><strong>Status:</strong> 
+                            {% if match.player_1_game_5_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 5</p>
@@ -237,7 +379,7 @@
                     <div class="golden-game">
                         <div class="team">
                             {% if match.player_2_game_1.event.home_team_team.logo_url %}
-                                <img src="{{ match.player_2_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.home_team }}">
+                                <img src="{{ match.player_2_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.home_team_team }}">
                             {% else %}
                                 <h4>{{ match.player_2_game_1.event.home_team }}</h4>
                             {% endif %}
@@ -246,12 +388,38 @@
             
                         <div class="team">
                             {% if match.player_2_game_1.event.away_team_team.logo_url %}
-                                <img src="{{ match.player_2_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.away_team }}">
+                                <img src="{{ match.player_2_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.away_team_team }}">
                             {% else %}
-                                <h4>{{ match.player_2_game_1.event.away_team }}</h4>
+                                <h4>{{ match.player_2_game_1.event.away_team_team }}</h4>
                             {% endif %}
                             <p><strong>Sport:</strong> {{ match.player_2_game_1.event.sport_title }}</p>
                         </div>
+                    </div>
+                    
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_2_game_1.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_2_game_1.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_2_game_1.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_2_game_1.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_2_game_1.owner.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_2_game_1.player_2.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.player_2_outcome}}</p>
+
+                        <p><strong>Status:</strong> 
+                            {% if match.player_2_game_1_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             {% else %}
@@ -271,12 +439,38 @@
         
                     <div class="team">
                         {% if match.player_2_game_2.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.away_team }}">
+                            <img src="{{ match.player_2_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.away_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_2.event.away_team }}</h4>
                         {% endif %}
                         <p><strong>Sport:</strong> {{ match.player_2_game_2.event.sport_title }}</p>
                     </div>
+                </div>
+                
+                <!-- Bet Information -->
+                <div class="bet-info">
+                    <h4>Bet Details:</h4>
+                    <p><strong>Market:</strong> 
+                        {% if match.player_2_game_2.bet.market.key == 'h2h' %}
+                            Head to Head
+                        {% elif match.player_2_game_2.bet.market.key == 'spreads' %}
+                            Spread
+                        {% elif match.player_2_game_2.bet.market.key == 'totals' %}
+                            Totals
+                        {% else %}
+                            {{ match.player_2_game_2.bet.market.key }}
+                        {% endif %}
+                    </p>
+                    <p><strong>{{ match.player_2_game_2.owner.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.owner_outcome}}</p>
+                    <p><strong>{{ match.player_2_game_2.player_2.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.player_2_outcome}}</p>
+
+                    <p><strong>Status:</strong> 
+                        {% if match.player_2_game_2_completed %}
+                            Completed
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </p>
                 </div>
             </div>
             {% else %}
@@ -287,21 +481,47 @@
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_3.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.home_team }}">
+                            <img src="{{ match.player_2_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.home_team_team }}">
                         {% else %}
-                            <h4>{{ match.player_2_game_3.event.home_team }}</h4>
+                            <h4>{{ match.player_2_game_3.event.home_team}}</h4>
                         {% endif %}
                         <p><strong>Sport:</strong> {{ match.player_2_game_3.event.sport_title }}</p>
                     </div>
         
                     <div class="team">
                         {% if match.player_2_game_3.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.away_team }}">
+                            <img src="{{ match.player_2_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.away_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_3.event.away_team }}</h4>
                         {% endif %}
                         <p><strong>Sport:</strong> {{ match.player_2_game_3.event.sport_title }}</p>
                     </div>
+                </div>
+                
+                <!-- Bet Information -->
+                <div class="bet-info">
+                    <h4>Bet Details:</h4>
+                    <p><strong>Market:</strong> 
+                        {% if match.player_2_game_3.bet.market.key == 'h2h' %}
+                            Head to Head
+                        {% elif match.player_2_game_3.bet.market.key == 'spreads' %}
+                            Spread
+                        {% elif match.player_2_game_3.bet.market.key == 'totals' %}
+                            Totals
+                        {% else %}
+                            {{ match.player_2_game_3.bet.market.key }}
+                        {% endif %}
+                    </p>
+                    <p><strong>{{ match.player_2_game_3.owner.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.owner_outcome}}</p>
+                    <p><strong>{{ match.player_2_game_3.player_2.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.player_2_outcome}}</p>
+
+                    <p><strong>Status:</strong> 
+                        {% if match.player_2_game_3_completed %}
+                            Completed
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </p>
                 </div>
             </div>
             {% else %}
@@ -312,7 +532,7 @@
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_4.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.home_team }}">
+                            <img src="{{ match.player_2_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.home_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_4.event.home_team }}</h4>
                         {% endif %}
@@ -321,12 +541,38 @@
         
                     <div class="team">
                         {% if match.player_2_game_4.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.away_team }}">
+                            <img src="{{ match.player_2_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.away_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_4.event.away_team }}</h4>
                         {% endif %}
                         <p><strong>Sport:</strong> {{ match.player_2_game_4.event.sport_title }}</p>
                     </div>
+                </div>
+                
+                <!-- Bet Information -->
+                <div class="bet-info">
+                    <h4>Bet Details:</h4>
+                    <p><strong>Market:</strong> 
+                        {% if match.player_2_game_4.bet.market.key == 'h2h' %}
+                            Head to Head
+                        {% elif match.player_2_game_4.bet.market.key == 'spreads' %}
+                            Spread
+                        {% elif match.player_2_game_4.bet.market.key == 'totals' %}
+                            Totals
+                        {% else %}
+                            {{ match.player_2_game_4.bet.market.key }}
+                        {% endif %}
+                    </p>
+                    <p><strong>{{ match.player_2_game_4.owner.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.owner_outcome}}</p>
+                    <p><strong>{{ match.player_2_game_4.player_2.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.player_2_outcome}}</p>
+
+                    <p><strong>Status:</strong> 
+                        {% if match.player_2_game_4_completed %}
+                            Completed
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </p>
                 </div>
             </div>
             {% else %}
@@ -337,7 +583,7 @@
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_5.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.home_team }}">
+                            <img src="{{ match.player_2_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.home_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_5.event.home_team }}</h4>
                         {% endif %}
@@ -346,12 +592,38 @@
         
                     <div class="team">
                         {% if match.player_2_game_5.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_2_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.away_team }}">
+                            <img src="{{ match.player_2_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.away_team_team }}">
                         {% else %}
                             <h4>{{ match.player_2_game_5.event.away_team }}</h4>
                         {% endif %}
                         <p><strong>Sport:</strong> {{ match.player_2_game_5.event.sport_title }}</p>
                     </div>
+                </div>
+                
+                <!-- Bet Information -->
+                <div class="bet-info">
+                    <h4>Bet Details:</h4>
+                    <p><strong>Market:</strong> 
+                        {% if match.player_2_game_5.bet.market.key == 'h2h' %}
+                            Head to Head
+                        {% elif match.player_2_game_5.bet.market.key == 'spreads' %}
+                            Spread
+                        {% elif match.player_2_game_5.bet.market.key == 'totals' %}
+                            Totals
+                        {% else %}
+                            {{ match.player_2_game_5.bet.market.key }}
+                        {% endif %}
+                    </p>
+                    <p><strong>{{ match.player_2_game_5.owner.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.owner_outcome}}</p>
+                    <p><strong>{{ match.player_2_game_5.player_2.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.player_2_outcome}}</p>
+
+                    <p><strong>Status:</strong> 
+                        {% if match.player_2_game_5_completed %}
+                            Completed
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </p>
                 </div>
             </div>
             {% else %}
