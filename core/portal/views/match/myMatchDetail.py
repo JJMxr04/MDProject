@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from core.match.models import Match
 from core.match.serializers.match import MatchSerializer
+from core.game.models import Game
 from core.event.models import Event
 from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
-from core.game.models import Game
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -44,6 +44,20 @@ def upload_pick(request, match_id):
 
     try:
         Match.objects.upload_pick(match=match, player=request.user, data=data)
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    
+@require_POST
+@login_required(login_url='/auth/login/')
+def player_2_select_outcome(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+    data = json.loads(request.body)
+    user = request.user
+
+
+    try:
+        Game.objects.update_by_id(id=game.id, current_user=user, data=data)
         return JsonResponse({'status': 'success'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)

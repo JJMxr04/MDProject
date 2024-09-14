@@ -1021,7 +1021,7 @@
         document.getElementById("event-popup").style.display = "block";
     }
 
-    let selectedGoldenGameOutcome = null;
+
 
     function openGoldenGamePopup(game) {
         document.getElementById("golden-game-popup").style.display = "block";
@@ -1036,14 +1036,18 @@
             .catch(error => {
                 console.error('Error fetching golden game markets:', error);
             });
+        selected_event = game.event.id;
     }
 
+
     function displayGoldenGameMarketsAndOutcomes(data) {
+        
         const marketsContainer = document.getElementById('golden-game-markets');
         marketsContainer.innerHTML = '';
         console.log('data ', data);
         const event_market = data.event_market;
         const outcomes = event_market.outcomes;
+        selected_event = data.event.id;
 
         if (outcomes && outcomes.length > 0) {
             const marketElement = document.createElement('div');
@@ -1072,9 +1076,9 @@
                     marketsContainer.querySelectorAll('.outcome').forEach(el => el.classList.remove('selected'));
                     // Add 'selected' class to clicked outcome
                     this.classList.add('selected');
-                    // Update selectedGoldenGameOutcome
-                    selectedGoldenGameOutcome = this.dataset.outcomeId;
-                    console.log('Selected Golden Game Outcome:', selectedGoldenGameOutcome);
+                    // Update selected_outcome
+                    selected_outcome = this.dataset.outcomeId;
+                    console.log('Selected Golden Game Outcome:', selected_outcome);
                 });
             });
         } else {
@@ -1089,11 +1093,53 @@
     }
 
     function submitGoldenGameSelection() {
-        if (selectedGoldenGameOutcome) {
-            console.log('Submitting Golden Game selection:', selectedGoldenGameOutcome);
+        console.log('Submitting selection:');
+        console.log('Event ID:', selected_event);
+        console.log('Outcome ID:', selected_outcome);
+        
+
+        if (selected_event && selected_outcome) {
+            console.log('Submitting selection:');
+            console.log('Event ID:', selected_event);
+            console.log('Outcome ID:', selected_outcome);
+        
             
-            closeGoldenGamePopup();
+            // Prepare the data to send
+            const data = {
+                event_id: selected_event,
+                player_choice: selected_outcome
+            };
+            console.log('data ', data)
+
+            // Send the data to the server
+            fetch('{% url "core-portal:portal-match-game-player_2_select_outcome" match.golden_game.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Handle successful submission
+                alert('Outcome selected successfully!');
+                // Reload the page
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Handle errors (e.g., show an error message)
+                alert('Error uploading pick. Please try again.');
+            });
         } else {
+            console.log('Please select an outcome before submitting.');
             alert('Please select an outcome before submitting.');
         }
     }
@@ -1108,9 +1154,13 @@
 
     function closeUploadPopup() {
         document.getElementById("upload-popup").style.display = "none";
+        selected_event = null;
+        selected_outcome = null;
     }
     function closeGoldenGamePopup() {
         document.getElementById("golden-game-popup").style.display = "none";
+        selected_event = null;
+        selected_outcome = null;
     }
 
     // Close the popup if the user clicks outside of it
