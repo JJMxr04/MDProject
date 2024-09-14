@@ -43,6 +43,24 @@
         .bet-info h4 {
             margin-bottom: 5px;
         }
+        .outcomes-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .outcome {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .outcome:hover {
+            background-color: #f0f0f0;
+        }
+        .outcome.selected {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
     </style>
 {% endblock css %}
 
@@ -415,7 +433,7 @@
                             {% if match.player_2_game_1.event.away_team_team.logo_url %}
                                 <img src="{{ match.player_2_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.away_team_team }}">
                             {% else %}
-                                <h4>{{ match.player_2_game_1.event.away_team_team }}</h4>
+                                <h4>{{ match.player_2_game_1.event.away_team }}</h4>
                             {% endif %}
                             <p><strong>Sport:</strong> {{ match.player_2_game_1.event.sport_title }}</p>
                         </div>
@@ -664,8 +682,41 @@
     </div>
 
     <!-- Golden Game Popup -->
-    <div id="golden-game-popup" style="display: none;">
-        <!-- Add dynamic golden game content here -->
+    <div id="golden-game-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span class="close" onclick="closeGoldenGamePopup()">&times;</span>
+            <h2>Golden Game Selection</h2>
+            <hr class="divider">
+            <div class="golden-game-popup-card">
+                <div class="golden-game">
+                    <div class="team">
+                        {% if match.golden_game.event.home_team_team.logo_url %}
+                            <img src="{{ match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ match.golden.event.home_team }}">
+                        {% else %}
+                            <h4>{{ match.golden_game.event.home_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
+                    </div>
+        
+                    <div class="team">
+                        {% if match.golden_game.event.away_team_team.logo_url %}
+                            <img src="{{ match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.away_team }}">
+                        {% else %}
+                            <h4>{{ match.golden_game.event.away_team }}</h4>
+                        {% endif %}
+                        <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
+                    </div>
+                    </div>
+                </div>
+            <hr class="divider">
+
+            <!-- New section for markets and outcomes -->
+            <div id="golden-game-markets">
+                <!-- Markets and outcomes will be loaded here -->
+            </div>
+
+            <hr class="divider">
+        </div>
     </div>
 
     <!-- Small Game Event Popup -->
@@ -970,8 +1021,81 @@
         document.getElementById("event-popup").style.display = "block";
     }
 
-    function openGoldenGamePopup() {
+    let selectedGoldenGameOutcome = null;
+
+    function openGoldenGamePopup(game) {
         document.getElementById("golden-game-popup").style.display = "block";
+        
+        // Fetch markets and outcomes for the golden game
+        const gameId = "{{ match.golden_game.id }}";
+        fetch(`{% url "core-portal:portal-match-event-market" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', gameId))
+            .then(response => response.json())
+            .then(data => {
+                displayGoldenGameMarketsAndOutcomes(data);
+            })
+            .catch(error => {
+                console.error('Error fetching golden game markets:', error);
+            });
+    }
+
+    function displayGoldenGameMarketsAndOutcomes(data) {
+        const marketsContainer = document.getElementById('golden-game-markets');
+        marketsContainer.innerHTML = '';
+        console.log('data ', data);
+        const event_market = data.event_market;
+        const outcomes = event_market.outcomes;
+
+        if (outcomes && outcomes.length > 0) {
+            const marketElement = document.createElement('div');
+            marketElement.className = 'market';
+            marketElement.innerHTML = `
+                <h3>${event_market.key === 'h2h' ? 'Head to Head' : 
+                      event_market.key === 'spreads' ? 'Spread' : 
+                      event_market.key === 'totals' ? 'Totals' : 
+                      event_market.key}</h3>
+                <ul class="outcomes-list">
+                    ${outcomes.map(outcome => `
+                        <li class="outcome" data-outcome-id="${outcome.id}">
+                            <span>${outcome.name}</span>
+                            ${outcome.point ? `<span>Point: ${outcome.point}</span>` : ''}
+                            <span>Price: ${outcome.price}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            marketsContainer.appendChild(marketElement);
+
+            // Add click event listeners to outcomes
+            marketsContainer.querySelectorAll('.outcome').forEach(outcomeElement => {
+                outcomeElement.addEventListener('click', function() {
+                    // Remove 'selected' class from all outcomes
+                    marketsContainer.querySelectorAll('.outcome').forEach(el => el.classList.remove('selected'));
+                    // Add 'selected' class to clicked outcome
+                    this.classList.add('selected');
+                    // Update selectedGoldenGameOutcome
+                    selectedGoldenGameOutcome = this.dataset.outcomeId;
+                    console.log('Selected Golden Game Outcome:', selectedGoldenGameOutcome);
+                });
+            });
+        } else {
+            marketsContainer.innerHTML = '<p>No markets available for this game.</p>';
+        }
+
+        // Add a submit button
+        const submitButton = document.createElement('button');
+        submitButton.textContent = 'Submit Selection';
+        submitButton.addEventListener('click', submitGoldenGameSelection);
+        marketsContainer.appendChild(submitButton);
+    }
+
+    function submitGoldenGameSelection() {
+        if (selectedGoldenGameOutcome) {
+            console.log('Submitting Golden Game selection:', selectedGoldenGameOutcome);
+            
+            closeGoldenGamePopup();
+        } else {
+            alert('Please select an outcome before submitting.');
+        }
     }
 
     function openSmallGameEventPopup(gameId) {
@@ -985,10 +1109,20 @@
     function closeUploadPopup() {
         document.getElementById("upload-popup").style.display = "none";
     }
+    function closeGoldenGamePopup() {
+        document.getElementById("golden-game-popup").style.display = "none";
+    }
 
     // Close the popup if the user clicks outside of it
     window.onclick = function(event) {
         var popup = document.getElementById("upload-popup");
+        if (event.target == popup) {
+            popup.style.display = "none";
+        }
+    }
+
+    window.onclick = function(event) {
+        var popup = document.getElementById("golden-game-popup");
         if (event.target == popup) {
             popup.style.display = "none";
         }

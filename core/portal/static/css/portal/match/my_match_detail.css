@@ -130,6 +130,13 @@
     font-weight: bold;
     font-size: 1.2em;
 }
+.golden-game-popup-card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
 
 .golden-game-card {
     background-color: #f0f0f0;
