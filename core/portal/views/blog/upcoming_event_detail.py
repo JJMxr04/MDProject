@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from core.event.models import Event 
+from core.event.serializers.event import EventSerializer
 
 
 
@@ -12,7 +13,7 @@ def upcoming_event_detail(request, event_id):
     # Assuming event.bookmakers is a preprocessed list of dictionaries with relevant data
 
     context = {
-        'event': event,
+        'event': EventSerializer(event).data,
     }
 
     return render(request, 'portal/blog/upcoming_event_detail.html', context)

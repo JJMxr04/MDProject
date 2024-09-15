@@ -34,12 +34,12 @@ def upcoming_events_list(request):
         filters['commence_time__lte'] = parse_date(end_date)
 
     # Fetch events with filtering
-    events = Event.objects.filter(**filters).order_by('-commence_time')
+    events = EventSerializer(Event.objects.filter(**filters).order_by('commence_time'),many=True).data
     
     # Serialize events
     
     # Convert to JSON using custom encoder
-    print(type(events[1].commence_time))
+
 
     context = {
         'events': events,

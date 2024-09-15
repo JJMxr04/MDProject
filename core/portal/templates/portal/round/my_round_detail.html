@@ -43,7 +43,7 @@
             <div class="golden-game">
                 <div class="team">
                     {% if round_details.match.golden_game.event.home_team_team.logo_url %}
-                        <img src="{{ round_details.match.golden_game.event.home_team_team.logo_url }}" alt="{{ round_details.match.golden_game.event.home_team }}">
+                        <img src="{{ round_details.match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ round_details.match.golden_game.event.home_team }}">
                     {% endif %}
                     <h4>{{ round_details.match.golden_game.event.home_team }}</h4>
                     <p><strong>Sport:</strong> {{ round_details.match.golden_game.event.sport_title }}</p>
@@ -51,7 +51,7 @@
 
                 <div class="team">
                     {% if round_details.match.golden_game.event.away_team_team.logo_url %}
-                        <img src="{{ round_details.match.golden_game.event.away_team_team.logo_url }}" alt="{{ round_details.match.golden_game.event.away_team }}">
+                        <img src="{{ round_details.match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ round_details.match.golden_game.event.away_team }}">
                     {% endif %}
                     <h4>{{ round_details.match.golden_game.event.away_team }}</h4>
                     <p><strong>Sport:</strong> {{ round_details.match.golden_game.event.sport_title }}</p>
