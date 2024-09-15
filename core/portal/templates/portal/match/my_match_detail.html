@@ -418,7 +418,7 @@
         <div class="player-games">
             <h3>Player 2 Games</h3>
             {% if match.player_2_game_1.event %}
-                <div class="small-game-event" onclick="openGamePopup()">
+                <div class="small-game-event" id="player-2-game-1-id" value="{{ match.player_2_game_1.id }}" onclick="openPlayer2Game1Popup()">
                     <div class="golden-game" >
                         <div class="team">
                             {% if match.player_2_game_1.event.home_team_team.logo_url %}
@@ -1022,11 +1022,16 @@
     }
 
     function openGoldenGamePopup() {
-        console.log('openGoldenGamePopup')
 
         let gameElement = document.getElementById('golden-game-id');
         let gameId = gameElement.getAttribute('value');
-        console.log('game ', gameId)
+        openGamePopup(gameId)
+    }
+
+    function openPlayer2Game1Popup() {
+
+        let gameElement = document.getElementById('player-2-game-1-id');
+        let gameId = gameElement.getAttribute('value');
         openGamePopup(gameId)
     }
 
