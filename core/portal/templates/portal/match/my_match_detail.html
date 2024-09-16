@@ -1020,7 +1020,7 @@
             .then(response => response.json())
             .then(data => {
                 displayGame(data);
-                displayGameMarketsAndOutcomes(data);
+                displayGameMarketsAndOutcomes(gameId,data);
             })
             .catch(error => {
                 console.error('Error fetching golden game markets:', error);
@@ -1065,7 +1065,7 @@
     }
 
 
-    function displayGameMarketsAndOutcomes(data) {
+    function displayGameMarketsAndOutcomes(gameId,data) {
         
         const marketsContainer = document.getElementById('golden-game-markets');
         marketsContainer.innerHTML = '';
@@ -1113,11 +1113,11 @@
         // Add a submit button
         const submitButton = document.createElement('button');
         submitButton.textContent = 'Submit Selection';
-        submitButton.addEventListener('click', submitGameSelection);
+        submitButton.addEventListener('click', () =>submitGameSelection(gameId));
         marketsContainer.appendChild(submitButton);
     }
 
-    function submitGameSelection() {
+    function submitGameSelection(gameId) {
         console.log('Submitting selection:');
         console.log('Event ID:', selected_event);
         console.log('Outcome ID:', selected_outcome);
@@ -1137,7 +1137,7 @@
             console.log('data ', data)
 
             // Send the data to the server
-            fetch(`{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', selected_event), {
+            fetch(`{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', gameId), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
