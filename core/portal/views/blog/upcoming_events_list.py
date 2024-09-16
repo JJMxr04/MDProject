@@ -24,6 +24,7 @@ def upcoming_events_list(request):
 
     # Prepare filters
     filters = {}
+    filters['completed'] = False
     if search_query:
         filters['title__icontains'] = search_query
     if selected_sport:
@@ -32,6 +33,7 @@ def upcoming_events_list(request):
         filters['commence_time__gte'] = parse_date(start_date)
     if end_date:
         filters['commence_time__lte'] = parse_date(end_date)
+        filters[com ]
 
     # Fetch events with filtering
     events = EventSerializer(Event.objects.filter(**filters).order_by('commence_time'),many=True).data

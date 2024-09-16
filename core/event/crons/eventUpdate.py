@@ -286,6 +286,7 @@ class EventCron():
         broken_leagues=[
             'americanfootball_ncaaf_championship_winner',
             'americanfootball_nfl_super_bowl_winner',
+            # 'baseball_mlb',
             'baseball_mlb_preseason',
             'baseball_mlb_world_series_winner',
             'baseball_milb',
@@ -319,7 +320,7 @@ class EventCron():
             'tennis_atp_aus_open_singles',
             'tennis_atp_canadian_open',
             'tennis_atp_cincinnati_open',
-            'tennis_atp_french_open'
+            'tennis_atp_french_open',
             'tennis_atp_us_open',
             'tennis_atp_wimbledon',
             'tennis_wta_aus_open_singles',
@@ -331,11 +332,10 @@ class EventCron():
         ]
         active_sports = Sport.objects.get_active_sports()
         for sport in active_sports:
-            if sport.key in broken_leagues:
-                continue
-            self.get_sport_events(sport)
-            self.get_sport_odds(sport)
-
+            if sport.key not in broken_leagues:
+                self.get_sport_events(sport)
+                self.get_sport_odds(sport)
+            
 def update_all_events():
     eventCron = EventCron()
     eventCron.update_all_events()
