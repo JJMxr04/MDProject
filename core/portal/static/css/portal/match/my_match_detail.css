@@ -3,7 +3,6 @@
     padding: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
-
     margin: 0 auto;
 }
 
@@ -14,6 +13,7 @@
 .match-detail p {
     margin: 8px 0;
 }
+
 /* Flex container for player cards */
 .player-cards {
     display: flex;
@@ -41,10 +41,6 @@
     object-fit: cover;
     margin-bottom: 10px;
 }
-
-
-
-
 
 /* Game info container styling */
 .game-info {
@@ -130,6 +126,7 @@
     font-weight: bold;
     font-size: 1.2em;
 }
+
 .golden-game-popup-card {
     background-color: #f0f0f0;
     padding: 20px;
@@ -216,7 +213,6 @@
 }
 
 #event-list {
-
     overflow-y: auto;  /* Enable vertical scrolling */
     padding-right: 10px; /* Add padding to avoid clipping the scrollbar */
 }
@@ -234,7 +230,6 @@
 #event-list::-webkit-scrollbar-thumb:hover {
     background-color: #0056b3;
 }
-
 
 /* Event card styling */
 .event-container {
@@ -322,7 +317,6 @@
     gap: 10px;
 }
 
-
 /* Event card name and time styling */
 .event-card .event-info {
     display: flex;
@@ -363,7 +357,7 @@
 
 #event-list {
     flex: 1; /* Take up equal space */
-
+}
 
 .bookmakers-section {
     flex: 1; /* Take up equal space */
@@ -396,64 +390,6 @@
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
-}
-
-.outcome {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.outcome:hover {
-    background-color: #f0f0f0;
-}
-
-.outcome.selected {
-    background-color: #e0e0e0;
-    font-weight: bold;
-}
-
-.no-bookmakers {
-    text-align: center;
-    padding: 20px;
-    font-style: italic;
-    color: #666;
-}
-
-.bet-info {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-}
-
-.bet-info h4 {
-    margin-bottom: 5px;
-}
-
-.outcomes-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-/* Merged and deduplicated styles */
-.bookmaker {
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    padding: 10px;
-}
-
-.market {
-    margin-top: 10px;
-}
-
-.market-title {
-    font-weight: bold;
 }
 
 .outcome {
