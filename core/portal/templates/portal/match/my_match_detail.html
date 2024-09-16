@@ -2,66 +2,6 @@
 {% load static %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
-    <style>
-        .bookmaker {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-        .market {
-            margin-top: 10px;
-        }
-        .market-title {
-            font-weight: bold;
-        }
-        .outcome {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            cursor: pointer;
-        }
-        .outcome:hover {
-            background-color: #f0f0f0;
-        }
-        .outcome.selected {
-            background-color: #e0e0e0;
-            font-weight: bold;
-        }
-        .no-bookmakers {
-            text-align: center;
-            padding: 20px;
-            font-style: italic;
-            color: #666;
-        }
-        .bet-info {
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        .bet-info h4 {
-            margin-bottom: 5px;
-        }
-        .outcomes-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .outcome {
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .outcome:hover {
-            background-color: #f0f0f0;
-        }
-        .outcome.selected {
-            background-color: #e0e0e0;
-            font-weight: bold;
-        }
-    </style>
 {% endblock css %}
 
 {% block content %}
@@ -158,7 +98,7 @@
         <div class="player-games">
             <h3>Player 1 Games</h3>
             {% if match.player_1_game_1.event %}
-                <div class="small-game-event">
+                <div class="small-game-event" id="player-1-game-1-id" value="{{ match.player_1_game_1.id }}" onclick="openPlayer1Game1Popup()">
                     <div class="golden-game">
                         <div class="team">
                             {% if match.player_1_game_1.event.home_team_team.logo_url %}
@@ -209,7 +149,7 @@
                 <p>No pick for Game 1</p>
             {% endif %}
             {% if match.player_1_game_2.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-1-game-2-id" value="{{ match.player_1_game_2.id }}" onclick="openPlayer1Game2Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_2.event.home_team_team.logo_url %}
@@ -260,7 +200,7 @@
                 <p>No pick for Game 2</p>
             {% endif %}
             {% if match.player_1_game_3.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-1-game-3-id" value="{{ match.player_1_game_3.id }}" onclick="openPlayer1Game3Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_3.event.home_team_team.logo_url %}
@@ -312,7 +252,7 @@
                 <p>No pick for Game 3</p>
             {% endif %}
             {% if match.player_1_game_4.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-1-game-4-id" value="{{ match.player_1_game_4.id }}" onclick="openPlayer1Game4Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_4.event.home_team_team.logo_url %}
@@ -364,7 +304,7 @@
                 <p>No pick for Game 4</p>
             {% endif %}
             {% if match.player_1_game_5.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-1-game-5-id" value="{{ match.player_1_game_5.id }}" onclick="openPlayer1Game5Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_5.event.home_team_team.logo_url %}
@@ -469,7 +409,7 @@
                 <p>No pick for Game 1</p>
             {% endif %}
             {% if match.player_2_game_2.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-2-game-2-id" value="{{ match.player_2_game_2.id }}" onclick="openPlayer2Game2Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_2.event.home_team_team.logo_url %}
@@ -520,7 +460,7 @@
                 <p>No pick for Game 2</p>
             {% endif %}
             {% if match.player_2_game_3.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-2-game-3-id" value="{{ match.player_2_game_3.id }}" onclick="openPlayer2Game3Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_3.event.home_team_team.logo_url %}
@@ -571,7 +511,7 @@
                 <p>No pick for Game 3</p>
             {% endif %}
             {% if match.player_2_game_4.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-2-game-4-id" value="{{ match.player_2_game_4.id }}" onclick="openPlayer2Game5Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_4.event.home_team_team.logo_url %}
@@ -622,7 +562,7 @@
                 <p>No pick for Game 4</p>
             {% endif %}
             {% if match.player_2_game_5.event %}
-            <div class="small-game-event">
+            <div class="small-game-event" id="player-2-game-5-id" value="{{ match.player_2_game_5.id }}" onclick="openPlayer2Game5Popup()">
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_5.event.home_team_team.logo_url %}
@@ -699,11 +639,6 @@
 
             <hr class="divider">
         </div>
-    </div>
-
-    <!-- Small Game Event Popup -->
-    <div id="small-game-event-popup" style="display: none;">
-        <!-- Add dynamic small game event content here -->
     </div>
 
     <!-- Upload Popup -->
@@ -1009,6 +944,37 @@
         let gameId = gameElement.getAttribute('value');
         openGamePopup(gameId)
     }
+    function openPlayer1Game1Popup() {
+
+        let gameElement = document.getElementById('player-1-game-1-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+    function openPlayer1Game2Popup() {
+
+        let gameElement = document.getElementById('player-1-game-2-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+    function openPlayer1Game3Popup() {
+
+        let gameElement = document.getElementById('player-1-game-3-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+    function openPlayer1Game4Popup() {
+
+        let gameElement = document.getElementById('player-1-game-4-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+
+    function openPlayer1Game5Popup() {
+
+        let gameElement = document.getElementById('player-1-game-5-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
 
     function openPlayer2Game1Popup() {
 
@@ -1016,6 +982,31 @@
         let gameId = gameElement.getAttribute('value');
         openGamePopup(gameId)
     }
+    function openPlayer2Game2Popup() {
+
+        let gameElement = document.getElementById('player-2-game-2-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+    function openPlayer2Game3Popup() {
+
+        let gameElement = document.getElementById('player-2-game-3-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+    function openPlayer2Game4Popup() {
+
+        let gameElement = document.getElementById('player-2-game-4-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+    function openPlayer2Game5Popup() {
+
+        let gameElement = document.getElementById('player-2-game-5-id');
+        let gameId = gameElement.getAttribute('value');
+        openGamePopup(gameId)
+    }
+
 
 
 
