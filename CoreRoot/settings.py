@@ -117,6 +117,7 @@ INSTALLED_APPS = [
     # 'core.ollama',
     'core.web',
     'core.portal',
+    'core.mail',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
@@ -178,7 +179,7 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
         'NAME': 'postgres',  # Main database name
-        'USER': 'joe',
+        'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': os.environ.get('DBHOST', 'localhost'),
         'PORT': os.environ.get('DBPORT', '5432'),

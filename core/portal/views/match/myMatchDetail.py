@@ -16,7 +16,7 @@ from django.utils import timezone
 
 from datetime import datetime, timedelta
 
-
+import uuid
 
 @login_required(login_url='/auth/login/')
 def my_match_detail_view(request, match_id):
@@ -51,13 +51,35 @@ def upload_pick(request, match_id):
 @require_POST
 @login_required(login_url='/auth/login/')
 def player_2_select_outcome(request, game_id):
-    game = get_object_or_404(Game, id=game_id)
+    # Log the received game_id
+    print(f"Received game_id: {game_id}")
+    
+    try:
+        # Convert game_id to UUID
+        
+        # Attempt to retrieve the game object using get()
+        game = Game.objects.get(id=game_id)
+    except Game.DoesNotExist:
+        # Log the error if game is not found and return 404
+        print(f"Game with id {game_id} not found.")
+        return render(request, '404.html', status=404)  # Render your 404 page
+    except ValueError as ve:
+        # Log the error if game_id is not a valid UUID
+        print(f"Invalid UUID format for game_id {game_id}: {ve}")
+        return JsonResponse({'status': 'error', 'message': 'Invalid game ID format'}, status=400)
+    except Exception as e:
+        # Log any other errors
+        print(f"Error retrieving game with id {game_id}: {e}")
+        return JsonResponse({'status': 'error', 'message': 'An error occurred'}, status=500)
+    
     data = json.loads(request.body)
     user = request.user
 
-
     try:
+        # Attempt to update the game object
         Game.objects.update_by_id(id=game.id, current_user=user, data=data)
         return JsonResponse({'status': 'success'})
     except Exception as e:
+        # Log any errors during the update process
+        print(f"Error updating game with id {game_id}: {e}")
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
