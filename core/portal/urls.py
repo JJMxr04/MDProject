@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from .views import UserProfileUpdateView
 
@@ -6,8 +6,7 @@ app_name = 'core-portal'
 
 urlpatterns = [
     path('dashboard/', views.portal_dashboard, name='portal-dashboard'),
-    path('blog/upcoming-events/', views.upcoming_events_list, name='portal-upcoming-events'),
-    path('blog/upcoming-events/<str:event_id>/', views.upcoming_event_detail, name='portal-upcoming-events-detail'),
+    path('event/', include(('core.event.urls', 'core-event'), namespace='core-event'), name='core-event'),
     path('my/tournaments/', views.my_tournaments, name='portal-my-tournaments'),
     path('my/tournaments/<uuid:tournament_id>/', views.my_tournament_detail, name='portal-my-tournament-detail'),
     path('tournament/round/<uuid:round_id>/', views.my_round_detail_view, name='portal-my-tournament-round-detail'),
