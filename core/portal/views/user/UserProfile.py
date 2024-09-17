@@ -3,9 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.portal.forms import UserProfileForm
-from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/auth/login/')
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
