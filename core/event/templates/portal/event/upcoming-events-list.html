@@ -49,7 +49,7 @@
                 </div>
                 <div class="events-list-container">
                     {% for event in events %}
-                        <a href="{% url 'core-event:upcoming-events-detail' event.id %}" class="event-card">
+                        <a href="{% url 'core-portal:upcoming-events-detail' event.id %}" class="event-card">
                             <div key="{{ event.id }}" >
                                 <div class="teams">
                                     <div class="team">
