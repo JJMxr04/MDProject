@@ -10,7 +10,7 @@ from django.http import JsonResponse
 
 @require_GET
 @login_required(login_url='/auth/login/')
-def get_notifictions(request):
+def get_notifications(request):
 
     # Filter tournaments based on query parameters
     notifications = Notification.objects.get_notifications(request.user)
@@ -23,3 +23,15 @@ def get_notifictions(request):
         'notifications': data
     })
 
+@require_POST
+@login_required(login_url='/auth/login/')
+def read_notifications(request,not_id):
+
+    # Filter tournaments based on query parameters
+    try:
+        Notification.objects.read_notifications(not_id)  # Fixed variable name
+
+        # Return a 200 response
+        return JsonResponse({'status': 'success'}, status=200)  # {{ edit_1 }}
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)  # {{ edit_2 }}

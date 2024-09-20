@@ -1,1 +1,1 @@
-from .notifications import get_notifictions
+from .notifications import get_notifications, read_notifications

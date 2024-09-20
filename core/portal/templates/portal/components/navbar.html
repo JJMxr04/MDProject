@@ -79,15 +79,36 @@ function fetchNotifications(event) {
     fetch("{% url 'core-portal:get-notifications' %}")
         .then(response => response.json())
         .then(data => {
-            // Handle the notifications data and update the dropdown
             const dropdown = document.getElementById('notificationDropdown');
             dropdown.innerHTML = ''; // Clear existing items
-            console.log("data:", data)
+            console.log("data:", data);
             if (data.notifications.length > 0) {
                 data.notifications.forEach(notification => {
+                    console.log("Notification data:", notification); // Log the entire notification object
+                    console.log("Notification UUID:", notification.uuid); // Debugging line
                     const item = document.createElement('li');
                     item.className = 'dropdown-item';
                     item.textContent = notification.message; // Adjust based on your data structure
+                    item.onclick = () => {
+                        // Construct the URL using the provided method
+                        const url = `{% url "core-portal:read_notifications" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', notification.uuid); // Use notification.uuid
+                        // Send POST request to mark notification as read
+                        fetch(url, { // Use the constructed URL
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Notification marked as read');
+                                dropdown.innerHTML = ''; // Clear original list
+                                fetchNotifications(event); // Fetch notifications again
+                            }
+                        })
+                        .catch(error => console.error('Error marking notification as read:', error));
+                    };
                     dropdown.appendChild(item);
                 });
             } else {
