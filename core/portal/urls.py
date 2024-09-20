@@ -7,6 +7,8 @@ from core.event.urls import urlpatterns as eventUrls
 from core.match.urls import urlpatterns as matchUrls
 from core.tournament.urls import urlpatterns as tournamentUrls
 from core.user.urls import urlpatterns as userUrls
+from core.mail.urls.notifications import urlpatterns as notificationUrls
+
 
 app_name = 'core-portal'
 
@@ -16,4 +18,6 @@ urlpatterns = [
     path('match/', include(matchUrls)),
     path('tournament/', include(tournamentUrls)),
     path('user/', include(userUrls)),
+    path('mail/', include(notificationUrls))
+
 ]

@@ -1,8 +1,17 @@
 from django.db import models
 from core.user.models import User
+import uuid
 
 
 class NotificationManager(models.Manager):
+    def get_notifications(self,user):
+
+        return self.filter(user=user).all()
+
+    def mark_read(self,id):
+        notification = self.get(id=id)
+        notification.delete()  # Delete the notification
+
     def create_notification(self, user, message):
         # Ensure the user and message are valid
         if not isinstance(user, User):
@@ -16,12 +25,13 @@ class NotificationManager(models.Manager):
 
 
 class Notification(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    read = models.BooleanField(default=False)
 
-    # Use MatchManager as the default manager
+
+    # Use Manager as the default manager
     objects = NotificationManager()
 
     class Meta:
