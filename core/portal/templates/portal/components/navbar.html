@@ -91,7 +91,7 @@ function fetchNotifications(event) {
                     item.textContent = notification.message; // Adjust based on your data structure
                     item.onclick = () => {
                         // Construct the URL using the provided method
-                        const url = `{% url "core-portal:read_notifications" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', notification.uuid); // Use notification.uuid
+                        const url = `{% url "core-portal:read_notifications" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', notification.id); // Use notification.uuid
                         // Send POST request to mark notification as read
                         fetch(url, { // Use the constructed URL
                             method: 'POST',

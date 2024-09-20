@@ -27,9 +27,10 @@ def get_notifications(request):
 @login_required(login_url='/auth/login/')
 def read_notifications(request,not_id):
 
+
     # Filter tournaments based on query parameters
     try:
-        Notification.objects.read_notifications(not_id)  # Fixed variable name
+        Notification.objects.mark_read(not_id)  # Fixed variable name
 
         # Return a 200 response
         return JsonResponse({'status': 'success'}, status=200)  # {{ edit_1 }}

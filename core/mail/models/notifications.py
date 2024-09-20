@@ -9,7 +9,8 @@ class NotificationManager(models.Manager):
         return self.filter(user=user).all()
 
     def mark_read(self,id):
-        notification = self.get(id=id)
+
+        notification = self.filter(id=id).first()
         notification.delete()  # Delete the notification
 
     def create_notification(self, user, message):

@@ -6,5 +6,5 @@ app_name = 'core-mail'
 
 urlpatterns = [
     path('notifications/',views.get_notifications, name='get-notifications'),
-    path('notifications/<uuid:not_id>/', views.read_notifications, name='read-notifications'),
+    path('notifications/<uuid:not_id>/', views.read_notifications, name='read_notifications'),
 ]
