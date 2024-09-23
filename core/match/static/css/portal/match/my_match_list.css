@@ -1,0 +1,128 @@
+.matches-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .matches-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-and-matches {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    height: 600px;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 10px;
+  }
+  
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-container .search-bar {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .filter-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .date-filters {
+    margin-top: 10px;
+  }
+  
+  .date-filters label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .matches-list-table-container {
+    flex-grow: 1;
+  }
+  
+  .matches-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #000;
+  }
+  
+  .matches-list-table th,
+  .matches-list-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #000;
+  }
+  
+  .matches-list-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .matches-list-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .matches-list-table tbody tr:hover {
+    background-color: #FFE47A;
+  }
+  
+  .matches-list-table tbody tr.selected {
+    background-color: #FFE47A;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 10px;
+    margin: 0 5px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .pagination button.active {
+    background: #0056b3;
+  }
+  
+  .pagination button:hover:not(.active) {
+    background: #0056b3;
+  }
+  
+  .offset-2 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
