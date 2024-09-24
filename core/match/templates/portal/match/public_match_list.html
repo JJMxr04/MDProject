@@ -1,7 +1,7 @@
 {% extends "portal/base_portal.html" %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_list.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/public_match_list.css' %}">
 {% endblock css %}
 
 {% block content %}
@@ -13,6 +13,11 @@
             <div class="sidebar">
                 <h2>Filters</h2>
                 <div class="filter-container">
+                    <!-- Create Match Button -->
+                    <button class="btn btn-primary create-match-button" onclick="showCreateMatchPopup(event)">
+                        <a href="#" class="create-match-button" onclick="showCreateMatchPopup(event)">Create Match</a>
+                    </button>
+
                     <form method="get">
                         <input
                             type="text"
@@ -84,4 +89,29 @@
         </div>
     </div>
 </div>
+
+<!-- Create Match Modal -->
+<div id="createMatchModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Create Match</h2>
+        <form id="createMatchForm">
+            <!-- Add your form fields here -->
+            <label for="player1">Player 1:</label>
+            <input type="text" id="player1" name="player1" required>
+            <label for="player2">Player 2:</label>
+            <input type="text" id="player2" name="player2" required>
+            <button type="submit">Create</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
+
+<script>
+    function showCreateMatchPopup(event) {
+        event.preventDefault(); // Prevent the default anchor behavior
+        alert("This will open the match creation form."); // Replace with modal logic if needed
+        // Optionally, you can redirect to the create match page here
+        // window.location.href = "{% url 'core-portal:portal-create-match' %}";
+    }
+</script>
