@@ -503,3 +503,10 @@
         margin-top: 5px;
     }
 }
+
+.expand-button {
+    width: 100%; /* Make the button take the full width */
+    display: block; /* Ensure it behaves like a block element */
+    padding: 10px; /* Add padding for better appearance */
+    font-size: 1em; /* Adjust font size as needed */
+}
