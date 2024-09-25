@@ -39,17 +39,14 @@ def public_match_list_view(request):
 def create_public_match_view(request):
 
 
-    
     # Create a new match
     try:
         owner = request.user
-        
         # Assuming you have a way to get Player objects from usernames
 
 
-        new_match = Match.objects.create(player_1=player_1)
+        new_match = Match.objects.create(player_1=owner)
         new_match.save()
-
         # Redirect or return a response after creation
 
 
