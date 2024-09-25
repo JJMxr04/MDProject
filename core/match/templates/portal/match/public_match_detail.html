@@ -27,20 +27,63 @@
     <div class="game-info">
         <h2>Match Information</h2>
         <p><strong>Start Date:</strong> {{ match.start_date }}</p>
-        <p><strong>End Date:</strong> {{ match.end_date }}</p>
-        <p><strong>Winner:</strong>
-            {% if match.winner %}
-                {{ match.winner.username }}
-            {% else %}
-                TBD
-            {% endif %}
         </p>
     </div>
 
 
-    <button class="btn btn-primary expand-button" onclick="">
+    <button class="btn btn-primary expand-button" onclick="showPopup()">
         Accept Match
     </button>
 </div>
+
+<div id="acceptMatchPopup" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2>Are you sure you want to create a match?</h2>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitMatch()">Submit</button>
+            <button class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showPopup() {
+        document.getElementById('acceptMatchPopup').style.display = 'flex';
+    }
+    
+    function closePopup() {
+        document.getElementById('acceptMatchPopup').style.display = 'none';
+    }
+    
+    function submitMatch() {
+        // Send a POST request to create a match
+        fetch("{% url 'core-portal:portal-accept-public-match' match.id%}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+            },
+            body: JSON.stringify({
+                // Add any necessary data for match creation here
+                'action': 'accept'
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Match created!"); // Notify user of success
+                closePopup();
+                window.location.href = "{% url 'core-portal:portal-my-match-detail' match.id %}"; // Redirect to match detail
+                // Close the popup after submission
+            } else {
+                alert("Error creating match."); // Notify user of error
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred."); // Notify user of error
+        });
+    }
+</script>
 
 {% endblock %}

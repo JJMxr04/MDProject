@@ -54,6 +54,8 @@ class MatchManager(AbstractManager):
         match = self.get_object_by_id(id=match.id)
         if match is None:
             return None
+        if match.player_1 == player_2:
+            return None
         match.match_state = "accepted"
         match.player_2 = player_2
         match.player_1_game_1 = Game.objects.create_game(match.player_1, match.player_2, match)

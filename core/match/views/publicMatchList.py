@@ -38,22 +38,28 @@ def public_match_list_view(request):
 @require_POST
 @login_required(login_url='/auth/login/')
 def create_public_match_view(request):
+    data = json.loads(request.body)  # Decode and parse JSON body
+    if data.get('action') == 'create':  # Updated line
     # Create a new match
-    try:
-        owner = request.user
-        # Assuming you have a way to get Player objects from usernames
+        try:
+            owner = request.user
+            # Assuming you have a way to get Player objects from usernames
 
 
-        new_match = Match.objects.create(player_1=owner)
-        new_match.save()
-        # Redirect or return a response after creation
+            new_match = Match.objects.create(player_1=owner)
+            new_match.save()
+            # Redirect or return a response after creation
 
 
 
 
-        return JsonResponse({'status': 'success'})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Not the correct action'}, status=400)
+    
+
     
 @login_required(login_url='/auth/login/')
 def public_match_detail_view(request, match_id):
@@ -67,3 +73,32 @@ def public_match_detail_view(request, match_id):
     }
     
     return render(request, 'portal/match/public_match_detail.html', context)
+
+@require_POST
+@login_required(login_url='/auth/login/')
+def accept_public_match_view(request, match_id):
+    print(1)
+    data = json.loads(request.body)  # Decode and parse JSON body
+    if data.get('action') == 'accept':  # Updated line
+    # Create a new match
+        print(2)
+        try:
+            print(3)
+            user = request.user
+            # Assuming you have a way to get Player objects from usernames
+            print(4)
+            match = Match.objects.get(id=match_id)
+            print(5)
+            a_match = Match.objects.accept_match(match,user)
+            print(6)
+            # Redirect or return a response after creation
+            print(7)
+
+
+
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Not the correct action'}, status=400)
+    
