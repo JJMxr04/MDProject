@@ -1,12 +1,12 @@
 {% extends "portal/base_portal.html" %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/public_match_detail.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="match-detail">
-    <h1><strong>Match Details</strong></h1>
+    <h1><strong>Match Request Details</strong></h1>
     <p>Match ID: {{ match.id }}</p>
     
     <!-- Player Cards -->
