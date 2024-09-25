@@ -11,13 +11,21 @@
         <div class="filter-and-matches">
             <!-- Sidebar with Filters -->
             <div class="sidebar">
-                <h2>Filters</h2>
+
                 <div class="filter-container">
                     <!-- Create Match Button -->
-                    <button class="btn btn-primary create-match-button" onclick="showCreateMatchPopup(event)">
-                        <a href="#" class="create-match-button" onclick="showCreateMatchPopup(event)">Create Match</a>
+                    <button class="btn btn-primary" onclick="showPopup()">
+                        Create Match
                     </button>
-
+                    <hr>
+                    <!-- Popup Modal -->
+                    <div id="createMatchPopup" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closePopup()">&times;</span>
+                            <h2>Create a New Match</h2>
+                            <!-- Add form or content for creating a match here -->
+                        </div>
+                    </div>
                     <form method="get">
                         <input
                             type="text"
@@ -26,23 +34,7 @@
                             value="{{ search_query }}"
                             class="search-bar"
                         />
-                        <select name="state">
-                            <option value="">All States</option>
-                            <option value="accepted" {% if state == "accepted" %}selected{% endif %}>Accepted</option>
-                            <option value="pending" {% if state == "pending" %}selected{% endif %}>Pending</option>
-                            <option value="completed" {% if state == "completed" %}selected{% endif %}>Completed</option>
-                        </select>
-                        <div class="date-filters">
-                            <label>
-                                Start Date:
-                                <input type="date" name="start_date" value="{{ start_date }}" />
-                            </label>
-                            <label>
-                                End Date:
-                                <input type="date" name="end_date" value="{{ end_date }}" />
-                            </label>
-                        </div>
-                        <button type="submit">Filter</button>
+                        <button class="btn btn-primary" type="submit">Search User</button>
                     </form>
                 </div>
             </div>
@@ -90,28 +82,39 @@
     </div>
 </div>
 
-<!-- Create Match Modal -->
-<div id="createMatchModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Create Match</h2>
-        <form id="createMatchForm">
-            <!-- Add your form fields here -->
-            <label for="player1">Player 1:</label>
-            <input type="text" id="player1" name="player1" required>
-            <label for="player2">Player 2:</label>
-            <input type="text" id="player2" name="player2" required>
-            <button type="submit">Create</button>
-        </form>
-    </div>
-</div>
-{% endblock %}
+<style>
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Adjust width as needed */
+    max-width: 500px; /* Max width for the modal */
+}
+</style>
 
 <script>
-    function showCreateMatchPopup(event) {
-        event.preventDefault(); // Prevent the default anchor behavior
-        alert("This will open the match creation form."); // Replace with modal logic if needed
-        // Optionally, you can redirect to the create match page here
-        // window.location.href = "{% url 'core-portal:portal-create-match' %}";
-    }
+function showPopup() {
+    document.getElementById('createMatchPopup').style.display = 'flex';
+}
+
+function closePopup() {
+    document.getElementById('createMatchPopup').style.display = 'none';
+}
 </script>
+
+{% endblock %}
+
+
