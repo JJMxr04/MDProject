@@ -6,6 +6,7 @@ import json
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404
 
 
 @login_required(login_url='/auth/login/')
@@ -53,3 +54,16 @@ def create_public_match_view(request):
         return JsonResponse({'status': 'success'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    
+@login_required(login_url='/auth/login/')
+def public_match_detail_view(request, match_id):
+    match = get_object_or_404(Match, id=match_id)
+
+
+    context = {
+        'match': match,
+
+
+    }
+    
+    return render(request, 'portal/match/public_match_detail.html', context)

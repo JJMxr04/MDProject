@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                         {% for match in matches %}
-                        <tr onclick="window.location='{% url 'core-portal:portal-my-match-detail' match.id %}'">
+                        <tr onclick="window.location='{% url 'core-portal:portal-public-match-detail' match.id %}'">
                             <td>{{ match.id }}</td>
                             <td>{{ match.player_1.username }}</td>
 
