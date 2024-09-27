@@ -12,33 +12,40 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Betting Advice
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href='#'>Feed</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">My Predictions</a></li>
+                        <li><a class="dropdown-item" href="#">Create Prediction</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         News
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:upcoming-events' %}">Sports Events</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:upcoming-events' %}">Upcoming Sports Events</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Blog</a></li>
+                        <li><a class="dropdown-item" href="#">Highlights</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Tournaments
+                        The Game
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-tournaments' %}">My Tournaments</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Matches
-                    </a>
-                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-public-match-list' %}">Match Requests</a></li>
                         <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-match-list' %}"#">My Matches</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-public-match-list' %}"#">Match Requests</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-tournaments' %}">My Tournaments</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">Invites</a></li>
+                        
                     </ul>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="notificationBell" onclick="fetchNotifications(event)">
                         <i class="bi bi-bell"></i>
@@ -58,7 +65,6 @@
                         {% endif %}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Invites</a></li>
                         <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
