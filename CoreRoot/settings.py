@@ -109,6 +109,8 @@ INSTALLED_APPS = [
     'core.user',
     'core.auth',
     'core.blog',
+    'core.blog.writer',
+    'core.blog.client',
     'core.crons',
     'core.event',
     'core.game',
