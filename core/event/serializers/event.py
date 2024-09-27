@@ -44,13 +44,16 @@ class EventSerializer(AbstractSerializer):
 
 
 class EventBookmakerSerializer(EventSerializer):
-    bookmakers = BookmakerSerializer(many=True, required=False)
+    # Remove the bookmakers field if it doesn't exist in the Event model
+    # bookmakers = BookmakerSerializer(many=True, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        # Always include the bookmakers in this serializer
-        rep['bookmakers'] = BookmakerSerializer(instance.bookmakers.all(), many=True).data
+        # Check if the instance has a method to get bookmakers or handle it differently
+        # If there's no direct relation, you might need to fetch them differently
+        # Example: rep['bookmakers'] = BookmakerSerializer(get_bookmakers_for_event(instance), many=True).data
+        rep['bookmakers'] = []  # Set to an empty list or handle accordingly
         return rep
