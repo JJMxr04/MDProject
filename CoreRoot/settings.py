@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
+from django.urls import reverse_lazy
+
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
     return CustomTokenObtainPairSerializer
@@ -309,19 +311,19 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Paradise Sports",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    # "site_logo": "books/img/logo.png",
+    "site_logo": "logo/paradise_logo_2_normal_100x100.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": None,
+    "login_logo": "logo/paradise_logo_2_normal_100x100.png",
 
     # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": None,
+    "login_logo_dark": "logo/paradise_logo_2_normal_100x100.png",
 
     # CSS classes that are applied to the logo above
     # "site_logo_classes": "img-circle",
 
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": None,
+    "site_icon":"logo/paradise_logo_2_normal_100x100.png",
 
     # Welcome text on the login screen
     "welcome_sign": "Welcome to Paradise Sports",
@@ -344,7 +346,7 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.is_staff"]},
 
         # external url that opens in a new window (Permissions can be added)
         # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
@@ -352,7 +354,10 @@ JAZZMIN_SETTINGS = {
         # model admin to link to (Permissions checked against model)
         # {"model": "auth.User"},
 
-        {"name": "Analytics Dashboard", "url":"/admin/dashboard", "permissions":["auth.is_admin"]},
+        {"name": "Analytics Dashboard", "url": reverse_lazy("admin_dashboard"), "permissions": ["auth.is_staff"]},
+
+        # Portal - using named URL resolved via reverse
+        {"name": "Portal", "url": reverse_lazy("core-portal:portal-dashboard"), "permissions": ["auth.is_staff"], "new_window": True},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
         # {"app": "books"},
