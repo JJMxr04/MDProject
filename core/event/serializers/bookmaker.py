@@ -18,3 +18,8 @@ class BookmakerSerializer(AbstractSerializer):
         # Filter markets by both bookmaker and event
         rep['markets'] = MarketSerializer(instance.markets.filter(bookmaker=instance, event_id=event_id), many=True).data
         return rep
+
+    def create(self, validated_data):
+        key = validated_data.get('key')
+        bookmaker, created = Bookmaker.objects.get_or_create(key=key, defaults=validated_data)
+        return bookmaker
