@@ -14,3 +14,8 @@ class BookmakerSerializer(AbstractSerializer):
         rep = super().to_representation(instance)
         rep['markets'] = MarketSerializer(instance.markets.all(), many=True).data
         return rep
+
+    def create(self, validated_data):
+        key = validated_data.get('key')
+        bookmaker, created = Bookmaker.objects.get_or_create(key=key, defaults=validated_data)
+        return bookmaker

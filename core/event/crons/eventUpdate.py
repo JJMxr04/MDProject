@@ -225,18 +225,13 @@ class EventCron():
             event_instance, created = Event.objects.get_or_create(id=eventID)
 
             for bookmaker_data in event_data['bookmakers']:
-                bookmaker_id = bookmaker_data.get('id')
+                bookmaker_key = bookmaker_data.get('key')  # Use bookmaker key instead of id
 
-                # Handle last_update to ensure it's in the correct format
-                last_update = bookmaker_data.get('last_update')
-                if isinstance(last_update, datetime):
-                    last_update_str = last_update.isoformat()
-                else:
-                    last_update_str = last_update or timezone.now().isoformat()
-
+                # Fetch the bookmaker by key
                 bookmaker_instance, _ = Bookmaker.objects.get_or_create(
-                    id=bookmaker_id,
-                    defaults={'event': event_instance, 'last_update': last_update_str,'key':bookmaker_data.get('key'),'title':bookmaker_data.get('title')}
+                    key=bookmaker_key,
+                    defaults={'event': event_instance, 'last_update': bookmaker_data.get('last_update'),
+                              'title': bookmaker_data.get('title')}
                 )
 
                 # Process markets - Ensure only one market with the same key and bookmaker
@@ -251,7 +246,7 @@ class EventCron():
                         market_instance = Market.objects.create(
                             key=market_key,
                             bookmaker=bookmaker_instance,
-                            last_update=last_update_str  # Ensure last_update is set
+                            last_update=market_data.get('last_update')  # Ensure last_update is set
                         )
 
                     # Update the market instance
@@ -279,7 +274,7 @@ class EventCron():
                             print("Validation errors in outcome:")
                             print(outcome_serializer.errors)
 
-                event_instance.save()
+            event_instance.save()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     def update_all_events(self):
