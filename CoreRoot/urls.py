@@ -8,7 +8,7 @@ from core.admin.admin import custom_admin_view
 from core.views import robots_txt
 
 urlpatterns = [
-    path('admin/dashboard/', custom_admin_view, name='custom_dashboard'),
+    path('admin/dashboard/', custom_admin_view, name='admin_dashboard'),
     path('admin/', admin.site.urls),
     # path('api/', include(('core.routers', 'core'), namespace="core-api")),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
