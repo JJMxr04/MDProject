@@ -67,8 +67,8 @@ class SportAdmin(admin.ModelAdmin):
 
 @admin.register(Bookmaker)
 class BookmakerAdmin(admin.ModelAdmin):
-    list_display = ['id', 'key', 'title', 'event', 'last_update']
-    search_fields = ['id', 'key', 'title', 'event__title', 'event__id']  # Added event__id for searching by event_id
+    list_display = ['id', 'key', 'title', 'last_update']
+    search_fields = ['id', 'key', 'title']  # Added event__id for searching by event_id
     readonly_fields = ['id', 'last_update']
 
     fieldsets = (
@@ -79,13 +79,13 @@ class BookmakerAdmin(admin.ModelAdmin):
 
 @admin.register(Market)
 class MarketAdmin(admin.ModelAdmin):
-    list_display = ['key', 'bookmaker', 'last_update']
-    search_fields = ['key', 'bookmaker__title']  # Assuming 'name' field was a typo and should be 'title'
-    readonly_fields = ['last_update']
+    list_display = ['key', 'bookmaker','event', 'last_update']
+    search_fields = ['key', 'bookmaker__title','event__title', 'event__id']  # Assuming 'name' field was a typo and should be 'title'
+    readonly_fields = ['id','last_update']
 
     fieldsets = (
         (None, {
-            'fields': ('key', 'bookmaker', 'last_update')
+            'fields': ('key', 'bookmaker', 'last_update', 'event')
         }),
     )
 
