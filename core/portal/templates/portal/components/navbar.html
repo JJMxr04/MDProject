@@ -15,10 +15,12 @@
                         Betting Advice
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href='#'>Feed</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">My Predictions</a></li>
-                        <li><a class="dropdown-item" href="#">Create Prediction</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:client-dashboard' %}">Feed</a></li>
+                        {% if user.is_writer or user.is_staff %}
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-dashboard' %}">My Predictions</a></li>
+                            <li><a class="dropdown-item" href="#">Create Prediction</a></li>
+                        {% endif %} 
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -61,7 +63,7 @@
                         {% if user.avatar %}
                             <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
                         {% else %}
-                            <img src="{% static 'images/avatar-placeholder.png' %}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
                         {% endif %}
                     </a>
                     <ul class="dropdown-menu">

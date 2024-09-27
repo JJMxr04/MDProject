@@ -98,6 +98,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_writer= models.BooleanField(default=False)
     activated_link = models.BooleanField(default=False)
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
@@ -115,5 +116,4 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     def name(self):
         return f"{self.first_name} {self.last_name}"
 
-    def check_portal_password(self, raw_password):
-        return check_password(raw_password, self.portal_password)
+
