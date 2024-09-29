@@ -100,10 +100,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apscheduler',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'apscheduler',  # This was in the second list only
+    "django_celery_results",  # This was in the first list only
+    "django_celery_beat",     # This was in the first list only
+    "storages",               # This was in the first list only
 
     # MDProject Models
     'core.commands',
@@ -111,17 +114,17 @@ INSTALLED_APPS = [
     'core.user',
     'core.auth',
     'core.blog',
-    'core.blog.writer',
-    'core.blog.client',
+    'core.blog.writer',       # This was in the second list only
+    'core.blog.client',       # This was in the second list only
     'core.crons',
     'core.event',
     'core.game',
     'core.match',
     'core.tournament',
-    # 'core.ollama',
+    'core.mail',
+    # 'core.ollama',           # Commented out in the second list
     'core.web',
     'core.portal',
-    'core.mail',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
