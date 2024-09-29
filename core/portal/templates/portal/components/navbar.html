@@ -15,12 +15,15 @@
                         Betting Advice
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:client-dashboard' %}">Feed</a></li>
+                        {% if not user.is_writer or user.is_staff %}
+                            <li><a class="dropdown-item" href="{% url 'core-portal:client-dashboard' %}">Feed</a></li>
+                        {% endif %} 
+                        <li><hr class="dropdown-divider" /></li>
                         {% if user.is_writer or user.is_staff %}
-                            <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" href="{% url 'core-portal:writer-dashboard' %}">My Predictions</a></li>
                             <li><a class="dropdown-item" href="#">Create Prediction</a></li>
                         {% endif %} 
+
                     </ul>
                 </li>
                 <li class="nav-item dropdown">

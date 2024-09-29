@@ -26,7 +26,7 @@ class UserAdmin(BaseUserAdmin):
     # Fieldsets configuration for displaying user details, including groups and permissions
     fieldsets = (
         ('Personal Information', {'fields': ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']}),
-        ('Permissions', {'fields': ['is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions',
+        ('Permissions', {'fields': ['is_writer','is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions',
                                     'activated_link']}),
         ('Important Dates', {'fields': ['last_login', 'created', 'updated']}),
     )
