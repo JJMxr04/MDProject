@@ -1,0 +1,30 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Article{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="bg-light shadow-md p-5 form-layout h-100 rounded">
+            <h3 class="mb-4 text-left"> Events</h3>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="bg-white shadow-md p-5 form-layout mt-5 rounded">
+            <h3 class="mb-4 text-left"> 🤓 Create An Article 🤓</h3>
+            
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-group text-left">
+                    {{ CreateArticleForm|crispy }}
+                </div>
+                
+                <br>
+                <input class="btn btn-success btn-lg mt-3" type="submit" value="Create Article">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

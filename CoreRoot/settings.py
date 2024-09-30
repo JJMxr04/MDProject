@@ -106,7 +106,9 @@ INSTALLED_APPS = [
     'apscheduler',  # This was in the second list only
     "django_celery_results",  # This was in the first list only
     "django_celery_beat",     # This was in the first list only
-    "storages",               # This was in the first list only
+    "storages",
+    'crispy_forms',
+    'crispy_bootstrap5',            # This was in the first list only
 
     # MDProject Models
     'core.commands',
@@ -130,6 +132,9 @@ INSTALLED_APPS = [
     'core.admin.CoreAdminConfig',
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -186,7 +191,7 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
         'NAME': 'postgres',  # Main database name
-        'USER': 'joe',
+        'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': os.environ.get('DBHOST', 'localhost'),
         'PORT': os.environ.get('DBPORT', '5432'),

@@ -21,7 +21,7 @@
                         <li><hr class="dropdown-divider" /></li>
                         {% if user.is_writer or user.is_staff %}
                             <li><a class="dropdown-item" href="{% url 'core-portal:writer-dashboard' %}">My Predictions</a></li>
-                            <li><a class="dropdown-item" href="#">Create Prediction</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-create-article' %}">Create Prediction</a></li>
                         {% endif %} 
 
                     </ul>

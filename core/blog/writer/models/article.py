@@ -1,6 +1,6 @@
 from django.db import models
 from core.user.models import User
-from core.event.models import Event, Bookmaker,Market, Outcome
+from core.event.models import Event, Outcome
 from django.utils import timezone
 import uuid
 
@@ -19,6 +19,7 @@ class Article(models.Model):
     # slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, blank=True,null=True)
     content = models.TextField(max_length=2000,)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
