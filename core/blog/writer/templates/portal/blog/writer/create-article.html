@@ -144,8 +144,26 @@ function fetchEvents() {
                                 const bookmakerElement = document.createElement('div');
                                 bookmakerElement.className = 'bookmaker';
                                 bookmakerElement.innerHTML = `
-                                    <p><strong>Bookmaker:</strong> ${bookmaker.title}</p>
-                                    <p><strong>Markets:</strong> ${bookmaker.markets}</p>
+                                    <h3>${bookmaker.title}</h3>
+                                    ${bookmaker.markets.map(market => `
+                                        <div class="market" data-key="${market.key}">
+                                            <h4 class="market-title">
+                                                ${market.key === 'h2h' ? 'Head to Head' : // Updated title
+                                                  market.key === 'totals' ? 'Totals' : // Updated title
+                                                  market.key === 'overunder' ? 'Over/Under' : // Updated title
+                                                  market.title}
+                                            </h4>
+                                            <ul>
+                                                ${market.outcomes.map(outcome => `
+                                                    <li class="outcome" data-outcome-id="${outcome.id}">
+                                                        <span class="outcome-name">${outcome.name}</span>
+                                                        <span class="point">${outcome.point || ''}</span>
+                                                        <span class="price">${outcome.price}</span>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                    `).join('')}
                                 `;
                                 bookmakersContainer.appendChild(bookmakerElement);
                             });
