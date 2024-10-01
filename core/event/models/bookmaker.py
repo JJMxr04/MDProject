@@ -7,7 +7,7 @@ class BookmakerManager(AbstractManager):
 
 class Bookmaker(AbstractModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='bookmakers', db_index=True)
-    key = models.CharField(max_length=255, unique=True)
+    key = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     last_update = models.DateTimeField(db_index=True)
 

@@ -5,4 +5,5 @@ class ArticleForm(ModelForm):
 
     class Meta:
         model = Article
-        fields = ['title',  'content', 'tags','is_premium',]
+        fields = ['title', 'event', 'outcome',   'content', 'tags','is_premium',]
+        

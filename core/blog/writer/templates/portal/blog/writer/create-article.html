@@ -1,6 +1,9 @@
 {% extends "portal/base_portal.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/create-article.css' %}">
+{% endblock css %}
 
 {% block title %}Create Article{% endblock title %}
 
@@ -9,6 +12,17 @@
     <div class="col-md-4">
         <div class="bg-light shadow-md p-5 form-layout h-100 rounded">
             <h3 class="mb-4 text-left"> Events</h3>
+            <div id="event-list">
+                {% if available_events %}
+                    {% for event in available_events %}
+                        <div class="event-container">
+                            <!-- Existing event display code -->
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-events-message">No events available for this period.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="col-md-8">
@@ -27,4 +41,135 @@
         </div>
     </div>
 </div>
+
+
+<script>
+function fetchEvents() {
+    const url = `{% url "core-portal:writer-events" %}`; // Adjust the URL as needed
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Fetched events:', data); // Log the fetched data
+        const eventList = document.getElementById('event-list');
+        eventList.innerHTML = ''; // Clear existing content
+
+        const events = data.events; // Access the events array
+
+        if (!Array.isArray(events) || events.length === 0) {
+            eventList.innerHTML = '<p class="no-events-message">No events available.</p>';
+            return;
+        }
+
+        events.forEach(event => {
+            const eventContainer = document.createElement('div');
+            eventContainer.className = 'event-container';
+            eventContainer.innerHTML = `
+                <button class="event-card" data-event-id="${event.id}">
+                    <div class="event-info">
+                        <div class="team">
+                            ${event.home_team_team.logo_url ? 
+                                `<img src="${event.home_team_team.logo_url}" alt="${event.home_team_team.name}">` : 
+                                ''
+                            }
+                            ${event.home_team_team.team_name ? 
+                                `<h4>${event.home_team_team.team_name}</h4>` : 
+                                ''
+                            }
+                        </div>
+                        <div class="vs-text">
+                            <h4>Vs</h4>
+                        </div>
+                        <div class="team">
+                            ${event.away_team_team.logo_url ? 
+                                `<img src="${event.away_team_team.logo_url}" alt="${event.away_team_team.name}">` : 
+                                ''
+                            }
+                            ${event.away_team_team.team_name ? 
+                                `<h4>${event.away_team_team.team_name}</h4>` : 
+                                ''
+                            }
+                        </div>
+                        <div class="event-body">
+                            <p><strong>Sport:</strong> ${event.sport_title}</p>
+                            <p><strong>Description:</strong> ${event.description}</p>
+                            <p><strong>Commence Time:</strong> ${event.commence_time}</p>
+                        </div>
+                    </div>
+                </button>
+            `;
+            eventContainer.addEventListener('click', () => {
+                eventContainer.classList.toggle('selected'); // Toggle selected class
+                console.log('selected')
+                console.log(event.id)
+                
+                // Send GET request when an event is selected
+                if (eventContainer.classList.contains('selected')) {
+                    const url = `{% url "core-portal:writer-event-BMO" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', event.id);
+        
+                    fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Fetched event data:', data); // Log the fetched data
+                        const bookmakersList = data.event_bookmakers; // Access the bookmakers array
+                        const bookmakersContainer = document.createElement('div'); // Create a container for bookmakers
+
+                        if (Array.isArray(bookmakersList) && bookmakersList.length > 0) {
+                            bookmakersList.forEach(bookmaker => {
+                                const bookmakerElement = document.createElement('div');
+                                bookmakerElement.className = 'bookmaker';
+                                bookmakerElement.innerHTML = `
+                                    <p><strong>Bookmaker:</strong> ${bookmaker.name}</p>
+                                    <p><strong>Odds:</strong> ${bookmaker.odds}</p>
+                                `;
+                                bookmakersContainer.appendChild(bookmakerElement);
+                            });
+                        } else {
+                            bookmakersContainer.innerHTML = '<p>No bookmakers available.</p>';
+                        }
+
+                        eventContainer.appendChild(bookmakersContainer); // Append the bookmakers container to the event container
+                    })
+                    .catch(error => {
+                        console.error('Error fetching event data:', error);
+                    });
+
+                    
+                }
+            });
+            eventList.appendChild(eventContainer);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching events:', error);
+    });
+}
+
+// Run fetchEvents when the page loads
+window.onload = fetchEvents;
+// or alternatively
+// document.addEventListener('DOMContentLoaded', fetchEvents);
+</script>
 {% endblock content %}

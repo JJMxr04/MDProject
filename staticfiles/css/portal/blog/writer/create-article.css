@@ -1,0 +1,5 @@
+.event-container.selected {
+    /* Change to your desired highlight color */
+    border: 2px solid #3D7EAA; /* Optional: Add a border for better visibility */
+    background-color: #FFE47A;
+}

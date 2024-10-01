@@ -15,5 +15,5 @@ def upcoming_event_detail(request, event_id):
     context = {
         'event': EventBookmakerSerializer(event).data,
     }
-    print(json.dumps(context['event'],indent=4))
+
     return render(request, 'portal/event/upcoming_event_detail.html', context)
