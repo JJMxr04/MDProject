@@ -132,8 +132,9 @@ function fetchEvents() {
                         return response.json();
                     })
                     .then(data => {
-                        console.log('Fetched event data:', data); // Log the fetched data
-                        const bookmakersList = data.event_bookmakers; // Access the bookmakers array
+                         
+                        const bookmakersList = data.event_bookmakers.bookmakers;
+                        console.log('Fetched event data:', bookmakersList); // Access the bookmakers array
                         const bookmakersContainer = document.createElement('div'); // Create a container for bookmakers
 
                         if (Array.isArray(bookmakersList) && bookmakersList.length > 0) {
@@ -141,8 +142,8 @@ function fetchEvents() {
                                 const bookmakerElement = document.createElement('div');
                                 bookmakerElement.className = 'bookmaker';
                                 bookmakerElement.innerHTML = `
-                                    <p><strong>Bookmaker:</strong> ${bookmaker.name}</p>
-                                    <p><strong>Odds:</strong> ${bookmaker.odds}</p>
+                                    <p><strong>Bookmaker:</strong> ${bookmaker.title}</p>
+                                    <p><strong>Markets:</strong> ${bookmaker.markets}</p>
                                 `;
                                 bookmakersContainer.appendChild(bookmakerElement);
                             });
