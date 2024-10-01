@@ -10,9 +10,9 @@
 {% block content %}
 <div class="row">
     <div class="col-md-4">
-        <div class="bg-light shadow-md p-5 form-layout h-100 rounded" style="height: calc(100vh - 100px); overflow-y: auto;"> <!-- Set height and overflow -->
+        <div class="bg-light shadow-md p-5 form-layout h-100 rounded equal-height" style=" overflow-y: auto;"> <!-- Added scrollable styles -->
             <h3 class="mb-4 text-left"> Events</h3>
-            <div id="event-list" style="max-height: calc(100vh - 200px); overflow-y: auto;"> <!-- Set max height for scrolling -->
+            <div id="event-list">
                 {% if available_events %}
                     {% for event in available_events %}
                         <div class="event-container">
@@ -25,8 +25,24 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="bg-white shadow-md p-5 form-layout mt-5 rounded" style="height: calc(100vh - 100px);"> <!-- Match height -->
+    <div class="col-md-4">
+        <div class="bg-light shadow-md p-5 form-layout h-100 rounded equal-height" style=" overflow-y: auto;"> <!-- Added scrollable styles -->
+            <h3 class="mb-4 text-left"> Bookmakers</h3>
+            <div id="bookmakers">
+                {% if available_events %}
+                    {% for event in available_events %}
+                        <div class="event-container">
+                            <!-- Existing event display code -->
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-events-message">No Bookmakers available for this period.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="bg-white shadow-md p-5 form-layout mt-0 rounded"> <!-- Changed mt-5 to mt-0 -->
             <h3 class="mb-4 text-left"> 🤓 Create An Article 🤓</h3>
             
             <form method="POST" autocomplete="off">
@@ -110,16 +126,24 @@ function fetchEvents() {
                 </button>
             `;
             eventContainer.addEventListener('click', () => {
-                eventContainer.classList.toggle('selected'); // Toggle selected class
+                // Deselect all other event containers
+                const allEventContainers = document.querySelectorAll('.event-container');
+                allEventContainers.forEach(container => {
+                    if (container !== eventContainer) {
+                        container.classList.remove('selected'); // Remove selected class from others
+                    }
+                });
+                
+                const isSelected = eventContainer.classList.toggle('selected'); // Toggle selected class for the clicked event
                 console.log('selected')
                 console.log(event.id)
                 
-                const bookmakersContainer = eventContainer.querySelector('.bookmakers-container'); // Select the bookmakers container
+                const bookmakersContainer = document.getElementById('bookmakers'); // Select the bookmakers section
 
                 // Send GET request when an event is selected
-                if (eventContainer.classList.contains('selected')) {
+                if (isSelected) {
                     const url = `{% url "core-portal:writer-event-BMO" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', event.id);
-        
+
                     fetch(url, {
                         method: 'GET',
                         headers: {
@@ -136,8 +160,7 @@ function fetchEvents() {
                     .then(data => {
                         const bookmakersList = data.event_bookmakers.bookmakers;
                         console.log('Fetched event data:', bookmakersList); // Access the bookmakers array
-                        const bookmakersContainer = document.createElement('div'); // Create a container for bookmakers
-                        bookmakersContainer.className = 'bookmakers-container'; // Add a class for easy selection
+                        bookmakersContainer.innerHTML = ''; // Clear existing content
 
                         if (Array.isArray(bookmakersList) && bookmakersList.length > 0) {
                             bookmakersList.forEach(bookmaker => {
@@ -167,20 +190,17 @@ function fetchEvents() {
                                 `;
                                 bookmakersContainer.appendChild(bookmakerElement);
                             });
-                        } else {
+                        }else {
                             bookmakersContainer.innerHTML = '<p>No bookmakers available.</p>';
                         }
-
-                        eventContainer.appendChild(bookmakersContainer); // Append the bookmakers container to the event container
                     })
                     .catch(error => {
                         console.error('Error fetching event data:', error);
                     });
 
                 } else {
-                    if (bookmakersContainer) {
-                        eventContainer.removeChild(bookmakersContainer); // Remove the bookmakers container if it exists
-                    }
+                    // Clear bookmakers if the event is deselected
+                    bookmakersContainer.innerHTML = ''; // Clear the bookmakers container
                 }
             });
             eventList.appendChild(eventContainer);
