@@ -3,7 +3,13 @@
     border: 10px solid #FFE47A; /* Optional: Add a border for better visibility */
     background: #FFE47A;
 }
-.event-container {
-    transition: background-color 0.3s; /* Smooth transition for background color */
-    background-color: #FFE47A;
+
+.offset-2 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.col-10 {
+    flex: 0 0 auto;
+    width: auto;
 }
