@@ -79,7 +79,6 @@ function fetchEvents() {
         return response.json();
     })
     .then(data => {
-        console.log('Fetched events:', data);
         const eventList = document.getElementById('event-list');
         eventList.innerHTML = '';
 
@@ -132,7 +131,6 @@ function fetchEvents() {
                 });
 
                 const isSelected = eventContainer.classList.toggle('selected');
-                console.log('Selected event ID:', event.id);
 
                 const eventIdInput = document.getElementById('event_id_input');
                 if (isSelected) {
@@ -161,7 +159,6 @@ function fetchEvents() {
                     })
                     .then(data => {
                         const bookmakersList = data.event_bookmakers.bookmakers;
-                        console.log('Fetched event data:', bookmakersList);
                         bookmakersContainer.innerHTML = '';
 
                         if (Array.isArray(bookmakersList) && bookmakersList.length > 0) {
@@ -223,7 +220,6 @@ function toggleOutcomeSelection(element) {
     // Select the clicked outcome
     element.classList.add('selected');
     const outcomeId = element.getAttribute('data-outcome-id');
-    console.log('Selected outcome ID:', outcomeId); // Log the selected outcome ID
 
     // Set the value of the hidden input to the selected outcome ID
     const outcomeIdInput = document.getElementById('outcome_id_input');
