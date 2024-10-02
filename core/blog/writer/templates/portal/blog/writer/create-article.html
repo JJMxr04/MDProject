@@ -51,6 +51,8 @@
                 <br>
                 <input type="hidden" id="event_id_input" name="event_id" value="">
                 <br>
+                <input type="hidden" id="outcome_id_input" name="outcome_id" value="">
+                <br>
                 <input class="btn btn-success btn-lg mt-3" type="submit" value="Create Article">
             </form>
         </div>
@@ -222,6 +224,10 @@ function toggleOutcomeSelection(element) {
     element.classList.add('selected');
     const outcomeId = element.getAttribute('data-outcome-id');
     console.log('Selected outcome ID:', outcomeId); // Log the selected outcome ID
+
+    // Set the value of the hidden input to the selected outcome ID
+    const outcomeIdInput = document.getElementById('outcome_id_input');
+    outcomeIdInput.value = outcomeId; // Pass the selected outcome ID to the hidden input
 }
 </script>
 {% endblock content %}
