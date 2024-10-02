@@ -1,9 +1,39 @@
-.event-container.selected {
-    /* Change to your desired highlight color */
-    border: 10px solid #FFE47A; /* Optional: Add a border for better visibility */
-    background: #FFE47A;
+/* CSS for event-container and event-list */
+.event-container {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
+.event-container.selected {
+    /* Keeping the color scheme from the first code */
+    border: 10px solid #FFE47A; /* Highlight color */
+    background: #FFE47A;
+}
+.bookmaker{
+    padding: 5px 5px;
+    border: 1px solid #3D7EAA;
+    border-radius: 8px; /* Added for rounded corners */
+    margin-bottom: 5px;
+
+}
+
+.outcome {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 5px;
+    border: 1px solid #3D7EAA;
+    border-radius: 8px; /* Added for rounded corners */
+}
+
+.outcome.selected {
+    /* Adjusting the outcome selected styles to match the highlight color scheme */
+    background-color: #FFE47A; /* Yellow background to match event-container */
+    border: 1px solid #FFCC00; /* Darker yellow border */
+}
+
+/* Ensuring equal height for elements */
 .offset-2 {
     margin-left: auto;
     margin-right: auto;

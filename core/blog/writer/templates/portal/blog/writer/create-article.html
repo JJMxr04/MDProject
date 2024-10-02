@@ -1,6 +1,9 @@
 {% extends "portal/base_portal.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/create-article.css' %}">
+{% endblock css %}
 {% block title %}Create Article{% endblock title %}
 
 {% block content %}
@@ -54,52 +57,7 @@
     </div>
 </div>
 
-<style>
-    /* CSS for event-container and event-list */
-    .event-container {
-        border: 1px solid #ddd;
-        padding: 15px;
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
-    .event-container.selected {
-        border: 2px solid green;
-        background-color: #f0fff0;
-    }
-    .event-container img {
-        max-width: 40px;
-        margin-right: 10px;
-    }
-    .team h4 {
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .vs-text h4 {
-        font-size: 18px;
-        margin: 0 10px;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .market-title {
-        font-weight: bold;
-        color: #007bff;
-    }
-    .no-events-message {
-        color: #666;
-        font-style: italic;
-    }
-    .bookmaker {
-        margin-bottom: 20px;
-    }
-    .market {
-        margin-top: 10px;
-    }
-    .outcome {
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0;
-    }
-</style>
+
 
 <script>
 function fetchEvents() {
@@ -215,12 +173,12 @@ function fetchEvents() {
                                             <h4 class="market-title">
                                                 ${market.key === 'h2h' ? 'Head to Head' : 
                                                   market.key === 'totals' ? 'Totals' : 
-                                                  market.key === 'overunder' ? 'Over/Under' : 
+                                                  market.key === 'spreads' ? 'Spreads' : 
                                                   market.title}
                                             </h4>
                                             <ul>
                                                 ${market.outcomes.map(outcome => `
-                                                    <li class="outcome" data-outcome-id="${outcome.id}">
+                                                    <li class="outcome" data-outcome-id="${outcome.id}" onclick="toggleOutcomeSelection(this)">
                                                         <span class="outcome-name">${outcome.name}</span>
                                                         <span class="point">${outcome.point || ''}</span>
                                                         <span class="price">${outcome.price}</span>
@@ -252,5 +210,18 @@ function fetchEvents() {
 }
 
 window.onload = fetchEvents;
+
+function toggleOutcomeSelection(element) {
+    // Deselect all outcomes
+    const allOutcomes = document.querySelectorAll('.outcome');
+    allOutcomes.forEach(outcome => {
+        outcome.classList.remove('selected');
+    });
+
+    // Select the clicked outcome
+    element.classList.add('selected');
+    const outcomeId = element.getAttribute('data-outcome-id');
+    console.log('Selected outcome ID:', outcomeId); // Log the selected outcome ID
+}
 </script>
 {% endblock content %}
