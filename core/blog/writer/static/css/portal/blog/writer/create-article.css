@@ -1,52 +1,160 @@
-/* CSS for event-container and event-list */
+/* General Event Container and List Styling */
 .event-container {
     border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 8px;
     cursor: pointer;
+    max-width: 100%; /* Use full width on smaller screens */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .event-container.selected {
-    /* Keeping the color scheme from the first code */
-    border: 10px solid #FFE47A; /* Highlight color */
-    background: #FFE47A;
+    border: 2px solid #FFE47A;
+    background-color: #FFE47A;
 }
-.bookmaker{
-    padding: 5px 5px;
+
+.event-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Bookmaker Styling */
+.bookmaker {
+    padding: 5px;
     border: 1px solid #3D7EAA;
-    border-radius: 8px; /* Added for rounded corners */
+    border-radius: 8px;
     margin-bottom: 5px;
-
 }
 
+/* Outcome Styling */
 .outcome {
     display: flex;
     justify-content: space-between;
-    padding: 5px 5px;
+    padding: 5px;
     border: 1px solid #3D7EAA;
-    border-radius: 8px; /* Added for rounded corners */
+    border-radius: 8px;
 }
 
 .outcome.selected {
-    /* Adjusting the outcome selected styles to match the highlight color scheme */
-    background-color: #FFE47A; /* Yellow background to match event-container */
-    border: 1px solid #FFCC00; /* Darker yellow border */
+    background-color: #FFE47A;
+    border: 1px solid #FFCC00;
 }
 
-/* Ensuring equal height for elements */
-.offset-2 {
-    margin-left: auto;
-    margin-right: auto;
+/* Team Images within Event Cards */
+.event-info .team img {
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 5px;
 }
 
-.col-10 {
-    flex: 0 0 auto;
-    width: auto;
+/* Align Team Names and Logos */
+.event-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    flex-wrap: wrap;
+    overflow: hidden;
 }
 
+.team {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.team h4 {
+    font-size: 0.9rem;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* VS Text Alignment */
+.vs-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.vs-text h4 {
+    font-size: 0.9rem;
+    margin: 0 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Event Body Text */
+.event-body {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 6px;
+    line-height: 1.2;
+}
+
+.event-body p {
+    margin: 2px 0;
+}
+
+/* Responsive Layout for the Event Cards */
+@media (max-width: 768px) {
+    .event-container {
+        max-width: 100%; /* Full width on mobile */
+        padding: 8px; /* Slightly reduced padding */
+    }
+
+    .event-info .team img {
+        width: 35px; /* Reduce image size for mobile */
+    }
+
+    .vs-text h4 {
+        font-size: 0.8rem; /* Smaller VS text for mobile */
+    }
+
+    .row {
+        flex-direction: column; /* Stack columns vertically on mobile */
+    }
+
+    .col-md-4 {
+        width: 100%; /* Make each column full width on mobile */
+        margin-bottom: 20px; /* Add margin between columns */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .event-container {
+        max-width: 220px; /* Slightly reduced width on tablet */
+    }
+
+    .row {
+        flex-direction: row; /* Keep columns side by side on tablet */
+    }
+
+    .col-md-4 {
+        width: 33.33%; /* Three columns in a row on tablet */
+    }
+}
+
+@media (min-width: 1025px) {
+    .event-container {
+        max-width: 250px; /* Normal width for desktop */
+    }
+
+    .col-md-4 {
+        width: 33.33%; /* Three columns in a row on desktop */
+    }
+}
+
+/* Equal Height Columns */
 .equal-height {
-    height: 100%;
-    max-height: 975px; /* Ensure equal height */
     display: flex;
     flex-direction: column;
+    height: 100%;
+    max-height: 975px;
+    overflow-y: auto;
 }

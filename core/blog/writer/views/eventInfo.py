@@ -34,9 +34,9 @@ def writer_events(request):
     # Calculate the date one week from now
     one_week_later = now + timedelta(weeks=1)
     
-    # Fetch events from today up to a week from now
-    events = Event.objects.filter(commence_time__range=(now, one_week_later))
-    event_ser = EventSerializer(events,many=True).data
+    # Fetch unique events from today up to a week from now that have bookmakers
+    events = Event.objects.filter(commence_time__range=(now, one_week_later), bookmakers__isnull=False).distinct()
+    event_ser = EventSerializer(events, many=True).data
     return JsonResponse({
         'events': event_ser
     })
