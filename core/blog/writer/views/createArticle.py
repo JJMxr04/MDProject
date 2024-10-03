@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from core.blog.writer.decorator import writer_required
 from core.event.models import Event, Outcome
@@ -34,7 +34,7 @@ def create_article(request):
             article.event = event  # Ensure the event is saved
             article.outcome = outcome  # Uncomment if you handle outcome
             article.save()
-            return HttpResponse('Article created!')
+            return redirect('core-portal:writer-my-articles')
 
     context = {'CreateArticleForm': form}
     return render(request, 'portal/blog/writer/create-article.html', context)
