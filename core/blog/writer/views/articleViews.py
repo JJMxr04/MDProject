@@ -20,9 +20,9 @@ def my_articles(request):
 @login_required(login_url='/auth/login/')
 @writer_required
 @author_required
-def update_article(request, article_id):  # Ensure article_id is included
+def update_article(request, art_id):  # Ensure article_id is included
     try:
-        article = Article.objects.get(id=article_id,author=request.user)
+        article = Article.objects.get(id=art_id,author=request.user)
     except:
         return redirect('core-portal:writer-my-articles')
     form = UpdateArticleForm(instance=article)
@@ -35,3 +35,20 @@ def update_article(request, article_id):  # Ensure article_id is included
     context = {'UpdateArticleForm':form}
 
     return render(request,'portal/blog/writer/update-article.html', context)
+
+
+@login_required(login_url='/auth/login/')
+@writer_required
+@author_required
+def delete_article(request, art_id):  # Ensure article_id is included
+    try:
+        article = Article.objects.get(id=art_id,author=request.user)
+    except:
+        return redirect('core-portal:writer-my-articles')
+    form = UpdateArticleForm(instance=article)
+    if request.method =='POST':
+        article.delete()
+        return redirect('core-portal:writer-my-articles')
+   
+
+    return render(request,'portal/blog/writer/delete-article.html')

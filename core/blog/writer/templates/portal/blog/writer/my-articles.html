@@ -24,7 +24,11 @@
 
             <p>Date Created: {{article.date_created}}</p>
             <p> Is Published: {{article.is_published}}</p>
+            <br>
             <a href="{% url 'core-portal:writer-update-article' article.id %}">Update Article</a>
+            <br>
+            <a href="{% url 'core-portal:writer-delete-article' article.id %}">Delete Article</a>
+            <br>
     </div>
 
     {% endfor %}
