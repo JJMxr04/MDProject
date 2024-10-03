@@ -21,7 +21,10 @@ def my_articles(request):
 @writer_required
 @author_required
 def update_article(request, article_id):  # Ensure article_id is included
-    article = Article.objects.get(id=article_id)
+    try:
+        article = Article.objects.get(id=article_id,author=request.user)
+    except:
+        return redirect('core-portal:writer-my-articles')
     form = UpdateArticleForm(instance=article)
     if request.method =='POST':
         form = UpdateArticleForm(request.POST, instance=article)
