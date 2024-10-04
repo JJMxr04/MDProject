@@ -21,7 +21,7 @@ urlpatterns = [
     # Ensure namespace is 'core-web'  # Correct namespace
     # path('event/', include(('core.event.urls', 'core-event'), namespace='core-event')),
     path('reset_password/',auth_views.PasswordResetView.as_view(template_name='authorization/password-reset.html'),name='reset_password'),
-    path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name='authorization/password-sent.html'),name='password_reset_sent'),
+    path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name='authorization/password-reset-sent.html'),name='password_reset_done'),
     path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(template_name='authorization/password-reset-form.html'),name='password_reset_confirm'),
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'),name='password_reset_complete'),
     
