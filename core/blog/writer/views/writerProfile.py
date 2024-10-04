@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from core.blog.writer.decorator import writer_required
 from core.event.models import Event, Sport  # Adjust import according to your project's structure

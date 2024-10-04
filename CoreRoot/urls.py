@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
 from core.views import robots_txt
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/dashboard/', custom_admin_view, name='admin_dashboard'),
@@ -19,6 +20,11 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     # Ensure namespace is 'core-web'  # Correct namespace
     # path('event/', include(('core.event.urls', 'core-event'), namespace='core-event')),
+    path('reset_password/',auth_views.PasswordResetView.as_view(template_name='authorization/password-reset.html'),name='reset_password'),
+    path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name='authorization/password-sent.html'),name='password_reset_sent'),
+    path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(template_name='authorization/password-reset-form.html'),name='password_reset_confirm'),
+    path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'),name='password_reset_complete'),
+    
 ]
 
 

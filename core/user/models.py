@@ -105,7 +105,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, related_name='users', blank=True)
+    tags = models.ManyToManyField(Tag, related_name='users', blank=True,verbose_name="What leagues do you plan on making predictions?")
     writer_descritption = models.TextField(null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

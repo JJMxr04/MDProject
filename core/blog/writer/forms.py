@@ -1,4 +1,5 @@
 from .models import Article, Tag
+import django.forms as forms
 from django.forms import ModelForm, TextInput
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -39,6 +40,7 @@ class WriterProfileForm(ModelForm):
         self.fields['first_name'].disabled = True
         self.fields['last_name'].disabled = True
 
-        
-
-
+        # Customize the 'tags' field to be displayed as checkboxes
+        self.fields['tags'].widget = forms.CheckboxSelectMultiple()
+        # You can also prepopulate the queryset for tags if needed
+        self.fields['tags'].queryset = Tag.objects.all()
