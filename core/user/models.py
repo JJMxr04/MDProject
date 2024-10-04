@@ -6,6 +6,7 @@ from django.http import Http404
 from core.abstract.models import AbstractModel, AbstractManager
 import os
 from django.contrib.auth.hashers import make_password, check_password
+from core.blog.writer.models import Tag
 
 
 def user_avatar_upload_path(instance, filename):
@@ -104,6 +105,8 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, related_name='users', blank=True)
+    writer_descritption = models.TextField(null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -115,5 +118,6 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
 
 

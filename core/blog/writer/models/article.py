@@ -1,16 +1,12 @@
 from django.db import models
-from core.user.models import User
+
 from core.event.models import Event, Outcome
 from django.utils import timezone
 import uuid
-
-
-class Tag(models.Model):
-    
-    name = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.name
+from .tag import Tag
+from django.contrib.auth import get_user_model
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 
 class Article(models.Model):

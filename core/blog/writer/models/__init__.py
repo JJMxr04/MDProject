@@ -1,1 +1,2 @@
-from .article import Tag, Article
+from .article import Article
+from .tag import Tag

@@ -33,6 +33,7 @@ def update_article(request, art_id):  # Ensure article_id is included
             return redirect('core-portal:writer-my-articles')
    
     context = {'UpdateArticleForm':form}
+    print(context)
 
     return render(request,'portal/blog/writer/update-article.html', context)
 
