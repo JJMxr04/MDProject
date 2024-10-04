@@ -39,4 +39,6 @@ class WriterProfileForm(ModelForm):
         self.fields['first_name'].disabled = True
         self.fields['last_name'].disabled = True
 
+        
+
 

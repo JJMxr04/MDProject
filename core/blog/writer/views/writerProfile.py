@@ -22,8 +22,7 @@ def writer_profile(request):  # Ensure article_id is included
         form = WriterProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('core-portal:profiles')
+            return redirect('core-portal:writer-profile')
    
     context = {'WriterProfileForm':form}
-    print(context)
     return render(request,'portal/blog/writer/writer-profile.html', context)
