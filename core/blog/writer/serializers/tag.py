@@ -5,9 +5,7 @@ from core.blog.writer.models import Tag
 
 
 
-class TagSerializer(serializers.Serializer):
-
-
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag
-        fields = '__all__'
+        model = Tag  # Assuming Tag is your model
+        fields = ['id', 'name']  # Ensure these fields are correct
