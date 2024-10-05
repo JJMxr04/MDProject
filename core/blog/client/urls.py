@@ -7,5 +7,5 @@ app_name = 'core-blog-client'
 urlpatterns = [
     path('client-dashboard/', views.client_dashboard, name='client-dashboard'),
     path('client-feed/', views.client_feed, name='client-feed'),
-    path('writer-list', views.writer_list, name='client-writer-list'),
+    path('writer', views.writer_list, name='client-writer-list'),
 ]

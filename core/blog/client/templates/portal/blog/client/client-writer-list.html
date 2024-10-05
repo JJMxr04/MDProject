@@ -11,12 +11,27 @@
 <div class="container bg-white shadow-md p-5 form-layout text-center offset2">
 
     <h5> 🤓 Welcome to the Writers List, {{ user.username }} 🤓</h5>
+    
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Search Writers" aria-label="Search Writers">
+    </div>
 </div>
 
     <br>
-    {% if writers%}
+    {% if writers %}
         {% for writer in writers %}
-        <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+        <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
+
+            <!-- Dropdown Menu positioned in the top right corner -->
+            <div class="dropdown position-absolute" style="top: 10px; right: 10px;">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; padding: 10px;">
+                    ⋮
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">View Details</a></li>
+                </ul>
+            </div>
 
             {% if writer.avatar %}
                 <img src="{{ writer.avatar }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
@@ -56,3 +71,8 @@
 
 
 {% endblock content %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
