@@ -23,12 +23,26 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ['is_staff', 'is_admin', 'is_active', 'activated_link', 'groups']
     ordering = ['-created']
 
-    # Fieldsets configuration for displaying user details, including groups and permissions
+    # Updated fieldsets configuration to include a new "Writer" fieldset
     fieldsets = (
         ('Personal Information', {'fields': ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']}),
-        ('Permissions', {'fields': ['is_writer','is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions',
-                                    'activated_link']}),
+        ('Writer', {'fields': ['is_writer','tags', 'writer_description']}),
+        ('Permissions', {'fields': ['activated_link', 'is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions',
+                                    ]}),
         ('Important Dates', {'fields': ['last_login', 'created', 'updated']}),
+    )
+
+    # Updated fields shown when creating a new user
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': (
+            'email', 'username', 'password1', 'password2', 'is_staff', 'is_active', 'groups', 'user_permissions')}
+         ),
+        ('Writer', {
+            'classes': ('wide',),
+            'fields': ('tags', 'writer_description')}
+         ),
     )
 
     # Fields shown when creating a new user

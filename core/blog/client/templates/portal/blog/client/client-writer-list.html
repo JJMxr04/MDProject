@@ -1,0 +1,58 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock css %}
+{% block title %}Writers{% endblock title %}
+
+{% block content %}
+
+<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
+
+    <h5> 🤓 Welcome to the Writers List, {{ user.username }} 🤓</h5>
+</div>
+
+    <br>
+    {% if writers%}
+        {% for writer in writers %}
+        <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+
+            {% if writer.avatar %}
+                <img src="{{ writer.avatar }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+            {% else %}
+                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+            {% endif %}
+            <h3> {{writer.first_name}} {{writer.last_name}}</h3>
+
+            <br> <br>
+            <h4> Writer Description:</h4>
+            <p> {{ writer.writer_description }}</p>
+
+            <br> <br>
+
+            <h4> Leagues Writer Primarly likes to Bet:</h4>
+            {% if writer.tags %}
+                {%for tag in writer.tags%}
+                <p> {{ tag.name }}</p>
+                {% endfor %}
+            {% else %}
+
+            <p> No Tags</p>
+            {% endif %}
+
+
+            <br>
+        </div>
+
+        {% endfor %}
+    {% else %}
+    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+        <h6> No Writers to display</h6>
+
+    </div>
+
+    {% endif %}
+
+
+{% endblock content %}

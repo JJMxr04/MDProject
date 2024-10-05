@@ -106,7 +106,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name='users', blank=True,verbose_name="What leagues do you plan on making predictions?")
-    writer_descritption = models.TextField(null=True)
+    writer_description = models.TextField(null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

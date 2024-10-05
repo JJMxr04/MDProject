@@ -29,7 +29,7 @@ class WriterProfileForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ['avatar', 'username', 'email', 'first_name', 'last_name', 'writer_descritption', 'tags']
+        fields = ['avatar', 'username', 'email', 'first_name', 'last_name', 'writer_description', 'tags']
         exclude = ['password1', 'password2']
 
     def __init__(self, *args, **kwargs):
