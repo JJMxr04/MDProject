@@ -1,0 +1,72 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock css %}
+{% block title %}Writers{% endblock title %}
+
+{% block content %}
+
+    <br>
+    {% if writer %}
+        
+        <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
+
+            <!-- Dropdown Menu positioned in the top right corner -->
+            
+
+            <div class="d-flex align-items-center justify-content-between"> <!-- Flex container for avatar and price -->
+                <div class="d-flex align-items-center"> <!-- Inner flex for avatar and name -->
+                    {% if writer.avatar %}
+                        <img src="{{ writer.avatar }}" class="rounded-circle border" style="width: 200px; height: 200px; object-fit: cover; margin-right: 20px; border: 5px solid #007bff;" alt="User Avatar">
+                    {% else %}
+                        <img src="https://robohash.org/1" class="rounded-circle border" style="width: 200px; height: 200px; object-fit: cover; margin-right: 20px; border: 5px solid #007bff;" alt="User Avatar">
+                    {% endif %}
+                    <div>
+                        <h3> {{writer.first_name}} {{writer.last_name}}</h3>
+                    </div>
+                </div> <!-- End of inner flex for avatar and name -->
+
+                <div class="text-right"> <!-- Price container -->
+                    <div class="border p-2" style="border: 2px solid #28a745; border-radius: 5px;">
+                        <h5 style="font-size: 1.5em; color: #28a745;">Current Subscription Price:</h5> <!-- Price label -->
+                        <h4 style="font-size: 2em; color: #28a745;"> <!-- Price displayed underneath -->
+                            {% if subscription_plan %} ${{ subscription_plan.price }} {% else %} Not currently allowing people to subscribe {% endif %}
+                        </h4>
+                    </div>
+                    <button class="btn btn-primary mt-2">Subscribe</button> <!-- Added Subscribe button -->
+                </div>
+            </div> <!-- End of flex container -->
+
+            <br> <br>
+            <h4> Writer Description:</h4>
+            <p> {{ writer.writer_description }}</p>
+
+            <br> <br>
+
+            <h4> Leagues Writer Primarly likes to Bet:</h4>
+            {% if writer.tags %}
+                {%for tag in writer.tags%}
+                <p> {{ tag.name }}</p>
+                {% endfor %}
+            {% else %}
+            <p> No Tags</p>
+            {% endif %}
+
+            <br>
+        </div>
+
+    {% else %}
+    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+        <h6> No Writer to display</h6>
+    </div>
+
+    {% endif %}
+
+{% endblock content %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
