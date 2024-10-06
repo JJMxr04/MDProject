@@ -12,16 +12,16 @@ def subscription_plan(request):
     form = SubscriptionPlanForm()
 
     # Check for existing subscription plans by the writer
-    existing_plan = SubscriptionPlan.objects.filter(writer=request.user).first()  # New line to find existing plan
+    existing_plan = SubscriptionPlan.objects.filter(writer=request.user).first()  # Find existing plan
 
     if request.method == 'POST':
         form = SubscriptionPlanForm(request.POST)
         
         if form.is_valid():
             if existing_plan:
-                # Update the existing subscription plan
-                existing_plan = form.save(commit=False)  # Create an instance without saving to the database
-                existing_plan.writer = request.user  # Ensure the writer is set
+                # Update the existing subscription plan with the form data
+                for attr, value in form.cleaned_data.items():
+                    setattr(existing_plan, attr, value)  # Update each attribute
                 existing_plan.save()  # Save the updated plan
             else:
                 # Create a new subscription plan
@@ -29,10 +29,9 @@ def subscription_plan(request):
                 new_plan.writer = request.user  # Set the writer
                 new_plan.save()  # Save the new plan
 
-            return redirect('core-portal:writer-subscription-plan') 
-        
+            return redirect('core-portal:writer-subscription-plan')  # Redirect to a success page after saving
 
     existing_plan_ser = SubscriptionPlanSerializer(existing_plan).data
-    context = {'SubscriptionPlanForm': form, 'existing_plan': existing_plan_ser}  # Changed to 'existing_plan'
-    print(context) # Include existing_plan in context
+    context = {'SubscriptionPlanForm': form, 'existing_plan': existing_plan_ser}  # Pass existing_plan to context
+    print(context)  # Include existing_plan in context
     return render(request, 'portal/blog/writer/subscription-plan.html', context)
