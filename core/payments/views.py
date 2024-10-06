@@ -22,6 +22,7 @@ def onboarding_page(request):
 @login_required(login_url='/auth/login/')
 @writer_required
 def create_account_link(request):
+    print('create-link')
     if request.method == 'POST':
         try:
             data = request.json()  # Get the JSON data from the request
@@ -29,8 +30,8 @@ def create_account_link(request):
 
             account_link = stripe.AccountLink.create(
                 account=connected_account_id,
-                return_url=f"http://localhost:4242/return/{connected_account_id}",
-                refresh_url=f"http://localhost:4242/refresh/{connected_account_id}",
+                return_url=f"http://localhost:8000/web/portal/payment/return/{connected_account_id}",
+                refresh_url=f"http://localhost:8000/web/portal/payment/refresh/{connected_account_id}",
                 type="account_onboarding",
             )
 
@@ -43,6 +44,7 @@ def create_account_link(request):
 @login_required(login_url='/auth/login/')
 @writer_required
 def create_account(request):
+    print('create')
     if request.method == 'POST':
         try:
             account = stripe.Account.create()
