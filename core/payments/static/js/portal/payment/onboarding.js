@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
     signUpButton.addEventListener('click', async () => {
       try {
-        const response = await fetch('/account/', {
+        const response = await fetch('{% url "core-portal:create_account" %}' , {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
     async function createAccountLink(accountId) {
       try {
-        const response = await fetch('/account_link/', {
+        const response = await fetch('{% url "core-portal:create_account_link" %}', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -48,4 +48,3 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   });
-  

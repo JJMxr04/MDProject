@@ -5,6 +5,8 @@ import stripe
 import os
 from django.contrib.auth.decorators import login_required
 from core.blog.writer.decorator import writer_required
+from django.shortcuts import render, redirect
+
 
 # Set up the Stripe API key
 stripe.api_key = settings.STRIPE_API_KEY
@@ -50,17 +52,15 @@ def create_account(request):
 
 
 # # Serve static files or fallback to the frontend
-# @login_required(login_url='/auth/login/')
-# @writer_required
-# def catch_all(request, connected_account_id=None, path=None):
-#     if settings.STATICFILES_DIRS:
-#         if path and os.path.exists(os.path.join(settings.STATICFILES_DIRS[0], path)):
-#             # Serve the static file if it exists
-#             with open(os.path.join(settings.STATICFILES_DIRS[0], path), 'rb') as f:
-#                 return HttpResponse(f.read(), content_type="text/html")
-#         else:
-#             # Serve the frontend index.html if no static file is found
-#             with open(os.path.join(settings.STATICFILES_DIRS[0], 'index.html'), 'rb') as f:
-#                 return HttpResponse(f.read(), content_type="text/html")
-#     # Redirect to the portal dashboard if static files directory is not configured
-#     return redirect('core-portal:portal-dashboard')
+
+@login_required(login_url='/auth/login/')
+@writer_required
+def catch_all(request, connected_account_id=None, path=None):
+    try:
+        # If the path is provided, you could handle specific routing logic here
+        # For now, let's assume any unmatched route renders your default template
+        return render(request, 'portal/payments/onboarding.html')
+    except Exception as e:
+        # In case of any errors, redirect to the dashboard as a fallback
+        return redirect('core-portal:portal-dashboard')
+
