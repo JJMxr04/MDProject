@@ -1,4 +1,4 @@
-from .models import Article, Tag
+from .models import Article, Tag, SubscriptionPlan
 import django.forms as forms
 from django.forms import ModelForm, TextInput
 from django.conf import settings
@@ -44,3 +44,8 @@ class WriterProfileForm(ModelForm):
         self.fields['tags'].widget = forms.CheckboxSelectMultiple()
         # You can also prepopulate the queryset for tags if needed
         self.fields['tags'].queryset = Tag.objects.all()
+
+class SubscriptionPlanForm(ModelForm):
+    class Meta:
+        model = SubscriptionPlan
+        fields = ['price']
