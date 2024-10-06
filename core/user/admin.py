@@ -19,14 +19,15 @@ class UserAdmin(BaseUserAdmin):
     # Custom fields for the admin display
     list_display = ['avatar_image', 'email', 'username', 'first_name', 'last_name', 'last_login', 'is_staff',
                     'is_admin', 'activated_link']
-    search_fields = ['email', 'username', 'first_name', 'last_name']
+    search_fields = ['email', 'username', 'first_name', 'last_name', '_stripe_account_id']  # Added _stripe_account_id here
+
     list_filter = ['is_staff', 'is_admin', 'is_active', 'activated_link', 'groups']
     ordering = ['-created']
 
-    # Updated fieldsets configuration to include a new "Writer" fieldset
+    # Updated fieldsets configuration to include _stripe_account_id under "Writer"
     fieldsets = (
         ('Personal Information', {'fields': ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']}),
-        ('Writer', {'fields': ['is_writer','tags', 'writer_description']}),
+        ('Writer', {'fields': ['is_writer', 'tags', 'writer_description', '_stripe_account_id']}),  # Added _stripe_account_id here
         ('Permissions', {'fields': ['activated_link', 'is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions',
                                     ]}),
         ('Important Dates', {'fields': ['last_login', 'created', 'updated']}),
@@ -41,7 +42,7 @@ class UserAdmin(BaseUserAdmin):
          ),
         ('Writer', {
             'classes': ('wide',),
-            'fields': ('tags', 'writer_description')}
+            'fields': ('tags', 'writer_description','_stripe_account_id')}
          ),
     )
 

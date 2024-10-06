@@ -7,7 +7,11 @@ from core.abstract.models import AbstractModel, AbstractManager
 import os
 from django.contrib.auth.hashers import make_password, check_password
 from core.blog.writer.models import Tag
+from cryptography.fernet import Fernet
 
+# Generate a key for encryption/decryption (store this securely)
+key = Fernet.generate_key()
+cipher_suite = Fernet(key)
 
 def user_avatar_upload_path(instance, filename):
     # File will be uploaded to MEDIA_ROOT/avatars/<username>/<filename>
@@ -107,6 +111,21 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     updated = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name='users', blank=True,verbose_name="What leagues do you plan on making predictions?")
     writer_description = models.TextField(null=True)
+    _stripe_account_id = models.BinaryField(null=True)  # Allow null values
+
+    @property
+    def stripe_account_id(self):
+        if self._stripe_account_id:
+            return cipher_suite.decrypt(self._stripe_account_id).decode('utf-8')
+        return None  # Return None if no account ID is set
+
+    @stripe_account_id.setter
+    def stripe_account_id(self, value):
+        if value is None:
+            self._stripe_account_id = None  # Set to None if no account ID
+        else:
+            self._stripe_account_id = cipher_suite.encrypt(value.encode('utf-8'))
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

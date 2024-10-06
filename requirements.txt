@@ -27,3 +27,4 @@ django-jazzmin==3.0.0
 django-crispy-forms==2.3.0
 crispy-bootstrap5==2024.2
 stripe==4.2.0b1
+cryptography==43.0.1
