@@ -8,6 +8,7 @@ from core.admin.admin import custom_admin_view
 from core.views import robots_txt
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('admin/dashboard/', custom_admin_view, name='admin_dashboard'),
     path('admin/', admin.site.urls),
@@ -25,6 +26,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(template_name='authorization/password-reset-form.html'),name='password_reset_confirm'),
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'),name='password_reset_complete'),
     
+    
+
 ]
 
 
