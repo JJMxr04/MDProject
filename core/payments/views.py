@@ -117,7 +117,7 @@ def create_checkout_session(request, creator_id):
                 },
             },
             mode='subscription',
-            success_url=request.build_absolute_uri(reverse('core-portal:successful_payment')),
+            success_url=request.build_absolute_uri(reverse('core-portal:successful-payment')),
             cancel_url=request.build_absolute_uri('/cancel/'),
         )
         return JsonResponse({'id': checkout_session.id})
