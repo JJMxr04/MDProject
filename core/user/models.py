@@ -108,6 +108,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     tags = models.ManyToManyField(Tag, related_name='users', blank=True,verbose_name="What leagues do you plan on making predictions?")
     writer_description = models.TextField(null=True)
     stripe_account_id = models.CharField(max_length=255)
+    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
 
 
     USERNAME_FIELD = 'email'

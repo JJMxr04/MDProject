@@ -6,6 +6,7 @@ from core.user.models import User
 from core.user.serializers import WriterSerializer
 from core.blog.writer.models import SubscriptionPlan
 from core.blog.writer.serializers.subscriptionPlan import SubscriptionPlanSerializer
+from django.conf import settings
 
 @login_required(login_url='/auth/login/')
 def writer_subscribe(request,writer_id):
@@ -17,7 +18,8 @@ def writer_subscribe(request,writer_id):
     existing_plan_ser = SubscriptionPlanSerializer(existing_plan).data
     # # Get all active subscriptions of the current user
     context={'writer':writer_ser,
-             "subscription_plan":existing_plan_ser}
+             "subscription_plan":existing_plan_ser,
+             'stripe_publishable_key': settings.STRIPE_PUBLISH_KEY,}
     # context={'writer':{}}
     
     return render(request, 'portal/blog/client/client-writer-subscribe.html',context)

@@ -35,7 +35,8 @@
                             {% if subscription_plan %} ${{ subscription_plan.price }} {% else %} Not currently allowing people to subscribe {% endif %}
                         </h4>
                     </div>
-                    <button class="btn btn-primary mt-2">Subscribe</button> <!-- Added Subscribe button -->
+
+                    <button id="checkout-button" class="btn btn-primary mt-2">Subscribe</button> <!-- Added Checkout button -->
                 </div>
             </div> <!-- End of flex container -->
 
@@ -65,6 +66,37 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block scripts %} <!-- Added scripts block for Stripe integration -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  var stripe = Stripe('{{ stripe_publishable_key }}');  // Your Stripe publishable key
+
+  document.getElementById('checkout-button').addEventListener('click', function() {
+    fetch("{% url 'core-portal:create-checkout-session' writer.id %}", { // Updated to use writer.id
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(sessionId) {
+      return stripe.redirectToCheckout({ sessionId: sessionId.id });
+    })
+    .then(function(result) {
+      if (result.error) {
+        alert(result.error.message);
+      }
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  });
+</script>
+{% endblock scripts %}
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

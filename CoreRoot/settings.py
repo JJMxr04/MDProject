@@ -31,7 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
+STRIPE_API_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISH_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
@@ -193,7 +196,7 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
         'NAME': 'postgres',  # Main database name
-        'USER': 'joe',
+        'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': os.environ.get('DBHOST', 'localhost'),
         'PORT': os.environ.get('DBPORT', '5432'),

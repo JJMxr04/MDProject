@@ -8,10 +8,20 @@ from core.blog.writer.decorator import writer_required
 from django.shortcuts import render, redirect
 from django.urls import reverse  # Import reverse
 import json
+from django.contrib.auth import get_user_model
+# from core.user.models import User
+User = get_user_model()
+from core.blog.writer.models import SubscriptionPlan
+
+import stripe
+from django.conf import settings
+from django.shortcuts import redirect, render
+from django.http import JsonResponse
 
 # Set up the Stripe API key
 stripe.api_key = settings.STRIPE_API_KEY
 stripe.api_version = '2023-10-16'
+
 
 @login_required(login_url='/auth/login/')
 def onboarding_page(request):
@@ -80,10 +90,71 @@ def catch_all(request, connected_account_id=None, path=None):
     try:
         # If the path is provided, you could handle specific routing logic here
         # For now, let's assume any unmatched route renders your default template
-        return redirect('core-portal:onboarding')
+        return render(request, path)
     except Exception as e:
-        print('help')
         print(e)
         # In case of any errors, redirect to the dashboard as a fallback
-        return redirect('core-portal:portal-dashboard')
+        return render(request, 'portal/payments/error.html')
 
+
+
+@login_required(login_url='/auth/login/')
+def create_checkout_session(request, creator_id):
+    # Retrieve the creator's Stripe account ID
+    creator = User.objects.get(public_id=creator_id)
+    subscription_plan = SubscriptionPlan.objects.get(writer=creator)
+
+    if not creator.stripe_account_id:
+        return JsonResponse({'error': 'Creator does not have a connected Stripe account'}, status=400)
+
+    try:
+        # Create a Checkout session for destination charges
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': f'Subscription Payment to {creator.first_name} {creator.last_name}',
+                        'description': 'Payment for creator content',
+                    },
+                    'unit_amount': int(int(subscription_plan.price) * 100),  # Amount in cents (e.g., $10.00)
+                },  # Added missing comma here
+                'quantity': 1,
+            }],
+            payment_intent_data={
+                'application_fee_amount': int(int(subscription_plan.price) * 100 * (int(settings.PLATFORM_COST) / 100)),  # Platform fee in cents (e.g., $2.00)
+                'transfer_data': {
+                    'destination': creator.stripe_account_id,  # Creator's Stripe account ID
+                },
+            },
+            mode='payment',
+            success_url=request.build_absolute_uri('/success/'),
+            cancel_url=request.build_absolute_uri('/cancel/'),
+        )
+        return JsonResponse({'id': checkout_session.id})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        return JsonResponse({'error': 'Invalid payload'}, status=400)
+    except stripe.error.SignatureVerificationError as e:
+        return JsonResponse({'error': 'Invalid signature'}, status=400)
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        # Fulfill the purchase, e.g., mark subscription as active
+        handle_checkout_session(session)
+
+    return JsonResponse({'status': 'success'}, status=200)
