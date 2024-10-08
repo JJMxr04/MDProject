@@ -1,0 +1,67 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/portal/round/my_round_detail.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="round-detail">
+    <h1>Round Details</h1>
+    {% if round_details %}
+        <div class="player-cards">
+            <div class="player-card">
+                <img src="{{ round_details.player_1.player.avatar.url|default:'placeholder.jpg' }}" alt="{{ round_details.player_1.player.username }}">
+                <h3>{{ round_details.player_1.player.username }}</h3>
+            </div>
+
+         <div class="player-card">
+            {% if round_details.player_2.player.avatar %}
+                <img src="{{ round_details.player_2.player.avatar.url }}" alt="{{ round_details.player_2.player.username }}">
+            {% else %}
+                <img src="{% static 'placeholder.jpg' %}" alt="Placeholder">
+            {% endif %}
+            <h3>{{ round_details.player_2.player.username }}</h3>
+        </div>
+
+
+        <div class="game-info">
+            <h2>Match Information</h2>
+            <p>
+                {% if round_details.match and round_details.match.id %}
+                    <strong>Match:</strong> <a href="{% url 'core-portal:portal-my-match-detail' round_details.match.id %}">{{ round_details.match.id }}</a>
+                {% else %}
+                    <strong>Match:</strong> Not available
+                {% endif %}
+            </p>
+            <p><strong>Start Date:</strong> {{ round_details.match.start_date }}</p>
+            <p><strong>End Date:</strong> {{ round_details.match.end_date }}</p>
+            <p><strong>Winner:</strong> {{ round_details.match.winner.username|default:"Not decided yet" }}</p>
+        </div>
+
+        {% if round_details.match.golden_game and round_details.match.golden_game.event %}
+            <div class="golden-game">
+                <div class="team">
+                    {% if round_details.match.golden_game.event.home_team_team.logo_url %}
+                        <img src="{{ round_details.match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ round_details.match.golden_game.event.home_team }}">
+                    {% endif %}
+                    <h4>{{ round_details.match.golden_game.event.home_team }}</h4>
+                    <p><strong>Sport:</strong> {{ round_details.match.golden_game.event.sport_title }}</p>
+                </div>
+
+                <div class="team">
+                    {% if round_details.match.golden_game.event.away_team_team.logo_url %}
+                        <img src="{{ round_details.match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ round_details.match.golden_game.event.away_team }}">
+                    {% endif %}
+                    <h4>{{ round_details.match.golden_game.event.away_team }}</h4>
+                    <p><strong>Sport:</strong> {{ round_details.match.golden_game.event.sport_title }}</p>
+                </div>
+            </div>
+        {% else %}
+            <p>No golden game scheduled</p>
+        {% endif %}
+    {% else %}
+        <p>No round details available</p>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,154 @@
+/* General Container */
+.event-detail-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+.event-detail-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.event-detail-container p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Teams Section */
+.teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.team {
+    text-align: center;
+    flex: 1;
+}
+
+.team img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.team p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.vs {
+    font-size: 2em;
+    font-weight: bold;
+    color: #999;
+}
+
+/* Commence Time */
+.commence-time {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* Bookmakers Section */
+.bookmakers-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bookmakers-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Individual Bookmaker */
+.bookmaker {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.bookmaker h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Markets within Bookmakers */
+.market {
+    margin-top: 10px;
+}
+
+.market h4 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+/* List Styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 8px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Outcome Styles */
+.outcome {
+    font-size: 16px;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    display: flex; /* Flexbox layout for placing containers side by side */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.outcome-name-container,
+.point-container,
+.price-container {
+    flex: 1; /* Each container will take equal space */
+    text-align: center;
+}
+
+.outcome-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.price {
+    font-weight: bold;
+    color: #333; /* Color for prices */
+}
+
+.point {
+    color: #333; /* Color for points */
+}
+
+.offset-2 {
+margin-left: auto;
+margin-right: auto;
+}

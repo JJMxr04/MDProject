@@ -12,6 +12,9 @@ app.conf.enable_utc = False
 app.config_from_object(settings, namespace='CELERY')
 
 app.loader.override_backends['django-db'] = 'django_celery_results.backends.database:DatabaseBackend'
+app.conf.update(
+    broker_connection_retry_on_startup=True,  # Add this line
+)
 
 
 app.autodiscover_tasks()

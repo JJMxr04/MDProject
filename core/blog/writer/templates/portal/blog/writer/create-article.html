@@ -1,0 +1,229 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/create-article.css' %}">
+{% endblock css %}
+{% block title %}Create Article{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="bg-light shadow-md p-5 form-layout h-100 rounded equal-height" style="overflow-y: auto;">
+            <h3 class="mb-4 text-left"> Events</h3>
+            <div id="event-list">
+                {% if available_events %}
+                    {% for event in available_events %}
+                        <div class="event-container">
+                            <!-- Existing event display code -->
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-events-message">No events available for this period.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="bg-light shadow-md p-5 form-layout h-100 rounded equal-height" style="overflow-y: auto;">
+            <h3 class="mb-4 text-left"> Bookmakers</h3>
+            <div id="bookmakers">
+                {% if available_events %}
+                    {% for event in available_events %}
+                        <div class="event-container">
+                            <!-- Existing event display code -->
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-events-message">No Bookmakers available for this period.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="bg-white shadow-md p-5 form-layout mt-0 rounded">
+            <h3 class="mb-4 text-left"> 🤓 Create An Article 🤓</h3>
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-group text-left">
+                    {{ CreateArticleForm|crispy }}
+                </div>
+                <br>
+                <input type="hidden" id="event_id_input" name="event_id" value="">
+                <br>
+                <input type="hidden" id="outcome_id_input" name="outcome_id" value="">
+                <br>
+                <input class="btn btn-success btn-lg mt-3" type="submit" value="Create Article">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function fetchEvents() {
+    const url = `{% url "core-portal:writer-events" %}`; // Adjust the URL as needed
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const eventList = document.getElementById('event-list');
+        eventList.innerHTML = '';
+
+        const events = data.events;
+
+        if (!Array.isArray(events) || events.length === 0) {
+            eventList.innerHTML = '<p class="no-events-message">No events available.</p>';
+            return;
+        }
+
+        events.forEach(event => {
+            const eventContainer = document.createElement('div');
+            eventContainer.className = 'event-container';
+            eventContainer.innerHTML = `
+                <button class="event-card" data-event-id="${event.id}">
+                    <div class="event-info">
+                        <div class="team">
+                            ${event.home_team_team.logo_url ? 
+                                `<img src="${event.home_team_team.logo_url}" alt="${event.home_team_team.name}">` : 
+                                ''}
+                            ${event.home_team_team.team_name ? 
+                                `<h4>${event.home_team_team.team_name}</h4>` : 
+                                ''}
+                        </div>
+                        <div class="vs-text">
+                            <h4>Vs</h4>
+                        </div>
+                        <div class="team">
+                            ${event.away_team_team.logo_url ? 
+                                `<img src="${event.away_team_team.logo_url}" alt="${event.away_team_team.name}">` : 
+                                ''}
+                            ${event.away_team_team.team_name ? 
+                                `<h4>${event.away_team_team.team_name}</h4>` : 
+                                ''}
+                        </div>
+                        <div class="event-body">
+                            <p><strong>Sport:</strong> ${event.sport_title}</p>
+                            <p><strong>Description:</strong> ${event.description}</p>
+                            <p><strong>Commence Time:</strong> ${event.commence_time}</p>
+                        </div>
+                    </div>
+                </button>
+            `;
+            eventContainer.addEventListener('click', () => {
+                const allEventContainers = document.querySelectorAll('.event-container');
+                allEventContainers.forEach(container => {
+                    if (container !== eventContainer) {
+                        container.classList.remove('selected');
+                    }
+                });
+
+                const isSelected = eventContainer.classList.toggle('selected');
+
+                const eventIdInput = document.getElementById('event_id_input');
+                if (isSelected) {
+                    eventIdInput.value = event.id;
+                } else {
+                    eventIdInput.value = ''; // Clear the input if the selection is deselected
+                }
+
+                const bookmakersContainer = document.getElementById('bookmakers');
+
+                if (isSelected) {
+                    const url = `{% url "core-portal:writer-event-BMO" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', event.id);
+
+                    fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const bookmakersList = data.event_bookmakers.bookmakers;
+                        bookmakersContainer.innerHTML = '';
+
+                        if (Array.isArray(bookmakersList) && bookmakersList.length > 0) {
+                            bookmakersList.forEach(bookmaker => {
+                                const bookmakerElement = document.createElement('div');
+                                bookmakerElement.className = 'bookmaker';
+                                bookmakerElement.innerHTML = `
+                                    <h3>${bookmaker.title}</h3>
+                                    ${bookmaker.markets.map(market => `
+                                        <div class="market" data-key="${market.key}">
+                                            <h4 class="market-title">
+                                                ${market.key === 'h2h' ? 'Head to Head' : 
+                                                  market.key === 'totals' ? 'Totals' : 
+                                                  market.key === 'spreads' ? 'Spreads' : 
+                                                  market.title}
+                                            </h4>
+                                            <ul>
+                                                ${market.outcomes.map(outcome => `
+                                                    <li class="outcome" data-outcome-id="${outcome.id}" onclick="toggleOutcomeSelection(this)">
+                                                        <span class="outcome-name">${outcome.name}</span>
+                                                        <span class="point">${outcome.point || ''}</span>
+                                                        <span class="price">${outcome.price}</span>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                    `).join('')}
+                                `;
+                                bookmakersContainer.appendChild(bookmakerElement);
+                            });
+                        } else {
+                            bookmakersContainer.innerHTML = '<p>No bookmakers available.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching event data:', error);
+                    });
+                } else {
+                    bookmakersContainer.innerHTML = '';
+                }
+            });
+            eventList.appendChild(eventContainer);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching events:', error);
+    });
+}
+
+window.onload = fetchEvents;
+
+function toggleOutcomeSelection(element) {
+    // Deselect all outcomes
+    const allOutcomes = document.querySelectorAll('.outcome');
+    allOutcomes.forEach(outcome => {
+        outcome.classList.remove('selected');
+    });
+
+    // Select the clicked outcome
+    element.classList.add('selected');
+    const outcomeId = element.getAttribute('data-outcome-id');
+
+    // Set the value of the hidden input to the selected outcome ID
+    const outcomeIdInput = document.getElementById('outcome_id_input');
+    outcomeIdInput.value = outcomeId; // Pass the selected outcome ID to the hidden input
+}
+</script>
+{% endblock content %}

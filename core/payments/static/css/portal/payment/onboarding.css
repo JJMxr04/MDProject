@@ -1,0 +1,27 @@
+/* Add any styles from your original design here */
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -10,9 +10,6 @@ from core.user.models import User
 
 class TieBreakerManager(AbstractManager):
 
-    def create(self):
-        return self.create()
-
 
     def calculate_winner(self,tiebreaker,player_1,player_2):
         lucky_num =random.randint(1, 2)

@@ -1,73 +1,89 @@
+import random
 import uuid
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
 from datetime import datetime, timedelta
 from django.utils import timezone
+from core.event.models.bookmaker import Bookmaker
 from core.user.models import User
-from core.event.models import Event
+# from core.event.models import Event
 from core.mail.models import Emails
+from core.game.models.bet import Bet,Outcome, Event,Market
 
 class GameManager(AbstractManager):
     def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
-                    home_team=None, away_team=None, winner=None):
+                    home_team=None, away_team=None, winner=None,bet_market=None):
         return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
                            deadline_time=deadline_time, completed=completed, home_team=home_team,
-                           away_team=away_team, winner=winner)
+                           away_team=away_team, winner=winner,bet=Bet.objects.create_bet(bet_market))
+    
+    def get_owner_correctness(self, game):
+        bet= game.bet
+        event= game.event
+        return Bet.objects.calculate_owner_choice(bet,event)
+    def get_player_2_correctness(self, game):
+        bet= game.bet
+        event= game.event
+        return Bet.objects.calculate_player_2_choice(bet,event)
 
     def update_by_id(self, id, current_user, data):
-        # print(data)
         game = self.filter(id=id).first()
         new_game = False
-        # print('Starting Game Check')
+
         if game is None:
-            # print('check 1')
-            # If the game does not exist, create a new instance
+
+            # If the game does not exist, return false
             return False, False
-        # print('check 2')
+
         if (current_user != game.owner) and (current_user != game.player_2):
-            # print('check 3')
+
             return False, False
-        # print('check 4')
-        if game.event is None:
-            # print('check 5')
-            new_game = True
-            event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
-            if event is None:
-                # print('check 6')
-                return False, False
-            # print('check 7')
-            commence_time_str = event.commence_time
 
-            # Convert the commence_time string to a datetime object
-            commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
+        if current_user == game.owner:
+            if game.event is None:
+                new_game = True
+                event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
+                if event is None:
+                    return False, False
+                
+                commence_time_str = event.commence_time
+                # Convert the commence_time string to a datetime object
+                commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
+                # Check if the commence time is at least 8 hours from now
+                current_time = timezone.now()
+                if commence_time < current_time + timedelta(hours=8):
+                    return False, False
+                game.event = event
+                game.home_team = event.home_team
+                game.away_team = event.away_team
+                game.commence_time = commence_time
+                game.deadline_time = commence_time - timedelta(hours=8)
+                game.save()
 
-            # Check if the commence time is at least 8 hours from now
-            current_time = timezone.now()
-            if commence_time < current_time + timedelta(hours=8):
-                return False, False
-
-            game.event = event
-            game.home_team = event.home_team
-            game.away_team = event.away_team
-            game.commence_time = commence_time
-            game.deadline_time = commence_time - timedelta(hours=8)
+        if current_user == game.player_2 and game.bet.owner_outcome is None:
+            return False, False
 
         # Check if the event has already started
         current_time = timezone.now()
-        # print('check 8')
         if game.commence_time and game.commence_time <= current_time:
             return False, False
-        # print('check 10')
-        if data.get("player_choice"):
-            if current_user == game.owner:
-                # print('check 11')
-                game.owner_choice = data.get("player_choice").team_name
-            # print('check 12')
-            if current_user == game.player_2:
-                # print('check 13')
-                game.player_2_choice = data.get("player_choice").team_name
-            # print('check 14')
 
+        if data.get("player_choice"):
+            player_choice = data.get("player_choice")
+            outcome=Outcome.objects.filter(id=player_choice).first()
+            if Outcome is None and current_user != game.owner:
+                return False, False
+            if Outcome is None and current_user == game.owner:
+                Bet.objects.set_market(game.bet,outcome.market)
+            game = self.filter(id=id).first()
+
+            if current_user == game.owner:
+                if game.bet.owner_outcome is None:
+                    Bet.objects.set_owner_outcome(game.bet,outcome)
+
+            if current_user == game.player_2:
+                if game.bet.player_2_outcome is None:
+                    Bet.objects.set_player_2_outcome(game.bet,outcome)
         game.save()
         # Email
         if current_user == game.owner:
@@ -75,14 +91,15 @@ class GameManager(AbstractManager):
         if current_user == game.player_2:
             Emails.send_opponent_pick_notification(game.owner,game.player_2.username)
 
-        # print('check 15')
-
         return new_game, game
 
     def get_golden_game(self, player_1, player_2, match):
         event = Event.objects.get_random_golden()
+        bookmaker = Bookmaker.objects.filter(event=event).first()
+        markets = Market.objects.filter(bookmaker=bookmaker)
+        market = random.choice(markets)
         return Game.objects.create_game(player_1, player_2, match, event, event.commence_time, None, event.completed,
-                                        event.home_team, event.away_team)
+                                        event.home_team, event.away_team,bet_market=market)
 
     def game_event_update(self, game, instance):
         game.winner = instance.winner
@@ -104,6 +121,7 @@ class Game(AbstractModel):
     owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='games', null=True, blank=True)
+    bet = models.ForeignKey(Bet, on_delete=models.CASCADE, related_name='game_bet', null=True, blank=True)
     objects = GameManager()
 
     class Meta:

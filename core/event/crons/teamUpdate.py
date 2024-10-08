@@ -77,7 +77,7 @@ class TeamCron():
         media_root = settings.MEDIA_ROOT
 
         # Call the write_image function to save the content
-        filename = write_image(content, country, title, team_name, team_id)
+        # filename = write_image(content, country, title, team_name, team_id)
 
         # Construct the relative URL from MEDIA_URL and the filename
         relative_url = os.path.relpath(filename, media_root)
@@ -108,14 +108,6 @@ class TeamCron():
                     country = "NoCountry"
                     country_code = "NoCountry"
                 team_id = data['teams'][0]['id']
-                # if len(data) > 1:
-                #     country = data[0]['country']['name']
-                #     country_code = data[0]['country']['alpha2']
-                #     team_id = data[0]['id']
-                # else:
-                #     country = data.get('country').get('name')
-                #     country_code = data['country']['alpha2']
-                #     team_id = data['id']
                 return country, country_code, team_id
             else:
                 return None,None,None
@@ -140,19 +132,9 @@ class TeamCron():
             else:
                 print(f"Error: {response.status_code} - {response.text} - data: {response.content}")
                 return None
-            # return None
-            # Get the content of the response (image data)
-            # data = response.json()
-            # write_json_to_file(data, f'testfiles/teams/teams_logos.json')
-            # if response.content:
-            #     return self.create_save_logo(team_name, title, team_id, country, response.content)
-            # else:
-            #     print(f"Error: {response.status_code} - {response.text} - data: {response.content}")
-            #     return None
+
         else:
             print(f"Error: {response.status_code} - {response.text}")
-            #raise Http404("Failed to get logo")
-            # print(f"Failed to get logo:{team_name}:{team_id}")
             return None
 
     def check_team(self, team_name, title, group):
@@ -175,7 +157,6 @@ class TeamCron():
             else:
                 # print(f"Team {team} exists 1")
                 return team
-
 
 
 

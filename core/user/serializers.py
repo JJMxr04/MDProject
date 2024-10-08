@@ -3,6 +3,7 @@ from rest_framework import serializers
 from core.user.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from core.abstract.serializers import AbstractSerializer
+from core.blog.writer.serializers.tag import TagSerializer
 
 
 class UserSerializer(AbstractSerializer):
@@ -15,9 +16,23 @@ class UserSerializer(AbstractSerializer):
         model = User
         # List of all the fields that can be included in a request or a response
         fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email', 'is_active',
-                  'created', 'updated', 'is_admin', 'is_staff','activated_link']
+                  'created', 'updated', 'is_admin', 'is_staff', 'activated_link']
+
         # List of all the fields that can only be read by the user
         read_only_field = ['is_active', 'is_admin', 'id', 'is_staff','activated_link']
+
+    def create(self, validated_data):
+        portal_password = validated_data.pop('portal_password', None)
+        user = super().create(validated_data)
+        if portal_password:
+            user.set_portal_password(portal_password)
+        return user
+
+    def update(self, instance, validated_data):
+        portal_password = validated_data.pop('portal_password', None)
+        if portal_password:
+            instance.set_portal_password(portal_password)
+        return super().update(instance, validated_data)
 
 class PublicUserSerializer(AbstractSerializer):
     # Rewriting some fields like the public id to be represented as the id of the object
@@ -60,3 +75,15 @@ class UserMeSerializer(AbstractSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email',
                   'created', 'updated']
         read_only_field = ['id','created', 'updated','is_active', 'is_admin', 'id', 'is_staff', 'activated_link']
+
+class WriterSerializer(AbstractSerializer):
+    # Rewriting some fields like the public id to be represented as the id of the object
+    id = serializers.UUIDField(source='public_id', read_only=True, format='hex')
+    tags = TagSerializer(many=True)
+
+    class Meta:
+        model = User
+        # List of all the fields that can be included in a request or a response
+        fields = ['id', 'username', 'avatar','first_name','last_name','writer_description','tags']
+        # List of all the fields that can only be read by the user
+

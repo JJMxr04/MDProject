@@ -45,68 +45,56 @@ class TournamentManager(AbstractManager):
         try:
             tournament = self.get(pk=tourney_id)
             if not tournament:
-                print(f"Tournament with ID {tourney_id} not found.")
                 return False
 
             user = User.objects.get(email=user_email)
 
             if not InvitedPlayer.objects.check_invited_player(tournament, user):
-                print("User was not invited to this tournament")
                 return False
 
             if tournament.state != 'created':
-                print("not created")
                 return False
 
             # Check if the current date is within three days of the tournament start date
             current_date = timezone.now()
             three_days_prior = tournament.start_date - timedelta(days=3)
             if current_date > three_days_prior:
-                print("Invites can only be accepted within three days prior to the event start date.")
                 return False
 
             players = list(Player.objects.get_players(tournament=tournament))
             if len(players) == tournament.max_accepted_players:
-                print("Max players")
                 return False
 
             if Player.objects.check_player_participating(tournament=tournament, user=user):
-                print("Already a player")
                 return False
 
             Player.objects.create_player(tournament, user)
             InvitedPlayer.objects.accept_invite(invited_player=invited_player)
             return True
 
-        except ObjectDoesNotExist as e:
-            print(f"Object not found: {e}")
+        except ObjectDoesNotExist:
             return False
-        except AttributeError as e:
-            print(f"Attribute error: {e}")
+        except AttributeError:
             return False
 
     def invite_player(self, tourney_id, user_email):
         try:
             tournament = self.get(pk=tourney_id)
             if not tournament:
-                print(f"Tournament with ID {tourney_id} not found.")
                 return False
 
             user = User.objects.get(email=user_email)
 
             if InvitedPlayer.objects.check_invited_player(tournament, user):
-                print("User is already invited or part of the tournament.")
                 return False
 
             InvitedPlayer.objects.create_invited_player(tournament, user)
             Emails.send_tournament_invite(user, tournament)
             return True
 
-        except ObjectDoesNotExist as e:
-            print(f"Object not found: {e}")
+        except ObjectDoesNotExist:
             return False
-        except AttributeError as e:
-            print(f"Attribute error: {e}")
+        except AttributeError:
             return False
 
     def next_power_of_2(self, num):
@@ -116,7 +104,6 @@ class TournamentManager(AbstractManager):
 
     def make_init_matches(self, tournament):
         bottom_level_rounds = Round.objects.filter(tournament=tournament, level_num=(tournament.levels - 1))
-        # print(f'initial first levels check {bottom_level_rounds}')
         players = list(Player.objects.get_players(tournament=tournament))
 
         # Calculate the next power of 2
@@ -140,10 +127,8 @@ class TournamentManager(AbstractManager):
     def create_rounds(self, tournament):
         tournament.state = 'inprogress'
         final_round = Round.objects.create_bracket(tournament)
-        # print(f'create rounds: {final_round}')
         tournament.final_round = final_round
         tournament.save()
-        # self.assign_byes(tournament)
     def assign_byes(self, tournament):
         """
         Assigns byes to players if the number of players is not an exact power of 2.
@@ -213,21 +198,14 @@ class TournamentManager(AbstractManager):
         players_num = len(Player.objects.get_players(tournament))
         tournament_players_num = tournament.max_accepted_players
         missing_players = tournament_players_num - players_num
-        # print(f'players_num: {players_num}')
-        # print(f'tournament_players_num: {tournament_players_num}')
-        # print(f'missing_players: {missing_players}')
 
         if missing_players > 1:
             tournament.state = ("aborted")
             tournament.save()
             return
-        print("create rounds")
         Tournament.objects.create_rounds(tournament)
-        print("matches")
         Tournament.objects.make_init_matches(tournament)
-        print("byes")
         Tournament.objects.assign_byes(tournament)
-        print("after")
 
 
 class RoundManager(AbstractManager):
@@ -247,7 +225,6 @@ class RoundManager(AbstractManager):
         current_round.prev_round_1 = previous_round_1
         current_round.prev_round_2 = previous_round_2
         current_round.save()
-        # print(f'create bracket: {current_round}')
         return current_round
 
     def create_tournament_match(self, round_obj):
@@ -265,7 +242,6 @@ class RoundManager(AbstractManager):
             print("both players assigned are None")
             exit()
         if not round_obj.player_1 or not round_obj.player_2:
-            # print(f'Bye round level:{round_obj.level_num}, Player 1 :{round_obj.player_1}, Player_2: {round_obj.player_2}')
             round_obj.completed = True
             if not round_obj.player_1:
                 round_obj.winner = round_obj.player_2
@@ -275,7 +251,6 @@ class RoundManager(AbstractManager):
 
 
         round_obj.save()
-        # print(f'assign players{round_obj}')
 
     def get_tourney_level_rounds(self, tournament, level):
         return self.filter(tournament=tournament, level_num=level)
@@ -356,7 +331,6 @@ class Tournament(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     start_date = models.DateTimeField()
-    # end_date = models.DateTimeField()
     state = models.CharField(max_length=10, default='created')  # created, inprogress, completed,aborted
     max_accepted_players = models.IntegerField()
     levels = models.FloatField(default=0)

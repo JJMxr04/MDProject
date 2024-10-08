@@ -1,0 +1,57 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/portal/payment/onboarding.css' %}">
+{% endblock css %}
+
+{% block title %}
+  Connect Onboarding Quickstart
+{% endblock title %}
+
+{% block content %}
+  <div id="container" class="bg-white shadow-md p-5 form-layout mt-0 rounded">
+    <div class="container">
+      <div class="banner">
+        <h2>Paradise Sports: Media and Entertainment</h2>
+      </div>
+      <div class="content">
+        <h2 id="title">Get ready for take off</h2>
+        <p id="subtitle">
+          Paradise Sports: Media and Entertainment is the world's leading air travel platform: join our team of pilots to help people travel faster.
+        </p>
+        <h2 id="add-information-title" class="hidden">Add information to start accepting money</h2>
+        <p id="add-information-subtitle" class="hidden">
+          Paradise Sports: Media and Entertainment partners with Stripe to help you receive payments while keeping your personal and bank details secure.
+        </p>
+        <div>
+          <button id="sign-up-button">Sign up</button>
+        </div>
+        <div>
+          <button id="add-information-button" class="hidden">Add information</button>
+        </div>
+        <h2 id="details-submitted-title" class="hidden">Details submitted</h2>
+        <p id="details-submitted-subtitle" class="hidden">That's everything we need for now</p>
+        <p id="error" class="error hidden">Something went wrong!</p>
+        <div id="dev-callout" class="dev-callout hidden">
+          <p id="connected-account-id" class="hidden"></p>
+          <p id="creating-connected-account" class="hidden">Creating a connected account...</p>
+          <p id="adding-onboarding-information" class="hidden">Adding some onboarding information...</p>
+        </div>
+        <div class="info-callout">
+          <p>
+            This is a sample app for Stripe-hosted Connect onboarding. 
+            <a href="https://docs.stripe.com/connect/onboarding/quickstart?connect-onboarding-surface=hosted" target="_blank" rel="noopener noreferrer">View docs</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="error" hidden>Something went wrong!</div>
+{% endblock content %}
+
+{% block scripts %}
+  <script src="{% static 'js/portal/payment/onboarding.js' %}" defer></script>
+{% endblock scripts %}

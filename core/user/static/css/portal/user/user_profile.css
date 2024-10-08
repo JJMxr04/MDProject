@@ -1,0 +1,126 @@
+.formContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .avatarContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .avatarImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .formGroup {
+    margin-bottom: 15px;
+  }
+
+  .formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .formGroup input,
+  .formGroup textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  .formGroup input:read-only {
+    background-color: #eee;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .formContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .formGroup {
+    margin-bottom: 15px;
+  }
+
+  .formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .formGroup input,
+  .formGroup textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  .formGroup input:read-only {
+    background-color: #eee;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+    .offset-2 {
+    margin-left: auto;
+    margin-right: auto;
+}

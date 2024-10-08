@@ -1,0 +1,128 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/public_match_list.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="matches-container">
+    <h1>My Matches</h1>
+    <div class="matches-content">
+        <div class="filter-and-matches">
+            <!-- Sidebar with Filters -->
+            <div class="sidebar">
+
+                <div class="filter-container">
+                    <!-- Create Match Button -->
+                    <button class="btn btn-primary" onclick="showPopup()">
+                        Create Match
+                    </button>
+                    <hr>
+                    <!-- Popup Modal -->
+                    <div id="createMatchPopup" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closePopup()">&times;</span>
+                            <h2>Are you sure you want to create a match?</h2>
+                            <div class="modal-buttons">
+                                <button class="btn btn-primary" onclick="submitMatch()">Submit</button>
+                                <button class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <form method="get">
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Search matches..."
+                            value="{{ search_query }}"
+                            class="search-bar"
+                        />
+                        <button class="btn btn-primary" type="submit">Search User</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Matches List -->
+            <div class="matches-list-table-container">
+                <table class="matches-list-table">
+                    <thead>
+                        <tr>
+                            <th>Match ID</th>
+                            <th>Player 1</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for match in matches %}
+                        <tr onclick="window.location='{% url 'core-portal:portal-public-match-detail' match.id %}'">
+                            <td>{{ match.id }}</td>
+                            <td>{{ match.player_1.username }}</td>
+
+                            <td>{{ match.start_date }}</td>
+                            <td>{{ match.end_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">No matches found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    {% for page_num in matches.paginator.page_range %}
+                        <a href="?page={{ page_num }}&search={{ search_query }}&state={{ state }}&start_date={{ start_date }}&end_date={{ end_date }}"
+                           class="{% if matches.number == page_num %}active{% endif %}">
+                           {{ page_num }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function showPopup() {
+    document.getElementById('createMatchPopup').style.display = 'flex';
+}
+
+function closePopup() {
+    document.getElementById('createMatchPopup').style.display = 'none';
+}
+
+function submitMatch() {
+    // Send a POST request to create a match
+    fetch("{% url 'core-portal:portal-create-public-match' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+        },
+        body: JSON.stringify({
+            // Add any necessary data for match creation here
+            'action': 'create'
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Match created!"); // Notify user of success
+            closePopup(); // Close the popup after submission
+        } else {
+            alert("Error creating match."); // Notify user of error
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred."); // Notify user of error
+    });
+}
+</script>
+
+{% endblock %}
+
+

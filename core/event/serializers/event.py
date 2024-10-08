@@ -1,18 +1,18 @@
 from rest_framework import serializers
 
 from core.event.models.event import Event
-from core.event.models import Team
-
+from core.event.models import Team, Bookmaker
 from core.abstract.serializers import AbstractSerializer
 from core.event.serializers.team import TeamSerializer
+from .bookmaker import BookmakerSerializer
+
 
 class TeamScoreSerializer(serializers.Serializer):
     name = serializers.CharField(required=False, allow_null=True)
     score = serializers.CharField(required=False, allow_null=True)
+
     class Meta:
-        fields = '__all__'  # Include all fields
-        # List of all the fields that can only be read by the user
-        # read_only_fields = ['id', 'created', 'updated']
+        fields = '__all__'
 
 
 class EventSerializer(AbstractSerializer):
@@ -22,6 +22,10 @@ class EventSerializer(AbstractSerializer):
     scores = TeamScoreSerializer(many=True, required=False, allow_null=True)
     home_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
     away_team_team = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
+    # bookmakers = BookmakerSerializer(many=True, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -29,9 +33,24 @@ class EventSerializer(AbstractSerializer):
         away_team_team = Team.objects.get_object_by_public_id(rep['away_team_team'])
         rep['home_team_team'] = TeamSerializer(home_team_team).data
         rep['away_team_team'] = TeamSerializer(away_team_team).data
+
+        # The bookmakers field is not included in this serializer
         return rep
 
     class Meta:
         model = Event
         fields = '__all__'
         read_only_fields = ['created', 'updated']
+
+
+class EventBookmakerSerializer(EventSerializer):
+    bookmakers = BookmakerSerializer(many=True, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        # Always include the bookmakers in this serializer
+        rep['bookmakers'] = BookmakerSerializer(instance.bookmakers.all(), many=True).data
+        return rep

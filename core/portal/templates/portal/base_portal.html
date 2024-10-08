@@ -10,7 +10,10 @@
     <!-- FontAwesome CSS for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7x1l5eD5AWxjz5e5VR7PyjR+X0dEw+75qg0" crossorigin="anonymous">
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/portal_main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/portal_layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/navbar.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <title>{% block title %}Portal{% endblock title %}</title>
     {% block css %}{% endblock css %}
 </head>
@@ -18,19 +21,17 @@
     <header>
         {% include "portal/components/navbar.html" %}
     </header>
-    <div class="sidebar" id="sidebar">
-        {% include 'portal/components/sidebar.html' %}
-    </div>
-    <button class="btn btn-primary toggle-btn" id="toggle-btn">☰</button>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-10 offset-2 p-4">
-                <div class="comp-container" id="main-content">
-                    {% block content %}{% endblock content %}
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10 offset-2 p-4">
+                    <div class="comp-container" id="main-content">
+                        {% block content %}{% endblock content %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 <!--    <footer class="footer mt-auto">-->
 <!--        <div class="footer-container">-->
 <!--            &lt;!&ndash; Portal-specific footer content &ndash;&gt;-->
@@ -38,14 +39,6 @@
 <!--    </footer>-->
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script>
-        document.getElementById('toggle-btn').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.querySelector('.navbar').classList.toggle('collapsed');
-            document.getElementById('main-content').classList.toggle('collapsed');
-            this.classList.toggle('collapsed');
-        });
-    </script>
     {% block scripts %}{% endblock scripts %}
 </body>
 </html>

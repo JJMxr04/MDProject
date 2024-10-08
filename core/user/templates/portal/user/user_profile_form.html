@@ -1,0 +1,52 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/portal/user/user_profile.css' %}">
+
+  <h1>Edit Profile</h1>
+  <form method="post" enctype="multipart/form-data" class="formContainer">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    <div class="avatarContainer">
+      {% if form.avatar.value %}
+        <img src="{{ form.avatar.value.url }}" alt="Avatar" class="avatarImage">
+      {% else %}
+        <img src="https://robohash.org/1" alt="Avatar" class="avatarImage">
+      {% endif %}
+    </div>
+    
+    <div class="formGroup">
+      {{ form.avatar.label_tag }}
+      {{ form.avatar }}
+    </div>
+    
+    <div class="formGroup">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+    </div>
+    
+    <div class="formGroup">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+    
+    <div class="formGroup">
+      {{ form.first_name.label_tag }}
+      {{ form.first_name }}
+    </div>
+    
+    <div class="formGroup">
+      {{ form.last_name.label_tag }}
+      {{ form.last_name }}
+    </div>
+    
+    <div class="formGroup">
+      {{ form.bio.label_tag }}
+      {{ form.bio }}
+    </div>
+    
+    <button type="submit" class="button">Update</button>
+  </form>
+{% endblock %}

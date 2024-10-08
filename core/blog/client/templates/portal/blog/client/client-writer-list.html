@@ -1,0 +1,78 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock css %}
+{% block title %}Writers{% endblock title %}
+
+{% block content %}
+
+<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
+
+    <h5> 🤓 Welcome to the Writers List, {{ user.username }} 🤓</h5>
+    
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Search Writers" aria-label="Search Writers">
+    </div>
+</div>
+
+    <br>
+    {% if writers %}
+        {% for writer in writers %}
+        <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
+
+            <!-- Dropdown Menu positioned in the top right corner -->
+            <div class="dropdown position-absolute" style="top: 10px; right: 10px;">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; padding: 10px;">
+                    ⋮
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'core-portal:client-writer-subscribe' writer.id %}">View Details</a></li>
+                </ul>
+            </div>
+
+            {% if writer.avatar %}
+                <img src="{{ writer.avatar }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+            {% else %}
+                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+            {% endif %}
+            <h3> {{writer.first_name}} {{writer.last_name}}</h3>
+
+            <br> <br>
+            <h4> Writer Description:</h4>
+            <p> {{ writer.writer_description }}</p>
+
+            <br> <br>
+
+            <h4> Leagues Writer Primarly likes to Bet:</h4>
+            {% if writer.tags %}
+                {%for tag in writer.tags%}
+                <p> {{ tag.name }}</p>
+                {% endfor %}
+            {% else %}
+
+            <p> No Tags</p>
+            {% endif %}
+
+
+            <br>
+        </div>
+
+        {% endfor %}
+    {% else %}
+    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+        <h6> No Writers to display</h6>
+
+    </div>
+
+    {% endif %}
+
+
+{% endblock content %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,151 @@
+/* Base Styles (Desktop) */
+.tournaments-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.tournaments-content {
+    display: flex;
+    flex-direction: column;
+}
+.filter-and-tournaments {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+.sidebar {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    height: 600px;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    overflow: hidden; /* Hide any overflow content */
+}
+.sidebar h2 {
+    margin-bottom: 10px;
+}
+.filter-container {
+    display: flex;
+    flex-direction: column;
+}
+.filter-container .search-bar,
+.filter-container select {
+    width: 100%; /* Ensure elements fit within the sidebar */
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+.tournaments-list-table-container {
+    flex-grow: 1;
+}
+.tournaments-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #000;
+}
+.tournaments-list-table th,
+.tournaments-list-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #000;
+}
+.tournaments-list-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+.tournaments-list-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.tournaments-list-table tbody tr:hover {
+    background-color: #FFE47A;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.pagination a {
+    padding: 10px;
+    margin: 0 5px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+.pagination a.active {
+    background: #0056b3;
+}
+.pagination a:hover:not(.active) {
+    background: #0056b3;
+}
+
+.offset-2 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+    .filter-and-tournaments {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+        height: auto;
+    }
+    .filter-container .search-bar,
+    .filter-container select {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .tournaments-list-table th,
+    .tournaments-list-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .offset-2 {
+        width: 80%; /* Reduce width to accommodate smaller screens */
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+    .filter-and-tournaments {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+        height: auto;
+        padding: 10px;
+    }
+    .filter-container .search-bar,
+    .filter-container select {
+        font-size: 12px;
+        padding: 6px;
+    }
+    .tournaments-list-table th,
+    .tournaments-list-table td {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .pagination a {
+        padding: 8px;
+        font-size: 12px;
+    }
+    .offset-2 {
+        width: 100%; /* Full width for mobile screens */
+    }
+}

@@ -1,0 +1,25 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/create-article.css' %}">
+{% endblock css %}
+{% block title %}Update Article{% endblock title %}
+
+
+
+{% block content %}
+<div class="bg-white shadow-md p-5 form-layout mt-0 rounded">
+    <h3 class="mb-4 text-left"> 🤓 Delete your Prediction 🤓</h3>
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <br>
+        <br>
+        <input class="btn btn-danger btn-lg mt-3" type="submit" value="Delete Prediction">
+    </form>
+
+    <br> <br>
+    <a href="{% url 'core-portal:writer-my-articles' %}">Return My Predictions</a>
+</div>
+
+{% endblock content %}
