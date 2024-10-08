@@ -451,9 +451,10 @@ JAZZMIN_SETTINGS = {
     # Add a language dropdown into the admin
     # "language_chooser": True,
 }
-
-CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
-CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
+BROKER_URL = f"{os.environ.get('REDIS_URL')}"
+CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}"
+# CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
+# CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
