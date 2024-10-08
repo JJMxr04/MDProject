@@ -48,7 +48,6 @@ def event_odds_test_cron():
     eventCron.get_upcoming_odds()
 @shared_task
 def print_cron_jobs():
-#     scheduler.print_jobs()
     print('Scheduled and  print cron job completed')
 
 # @shared_task
