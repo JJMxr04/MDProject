@@ -71,6 +71,7 @@ def create_account(request):
             user.save()
             return JsonResponse({'account': account.id})
         except Exception as e:
+            print(f'account/ error: {e}')
             return JsonResponse({'error': str(e)}, status=500)
 
 
