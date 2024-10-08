@@ -64,7 +64,16 @@ def create_account(request):
         try:
             user = request.user
             if user.stripe_account_id:
-                return JsonResponse({'error': 'User already has a Stripe account.'}, status=400)
+                # Fetch the Stripe account details to check if it is fully set up
+                account = stripe.Account.retrieve(user.stripe_account_id)
+
+                # Check if the account is fully set up
+                if account.charges_enabled and account.payouts_enabled:
+                    return JsonResponse({'error': 'User already has a fully set up Stripe account.'}, status=400)
+                else:
+                    # If not fully set up, redirect to the account setup process
+                    return JsonResponse({'account': account.id})
+
 
             account = stripe.Account.create()
             user.stripe_account_id = account.id
