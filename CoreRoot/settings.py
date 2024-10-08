@@ -182,9 +182,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=f"postgres://{os.environ.get('DBUSER')}:{os.environ.get('DBPASSWORD')}@{os.environ.get('DBHOST')}:{os.environ.get('DBPORT')}/{os.environ.get('DBNAME')}"
+#     )
+# }
+
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"postgres://{os.environ.get('DBUSER')}:{os.environ.get('DBPASSWORD')}@{os.environ.get('DBHOST')}:{os.environ.get('DBPORT')}/{os.environ.get('DBNAME')}"
+        default=f"{{os.environ.get('DATABASE_URL')}}"
     )
 }
 
