@@ -42,8 +42,8 @@ def create_account_link(request):
             if connected_account_id is None:
                 return JsonResponse({'error': 'Connected account ID is required.'}, status=400)
 
-            return_url = f"http://localhost:8000/web/portal/payments/return/{connected_account_id}/"
-            refresh_url = f"http://localhost:8000/web/portal/payments/return/{connected_account_id}/"
+            return_url = f"https://paradise-sports-94ea4023d1fa.herokuapp.com//web/portal/payments/return/{connected_account_id}/"
+            refresh_url = f"https://paradise-sports-94ea4023d1fa.herokuapp.com//web/portal/payments/return/{connected_account_id}/"
 
             account_link = stripe.AccountLink.create(
                 account=connected_account_id,
