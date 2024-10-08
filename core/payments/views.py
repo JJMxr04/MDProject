@@ -27,7 +27,7 @@ def onboarding_page(request):
     return render(request, 'portal/payments/onboarding.html')
 
 
-@login_required(login_url='/auth/login/')
+# @login_required(login_url='/auth/login/')
 def successful_payment(request):
     return render(request, 'portal/payments/success.html')
 
@@ -94,7 +94,7 @@ def catch_all(request, connected_account_id=None, path=None):
         return render(request, 'portal/payments/error.html')
 
 
-# @login_required(login_url='/auth/login/')
+ @login_required(login_url='/auth/login/')
 def create_checkout_session(request, creator_id):
     creator = User.objects.get(public_id=creator_id)
     subscription_plan = SubscriptionPlan.objects.get(writer=creator)
