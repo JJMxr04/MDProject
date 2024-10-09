@@ -486,3 +486,5 @@ SECURE_HSTS_PRELOAD = True
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
 django_heroku.settings(locals())
+
+# End of file
