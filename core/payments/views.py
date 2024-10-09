@@ -13,6 +13,7 @@ from core.blog.client.models import Subscription
 from django.contrib.auth import get_user_model
 from dateutil.relativedelta import relativedelta
 from django.views.decorators.csrf import csrf_exempt
+from core.payment.models import Invoice
 
 
 User = get_user_model()
