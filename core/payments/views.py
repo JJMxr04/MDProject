@@ -27,7 +27,7 @@ def onboarding_page(request):
     return render(request, 'portal/payments/onboarding.html')
 
 
-# @login_required(login_url='/auth/login/')
+@login_required(login_url='/auth/login/')
 def successful_payment(request):
     return render(request, 'portal/payments/success.html')
 
