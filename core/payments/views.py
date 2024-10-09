@@ -132,7 +132,7 @@ def create_checkout_session(request, creator_id):
             success_url=request.build_absolute_uri(reverse('core-portal:successful-payment')),
             cancel_url=request.build_absolute_uri('/cancel/'),
             metadata={  # Add metadata here
-                'creator_id': creator_id
+                'creator_id': creator.id
             },
         )
         return JsonResponse({'id': checkout_session.id})
@@ -149,14 +149,10 @@ def stripe_webhook(request):
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
     except ValueError:
-        print(f'error: Invalid payload: {e}')
         return JsonResponse({'error': 'Invalid payload'}, status=400)
     except stripe.error.SignatureVerificationError:
-        print(f'error: Invalid signature: {e}')
         return JsonResponse({'error': 'Invalid signature'}, status=400)
-    print(f'pre-event: type{event['type']}')
     if event['type'] == 'checkout.session.completed':
-        print(0)
         session = event['data']['object']
         handle_checkout_session(session)
 
@@ -164,34 +160,25 @@ def stripe_webhook(request):
 
 
 def handle_checkout_session(session):
-    print(1)
     try:
-        print(2)
         subscriber = User.objects.get(email=session['customer_details']['email'])
-        print(3)
-        print(session)
         creator_id = session['metadata']['creator_id']  
-        print(4)
+        subscription_id = session['subscription']
         creator = User.objects.get(id=creator_id)
-        print(5)
         plan = SubscriptionPlan.objects.get(writer=creator)
-        print(6)
         subscription, created = Subscription.objects.get_or_create(
             subscriber=subscriber,
             writer=creator,
-            defaults={'plan': plan, 'start_date': timezone.now(), 'end_date': timezone.now() + relativedelta(months=1)}
+            defaults={'plan': plan, 'start_date': timezone.now(), 'end_date': timezone.now() + relativedelta(months=1)},
+            stripe_subscription_id=subscription_id
+
         )
-        print(7)
 
         if not created:
-            print(8)
             subscription.active = True
             subscription.start_date = timezone.now()
             subscription.end_date = subscription.start_date + relativedelta(months=1)
             subscription.save()
 
         return JsonResponse({'status': 'subscription_created'})
-    except Exception as e:
-        print(9)
-        print(f"Error in handling checkout session: {e}")
         return JsonResponse({'error': str(e)}, status=500)
