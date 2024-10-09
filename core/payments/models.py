@@ -4,6 +4,10 @@ from core.blog.client.models import Subscription
 
 User = get_user_model()
 
+# Updated Subscription Manager
+class InvoiceManager(models.Manager):
+    pass
+
 class Invoice(models.Model):
     STATUS_CHOICES = (
         ('paid', 'Paid'),
@@ -18,6 +22,7 @@ class Invoice(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = InvoiceManager()
 
     def __str__(self):
         return f"Invoice {self.stripe_invoice_id} - {self.status} - {self.user.email}"
