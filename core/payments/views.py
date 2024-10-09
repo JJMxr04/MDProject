@@ -12,6 +12,8 @@ from core.blog.writer.models import SubscriptionPlan
 from core.blog.client.models import Subscription
 from django.contrib.auth import get_user_model
 from dateutil.relativedelta import relativedelta
+from django.views.decorators.csrf import csrf_exempt
+
 
 User = get_user_model()
 
@@ -27,7 +29,7 @@ def onboarding_page(request):
     return render(request, 'portal/payments/onboarding.html')
 
 
-@login_required(login_url='/auth/login/')
+# @login_required(login_url='/auth/login/')
 def successful_payment(request):
     return render(request, 'portal/payments/success.html')
 
@@ -136,7 +138,7 @@ def create_checkout_session(request, creator_id):
         return JsonResponse({'error': str(e)}, status=500)
 
 
-
+@csrf_exempt
 def stripe_webhook(request):
     payload = request.body
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
@@ -145,8 +147,10 @@ def stripe_webhook(request):
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
     except ValueError:
+        print(f'error: Invalid payload: {e}')
         return JsonResponse({'error': 'Invalid payload'}, status=400)
     except stripe.error.SignatureVerificationError:
+        print(f'error: Invalid signature: {e}')
         return JsonResponse({'error': 'Invalid signature'}, status=400)
 
     if event['type'] == 'checkout.session.completed':
