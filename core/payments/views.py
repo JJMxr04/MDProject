@@ -122,8 +122,8 @@ def create_checkout_session(request, creator_id):
                 },
                 'quantity': 1,
             }],
-            subscription_data={  # Use subscription_data instead of payment_intent_data for recurring payments
-                'application_fee_percent': int(settings.PLATFORM_COST),  # Platform fee percentage
+            subscription_data={  
+                'application_fee_percent': int(settings.PLATFORM_COST),
                 'transfer_data': {
                     'destination': creator.stripe_account_id,  # Creator's Stripe account ID
                 },
@@ -131,12 +131,14 @@ def create_checkout_session(request, creator_id):
             mode='subscription',
             success_url=request.build_absolute_uri(reverse('core-portal:successful-payment')),
             cancel_url=request.build_absolute_uri('/cancel/'),
+            metadata={  # Add metadata here
+                'creator_id': creator_id
+            },
         )
         return JsonResponse({'id': checkout_session.id})
     except Exception as e:
         print(e)
         return JsonResponse({'error': str(e)}, status=500)
-
 
 @csrf_exempt
 def stripe_webhook(request):
