@@ -162,16 +162,22 @@ def stripe_webhook(request):
 def handle_checkout_session(session):
     try:
         subscriber = User.objects.get(email=session['customer_details']['email'])
-        creator_id = session['metadata']['creator_id']  
+        creator_id = session['metadata']['creator_id']
         subscription_id = session['subscription']
         creator = User.objects.get(id=creator_id)
         plan = SubscriptionPlan.objects.get(writer=creator)
+
+        # Store the subscription and customer IDs in the Subscription model
         subscription, created = Subscription.objects.get_or_create(
             subscriber=subscriber,
             writer=creator,
-            defaults={'plan': plan, 'start_date': timezone.now(), 'end_date': timezone.now() + relativedelta(months=1)},
-            stripe_subscription_id=subscription_id
-
+            defaults={
+                'plan': plan,
+                'start_date': timezone.now(),
+                'end_date': timezone.now() + relativedelta(months=1),
+                'stripe_subscription_id': subscription_id,
+                'stripe_customer_id': session['customer']
+            }
         )
 
         if not created:
@@ -183,3 +189,27 @@ def handle_checkout_session(session):
         return JsonResponse({'status': 'subscription_created'})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+
+def handle_failed_payment(invoice):
+    try:
+        # Retrieve the Stripe customer and subscription IDs from the invoice
+        customer_id = invoice['customer']
+        subscription_id = invoice['subscription']
+
+        # Find the user by their Stripe customer ID (assuming you store it)
+        subscriber = User.objects.get(stripe_customer_id=customer_id)
+
+        # Retrieve the corresponding subscription
+        subscription = Subscription.objects.get(
+            subscriber=subscriber,
+            stripe_subscription_id=subscription_id
+        )
+
+        # Deactivate the subscription
+        subscription.active = False
+        subscription.save()
+
+        print(f"Subscription {subscription_id} for user {subscriber.email} has been deactivated due to payment failure.")
+    except Exception as e:
+        print(f"Error handling failed payment: {e}")

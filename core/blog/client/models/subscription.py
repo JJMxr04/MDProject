@@ -45,7 +45,9 @@ class Subscription(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(null=True, blank=True)  # Optional end date for the subscription
     active = models.BooleanField(default=True)
-    stripe_subscription_id =  models.CharField(max_length=200)
+        # Stripe-specific fields
+    stripe_subscription_id = models.CharField(max_length=255, null=True, blank=True)
+    stripe_customer_id = models.CharField(max_length=255, null=True, blank=True)
 
     objects = SubscriptionManager()
 
