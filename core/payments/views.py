@@ -152,11 +152,21 @@ def stripe_webhook(request):
         return JsonResponse({'error': 'Invalid payload'}, status=400)
     except stripe.error.SignatureVerificationError:
         return JsonResponse({'error': 'Invalid signature'}, status=400)
+
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         handle_checkout_session(session)
 
+    elif event['type'] == 'invoice.payment_failed':
+        invoice = event['data']['object']
+        handle_failed_payment(invoice)
+
+    elif event['type'] == 'invoice.payment_succeeded':
+        invoice = event['data']['object']
+        handle_successful_payment(invoice)
+
     return JsonResponse({'status': 'success'}, status=200)
+
 
 
 def handle_checkout_session(session):
@@ -196,8 +206,10 @@ def handle_failed_payment(invoice):
         # Retrieve the Stripe customer and subscription IDs from the invoice
         customer_id = invoice['customer']
         subscription_id = invoice['subscription']
+        stripe_invoice_id = invoice['id']  # Stripe invoice ID
+        amount_due = invoice['amount_due'] / 100  # Convert cents to dollars
 
-        # Find the user by their Stripe customer ID (assuming you store it)
+        # Find the user by their Stripe customer ID
         subscriber = User.objects.get(stripe_customer_id=customer_id)
 
         # Retrieve the corresponding subscription
@@ -206,10 +218,55 @@ def handle_failed_payment(invoice):
             stripe_subscription_id=subscription_id
         )
 
-        # Deactivate the subscription
+        # Create or update the invoice record as failed
+        Invoice.objects.update_or_create(
+            stripe_invoice_id=stripe_invoice_id,
+            defaults={
+                'user': subscriber,
+                'subscription': subscription,
+                'amount': amount_due,
+                'status': 'failed',
+            }
+        )
+
+        # Optionally, deactivate the subscription
         subscription.active = False
         subscription.save()
 
-        print(f"Subscription {subscription_id} for user {subscriber.email} has been deactivated due to payment failure.")
+        print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as failed. Subscription deactivated.")
     except Exception as e:
         print(f"Error handling failed payment: {e}")
+
+
+
+def handle_successful_payment(invoice):
+    try:
+        # Retrieve the Stripe customer and subscription IDs from the invoice
+        customer_id = invoice['customer']
+        subscription_id = invoice['subscription']
+        stripe_invoice_id = invoice['id']  # Stripe invoice ID
+        amount_paid = invoice['amount_paid'] / 100  # Convert cents to dollars
+
+        # Find the user by their Stripe customer ID
+        subscriber = User.objects.get(stripe_customer_id=customer_id)
+
+        # Retrieve the corresponding subscription
+        subscription = Subscription.objects.get(
+            subscriber=subscriber,
+            stripe_subscription_id=subscription_id
+        )
+
+        # Create or update the invoice record
+        Invoice.objects.update_or_create(
+            stripe_invoice_id=stripe_invoice_id,
+            defaults={
+                'user': subscriber,
+                'subscription': subscription,
+                'amount': amount_paid,
+                'status': 'paid',
+            }
+        )
+
+        print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as paid.")
+    except Exception as e:
+        print(f"Error handling successful payment: {e}")
