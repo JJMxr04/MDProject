@@ -15,5 +15,5 @@ class SubscriptionPlan(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text='Set the monthly price for the subscription')
 
     def __str__(self):
-        return f'{self.writer} subscription plan: ${self.price}/month'
+        return f'${self.price}/month to {self.writer} '
 
