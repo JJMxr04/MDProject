@@ -39,7 +39,7 @@ STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') == False
+DEBUG = os.getenv('DEBUG') 
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
