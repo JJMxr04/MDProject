@@ -181,4 +181,5 @@ def handle_checkout_session(session):
             subscription.save()
 
         return JsonResponse({'status': 'subscription_created'})
+    except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
