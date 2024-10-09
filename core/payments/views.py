@@ -167,7 +167,7 @@ def handle_checkout_session(session):
         print(2)
         subscriber = User.objects.get(email=session['customer_details']['email'])
         print(3)
-        print(session['data'])
+        print(session)
         creator_id = session['metadata']['creator_id']  
         print(4)
         creator = User.objects.get(id=creator_id)
