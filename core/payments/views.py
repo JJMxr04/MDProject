@@ -196,29 +196,36 @@ def handle_checkout_session(session):
             subscription.end_date = subscription.start_date + relativedelta(months=1)
             subscription.save()
 
+        # Create an invoice for the initial payment (assuming the first month is paid upfront)
+        Invoice.objects.create(
+            user=subscriber,
+            subscription=subscription,
+            amount=plan.price,  # Initial price of the subscription plan
+            status='paid',  # Mark it as paid since the session completed
+            stripe_invoice_id=session['id']  # Use session ID as the initial invoice reference
+        )
+
         return JsonResponse({'status': 'subscription_created'})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
 
+
 def handle_failed_payment(invoice):
     try:
-        # Retrieve the Stripe customer and subscription IDs from the invoice
         customer_id = invoice['customer']
         subscription_id = invoice['subscription']
-        stripe_invoice_id = invoice['id']  # Stripe invoice ID
+        stripe_invoice_id = invoice['id']
         amount_due = invoice['amount_due'] / 100  # Convert cents to dollars
 
-        # Find the user by their Stripe customer ID
         subscriber = User.objects.get(stripe_customer_id=customer_id)
 
-        # Retrieve the corresponding subscription
         subscription = Subscription.objects.get(
             subscriber=subscriber,
             stripe_subscription_id=subscription_id
         )
 
-        # Create or update the invoice record as failed
+        # Update or create the failed invoice
         Invoice.objects.update_or_create(
             stripe_invoice_id=stripe_invoice_id,
             defaults={
@@ -238,8 +245,35 @@ def handle_failed_payment(invoice):
         print(f"Error handling failed payment: {e}")
 
 
-
 def handle_successful_payment(invoice):
+    try:
+        customer_id = invoice['customer']
+        subscription_id = invoice['subscription']
+        stripe_invoice_id = invoice['id']
+        amount_paid = invoice['amount_paid'] / 100  # Convert cents to dollars
+
+        subscriber = User.objects.get(stripe_customer_id=customer_id)
+
+        subscription = Subscription.objects.get(
+            subscriber=subscriber,
+            stripe_subscription_id=subscription_id
+        )
+
+        # Update or create the invoice as paid
+        Invoice.objects.update_or_create(
+            stripe_invoice_id=stripe_invoice_id,
+            defaults={
+                'user': subscriber,
+                'subscription': subscription,
+                'amount': amount_paid,
+                'status': 'paid',
+            }
+        )
+
+        print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as paid.")
+    except Exception as e:
+        print(f"Error handling successful payment: {e}")
+
     try:
         # Retrieve the Stripe customer and subscription IDs from the invoice
         customer_id = invoice['customer']
