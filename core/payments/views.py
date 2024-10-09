@@ -195,7 +195,7 @@ def handle_checkout_session(session):
             subscription.start_date = timezone.now()
             subscription.end_date = subscription.start_date + relativedelta(months=1)
             subscription.save()
-
+        print("creating invoice 1")
         # Create an invoice for the initial payment (assuming the first month is paid upfront)
         Invoice.objects.create(
             user=subscriber,
@@ -204,6 +204,7 @@ def handle_checkout_session(session):
             status='paid',  # Mark it as paid since the session completed
             stripe_invoice_id=session['id']  # Use session ID as the initial invoice reference
         )
+        print("creating invoice 2")
 
         return JsonResponse({'status': 'subscription_created'})
     except Exception as e:
