@@ -107,7 +107,7 @@ def create_checkout_session(request, creator_id):
                         'description': 'Payment for creator content',
                     },
                     'unit_amount': int(int(subscription_plan.price) * 100),
-                    'recurring': {'interval': 'minute'},
+                    'recurring': {'interval': 'daily'},
                 },
                 'quantity': 1,
             }],
