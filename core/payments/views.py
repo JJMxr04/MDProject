@@ -30,7 +30,6 @@ def onboarding_page(request):
     return render(request, 'portal/payments/onboarding.html')
 
 
-# @login_required(login_url='/auth/login/')
 def successful_payment(request):
     return render(request, 'portal/payments/success.html')
 
@@ -42,11 +41,11 @@ def create_account_link(request):
         try:
             data = json.loads(request.body)
             connected_account_id = data.get('account')
-            if connected_account_id is None:
+            if not connected_account_id:
                 return JsonResponse({'error': 'Connected account ID is required.'}, status=400)
 
-            return_url = f"https://paradise-sports-94ea4023d1fa.herokuapp.com/web/portal/payments/return/{connected_account_id}/"
-            refresh_url = f"https://paradise-sports-94ea4023d1fa.herokuapp.com/web/portal/payments/return/{connected_account_id}/"
+            return_url = f"https://yourdomain.com/web/portal/payments/return/{connected_account_id}/"
+            refresh_url = f"https://yourdomain.com/web/portal/payments/return/{connected_account_id}/"
 
             account_link = stripe.AccountLink.create(
                 account=connected_account_id,
@@ -67,23 +66,16 @@ def create_account(request):
         try:
             user = request.user
             if user.stripe_account_id:
-                # Fetch the Stripe account details to check if it is fully set up
                 account = stripe.Account.retrieve(user.stripe_account_id)
-
-                # Check if the account is fully set up
                 if account.charges_enabled and account.payouts_enabled:
                     return JsonResponse({'error': 'User already has a fully set up Stripe account.'}, status=400)
-                else:
-                    # If not fully set up, redirect to the account setup process
-                    return JsonResponse({'account': account.id})
-
+                return JsonResponse({'account': account.id})
 
             account = stripe.Account.create()
             user.stripe_account_id = account.id
             user.save()
             return JsonResponse({'account': account.id})
         except Exception as e:
-            print(f'account/ error: {e}')
             return JsonResponse({'error': str(e)}, status=500)
 
 
@@ -93,7 +85,6 @@ def catch_all(request, connected_account_id=None, path=None):
     try:
         return render(request, path)
     except Exception as e:
-        print(e)
         return render(request, 'portal/payments/error.html')
 
 
@@ -106,7 +97,6 @@ def create_checkout_session(request, creator_id):
         return JsonResponse({'error': 'Creator does not have a connected Stripe account'}, status=400)
 
     try:
-        # Create a Checkout session for subscription
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
@@ -116,30 +106,24 @@ def create_checkout_session(request, creator_id):
                         'name': f'Subscription Payment to {creator.first_name} {creator.last_name}',
                         'description': 'Payment for creator content',
                     },
-                    'unit_amount': int(int(subscription_plan.price) * 100),  # Amount in cents
-                    'recurring': {
-                        'interval': 'month',  # Set the interval for the subscription (monthly in this case)
-                    },
+                    'unit_amount': int(int(subscription_plan.price) * 100),
+                    'recurring': {'interval': 'minute'},
                 },
                 'quantity': 1,
             }],
             subscription_data={  
-                'application_fee_percent': int(settings.PLATFORM_COST),
-                'transfer_data': {
-                    'destination': creator.stripe_account_id,  # Creator's Stripe account ID
-                },
+                'application_fee_percent': settings.PLATFORM_COST,
+                'transfer_data': {'destination': creator.stripe_account_id},
             },
             mode='subscription',
             success_url=request.build_absolute_uri(reverse('core-portal:successful-payment')),
             cancel_url=request.build_absolute_uri('/cancel/'),
-            metadata={  # Add metadata here
-                'creator_id': creator.id
-            },
+            metadata={'creator_id': creator.id},
         )
         return JsonResponse({'id': checkout_session.id})
     except Exception as e:
-        print(e)
         return JsonResponse({'error': str(e)}, status=500)
+
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -169,7 +153,6 @@ def stripe_webhook(request):
     return JsonResponse({'status': 'success'}, status=200)
 
 
-
 def handle_checkout_session(session):
     try:
         subscriber = User.objects.get(email=session['customer_details']['email'])
@@ -178,7 +161,6 @@ def handle_checkout_session(session):
         creator = User.objects.get(id=creator_id)
         plan = SubscriptionPlan.objects.get(writer=creator)
 
-        # Store the subscription and customer IDs in the Subscription model
         subscription, created = Subscription.objects.get_or_create(
             subscriber=subscriber,
             writer=creator,
@@ -196,22 +178,17 @@ def handle_checkout_session(session):
             subscription.start_date = timezone.now()
             subscription.end_date = subscription.start_date + relativedelta(months=1)
             subscription.save()
-        print("creating invoice 1")
-        # Create an invoice for the initial payment (assuming the first month is paid upfront)
+
         Invoice.objects.create(
             user=subscriber,
             subscription=subscription,
-            amount=plan.price,  # Initial price of the subscription plan
-            status='paid',  # Mark it as paid since the session completed
-            stripe_invoice_id=session['id']  # Use session ID as the initial invoice reference
+            amount=plan.price,
+            status='paid',
+            stripe_invoice_id=session['id']
         )
-        print("creating invoice 2")
-
-        return JsonResponse({'status': 'subscription_created'})
     except Exception as e:
         print(f'Error: {e}')
         return JsonResponse({'error': str(e)}, status=500)
-
 
 
 def handle_failed_payment(invoice):
@@ -219,7 +196,7 @@ def handle_failed_payment(invoice):
         customer_id = invoice['customer']
         subscription_id = invoice['subscription']
         stripe_invoice_id = invoice['id']
-        amount_due = invoice['amount_due'] / 100  # Convert cents to dollars
+        amount_due = invoice['amount_due'] / 100
 
         subscriber = User.objects.get(stripe_customer_id=customer_id)
 
@@ -228,7 +205,6 @@ def handle_failed_payment(invoice):
             stripe_subscription_id=subscription_id
         )
 
-        # Update or create the failed invoice
         Invoice.objects.update_or_create(
             stripe_invoice_id=stripe_invoice_id,
             defaults={
@@ -239,10 +215,8 @@ def handle_failed_payment(invoice):
             }
         )
 
-        # Optionally, deactivate the subscription
         subscription.active = False
         subscription.save()
-
         print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as failed. Subscription deactivated.")
     except Exception as e:
         print(f"Error handling failed payment: {e}")
@@ -253,7 +227,7 @@ def handle_successful_payment(invoice):
         customer_id = invoice['customer']
         subscription_id = invoice['subscription']
         stripe_invoice_id = invoice['id']
-        amount_paid = invoice['amount_paid'] / 100  # Convert cents to dollars
+        amount_paid = invoice['amount_paid'] / 100
 
         subscriber = User.objects.get(stripe_customer_id=customer_id)
 
@@ -262,7 +236,6 @@ def handle_successful_payment(invoice):
             stripe_subscription_id=subscription_id
         )
 
-        # Update or create the invoice as paid
         Invoice.objects.update_or_create(
             stripe_invoice_id=stripe_invoice_id,
             defaults={
@@ -272,38 +245,6 @@ def handle_successful_payment(invoice):
                 'status': 'paid',
             }
         )
-
-        print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as paid.")
-    except Exception as e:
-        print(f"Error handling successful payment: {e}")
-
-    try:
-        # Retrieve the Stripe customer and subscription IDs from the invoice
-        customer_id = invoice['customer']
-        subscription_id = invoice['subscription']
-        stripe_invoice_id = invoice['id']  # Stripe invoice ID
-        amount_paid = invoice['amount_paid'] / 100  # Convert cents to dollars
-
-        # Find the user by their Stripe customer ID
-        subscriber = User.objects.get(stripe_customer_id=customer_id)
-
-        # Retrieve the corresponding subscription
-        subscription = Subscription.objects.get(
-            subscriber=subscriber,
-            stripe_subscription_id=subscription_id
-        )
-
-        # Create or update the invoice record
-        Invoice.objects.update_or_create(
-            stripe_invoice_id=stripe_invoice_id,
-            defaults={
-                'user': subscriber,
-                'subscription': subscription,
-                'amount': amount_paid,
-                'status': 'paid',
-            }
-        )
-
         print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as paid.")
     except Exception as e:
         print(f"Error handling successful payment: {e}")
