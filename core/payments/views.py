@@ -331,7 +331,7 @@ def handle_subscription_update(sub):
         try:
             customer_id = sub['customer']
             subscription_id = sub['subscription']
-            status=sub['status']
+            # status=sub['status']
             print(f'subscription_id:{subscription_id}')
 
 
@@ -343,10 +343,10 @@ def handle_subscription_update(sub):
                 stripe_subscription_id=subscription_id
             )
 
-            if status == 'active':
-                subscription.active = True
-            else:
-                subscription.active = False
+            # if status == 'active':
+            #     subscription.active = True
+            # else:
+            #     subscription.active = False
             subscription.save()
 
         except Exception as e:
