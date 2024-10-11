@@ -331,14 +331,8 @@ def handle_subscription_update(sub):
         try:
             subscription_id = sub['id']
             status=sub['status']
-            print(f'subscription_id:{subscription_id}')
-
-
-            subscriber = User.objects.get(stripe_customer_id=customer_id)
-            print(f'subcriber:{subscriber}')
 
             subscription = Subscription.objects.get(
-                subscriber=subscriber,
                 stripe_subscription_id=subscription_id
             )
 
