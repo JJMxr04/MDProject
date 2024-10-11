@@ -36,11 +36,12 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         ('Personal Information', {'fields': ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']}),
-        ('Writer', {'fields': ['is_writer', 'tags', 'writer_description', 'stripe_account_id']}),  # Show decrypted stripe_account_id
+        ('Writer', {'fields': ['is_writer', 'tags', 'writer_description', 'stripe_account_id']}),
+        ('Important Dates', {'fields': ['stripe_customer_id']}),  # Show decrypted stripe_account_id
         ('Permissions', {'fields': ['activated_link', 'is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions']}),
         ('Important Dates', {'fields': ['last_login', 'created', 'updated']}),
-    )
 
+    )
     readonly_fields = ['created', 'updated', 'is_superuser', 'is_active', 'last_login']
 
     def avatar_image(self, obj):
