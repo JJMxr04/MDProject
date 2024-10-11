@@ -173,6 +173,11 @@ def stripe_webhook(request):
         sub = event['data']['object']
         handle_subscription_update(sub)
 
+    
+    elif event['type'] == 'customer.subscription.deleted':
+        sub = event['data']['object']
+        handle_subscription_deleted(sub)
+
     return JsonResponse({'status': 'success'}, status=200)
 
 
@@ -334,6 +339,28 @@ def handle_subscription_update(sub):
                 subscription.active = True
             else:
                 subscription.active = False
+            subscription.save()
+
+        except Exception as e:
+            print(f"Error handling subscription update: {e}")
+
+
+def handle_subscription_deleted(sub):
+
+        try:
+            customer_id = sub['customer']
+            subscription_id = sub['subscription']
+            status=sub['status']
+
+            subscriber = User.objects.get(stripe_customer_id=customer_id)
+
+            subscription = Subscription.objects.get(
+                subscriber=subscriber,
+                stripe_subscription_id=subscription_id
+            )
+
+
+            subscription.active = False
             subscription.save()
 
         except Exception as e:
