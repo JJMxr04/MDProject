@@ -239,7 +239,7 @@ def handle_failed_payment(invoice):
         stripe_invoice_id = invoice['id']
         amount_due = invoice['amount_due'] / 100  # Convert cents to dollars
 
-        subscriber = User.objects.get(stripe_customer_id=customer_id).first()
+        subscriber = User.objects.get(stripe_customer_id=customer_id)
         subscription = Subscription.objects.get(
             subscriber=subscriber,
             stripe_subscription_id=subscription_id
@@ -359,9 +359,9 @@ def handle_subscription_deleted(sub):
             customer_id = sub['customer']
             subscription_id = sub['subscription']
             status=sub['status']
-
-            subscriber = User.objects.get(stripe_customer_id=customer_id)
             print(f'subscription_id:{subscription_id}')
+
+            subscriber = User.objects.get(stripe_customer_id=customer_id).first()
             print(f'subcriber:{subscriber}')
 
             subscription = Subscription.objects.get(
