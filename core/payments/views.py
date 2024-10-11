@@ -164,6 +164,11 @@ def stripe_webhook(request):
 
     elif event['type'] == 'invoice.payment_succeeded':
         invoice = event['data']['object']
+        print(invoice)
+        handle_successful_payment(invoice)
+
+    elif event['type'] == 'subscription.updated':
+        invoice = event['data']['object']
         handle_successful_payment(invoice)
 
     return JsonResponse({'status': 'success'}, status=200)
