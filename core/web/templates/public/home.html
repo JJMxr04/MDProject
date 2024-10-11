@@ -4,14 +4,21 @@
 <div class="container comp-container">
 
     <!-- Hero Section with Animation -->
-    <section class="hero-section text-center">
+<!-- Combined Hero and CTA Section -->
+<section class="hero-cta-section text-center position-relative">
+    <div class="hero-background">
+        <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid" alt="Treasure Image">
+    </div>
+    <div class="overlay">
         <h1 class="hero-title animate-fade-in">Welcome to PBL</h1>
         <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
+        <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
         <div class="text-center animate-fade-in">
-            <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid rounded zoom-on-hover" alt="Treasure Image">
-            <a href="/auth/waitlist/" class="btn btn-primary hero-btn">Join the Waitlist</a>
+            <a href="/auth/waitlist/" class="btn btn-lg btn-primary">Join the Waitlist</a>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Features Section -->
     <section class="features-section py-5">
@@ -80,13 +87,6 @@
         </div>
     </section>
 
-    <!-- Call to Action Block -->
-    <section class="cta-section py-5 text-center">
-        <h2 class="cta-title animate-fade-in">Get Started Today!</h2>
-        <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
-        <div class="text-center animate-fade-in">
-            <a href="/auth/register" class="btn btn-lg btn-primary">Sign Up Now</a>
-        </div>
-    </section>
+
 </div>
 {% endblock %}

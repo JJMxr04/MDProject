@@ -214,3 +214,42 @@ h2 {
     transform: translateY(0);
   }
 }
+
+.hero-cta-section {
+  position: relative;
+  text-align: center;
+  color: white; /* Adjust text color for contrast */
+  padding: 80px 20px; /* Add padding for better spacing */
+}
+
+.hero-background img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0.5; /* Set opacity for a subtle background effect */
+}
+
+.overlay {
+  position: relative;
+  z-index: 2; /* Ensure text appears above the image */
+  backdrop-filter: blur(5px); /* Optional: add a blur effect to enhance readability */
+}
+
+.hero-title {
+  font-size: 3rem; /* Adjust font size */
+  margin-bottom: 1rem; /* Spacing below title */
+}
+
+.hero-subtitle {
+  font-size: 1.5rem; /* Adjust font size */
+  margin-bottom: 1rem; /* Spacing below subtitle */
+}
+
+.cta-description {
+  font-size: 1.2rem; /* Adjust font size */
+  margin-bottom: 1.5rem; /* Spacing below description */
+}
+
