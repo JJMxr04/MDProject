@@ -16,7 +16,7 @@ body {
 }
 
 .comp-container {
-  background: #fff; /* #FFE47A*/
+  background: #fff; /* White background */
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -138,7 +138,7 @@ h2 {
 }
 
 .footer-container {
-  background: #FFE47A; /* #FFE47A*/
+  background: #FFE47A; /* Sand yellow background */
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -252,18 +252,3 @@ h2 {
   font-size: 1.2rem; /* Adjust font size */
   margin-bottom: 1.5rem; /* Spacing below description */
 }
-
-
-.features-section {
-  color: white; /* Set text color to white */
-}
-
-.features-section .feature-title {
-  color: white; /* White color for feature titles */
-}
-
-.features-section .feature-description {
-  color: white; /* White color for feature descriptions */
-}
-
-
