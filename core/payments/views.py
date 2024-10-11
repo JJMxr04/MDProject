@@ -185,10 +185,15 @@ def stripe_webhook(request):
 def handle_checkout_session(session):
     try:
         subscriber = User.objects.get(email=session['customer_details']['email'])
+        customer_id = session['customer']
         creator_id = session['metadata']['creator_id']
         subscription_id = session['subscription']
         creator = User.objects.get(id=creator_id)
         plan = SubscriptionPlan.objects.get(writer=creator)
+
+        if not subscriber.stripe_customer_id:
+            subscriber.stripe_customer_id = customer_id
+            subscriber.save()
 
         # Store the subscription and customer IDs in the Subscription model
         subscription, created = Subscription.objects.get_or_create(
@@ -208,6 +213,7 @@ def handle_checkout_session(session):
             subscription.start_date = timezone.now()
             subscription.end_date = subscription.start_date + relativedelta(months=1)
             subscription.save()
+
         print("creating invoice 1")
         # Create an invoice for the initial payment (assuming the first month is paid upfront)
         Invoice.objects.create(
