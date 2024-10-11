@@ -153,7 +153,6 @@ def stripe_webhook(request):
         return JsonResponse({'error': 'Invalid payload'}, status=400)
     except stripe.error.SignatureVerificationError:
         return JsonResponse({'error': 'Invalid signature'}, status=400)
-    print(event)
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
@@ -166,12 +165,11 @@ def stripe_webhook(request):
 
     elif event['type'] == 'invoice.payment_succeeded':
         invoice = event['data']['object']
-        print(invoice)
         handle_successful_payment(invoice)
 
-    elif event['type'] == 'subscription.updated':
-        invoice = event['data']['object']
-        handle_successful_payment(invoice)
+    elif event['type'] == 'customer.subscription.updated':
+        sub = event['data']['object']
+        handle_subscription_update(sub)
 
     return JsonResponse({'status': 'success'}, status=200)
 
@@ -314,3 +312,27 @@ def handle_successful_payment(invoice):
         print(f"Invoice {stripe_invoice_id} for user {subscriber.email} recorded as paid.")
     except Exception as e:
         print(f"Error handling successful payment: {e}")
+
+
+def handle_subscription_update(sub):
+
+        try:
+            customer_id = sub['customer']
+            subscription_id = sub['subscription']
+            status=sub['status']
+
+            subscriber = User.objects.get(stripe_customer_id=customer_id)
+
+            subscription = Subscription.objects.get(
+                subscriber=subscriber,
+                stripe_subscription_id=subscription_id
+            )
+
+            if status == 'active':
+                subscription.active = True
+            else:
+                subscription.active = False
+            subscription.save()
+
+        except Exception as e:
+            print(f"Error handling subscription update: {e}")
