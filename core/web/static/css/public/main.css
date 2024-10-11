@@ -116,7 +116,6 @@ h2 {
   flex-wrap: wrap;
 }
 
-
 /* Style for the login button to match other buttons */
 .btn-outline-success {
   color: white;
@@ -135,7 +134,6 @@ h2 {
 .footer {
   background-color: transparent;
   padding: 20px;
-
   margin-top: auto; /* Push footer to the bottom */
 }
 
@@ -147,3 +145,72 @@ h2 {
   box-sizing: border-box;
 }
 
+/* Title animation */
+.landing-title {
+  font-size: 3rem;
+  color: #333;
+  opacity: 0;
+  animation: fadeInDown 2s ease forwards;
+}
+
+/* Fade-in effect for the text-image block */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1.5s ease forwards;
+}
+
+/* Smooth hover effect on the image */
+.zoom-on-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.1);
+}
+
+/* Button pulse animation */
+.pulse {
+  animation: pulseAnimation 2s infinite;
+}
+
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Fade-up animation for text */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+/* Animations for fade in and up/down */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

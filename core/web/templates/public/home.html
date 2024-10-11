@@ -1,28 +1,91 @@
-<!-- core/web/templates/public/home.html -->
 {% extends "public/base.html" %}
 
 {% block content %}
 <div class="container comp-container">
-    <!-- Centered h1 -->
-    <h1 class="text-center">Welcome to PBL</h1>
 
-    <!-- Text-Image Block -->
-    <div class="text-image-block">
+    <!-- Hero Section with Animation -->
+    <section class="hero-section text-center">
+        <h1 class="hero-title animate-fade-in">Welcome to PBL</h1>
+        <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
+        <div class="text-center animate-fade-in">
+            <a href="/auth/waitlist/" class="btn btn-primary hero-btn">Join the Waitlist</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5">
         <div class="row">
-            <div class="col-md-6">
-                <!-- Add rounded corners to the image -->
-                <img src="static/assets/Images/Home/treasure2.png" class="img-fluid rounded" alt="Image">
+            <div class="col-md-4 text-center animate-slide-up">
+                <img src="static/assets/Images/features/bet.png" class="img-fluid rounded" alt="Bet Image">
+                <h3 class="feature-title">Smart Betting</h3>
+                <p class="feature-description">Analyze and place bets with confidence using real-time stats.</p>
             </div>
-            <div class="col-md-6">
-                <!-- Removed unnecessary content -->
-                <h2 class="text-center">"The house always wins, but it doesn't have to!"</h2>
-                <p class="text-center">Untold riches await you! To add yourself to the wait list click below</p>
-                <!-- Centered and styled waitlist button -->
-                <div class="text-center">
-                    <a href="/auth/waitlist/" class="btn btn-primary" style="background-color: #3D7EAA;">Wait List</a>
+            <div class="col-md-4 text-center animate-slide-up">
+                <img src="static/assets/Images/features/subscription.png" class="img-fluid rounded" alt="Subscription Image">
+                <h3 class="feature-title">Flexible Subscriptions</h3>
+                <p class="feature-description">Choose from multiple subscription plans tailored for your needs.</p>
+            </div>
+            <div class="col-md-4 text-center animate-slide-up">
+                <img src="static/assets/Images/features/community.png" class="img-fluid rounded" alt="Community Image">
+                <h3 class="feature-title">Vibrant Community</h3>
+                <p class="feature-description">Connect with fellow bettors and discuss strategies in real-time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Plans Section -->
+    <section class="subscription-section py-5 bg-light">
+        <div class="text-center">
+            <h2 class="section-title">Our Plans</h2>
+            <p class="section-description">Choose the best subscription plan that suits your betting style.</p>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4 animate-slide-left">
+                <div class="plan-card">
+                    <h3>Basic</h3>
+                    <p class="price">$10/month</p>
+                    <ul class="plan-features">
+                        <li>Access to basic stats</li>
+                        <li>Weekly betting tips</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline-primary">Subscribe</a>
+                </div>
+            </div>
+            <div class="col-md-4 animate-fade-in">
+                <div class="plan-card featured">
+                    <h3>Pro</h3>
+                    <p class="price">$30/month</p>
+                    <ul class="plan-features">
+                        <li>Advanced analytics</li>
+                        <li>Daily betting tips</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Subscribe</a>
+                </div>
+            </div>
+            <div class="col-md-4 animate-slide-right">
+                <div class="plan-card">
+                    <h3>Elite</h3>
+                    <p class="price">$60/month</p>
+                    <ul class="plan-features">
+                        <li>All Pro features</li>
+                        <li>Exclusive webinars</li>
+                        <li>1-on-1 mentoring</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline-primary">Subscribe</a>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Call to Action Block -->
+    <section class="cta-section py-5 text-center">
+        <h2 class="cta-title animate-fade-in">Get Started Today!</h2>
+        <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
+        <div class="text-center animate-fade-in">
+            <a href="/auth/register" class="btn btn-lg btn-primary">Sign Up Now</a>
+        </div>
+    </section>
 </div>
 {% endblock %}
