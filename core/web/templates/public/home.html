@@ -4,38 +4,36 @@
 <div class="container comp-container">
 
     <!-- Hero Section with Animation -->
-<!-- Combined Hero and CTA Section -->
-<section class="hero-cta-section text-center position-relative">
-    <div class="hero-background">
-        <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid" alt="Treasure Image">
-    </div>
-    <div class="overlay">
-        <h1 class="hero-title animate-fade-in">Welcome to PBL</h1>
-        <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
-        <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
-        <div class="text-center animate-fade-in">
-            <a href="/auth/waitlist/" class="btn btn-lg btn-primary">Join the Waitlist</a>
+    <section class="hero-cta-section text-center position-relative">
+        <div class="hero-background">
+            <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid" alt="Treasure Image">
         </div>
-    </div>
-</section>
-
+        <div class="overlay">
+            <h1 class="hero-title animate-fade-in">Welcome to PBL</h1>
+            <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
+            <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
+            <div class="text-center animate-fade-in">
+                <a href="/auth/waitlist/" class="btn btn-lg btn-primary">Join the Waitlist</a>
+            </div>
+        </div>
+    </section>
 
     <!-- Features Section -->
-    <div class="overlay">
+    <div class="features-background">
         <section class="features-section py-5">
             <div class="row">
                 <div class="col-md-4 text-center animate-slide-up">
-                    <img src="static/assets/Images/features/bet.png" class="img-fluid rounded" alt="Bet Image">
+                    <img src="{% static 'assets/Images/features/bet.png' %}" class="img-fluid rounded" alt="Bet Image">
                     <h3 class="feature-title">Smart Betting</h3>
                     <p class="feature-description">Analyze and place bets with confidence of professional betters.</p>
                 </div>
                 <div class="col-md-4 text-center animate-slide-up">
-                    <img src="static/assets/Images/features/subscription.png" class="img-fluid rounded" alt="Subscription Image">
+                    <img src="{% static 'assets/Images/features/subscription.png' %}" class="img-fluid rounded" alt="Subscription Image">
                     <h3 class="feature-title">Flexible Subscriptions</h3>
                     <p class="feature-description">Choose from multiple subscription plans tailored for your needs.</p>
                 </div>
                 <div class="col-md-4 text-center animate-slide-up">
-                    <img src="static/assets/Images/features/community.png" class="img-fluid rounded" alt="Community Image">
+                    <img src="{% static 'assets/Images/features/community.png' %}" class="img-fluid rounded" alt="Community Image">
                     <h3 class="feature-title">Vibrant Community</h3>
                     <p class="feature-description">Connect with fellow bettors and discuss strategies in real-time.</p>
                 </div>
@@ -44,6 +42,7 @@
     </div>
 
     <hr>
+
     <!-- Subscription Plans Section -->
     <section class="subscription-section py-5 bg-light">
         <div class="text-center">
@@ -89,7 +88,6 @@
             </div>
         </div>
     </section>
-
 
 </div>
 {% endblock %}

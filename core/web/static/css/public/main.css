@@ -1,3 +1,4 @@
+/* General body styles */
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(to right, #3D7EAA, #FFE47A);
@@ -8,6 +9,7 @@ body {
   min-height: 100vh;
 }
 
+/* Container styles */
 .container {
   width: 100%; /* Stretch container to maximum width */
   max-width: 1200px; /* Set a maximum width for the container */
@@ -15,6 +17,7 @@ body {
   align: center;
 }
 
+/* Component container styles */
 .comp-container {
   background: #fff; /* White background */
   padding: 20px;
@@ -23,11 +26,13 @@ body {
   box-sizing: border-box;
 }
 
+/* Headings */
 h2 {
   text-align: center;
   color: #333;
 }
 
+/* Form group styles */
 .form-group {
   margin-bottom: 15px;
 }
@@ -56,6 +61,7 @@ h2 {
   background-color: #1E90FF;
 }
 
+/* Footer styles */
 .form-footer {
   text-align: center;
   padding-top: 10px;
@@ -145,6 +151,45 @@ h2 {
   box-sizing: border-box;
 }
 
+/* Hero section styles */
+.hero-cta-section {
+  position: relative;
+  text-align: center;
+  color: white; /* Adjust text color for contrast */
+  padding: 80px 20px; /* Add padding for better spacing */
+}
+
+.hero-background img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Place the treasure image behind other elements */
+  opacity: 0.5; /* Set opacity for a subtle background effect */
+}
+
+.overlay {
+  position: relative;
+  z-index: 2; /* Ensure text appears above the image */
+  backdrop-filter: blur(5px); /* Optional: add a blur effect to enhance readability */
+}
+
+.hero-title {
+  font-size: 3rem; /* Adjust font size */
+  margin-bottom: 1rem; /* Spacing below title */
+}
+
+.hero-subtitle {
+  font-size: 1.5rem; /* Adjust font size */
+  margin-bottom: 1rem; /* Spacing below subtitle */
+}
+
+.cta-description {
+  font-size: 1.2rem; /* Adjust font size */
+  margin-bottom: 1.5rem; /* Spacing below description */
+}
+
 /* Title animation */
 .landing-title {
   font-size: 3rem;
@@ -215,40 +260,13 @@ h2 {
   }
 }
 
-.hero-cta-section {
+/* Features section styles */
+.features-background {
   position: relative;
-  text-align: center;
-  color: white; /* Adjust text color for contrast */
-  padding: 80px 20px; /* Add padding for better spacing */
+  z-index: 1; /* Ensure features section sits above the treasure image */
 }
 
-.hero-background img {
-  width: 100%;
-  height: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  opacity: 0.5; /* Set opacity for a subtle background effect */
-}
-
-.overlay {
-  position: relative;
-  z-index: 2; /* Ensure text appears above the image */
-  backdrop-filter: blur(5px); /* Optional: add a blur effect to enhance readability */
-}
-
-.hero-title {
-  font-size: 3rem; /* Adjust font size */
-  margin-bottom: 1rem; /* Spacing below title */
-}
-
-.hero-subtitle {
-  font-size: 1.5rem; /* Adjust font size */
-  margin-bottom: 1rem; /* Spacing below subtitle */
-}
-
-.cta-description {
-  font-size: 1.2rem; /* Adjust font size */
-  margin-bottom: 1.5rem; /* Spacing below description */
+.features-section {
+  position: relative; /* Ensure this section stays above the treasure image */
+  z-index: 3; /* This should be higher than the hero background */
 }
