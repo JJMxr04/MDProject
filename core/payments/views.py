@@ -329,7 +329,6 @@ def handle_successful_payment(invoice):
 def handle_subscription_update(sub):
 
         try:
-            customer_id = sub['customer']
             subscription_id = sub['id']
             status=sub['status']
             print(f'subscription_id:{subscription_id}')
@@ -343,10 +342,10 @@ def handle_subscription_update(sub):
                 stripe_subscription_id=subscription_id
             )
 
-            # if status == 'active':
-            #     subscription.active = True
-            # else:
-            #     subscription.active = False
+            if status == 'active':
+                subscription.active = True
+            else:
+                subscription.active = False
             subscription.save()
 
         except Exception as e:
@@ -356,19 +355,10 @@ def handle_subscription_update(sub):
 def handle_subscription_deleted(sub):
 
         try:
-            print(1)
-            customer_id = sub['customer']
-            print(2)
             subscription_id = sub['id']
-            print(3)
             status=sub['status']
-            print(f'subscription_id:{subscription_id}')
-
-            subscriber = User.objects.get(stripe_customer_id=customer_id).first()
-            print(f'subcriber:{subscriber}')
 
             subscription = Subscription.objects.get(
-                subscriber=subscriber,
                 stripe_subscription_id=subscription_id
             )
 
