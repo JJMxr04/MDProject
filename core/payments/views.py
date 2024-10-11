@@ -364,4 +364,4 @@ def handle_subscription_deleted(sub):
             subscription.save()
 
         except Exception as e:
-            print(f"Error handling subscription update: {e}")
+            print(f"Error handling subscription deleted: {e}")
