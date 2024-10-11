@@ -153,6 +153,8 @@ def stripe_webhook(request):
         return JsonResponse({'error': 'Invalid payload'}, status=400)
     except stripe.error.SignatureVerificationError:
         return JsonResponse({'error': 'Invalid signature'}, status=400)
+    print(event['type'])
+    print(event)
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
