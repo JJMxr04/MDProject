@@ -178,6 +178,9 @@ TEMPLATES = [
         },
     },
 ]
+# settings.py
+X_FRAME_OPTIONS = 'ALLOWALL'
+
 
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
