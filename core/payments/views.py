@@ -356,9 +356,12 @@ def handle_subscription_update(sub):
 def handle_subscription_deleted(sub):
 
         try:
+            print(1)
             customer_id = sub['customer']
+            print(2)
             subscription_id = sub['subscription']
-            status=sub['status']
+            print(3)
+            # status=sub['status']
             print(f'subscription_id:{subscription_id}')
 
             subscriber = User.objects.get(stripe_customer_id=customer_id).first()
