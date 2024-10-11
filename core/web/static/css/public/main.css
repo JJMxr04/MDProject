@@ -253,3 +253,17 @@ h2 {
   margin-bottom: 1.5rem; /* Spacing below description */
 }
 
+
+.features-section {
+  color: white; /* Set text color to white */
+}
+
+.features-section .feature-title {
+  color: white; /* White color for feature titles */
+}
+
+.features-section .feature-description {
+  color: white; /* White color for feature descriptions */
+}
+
+
