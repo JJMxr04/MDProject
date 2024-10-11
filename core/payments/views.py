@@ -239,8 +239,9 @@ def handle_failed_payment(invoice):
         stripe_invoice_id = invoice['id']
         amount_due = invoice['amount_due'] / 100  # Convert cents to dollars
 
-        subscriber = User.objects.get(stripe_customer_id=customer_id)
-
+        subscriber = User.objects.get(stripe_customer_id=customer_id).first()
+        print(f'subscription_id:{subscription_id}')
+        print(f'subcriber:{subscriber}')
         subscription = Subscription.objects.get(
             subscriber=subscriber,
             stripe_subscription_id=subscription_id
