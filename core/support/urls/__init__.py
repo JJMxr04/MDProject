@@ -1,0 +1,1 @@
+from .adminUrls import urlpatterns as adminUrlPatterns

@@ -137,6 +137,7 @@ INSTALLED_APPS = [
     'core.web',
     'core.portal',
     'core.payments',
+    'core.support',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',

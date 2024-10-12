@@ -1,0 +1,15 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>Ticket List</h2>
+<ul>
+    {% for ticket in tickets %}
+    <li>
+        <a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.title }}</a> 
+        - {{ ticket.status.name }} - Created by {{ ticket.created_by.username }}
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_ticket' %}">Create a New Ticket</a>
+{% endblock %}

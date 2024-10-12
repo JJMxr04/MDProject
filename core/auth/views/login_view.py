@@ -7,7 +7,7 @@ class LoginView(LoginView):  # Renamed class to avoid potential conflicts with t
     def get_success_url(self):
         user = self.request.user
         if user.is_staff:
-            return reverse_lazy('admin_dashboard')
+            return reverse_lazy('core-admin:admin_dashboard')
         else:
             return reverse_lazy('core-portal:portal-dashboard')  # Ensure this matches the correct URL name in your portal app
         # if user:
