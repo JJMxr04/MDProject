@@ -1,0 +1,60 @@
+/* Navbar styles */
+.navbar {
+    background-color: #3D7EAA; /* Ocean blue */
+    overflow: visible; /* Ensure dropdowns are visible */
+    border-bottom: 3px solid #FFE47A; /* Sand yellow */
+    border-radius: 15px; /* Rounded corners */
+    border: 2px solid #005A9C; /* Darker ocean blue border */
+    margin-bottom: 10px; /* Space below navbar */
+    max-width: 1200px; /* Maximum width for the navbar */
+    width: 100%;
+    margin: 0 auto; /* Center the navbar horizontally */
+    box-sizing: border-box;
+  }
+  
+  .navbar-nav .nav-item .nav-link {
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s; /* Smooth transition for hover effects */
+  }
+  
+  .navbar-nav .nav-item .nav-link:hover {
+    background-color: #1E90FF; /* Darker ocean blue */
+    color: #FFE47A; /* Sand yellow text */
+    font-size: 18px; /* Slightly larger text */
+    text-decoration: underline; /* Underline text */
+  }
+  
+  /* Adjusting the image inside the navbar */
+  .navbar-brand img {
+    max-height: 60px; /* Limit the height for smaller screens */
+    max-width: 100%; /* Ensure the image scales within its container */
+    height: auto; /* Maintain aspect ratio */
+    width: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Make sure the image fits within the container */
+  }
+  
+  /* Ensure the navbar container stays responsive */
+  .navbar .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Style for the login button to match other buttons */
+  .btn-outline-success {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn-outline-success:hover {
+    background-color: #1E90FF; /* Darker ocean blue */
+    color: #FFE47A; /* Sand yellow text */
+    border-color: #1E90FF;
+  }
+  

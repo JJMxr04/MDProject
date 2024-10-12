@@ -1,0 +1,159 @@
+/* Home.css */
+
+/* Hero section styles */
+.hero-cta-section {
+  position: relative;
+  text-align: center;
+  color: white; /* Adjust text color for contrast */
+  padding: 80px 20px; /* Add padding for better spacing */
+  overflow: hidden; /* Ensures the image doesn’t overflow the container */
+}
+
+.hero-background img {
+  width: 100%; /* Stretch the image across the container width */
+  height: 100%; /* Fill the height of the hero section */
+  object-fit: cover; /* Maintain aspect ratio while covering the section */
+  position: absolute; /* Keep it behind other elements in this section */
+  top: 0;
+  left: 0;
+  z-index: 1; /* Place the background image behind other elements */
+  opacity: 0.5; /* Set opacity for a subtle background effect */
+}
+
+/* Ensure the overlay content appears on top of the image */
+.overlay {
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px); /* Optional: add a blur effect to enhance readability */
+}
+
+.hero-title {
+  font-size: 3rem; /* Adjust font size */
+  margin-bottom: 1rem; /* Spacing below title */
+}
+
+.hero-subtitle {
+  font-size: 1.5rem; /* Adjust font size */
+  margin-bottom: 1rem; /* Spacing below subtitle */
+}
+
+.cta-description {
+  font-size: 1.2rem; /* Adjust font size */
+  margin-bottom: 1.5rem; /* Spacing below description */
+}
+
+/* Features section styles */
+.features-background {
+  position: relative;
+  z-index: 1; /* Ensure features section sits above the treasure image */
+}
+
+.features-section {
+  position: relative;
+  z-index: 2; /* Ensure it stays above the background image */
+  padding: 60px 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Add a semi-transparent background for better readability */
+}
+
+/* Title animation */
+.landing-title {
+  font-size: 3rem;
+  color: #333;
+  opacity: 0;
+  animation: fadeInDown 2s ease forwards;
+}
+
+/* Fade-in effect for the text-image block */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1.5s ease forwards;
+}
+
+/* Smooth hover effect on the image */
+.zoom-on-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.1);
+}
+
+/* Button pulse animation */
+.pulse {
+  animation: pulseAnimation 2s infinite;
+}
+
+@keyframes pulseAnimation {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.05);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+
+/* Fade-up animation for text */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+/* Animations for fade in and up/down */
+@keyframes fadeIn {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Home.css */
+/* Home.css */
+
+/* Adjust image sizes in the features section */
+.feature-image {
+  width: 20%; /* Smaller image size (reduced from 80%) */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 15px; /* Space below images */
+}
+
+/* Small link styling */
+.small-link {
+  font-size: 0.85rem; /* Slightly smaller font size for the links */
+  display: block; /* Ensure it's on a new line */
+  margin-top: 5px; /* Add a little space above the link */
+  color: #666; /* Light gray color for subtle visibility */
+}
+
+.small-link:hover {
+  color: #000; /* Darker color for better visibility on hover */
+}
+
+/* Feature section text adjustments */
+.feature-title {
+  font-size: 1.5rem; /* Keep titles readable */
+  margin-top: 10px; /* Space above titles */
+}
+
+.feature-description {
+  font-size: 1rem; /* Standard description size */
+  margin-top: 10px; /* Space above descriptions */
+}

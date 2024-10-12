@@ -1,5 +1,9 @@
 {% extends "public/base.html" %}
 {% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/public/home.css' %}">
+{% endblock css %}
 {% block content %}
 <div class="container comp-container">
 
@@ -23,19 +27,22 @@
         <section class="features-section py-5">
             <div class="row">
                 <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/features/bet.png' %}" class="img-fluid rounded" alt="Bet Image">
+                    <img src="{% static 'assets/Images/Home/game.png' %}" class="feature-image rounded" alt="Community Image">
+                    <a href="https://www.flaticon.com/free-icons/joystick" class="small-link">Joystick icons created by Good Ware - Flaticon</a>
+                    <h3 class="feature-title">The Game</h3>
+                    <p class="feature-description">Connect with fellow bettors to play The game and win untold riches.</p>
+                </div>
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/graph.png' %}" class="feature-image rounded" alt="Bet Image">
+                    <a href="https://www.flaticon.com/free-icons/growth" class="small-link">Growth icons created by Freepik - Flaticon</a>
                     <h3 class="feature-title">Smart Betting</h3>
-                    <p class="feature-description">Analyze and place bets with confidence of professional betters.</p>
+                    <p class="feature-description">Analyze and place bets with the confidence of professional bettors.</p>
                 </div>
                 <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/features/subscription.png' %}" class="img-fluid rounded" alt="Subscription Image">
+                    <img src="{% static 'assets/Images/Home/subscribe.png' %}" class="feature-image rounded" alt="Subscription Image">
+                    <a href="https://www.flaticon.com/free-icons/subscription" class="small-link">Subscription icons created by Danteee82 - Flaticon</a>
                     <h3 class="feature-title">Flexible Subscriptions</h3>
-                    <p class="feature-description">Choose from multiple subscription plans tailored for your needs.</p>
-                </div>
-                <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/features/community.png' %}" class="img-fluid rounded" alt="Community Image">
-                    <h3 class="feature-title">Vibrant Community</h3>
-                    <p class="feature-description">Connect with fellow bettors and discuss strategies in real-time.</p>
+                    <p class="feature-description">Choose from multiple professional bettors to subscribe to.</p>
                 </div>
             </div>
         </section>
@@ -43,51 +50,54 @@
 
     <hr>
 
-    <!-- Subscription Plans Section -->
-    <section class="subscription-section py-5 bg-light">
-        <div class="text-center">
-            <h2 class="section-title">Our Plans</h2>
-            <p class="section-description">Choose the best subscription plan that suits your betting style.</p>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-4 animate-slide-left">
-                <div class="plan-card">
-                    <h3>Basic</h3>
-                    <p class="price">$10/month</p>
-                    <ul class="plan-features">
-                        <li>Access to basic stats</li>
-                        <li>Weekly betting tips</li>
-                        <li>Email support</li>
-                    </ul>
-                    <a href="#" class="btn btn-outline-primary">Subscribe</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-fade-in">
-                <div class="plan-card featured">
-                    <h3>Pro</h3>
-                    <p class="price">$30/month</p>
-                    <ul class="plan-features">
-                        <li>Advanced analytics</li>
-                        <li>Daily betting tips</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Subscribe</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-slide-right">
-                <div class="plan-card">
-                    <h3>Elite</h3>
-                    <p class="price">$60/month</p>
-                    <ul class="plan-features">
-                        <li>All Pro features</li>
-                        <li>Exclusive webinars</li>
-                        <li>1-on-1 mentoring</li>
-                    </ul>
-                    <a href="#" class="btn btn-outline-primary">Subscribe</a>
-                </div>
+<!-- Subscription Plans Section -->
+<section class="subscription-section py-5 bg-light">
+    <div class="text-center">
+        <h2 class="section-title">Support Your Favorite Bettor</h2>
+        <p class="section-description">Choose a subscription that gives you access to exclusive insights, tips, and community engagement directly from professional bettors.</p>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-4 animate-slide-left">
+            <div class="plan-card">
+                <h3>Fan</h3>
+                <p class="price">$5/month</p>
+                <ul class="plan-features">
+                    <li>Access to basic betting insights</li>
+                    <li>Monthly Q&A with bettor</li>
+                    <li>Access to free community posts</li>
+                </ul>
+                <a href="#" class="btn btn-outline-primary">Subscribe</a>
             </div>
         </div>
-    </section>
+        <div class="col-md-4 animate-fade-in">
+            <div class="plan-card featured">
+                <h3>Supporter</h3>
+                <p class="price">$20/month</p>
+                <ul class="plan-features">
+                    <li>All Fan features</li>
+                    <li>Exclusive weekly betting tips</li>
+                    <li>Access to premium community content</li>
+                    <li>Priority in live Q&A sessions</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Subscribe</a>
+            </div>
+        </div>
+        <div class="col-md-4 animate-slide-right">
+            <div class="plan-card">
+                <h3>VIP</h3>
+                <p class="price">$50/month</p>
+                <ul class="plan-features">
+                    <li>All Supporter features</li>
+                    <li>Direct 1-on-1 messaging with bettor</li>
+                    <li>Exclusive betting strategies and webinars</li>
+                    <li>Early access to new features and events</li>
+                </ul>
+                <a href="#" class="btn btn-outline-primary">Subscribe</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 </div>
 {% endblock %}
