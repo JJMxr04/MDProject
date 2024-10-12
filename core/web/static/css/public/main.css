@@ -62,32 +62,3 @@ h2 {
 .form-group button:hover {
   background-color: #1E90FF;
 }
-
-/* Footer styles */
-.form-footer {
-  text-align: center;
-  padding-top: 10px;
-}
-
-.form-footer a {
-  color: #5CACEE;
-  text-decoration: none;
-}
-
-.form-footer a:hover {
-  text-decoration: underline;
-}
-
-.footer {
-  background-color: transparent;
-  padding: 20px;
-  margin-top: auto; /* Push footer to the bottom */
-}
-
-.footer-container {
-  background: #FFE47A; /* Sand yellow background */
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
