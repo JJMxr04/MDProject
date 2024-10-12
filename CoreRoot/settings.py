@@ -398,6 +398,8 @@ JAZZMIN_SETTINGS = {
         # Portal - using named URL resolved via reverse
         {"name": "Portal", "url": reverse_lazy("core-portal:portal-dashboard"), "permissions": ["auth.is_staff"], "new_window": True},
 
+        {"name": "Helpdesk", "url": reverse_lazy("core-admin:ticket_list"), "permissions": ["auth.is_staff"], "new_window": True},
+
         # App with dropdown menu to all its models pages (Permissions checked against models)
         # {"app": "books"},
     ],
