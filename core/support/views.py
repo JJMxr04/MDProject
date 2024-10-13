@@ -9,9 +9,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import Ticket, Status, Comment
-from django.http import JsonResponse
-from .models import Status
-import json
 
 @staff_member_required
 def create_ticket(request):
@@ -71,21 +68,3 @@ def update_ticket_status(request):
             return JsonResponse({'success': False, 'error': 'Invalid data'}, status=400)
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
-
-
-@staff_member_required
-@csrf_exempt
-def update_status_order(request):
-    if request.method == 'POST':
-        try:
-            status_order = json.loads(request.body).get('status_order', [])
-            for item in status_order:
-                status_id = item['id']
-                position = item['position']
-                status = Status.objects.get(id=status_id)
-                status.position = position
-                status.save()
-            return JsonResponse({'success': True})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-

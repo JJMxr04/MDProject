@@ -38,12 +38,11 @@
             <div class="kanban-column-content" id="status-{{ status.id }}">
                 {% for ticket in tickets %}
                 {% if ticket.status.id == status.id %}
-                <a href="{% url 'core-admin:ticket_detail' ticket.id %}" class="kanban-card-link">
-                    <div class="kanban-card" data-ticket-id="{{ ticket.id }}">
-                        <p class="ticket-title">{{ ticket.title }}</p>
-                        <p>Created by: {{ ticket.created_by.username }}</p>
-                    </div>
-                </a>
+                <div class="kanban-card" data-ticket-id="{{ ticket.id }}" onclick="window.location.href='{% url 'core-admin:ticket_detail' ticket.id %}'">
+                    <p class="ticket-title">{{ ticket.title }}</p>
+                    <p>Created by: {{ ticket.created_by.username }}</p>
+                </div>
+                
                 {% endif %}
                 {% endfor %}
             </div>
@@ -81,7 +80,7 @@
                 animation: 200,
                 onEnd: function(evt) {
                     const ticketId = evt.item.dataset.ticketId;
-                    const newStatus = evt.to.parentNode.dataset.status;
+                    const newStatus = evt.to.closest('.kanban-column').dataset.status;
 
                     // Update ticket status using an AJAX request
                     fetch('{% url "core-admin:update_ticket_status" %}', {
