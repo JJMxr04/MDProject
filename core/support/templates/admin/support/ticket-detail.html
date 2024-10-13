@@ -2,23 +2,151 @@
 {% load i18n %}
 
 {% block content %}
-<h2>{{ ticket.title }}</h2>
-<p>{{ ticket.description }}</p>
-<p>Status: {{ ticket.status.name }}</p>
-<p>Assigned to: {{ ticket.assigned_to }}</p>
-<p>Created by: {{ ticket.created_by.username }} on {{ ticket.created_at }}</p>
+<div class="ticket-detail-container">
+    <!-- Left Column: Ticket Information -->
+    <div class="ticket-info">
+        <div class="ticket-header">
+            <h2>{{ ticket.title }}</h2>
+            <p class="ticket-meta">
+                <strong>Status:</strong> {{ ticket.status.name }}<br>
+                <strong>Assigned to:</strong> {{ ticket.assigned_to }}<br>
+                <strong>Created by:</strong> {{ ticket.created_by.username }} on 
+                {{ ticket.created_at|date:"F j, Y, g:i a" }}
+            </p>
+            <p class="ticket-description">{{ ticket.description }}</p>
+        </div>
 
-<h3>Comments</h3>
-<ul>
-    {% for comment in comments %}
-    <li><strong>{{ comment.user.username }}</strong> - {{ comment.message }} ({{ comment.created_at }})</li>
-    {% endfor %}
-</ul>
+        <div class="add-comment-section">
+            <h3>Add a Comment</h3>
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
-<h3>Add a Comment</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+    <!-- Right Column: Comments -->
+    <div class="comments-section">
+        <h3>Comments</h3>
+        {% if comments %}
+            <ul class="comments-list">
+                {% for comment in comments %}
+                    <li class="comment-item">
+                        <div class="comment-header">
+                            <strong>{{ comment.user.username }}</strong>
+                            <span class="comment-date">{{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+                        </div>
+                        <p class="comment-message">{{ comment.message }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments yet. Be the first to add one!</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* Container Styling */
+    .ticket-detail-container {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        gap: 20px;
+        background-color: #f0f2f5;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Left Column: Ticket Information Styling */
+    .ticket-info {
+        flex: 1;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .ticket-header {
+        margin-bottom: 20px;
+    }
+
+    .ticket-meta {
+        color: #555;
+        font-size: 0.9em;
+    }
+
+    .ticket-description {
+        font-size: 1.1em;
+        margin-top: 15px;
+    }
+
+    .add-comment-section {
+        margin-top: 30px;
+    }
+
+    /* Right Column: Comments Styling */
+    .comments-section {
+        flex: 1;
+        max-height: 500px;
+        overflow-y: auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .comments-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .comment-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .comment-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .comment-date {
+        font-size: 0.85em;
+        color: #888;
+        margin-left: 10px;
+    }
+
+    .comment-message {
+        font-size: 1em;
+    }
+
+    /* Form Styling */
+    .comment-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-submit {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+</style>
 {% endblock %}
