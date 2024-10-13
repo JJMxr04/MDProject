@@ -14,7 +14,11 @@ class Category(models.Model):
 
 class Status(models.Model):
     name = models.CharField(max_length=100)
-    
+    position = models.PositiveIntegerField(default=0)  # Add position field for drag-and-drop ordering
+
+    class Meta:
+        ordering = ['position']  # Order statuses by position
+
     def __str__(self):
         return self.name
 

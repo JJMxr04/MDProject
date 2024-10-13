@@ -38,10 +38,12 @@
             <div class="kanban-column-content" id="status-{{ status.id }}">
                 {% for ticket in tickets %}
                 {% if ticket.status.id == status.id %}
-                <div class="kanban-card" data-ticket-id="{{ ticket.id }}">
-                    <a href="{% url 'core-admin:ticket_detail' ticket.id %}">{{ ticket.title }}</a>
-                    <p>Created by: {{ ticket.created_by.username }}</p>
-                </div>
+                <a href="{% url 'core-admin:ticket_detail' ticket.id %}" class="kanban-card-link">
+                    <div class="kanban-card" data-ticket-id="{{ ticket.id }}">
+                        <p class="ticket-title">{{ ticket.title }}</p>
+                        <p>Created by: {{ ticket.created_by.username }}</p>
+                    </div>
+                </a>
                 {% endif %}
                 {% endfor %}
             </div>
@@ -105,11 +107,10 @@
 </script>
 
 <style>
-
     .row {
         display: block;
-
     }
+
     .view-controls {
         display: flex;
         justify-content: space-between;
@@ -225,6 +226,12 @@
         box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
+    /* Modify card link to fill the card */
+    .kanban-card-link {
+        text-decoration: none;
+        display: block;
+    }
+
     .kanban-card {
         background: linear-gradient(135deg, #007bff, #6f42c1);
         color: white;
@@ -238,6 +245,12 @@
 
     .kanban-card:hover {
         transform: translateY(-5px);
+    }
+
+    /* Title inside the card */
+    .kanban-card .ticket-title {
+        color: white;
+        font-weight: bold;
     }
 </style>
 {% endblock %}
