@@ -1,4 +1,7 @@
-from django.contrib import admin
+from django.urls import path, include, re_path
+from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
 from core.support.urls import adminUrlPatterns as supportUrlPatterns

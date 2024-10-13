@@ -393,7 +393,7 @@ JAZZMIN_SETTINGS = {
         # model admin to link to (Permissions checked against model)
         # {"model": "auth.User"},
 
-        {"name": "Analytics Dashboard", "url": reverse_lazy("admin_dashboard"), "permissions": ["auth.is_staff"]},
+        {"name": "Analytics Dashboard", "url": reverse_lazy("core-admin:admin_dashboard"), "permissions": ["auth.is_staff"]},
 
         # Portal - using named URL resolved via reverse
         {"name": "Portal", "url": reverse_lazy("core-portal:portal-dashboard"), "permissions": ["auth.is_staff"], "new_window": True},
