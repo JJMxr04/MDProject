@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Ticket, Comment
-from .forms import TicketForm, CommentForm
+from ..models import Ticket, Comment
+from ..forms import TicketForm, CommentForm
 
 from django.contrib.admin.views.decorators import staff_member_required
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .models import Ticket, Status, Comment
+from ..models import Ticket, Status, Comment
 
 @staff_member_required
 def create_ticket(request):

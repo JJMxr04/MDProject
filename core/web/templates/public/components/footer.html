@@ -10,13 +10,13 @@
 <footer class="footer">
     <div class="container footer-container">
         <div class="logo-container">
-            <img src="static/assets/Logo/paradise_logo_2_normal.png" alt="Logo" class="logo">
+            <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" alt="Logo" class="logo">
             <span class="text-muted">Paradise Sports: Media and Entertainment</span>
         </div>
         <div class="nav-links">
-            <a href="/about/">About Us</a>
+            <a href="{% url 'core-web:about' %}">About Us</a>
             <a href="#">Services</a>
-            <a href="#">Contact</a>
+            <a href="{% url 'core-web:contact-us' %}">Contact</a>
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-icons">

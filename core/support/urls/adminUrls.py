@@ -1,5 +1,5 @@
 from django.urls import path
-from core.support import views
+from core.support.views import views
 
 app_name = 'core-support'
 
@@ -10,3 +10,6 @@ urlpatterns = [
     path('update_ticket_status/', views.update_ticket_status, name='update_ticket_status'),
     # path('update-status-order/', views.update_status_order, name='update_status_order'),
 ]
+
+
+
