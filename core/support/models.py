@@ -29,7 +29,7 @@ class Ticket(models.Model):
         ('resolved', 'Resolved'),
         ('closed', 'Closed'),
     ]
-    
+    email = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
