@@ -40,7 +40,7 @@ def ticket_detail(request, ticket_id):
             comment.user = request.user
             comment.ticket = ticket
             comment.save()
-            return redirect('ticket_detail', ticket_id=ticket.id)
+            return redirect('core-admin:ticket_detail', ticket_id=ticket.id)
     else:
         comment_form = CommentForm()
     return render(request, 'admin/support/ticket-detail.html', {
