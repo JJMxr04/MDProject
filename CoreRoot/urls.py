@@ -18,7 +18,8 @@ urlpatterns = [
     path("robots.txt", robots_txt, name="robots_txt"),
     path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
     # main project urls.py
-    path('administration/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),  # Updated path
+    path('administration/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')), 
+    # path('mail/', include(('core.mail.urls', 'core-mail'), namespace='core-mail')), # Updated path
 
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     # Ensure namespace is 'core-web'  # Correct namespace
