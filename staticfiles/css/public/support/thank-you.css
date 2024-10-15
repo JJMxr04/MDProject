@@ -1,0 +1,38 @@
+
+.thank-you-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+}
+
+.thank-you-message h1 {
+    font-size: 3rem;
+    color: #3D7EAA; /* Deep blue */
+    margin-bottom: 20px;
+}
+
+.thank-you-message p {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.thank-you-message a.btn-primary {
+    background-color: #5CACEE; /* Sky blue */
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.thank-you-message a.btn-primary:hover {
+    background-color: #1E90FF; /* Darker blue on hover */
+}
