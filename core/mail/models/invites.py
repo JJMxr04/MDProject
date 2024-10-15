@@ -65,7 +65,7 @@ class Invite(models.Model):
     objects = InviteManager()
 
     class Meta:
-        db_table = 'core_invite'
+        db_table = 'core_invites'
 
     def __str__(self):
         return f"Invite from {self.sender.username} to {self.player.username} ({self.get_type_display()})"

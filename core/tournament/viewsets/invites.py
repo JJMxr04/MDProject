@@ -1,21 +1,21 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from core.tournament.serializers.tournament import InvitedPlayerSerializer
-from core.tournament.models.tournament import Tournament, InvitedPlayer
+from core.tournament.serializers.tournament import InviteSerializer
+from core.tournament.models.tournament import Tournament, Invite
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.mail.models import Emails
 from django.utils import timezone
 
-class InvitedPlayerViewSet(viewsets.ModelViewSet):
+class InviteViewSet(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)  # Note the comma to make it a tuple
     http_method_names = ('get', 'patch')  # Limiting allowed methods
-    serializer_class = InvitedPlayerSerializer
+    serializer_class = InviteSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        return InvitedPlayer.objects.filter(player=user, state='sent')
+        return Invite.objects.filter(player=user, state='sent')
 
     def update(self, request, *args, **kwargs):
         user = self.request.user
@@ -28,9 +28,9 @@ class InvitedPlayerViewSet(viewsets.ModelViewSet):
         success = Tournament.objects.accept_invite(tourney_id=tournament.id, invited_player=invited_player)
         if success:
             # Optionally update the state or other attributes of invited_player here
-            InvitedPlayer.objects.accept_invite(invited_player=invited_player)
+            Invite.objects.accept_invite(invited_player=invited_player)
             # Serialize only necessary fields
-            serializer = InvitedPlayerSerializer(instance=invited_player)
+            serializer = InviteSerializer(instance=invited_player)
             Emails.send_tournament_acceptance_confirmation(user, tournament)
             return Response(serializer.data)
         else:

@@ -20,7 +20,7 @@ from core.event.models.event import Event
 from core.event.models.team import Team
 from core.game.models.game import Game
 from core.event.models.sport import Sport
-from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
+from core.tournament.models.tournament import Tournament, Round, Invite, Player
 from django.http import Http404
 from datetime import datetime, timedelta
 from .Support import Support
@@ -206,8 +206,8 @@ class TourneyTest:
         for x in range(0, tournament.max_accepted_players-3):
             Tournament.objects.invite_player(tournament.id, f"{x}test{x}@test.com")
             user=User.objects.get_object_by_email(f"{x}test{x}@test.com")
-            invitedPlayer = InvitedPlayer.objects.get(player=user,tournament=tournament)
-            Tournament.objects.accept_invite(tournament.id, invitedPlayer)
+            Invite = Invite.objects.get(player=user,tournament=tournament)
+            Tournament.objects.accept_invite(tournament.id, Invite)
         # Tournament.objects.make_init_matches(tournament)
 
     def make_tourney_rounds_matches(self):
