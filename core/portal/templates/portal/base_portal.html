@@ -19,7 +19,9 @@
 </head>
 <body>
     <header>
-        {% include "portal/components/navbar.html" %}
+        {% block navbar %}
+            {% include "portal/components/navbar.html" %}
+        {% endblock navbar %}
     </header>
     <main>
         <div class="container-fluid">
