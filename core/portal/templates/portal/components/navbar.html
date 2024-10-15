@@ -60,42 +60,14 @@
 
 
                 <!-- Notification Bell -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-bell"></i>
-                        <span id="notificationBadge" class="notification-badge" style="display: none;">!</span>
-                    </a>
-                    <ul class="dropdown-menu notification-dropdown" id="notificationDropdown">
-                        <li class="dropdown-item">Loading...</li>
-                    </ul>
-                </li>
 
+                {% include 'portal/components/notification_profile_navbar' %}
 
-                <!-- User Profile -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% else %}
-                            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% endif %}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li>
-                            <form method="post" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 
 
-<script src="{% static 'js/notifications.js' %}"></script>
+
     
