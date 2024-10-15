@@ -60,110 +60,14 @@
 
 
                 <!-- Notification Bell -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-bell"></i>
-                        <span id="notificationBadge" class="notification-badge" style="display: none;">!</span>
-                    </a>
-                    <ul class="dropdown-menu notification-dropdown" id="notificationDropdown">
-                        <li class="dropdown-item">Loading...</li>
-                    </ul>
-                </li>
 
+                {% include 'portal/components/notification_profile_navbar' %}
 
-                <!-- User Profile -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% else %}
-                            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% endif %}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li>
-                            <form method="post" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetchNotificationsOnLoad();
-    });
-    
-    function fetchNotificationsOnLoad() {
-        fetch('{% url "core-portal:get-notifications" %}')
-            .then(response => response.json())
-            .then(data => {
-                const notifications = data.notifications;
-                const notificationDropdown = document.getElementById('notificationDropdown');
-                const notificationBadge = document.getElementById('notificationBadge');
 
-                // Clear existing notifications
-                notificationDropdown.innerHTML = '';
-
-                if (notifications.length > 0) {
-                    notifications.forEach(notification => {
-                        const li = document.createElement('li');
-                        li.classList.add('dropdown-item');
-                        li.textContent = notification.message;
-                        li.onclick = () => markNotificationAsRead(notification.id, li);
-                        notificationDropdown.appendChild(li);
-                    });
-
-                    // Show the notification badge if there are unread notifications
-                    notificationBadge.style.display = 'block';
-                } else {
-                    const li = document.createElement('li');
-                    li.classList.add('dropdown-item');
-                    li.textContent = 'No new notifications';
-                    notificationDropdown.appendChild(li);
-                    notificationBadge.style.display = 'none';
-                }
-            })
-            .catch(error => console.error('Error fetching notifications:', error));
-    }
-    
-    function markNotificationAsRead(notificationId, listItem) {
-        fetch(`/web/portal/mail/notifications/${notificationId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            if (response.ok) {
-                // Remove the clicked notification from the list
-                listItem.remove();
-
-                // Check if there are any remaining notifications
-                const notificationDropdown = document.getElementById('notificationDropdown');
-                if (!notificationDropdown.querySelector('.dropdown-item')) {
-                    const li = document.createElement('li');
-                    li.classList.add('dropdown-item');
-                    li.textContent = 'No new notifications';
-                    notificationDropdown.appendChild(li);
-
-                    // Hide the notification badge
-                    document.getElementById('notificationBadge').style.display = 'none';
-                }
-            } else {
-                console.error('Failed to mark notification as read');
-            }
-        })
-        .catch(error => console.error('Error marking notification as read:', error));
-    }
-</script>
     

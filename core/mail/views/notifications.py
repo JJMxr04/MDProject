@@ -22,13 +22,16 @@ def get_notifications(request):
 @require_POST
 @login_required(login_url='/auth/login/')
 def read_notifications(request, not_id):
+    print(1)
     try:
-        notification = Notification.objects.get(id=not_id, user=request.user)
-        notification.read = True
-        notification.save()
+
+        Notification.objects.mark_read(not_id)
+
 
         return JsonResponse({'status': 'success'}, status=200)
     except Notification.DoesNotExist:
+
         return JsonResponse({'error': 'Notification not found'}, status=404)
     except Exception as e:
+
         return JsonResponse({'error': str(e)}, status=400)
