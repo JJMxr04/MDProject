@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% if user.is_writer %}{% url 'core-portal:writer-dashboard' %}{% else %}{% url 'core-portal:client-dashboard' %}{% endif %}">
+        <a class="navbar-brand" href="{% url 'core-portal:portal-dashboard' %}">
             <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="navbar-logo img-fluid rounded" alt="Paradise Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
