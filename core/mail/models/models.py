@@ -141,7 +141,7 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
     @classmethod
     def send_match_acceptance_confirmation(cls, user, opponent_name):
@@ -152,7 +152,7 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        send_email(subject, user.email, template_path, context)
+        send_email.delay(subject, user.email, template_path, context)
 
 
 

@@ -41,15 +41,9 @@ class TournamentManager(AbstractManager):
         return Player.objects.filter(tournament=tournament)
 
     def accept_invite(self, tourney_id, invited_player):
-        user_email = invited_player.player.email
         try:
             tournament = self.get(pk=tourney_id)
             if not tournament:
-                return False
-
-            user = User.objects.get(email=user_email)
-
-            if not InvitedPlayer.objects.check_invited_player(tournament, user):
                 return False
 
             if tournament.state != 'created':
@@ -68,8 +62,8 @@ class TournamentManager(AbstractManager):
             if Player.objects.check_player_participating(tournament=tournament, user=user):
                 return False
 
-            Player.objects.create_player(tournament, user)
-            InvitedPlayer.objects.accept_invite(invited_player=invited_player)
+            Player.objects.create_player(tournament, invited_player)
+
             return True
 
         except ObjectDoesNotExist:
