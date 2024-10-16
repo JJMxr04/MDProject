@@ -1,0 +1,30 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/public_match_list.css' %}">
+    <style>
+        .invite-success-container {
+            text-align: center;
+            margin: 50px;
+        }
+
+        .invite-success-message {
+            font-size: 24px;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock css %}
+
+{% block content %}
+<div class="invite-success-container">
+    <h1 class="invite-success-message">Invite Successful!</h1>
+    <p>Your match invitation has been sent successfully.</p>
+    <a href="{% url 'core-portal:portal-my-matches' %}" class="btn btn-primary">Return to My Matches</a>
+</div>
+{% endblock %}

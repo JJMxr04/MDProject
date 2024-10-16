@@ -208,7 +208,7 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
         'NAME': 'postgres',  # Main database name
-        'USER': 'joe',
+        'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': os.environ.get('DBHOST', 'localhost'),
         'PORT': os.environ.get('DBPORT', '5432'),
@@ -324,9 +324,10 @@ AUTHENTICATION_BACKENDS = [
 # Media files (user-uploaded files)
 if not os.environ.get("DEBUG"):
     MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 else:
     MEDIA_URL = f'/media/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOWED_ORIGINS = [

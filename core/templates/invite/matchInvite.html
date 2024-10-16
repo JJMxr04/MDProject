@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match Invitation</title>
+  <style>
+    /* General body styles */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #3D7EAA, #FFE47A);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    /* Email container styles */
+    .email-container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #FFFFFF;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      box-sizing: border-box;
+    }
+    /* Logo container */
+    .logo {
+      margin-bottom: 20px;
+    }
+    /* Headings */
+    h1 {
+      font-size: 28px;
+      color: #333333;
+    }
+    /* Paragraph styles */
+    p {
+      font-size: 14px;
+      color: #333333;
+      line-height: 1.5;
+      margin: 0 0 15px;
+    }
+    /* Button styles */
+    .button {
+      display: inline-block;
+      padding: 15px 20px;
+      background-color: #2CB543;
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <!-- Logo -->
+    <div class="logo">
+        <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
+    </div>
+    <!-- Email content -->
+    <h1>You Have Been Invited to Play in a Match</h1>
+    <p>Dear {{ username }},</p>
+    <p>We are excited to invite you to an upcoming match against {{ opponent_name }}.</p>
+    <p>Get ready to showcase your skills and compete in this exciting event. We are looking forward to seeing your performance on the field!</p>
+    <p>If you have any questions or need further details, feel free to contact our support team. We're here to assist you!</p>
+    <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
+    <!-- Uncomment the line below if a button for match details or RSVP is needed -->
+    <!-- <a href="{{ match_details_url }}" class="button">View Match Details</a> -->
+  </div>
+</body>
+</html>
