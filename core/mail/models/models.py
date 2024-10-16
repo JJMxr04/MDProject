@@ -132,3 +132,27 @@ class Emails:
 
         send_email.delay(subject, user.email, template_path, context)
 
+    @classmethod
+    def send_match_invite(cls, user, opponent_name):
+        subject = "Your have Been Invited to Join a Match"
+        template_path = "invite/matchInvite.html"
+        context = {
+            'username': user.username,
+            'opponent_name': opponent_name,
+        }
+        Notification.objects.create_notification(user,subject)
+        send_email.delay(subject, user.email, template_path, context)
+
+    @classmethod
+    def send_match_invite(cls, user, opponent_name):
+        subject = "Your have Been Invited to Join a Tournament"
+        template_path = "invite/tournamentInvite.html"
+        context = {
+            'username': user.username,
+            'opponent_name': opponent_name,
+        }
+        Notification.objects.create_notification(user,subject)
+        send_email.delay(subject, user.email, template_path, context)
+
+    
+
