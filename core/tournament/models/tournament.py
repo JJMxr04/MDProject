@@ -9,7 +9,7 @@ from core.user.models import User
 from core.match.models.match import Match
 from core.abstract.models import AbstractModel, AbstractManager
 from core.user.models import User
-from core.mail.models import Emails
+# from core.mail.models import Emails
 
 
 class TournamentManager(AbstractManager):
@@ -89,7 +89,7 @@ class TournamentManager(AbstractManager):
                 return False
 
             InvitedPlayer.objects.create_invited_player(tournament, user)
-            Emails.send_tournament_invite(user, tournament)
+            # Emails.send_tournament_invite(user, tournament)
             return True
 
         except ObjectDoesNotExist:
@@ -299,7 +299,7 @@ class InvitedPlayerManager(AbstractManager):
             tournament = Tournament.objects.get(id=tournament_id)
             player = User.objects.get(id=player_id)
             invited_player = self.create(tournament=tournament, player=player)
-            Emails.send_tournament_invite(player, tournament)
+            # Emails.send_tournament_invite(player, tournament)
             return invited_player
         except (Tournament.DoesNotExist, Player.DoesNotExist):
             return None

@@ -141,18 +141,22 @@ class Emails:
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        send_email.delay(subject, user.email, template_path, context)
+        send_email(subject, user.email, template_path, context)
 
     @classmethod
-    def send_match_invite(cls, user, opponent_name):
-        subject = "Your have Been Invited to Join a Tournament"
-        template_path = "invite/tournamentInvite.html"
+    def send_match_acceptance_confirmation(cls, user, opponent_name):
+        subject = f"Your have accepted the match invite from {opponent_name}"
+        template_path = "invite/matchAccept.html"
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
         }
         Notification.objects.create_notification(user,subject)
-        send_email.delay(subject, user.email, template_path, context)
+        send_email(subject, user.email, template_path, context)
+
+
+
+
 
     
 
