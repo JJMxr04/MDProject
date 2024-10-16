@@ -1,0 +1,202 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="ticket-detail-container">
+    <!-- Left Column: Ticket Information -->
+    <div class="ticket-info">
+        <div class="ticket-header">
+            <h2>{{ ticket.title }}</h2>
+            <p class="ticket-meta">
+                <strong>Status:</strong> {{ ticket.status.name }}<br>
+                <strong>Assigned to:</strong> {{ ticket.assigned_to }}<br>
+                <strong>Created by:</strong> {{ ticket.created_by.username }} on 
+                {{ ticket.created_at|date:"F j, Y, g:i a" }}
+            </p>
+            <p class="ticket-description">{{ ticket.description }}</p>
+        </div>
+    </div>
+
+    <!-- Right Column: Add Comment and Comments Section -->
+    <div class="right-column">
+        <!-- Add Comment Section -->
+        <div class="add-comment-section">
+            <h3>Add a Comment</h3>
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <h3>Comments</h3>
+            {% if comments %}
+                <ul class="comments-list">
+                    {% for comment in comments %}
+                        <li class="comment-item">
+                            <div class="comment-header">
+                                <strong>{{ comment.user.username }}</strong>
+                                <span class="comment-date">{{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+                            </div>
+                            <p class="comment-message">{{ comment.message }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-comments">No comments yet. Be the first to add one!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* General Layout */
+    .ticket-detail-container {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 40px;
+        gap: 40px;
+        background-color: #f7f8fc;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Ticket Information Section */
+    .ticket-info {
+        flex: 1;
+        background-color: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .ticket-header h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .ticket-meta {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .ticket-description {
+        font-size: 1.2rem;
+        margin-top: 20px;
+        color: #444;
+        line-height: 1.8;
+    }
+
+    /* Right Column Styling */
+    .right-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* Add Comment Section */
+    .add-comment-section {
+        background-color: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .add-comment-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Comments Section */
+    .comments-section {
+        background-color: white;
+        padding: 30px;
+        border-radius: 16px;
+        max-height: 500px;
+        overflow-y: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .comments-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .comment-item {
+        background-color: #f2f2f2;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        transition: background-color 0.3s ease;
+    }
+
+    .comment-item:hover {
+        background-color: #e6e6e6;
+    }
+
+    .comment-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .comment-date {
+        font-size: 0.9rem;
+        color: #888;
+        margin-left: 10px;
+    }
+
+    .comment-message {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .no-comments {
+        font-size: 1rem;
+        color: #888;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Form Styles */
+    .comment-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .comment-form input, .comment-form textarea {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

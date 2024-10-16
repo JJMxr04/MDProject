@@ -1,0 +1,43 @@
+<!-- templates/public/support/contact-us.html -->
+{% extends "public/base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/public/support/contact-us.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Contact Us</h1>
+    <p class="section-description">We are here to assist you. Please fill out the form below, and we will get back to you as soon as possible.</p>
+    
+    <div class="comp-container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+                {{ form.category.errors }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

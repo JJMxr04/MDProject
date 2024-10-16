@@ -40,12 +40,12 @@ PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
-# DUBUG = False 
+# DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
+ALLOWED_HOSTS=['localhost']
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
-CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
-
+# CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
@@ -137,6 +137,7 @@ INSTALLED_APPS = [
     'core.web',
     'core.portal',
     'core.payments',
+    'core.support',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
@@ -167,7 +168,7 @@ BASE_DIR_TEMPS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR_TEMPS, 'core', 'admin', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR_TEMPS,'core', 'admin', 'templates',)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -179,36 +180,58 @@ TEMPLATES = [
         },
     },
 ]
-# settings.py
-X_FRAME_OPTIONS = 'ALLOWALL'
-
 
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('DBENGINE'),
+#         'NAME': os.environ.get('DBNAME'),
+#         'USER': os.environ.get('BDUSER'),
+#         'PASSWORD': os.environ.get('DBPASSWORD'),
+#         'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
+#         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
+#     }
+# }
+
 # DATABASES = {
 #     'default': dj_database_url.config(
-#         default=f"postgres://{os.environ.get('DBUSER')}:{os.environ.get('DBPASSWORD')}@{os.environ.get('DBHOST')}:{os.environ.get('DBPORT')}/{os.environ.get('DBNAME')}"
+#         default=f"{os.environ.get('DATABASE_URL')}"
 #     )
 # }
 
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"{os.environ.get('DATABASE_URL')}"
-    )
+    'default': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'postgres',  # Main database name
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'SERIALIZE': True,
+        },
+    },
+    'test_mirror': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'postgres',  # Mirroring the same main database
+        'USER': 'joe',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'MIRROR': 'default',  # Mirror the default database
+        },
+    },
 }
 
-# Optional: Add test settings if needed
-DATABASES['default']['TEST'] = {
-    'SERIALIZE': True,
-}
 
 
-
-
-
-EMAIL_BACKEND = f'{os.environ.get('EMAIL_BACKEND')}'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
@@ -249,33 +272,25 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files (user-uploaded files)
-if not os.environ.get("DEBUG"):
-    MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
-else:
-    MEDIA_URL = f'/media/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_QUERYSTRING_AUTH = False
-AWS_QUERYSTRING_AUTH = False
-# Additional optional settings
-AWS_S3_FILE_OVERWRITE = True
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-CELERY_RESULT_EXTENDED = True
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
+# AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_QUERYSTRING_AUTH = False
+# AWS_QUERYSTRING_AUTH = False
+# # Additional optional settings
+# AWS_S3_FILE_OVERWRITE = True
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+# CELERY_RESULT_EXTENDED = True
 
 # Configure Django REST Framework settings
 REST_FRAMEWORK = {
@@ -305,6 +320,21 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+
+# Media files (user-uploaded files)
+if not os.environ.get("DEBUG"):
+    MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+else:
+    MEDIA_URL = f'/media/'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CORS_ALLOWED_ORIGINS = [
+
+"http://localhost:8000",
+"http://localhost:3000"
+]
 
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
 LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
@@ -364,10 +394,12 @@ JAZZMIN_SETTINGS = {
         # model admin to link to (Permissions checked against model)
         # {"model": "auth.User"},
 
-        {"name": "Analytics Dashboard", "url": reverse_lazy("admin_dashboard"), "permissions": ["auth.is_staff"]},
+        {"name": "Analytics Dashboard", "url": reverse_lazy("core-admin:admin_dashboard"), "permissions": ["auth.is_staff"]},
 
         # Portal - using named URL resolved via reverse
         {"name": "Portal", "url": reverse_lazy("core-portal:portal-dashboard"), "permissions": ["auth.is_staff"], "new_window": True},
+
+        {"name": "Helpdesk", "url": reverse_lazy("core-admin:ticket_list"), "permissions": ["auth.is_staff"], "new_window": True},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
         # {"app": "books"},
@@ -456,6 +488,7 @@ JAZZMIN_SETTINGS = {
     # "language_chooser": True,
 }
 
+
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
 CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -478,17 +511,17 @@ CACHES = {
 
 CELERY_BEAT_SCHEDULE = {}
 
-# SSL/TLS settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+# # SSL/TLS settings
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_HSTS_SECONDS = 31536000  # 1 year
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # End of file

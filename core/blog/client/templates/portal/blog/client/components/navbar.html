@@ -1,0 +1,59 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'core-portal:portal-dashboard' %}">
+            <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="navbar-logo img-fluid rounded" alt="Paradise Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Betting Advice
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'core-portal:client-feed' %}">Feed</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:client-writer-list' %}">Writers</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        News
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'core-portal:upcoming-events' %}">Upcoming Sports Events</a></li>
+                        <li><a class="dropdown-item" href="#">Highlights</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        The Game
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-public-match-list' %}">Match Requests</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-match-list' %}"#">My Matches</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-tournaments' %}">My Tournaments</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">Invites</a></li>
+                        
+                    </ul>
+                </li>
+
+
+                <!-- Notification Bell -->
+
+                {% include 'portal/components/notification_profile_navbar' %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+    

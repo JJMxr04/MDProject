@@ -5,8 +5,10 @@ from django.http import Http404, HttpResponseRedirect
 from django.contrib import messages
 from django.utils.html import format_html
 from core.user.models import User
-from .models.tournament import Tournament, Player, Round, InvitedPlayer
+from .models.tournament import Tournament, Player, Round
+from core.mail.models import Invite
 from uuid import UUID  # Import UUID for type checking
+from django.utils import timezone
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
@@ -45,8 +47,10 @@ class TournamentAdmin(admin.ModelAdmin):
             player_ids = request.POST.getlist('players')
             invited_players_count = 0
             for player_id in player_ids:
-                if InvitedPlayer.objects.invite_player(tournament.id, player_id):
-                    invited_players_count += 1
+                user = User.objects.get(id=player_id)
+                if not Invite.objects.get(player=user,obj_id=tournament.id):
+                    if Invite.objects.create_invite(invite_type='tournament',obj_id=tournament.id, sender=request.user,player=user,invited_date=timezone.now()):
+                        invited_players_count += 1
 
             failed_invites_count = len(player_ids) - invited_players_count
             if failed_invites_count > 0:
@@ -147,22 +151,6 @@ class TournamentAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ['tournament_name', 'player', 'seed', 'division']
     list_filter = ['tournament__name']
-    search_fields = ['tournament__name', 'player__username', 'player__email']
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        # Customize queryset as needed, e.g., prefetch related fields
-        return queryset
-
-    def tournament_name(self, obj):
-        return obj.tournament.name
-
-    tournament_name.admin_order_field = 'tournament'  # Allows sorting by tournament name
-
-@admin.register(InvitedPlayer)
-class InvitedPlayerAdmin(admin.ModelAdmin):
-    list_display = ['tournament_name', 'player', 'accepted', 'accepted_date', 'invited_date']
-    list_filter = ['tournament__name', 'accepted']
     search_fields = ['tournament__name', 'player__username', 'player__email']
 
     def get_queryset(self, request):

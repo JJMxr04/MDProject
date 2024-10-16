@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
+from core.tournament.models.tournament import Tournament, Round, Invite, Player
 from core.user.serializers import PublicUserSerializer
 from core.match.serializers.match import MatchSerializer
 
@@ -12,11 +12,11 @@ class PlayerSerializer(serializers.ModelSerializer):
         fields = ['id', 'tournament', 'player', 'seed', 'division']
 
 
-class InvitedPlayerSerializer(serializers.ModelSerializer):
+class InviteSerializer(serializers.ModelSerializer):
     player = PublicUserSerializer()
 
     class Meta:
-        model = InvitedPlayer
+        model = Invite
         fields = ['id', 'tournament', 'player', 'accepted', 'accepted_date', 'invited_date', 'state']
 
 
@@ -44,7 +44,7 @@ class RoundSerializer(serializers.ModelSerializer):
 
 
 class TournamentSerializer(serializers.ModelSerializer):
-    invited_players = InvitedPlayerSerializer(many=True, read_only=True)
+    invited_players = InviteSerializer(many=True, read_only=True)
     players = PlayerSerializer(many=True, read_only=True)
     final_round = RoundSerializer()
 
@@ -63,7 +63,7 @@ class TournamentSerializer(serializers.ModelSerializer):
         tournament = Tournament.objects.create(**validated_data)
 
         for invited_player_data in invited_players_data:
-            InvitedPlayer.objects.create(tournament=tournament, **invited_player_data)
+            Invite.objects.create(tournament=tournament, **invited_player_data)
 
         for player_data in players_data:
             Player.objects.create(tournament=tournament, **player_data)

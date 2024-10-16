@@ -10,131 +10,64 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown"></li>
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Betting Advice
                     </a>
                     <ul class="dropdown-menu">
                         {% if not user.is_writer or user.is_staff %}
-                            <li><a class="dropdown-item" href="{% url 'core-portal:client-dashboard' %}">Dashboard</a></li>
                             <li><a class="dropdown-item" href="{% url 'core-portal:client-feed' %}">Feed</a></li>
-                            <li><a class="dropdown-item" href="{% url 'core-portal:client-writer-list' %}">Writers</a></li>
                         {% endif %} 
-                        <li><hr class="dropdown-divider" /></li>
+
                         {% if user.is_writer or user.is_staff %}
                             <li><a class="dropdown-item" href="{% url 'core-portal:writer-dashboard' %}">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-profile' %}">Writer Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-my-articles' %}">My Predictions</a></li>
-                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-create-article' %}">Create Prediction</a></li>
-                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-subscription-plan' %}">Subscription Rate</a></li>
-                            <li><a class="dropdown-item" href="{% url 'core-portal:onboarding' %}">Stripe Payments</a></li>
-                            <li><a class="dropdown-item" href="https://dashboard.stripe.com" target="_blank">Go to Stripe Dashboard</a></li>
 
                         {% endif %} 
 
                     </ul>
                 </li>
+                <!-- News Section -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         News
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'core-portal:upcoming-events' %}">Upcoming Sports Events</a></li>
+                        <li><a class="dropdown-item" href="#">Latest News</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#">Highlights</a></li>
+                        <li><a class="dropdown-item" href="#">Interviews</a></li>
+                        <li><a class="dropdown-item" href="#">Press Conferences</a></li>
                     </ul>
                 </li>
+
+                <!-- The Game Section -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         The Game
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'core-portal:portal-public-match-list' %}">Match Requests</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-match-list' %}"#">My Matches</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-match-list' %}">My Matches</a></li>
+                        <li><a class="dropdown-item" href="#">Live Scores</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-tournaments' %}">My Tournaments</a></li>
+                        <li><a class="dropdown-item" href="#">Tournament Standings</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Invites</a></li>
-                        
+                        <li><a class="dropdown-item" href="#">Game Invites</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" id="notificationBell" onclick="fetchNotifications(event)">
-                        <i class="bi bi-bell"></i>
-                        <!-- Notification Badge -->
-                        <span id="notificationBadge" class="notification-badge" style="display: none;">!</span>
-                    </a>
-                    <ul class="dropdown-menu notification-dropdown" id="notificationDropdown">
-                        <li class="dropdown-item">No new notifications</li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% else %}
-                            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% endif %}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li>
-                            <form method="post" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
+
+                <!-- Notification Bell -->
+
+                {% include 'portal/components/notification_profile_navbar' %}
+
             </ul>
         </div>
     </div>
 </nav>
 
-<script>
-function fetchNotifications(event) {
-    event.preventDefault(); // Prevent default link behavior
-    fetch("{% url 'core-portal:get-notifications' %}")
-        .then(response => response.json())
-        .then(data => {
-            const dropdown = document.getElementById('notificationDropdown');
-            dropdown.innerHTML = ''; // Clear existing items
-            console.log("data:", data);
-            if (data.notifications.length > 0) {
-                data.notifications.forEach(notification => {
-                    console.log("Notification data:", notification); // Log the entire notification object
-                    console.log("Notification UUID:", notification.uuid); // Debugging line
-                    const item = document.createElement('li');
-                    item.className = 'dropdown-item';
-                    item.textContent = notification.message; // Adjust based on your data structure
-                    item.onclick = () => {
-                        // Construct the URL using the provided method
-                        const url = `{% url "core-portal:read_notifications" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', notification.id); // Use notification.uuid
-                        // Send POST request to mark notification as read
-                        fetch(url, { // Use the constructed URL
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
-                            }
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                console.log('Notification marked as read');
-                                dropdown.innerHTML = ''; // Clear original list
-                                fetchNotifications(event); // Fetch notifications again
-                            }
-                        })
-                        .catch(error => console.error('Error marking notification as read:', error));
-                    };
-                    dropdown.appendChild(item);
-                });
-            } else {
-                dropdown.innerHTML = '<li class="dropdown-item">No new notifications</li>';
-            }
-        })
-        .catch(error => console.error('Error fetching notifications:', error));
-}
-</script>
+
+
+    
