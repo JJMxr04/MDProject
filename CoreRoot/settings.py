@@ -44,7 +44,7 @@ DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
 # ALLOWED_HOSTS=['localhost']
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
+# CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
 # CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
 
 SIMPLE_JWT = {
