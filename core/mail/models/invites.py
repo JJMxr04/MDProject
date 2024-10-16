@@ -53,7 +53,7 @@ class InviteManager(AbstractManager):
 
 class Invite(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    obj_id = models.UUIDField()  # Stores the UUID of the referenced object (e.g., Tournament, Match)
+    obj_id = models.UUIDField(null=True,blank=True)  # Stores the UUID of the referenced object (e.g., Tournament, Match)
     player = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invites')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invites')  # User who sent the invite
     type = models.CharField(max_length=20, choices=INVITE_TYPE_CHOICES)  # 'tournament', 'match', etc.
