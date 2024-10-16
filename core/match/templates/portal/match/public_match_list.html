@@ -36,10 +36,8 @@
                                 <!-- Invite Form Integration -->
                                 {{ form|crispy }}
 
-                                
-
                                 <div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="submitCreateMatchForm()">Submit</button>
                                     <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
                                 </div>
                             </form>
@@ -107,6 +105,32 @@ function showPopup() {
 
 function closePopup() {
     document.getElementById('createMatchPopup').style.display = 'none';
+}
+
+function submitCreateMatchForm() {
+    const form = document.getElementById('createMatchForm');
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Match created successfully.');
+        } else {
+            alert(`Error: ${data.message}`);
+        }
+        closePopup();
+    })
+    .catch(error => {
+        alert('An unexpected error occurred.');
+        console.error(error);
+    });
 }
 </script>
 
