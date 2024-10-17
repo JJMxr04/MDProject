@@ -332,10 +332,8 @@ AUTHENTICATION_BACKENDS = [
 
 
 # Media files (user-uploaded files)
-if not os.environ.get("DEBUG"):
-    MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
-else:
-    MEDIA_URL = f'/media/'
+MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
+
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
