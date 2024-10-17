@@ -39,8 +39,8 @@ STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
 PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
-# DEBUG = False
+# DEBUG = os.environ.get('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
 # ALLOWED_HOSTS=['localhost']
