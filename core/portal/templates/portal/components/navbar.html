@@ -42,26 +42,12 @@
                 </li>
 
                 <!-- The Game Section -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        The Game
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-public-match-list' %}">Match Requests</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-match-list' %}">My Matches</a></li>
-                        <li><a class="dropdown-item" href="#">Live Scores</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="{% url 'core-portal:portal-my-tournaments' %}">My Tournaments</a></li>
-                        <li><a class="dropdown-item" href="#">Tournament Standings</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Game Invites</a></li>
-                    </ul>
-                </li>
+                {% include 'portal/components/GameNavbar.html' %}
 
 
                 <!-- Notification Bell -->
 
-                {% include 'portal/components/notification_profile_navbar' %}
+                {% include 'portal/components/notification_profile_navbar.html' %}
 
             </ul>
         </div>

@@ -9,5 +9,6 @@ urlpatterns = [
     path('notifications/<uuid:not_id>/', views.read_notifications, name='read_notifications'),
     path('create-invite/', views.create_invite, name='create_invite'),
     path('invite-success/', views.success_invite, name='invite-success'),
-    path('invite-accept/<uuid:invite_id>', views.accept_invite, name='invite-accept'),
+    path('invites/', views.invite_list, name='invite-list'),
+    path('invites/<str:invite_id>', views.accept_invite, name='invite-accept'),
 ]

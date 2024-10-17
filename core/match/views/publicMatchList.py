@@ -65,7 +65,7 @@ def create_public_match_view(request):
             player_2= User.objects.get(id=player)
             # Create the invite
             invite = Invite.objects.create_invite(
-                obj_id-None,
+                obj_id=None,
                 sender=owner,
                 player=player_2,  # Add the invited player
                 invite_type='match'
