@@ -8,15 +8,9 @@
   <style>
     /* General body styles */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #3D7EAA; /* Fallback solid color */
-      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
     }
 
     /* Email container styles */
@@ -83,19 +77,25 @@
   </style>
 </head>
 <body>
-  <div class="email-container">
-    <!-- Logo -->
-    <div class="logo">
-      <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
-    </div>
-    <!-- Email content -->
-    <h1>You Have Been Invited to Play in a Match</h1>
-    <p>Dear {{ username }},</p>
-    <p>We are excited to invite you to an upcoming match against {{ opponent_name }}. Get ready to showcase your skills and compete in this exciting event. We are looking forward to seeing your performance on the field!</p>
-    <p>If you have any questions or need further details, feel free to contact our support team. We're here to assist you!</p>
-    <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
-    <!-- Button for match details -->
-    <a href="{{ match_details_url }}" class="button">View Match Details</a>
-  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#3D7EAA"> <!-- Background color applied here -->
+    <tr>
+      <td align="center" style="background-image: linear-gradient(to right, #3D7EAA, #FFE47A);">
+        <div class="email-container">
+          <!-- Logo -->
+          <div class="logo">
+            <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
+          </div>
+          <!-- Email content -->
+          <h1>You Have Been Invited to Play in a Match</h1>
+          <p>Dear {{ username }},</p>
+          <p>We are excited to invite you to an upcoming match against {{ opponent_name }}. Get ready to showcase your skills and compete in this exciting event. We are looking forward to seeing your performance on the field!</p>
+          <p>If you have any questions or need further details, feel free to contact our support team. We're here to assist you!</p>
+          <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
+          <!-- Button for match details -->
+          <a href="{{ match_details_url }}" class="button">View Match Details</a>
+        </div>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
