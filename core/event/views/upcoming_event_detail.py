@@ -20,9 +20,11 @@ def upcoming_event_detail(request, event_id):
 
     # Serialize the event data for the template
     try:
-        print('event5')        event_data = EventBookmakerSerializer(event).data
+        print('event5')        
+        event_data = EventBookmakerSerializer(event).data
     except Exception as e:
-        print('event6')        logger.error(f"Error serializing event data: {str(e)}")
+        print('event6')        
+        logger.error(f"Error serializing event data: {str(e)}")
         return HttpResponseNotFound("Error processing event data")
     print('event7')    # Add the event data to the context for rendering
     # context = {
@@ -34,4 +36,5 @@ def upcoming_event_detail(request, event_id):
 
     # return redirect('core-portal:portal-dashboard')
 
-    return render(request, 'portal/event/upcoming_event_detail.html', context)
+    # return render(request, 'portal/event/upcoming_event_detail.html', context)
+    return render(request, 'portal/dashboard/dashboard.html',  {'user': request.user})
