@@ -13,47 +13,55 @@
     <div class="event-detail-container">
         <div class="teams">
             <div class="team">
-                <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
-                <p>{{ event.home_team_team.team_name }}</p>
+                <img src="{{ event.home_team_team.logo_url|default:'' }}" alt="{{ event.home_team_team.team_name|default:'Home team' }} logo" />
+                <p>{{ event.home_team_team.team_name|default:'Home team' }}</p>
             </div>
             <div class="vs">VS</div>
             <div class="team">
-                <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.team_name }} logo" />
-                <p>{{ event.away_team_team.team_name }}</p>
+                <img src="{{ event.away_team_team.logo_url|default:'' }}" alt="{{ event.away_team_team.team_name|default:'Away team' }} logo" />
+                <p>{{ event.away_team_team.team_name|default:'Away team' }}</p>
             </div>
         </div>
 
-        <h1>{{ event.title }}</h1>
-        <p>{{ event.description }}</p>
-        <p class="commence-time" data-time="{{ event.commence_time }}">Commence Time: {{ event.commence_time }}</p>
+        <h1>{{ event.title|default:'Event Title' }}</h1>
+        <p>{{ event.description|default:'No description available' }}</p>
+        <p class="commence-time" data-time="{{ event.commence_time|default:'' }}">Commence Time: {{ event.commence_time|default:'TBD' }}</p>
 
         <!-- Bookmakers Section -->
         <div class="bookmakers-section">
             <h2>Bookmakers</h2>
-            {% if event.bookmakers%}
+            {% if event.bookmakers %}
                 {% for bookmaker in event.bookmakers %}
                     <div class="bookmaker">
-                        <h3>{{ bookmaker.title }}</h3>
-                        {% for market in bookmaker.markets %}
-                            <div class="market" data-key="{{ market.key }}">
-                                <h4 class="market-title">{{ market.title }}</h4>
-                                <ul>
-                                    {% for outcome in market.outcomes %}
-                                        <li class="outcome">
-                                            <div class="outcome-name-container">
-                                                <span class="outcome-name">{{ outcome.name }}</span>
-                                            </div>
-                                            <div class="point-container">
-                                                <span class="point">{{ outcome.point }}</span>
-                                            </div>
-                                            <div class="price-container">
-                                                <span class="price">{{ outcome.price }}</span>
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endfor %}
+                        <h3>{{ bookmaker.title|default:'Unknown Bookmaker' }}</h3>
+                        {% if bookmaker.markets %}
+                            {% for market in bookmaker.markets %}
+                                <div class="market" data-key="{{ market.key }}">
+                                    <h4 class="market-title">{{ market.title|default:'Unknown Market' }}</h4>
+                                    <ul>
+                                        {% if market.outcomes %}
+                                            {% for outcome in market.outcomes %}
+                                                <li class="outcome">
+                                                    <div class="outcome-name-container">
+                                                        <span class="outcome-name">{{ outcome.name|default:'Unknown Outcome' }}</span>
+                                                    </div>
+                                                    <div class="point-container">
+                                                        <span class="point">{{ outcome.point|default:'N/A' }}</span>
+                                                    </div>
+                                                    <div class="price-container">
+                                                        <span class="price">{{ outcome.price|default:'N/A' }}</span>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li>No outcomes available</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No markets available</p>
+                        {% endif %}
                     </div>
                 {% endfor %}
             {% else %}
@@ -82,17 +90,19 @@
             const timeElements = document.querySelectorAll('.commence-time');
             timeElements.forEach(function(element) {
                 const timeString = element.getAttribute('data-time');
-                const date = new Date(timeString);  // Convert the string to a JavaScript Date object
-                const options = {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                };
-                const formattedDate = date.toLocaleString('en-US', options);
-                element.textContent = formattedDate;
+                if (timeString) {
+                    const date = new Date(timeString);
+                    const options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    const formattedDate = date.toLocaleString('en-US', options);
+                    element.textContent = formattedDate;
+                }
             });
 
             // Update market titles using the getMarketTitle function

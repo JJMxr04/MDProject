@@ -8,14 +8,23 @@ import json
 
 @login_required(login_url='/auth/login/')
 def upcoming_event_detail(request, event_id):
-    print('event1')
-    event = get_object_or_404(Event, pk=event_id)
-    print('event2')
-    # Add necessary processing logic for bookmakers, markets, and outcomes
-    # Assuming event.bookmakers is a preprocessed list of dictionaries with relevant data
-    context = {
-        'event': EventBookmakerSerializer(event).data,
-    }
+    # Attempt to retrieve the event or log an error if not found
+    try:
+        event = get_object_or_404(Event, pk=event_id)
+    except Event.DoesNotExist:
+        logger.error(f"Event with ID {event_id} does not exist.")
+        return HttpResponseNotFound("Event not found")
     
-    print('event3')
+    # Serialize the event data for the template
+    try:
+        event_data = EventBookmakerSerializer(event).data
+    except Exception as e:
+        logger.error(f"Error serializing event data: {str(e)}")
+        return HttpResponseNotFound("Error processing event data")
+
+    # Add the event data to the context for rendering
+    context = {
+        'event': event_data,
+    }
+
     return render(request, 'portal/event/upcoming_event_detail.html', context)
