@@ -17,14 +17,16 @@ from rest_framework.response import Response
 
 
 class MatchManager(AbstractManager):
-    def create_match(self, player_1, player_2=None, start_date = timezone.now()):
+    def create_match(self, player_1, player_2=None, start_date = timezone.now(), match_type='public'):
+        print('creating match getting time')
         start_date = timezone.now()
         end_date = start_date + timedelta(weeks=1)
-
+        print('creating match')
         if player_2 is None:
-            return self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
+            return self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date,match_type='public')
         else:
-            match = self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date)
+            match = self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date,match_type='private')
+            print('right before accept match')
             return self.accept_match(match, player_2)
 
 

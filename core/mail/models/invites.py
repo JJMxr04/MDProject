@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from core.user.models import User
 from core.abstract.models import AbstractManager
 
+
 from .models import Emails
 import importlib
 
@@ -62,17 +63,19 @@ class InviteManager(AbstractManager):
             invite.accepted_date = timezone.now()
             invite.state = "accepted"
             invite.save()
+
             if invite.type == 'match':
                 from core.match.models import Match
-                Match.objects.create_match(self, invite.sender, player_2=invite.player, start_date = timezone.now())
+                print(1)
+                Match.objects.create_match(player_1=invite.sender, player_2=invite.player)
                 Emails.send_match_acceptance_confirmation(sender,player.username)
             if invite.type == 'tournament':
                 from core.tournament.models import Tournament
                 tournament= Tournament.objects.get(id=invite.obj_id)
                 Emails.send_tournament_acceptance_confirmation(player, tournament)
-            invite.delete()
             return True
         except Error as e:
+            print(e)
             return False
 
 class Invite(models.Model):
