@@ -69,6 +69,7 @@ class InviteManager(AbstractManager):
                 Match.objects.create_match(player_1=invite.sender, player_2=invite.player)
                 print('after match creation')
                 Emails.send_match_acceptance_confirmation(sender,player.username)
+                print('after senidng accept email')
             if invite.type == 'tournament':
                 from core.tournament.models import Tournament
                 tournament= Tournament.objects.get(id=invite.obj_id)

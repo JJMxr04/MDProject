@@ -18,15 +18,12 @@ from rest_framework.response import Response
 
 class MatchManager(AbstractManager):
     def create_match(self, player_1, player_2=None, start_date = timezone.now(), match_type='public'):
-        print('creating match getting time')
         start_date = timezone.now()
         end_date = start_date + timedelta(weeks=1)
-        print('creating match')
         if player_2 is None:
             return self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date,match_type='public')
         else:
             match = self.create(player_1=player_1, player_2=player_2, start_date=start_date, end_date=end_date,match_type='private')
-            print('right before accept match')
             return self.accept_match(match, player_2)
 
 
@@ -53,13 +50,11 @@ class MatchManager(AbstractManager):
 
 
     def accept_match(self, match, player_2):
-        print('ac1')
         match = self.get_object_by_id(id=match.id)
         if match is None:
             return None
         if match.player_1 == player_2:
             return None
-        print('ac2')
         match.match_state = "accepted"
         match.player_2 = player_2
         match.player_1_game_1 = Game.objects.create_game(match.player_1, match.player_2, match)
@@ -78,11 +73,11 @@ class MatchManager(AbstractManager):
         match.player_2_game_3 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_4 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_5 = Game.objects.create_game(match.player_2, match.player_1, match)
-        print('ac3')
+
 
         match.golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
         match.save()
-        print('ac4')
+
         return match
 
     def match_game_event_update(self, games, instance):
