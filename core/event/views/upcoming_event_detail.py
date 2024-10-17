@@ -31,7 +31,7 @@ def upcoming_event_detail(request, event_id):
     # context = {
     #     'event': event_data,
     # }
-        context = {
+    context = {
         'event': '{}',
     }
 
