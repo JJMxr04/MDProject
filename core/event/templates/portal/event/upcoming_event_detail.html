@@ -14,48 +14,5 @@
        
     </div>
 
-    <script>
-        // JavaScript function to get the market title
-        const getMarketTitle = (key) => {
-            switch (key.toLowerCase()) {
-                case 'h2h':
-                    return 'Head 2 Head';
-                case 'spreads':
-                    return 'Spreads';
-                case 'totals':
-                    return 'Over/Under';
-                default:
-                    return key;
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update commence time formatting
-            const timeElements = document.querySelectorAll('.commence-time');
-            timeElements.forEach(function(element) {
-                const timeString = element.getAttribute('data-time');
-                if (timeString) {
-                    const date = new Date(timeString);
-                    const options = {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true
-                    };
-                    const formattedDate = date.toLocaleString('en-US', options);
-                    element.textContent = formattedDate;
-                }
-            });
-
-            // Update market titles using the getMarketTitle function
-            const marketElements = document.querySelectorAll('.market');
-            marketElements.forEach(function(element) {
-                const marketKey = element.getAttribute('data-key');
-                const marketTitleElement = element.querySelector('.market-title');
-                marketTitleElement.textContent = getMarketTitle(marketKey);
-            });
-        });
-    </script>
+   
 {% endblock content %}
