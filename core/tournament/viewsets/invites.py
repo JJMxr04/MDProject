@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from core.tournament.serializers.tournament import InviteSerializer
-from core.tournament.models.tournament import Tournament, Invite
+from core.tournament.models.tournament import Tournament, InvitePlayer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.mail.models import Emails
 from django.utils import timezone
@@ -15,7 +15,7 @@ class InviteViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Invite.objects.filter(player=user, state='sent')
+        return InvitePlayer.objects.filter(player=user, state='sent')
 
     def update(self, request, *args, **kwargs):
         user = self.request.user
@@ -28,7 +28,7 @@ class InviteViewSet(viewsets.ModelViewSet):
         success = Tournament.objects.accept_invite(tourney_id=tournament.id, invited_player=invited_player)
         if success:
             # Optionally update the state or other attributes of invited_player here
-            Invite.objects.accept_invite(invited_player=invited_player)
+            InvitePlayer.objects.accept_invite(invited_player=invited_player)
             # Serialize only necessary fields
             serializer = InviteSerializer(instance=invited_player)
             Emails.send_tournament_acceptance_confirmation(user, tournament)
