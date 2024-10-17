@@ -36,5 +36,5 @@ def upcoming_event_detail(request, event_id):
 
     # return redirect('core-portal:portal-dashboard')
 
-    # return render(request, 'portal/event/upcoming_event_detail.html', context)
-    return render(request, 'portal/dashboard/dashboard.html',  {'user': request.user})
+    return render(request, 'portal/event/upcoming_event_detail.html', context)
+    # return render(request, 'portal/dashboard/dashboard.html',  {'user': request.user})
