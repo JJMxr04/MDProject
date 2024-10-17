@@ -2,24 +2,22 @@
 <html lang="en">
 <head>
   {% load static %}
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Match Invitation</title>
   <style>
     /* General body styles */
-/* General body styles */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #3D7EAA; /* Fallback solid color */
-    background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #3D7EAA; /* Fallback solid color */
+      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
     /* Email container styles */
     .email-container {
@@ -32,15 +30,19 @@
       text-align: center;
       box-sizing: border-box;
     }
+
     /* Logo container */
     .logo {
       margin-bottom: 20px;
     }
+
     /* Headings */
     h1 {
       font-size: 28px;
       color: #333333;
+      margin: 0 0 15px;
     }
+
     /* Paragraph styles */
     p {
       font-size: 14px;
@@ -48,6 +50,7 @@
       line-height: 1.5;
       margin: 0 0 15px;
     }
+
     /* Button styles */
     .button {
       display: inline-block;
@@ -59,14 +62,31 @@
       font-size: 16px;
       margin-top: 20px;
     }
+
+    /* Image styles */
+    .img-fluid {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      .email-container {
+        padding: 15px;
+      }
+
+      .button {
+        padding: 12px 15px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="email-container">
     <!-- Logo -->
-    <!-- Logo -->
     <div class="logo">
-      <img src="/static/assets/Logo/paradise_logo_2_normal.png" class="img-fluid rounded" alt="Paradise Sports Logo">
+      <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
     </div>
     <!-- Email content -->
     <h1>You Have Been Invited to Play in a Match</h1>
