@@ -19,14 +19,11 @@ def upcoming_event_detail(request, event_id):
         return HttpResponseNotFound("Event not found")
 
     # Serialize the event data for the template
-    try:
-        print('event5')        
+    try:       
         event_data = EventBookmakerSerializer(event).data
-    except Exception as e:
-        print('event6')        
+    except Exception as e:       
         logger.error(f"Error serializing event data: {str(e)}")
-        return HttpResponseNotFound("Error processing event data")
-    print('event7')    # Add the event data to the context for rendering
+        return HttpResponseNotFound("Error processing event data")    # Add the event data to the context for rendering
     # context = {
     #     'event': event_data,
     # }
