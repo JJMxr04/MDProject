@@ -12,5 +12,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameModel(old_name="Invite", new_name="InvitePlayer",),
+        migrations.RenameModel(old_name="Invite", new_name="InvitedPlayer",),
     ]

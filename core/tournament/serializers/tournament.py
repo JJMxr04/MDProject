@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.tournament.models.tournament import Tournament, Round, InvitePlayer, Player
+from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
 from core.user.serializers import PublicUserSerializer
 from core.match.serializers.match import MatchSerializer
 
@@ -16,7 +16,7 @@ class InviteSerializer(serializers.ModelSerializer):
     player = PublicUserSerializer()
 
     class Meta:
-        model = InvitePlayer
+        model = InvitedPlayer
         fields = ['id', 'tournament', 'player', 'accepted', 'accepted_date', 'invited_date', 'state']
 
 

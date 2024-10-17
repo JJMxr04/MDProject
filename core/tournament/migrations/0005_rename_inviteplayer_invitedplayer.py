@@ -7,10 +7,10 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("core_tournament", "0004_rename_invite_inviteplayer"),
+        ("core_tournament", "0004_rename_invite_InvitedPlayer"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
-        migrations.RenameModel(old_name="InvitePlayer", new_name="InvitedPlayer",),
+        migrations.RenameModel(old_name="InvitedPlayer", new_name="InvitedPlayer",),
     ]

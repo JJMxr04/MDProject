@@ -1,6 +1,6 @@
 from datetime import timedelta
 from django.utils import timezone
-from core.tournament.models.tournament import Round, Tournament, Player, InvitePlayer
+from core.tournament.models.tournament import Round, Tournament, Player, InvitedPlayer
 
 from core.mail.models import Emails
 
