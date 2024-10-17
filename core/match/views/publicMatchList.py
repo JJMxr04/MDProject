@@ -67,7 +67,7 @@ def create_public_match_view(request):
             invite = Invite.objects.create(
                 sender=owner,
                 player=player_2,  # Add the invited player
-                invite_type='private'
+                invite_type='match'
             )
 
             return JsonResponse({'status': 'success', 'invite_id': invite.id})
