@@ -53,11 +53,13 @@ class MatchManager(AbstractManager):
 
 
     def accept_match(self, match, player_2):
+        print('ac1')
         match = self.get_object_by_id(id=match.id)
         if match is None:
             return None
         if match.player_1 == player_2:
             return None
+        print('ac2')
         match.match_state = "accepted"
         match.player_2 = player_2
         match.player_1_game_1 = Game.objects.create_game(match.player_1, match.player_2, match)
@@ -76,11 +78,11 @@ class MatchManager(AbstractManager):
         match.player_2_game_3 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_4 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_5 = Game.objects.create_game(match.player_2, match.player_1, match)
-
+        print('ac3')
 
         match.golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
         match.save()
-
+        print('ac4')
         return match
 
     def match_game_event_update(self, games, instance):
