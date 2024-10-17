@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
 from core.event.models import Event 
 from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
