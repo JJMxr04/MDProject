@@ -145,18 +145,15 @@ class Emails:
 
     @classmethod
     def send_match_acceptance_confirmation(cls, user, opponent_name):
-        print('send1')
-        subject = f"Your have accepted the match invite from {opponent_name}"
+        subject = f"Your opponent,{opponent_name}, has accepted the match invite!"
         template_path = "invite/matchAccept.html"
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        print('send2')
         Notification.objects.create_notification(user,subject)
-        print('send3')
         send_email.delay(subject, user.email, template_path, context)
-        print('send4')
+
 
 
 
