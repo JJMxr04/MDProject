@@ -61,18 +61,18 @@
 <body>
   <div class="email-container">
     <!-- Logo -->
+    <!-- Logo -->
     <div class="logo">
-        <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
+      <img src="/static/assets/Logo/paradise_logo_2_normal.png" class="img-fluid rounded" alt="Paradise Sports Logo">
     </div>
     <!-- Email content -->
     <h1>You Have Been Invited to Play in a Match</h1>
     <p>Dear {{ username }},</p>
-    <p>We are excited to invite you to an upcoming match against {{ opponent_name }}.</p>
-    <p>Get ready to showcase your skills and compete in this exciting event. We are looking forward to seeing your performance on the field!</p>
+    <p>We are excited to invite you to an upcoming match against {{ opponent_name }}. Get ready to showcase your skills and compete in this exciting event. We are looking forward to seeing your performance on the field!</p>
     <p>If you have any questions or need further details, feel free to contact our support team. We're here to assist you!</p>
     <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
-    <!-- Uncomment the line below if a button for match details or RSVP is needed -->
-    <!-- <a href="{{ match_details_url }}" class="button">View Match Details</a> -->
+    <!-- Button for match details -->
+    <a href="{{ match_details_url }}" class="button">View Match Details</a>
   </div>
 </body>
 </html>

@@ -11,7 +11,7 @@
       font-family: Arial, sans-serif;
       background: linear-gradient(to right, #3D7EAA, #FFE47A);
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -23,8 +23,8 @@
       width: 100%;
       background-color: #FFFFFF;
       padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
       text-align: center;
       box-sizing: border-box;
     }
@@ -34,26 +34,31 @@
     }
     /* Headings */
     h1 {
-      font-size: 28px;
-      color: #333333;
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
     }
     /* Paragraph styles */
     p {
-      font-size: 14px;
-      color: #333333;
-      line-height: 1.5;
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
       margin: 0 0 15px;
     }
     /* Button styles */
     .button {
       display: inline-block;
-      padding: 15px 20px;
-      background-color: #2CB543;
+      padding: 12px 30px;
+      background-color: #5CACEE;
       color: #FFFFFF;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 50px;
       font-size: 16px;
       margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #1E90FF;
     }
   </style>
 </head>
@@ -61,7 +66,7 @@
   <div class="email-container">
     <!-- Logo -->
     <div class="logo">
-        <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
+      <img src="/static/assets/Logo/paradise_logo_2_normal.png" class="img-fluid rounded" alt="Paradise Sports Logo">
     </div>
     <!-- Email content -->
     <h1>Your Match Invitation Has Been Accepted!</h1>
