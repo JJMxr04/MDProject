@@ -24,12 +24,12 @@ def upcoming_event_detail(request, event_id):
     except Exception as e:       
         logger.error(f"Error serializing event data: {str(e)}")
         return HttpResponseNotFound("Error processing event data")    # Add the event data to the context for rendering
-    # context = {
-    #     'event': event_data,
-    # }
     context = {
-        'event': '{}',
+        'event': event_data,
     }
+    # context = {
+    #     'event': '{}',
+    # }
 
     # return redirect('core-portal:portal-dashboard')
 
