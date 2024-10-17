@@ -9,7 +9,7 @@
         <h1>Upcoming Events</h1>
         <div class="events-content">
             <div class="filter-and-events">
-                <aside class="sidebar">
+                <div class="sidebar">
                     <h2>Filters</h2>
                     <div class="filter-container">
                         <input
@@ -18,9 +18,8 @@
                             value="{{ search_query }}"
                             oninput="updateFilter()"
                             class="search-bar"
-                            aria-label="Search events"
                         />
-                        <select id="sportFilter" onchange="updateFilter()" aria-label="Filter by sport">
+                        <select id="sportFilter" onchange="updateFilter()">
                             <option value="">All Sports</option>
                             {% for sport in sports %}
                                 <option value="{{ sport.key }}" {% if selected_sport == sport.key %}selected{% endif %}>
@@ -29,41 +28,48 @@
                             {% endfor %}
                         </select>
                         <div class="date-filters">
-                            <label for="start-date">Start Date:</label>
-                            <input
-                                type="date"
-                                id="start-date"
-                                value="{{ start_date }}"
-                                onchange="updateFilter()"
-                            />
-                            <label for="end-date">End Date:</label>
-                            <input
-                                type="date"
-                                id="end-date"
-                                value="{{ end_date }}"
-                                onchange="updateFilter()"
-                            />
+                            <label>
+                                Start Date:
+                                <input
+                                    type="date"
+                                    value="{{ start_date }}"
+                                    onchange="updateFilter()"
+                                />
+                            </label>
+                            <label>
+                                End Date:
+                                <input
+                                    type="date"
+                                    value="{{ end_date }}"
+                                    onchange="updateFilter()"
+                                />
+                            </label>
                         </div>
                     </div>
-                </aside>
+                </div>
                 <div class="events-list-container">
                     {% for event in events %}
-                        <a href="{% url 'core-portal:upcoming-events-detail' event.id %}" class="event-card" aria-label="View details for {{ event.title }}">
-                            <div class="event-content" key="{{ event.id }}">
+                        <a href="{% url 'core-portal:upcoming-events-detail' event.id %}" class="event-card">
+                            <div key="{{ event.id }}" >
                                 <div class="teams">
                                     <div class="team">
-                                        <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
+                                        <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team }} logo" />
                                         <p>{{ event.home_team_team.team_name }}</p>
                                     </div>
                                     <div class="vs">VS</div>
                                     <div class="team">
-                                        <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.team_name }} logo" />
+                                        <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team }} logo" />
                                         <p>{{ event.away_team_team.team_name }}</p>
                                     </div>
                                 </div>
                                 <h2>{{ event.title }}</h2>
                                 <p>{{ event.description }}</p>
-                                <time class="commence-time" datetime="{{ event.commence_time|date:'c' }}">{{ event.commence_time }}</time>
+                                <p class="commence-time" data-time="{{ event.commence_time }}">
+                                    {{ event.commence_time }}
+                                </p>
+
+
+
                             </div>
                         </a>
                     {% empty %}
@@ -74,38 +80,42 @@
         </div>
         <div class="pagination">
             {% if current_page > 1 %}
-                <button onclick="changePage({{ current_page }} - 1)" aria-label="Go to previous page">Previous</button>
+                <button onclick="changePage({{ current_page }} - 1)">Previous</button>
             {% endif %}
 
+            <!-- Display the first 3 pages -->
             {% for page_num in page_range|slice:":3" %}
-                <button class="{% if page_num == current_page %}active{% endif %}" onclick="changePage({{ page_num }})" aria-label="Page {{ page_num }}">
+                <button class="{% if page_num == current_page %}active{% endif %}" onclick="changePage({{ page_num }})">
                     {{ page_num }}
                 </button>
             {% endfor %}
 
+            <!-- Input box for page number -->
             <input type="number" id="pageInput" placeholder="Page #"
                    min="1" max="{{ total_pages }}" value="{{ current_page }}"
-                   onkeydown="if (event.key === 'Enter') { goToPage(); }" aria-label="Go to page number" />
-
+                   onkeydown="if (event.key === 'Enter') { goToPage(); }" />
+            <!-- Display the last page if not already in the range -->
             {% if total_pages > 3 %}
                 <span>...</span>
-                <button class="{% if total_pages == current_page %}active{% endif %}" onclick="changePage({{ total_pages }})" aria-label="Last page, {{ total_pages }}">
+                <button class="{% if total_pages == current_page %}active{% endif %}" onclick="changePage({{ total_pages }})">
                     {{ total_pages }}
                 </button>
             {% endif %}
 
             {% if current_page < total_pages %}
-                <button onclick="changePage({{ current_page|add:'1' }})" aria-label="Go to next page">Next</button>
+                <button onclick="changePage({{ current_page|add:'1' }})">Next</button>
             {% endif %}
+            
         </div>
-    </div>
+
+
 
     <script>
         function updateFilter() {
             const searchQuery = document.querySelector('.search-bar').value;
             const sportFilter = document.getElementById('sportFilter').value;
-            const startDate = document.getElementById('start-date').value;
-            const endDate = document.getElementById('end-date').value;
+            const startDate = document.querySelector('input[type="date"]:nth-of-type(1)').value;
+            const endDate = document.querySelector('input[type="date"]:nth-of-type(2)').value;
             const params = new URLSearchParams({
                 search: searchQuery,
                 sport: sportFilter,
@@ -116,29 +126,65 @@
             window.location.search = params.toString();
         }
 
-        function changePage(page) {
-            updateFilter();
-            window.location.search += `&page=${page}`;
-        }
+function changePage(page) {
+        const searchQuery = document.querySelector('.search-bar').value;
+        const sportFilter = document.getElementById('sportFilter').value;
+        const startDate = document.querySelector('input[type="date"]:nth-of-type(1)').value;
+        const endDate = document.querySelector('input[type="date"]:nth-of-type(2)').value;
+        const params = new URLSearchParams({
+            search: searchQuery,
+            sport: sportFilter,
+            start_date: startDate,
+            end_date: endDate,
+            page: page
+        });
+        window.location.search = params.toString();
+    }
 
-        function goToPage() {
-            const page = document.getElementById('pageInput').value;
-            if (page) {
-                changePage(page);
-            }
+    function goToPage() {
+        const page = document.getElementById('pageInput').value;
+        if (page) {
+            changePage(page);
         }
+    }
+
+    function debugEvents() {
+        console.log("Debugging events:");
+        console.log("{% if events %}Events found:{% else %}No events found in the template context.{% endif %}");
+        {% for event in events %}
+            console.log({
+                id: "{{ event.id }}",
+                title: "{{ event.title }}",
+                homeTeam: "{{ event.home_team_team.team_name }}",
+                awayTeam: "{{ event.away_team_team.team_name }}",
+                commenceTime: "{{ event.commence_time|date:"c" }}"
+            });
+        {% endfor %}
+    }
+
+    document.addEventListener('DOMContentLoaded', debugEvents);
 
         document.addEventListener('DOMContentLoaded', function() {
-            const timeElements = document.querySelectorAll('.commence-time');
-            timeElements.forEach(element => {
-                const timeString = element.getAttribute('datetime');
-                const date = new Date(timeString);
-                const options = {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                    hour: 'numeric', minute: 'numeric', hour12: true
-                };
-                element.textContent = date.toLocaleString('en-US', options);
-            });
+        const timeElements = document.querySelectorAll('.commence-time');
+
+        timeElements.forEach(function(element) {
+            const timeString = element.getAttribute('data-time');
+            const date = new Date(timeString);  // Convert the string to a JavaScript Date object
+
+            // Format the date and time to a readable format
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            };
+            const formattedDate = date.toLocaleString('en-US', options);
+
+            // Replace the text content with the formatted date
+            element.textContent = formattedDate;
         });
+    });
     </script>
 {% endblock content %}
