@@ -5,38 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tournament Acceptance Confirmation</title>
   <style>
+    /* General body styles */
     body {
-      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-      background-color: #FAFAFA;
+      font-family: Arial, sans-serif;
+      background-color: #3D7EAA; /* Fallback solid color */
+      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
+
+    /* Email container styles */
     .email-container {
       max-width: 600px;
-      margin: 0 auto;
-      background-color: #FFFFFF;
+      width: 100%;
       padding: 20px;
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      box-sizing: border-box;
+      background-color: transparent; /* Removed background color */
     }
+
+    /* Headings */
     h1 {
       font-size: 28px;
       color: #333333;
+      margin: 0 0 15px;
     }
+
+    /* Paragraph styles */
     p {
       font-size: 14px;
       color: #333333;
       line-height: 1.5;
+      margin: 0 0 15px;
     }
+
+    /* List styles */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 15px;
+    }
+    li {
+      font-size: 14px;
+      color: #333333;
+      line-height: 1.5;
+    }
+
+    /* Button styles */
     .button {
       display: inline-block;
       padding: 15px 20px;
-      margin-top: 20px;
       background-color: #2CB543;
       color: #FFFFFF;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 50px;
       font-size: 16px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #239B3B;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      .email-container {
+        padding: 15px;
+      }
+
+      .button {
+        padding: 12px 15px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -48,9 +94,8 @@
     <p>Here are the details of the tournament:</p>
     <ul>
       <li><strong>Date:</strong> {{ tournament_date }}</li>
-<!--      <li><strong>Location:</strong> {{ tournament_location }}</li>-->
-      <!-- Uncomment the line below if the prize information needs to be included -->
-      <!-- <li><strong>Prize:</strong> {{ tournament_prize }}</li> -->
+      <!-- <li><strong>Location:</strong> {{ tournament_location }}</li> Uncomment if needed -->
+      <!-- <li><strong>Prize:</strong> {{ tournament_prize }}</li> Uncomment if needed -->
     </ul>
     <p>We will be sending more information regarding the schedule and rules soon. Please ensure to check your email regularly for updates.</p>
     <p>For any questions or additional information, feel free to reach out to our support team. We are here to help!</p>

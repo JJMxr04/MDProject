@@ -5,38 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Waitlist Update</title>
   <style>
+    /* General body styles */
     body {
-      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-      background-color: #FAFAFA;
+      font-family: Arial, sans-serif;
+      background-color: #3D7EAA; /* Fallback solid color */
+      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
+
+    /* Email container styles */
     .email-container {
       max-width: 600px;
-      margin: 0 auto;
-      background-color: #FFFFFF;
+      width: 100%;
       padding: 20px;
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      box-sizing: border-box;
+      background-color: transparent; /* Removed background color */
     }
+
+    /* Headings */
     h1 {
       font-size: 28px;
       color: #333333;
+      margin: 0 0 15px;
     }
+
+    /* Paragraph styles */
     p {
       font-size: 14px;
       color: #333333;
       line-height: 1.5;
+      margin: 0 0 15px;
     }
+
+    /* Button styles */
     .button {
       display: inline-block;
       padding: 15px 20px;
-      margin-top: 20px;
       background-color: #2CB543;
       color: #FFFFFF;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 50px; /* Updated to match the first email */
       font-size: 16px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #239B3B; /* Updated hover color */
+    }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      .email-container {
+        padding: 15px;
+      }
+
+      .button {
+        padding: 12px 15px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -46,12 +80,11 @@
     <p>Dear Valued User,</p>
     <p>We are excited to inform you that you have been taken off the waitlist and can now register on our site.</p>
     <p>This is a fantastic opportunity to access exclusive features and be part of our community.</p>
-<!--    <p>To complete your registration, please click the button below:</p>-->
-<!--    <a href="https://example.com/register" class="button">Register Now</a>-->
     <p>If you have any questions or need further information, do not hesitate to contact our support team.</p>
     <p>We look forward to welcoming you!</p>
-    <p>Best regards,<br> Paradise Sports Media and Entertainment</p>
-<!--    <a href="https://example.com/support" class="button">Contact Support</a>-->
+    <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
+    <!-- Uncomment the line below if a support contact button is needed -->
+    <!-- <a href="{{ support_url }}" class="button">Contact Support</a> -->
   </div>
 </body>
 </html>

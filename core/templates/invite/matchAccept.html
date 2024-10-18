@@ -7,51 +7,53 @@
   <title>Match Invitation Accepted</title>
   <style>
     /* General body styles */
-/* General body styles */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #3D7EAA; /* Fallback solid color */
-    background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #3D7EAA; /* Fallback solid color */
+      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
     /* Email container styles */
     .email-container {
       max-width: 600px;
       width: 100%;
-      background-color: #FFFFFF;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+      border-radius: 5px;
+
       text-align: center;
       box-sizing: border-box;
     }
+
     /* Logo container */
     .logo {
       margin-bottom: 20px;
     }
+
     /* Headings */
     h1 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    /* Paragraph styles */
-    p {
-      font-size: 16px;
-      color: #666;
-      line-height: 1.6;
+      font-size: 28px;
+      color: #333333;
       margin: 0 0 15px;
     }
+
+    /* Paragraph styles */
+    p {
+      font-size: 14px;
+      color: #333333;
+      line-height: 1.5;
+      margin: 0 0 15px;
+    }
+
     /* Button styles */
     .button {
       display: inline-block;
-      padding: 12px 30px;
+      padding: 15px 20px;
       background-color: #5CACEE;
       color: #FFFFFF;
       text-decoration: none;
@@ -60,8 +62,27 @@
       margin-top: 20px;
       transition: background-color 0.3s ease;
     }
+
     .button:hover {
       background-color: #1E90FF;
+    }
+
+    /* Image styles */
+    .img-fluid {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      .email-container {
+        padding: 15px;
+      }
+
+      .button {
+        padding: 12px 15px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -69,7 +90,7 @@
   <div class="email-container">
     <!-- Logo -->
     <div class="logo">
-      <img src="/static/assets/Logo/paradise_logo_2_normal.png" class="img-fluid rounded" alt="Paradise Sports Logo">
+      <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
     </div>
     <!-- Email content -->
     <h1>Your Match Invitation Has Been Accepted!</h1>
