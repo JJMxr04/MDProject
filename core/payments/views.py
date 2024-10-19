@@ -25,7 +25,30 @@ stripe.api_version = '2023-10-16'
 
 @login_required(login_url='/auth/login/')
 def onboarding_page(request):
-    return render(request, 'portal/payments/onboarding.html')
+    user = request.user
+
+    # Assuming the user model has a field for Stripe account ID
+    stripe_account_id = user.stripe_account_id
+
+    if not stripe_account_id:
+        # No connected account, redirect to onboarding
+        return render(request, 'portal/payments/onboarding.html' ) # Replace 'onboarding_page' with your actual onboarding URL name
+
+    # Fetch the account details from Stripe
+    try:
+        account = stripe.Account.retrieve(stripe_account_id)
+    except stripe.error.StripeError:
+        # Handle any potential error here (e.g., log the error)
+        return render(request, 'portal/payments/onboarding.html' )
+
+    # Check if the account is fully set up
+    if account['charges_enabled'] and account['details_submitted']:
+        # Account is fully set up, display the dashboard
+         return redirect('core-portal:writer-dashboard') 
+    else:
+        # Account is not fully set up, redirect to onboarding
+        
+        return render(request, 'portal/payments/onboarding.html')
 
 
 # @login_required(login_url='/auth/login/')
