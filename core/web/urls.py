@@ -7,6 +7,8 @@ app_name = 'core-web'
 urlpatterns = [
     path('', views.home, name='home'),  # Corrected path
     path('about/', views.about, name='about'),
+    path('privacy-policy/', views.privacy_policy, name='private-policy'),
+
     path('contactus/',include(supportUrls))
     
 ]
