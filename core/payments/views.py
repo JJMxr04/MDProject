@@ -25,8 +25,6 @@ stripe.api_version = '2023-10-16'
 
 @login_required(login_url='/auth/login/')
 def onboarding_page(request):
-    if request.user.stripe_account_id:
-        return redirect('core-portal:writer-subscription-plan')
     return render(request, 'portal/payments/onboarding.html')
 
 

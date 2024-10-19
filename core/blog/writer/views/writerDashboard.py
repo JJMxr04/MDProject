@@ -10,6 +10,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 import stripe
 import os
 import json
+from django.conf import settings
 
 stripe.api_key = settings.STRIPE_API_KEY
 stripe.api_version = '2023-10-16'
