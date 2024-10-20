@@ -40,7 +40,6 @@ def onboarding_page(request):
     except stripe.error.StripeError:
         # Handle any potential error here (e.g., log the error)
         return render(request, 'portal/payments/onboarding.html' )
-
     # Check if the account is fully set up
     if account['charges_enabled'] and account['details_submitted']:
         # Account is fully set up, display the dashboard
