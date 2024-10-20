@@ -34,10 +34,12 @@ def writer_dashboard(request):
         try:
             # Fetch account balance
             balance = stripe.Balance.retrieve(stripe_account=stripe_account_id)
+            print(f'Balance: {balance}')
             available_balance = balance['available'][0]['amount'] / 100  # Convert from cents to dollars
 
             # Fetch the last payout
             payouts = stripe.Payout.list(stripe_account=stripe_account_id)
+            print(f'Payouts: {payouts}')
             last_payout = payouts['data'][0] if payouts['data'] else None
             last_payout_amount = last_payout['amount'] / 100 if last_payout else 0
             last_payout_date = last_payout['arrival_date'] if last_payout else 'No payouts yet'
