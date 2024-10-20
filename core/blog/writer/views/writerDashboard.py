@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from core.blog.writer.decorator import writer_required
 from django.conf import settings
 import stripe
+import os
+from core.blog.client.models import Subscription
+from core.blog.writer.models import SubscriptionPlan
+
 
 # Set up Stripe API key and version
 stripe.api_key = settings.STRIPE_API_KEY
@@ -32,11 +36,17 @@ def writer_dashboard(request):
         # Account is fully set up, fetch additional details
 
         try:
+
+            active_subscriptions = len()
             # Fetch account balance
             balance = stripe.Balance.retrieve(stripe_account=stripe_account_id)
             print(f'Balance: {balance}')
-            available_balance = balance['available'][0]['amount'] / 100  # Convert from cents to dollars
+            available_balance = balance['available'][0]['amount'] / 100
+            pending_balance = balance['pending'][0]['amount'] / 100  # Convert from cents to dollars
 
+
+            active_subcriptions = Subscription.objects.writer_active_subscriptions(writer=request.user)
+            current_subscription_price= SubscriptionPlan.objects.filter(wrier=request.user).price,
             # Fetch the last payout
             payouts = stripe.Payout.list(stripe_account=stripe_account_id)
             print(f'Payouts: {payouts}')
@@ -48,7 +58,7 @@ def writer_dashboard(request):
             # Assuming Stripe charges 2.9% + $0.30 per transaction and the application fee is 10% of the earnings.
             total_gross_income = available_balance + last_payout_amount  # Combine payout and available balance
             stripe_fee = (total_gross_income * 0.029) + 0.30  # Stripe fee calculation
-            application_fee = total_gross_income * 0.10  # Application fee as 10% of total gross income
+            application_fee = total_gross_income *  (settings.PLATFORM_COST/100) # Application fee as 10% of total gross income
             net_earnings = total_gross_income - (stripe_fee + application_fee)
 
         except stripe.error.StripeError:
@@ -62,7 +72,11 @@ def writer_dashboard(request):
 
         # Pass the data to the template
         context = {
+            'active_subcriptions': active_subcriptions,
+            'current_subscription_price': current_subscription_price,
+            'monthly_income_projection': active_subscriptions * current_subscription_price,
             'available_balance': available_balance,
+            'pending_balance': pending_balance,
             'last_payout_amount': last_payout_amount,
             'last_payout_date': last_payout_date,
             'stripe_fee': round(stripe_fee, 2),

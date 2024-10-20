@@ -13,27 +13,27 @@
         <div class="stats-cards">
             <div class="card">
                 <h3>Subscribers</h3>
-                <p>2,345</p>
+                <p>{{ active_subscriptions }}</p>
             </div>
             <div class="card">
-                <h3>Monthly Income</h3>
-                <p>$4,780</p>
+                <h3>Monthly Income Projection</h3>
+                <p>${{ monthly_income_projection }}</p>
             </div>
             <div class="card">
                 <h3>Current Subscription Rate</h3>
-                <p>$10.00 / month</p>
+                <p>${{ current_subscription_price }} / month</p>
             </div>
             <div class="card">
                 <h3>Ranking</h3>
-                <p>#120</p>
+                <p>#120</p> <!-- Replace with dynamic ranking data if available -->
             </div>
             <div class="card">
                 <h3>Rating</h3>
-                <p>4.7 / 5 ⭐</p>
+                <p>4.7 / 5 ⭐</p> <!-- Replace with dynamic rating data if available -->
             </div>
             <div class="card">
                 <h3>Correctness Percentage</h3>
-                <p>95%</p>
+                <p>95%</p> <!-- Replace with dynamic correctness data if available -->
             </div>
         </div>
     </div>
@@ -45,6 +45,10 @@
             <div class="card">
                 <h3>Available Balance</h3>
                 <p>${{ available_balance }}</p>
+            </div>
+            <div class="card">
+                <h3>Pending Balance</h3>
+                <p>${{ pending_balance }}</p>
             </div>
             <div class="card">
                 <h3>Last Payout</h3>
@@ -89,21 +93,21 @@
             <tbody>
                 <tr>
                     <td>October</td>
-                    <td>2,345</td>
-                    <td>$4,780</td>
-                    <td>$10.00</td>
+                    <td>{{ active_subscriptions }}</td>
+                    <td>${{ monthly_income_projection }}</td>
+                    <td>${{ current_subscription_price }}</td>
                 </tr>
                 <tr>
                     <td>September</td>
                     <td>2,200</td>
                     <td>$4,400</td>
-                    <td>$10.00</td>
+                    <td>$10.00</td> <!-- Replace with actual historical data if available -->
                 </tr>
                 <tr>
                     <td>August</td>
                     <td>2,050</td>
                     <td>$4,100</td>
-                    <td>$10.00</td>
+                    <td>$10.00</td> <!-- Replace with actual historical data if available -->
                 </tr>
             </tbody>
         </table>
@@ -116,6 +120,7 @@
             <li>Video 1: 500 views, 95% correctness, 4.8/5 rating</li>
             <li>Article: 300 reads, 90% correctness, 4.6/5 rating</li>
             <li>Podcast: 200 listens, 85% correctness, 4.7/5 rating</li>
+            <!-- Replace with actual content performance data if available -->
         </ul>
     </div>
 

@@ -38,6 +38,10 @@ class SubscriptionManager(models.Manager):
             subscription.active = False
             subscription.save()
 
+    def writer_active_subscriptions(self,writer):
+        subscriptions = self.filter( writer=writer,active=True).all()
+        return len(subscriptions)
+
 class Subscription(models.Model):
     subscriber = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='subscriptions')
     writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='subscribers', limit_choices_to={'is_writer': True})
