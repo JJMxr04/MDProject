@@ -37,7 +37,7 @@ def writer_dashboard(request):
 
         try:
 
-            active_subscriptions = len()
+            
             # Fetch account balance
             balance = stripe.Balance.retrieve(stripe_account=stripe_account_id)
             print(f'Balance: {balance}')
@@ -45,7 +45,7 @@ def writer_dashboard(request):
             pending_balance = balance['pending'][0]['amount'] / 100  # Convert from cents to dollars
 
 
-            active_subcriptions = Subscription.objects.writer_active_subscriptions(writer=request.user)
+            active_subcriptions = len(Subscription.objects.writer_active_subscriptions(writer=request.user))
             current_subscription_price= SubscriptionPlan.objects.filter(wrier=request.user).price,
             # Fetch the last payout
             payouts = stripe.Payout.list(stripe_account=stripe_account_id)
