@@ -58,7 +58,7 @@ def writer_dashboard(request):
             # Assuming Stripe charges 2.9% + $0.30 per transaction and the application fee is 10% of the earnings.
             total_gross_income = available_balance + last_payout_amount  # Combine payout and available balance
             stripe_fee = (total_gross_income * 0.029) + 0.30  # Stripe fee calculation
-            application_fee = total_gross_income *  (settings.PLATFORM_COST/100) # Application fee as 10% of total gross income
+            application_fee = total_gross_income *  (int(settings.PLATFORM_COST)/100) # Application fee as 10% of total gross income
             net_earnings = total_gross_income - (stripe_fee + application_fee)
 
         except stripe.error.StripeError:
