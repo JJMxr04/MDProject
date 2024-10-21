@@ -70,7 +70,7 @@ def writer_dashboard(request):
 
         # Pass the data to the template
         context = {
-            'active_subcriptions': active_subscriptions,
+            'active_subscriptions': active_subscriptions,
             'current_subscription_price': current_subscription_price,
             'monthly_income_projection': active_subscriptions * current_subscription_price,
             'available_balance': available_balance,
