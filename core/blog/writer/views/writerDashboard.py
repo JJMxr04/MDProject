@@ -81,7 +81,7 @@ def writer_dashboard(request):
             'application_fee': round(application_fee, 2),
             'net_earnings': round(net_earnings, 2),
         }
-        print(context)
+        print('context:{context}')
         return render(request, 'portal/blog/writer/writer-dashboard.html', context)
 
     else:
