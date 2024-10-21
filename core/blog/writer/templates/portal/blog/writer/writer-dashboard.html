@@ -17,11 +17,11 @@
             </div>
             <div class="card">
                 <h3>Monthly Income Projection</h3>
-                <p>${{ monthly_income_projection }}</p>
+                <p>${{ monthly_income_projection.0|floatformat:2 }}</p>
             </div>
             <div class="card">
                 <h3>Current Subscription Rate</h3>
-                <p>${{ current_subscription_price }} / month</p>
+                <p>${{ current_subscription_price.0|floatformat:2 }} / month</p>
             </div>
             <div class="card">
                 <h3>Ranking</h3>
@@ -44,27 +44,29 @@
         <div class="stats-cards">
             <div class="card">
                 <h3>Available Balance</h3>
-                <p>${{ available_balance }}</p>
+                <p>${{ available_balance|floatformat:2 }}</p>
             </div>
             <div class="card">
                 <h3>Pending Balance</h3>
-                <p>${{ pending_balance }}</p>
+                <p>${{ pending_balance|floatformat:2 }}</p>
             </div>
             <div class="card">
                 <h3>Last Payout</h3>
-                <p>${{ last_payout_amount }} <br><small>{{ last_payout_date }}</small></p>
+                <p>${{ last_payout_amount|floatformat:2 }} <br>
+                    <small>{{ last_payout_date|date:"F j, Y" }}</small>
+                </p>
             </div>
             <div class="card">
                 <h3>Stripe Fee</h3>
-                <p>${{ stripe_fee }}</p>
+                <p>${{ stripe_fee|floatformat:2 }}</p>
             </div>
             <div class="card">
                 <h3>Application Fee</h3>
-                <p>${{ application_fee }}</p>
+                <p>${{ application_fee|floatformat:2 }}</p>
             </div>
             <div class="card">
                 <h3>Net Earnings</h3>
-                <p>${{ net_earnings }}</p>
+                <p>${{ net_earnings|floatformat:2 }}</p>
             </div>
         </div>
     </div>
@@ -94,8 +96,8 @@
                 <tr>
                     <td>October</td>
                     <td>{{ active_subscriptions }}</td>
-                    <td>${{ monthly_income_projection }}</td>
-                    <td>${{ current_subscription_price }}</td>
+                    <td>${{ monthly_income_projection.0|floatformat:2 }}</td>
+                    <td>${{ current_subscription_price.0|floatformat:2 }}</td>
                 </tr>
                 <tr>
                     <td>September</td>
