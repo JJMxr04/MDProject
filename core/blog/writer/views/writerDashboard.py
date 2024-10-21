@@ -46,7 +46,7 @@ def writer_dashboard(request):
 
 
             active_subcriptions = Subscription.objects.writer_active_subscriptions(writer=request.user)
-            current_subscription_price= SubscriptionPlan.objects.filter(writer=request.user).price,
+            current_subscription_price= SubscriptionPlan.objects.filter(writer=request.user).first().price,
             # Fetch the last payout
             payouts = stripe.Payout.list(stripe_account=stripe_account_id)
             print(f'Payouts: {payouts}')
