@@ -44,7 +44,7 @@ def writer_dashboard(request):
             pending_balance = balance['pending'][0]['amount'] / 100  # Convert from cents to dollars
 
 
-            active_subcriptions = Subscription.objects.writer_active_subscriptions(writer=request.user)
+            active_subscriptions = Subscription.objects.writer_active_subscriptions(writer=request.user)
             current_subscription_price= SubscriptionPlan.objects.filter(writer=request.user).first().price,
             # Fetch the last payout
             payouts = stripe.Payout.list(stripe_account=stripe_account_id)
@@ -70,9 +70,9 @@ def writer_dashboard(request):
 
         # Pass the data to the template
         context = {
-            'active_subcriptions': active_subcriptions,
+            'active_subcriptions': active_subscriptions,
             'current_subscription_price': current_subscription_price,
-            'monthly_income_projection': active_subcriptions * current_subscription_price,
+            'monthly_income_projection': active_subscriptions * current_subscription_price,
             'available_balance': available_balance,
             'pending_balance': pending_balance,
             'last_payout_amount': last_payout_amount,
@@ -81,7 +81,7 @@ def writer_dashboard(request):
             'application_fee': round(application_fee, 2),
             'net_earnings': round(net_earnings, 2),
         }
-        print(f'context:{context}')
+
         return render(request, 'portal/blog/writer/writer-dashboard.html', context)
 
     else:
