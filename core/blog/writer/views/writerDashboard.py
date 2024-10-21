@@ -74,7 +74,7 @@ def writer_dashboard(request):
         context = {
             'active_subcriptions': active_subcriptions,
             'current_subscription_price': current_subscription_price,
-            'monthly_income_projection': active_subscriptions * current_subscription_price,
+            'monthly_income_projection': active_subcriptions * current_subscription_price,
             'available_balance': available_balance,
             'pending_balance': pending_balance,
             'last_payout_amount': last_payout_amount,
