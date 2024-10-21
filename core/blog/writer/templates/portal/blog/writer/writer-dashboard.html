@@ -9,67 +9,69 @@
     <p class="dashboard-quote">"Create content that inspires and connects with your audience." – Your daily motivation</p>
 
     <!-- Key Metrics -->
-    <div class="dashboard-section">
-        <div class="stats-cards">
-            <div class="card">
-                <h3>Subscribers</h3>
-                <p>{{ active_subscriptions }}</p>
-            </div>
-            <div class="card">
-                <h3>Monthly Income Projection</h3>
-                <p>${{ monthly_income_projection.0|floatformat:2 }}</p>
-            </div>
-            <div class="card">
-                <h3>Current Subscription Rate</h3>
-                <p>${{ current_subscription_price.0|floatformat:2 }} / month</p>
-            </div>
-            <!-- <div class="card">
-                <h3>Ranking</h3>
-                <p>#120</p>
-            </div>
-            <div class="card">
-                <h3>Rating</h3>
-                <p>4.7 / 5 ⭐</p> 
-            </div>
-            <div class="card">
-                <h3>Correctness Percentage</h3>
-                <p>95%</p> 
-            </div> -->
+<!-- Key Metrics -->
+<div class="dashboard-section">
+    <div class="stats-cards">
+        <div class="card">
+            <h3>Subscribers</h3>
+            <p>{{ active_subscriptions }}</p>
+        </div>
+        <div class="card">
+            <h3>Monthly Income Projection</h3>
+            <p>${{ monthly_income_projection.0|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Current Subscription Rate</h3>
+            <p>${{ current_subscription_price.0|floatformat:2 }} / month</p>
         </div>
     </div>
+</div>
 
-    <!-- Stripe Income Summary -->
-    <div class="dashboard-section income-summary">
-        <h2>Stripe Income Summary</h2>
-        <div class="stats-cards">
-            <div class="card">
-                <h3>Available Balance</h3>
-                <p>${{ available_balance|floatformat:2 }}</p>
-            </div>
-            <div class="card">
-                <h3>Pending Balance</h3>
-                <p>${{ pending_balance|floatformat:2 }}</p>
-            </div>
-            <div class="card">
-                <h3>Last Payout</h3>
-                <p>${{ last_payout_amount|floatformat:2 }} <br>
-                    <small>{{ last_payout_date|date:"F j, Y" }}</small>
-                </p>
-            </div>
-            <div class="card">
-                <h3>Stripe Fee</h3>
-                <p>${{ stripe_fee|floatformat:2 }}</p>
-            </div>
-            <div class="card">
-                <h3>Application Fee</h3>
-                <p>${{ application_fee|floatformat:2 }}</p>
-            </div>
-            <div class="card">
-                <h3>Net Earnings</h3>
-                <p>${{ net_earnings|floatformat:2 }}</p>
-            </div>
+<!-- Stripe Income Summary -->
+<div class="dashboard-section income-summary">
+    <h2>Stripe Income Summary</h2>
+    <div class="stats-cards">
+        <div class="card">
+            <h3>Available Balance</h3>
+            <p>${{ available_balance|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Pending Balance</h3>
+            <p>${{ pending_balance|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Last Payout</h3>
+            <p>${{ last_payout_amount|floatformat:2 }} <br>
+                <small>{{ last_payout_date|date:"F j, Y" }}</small>
+            </p>
+        </div>
+        <div class="card">
+            <h3>Stripe Fee</h3>
+            <p>${{ stripe_fee|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Application Fee</h3>
+            <p>${{ application_fee|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Net Earnings</h3>
+            <p>${{ net_earnings|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Total Earned Income</h3>
+            <p>${{ total_earned_income|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Overall Stripe Fees</h3>
+            <p>${{ overall_stripe_fees|floatformat:2 }}</p>
+        </div>
+        <div class="card">
+            <h3>Overall Application Fees</h3>
+            <p>${{ overall_application_fees|floatformat:2 }}</p>
         </div>
     </div>
+</div>
+
 
     <!-- Subscriber Growth Chart -->
     <div class="dashboard-section">
