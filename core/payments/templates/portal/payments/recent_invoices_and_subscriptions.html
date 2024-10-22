@@ -2,6 +2,90 @@
 {% load static %}
 {% block css %}
   <link rel="stylesheet" href="{% static 'css/portal/payment/onboarding.css' %}">
+  <style>
+    /* General container and layout */
+    #container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    /* Typography improvements */
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+
+    /* Active Subscriptions & Invoices lists */
+    .active-subscriptions ul, .recent-invoices ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    /* Card-like styles for subscription and invoice items */
+    .active-subscriptions li, .recent-invoices li {
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .active-subscriptions li:hover, .recent-invoices li:hover {
+      background-color: #f1f1f1;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .subscription-details, .invoice-details {
+      flex-grow: 1;
+    }
+
+    /* Highlighted text (e.g., plan name, invoice number) */
+    .subscription-details strong, .invoice-details strong {
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* Action links (cancel subscription, view invoice) */
+    .subscription-actions a, .invoice-details a {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .subscription-actions a:hover, .invoice-details a:hover {
+      background-color: #0056b3;
+    }
+
+    /* Spacing for smaller text information */
+    .subscription-details span, .invoice-details span {
+      display: block;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    /* Empty state */
+    p {
+      color: #888;
+      font-size: 1rem;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 {% endblock css %}
 
 {% block title %}
@@ -10,20 +94,26 @@
 
 {% block content %}
   <div id="container" class="bg-white shadow-md p-5 form-layout mt-0 rounded">
+    
+    <!-- Active Subscriptions Section -->
     <h2>Active Subscriptions</h2>
     <div class="active-subscriptions">
       {% if active_subscriptions %}
         <ul>
           {% for subscription in active_subscriptions %}
             <li>
-              <strong>{{ subscription.plan.name }}</strong> - 
-              Start Date: {{ subscription.start_date }} - 
-              End Date: {{ subscription.end_date }} - 
-              Status: {{ subscription.status }} - 
-              <a href="{% url 'core-portal:cancel_subscription' subscription.id %}" 
-                 onclick="return confirm('Are you sure you want to cancel this subscription?');">
-                Cancel
-              </a>
+              <div class="subscription-details">
+                <strong>{{ subscription.plan.name }}</strong>
+                <span>Start Date: {{ subscription.start_date }}</span>
+                <span>End Date: {{ subscription.end_date }}</span>
+                <span>Status: {{ subscription.status }}</span>
+              </div>
+              <div class="subscription-actions">
+                <a href="{% url 'core-portal:cancel_subscription' subscription.id %}" 
+                   onclick="return confirm('Are you sure you want to cancel this subscription?');">
+                  Cancel
+                </a>
+              </div>
             </li>
           {% endfor %}
         </ul>
@@ -32,18 +122,21 @@
       {% endif %}
     </div>
 
+    <!-- Recent Invoices Section -->
     <h2>Recent Invoices</h2>
     <div class="recent-invoices">
       {% if recent_invoices %}
         <ul>
           {% for invoice in recent_invoices %}
             <li>
-              <a href="{% url 'core-portal:invoice_detail' invoice.id %}">
-                <strong>Invoice #{{ invoice.number }}</strong> - 
-                Amount: ${{ invoice.amount_due_in_dollars|floatformat:2 }} {{ invoice.currency|upper }} - 
-                Status: {{ invoice.status }} - 
-                Created: {{ invoice.created|date:"Y-m-d H:i" }}
-              </a>
+              <div class="invoice-details">
+                <a href="{% url 'core-portal:invoice_detail' invoice.id %}">
+                  <strong>Invoice #{{ invoice.number }}</strong>
+                </a>
+                <span>Amount: ${{ invoice.amount_due_in_dollars|floatformat:2 }} {{ invoice.currency|upper }}</span>
+                <span>Status: {{ invoice.status }}</span>
+                <span>Created: {{ invoice.created|date:"Y-m-d H:i" }}</span>
+              </div>
             </li>
           {% endfor %}
         </ul>
@@ -51,5 +144,6 @@
         <p>No recent invoices found.</p>
       {% endif %}
     </div>
+    
   </div>
 {% endblock content %}
