@@ -443,6 +443,8 @@ def recent_invoices_and_subscriptions(request):
         try:
             invoices = stripe.Invoice.list(customer=user.stripe_customer_id, limit=10)
             recent_invoices = invoices.data
+            for invoice in recent_invoices:
+                invoice.amount_due_in_dollars = invoice.amount_due / 100  # Convert cents to dollars
         except stripe.error.StripeError as e:
             print(f"Error fetching invoices from Stripe: {e}")
 

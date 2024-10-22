@@ -40,7 +40,7 @@
             <li>
               <a href="{% url 'invoice_detail' invoice.id %}">
                 <strong>Invoice #{{ invoice.number }}</strong> - 
-                Amount: ${{ invoice.amount_due / 100|floatformat:2 }} {{ invoice.currency|upper }} - 
+                Amount: ${{ invoice.amount_due_in_dollars|floatformat:2 }} {{ invoice.currency|upper }} - 
                 Status: {{ invoice.status }} - 
                 Created: {{ invoice.created|date:"Y-m-d H:i" }}
               </a>
