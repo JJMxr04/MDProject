@@ -29,7 +29,7 @@
                 {% for item in invoice.lines.data %}
                 <tr>
                     <td>{{ item.description }}</td>
-                    <td>${{ item.amount / 100|floatformat:2 }}</td>
+                    <td>${{ item.amount|floatformat:2 }}</td>
                     <td>{{ item.quantity }}</td>
                 </tr>
                 {% endfor %}

@@ -461,14 +461,20 @@ def invoice_detail(request, invoice_id):
         try:
             # Retrieve the invoice from Stripe
             invoice = stripe.Invoice.retrieve(invoice_id)
-            # Perform division of amount_due here
+            
+            # Process invoice amount_due
             if invoice.amount_due is not None:
                 invoice.amount_due = invoice.amount_due / 100
+
+            # Process item amounts in lines.data
+            for item in invoice.lines.data:
+                if item.amount is not None:
+                    item.amount = item.amount / 100
+
         except stripe.error.StripeError as e:
             print(f"Error fetching invoice: {e}")
 
     return render(request, 'portal/payments/invoice_detail.html', {'invoice': invoice})
-
 
 @login_required(login_url='/auth/login/')
 def cancel_subscription(request, subscription_id):
