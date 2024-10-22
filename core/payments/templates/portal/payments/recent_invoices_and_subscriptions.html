@@ -103,7 +103,7 @@
           {% for subscription in active_subscriptions %}
             <li>
               <div class="subscription-details">
-                <strong>{{ subscription.plan.name }}</strong>
+                <strong>{{ subscription.plan }}</strong>
                 <span>Start Date: {{ subscription.start_date }}</span>
                 <span>End Date: {{ subscription.end_date }}</span>
                 <span>Status: {{ subscription.status }}</span>
