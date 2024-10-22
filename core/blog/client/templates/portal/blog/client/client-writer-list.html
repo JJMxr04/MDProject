@@ -27,6 +27,22 @@
     </div>
 </div>
 
+<div class="form-check form-switch">
+    <input 
+        class="form-check-input subscribe-toggle" 
+        type="checkbox" 
+        id="subscribe-{{ writer.id }}" 
+        data-writer-id="{{ writer.id }}" 
+        {% if writer.is_subscribed %}checked{% endif %}>
+    <label class="form-check-label" for="subscribe-{{ writer.id }}">
+        {% if writer.is_subscribed %}
+            Subscribed
+        {% else %}
+            Not Subscribed
+        {% endif %}
+    </label>
+</div>
+
     <br>
     {% if writers %}
         {% for writer in writers %}
@@ -74,6 +90,32 @@
     </div>
 
     {% endif %}
+
+    <script>
+        $(document).ready(function() {
+            $('.subscribe-toggle').on('change', function() {
+                var writerId = $(this).data('writer-id');
+                var isSubscribed = $(this).is(':checked');
+    
+                $.ajax({
+                    url: '{% url "core-portal:client-writer-toggle-subscription" %}',  // URL for the subscription toggle
+                    method: 'POST',
+                    data: {
+                        'writer_id': writerId,
+                        'is_subscribed': isSubscribed,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+    
 
 {% endblock content %}
 
