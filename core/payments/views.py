@@ -50,9 +50,12 @@ def onboarding_page(request):
         return render(request, 'portal/payments/onboarding.html')
 
 
-# @login_required(login_url='/auth/login/')
+@login_required(login_url='/auth/login/')
 def successful_payment(request):
     return render(request, 'portal/payments/success.html')
+@login_required(login_url='/auth/login/')
+def successful_cancel_subscription(request):
+    return render(request, 'portal/payments/success-cancel-subscription.html')
 
 
 @login_required(login_url='/auth/login/')
@@ -476,7 +479,7 @@ def cancel_subscription(request, subscription_id):
         )
 
         # Redirect to a success page or display a success message
-        return redirect('core-portal:successful-payment')
+        return redirect('core-portal:successful-cancel-subscription')
     except Subscription.DoesNotExist:
         return JsonResponse({'error': 'Subscription not found'}, status=404)
     except stripe.error.StripeError as e:
