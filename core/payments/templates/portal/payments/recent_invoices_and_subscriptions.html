@@ -16,14 +16,14 @@
         <ul>
           {% for subscription in active_subscriptions %}
             <li>
-              <strong>
-                <a href="{% url 'subscription_detail' subscription.id %}">
-                  {{ subscription.plan.name }}
-                </a>
-              </strong> - 
+              <strong>{{ subscription.plan.name }}</strong> - 
               Start Date: {{ subscription.start_date }} -
               End Date: {{ subscription.end_date }} -
-              Status: {{ subscription.status }}
+              Status: {{ subscription.status }} -
+              <a href="{% url 'core-portal:cancel_subscription' subscription.id %}" 
+                 onclick="return confirm('Are you sure you want to cancel this subscription?');">
+                Cancel
+              </a>
             </li>
           {% endfor %}
         </ul>

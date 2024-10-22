@@ -18,5 +18,6 @@ urlpatterns = [
     path('manage-subscriptions/',views.recent_invoices_and_subscriptions, name='manage-subscriptions'),
     path('cancel_subscription/<int:subscription_id>/', views.cancel_subscription, name='cancel_subscription'),
 
+
     
 ]
