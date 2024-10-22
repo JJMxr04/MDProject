@@ -425,3 +425,29 @@ def handle_subscription_deleted(sub):
 
         except Exception as e:
             print(f"Error handling subscription deleted: {e}")
+
+
+
+@login_required(login_url='/auth/login/')
+def recent_invoices_and_subscriptions(request):
+    user = request.user
+
+    # Fetch the active subscriptions from the database
+    active_subscriptions = Subscription.objects.filter(subscriber=user, active=True)
+
+    # Fetch recent invoices from Stripe
+    recent_invoices = []
+    if user.stripe_customer_id:
+        try:
+            # Fetch the most recent 10 invoices from Stripe for the user's customer ID
+            invoices = stripe.Invoice.list(customer=user.stripe_customer_id, limit=10)
+            recent_invoices = invoices.data
+        except stripe.error.StripeError as e:
+            # Handle any Stripe API errors
+            print(f"Error fetching invoices from Stripe: {e}")
+
+    # Render the template with the invoices and subscriptions data
+    return render(request, 'portal/payments/recent_invoices_and_subscriptions.html', {
+        'active_subscriptions': active_subscriptions,
+        'recent_invoices': recent_invoices,
+    })

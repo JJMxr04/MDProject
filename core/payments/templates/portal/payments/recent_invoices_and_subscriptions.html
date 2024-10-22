@@ -1,0 +1,51 @@
+{% extends "portal/blog/writer/components/base_portal_writer.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/portal/payment/onboarding.css' %}">
+{% endblock css %}
+
+{% block title %}
+  Recent Invoices & Active Subscriptions
+{% endblock title %}
+
+{% block content %}
+  <div id="container" class="bg-white shadow-md p-5 form-layout mt-0 rounded">
+    <h2>Active Subscriptions</h2>
+    <div class="active-subscriptions">
+      {% if active_subscriptions %}
+        <ul>
+          {% for subscription in active_subscriptions %}
+            <li>
+              <strong>{{ subscription.plan.name }}</strong> - 
+              Start Date: {{ subscription.start_date }} -
+              End Date: {{ subscription.end_date }} -
+              Status: {{ subscription.status }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No active subscriptions found.</p>
+      {% endif %}
+    </div>
+
+    <h2>Recent Invoices</h2>
+    <div class="recent-invoices">
+      {% if recent_invoices %}
+        <ul>
+          {% for invoice in recent_invoices %}
+            <li>
+              <strong>Invoice #{{ invoice.number }}</strong> - 
+              Amount: {{ invoice.amount_due|floatformat:2 }} {{ invoice.currency|upper }} -
+              Status: {{ invoice.status }} - 
+              Created: {{ invoice.created|date:"Y-m-d H:i" }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No recent invoices found.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+
+

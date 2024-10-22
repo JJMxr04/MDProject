@@ -23,6 +23,7 @@
     <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
         <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item" href="{% url 'core-portal:manage-subscriptions' %}">Manage Subscriptions</a></li>
         <li>
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
