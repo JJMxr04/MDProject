@@ -1,0 +1,73 @@
+{% extends "portal/blog/writer/components/base_portal_writer.html" %}
+{% load static %}
+
+{% block title %}Invoice Details{% endblock title %}
+
+{% block content %}
+<div class="container bubble-bg shadow-lg p-5">
+    <h2 class="text-center">Invoice Details</h2>
+
+    {% if invoice %}
+        <div class="invoice-info">
+            <h3>Invoice #{{ invoice.id }}</h3>
+            <p>Status: <strong>{{ invoice.status }}</strong></p>
+            <p>Amount Due: ${{ invoice.amount_due / 100|floatformat:2 }}</p>
+            <p>Due Date: {{ invoice.due_date|date:"F j, Y" }}</p>
+            <p>Created on: {{ invoice.created|date:"F j, Y" }}</p>
+        </div>
+
+        <h4 class="mt-4">Items</h4>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in invoice.lines.data %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td>${{ item.amount / 100|floatformat:2 }}</td>
+                    <td>{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'recent_invoices' %}" class="btn btn-primary">Back to Invoices</a>
+        </div>
+
+    {% else %}
+        <p>Invoice not found or unavailable.</p>
+    {% endif %}
+</div>
+
+<style>
+    .invoice-info {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    .invoice-table th, .invoice-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    .invoice-table th {
+        background-color: #e0f7fa;
+    }
+    .invoice-table tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+{% endblock content %}

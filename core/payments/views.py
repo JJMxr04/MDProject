@@ -430,7 +430,6 @@ def handle_subscription_deleted(sub):
             print(f"Error handling subscription deleted: {e}")
 
 
-
 @login_required(login_url='/auth/login/')
 def recent_invoices_and_subscriptions(request):
     user = request.user
@@ -442,11 +441,9 @@ def recent_invoices_and_subscriptions(request):
     recent_invoices = []
     if user.stripe_customer_id:
         try:
-            # Fetch the most recent 10 invoices from Stripe for the user's customer ID
             invoices = stripe.Invoice.list(customer=user.stripe_customer_id, limit=10)
             recent_invoices = invoices.data
         except stripe.error.StripeError as e:
-            # Handle any Stripe API errors
             print(f"Error fetching invoices from Stripe: {e}")
 
     # Render the template with the invoices and subscriptions data
@@ -454,6 +451,19 @@ def recent_invoices_and_subscriptions(request):
         'active_subscriptions': active_subscriptions,
         'recent_invoices': recent_invoices,
     })
+@login_required(login_url='/auth/login/')
+def invoice_detail(request, invoice_id):
+    user = request.user
+    invoice = None
+    if user.stripe_customer_id:
+        try:
+            # Retrieve the invoice from Stripe
+            invoice = stripe.Invoice.retrieve(invoice_id)
+        except stripe.error.StripeError as e:
+            print(f"Error fetching invoice: {e}")
+
+    return render(request, 'portal/payments/invoice_detail.html', {'invoice': invoice})
+
 
 @login_required(login_url='/auth/login/')
 def cancel_subscription(request, subscription_id):

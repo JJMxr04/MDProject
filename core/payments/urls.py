@@ -18,6 +18,7 @@ urlpatterns = [
     path('manage-subscriptions/',views.recent_invoices_and_subscriptions, name='manage-subscriptions'),
     path('cancel_subscription/<int:subscription_id>/', views.cancel_subscription, name='cancel_subscription'),
     path('success-cancel-subscription/', views.successful_cancel_subscription, name='successful-cancel-subscription'),
+    path('invoice/<str:invoice_id>/', views.invoice_detail, name='invoice_detail'),
     
 
 

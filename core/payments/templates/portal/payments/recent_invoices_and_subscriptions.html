@@ -1,4 +1,4 @@
-{% extends "portal/blog/writer/components/base_portal_writer.html" %}
+{% extends "portal/blog/writer/components/base_portal_writer.html" %} 
 {% load static %}
 {% block css %}
   <link rel="stylesheet" href="{% static 'css/portal/payment/onboarding.css' %}">
@@ -17,9 +17,9 @@
           {% for subscription in active_subscriptions %}
             <li>
               <strong>{{ subscription.plan.name }}</strong> - 
-              Start Date: {{ subscription.start_date }} -
-              End Date: {{ subscription.end_date }} -
-              Status: {{ subscription.status }} -
+              Start Date: {{ subscription.start_date }} - 
+              End Date: {{ subscription.end_date }} - 
+              Status: {{ subscription.status }} - 
               <a href="{% url 'core-portal:cancel_subscription' subscription.id %}" 
                  onclick="return confirm('Are you sure you want to cancel this subscription?');">
                 Cancel
@@ -38,10 +38,12 @@
         <ul>
           {% for invoice in recent_invoices %}
             <li>
-              <strong>Invoice #{{ invoice.number }}</strong> - 
-              Amount: {{ invoice.amount_due|floatformat:2 }} {{ invoice.currency|upper }} -
-              Status: {{ invoice.status }} - 
-              Created: {{ invoice.created|date:"Y-m-d H:i" }}
+              <a href="{% url 'invoice_detail' invoice.id %}">
+                <strong>Invoice #{{ invoice.number }}</strong> - 
+                Amount: ${{ invoice.amount_due / 100|floatformat:2 }} {{ invoice.currency|upper }} - 
+                Status: {{ invoice.status }} - 
+                Created: {{ invoice.created|date:"Y-m-d H:i" }}
+              </a>
             </li>
           {% endfor %}
         </ul>
