@@ -24,5 +24,5 @@ class SubscriptionPlan(models.Model):
     objects = SubscriptionPlanManager()
 
     def __str__(self):
-        return f'${self.price}/month to {self.writer} '
+        return f'${self.price}/month to {self.writer.username} '
 
