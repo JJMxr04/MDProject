@@ -4,6 +4,8 @@
   margin-top: auto; /* Push footer to the bottom */
   font-family: Arial, sans-serif;
   color: #333; /* Text color */
+  max-width: 1200px; /* Maximum width for the navbar */
+  width: 100%;
 }
 
 .footer-container {
