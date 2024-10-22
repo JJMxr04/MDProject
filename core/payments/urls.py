@@ -15,7 +15,8 @@ urlpatterns = [
     path('create-checkout-session/<str:creator_id>/', views.create_checkout_session, name='create-checkout-session'),
     path('webhook/', views.stripe_webhook, name='stripe-webhook'),
     path('success/', views.successful_payment, name='successful-payment'),
-    path('manage-subscriptions/',views.recent_invoices_and_subscriptions, name='manage-subscriptions')
+    path('manage-subscriptions/',views.recent_invoices_and_subscriptions, name='manage-subscriptions'),
+    path('cancel_subscription/<int:subscription_id>/', views.cancel_subscription, name='cancel_subscription'),
 
     
 ]

@@ -16,7 +16,11 @@
         <ul>
           {% for subscription in active_subscriptions %}
             <li>
-              <strong>{{ subscription.plan.name }}</strong> - 
+              <strong>
+                <a href="{% url 'subscription_detail' subscription.id %}">
+                  {{ subscription.plan.name }}
+                </a>
+              </strong> - 
               Start Date: {{ subscription.start_date }} -
               End Date: {{ subscription.end_date }} -
               Status: {{ subscription.status }}
@@ -47,5 +51,3 @@
     </div>
   </div>
 {% endblock content %}
-
-

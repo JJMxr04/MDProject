@@ -451,3 +451,36 @@ def recent_invoices_and_subscriptions(request):
         'active_subscriptions': active_subscriptions,
         'recent_invoices': recent_invoices,
     })
+
+@login_required(login_url='/auth/login/')
+def cancel_subscription(request, subscription_id):
+    try:
+        # Get the subscription object from the database
+        subscription = Subscription.objects.get(id=subscription_id, subscriber=request.user)
+
+        # Call Stripe API to cancel the subscription
+        stripe.Subscription.delete(subscription.stripe_subscription_id)
+
+        # Update the subscription status in the database
+        subscription.active = False
+        subscription.end_date = timezone.now()
+        subscription.save()
+
+        # Optionally, create an invoice record for the cancellation
+        Invoice.objects.create(
+            user=request.user,
+            subscription=subscription,
+            amount=0,  # Amount could be set based on your policy (e.g., prorated amount)
+            status='canceled',
+            stripe_invoice_id=None  # Set to None as there's no associated invoice for cancellation
+        )
+
+        # Redirect to a success page or display a success message
+        return redirect('core-portal:successful-payment')
+    except Subscription.DoesNotExist:
+        return JsonResponse({'error': 'Subscription not found'}, status=404)
+    except stripe.error.StripeError as e:
+        return JsonResponse({'error': f'Stripe error: {str(e)}'}, status=500)
+    except Exception as e:
+        return JsonResponse({'error': f'Error: {str(e)}'}, status=500)
+
