@@ -14,7 +14,16 @@
     
     <!-- Search Bar -->
     <div class="mb-3">
-        <input type="text" class="form-control" placeholder="Search Writers" aria-label="Search Writers">
+        <form method="GET" action="{% url 'core-portal:writer-list' %}">
+            <input 
+                type="text" 
+                name="search" 
+                class="form-control" 
+                placeholder="Search Writers" 
+                aria-label="Search Writers" 
+                value="{{ search_query|default_if_none:'' }}"
+            >
+        </form>
     </div>
 </div>
 
@@ -38,7 +47,7 @@
             {% else %}
                 <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
             {% endif %}
-            <h3> {{writer.first_name}} {{writer.last_name}}</h3>
+            <h3> {{ writer.first_name }} {{ writer.last_name }}</h3>
 
             <br> <br>
             <h4> Writer Description:</h4>
@@ -46,16 +55,14 @@
 
             <br> <br>
 
-            <h4> Leagues Writer Primarly likes to Bet:</h4>
+            <h4> Leagues Writer Primarily likes to Bet:</h4>
             {% if writer.tags %}
-                {%for tag in writer.tags%}
+                {% for tag in writer.tags %}
                 <p> {{ tag.name }}</p>
                 {% endfor %}
             {% else %}
-
-            <p> No Tags</p>
+            <p>No Tags</p>
             {% endif %}
-
 
             <br>
         </div>
@@ -64,11 +71,9 @@
     {% else %}
     <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
         <h6> No Writers to display</h6>
-
     </div>
 
     {% endif %}
-
 
 {% endblock content %}
 
