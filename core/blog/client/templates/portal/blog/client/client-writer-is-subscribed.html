@@ -7,40 +7,35 @@
 {% block title %}Subscribe to {{ writer.username }}{% endblock title %}
 
 {% block content %}
-<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
-    <h5>📚 Welcome, {{ user.username }}! 📚</h5>
-    <p>Subscribe to {{ writer.username }} to access exclusive articles and content.</p>
-</div>
+
 
 <br>
 
 
-    <div class="container bg-white shadow-md p-5 form-layout text-center offset2">
-        <h4>🎉 You are subscribed to {{ writer.username }}! 🎉</h4>
-        <p>Here are the latest articles by {{ writer.username }}:</p>
-    </div>
+<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
+    <h4>🎉 You are subscribed to {{ writer.username }}! 🎉</h4>
+    <p>Here are the latest articles by {{ writer.username }}:</p>
+</div>
 
-    <br>
-    
-    {% if articles %}
-        {% for article in articles %}
-            <div class="container bg-white shadow-md p-5 form-layout rounded text-left mb-4">
-                <h3>{{ article.title }}</h3>
-                <p class="text-muted">Published on: {{ article.date_published|date:"F j, Y, g:i a" }}</p>
-                <h5>Event: {{ article.event }}</h5>
-                <h5>Market: {{ article.outcome.market.key }}</h5>
-                <h5>Outcome: {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</h5>
-                <div class="article-content">
-                    <p>{{ article.content }}</p>
-                </div>
-                <p class="text-right"><em>Date Created: {{ article.date_created|date:"F j, Y" }}</em></p>
+{% if articles %}
+    {% for article in articles %}
+        <div class="container bg-white shadow-md p-5 form-layout rounded text-left mb-4">
+            <h3>{{ article.title }}</h3>
+            <p class="text-muted">Published on: {{ article.date_published|date:"F j, Y, g:i a" }}</p>
+            <h5>Event: {{ article.event }}</h5>
+            <h5>Market: {{ article.outcome.market.key }}</h5>
+            <h5>Outcome: {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</h5>
+            <div class="article-content">
+                <p>{{ article.content }}</p>
             </div>
-        {% endfor %}
-    {% else %}
-        <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
-            <h6>No articles to display at the moment. Check back soon for more updates!</h6>
+            <p class="text-right"><em>Date Created: {{ article.date_created|date:"F j, Y" }}</em></p>
         </div>
-    {% endif %}
+    {% endfor %}
+{% else %}
+    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+        <h6>No articles to display at the moment. Check back soon for more updates!</h6>
+    </div>
+{% endif %}
 
 
 {% endblock content %}
