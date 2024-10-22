@@ -35,7 +35,7 @@ def writer_dashboard(request):
 
             # Fetch active subscriptions and current subscription price
             active_subscriptions = Subscription.objects.writer_active_subscriptions(writer=request.user)
-            print(f'current sub price: {SubscriptionPlan.objects.filter(writer=request.user)}')
+            print(f'current sub price: {SubscriptionPlan.objects.filter(writer=request.user).first()}')
             current_subscription_price = SubscriptionPlan.objects.filter(writer=request.user).first().price
 
             # Fetch payouts and last payout
