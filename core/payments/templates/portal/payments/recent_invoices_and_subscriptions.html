@@ -38,7 +38,7 @@
         <ul>
           {% for invoice in recent_invoices %}
             <li>
-              <a href="{% url 'invoice_detail' invoice.id %}">
+              <a href="{% url 'core-portal:invoice_detail' invoice.id %}">
                 <strong>Invoice #{{ invoice.number }}</strong> - 
                 Amount: ${{ invoice.amount_due_in_dollars|floatformat:2 }} {{ invoice.currency|upper }} - 
                 Status: {{ invoice.status }} - 
