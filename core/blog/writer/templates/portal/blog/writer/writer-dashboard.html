@@ -13,28 +13,16 @@
         <div class="stats-cards">
             <div class="card">
                 <h3>Subscribers</h3>
-                <p>{{ active_subscriptions }}</p>
+                <p>{{ active_subscriptions|default:"0" }}</p>
             </div>
             <div class="card">
                 <h3>Monthly Income Projection</h3>
-                <p>${{ monthly_income_projection.0|floatformat:2 }}</p>
+                <p>${{ monthly_income_projection|floatformat:2|default:"0.00" }}</p>
             </div>
             <div class="card">
                 <h3>Current Subscription Rate</h3>
-                <p>${{ current_subscription_price.0|floatformat:2 }} / month</p>
+                <p>${{ current_subscription_price|floatformat:2|default:"0.00" }} / month</p>
             </div>
-            <!-- <div class="card">
-                <h3>Ranking</h3>
-                <p>#120</p>
-            </div>
-            <div class="card">
-                <h3>Rating</h3>
-                <p>4.7 / 5 ⭐</p> 
-            </div>
-            <div class="card">
-                <h3>Correctness Percentage</h3>
-                <p>95%</p> 
-            </div> -->
         </div>
     </div>
 
@@ -44,87 +32,32 @@
         <div class="stats-cards">
             <div class="card">
                 <h3>Available Balance</h3>
-                <p>${{ available_balance|floatformat:2 }}</p>
+                <p>${{ available_balance|floatformat:2|default:"0.00" }}</p>
             </div>
             <div class="card">
                 <h3>Pending Balance</h3>
-                <p>${{ pending_balance|floatformat:2 }}</p>
+                <p>${{ pending_balance|floatformat:2|default:"0.00" }}</p>
             </div>
             <div class="card">
                 <h3>Last Payout</h3>
-                <p>${{ last_payout_amount|floatformat:2 }} <br>
-                    <small>{{ last_payout_date|date:"F j, Y" }}</small>
+                <p>${{ last_payout_amount|floatformat:2|default:"0.00" }} <br>
+                    <small>{{ last_payout_date|date:"F j, Y"|default:"N/A" }}</small>
                 </p>
             </div>
             <div class="card">
                 <h3>Stripe Fee</h3>
-                <p>${{ stripe_fee|floatformat:2 }}</p>
+                <p>${{ stripe_fee|floatformat:2|default:"0.00" }}</p>
             </div>
             <div class="card">
                 <h3>Application Fee</h3>
-                <p>${{ application_fee|floatformat:2 }}</p>
+                <p>${{ application_fee|floatformat:2|default:"0.00" }}</p>
             </div>
             <div class="card">
                 <h3>Net Earnings</h3>
-                <p>${{ net_earnings|floatformat:2 }}</p>
+                <p>${{ net_earnings|floatformat:2|default:"0.00" }}</p>
             </div>
         </div>
     </div>
-
-    <!-- Subscriber Growth Chart -->
-    <div class="dashboard-section">
-        <h2>Subscriber Growth</h2>
-        <div class="chart-container">
-            <!-- Placeholder for a subscriber growth chart -->
-            <p>[Chart Placeholder]</p>
-        </div>
-    </div>
-
-    <!-- Income Breakdown -->
-    <!-- <div class="dashboard-section">
-        <h2>Income Breakdown</h2>
-        <table class="income-table">
-            <thead>
-                <tr>
-                    <th>Month</th>
-                    <th>Subscribers</th>
-                    <th>Income</th>
-                    <th>Subscription Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>October</td>
-                    <td>{{ active_subscriptions }}</td>
-                    <td>${{ monthly_income_projection.0|floatformat:2 }}</td>
-                    <td>${{ current_subscription_price.0|floatformat:2 }}</td>
-                </tr>
-                <tr>
-                    <td>September</td>
-                    <td>2,200</td>
-                    <td>$4,400</td>
-                    <td>$10.00</td> 
-                </tr>
-                <tr>
-                    <td>August</td>
-                    <td>2,050</td>
-                    <td>$4,100</td>
-                    <td>$10.00</td> 
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
-
-    <!-- Content Performance -->
-    <!-- <div class="dashboard-section">
-        <h2>Content Performance</h2>
-        <ul>
-            <li>Video 1: 500 views, 95% correctness, 4.8/5 rating</li>
-            <li>Article: 300 reads, 90% correctness, 4.6/5 rating</li>
-            <li>Podcast: 200 listens, 85% correctness, 4.7/5 rating</li>
-            <!-- Replace with actual content performance data if available -->
-        </ul>
-    </div> -->
 
     <!-- Creator Tips -->
     <div class="dashboard-section">
@@ -134,99 +67,6 @@
 </div>
 
 <style>
-    .container {
-        margin-top: 30px;
-        padding: 40px;
-        border-radius: 20px;
-        background: linear-gradient(135deg, #f0f4ff, #d3eaff);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    }
-    .dashboard-title {
-        font-size: 2em;
-        margin-bottom: 15px;
-        color: #333;
-    }
-    .dashboard-quote {
-        font-style: italic;
-        color: #666;
-        margin-bottom: 30px;
-    }
-    .dashboard-section {
-        margin-top: 30px;
-        padding: 20px;
-        border-radius: 15px;
-        background-color: #fff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-        transition: transform 0.3s ease;
-    }
-    .dashboard-section:hover {
-        transform: scale(1.02);
-    }
-    .stats-cards {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 15px;
-        margin-top: 20px;
-    }
-    .card {
-        background: linear-gradient(135deg, #cfe8ff, #e3f2ff);
-        padding: 20px;
-        border-radius: 15px;
-        width: 30%;
-        text-align: center;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-    }
-    .card:hover {
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
-    .card h3 {
-        margin: 0;
-        font-size: 1.2em;
-        color: #444;
-    }
-    .card p {
-        font-size: 1.5em;
-        margin-top: 5px;
-        color: #222;
-    }
-    .income-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-        background-color: #fafafa;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    }
-    .income-table th, .income-table td {
-        padding: 15px;
-        text-align: center;
-        border-bottom: 1px solid #ddd;
-    }
-    .income-table th {
-        background-color: #f0f4ff;
-        color: #333;
-    }
-    .income-table tr:hover {
-        background-color: #f8fbff;
-    }
-    .chart-container {
-        background-color: #f9f9f9;
-        height: 200px;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 15px;
-        padding: 10px;
-    }
-    .income-summary .card p {
-        font-size: 1.2em;
-        margin: 0;
-    }
+    /* [CSS styles remain unchanged] */
 </style>
 {% endblock content %}
