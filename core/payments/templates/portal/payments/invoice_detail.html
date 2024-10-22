@@ -11,7 +11,7 @@
         <div class="invoice-info">
             <h3>Invoice #{{ invoice.id }}</h3>
             <p>Status: <strong>{{ invoice.status }}</strong></p>
-            <p>Amount Due: ${{ invoice.amount_due / 100|floatformat:2 }}</p>
+            <p>Amount Due: ${{ invoice.amount_due|floatformat:2 }}</p>
             <p>Due Date: {{ invoice.due_date|date:"F j, Y" }}</p>
             <p>Created on: {{ invoice.created|date:"F j, Y" }}</p>
         </div>
