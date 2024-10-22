@@ -43,8 +43,12 @@
               <h6>Password Confirmation</h6>
               {{ form.password2 }}
             </div>
+            <div class="form-outline text-black form-black mb-4">
+              {{ form.register_as_writer }} <label for="register_as_writer">Register as a writer</label>
+            </div>
             <button class="btnSubmit btn-lg px-5" type="submit">Sign Up</button>
-          </form>
+        </form>
+        
 
           <div>
             <p class="mb-0 mt-4">Already have an account? <a href="/auth/login" class="link-login fw-bold text-black">Login</a></p>
