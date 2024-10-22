@@ -11,22 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 {% include 'portal/blog/client/betting-advice-component.html' %}
-                <li class="nav-item dropdown"></li>
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Betting Advice
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% if not user.is_writer or user.is_staff %}
-                            <li><a class="dropdown-item" href="{% url 'core-portal:client-feed' %}">Feed</a></li>
-                        {% endif %} 
 
-                        {% if user.is_writer or user.is_staff %}
-                            <li><a class="dropdown-item" href="{% url 'core-portal:writer-dashboard' %}">Dashboard</a></li>
-
-                        {% endif %} 
-
-                    </ul>
-                </li>
                 <!-- News Section -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
