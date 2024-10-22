@@ -18,7 +18,7 @@ def writer_subscribe(request, writer_id):
 
     if is_subscribed:
         # If the user is subscribed, display the articles from the writer
-        articles = Article.objects.filter(author=writer).order_by('-date_published')
+        articles = Article.objects.filter(author=writer, is_published=True).order_by('-date_published')
         context = {
             'articles': articles,
             'writer': writer,

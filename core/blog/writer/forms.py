@@ -10,13 +10,13 @@ class ArticleForm(ModelForm):
 
     class Meta:
         model = Article
-        fields = ['title',   'content', 'tags','is_premium',]
+        fields = ['title',   'content', 'tags','is_published',]
 
 
 class UpdateArticleForm(ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'event', 'outcome', 'content', 'tags', 'is_premium']
+        fields = ['title', 'event', 'outcome', 'content', 'tags', 'is_published']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

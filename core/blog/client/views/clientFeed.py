@@ -12,7 +12,7 @@ def client_feed(request):
     subscribed_writers = subscriptions.values_list('writer', flat=True)
     
     # Get all articles from those writers, ordered by date_published
-    articles = Article.objects.filter(author__in=subscribed_writers).order_by('-date_published')
+    articles = Article.objects.filter(author__in=subscribed_writers,is_published=True).order_by('-date_published')
     
     # Pass the articles to the template context
     context = {

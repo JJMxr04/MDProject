@@ -21,7 +21,7 @@ class Article(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     date_published = models.DateTimeField(blank=True, null=True)  # Allow null initially
     tags = models.ManyToManyField(Tag, related_name='articles',blank=True)
-    is_published = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=False, verbose_name="Publish?")
     image = models.ImageField(upload_to='articles/', blank=True, null=True)
     # highlight_link = models.CharField(max_length=500,,blank=True)
     is_premium= models.BooleanField(default=False, verbose_name="Premium Article?")
