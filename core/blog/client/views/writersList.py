@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from core.user.models import User
 from core.user.serializers import WriterSerializer
 from django.views.decorators.http import require_POST
+from core.blog.client.models import Subscription
 
 @login_required(login_url='/auth/login/')
 @require_POST
@@ -23,18 +24,29 @@ def toggle_subscription(request):
 
 @login_required(login_url='/auth/login/')
 def writer_list(request):
+    # Get the search query and the subscribed filter
     query = request.GET.get('search', '')
+    subscribed_only = request.GET.get('subscribed_only', 'false').lower() == 'true'  # Toggle filter
 
-    if query:
-        writers = User.objects.filter(is_writer=True, username__icontains=query)
+    # Get the user's subscriptions
+    if subscribed_only:
+        subscribed_writers = Subscription.objects.filter(user=request.user).values_list('writer_id', flat=True)
+        if query:
+            writers = User.objects.filter(is_writer=True, id__in=subscribed_writers, username__icontains=query)
+        else:
+            writers = User.objects.filter(is_writer=True, id__in=subscribed_writers)
     else:
-        writers = User.objects.filter(is_writer=True)
-
-    writers_ser = WriterSerializer(writers, many=True, context={'request': request}).data
+        if query:
+            writers = User.objects.filter(is_writer=True, username__icontains=query)
+        else:
+            writers = User.objects.filter(is_writer=True)
+    
+    writers_ser = WriterSerializer(writers, many=True).data 
     
     context = {
         'writers': writers_ser,
         'search_query': query,
+        'subscribed_only': subscribed_only,  # Pass the current state to the template
     }
     
     return render(request, 'portal/blog/client/client-writer-list.html', context)

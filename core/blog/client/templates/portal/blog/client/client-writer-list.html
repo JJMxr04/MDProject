@@ -2,125 +2,88 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block css %}
-
+<!-- Add any custom CSS here -->
 {% endblock css %}
 {% block title %}Writers{% endblock title %}
 
 {% block content %}
-
 <div class="container bg-white shadow-md p-5 form-layout text-center offset2">
-
     <h5> 🤓 Welcome to the Writers List, {{ user.username }} 🤓</h5>
     
-    <!-- Search Bar -->
-    <div class="mb-3">
-        <form method="GET" action="{% url 'core-portal:client-writer-list' %}">
-            <input 
-                type="text" 
-                name="search" 
-                class="form-control" 
-                placeholder="Search Writers" 
-                aria-label="Search Writers" 
-                value="{{ search_query|default_if_none:'' }}"
-            >
-        </form>
-    </div>
-</div>
-
-<div class="form-check form-switch">
-    <input 
-        class="form-check-input subscribe-toggle" 
-        type="checkbox" 
-        id="subscribe-{{ writer.id }}" 
-        data-writer-id="{{ writer.id }}" 
-        {% if writer.is_subscribed %}checked{% endif %}>
-    <label class="form-check-label" for="subscribe-{{ writer.id }}">
-        {% if writer.is_subscribed %}
-            Subscribed
-        {% else %}
-            Not Subscribed
-        {% endif %}
-    </label>
-</div>
-
-    <br>
-    {% if writers %}
-        {% for writer in writers %}
-        <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
-
-            <!-- Dropdown Menu positioned in the top right corner -->
-            <div class="dropdown position-absolute" style="top: 10px; right: 10px;">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; padding: 10px;">
-                    ⋮
+    <!-- Sub-navigation bar -->
+    <nav class="app-nav nav nav-tabs sub-nav">
+        <div class="limit-width" role="list">
+            <div role="listitem" class="sub-nav-item">
+                <a class="nav-link {% if not subscribed_only %}active{% endif %}" href="?subscribed_only=false">
+                    <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
+                        <use xlink:href="#overview-28"></use>
+                    </svg>
+                    <span class="sub-nav-item-name gray">All Writers</span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'core-portal:client-writer-subscribe' writer.id %}">View Details</a></li>
-                </ul>
             </div>
 
-            {% if writer.avatar %}
-                <img src="{{ writer.avatar }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
-            {% else %}
-                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
-            {% endif %}
-            <h3> {{ writer.first_name }} {{ writer.last_name }}</h3>
+            <div role="listitem" class="sub-nav-item">
+                <a class="nav-link {% if subscribed_only %}active{% endif %}" href="?subscribed_only=true">
+                    <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
+                        <use xlink:href="#team-28"></use>
+                    </svg>
+                    <span class="sub-nav-item-name gray">Subscribed Writers</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
 
-            <br> <br>
-            <h4> Writer Description:</h4>
-            <p> {{ writer.writer_description }}</p>
+<br>
 
-            <br> <br>
+<!-- Writers List -->
+{% if writers %}
+    {% for writer in writers %}
+    <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
 
-            <h4> Leagues Writer Primarily likes to Bet:</h4>
-            {% if writer.tags %}
-                {% for tag in writer.tags %}
-                <p> {{ tag.name }}</p>
-                {% endfor %}
-            {% else %}
-            <p>No Tags</p>
-            {% endif %}
-
-            <br>
+        <!-- Dropdown Menu positioned in the top right corner -->
+        <div class="dropdown position-absolute" style="top: 10px; right: 10px;">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; padding: 10px;">
+                ⋮
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'core-portal:client-writer-subscribe' writer.id %}">View Details</a></li>
+            </ul>
         </div>
 
-        {% endfor %}
-    {% else %}
+        {% if writer.avatar %}
+            <img src="{{ writer.avatar }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+        {% else %}
+            <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+        {% endif %}
+        <h3> {{ writer.first_name }} {{ writer.last_name }}</h3>
+
+        <br><br>
+        <h4> Writer Description:</h4>
+        <p> {{ writer.writer_description }}</p>
+
+        <br><br>
+
+        <h4> Leagues Writer Primarily likes to Bet:</h4>
+        {% if writer.tags %}
+            {% for tag in writer.tags %}
+            <p> {{ tag.name }}</p>
+            {% endfor %}
+        {% else %}
+        <p>No Tags</p>
+        {% endif %}
+
+        <br>
+    </div>
+    {% endfor %}
+{% else %}
     <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
         <h6> No Writers to display</h6>
     </div>
-
-    {% endif %}
+{% endif %}
 
 {% endblock content %}
 
-<!-- Make sure jQuery is included before the script -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-<!-- Custom script to handle the subscription toggle -->
-<script>
-    $(document).ready(function() {
-        $('.subscribe-toggle').on('change', function() {
-            var writerId = $(this).data('writer-id');
-            var isSubscribed = $(this).is(':checked');
-
-            $.ajax({
-                url: '{% url "core-portal:client-writer-toggle-subscription" %}',  // URL for the subscription toggle
-                method: 'POST',
-                data: {
-                    'writer_id': writerId,
-                    'is_subscribed': isSubscribed,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                success: function(response) {
-                    alert(response.message);
-                },
-                error: function() {
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        });
-    });
-</script>
