@@ -14,7 +14,7 @@ def writer_subscribe(request, writer_id):
     existing_plan = SubscriptionPlan.objects.filter(writer=writer).first()
 
     # Check if the user is subscribed to the writer
-    is_subscribed = Subscription.objects.active_subscriptions(user=request.user).filter(writer=writer).exists()
+    is_subscribed = Subscription.objects.filter(subscriber=request.user,writer=writer).exists()
 
     if is_subscribed:
         # If the user is subscribed, display the articles from the writer
@@ -32,7 +32,6 @@ def writer_subscribe(request, writer_id):
     context = {
         'writer': writer_ser,
         'subscription_plan': existing_plan_ser,
-        'stripe_publishable_key': settings.STRIPE_PUBLISH_KEY,
     }
 
     return render(request, 'portal/blog/client/client-writer-subscribe.html', context)

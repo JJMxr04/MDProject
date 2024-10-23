@@ -1,39 +1,44 @@
+{% extends "portal/blog/client/components/base_portal_client.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-feed.css' %}">
+{% endblock css %}
+{% block title %}My Articles{% endblock title %}
 
-<!-- Notification Bell -->
-<li class="nav-item dropdown">
-    <a class="nav-link" href="#" role="button" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-bell"></i>
-        <span id="notificationBadge" class="notification-badge" style="display: none;">!</span>
-    </a>
-    <ul class="dropdown-menu notification-dropdown" id="notificationDropdown">
-        <li class="dropdown-item">Loading...</li>
-    </ul>
-</li>
+{% block content %}
+<div class="container bg-white shadow-md p-5 form-layout text-center welcome-message">
+    <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
+</div>
 
-<!-- User Profile -->
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        {% if user.avatar %}
-            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-        {% else %}
-            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-        {% endif %}
-    </a>
-    <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
-        <li><hr class="dropdown-divider" /></li>
-        {% if not user.is_writer or user.is_staff %}
-            <li><a class="dropdown-item" href="{% url 'core-portal:manage-subscriptions' %}">Manage Subscriptions</a></li>
-        {% endif %} 
-        <li>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="dropdown-item">Logout</button>
-            </form>
-        </li>
-    </ul>
-</li>
-
-
-<script src="{% static 'js/notifications.js' %}"></script>
+{% if articles %}
+    <div class="articles-container">
+        {% for article in articles %}
+        <div class="article-card">
+            <div class="article-header">
+                {% if article.writer.avatar %}
+                    <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+                {% else %}
+                    <img src="https://robohash.org/1" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+                {% endif %}
+                <div class="article-author-info">
+                    <span class="article-author">{{ article.writer.username }}</span>
+                    <span class="article-date">{{ article.date_created }}</span>
+                </div>
+            </div>
+            <h3 class="article-title">{{ article.title }}</h3>
+            <div class="article-meta">
+                <span><strong>Event:</strong> {{ article.event }}</span>
+                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
+                <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
+            </div>
+            <p class="article-content">{{ article.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="no-articles">
+        <h6>No Articles to display</h6>
+    </div>
+{% endif %}
+{% endblock content %}
