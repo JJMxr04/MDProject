@@ -40,7 +40,7 @@ PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-if os.environ.get('DEBUG') == 'True'
+if os.environ.get('DEBUG') == 'True':
     DEBUG = True
 else:
     DEBUG = False

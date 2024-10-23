@@ -1,0 +1,84 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* Welcome Message */
+.welcome-message {
+    background-color: #eaf0f7;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Articles Container */
+.articles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Article Card */
+.article-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 700px;
+    width: 100%;
+    transition: transform 0.2s ease-in-out;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Article Title */
+.article-title {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+/* Article Meta Information */
+.article-meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.article-meta span {
+    display: block;
+}
+
+/* Article Content */
+.article-content {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Article Footer */
+.article-footer {
+    font-size: 0.85rem;
+    color: #888;
+    text-align: right;
+}
+
+/* No Articles Message */
+.no-articles {
+    background-color: #f8d7da;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 767px) {
+    .article-card {
+        margin-bottom: 20px;
+    }
+}
