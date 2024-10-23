@@ -6,7 +6,7 @@ from core.user.models import User
 from core.user.serializers import WriterSerializer
 from core.blog.writer.serializers.subscriptionPlan import SubscriptionPlanSerializer
 from core.blog.client.models import Subscription  # Adjust import according to your project's structure
-import stripe
+
 
 @login_required(login_url='/auth/login/')
 def writer_subscribe(request, writer_id):
