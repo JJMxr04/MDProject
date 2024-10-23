@@ -36,11 +36,18 @@
 
 <br>
 
+<!-- Search Bar -->
+<div class="container bg-white shadow-md p-3 mb-3 rounded">
+    <form method="get" action="" class="form-inline">
+        <input type="text" name="search" class="form-control mr-2" placeholder="Search by username..." value="{{ search_query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
 <!-- Writers List -->
 {% if writers %}
     {% for writer in writers %}
     <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
-
         <!-- Dropdown Menu positioned in the top right corner -->
         <div class="dropdown position-absolute" style="top: 10px; right: 10px;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; padding: 10px;">
@@ -72,7 +79,6 @@
         {% else %}
             <p>No Tags</p>
         {% endif %}
-    
 
         <br>
     </div>
