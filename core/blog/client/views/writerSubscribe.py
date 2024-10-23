@@ -32,6 +32,7 @@ def writer_subscribe(request, writer_id):
     context = {
         'writer': writer_ser,
         'subscription_plan': existing_plan_ser,
+        'stripe_publishable_key': settings.STRIPE_PUBLISH_KEY,
     }
 
     return render(request, 'portal/blog/client/client-writer-subscribe.html', context)
