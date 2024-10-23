@@ -36,6 +36,19 @@
 
 <br>
 
+<!-- Search Bar -->
+<div class="container bg-white shadow-md p-3 form-layout rounded">
+    <form method="get" action=".">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search for writers..." value="{{ search_query }}">
+            <input type="hidden" name="subscribed_only" value="{{ subscribed_only }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+</div>
+
+<br>
+
 <!-- Writers List -->
 {% if writers %}
     {% for writer in writers %}
