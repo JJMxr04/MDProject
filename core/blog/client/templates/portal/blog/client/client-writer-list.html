@@ -91,35 +91,36 @@
 
     {% endif %}
 
-    <script>
-        $(document).ready(function() {
-            $('.subscribe-toggle').on('change', function() {
-                var writerId = $(this).data('writer-id');
-                var isSubscribed = $(this).is(':checked');
-    
-                $.ajax({
-                    url: '{% url "core-portal:client-writer-toggle-subscription" %}',  // URL for the subscription toggle
-                    method: 'POST',
-                    data: {
-                        'writer_id': writerId,
-                        'is_subscribed': isSubscribed,
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                    },
-                    success: function(response) {
-                        alert(response.message);
-                    },
-                    error: function() {
-                        alert('An error occurred. Please try again.');
-                    }
-                });
-            });
-        });
-    </script>
-    
-
 {% endblock content %}
 
+<!-- Make sure jQuery is included before the script -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom script to handle the subscription toggle -->
+<script>
+    $(document).ready(function() {
+        $('.subscribe-toggle').on('change', function() {
+            var writerId = $(this).data('writer-id');
+            var isSubscribed = $(this).is(':checked');
+
+            $.ajax({
+                url: '{% url "core-portal:client-writer-toggle-subscription" %}',  // URL for the subscription toggle
+                method: 'POST',
+                data: {
+                    'writer_id': writerId,
+                    'is_subscribed': isSubscribed,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(response) {
+                    alert(response.message);
+                },
+                error: function() {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>
