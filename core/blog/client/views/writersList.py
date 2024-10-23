@@ -40,6 +40,8 @@ def writer_list(request):
             writers = User.objects.filter(is_writer=True, username__icontains=query)
         else:
             writers = User.objects.filter(is_writer=True)
+
+    writers_ser = WriterSerializer(writers,many=True).data
     
     context = {
         'writers': writers,
