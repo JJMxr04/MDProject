@@ -30,7 +30,7 @@ def writer_list(request):
 
     # Get the user's subscriptions
     if subscribed_only:
-        subscribed_writers = Subscription.objects.filter(user=request.user).values_list('writer_id', flat=True)
+        subscribed_writers = Subscription.objects.filter(subscriber=request.user).values_list('writer_id', flat=True)
         if query:
             writers = User.objects.filter(is_writer=True, id__in=subscribed_writers, username__icontains=query)
         else:
