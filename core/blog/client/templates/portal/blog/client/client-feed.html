@@ -15,6 +15,13 @@
     <div class="articles-container">
         {% for article in articles %}
         <div class="article-card">
+            <div class="article-header">
+                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+                <div class="article-author-info">
+                    <span class="article-author">{{ article.writer.username }}</span>
+                    <span class="article-date">{{ article.date_created }}</span>
+                </div>
+            </div>
             <h3 class="article-title">{{ article.title }}</h3>
             <div class="article-meta">
                 <span><strong>Event:</strong> {{ article.event }}</span>
@@ -22,9 +29,6 @@
                 <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
             </div>
             <p class="article-content">{{ article.content }}</p>
-            <div class="article-footer">
-                <span class="article-date">Date Created: {{ article.date_created }}</span>
-            </div>
         </div>
         {% endfor %}
     </div>
