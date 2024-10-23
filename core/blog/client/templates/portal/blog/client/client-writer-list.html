@@ -11,27 +11,29 @@
     <h5> 🤓 Welcome to the Writers List, {{ user.username }} 🤓</h5>
     
     <!-- Sub-navigation bar -->
-    <nav class="app-nav nav nav-tabs sub-nav">
-        <div class="limit-width" role="list">
-            <div role="listitem" class="sub-nav-item">
-                <a class="nav-link {% if not subscribed_only %}active{% endif %}" href="?subscribed_only=false">
-                    <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
-                        <use xlink:href="#overview-28"></use>
-                    </svg>
-                    <span class="sub-nav-item-name gray">All Writers</span>
-                </a>
-            </div>
-
-            <div role="listitem" class="sub-nav-item">
-                <a class="nav-link {% if subscribed_only %}active{% endif %}" href="?subscribed_only=true">
-                    <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
-                        <use xlink:href="#team-28"></use>
-                    </svg>
-                    <span class="sub-nav-item-name gray">Subscribed Writers</span>
-                </a>
-            </div>
+<!-- Sub-navigation bar -->
+<nav class="app-nav nav nav-tabs sub-nav justify-content-center">
+    <div class="limit-width d-flex" role="list">
+        <div role="listitem" class="sub-nav-item">
+            <a class="nav-link {% if not subscribed_only %}active{% endif %}" href="?subscribed_only=false">
+                <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
+                    <use xlink:href="#overview-28"></use>
+                </svg>
+                <span class="sub-nav-item-name gray">All Writers</span>
+            </a>
         </div>
-    </nav>
+
+        <div role="listitem" class="sub-nav-item">
+            <a class="nav-link {% if subscribed_only %}active{% endif %}" href="?subscribed_only=true">
+                <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
+                    <use xlink:href="#team-28"></use>
+                </svg>
+                <span class="sub-nav-item-name gray">Subscribed Writers</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
 </div>
 
 <br>
