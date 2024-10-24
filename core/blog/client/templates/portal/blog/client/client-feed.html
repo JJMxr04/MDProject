@@ -11,31 +11,8 @@
     <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-<div class="articles-container" id="articles-container">
-    {% if articles %}
-        {% for article in articles %}
-        <div class="article-card">
-            <div class="article-header">
-                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
-                <div class="article-author-info">
-                    <span class="article-author">{{ article.writer.username }}</span>
-                    <span class="article-date">{{ article.date_created }}</span>
-                </div>
-            </div>
-            <h3 class="article-title">{{ article.title }}</h3>
-            <div class="article-meta">
-                <span><strong>Event:</strong> {{ article.event }}</span>
-                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
-                <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
-            </div>
-            <p class="article-content">{{ article.content }}</p>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div class="no-articles">
-            <h6>No Articles to display</h6>
-        </div>
-    {% endif %}
+<div id="content-before-loading" class="articles-container">
+    <!-- Initial articles will be loaded here via JavaScript -->
 </div>
 
 <div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
@@ -46,60 +23,89 @@
     let page = 1;
     let isLoading = false;
 
-    // Function to load more articles
-    window.loadMoreArticles = function() {
-        if (isLoading) return;
+    const beforeLoading = document.getElementById("content-before-loading"); 
+
+    function getInformation() { 
         isLoading = true;
-        document.getElementById('loading').style.display = 'block';
+        document.getElementById("loading").style.display = "block";
 
-        console.log("Loading more articles, Page:", page + 1); // Debugging log
-
-        fetch(`?page=${page + 1}`, {
+        // Fetch data from the server
+        fetch(`?page=${page}`, {
             headers: {
                 'x-requested-with': 'XMLHttpRequest'
             }
         })
         .then(response => response.json())
         .then(data => {
+            document.getElementById("loading").style.display = "none";
             if (data.html) {
-                document.getElementById('articles-container').insertAdjacentHTML('beforeend', data.html);
-                page++; // Increment page number after successful load
+                // Insert articles dynamically using JS
+                data.articles.forEach(article => {
+                    const articleCard = document.createElement("div");
+                    articleCard.className = "article-card";
+
+                    const articleHeader = document.createElement("div");
+                    articleHeader.className = "article-header";
+
+                    const avatarImg = document.createElement("img");
+                    avatarImg.src = article.writer.avatar.url;
+                    avatarImg.alt = `${article.writer.username}'s avatar`;
+                    avatarImg.className = "article-avatar";
+
+                    const authorInfo = document.createElement("div");
+                    authorInfo.className = "article-author-info";
+                    authorInfo.innerHTML = `<span class="article-author">${article.writer.username}</span>
+                                            <span class="article-date">${article.date_created}</span>`;
+
+                    articleHeader.appendChild(avatarImg);
+                    articleHeader.appendChild(authorInfo);
+
+                    const articleTitle = document.createElement("h3");
+                    articleTitle.className = "article-title";
+                    articleTitle.textContent = article.title;
+
+                    const articleMeta = document.createElement("div");
+                    articleMeta.className = "article-meta";
+                    articleMeta.innerHTML = `<span><strong>Event:</strong> ${article.event}</span>
+                                             <span><strong>Market:</strong> ${article.outcome.market.key}</span>
+                                             <span><strong>Outcome:</strong> ${article.outcome.name} - ${article.outcome.price} - ${article.outcome.point}</span>`;
+
+                    const articleContent = document.createElement("p");
+                    articleContent.className = "article-content";
+                    articleContent.textContent = article.content;
+
+                    articleCard.appendChild(articleHeader);
+                    articleCard.appendChild(articleTitle);
+                    articleCard.appendChild(articleMeta);
+                    articleCard.appendChild(articleContent);
+
+                    beforeLoading.appendChild(articleCard);
+                });
+
+                page++; // Increment page number for the next fetch
+                if (!data.has_next) {
+                    window.removeEventListener("scroll", handleScroll); // Remove listener if no more pages
+                }
             }
-            if (!data.has_next) {
-                // No more articles to load, remove the scroll event listener
-                window.removeEventListener('scroll', handleScroll);
-            }
-            document.getElementById('loading').style.display = 'none';
             isLoading = false;
         })
         .catch(() => {
-            document.getElementById('loading').style.display = 'none';
+            document.getElementById("loading").style.display = "none";
             isLoading = false;
         });
     }
 
     // Handle the scroll event to trigger loading more articles
     function handleScroll() {
-        console.log("Scrolled, checking position..."); // Debugging log
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 && !isLoading) {
-            console.log("Near bottom, loading more..."); // Debugging log
-            loadMoreArticles();
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
+            getInformation();
         }
     }
 
     // Add scroll event listener when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log("DOM fully loaded and parsed"); // Debugging log
-        window.addEventListener('scroll', handleScroll);
-
-        // Check if there are more articles to load initially
-        const hasMorePages = {{ articles.has_next|yesno:"true,false" }};
-        console.log("Has more pages:", hasMorePages); // Log has_next status
-
-        if (!hasMorePages) {
-            // Remove scroll listener if no more articles
-            window.removeEventListener('scroll', handleScroll);
-        }
+    document.addEventListener("DOMContentLoaded", () => {
+        getInformation(); // Load the first batch of articles
+        window.addEventListener("scroll", handleScroll);
     });
 </script>
 
