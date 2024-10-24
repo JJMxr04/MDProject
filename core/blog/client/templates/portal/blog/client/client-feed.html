@@ -81,7 +81,7 @@
     // Handle the scroll event to trigger loading more articles
     function handleScroll() {
         console.log("Scrolled, checking position..."); // Debugging log
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 && !isLoading) {
             console.log("Near bottom, loading more..."); // Debugging log
             loadMoreArticles();
         }
@@ -94,6 +94,8 @@
 
         // Check if there are more articles to load initially
         const hasMorePages = {{ articles.has_next|yesno:"true,false" }};
+        console.log("Has more pages:", hasMorePages); // Log has_next status
+
         if (!hasMorePages) {
             // Remove scroll listener if no more articles
             window.removeEventListener('scroll', handleScroll);
