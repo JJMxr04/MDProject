@@ -4,38 +4,68 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/my-articles.css' %}">
 {% endblock css %}
-{% block title %}Subscribe to {{ writer.username }}{% endblock title %}
+{% block title %}{{ writer.username }}'s Profile{% endblock title %}
 
 {% block content %}
 
-
-<br>
-
-
-<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
-    <h4>🎉 You are subscribed to {{ writer.username }}! 🎉</h4>
-    <p>Here are the latest articles by {{ writer.username }}:</p>
+<div class="profile-container container bg-white shadow-md p-5 form-layout rounded text-center">
+    <div class="profile-header">
+        {% if writer.avatar %}
+            <img src="{{ writer.avatar.url }}" class="profile-avatar rounded-circle">
+        {% else %}
+            <img src="https://robohash.org/1" class="profile-avatar rounded-circle">
+        {% endif %}
+        <h2 class="profile-username">{{ writer.username }}</h2>
+        <p class="profile-name">{{ writer.first_name }} {{ writer.last_name }}</p>
+        <div class="profile-bio">
+            <p>{{ writer.bio|default:"No bio available" }}</p>
+        </div>
+        {% if writer.writer_description %}
+            <div class="profile-description">
+                <p>{{ writer.writer_description }}</p>
+            </div>
+        {% endif %}
+    </div>
 </div>
 
-{% if articles %}
-    {% for article in articles %}
-        <div class="container bg-white shadow-md p-5 form-layout rounded text-left mb-4">
-            <h3>{{ article.title }}</h3>
-            <p class="text-muted">Published on: {{ article.date_published|date:"F j, Y, g:i a" }}</p>
-            <h5>Event: {{ article.event }}</h5>
-            <h5>Market: {{ article.outcome.market.key }}</h5>
-            <h5>Outcome: {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</h5>
-            <div class="article-content">
-                <p>{{ article.content }}</p>
-            </div>
-            <p class="text-right"><em>Date Created: {{ article.date_created|date:"F j, Y" }}</em></p>
+<div class="container articles-section mt-5">
+    <h4 class="text-center">Latest Articles by {{ writer.username }}</h4>
+    <hr>
+    {% if articles %}
+        <div class="articles-container">
+            {% for article in articles %}
+                <div class="article-card bg-white shadow-sm p-4 mb-4 rounded">
+                    <h3 class="article-title">{{ article.title }}</h3>
+                    <p class="article-meta text-muted">
+                        Published on: {{ article.date_published|date:"F j, Y, g:i a" }}
+                    </p>
+                    <div class="article-details">
+                        <p><strong>Event:</strong> {{ article.event }}</p>
+                        <p>
+                            <strong>Market:</strong> 
+                            {% if article.outcome.market.key == "h2h" %}
+                                Head 2 Head
+                            {% elif article.outcome.market.key == "totals" %}
+                                Over/Under
+                            {% elif article.outcome.market.key == "spreads" %}
+                                Spreads
+                            {% else %}
+                                {{ article.outcome.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</p>
+                    </div>
+                    <div class="article-content">
+                        <p>{{ article.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-{% else %}
-    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
-        <h6>No articles to display at the moment. Check back soon for more updates!</h6>
-    </div>
-{% endif %}
-
+    {% else %}
+        <div class="no-articles text-center">
+            <h6>No articles to display at the moment. Check back soon for more updates!</h6>
+        </div>
+    {% endif %}
+</div>
 
 {% endblock content %}

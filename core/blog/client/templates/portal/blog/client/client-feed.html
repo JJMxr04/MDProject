@@ -29,7 +29,17 @@
             <h3 class="article-title">{{ article.title }}</h3>
             <div class="article-meta">
                 <span><strong>Event:</strong> {{ article.event }}</span>
-                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
+                <span><strong>Market:</strong> 
+                    {% if article.outcome.market.key == "h2h" %}
+                        Head 2 Head
+                    {% elif article.outcome.market.key == "totals" %}
+                        Over/Under
+                    {% elif article.outcome.market.key == "spreads" %}
+                        Spreads
+                    {% else %}
+                        {{ article.outcome.market.key }}
+                    {% endif %}
+                </span>
                 <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
             </div>
             <p class="article-content">{{ article.content }}</p>
