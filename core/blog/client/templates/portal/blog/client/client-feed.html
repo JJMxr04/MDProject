@@ -16,7 +16,11 @@
         {% for article in articles %}
         <div class="article-card">
             <div class="article-header">
-                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+                {% if article.author.avatar %}
+                    <img src="{{ article.author.avatar }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                {% else %}
+                    <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                {% endif %}
                 <div class="article-author-info">
                     <span class="article-author">{{ article.writer.username }}</span>
                     <span class="article-date">{{ article.date_created }}</span>
