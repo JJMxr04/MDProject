@@ -4,10 +4,11 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/public/home.css' %}">
 {% endblock css %}
+
 {% block content %}
 <div class="container comp-container">
 
-    <!-- Hero Section with Animation -->
+    <!-- Hero Section -->
     <section class="hero-cta-section text-center position-relative">
         <div class="hero-background">
             <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid" alt="Treasure Image">
@@ -23,30 +24,25 @@
     </section>
 
     <!-- Features Section -->
-    <div class="features-background">
-        <section class="features-section py-5">
-            <div class="row">
-                <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/Home/game.png' %}" class="feature-image rounded" alt="Community Image">
-                    <a href="https://www.flaticon.com/free-icons/joystick" class="small-link">Joystick icons created by Good Ware - Flaticon</a>
-                    <h3 class="feature-title">The Game</h3>
-                    <p class="feature-description">Connect with fellow bettors, participate in challenges, and prove your skills.</p>
-                </div>
-                <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/Home/graph.png' %}" class="feature-image rounded" alt="Bet Image">
-                    <a href="https://www.flaticon.com/free-icons/growth" class="small-link">Growth icons created by Freepik - Flaticon</a>
-                    <h3 class="feature-title">Betting Challenges</h3>
-                    <p class="feature-description">Join betting competitions, and see who rises to the top with smart bets and strategies.</p>
-                </div>
-                <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/Home/subscribe.png' %}" class="feature-image rounded" alt="Subscription Image">
-                    <a href="https://www.flaticon.com/free-icons/subscription" class="small-link">Subscription icons created by Danteee82 - Flaticon</a>
-                    <h3 class="feature-title">Leaderboards</h3>
-                    <p class="feature-description">Track your favorite bettor's performance in real-time and see how they stack up in the community.</p>
-                </div>
+    <section class="features-section py-5">
+        <div class="row">
+            <div class="col-md-4 text-center animate-slide-up">
+                <img src="{% static 'assets/Images/Home/game.png' %}" class="feature-image rounded" alt="Community Image">
+                <h3 class="feature-title">The Game</h3>
+                <p class="feature-description">Connect with fellow bettors, participate in challenges, and prove your skills.</p>
             </div>
-        </section>
-    </div>
+            <div class="col-md-4 text-center animate-slide-up">
+                <img src="{% static 'assets/Images/Home/graph.png' %}" class="feature-image rounded" alt="Bet Image">
+                <h3 class="feature-title">Betting Challenges</h3>
+                <p class="feature-description">Join betting competitions, and see who rises to the top with smart bets and strategies.</p>
+            </div>
+            <div class="col-md-4 text-center animate-slide-up">
+                <img src="{% static 'assets/Images/Home/subscribe.png' %}" class="feature-image rounded" alt="Subscription Image">
+                <h3 class="feature-title">Leaderboards</h3>
+                <p class="feature-description">Track your favorite bettor's performance in real-time and see how they stack up in the community.</p>
+            </div>
+        </div>
+    </section>
 
     <hr>
 
@@ -81,9 +77,8 @@
         </div>
     </section>
 
-
     <!-- Bettor Profiles Section -->
-    <section class="bettor-profiles-section py-5 bg-light">
+    <section class="bettor-profiles-section py-5">
         <div class="text-center">
             <h2 class="section-title">Meet the Bettors</h2>
             <p class="section-description">Explore detailed profiles of professional bettors and follow their betting journey. Learn from their successes, failures, and strategies.</p>
