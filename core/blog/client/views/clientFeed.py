@@ -1,87 +1,34 @@
-{% extends "portal/blog/client/components/base_portal_client.html" %}
-{% load static %}
-{% load crispy_forms_tags %}
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-feed.css' %}">
-{% endblock css %}
-{% block title %}My Articles{% endblock title %}
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from core.blog.writer.models import Article
+from core.blog.client.models import Subscription
 
-{% block content %}
-<div class="container bg-white shadow-md p-5 form-layout text-center welcome-message">
-    <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
-</div>
-
-<div class="articles-container" id="articles-container">
-    {% if articles %}
-        {% for article in articles %}
-        <div class="article-card">
-            <div class="article-header">
-                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
-                <div class="article-author-info">
-                    <span class="article-author">{{ article.writer.username }}</span>
-                    <span class="article-date">{{ article.date_created }}</span>
-                </div>
-            </div>
-            <h3 class="article-title">{{ article.title }}</h3>
-            <div class="article-meta">
-                <span><strong>Event:</strong> {{ article.event }}</span>
-                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
-                <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
-            </div>
-            <p class="article-content">{{ article.content }}</p>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div class="no-articles">
-            <h6>No Articles to display</h6>
-        </div>
-    {% endif %}
-</div>
-
-<div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
-{% endblock content %}
-
-{% block js %}
-<script>
-    let page = 1;
-    let isLoading = false;
-
-    function loadMoreArticles() {
-        if (isLoading) return;
-        isLoading = true;
-        document.getElementById('loading').style.display = 'block';
-
-        fetch(`?page=${page + 1}`, {
-            headers: {
-                'x-requested-with': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.html) {
-                document.getElementById('articles-container').insertAdjacentHTML('beforeend', data.html);
-                page++;
-            }
-            if (!data.has_next) {
-                // No more pages to load
-                window.removeEventListener('scroll', handleScroll);
-            }
-            document.getElementById('loading').style.display = 'none';
-            isLoading = false;
-        })
-        .catch(() => {
-            document.getElementById('loading').style.display = 'none';
-            isLoading = false;
-        });
+@login_required(login_url='/auth/login/')
+def client_feed(request):
+    # Get all active subscriptions of the current user
+    subscriptions = Subscription.objects.active_subscriptions(user=request.user)
+    
+    # Extract all the writers (authors) the user is subscribed to
+    subscribed_writers = subscriptions.values_list('writer', flat=True)
+    
+    # Get all articles from those writers, ordered by date_published
+    articles = Article.objects.filter(author__in=subscribed_writers, is_published=True).order_by('-date_published')
+    
+    # Paginate articles, 10 per page
+    paginator = Paginator(articles, 10)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    
+    # Check if the request is for loading more articles (AJAX)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Render only the articles list as JSON
+        article_list_html = render(request, 'portal/blog/client/partials/article_list.html', {'articles': page_obj}).content.decode('utf-8')
+        return JsonResponse({'html': article_list_html, 'has_next': page_obj.has_next()})
+    
+    # Pass the paginated articles to the template context
+    context = {
+        'articles': page_obj,
     }
-
-    function handleScroll() {
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        if (scrollTop + clientHeight >= scrollHeight - 5) {
-            loadMoreArticles();
-        }
-    }
-
-    window.addEventListener('scroll', handleScroll);
-</script>
-{% endblock js %}
+    return render(request, 'portal/blog/client/client-feed.html', context)
