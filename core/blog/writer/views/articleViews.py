@@ -6,14 +6,30 @@ from core.blog.writer.serializers.article import ArticleSerializer
 from core.blog.writer.forms import ArticleForm, UpdateArticleForm
 from core.blog.writer.models import Article
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required(login_url='/auth/login/')
 @writer_required
 def my_articles(request):
     current_user = request.user.id
     # Order articles by date_created in descending order
-    articles = Article.objects.filter(author=current_user).order_by('-date_created')
-    article = ArticleSerializer(articles, many=True).data
+    articles_list = Article.objects.filter(author=current_user).order_by('-date_created')
+    
+    # Set up pagination with 5 articles per page
+    paginator = Paginator(articles_list, 5)
+    
+    # Get the current page number from the GET request
+    page = request.GET.get('page', 1)
+    
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        # If the page is not an integer, show the first page
+        articles = paginator.page(1)
+    except EmptyPage:
+        # If the page is out of range, show the last page
+        articles = paginator.page(paginator.num_pages)
+    
     content = {'articles': articles}
     return render(request, 'portal/blog/writer/my-articles.html', content)
 
