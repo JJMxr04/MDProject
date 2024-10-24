@@ -20,17 +20,57 @@
 <script>
     let page = 1;
     let isLoading = false;
+    const initialArticles = {{ articles_data|safe }};  // Django context variable passed as JS object
+    const hasNext = {{ has_next|yesno:"true,false" }};  // Whether there are more pages after the initial load
 
     const beforeLoading = document.getElementById("content-before-loading");
     const loadingIndicator = document.getElementById("loading");
     const noMoreArticles = document.getElementById("no-more-articles");
 
+    // Function to render articles
+    function renderArticles(articles) {
+        articles.forEach(article => {
+            const articleCard = document.createElement("div");
+            articleCard.className = "article-card";
+
+            const articleHeader = `
+                <div class="article-header">
+                    <img src="${article.writer.avatar}" alt="${article.writer.username}'s avatar" class="article-avatar">
+                    <div class="article-author-info">
+                        <span class="article-author">${article.writer.username}</span>
+                        <span class="article-date">${article.date_published}</span>
+                    </div>
+                </div>`;
+            const articleContent = `
+                <h3 class="article-title">${article.title}</h3>
+                <div class="article-meta">
+                    <span><strong>Event:</strong> ${article.event}</span>
+                    <span><strong>Market:</strong> ${article.market_key}</span>
+                    <span><strong>Outcome:</strong> ${article.outcome_name} - ${article.outcome_price} - ${article.outcome_point}</span>
+                </div>
+                <p class="article-content">${article.content}</p>`;
+            
+            articleCard.innerHTML = articleHeader + articleContent;
+            beforeLoading.appendChild(articleCard);
+        });
+    }
+
+    // Load initial articles
+    document.addEventListener("DOMContentLoaded", () => {
+        renderArticles(initialArticles);
+        if (!hasNext) {
+            noMoreArticles.style.display = "block";
+        } else {
+            window.addEventListener("scroll", handleScroll);
+        }
+    });
+
+    // Fetch more articles via AJAX
     function fetchArticles() {
-        console.log('fethcing articles')
         isLoading = true;
         loadingIndicator.style.display = "block";
 
-        fetch(`?page=${page}`, {
+        fetch(`?page=${page + 1}`, {
             headers: {
                 'x-requested-with': 'XMLHttpRequest'
             }
@@ -38,38 +78,13 @@
         .then(response => response.json())
         .then(data => {
             loadingIndicator.style.display = "none";
-            console.log('data')
-            console.log(data)
             if (data.articles && data.articles.length > 0) {
-                data.articles.forEach(article => {
-                    const articleCard = document.createElement("div");
-                    articleCard.className = "article-card";
+                renderArticles(data.articles);
+                page++;  // Increment page number for the next fetch
 
-                    const articleHeader = `
-                        <div class="article-header">
-                            <img src="${article.writer.avatar}" alt="${article.writer.username}'s avatar" class="article-avatar">
-                            <div class="article-author-info">
-                                <span class="article-author">${article.writer.username}</span>
-                                <span class="article-date">${article.date_published}</span>
-                            </div>
-                        </div>`;
-                    const articleContent = `
-                        <h3 class="article-title">${article.title}</h3>
-                        <div class="article-meta">
-                            <span><strong>Event:</strong> ${article.event}</span>
-                            <span><strong>Market:</strong> ${article.market_key}</span>
-                            <span><strong>Outcome:</strong> ${article.outcome_name} - ${article.outcome_price} - ${article.outcome_point}</span>
-                        </div>
-                        <p class="article-content">${article.content}</p>`;
-                    
-                    articleCard.innerHTML = articleHeader + articleContent;
-                    beforeLoading.appendChild(articleCard);
-                });
-
-                page++; // Increment page number for the next fetch
                 if (!data.has_next) {
                     noMoreArticles.style.display = "block";
-                    window.removeEventListener("scroll", handleScroll); // Remove listener if no more pages
+                    window.removeEventListener("scroll", handleScroll);
                 }
             }
             isLoading = false;
@@ -80,17 +95,11 @@
         });
     }
 
-    // Handle the scroll event
+    // Handle scroll to load more articles
     function handleScroll() {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
             fetchArticles();
         }
     }
-
-    // Initialize on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        fetchArticles(); // Load the first batch of articles
-        window.addEventListener("scroll", handleScroll);
-    });
 </script>
 {% endblock js %}

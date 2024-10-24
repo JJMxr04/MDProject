@@ -16,29 +16,31 @@ def client_feed(request):
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        print('get request')
-        articles_data = [
-            {
-                'title': article.title,
-                'writer': {
-                    'username': article.author.username,
-                    'avatar': article.author.avatar.url if article.author.avatar else '/static/images/default-avatar.png'
-                },
-                'date_published': article.date_published.strftime('%Y-%m-%d'),
-                'content': article.content[:200] + '...',  # Show a snippet
-                'event': article.event.name if article.event else 'N/A',
-                'market_key': article.outcome.market.key if article.outcome else 'N/A',
-                'outcome_name': article.outcome.name if article.outcome else 'N/A',
-                'outcome_price': article.outcome.price if article.outcome else 'N/A',
-                'outcome_point': article.outcome.point if article.outcome else 'N/A',
-            } for article in page_obj
-        ]
+    articles_data = [
+        {
+            'title': article.title,
+            'writer': {
+                'username': article.author.username,
+                'avatar': article.author.avatar.url if article.author.avatar else '/static/images/default-avatar.png'
+            },
+            'date_published': article.date_published.strftime('%Y-%m-%d'),
+            'content': article.content[:200] + '...',  # Show a snippet
+            'event': article.event.name if article.event else 'N/A',
+            'market_key': article.outcome.market.key if article.outcome else 'N/A',
+            'outcome_name': article.outcome.name if article.outcome else 'N/A',
+            'outcome_price': article.outcome.price if article.outcome else 'N/A',
+            'outcome_point': article.outcome.point if article.outcome else 'N/A',
+        } for article in page_obj
+    ]
 
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({
             'articles': articles_data,
             'has_next': page_obj.has_next(),
         })
 
-    context = {'articles': page_obj}
+    context = {
+        'articles_data': articles_data,  # Pass initial articles data
+        'has_next': page_obj.has_next(),
+    }
     return render(request, 'portal/blog/client/client-feed.html', context)
