@@ -2,104 +2,44 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-feed.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/my-articles.css' %}">
 {% endblock css %}
-{% block title %}My Articles{% endblock title %}
+{% block title %}My Article{% endblock title %}
 
 {% block content %}
-<div class="container bg-white shadow-md p-5 form-layout text-center welcome-message">
-    <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
+
+<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
+
+    <h5> 🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-<div id="content-before-loading" class="articles-container"></div>
-<div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
-<div id="no-more-articles" class="text-center" style="display: none;">No more articles to load.</div>
+    <br>
+    {% if articles%}
+        {% for article in articles %}
+        <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+                <h3> {{article.title}}</h3>
+
+                <h5>Event: {{article.event}}</h5>
+                <h5>Market: {{article.outcome.market.key}}</h5>
+                <h5>Outcome: {{article.outcome.name}} - {{article.outcome.price}} - {{article.outcome.point}}</h5>
+                <p><u> Content:</u></p>
+                {{article.content}}
+
+                <br> <br>
+
+                <p>Date Created: {{article.date_created}}</p>
+
+                <br>
+        </div>
+
+        {% endfor %}
+    {% else %}
+    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
+        <h6> No Articles to display</h6>
+
+    </div>
+
+    {% endif %}
+
+
 {% endblock content %}
-
-{% block js %}
-<script>
-    let page = 1;
-    let isLoading = false;
-    const initialArticles = {{ articles_data|safe }};  // Django context variable passed as JS object
-    const hasNext = {{ has_next|yesno:"true,false" }};  // Whether there are more pages after the initial load
-
-    const beforeLoading = document.getElementById("content-before-loading");
-    const loadingIndicator = document.getElementById("loading");
-    const noMoreArticles = document.getElementById("no-more-articles");
-
-    // Function to render articles
-    function renderArticles(articles) {
-        articles.forEach(article => {
-            const articleCard = document.createElement("div");
-            articleCard.className = "article-card";
-
-            const articleHeader = `
-                <div class="article-header">
-                    <img src="${article.writer.avatar}" alt="${article.writer.username}'s avatar" class="article-avatar">
-                    <div class="article-author-info">
-                        <span class="article-author">${article.writer.username}</span>
-                        <span class="article-date">${article.date_published}</span>
-                    </div>
-                </div>`;
-            const articleContent = `
-                <h3 class="article-title">${article.title}</h3>
-                <div class="article-meta">
-                    <span><strong>Event:</strong> ${article.event}</span>
-                    <span><strong>Market:</strong> ${article.market_key}</span>
-                    <span><strong>Outcome:</strong> ${article.outcome_name} - ${article.outcome_price} - ${article.outcome_point}</span>
-                </div>
-                <p class="article-content">${article.content}</p>`;
-            
-            articleCard.innerHTML = articleHeader + articleContent;
-            beforeLoading.appendChild(articleCard);
-        });
-    }
-
-    // Load initial articles
-    document.addEventListener("DOMContentLoaded", () => {
-        renderArticles(initialArticles);
-        if (!hasNext) {
-            noMoreArticles.style.display = "block";
-        } else {
-            window.addEventListener("scroll", handleScroll);
-        }
-    });
-
-    // Fetch more articles via AJAX
-    function fetchArticles() {
-        isLoading = true;
-        loadingIndicator.style.display = "block";
-
-        fetch(`?page=${page + 1}`, {
-            headers: {
-                'x-requested-with': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            loadingIndicator.style.display = "none";
-            if (data.articles && data.articles.length > 0) {
-                renderArticles(data.articles);
-                page++;  // Increment page number for the next fetch
-
-                if (!data.has_next) {
-                    noMoreArticles.style.display = "block";
-                    window.removeEventListener("scroll", handleScroll);
-                }
-            }
-            isLoading = false;
-        })
-        .catch(() => {
-            loadingIndicator.style.display = "none";
-            isLoading = false;
-        });
-    }
-
-    // Handle scroll to load more articles
-    function handleScroll() {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
-            fetchArticles();
-        }
-    }
-</script>
-{% endblock js %}
