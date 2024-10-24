@@ -11,30 +11,85 @@
     <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-{% if articles %}
-    <div class="articles-container">
-        {% for article in articles %}
-        <div class="article-card">
-            <div class="article-header">
-                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
-                <div class="article-author-info">
-                    <span class="article-author">{{ article.writer.username }}</span>
-                    <span class="article-date">{{ article.date_created }}</span>
-                </div>
+<div class="articles-container">
+    {% for article in articles %}
+    <div class="article-card">
+        <div class="article-header">
+            <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+            <div class="article-author-info">
+                <span class="article-author">{{ article.writer.username }}</span>
+                <span class="article-date">{{ article.date_created }}</span>
             </div>
-            <h3 class="article-title">{{ article.title }}</h3>
-            <div class="article-meta">
-                <span><strong>Event:</strong> {{ article.event }}</span>
-                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
-                <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
-            </div>
-            <p class="article-content">{{ article.content }}</p>
         </div>
-        {% endfor %}
+        <h3 class="article-title">{{ article.title }}</h3>
+        <div class="article-meta">
+            <span><strong>Event:</strong> {{ article.event }}</span>
+            <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
+            <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
+        </div>
+        <p class="article-content">{{ article.content }}</p>
     </div>
-{% else %}
-    <div class="no-articles">
-        <h6>No Articles to display</h6>
-    </div>
-{% endif %}
+    {% endfor %}
+</div>
+
+<div class="loading-spinner" style="display: none;">
+    <p>Loading more articles...</p>
+</div>
 {% endblock content %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let page = 2;
+    let isLoading = false;
+
+    function loadMoreArticles() {
+        if (isLoading) return;
+
+        isLoading = true;
+        $(".loading-spinner").show();
+
+        $.ajax({
+            url: "{% url 'client_feed' %}?page=" + page,
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                response.articles.forEach(article => {
+                    $('.articles-container').append(`
+                        <div class="article-card">
+                            <div class="article-header">
+                                <img src="${article.writer.avatar_url}" alt="${article.writer.username}'s avatar" class="article-avatar">
+                                <div class="article-author-info">
+                                    <span class="article-author">${article.writer.username}</span>
+                                    <span class="article-date">${article.date_created}</span>
+                                </div>
+                            </div>
+                            <h3 class="article-title">${article.title}</h3>
+                            <div class="article-meta">
+                                <span><strong>Event:</strong> ${article.event}</span>
+                                <span><strong>Market:</strong> ${article.market}</span>
+                                <span><strong>Outcome:</strong> ${article.outcome.name} - ${article.outcome.price} - ${article.outcome.point}</span>
+                            </div>
+                            <p class="article-content">${article.content}</p>
+                        </div>
+                    `);
+                });
+
+                if (!response.has_next) {
+                    $(window).off('scroll');
+                }
+
+                page++;
+                isLoading = false;
+                $(".loading-spinner").hide();
+            }
+        });
+    }
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            loadMoreArticles();
+        }
+    });
+</script>
+{% endblock javascript %}
