@@ -17,7 +17,7 @@
         <div class="article-card">
             <div class="article-header">
                 {% if article.author.avatar %}
-                    <img src="{{ article.author.avatar }}" class="article-avatar">
+                    <img src="{{ article.author.avatar.url }}" class="article-avatar">
                 {% else %}
                     <img src="https://robohash.org/1" class="article-avatar">
                 {% endif %}
