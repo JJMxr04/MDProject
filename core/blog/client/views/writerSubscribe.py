@@ -12,10 +12,12 @@ import stripe
 def writer_subscribe(request, writer_id):
     print(f'writer_id:{writer_id}')
     writer = User.objects.filter(public_id=writer_id).first()
-
+    print(f'writer:{writer}')
     # Check if the user is subscribed to the writer
     is_subscribed = Subscription.objects.filter(subscriber=request.user,writer=writer).exists()
+    print(f'is_subbed:{is_subscribed}')
     writer_ser = WriterSerializer(writer).data
+    print(f'writer_ser:{writer_ser}')
 
     if is_subscribed:
         # If the user is subscribed, display the articles from the writer
@@ -24,6 +26,7 @@ def writer_subscribe(request, writer_id):
             'articles': articles,
             'writer': writer_ser,
         }
+        print(f'is_subbed context:{context}')
         return render(request, 'portal/blog/client/client-writer-is-subscribed.html', context)
 
     # If the user is not subscribed, show the subscription page
@@ -35,5 +38,6 @@ def writer_subscribe(request, writer_id):
         'subscription_plan': existing_plan_ser,
         'stripe_publishable_key': settings.STRIPE_PUBLISH_KEY,
     }
+    print(f'not subbed context: {context}')
 
     return render(request, 'portal/blog/client/client-writer-subscribe.html', context)
