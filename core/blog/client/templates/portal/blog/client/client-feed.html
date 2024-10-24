@@ -2,44 +2,39 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/my-articles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-feed.css' %}">
 {% endblock css %}
-{% block title %}My Article{% endblock title %}
+{% block title %}My Articles{% endblock title %}
 
 {% block content %}
-
-<div class="container bg-white shadow-md p-5 form-layout text-center offset2">
-
-    <h5> 🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
+<div class="container bg-white shadow-md p-5 form-layout text-center welcome-message">
+    <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-    <br>
-    {% if articles%}
+{% if articles %}
+    <div class="articles-container">
         {% for article in articles %}
-        <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
-                <h3> {{article.title}}</h3>
-
-                <h5>Event: {{article.event}}</h5>
-                <h5>Market: {{article.outcome.market.key}}</h5>
-                <h5>Outcome: {{article.outcome.name}} - {{article.outcome.price}} - {{article.outcome.point}}</h5>
-                <p><u> Content:</u></p>
-                {{article.content}}
-
-                <br> <br>
-
-                <p>Date Created: {{article.date_created}}</p>
-
-                <br>
+        <div class="article-card">
+            <div class="article-header">
+                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+                <div class="article-author-info">
+                    <span class="article-author">{{ article.writer.username }}</span>
+                    <span class="article-date">{{ article.date_created }}</span>
+                </div>
+            </div>
+            <h3 class="article-title">{{ article.title }}</h3>
+            <div class="article-meta">
+                <span><strong>Event:</strong> {{ article.event }}</span>
+                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
+                <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
+            </div>
+            <p class="article-content">{{ article.content }}</p>
         </div>
-
         {% endfor %}
-    {% else %}
-    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
-        <h6> No Articles to display</h6>
-
     </div>
-
-    {% endif %}
-
-
+{% else %}
+    <div class="no-articles">
+        <h6>No Articles to display</h6>
+    </div>
+{% endif %}
 {% endblock content %}
