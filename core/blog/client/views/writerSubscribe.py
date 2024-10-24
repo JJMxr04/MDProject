@@ -11,7 +11,7 @@ import stripe
 @login_required(login_url='/auth/login/')
 def writer_subscribe(request, writer_id):
     print(f'writer_id:{writer_id}')
-    writer = User.objects.filter(public_id=writer_id).first()
+    writer = User.objects.filter(id=writer_id).first()
     print(f'writer:{writer}')
     # Check if the user is subscribed to the writer
     is_subscribed = Subscription.objects.filter(subscriber=request.user,writer=writer).exists()
