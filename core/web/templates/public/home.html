@@ -4,11 +4,10 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/public/home.css' %}">
 {% endblock css %}
-
 {% block content %}
 <div class="container comp-container">
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Animation -->
     <section class="hero-cta-section text-center position-relative">
         <div class="hero-background">
             <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid" alt="Treasure Image">
@@ -16,7 +15,7 @@
         <div class="overlay">
             <h1 class="hero-title animate-fade-in">Welcome to PBL</h1>
             <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
-            <p class="cta-description animate-fade-in">Join PBL and compete in exciting bettor challenges. Your winnings await!</p>
+            <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
             <div class="text-center animate-fade-in">
                 <a href="/auth/waitlist/" class="btn btn-lg btn-primary">Join the Waitlist</a>
             </div>
@@ -24,92 +23,81 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features-section py-5">
-        <div class="row">
-            <div class="col-md-4 text-center animate-slide-up">
-                <img src="{% static 'assets/Images/Home/game.png' %}" class="feature-image rounded" alt="Community Image">
-                <h3 class="feature-title">The Game</h3>
-                <p class="feature-description">Connect with fellow bettors, participate in challenges, and prove your skills.</p>
+    <div class="features-background">
+        <section class="features-section py-5">
+            <div class="row">
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/game.png' %}" class="feature-image rounded" alt="Community Image">
+                    <a href="https://www.flaticon.com/free-icons/joystick" class="small-link">Joystick icons created by Good Ware - Flaticon</a>
+                    <h3 class="feature-title">The Game</h3>
+                    <p class="feature-description">Connect with fellow bettors to play The game and win untold riches.</p>
+                </div>
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/graph.png' %}" class="feature-image rounded" alt="Bet Image">
+                    <a href="https://www.flaticon.com/free-icons/growth" class="small-link">Growth icons created by Freepik - Flaticon</a>
+                    <h3 class="feature-title">Smart Betting</h3>
+                    <p class="feature-description">Analyze and place bets with the confidence of professional bettors.</p>
+                </div>
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/subscribe.png' %}" class="feature-image rounded" alt="Subscription Image">
+                    <a href="https://www.flaticon.com/free-icons/subscription" class="small-link">Subscription icons created by Danteee82 - Flaticon</a>
+                    <h3 class="feature-title">Flexible Subscriptions</h3>
+                    <p class="feature-description">Choose from multiple professional bettors to subscribe to.</p>
+                </div>
             </div>
-            <div class="col-md-4 text-center animate-slide-up">
-                <img src="{% static 'assets/Images/Home/graph.png' %}" class="feature-image rounded" alt="Bet Image">
-                <h3 class="feature-title">Betting Challenges</h3>
-                <p class="feature-description">Join betting competitions, and see who rises to the top with smart bets and strategies.</p>
-            </div>
-            <div class="col-md-4 text-center animate-slide-up">
-                <img src="{% static 'assets/Images/Home/subscribe.png' %}" class="feature-image rounded" alt="Subscription Image">
-                <h3 class="feature-title">Leaderboards</h3>
-                <p class="feature-description">Track your favorite bettor's performance in real-time and see how they stack up in the community.</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <hr>
 
-    <!-- Bettor Challenges Section -->
-    <section class="challenges-section py-5 bg-light">
-        <div class="text-center">
-            <h2 class="section-title">Bettor Challenges</h2>
-            <p class="section-description">Support your favorite bettor by joining or spectating live challenges. Watch them climb the ranks and compete for glory.</p>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-4 animate-slide-left">
-                <div class="challenge-card">
-                    <h3>1v1 Showdown</h3>
-                    <p class="description">Two bettors go head-to-head, and the best strategist wins. Choose your side and engage in the action.</p>
-                    <a href="#" class="btn btn-outline-primary">Join Challenge</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-fade-in">
-                <div class="challenge-card">
-                    <h3>Team Bet-Off</h3>
-                    <p class="description">Join forces with your favorite bettor in a team-based betting challenge. Outplay the competition and win as a team.</p>
-                    <a href="#" class="btn btn-primary">Join Challenge</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-slide-right">
-                <div class="challenge-card">
-                    <h3>High Roller Arena</h3>
-                    <p class="description">Watch or participate in high-stakes challenges where the best of the best face off. Bet big, win big.</p>
-                    <a href="#" class="btn btn-outline-primary">Join Challenge</a>
-                </div>
+<!-- Subscription Plans Section -->
+<section class="subscription-section py-5 bg-light">
+    <div class="text-center">
+        <h2 class="section-title">Support Your Favorite Bettor</h2>
+        <p class="section-description">Choose a subscription that gives you access to exclusive insights, tips, and community engagement directly from professional bettors.</p>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-4 animate-slide-left">
+            <div class="plan-card">
+                <h3>Fan</h3>
+                <p class="price">$5/month</p>
+                <ul class="plan-features">
+                    <li>Access to basic betting insights</li>
+                    <li>Monthly Q&A with bettor</li>
+                    <li>Access to free community posts</li>
+                </ul>
+                <a href="#" class="btn btn-outline-primary">Subscribe</a>
             </div>
         </div>
-    </section>
+        <div class="col-md-4 animate-fade-in">
+            <div class="plan-card featured">
+                <h3>Supporter</h3>
+                <p class="price">$20/month</p>
+                <ul class="plan-features">
+                    <li>All Fan features</li>
+                    <li>Exclusive weekly betting tips</li>
+                    <li>Access to premium community content</li>
+                    <li>Priority in live Q&A sessions</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Subscribe</a>
+            </div>
+        </div>
+        <div class="col-md-4 animate-slide-right">
+            <div class="plan-card">
+                <h3>VIP</h3>
+                <p class="price">$50/month</p>
+                <ul class="plan-features">
+                    <li>All Supporter features</li>
+                    <li>Direct 1-on-1 messaging with bettor</li>
+                    <li>Exclusive betting strategies and webinars</li>
+                    <li>Early access to new features and events</li>
+                </ul>
+                <a href="#" class="btn btn-outline-primary">Subscribe</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Bettor Profiles Section -->
-    <section class="bettor-profiles-section py-5">
-        <div class="text-center">
-            <h2 class="section-title">Meet the Bettors</h2>
-            <p class="section-description">Explore detailed profiles of professional bettors and follow their betting journey. Learn from their successes, failures, and strategies.</p>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-4 animate-slide-left">
-                <div class="profile-card">
-                    <img src="{% static 'assets/Images/Bettors/bettor1.png' %}" class="profile-image" alt="Bettor 1">
-                    <h3>Bettor Name</h3>
-                    <p class="description">Specializes in risk-heavy strategies with a track record of high rewards.</p>
-                    <a href="#" class="btn btn-outline-primary">View Profile</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-fade-in">
-                <div class="profile-card">
-                    <img src="{% static 'assets/Images/Bettors/bettor2.png' %}" class="profile-image" alt="Bettor 2">
-                    <h3>Bettor Name</h3>
-                    <p class="description">Known for a data-driven approach to low-risk, consistent betting strategies.</p>
-                    <a href="#" class="btn btn-primary">View Profile</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-slide-right">
-                <div class="profile-card">
-                    <img src="{% static 'assets/Images/Bettors/bettor3.png' %}" class="profile-image" alt="Bettor 3">
-                    <h3>Bettor Name</h3>
-                    <p class="description">Utilizes market analysis to predict outcomes in high-stakes environments.</p>
-                    <a href="#" class="btn btn-outline-primary">View Profile</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
 </div>
 {% endblock %}
