@@ -17,6 +17,7 @@ def client_feed(request):
     page_obj = paginator.get_page(page_number)
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        print('get request')
         articles_data = [
             {
                 'title': article.title,

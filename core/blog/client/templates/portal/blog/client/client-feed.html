@@ -26,6 +26,7 @@
     const noMoreArticles = document.getElementById("no-more-articles");
 
     function fetchArticles() {
+        console.log('fethcing articles')
         isLoading = true;
         loadingIndicator.style.display = "block";
 
@@ -37,6 +38,8 @@
         .then(response => response.json())
         .then(data => {
             loadingIndicator.style.display = "none";
+            console.log('data')
+            console.log(data)
             if (data.articles && data.articles.length > 0) {
                 data.articles.forEach(article => {
                     const articleCard = document.createElement("div");
