@@ -6,14 +6,12 @@
 {% endblock css %}
 {% block title %}Update Article{% endblock title %}
 
-
-
 {% block content %}
-<div class="bg-white shadow-md p-5 form-layout mt-0 rounded">
-    <h3 class="mb-4 text-left"> 🤓 Update your Article 🤓</h3>
+<div class="form-layout bg-white shadow-md p-5 mt-0 rounded">
+    <h3 class="mb-4">🤓 Update your Article 🤓</h3>
     <form method="POST" autocomplete="off">
         {% csrf_token %}
-        <div class="form-group text-left">
+        <div class="form-group">
             {{ UpdateArticleForm|crispy }}
         </div>
         <br>
@@ -21,5 +19,4 @@
         <input class="btn btn-success btn-lg mt-3" type="submit" value="Update Article">
     </form>
 </div>
-
 {% endblock content %}

@@ -4,34 +4,31 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/my-articles.css' %}">
 {% endblock css %}
-{% block title %}My Article{% endblock title %}
+{% block title %}My Articles{% endblock title %}
 
 {% block content %}
-
-    <br>
-
-    {% for article in articles %}
-    <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
-            <h3> {{article.title}}</h3>
-
-            <h5>Event: {{article.event}}</h5>
-            <h5>Market: {{article.outcome.market.key}}</h5>
-            <h5>Outcome: {{article.outcome.name}} - {{article.outcome.price}} - {{article.outcome.point}}</h5>
-            <p><u> Content:</u></p>
-            {{article.content}}
-
-            <br> <br>
-
-            <p>Date Created: {{article.date_created}}</p>
-            <p> Is Published: {{article.is_published}}</p>
-            <br>
-            <a href="{% url 'core-portal:writer-update-article' article.id %}">Update Article</a>
-            <br>
-            <a href="{% url 'core-portal:writer-delete-article' article.id %}">Delete Article</a>
-            <br>
+    <div class="articles-container">
+        {% for article in articles %}
+        <div class="article-card container bg-white shadow-md p-4 form-layout rounded">
+            <h3>{{ article.title }}</h3>
+            <h5>Event: {{ article.event }}</h5>
+            <h5>Market: {{ article.outcome.market.key }}</h5>
+            <h5>Outcome: {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</h5>
+            <p><u>Content:</u></p>
+            <div class="article-content">
+                {{ article.content }}
+            </div>
+            <div class="article-details">
+                <p>Date Created: {{ article.date_created }}</p>
+                <p>Is Published: {{ article.is_published }}</p>
+            </div>
+            <div class="article-actions">
+                <a class="btn btn-primary" href="{% url 'core-portal:writer-update-article' article.id %}">Update Article</a>
+                <a class="btn btn-danger" href="{% url 'core-portal:writer-delete-article' article.id %}">Delete Article</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No articles found.</p>
+        {% endfor %}
     </div>
-
-    {% endfor %}
-
-
 {% endblock content %}

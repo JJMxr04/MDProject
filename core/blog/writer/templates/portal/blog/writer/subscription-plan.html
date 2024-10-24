@@ -2,14 +2,12 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/create-article.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/writer/subscription-plan.css' %}">
 {% endblock css %}
 {% block title %}Subscription Rate{% endblock title %}
 
-
-
 {% block content %}
-<div class="container bg-white shadow-md p-5 form-layout mt-0 rounded">
+<div class="container-fluid bg-white shadow-md p-5 form-layout mt-0 rounded">
     <h3 class="mb-4 text-left"> 🤓 Define your Subscription Rate 🤓</h3>
     
     <!-- New card for displaying the existing subscription price -->
@@ -32,9 +30,7 @@
             {{ SubscriptionPlanForm|crispy }}
         </div>
         <br>
-        <br>
         <input class="btn btn-success btn-lg mt-3" type="submit" value="Update Rate">
     </form>
 </div>
-
 {% endblock content %}
