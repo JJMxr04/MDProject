@@ -39,50 +39,52 @@
 </div>
 
 <div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
+<button id="load-more-btn" class="btn btn-primary" style="display: none;" onclick="loadMoreArticles()">Load More</button>
 {% endblock content %}
 
 {% block js %}
 <script>
     let page = 1;
-let isLoading = false;
+    let isLoading = false;
 
-function loadMoreArticles() {
-    if (isLoading) return;
-    isLoading = true;
-    document.getElementById('loading').style.display = 'block';
+    function loadMoreArticles() {
+        if (isLoading) return;
+        isLoading = true;
+        document.getElementById('loading').style.display = 'block';
 
-    fetch(`?page=${page + 1}`, {
-        headers: {
-            'x-requested-with': 'XMLHttpRequest'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.html) {
-            document.getElementById('articles-container').insertAdjacentHTML('beforeend', data.html);
-            page++; // Increment page number only after successful fetch
-        }
-        if (!data.has_next) {
-            // No more pages to load, remove the scroll event listener
-            window.removeEventListener('scroll', handleScroll);
-        }
-        document.getElementById('loading').style.display = 'none';
-        isLoading = false;
-    })
-    .catch(() => {
-        document.getElementById('loading').style.display = 'none';
-        isLoading = false;
-    });
-}
-
-function handleScroll() {
-    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 5) {
-        loadMoreArticles();
+        fetch(`?page=${page + 1}`, {
+            headers: {
+                'x-requested-with': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.html) {
+                document.getElementById('articles-container').insertAdjacentHTML('beforeend', data.html);
+                page++; // Increment page number only after successful fetch
+            }
+            if (!data.has_next) {
+                // No more pages to load, hide the "Load More" button
+                document.getElementById('load-more-btn').style.display = 'none';
+            } else {
+                // Keep showing the "Load More" button if there are more pages
+                document.getElementById('load-more-btn').style.display = 'block';
+            }
+            document.getElementById('loading').style.display = 'none';
+            isLoading = false;
+        })
+        .catch(() => {
+            document.getElementById('loading').style.display = 'none';
+            isLoading = false;
+        });
     }
-}
 
-window.addEventListener('scroll', handleScroll);
-
+    // Initially, show the "Load More" button if there are articles to load
+    document.addEventListener('DOMContentLoaded', () => {
+        const hasMorePages = {{ articles.has_next|yesno:"true,false" }};
+        if (hasMorePages) {
+            document.getElementById('load-more-btn').style.display = 'block';
+        }
+    });
 </script>
 {% endblock js %}
