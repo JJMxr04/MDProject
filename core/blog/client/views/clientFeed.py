@@ -25,7 +25,7 @@ def client_feed(request):
             },
             'date_published': article.date_published.strftime('%Y-%m-%d'),
             'content': article.content[:200] + '...',  # Show a snippet
-            'event': article.event.name if article.event else 'N/A',
+            'event': article.event if article.event else 'N/A',
             'market_key': article.outcome.market.key if article.outcome else 'N/A',
             'outcome_name': article.outcome.name if article.outcome else 'N/A',
             'outcome_price': article.outcome.price if article.outcome else 'N/A',
