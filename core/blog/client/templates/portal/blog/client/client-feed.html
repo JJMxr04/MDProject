@@ -89,6 +89,7 @@
 
     // Add scroll event listener when the page loads
     document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOM fully loaded and parsed"); // Debugging log
         window.addEventListener('scroll', handleScroll);
 
         // Check if there are more articles to load initially
