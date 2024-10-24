@@ -11,11 +11,9 @@
     <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-<div id="content-before-loading" class="articles-container">
-    <!-- Initial articles will be loaded here via JavaScript -->
-</div>
-
+<div id="content-before-loading" class="articles-container"></div>
 <div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
+<div id="no-more-articles" class="text-center" style="display: none;">No more articles to load.</div>
 {% endblock content %}
 
 {% block js %}
@@ -23,13 +21,14 @@
     let page = 1;
     let isLoading = false;
 
-    const beforeLoading = document.getElementById("content-before-loading"); 
+    const beforeLoading = document.getElementById("content-before-loading");
+    const loadingIndicator = document.getElementById("loading");
+    const noMoreArticles = document.getElementById("no-more-articles");
 
-    function getInformation() { 
+    function fetchArticles() {
         isLoading = true;
-        document.getElementById("loading").style.display = "block";
+        loadingIndicator.style.display = "block";
 
-        // Fetch data from the server
         fetch(`?page=${page}`, {
             headers: {
                 'x-requested-with': 'XMLHttpRequest'
@@ -37,76 +36,58 @@
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById("loading").style.display = "none";
-            if (data.html) {
-                // Insert articles dynamically using JS
+            loadingIndicator.style.display = "none";
+            if (data.articles && data.articles.length > 0) {
                 data.articles.forEach(article => {
                     const articleCard = document.createElement("div");
                     articleCard.className = "article-card";
 
-                    const articleHeader = document.createElement("div");
-                    articleHeader.className = "article-header";
-
-                    const avatarImg = document.createElement("img");
-                    avatarImg.src = article.writer.avatar.url;
-                    avatarImg.alt = `${article.writer.username}'s avatar`;
-                    avatarImg.className = "article-avatar";
-
-                    const authorInfo = document.createElement("div");
-                    authorInfo.className = "article-author-info";
-                    authorInfo.innerHTML = `<span class="article-author">${article.writer.username}</span>
-                                            <span class="article-date">${article.date_created}</span>`;
-
-                    articleHeader.appendChild(avatarImg);
-                    articleHeader.appendChild(authorInfo);
-
-                    const articleTitle = document.createElement("h3");
-                    articleTitle.className = "article-title";
-                    articleTitle.textContent = article.title;
-
-                    const articleMeta = document.createElement("div");
-                    articleMeta.className = "article-meta";
-                    articleMeta.innerHTML = `<span><strong>Event:</strong> ${article.event}</span>
-                                             <span><strong>Market:</strong> ${article.outcome.market.key}</span>
-                                             <span><strong>Outcome:</strong> ${article.outcome.name} - ${article.outcome.price} - ${article.outcome.point}</span>`;
-
-                    const articleContent = document.createElement("p");
-                    articleContent.className = "article-content";
-                    articleContent.textContent = article.content;
-
-                    articleCard.appendChild(articleHeader);
-                    articleCard.appendChild(articleTitle);
-                    articleCard.appendChild(articleMeta);
-                    articleCard.appendChild(articleContent);
-
+                    const articleHeader = `
+                        <div class="article-header">
+                            <img src="${article.writer.avatar}" alt="${article.writer.username}'s avatar" class="article-avatar">
+                            <div class="article-author-info">
+                                <span class="article-author">${article.writer.username}</span>
+                                <span class="article-date">${article.date_published}</span>
+                            </div>
+                        </div>`;
+                    const articleContent = `
+                        <h3 class="article-title">${article.title}</h3>
+                        <div class="article-meta">
+                            <span><strong>Event:</strong> ${article.event}</span>
+                            <span><strong>Market:</strong> ${article.market_key}</span>
+                            <span><strong>Outcome:</strong> ${article.outcome_name} - ${article.outcome_price} - ${article.outcome_point}</span>
+                        </div>
+                        <p class="article-content">${article.content}</p>`;
+                    
+                    articleCard.innerHTML = articleHeader + articleContent;
                     beforeLoading.appendChild(articleCard);
                 });
 
                 page++; // Increment page number for the next fetch
                 if (!data.has_next) {
+                    noMoreArticles.style.display = "block";
                     window.removeEventListener("scroll", handleScroll); // Remove listener if no more pages
                 }
             }
             isLoading = false;
         })
         .catch(() => {
-            document.getElementById("loading").style.display = "none";
+            loadingIndicator.style.display = "none";
             isLoading = false;
         });
     }
 
-    // Handle the scroll event to trigger loading more articles
+    // Handle the scroll event
     function handleScroll() {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
-            getInformation();
+            fetchArticles();
         }
     }
 
-    // Add scroll event listener when the page loads
+    // Initialize on page load
     document.addEventListener("DOMContentLoaded", () => {
-        getInformation(); // Load the first batch of articles
+        fetchArticles(); // Load the first batch of articles
         window.addEventListener("scroll", handleScroll);
     });
 </script>
-
 {% endblock js %}
