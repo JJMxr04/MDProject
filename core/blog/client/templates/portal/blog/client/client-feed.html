@@ -47,7 +47,8 @@
     let page = 1;
     let isLoading = false;
 
-    function loadMoreArticles() {
+    // Ensure loadMoreArticles is defined globally
+    window.loadMoreArticles = function() {
         if (isLoading) return;
         isLoading = true;
         document.getElementById('loading').style.display = 'block';
