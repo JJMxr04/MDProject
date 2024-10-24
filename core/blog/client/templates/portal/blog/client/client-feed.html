@@ -11,44 +11,77 @@
     <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-{% if articles %}
-    <div class="articles-container">
+<div class="articles-container" id="articles-container">
+    {% if articles %}
         {% for article in articles %}
         <div class="article-card">
             <div class="article-header">
-                {% if article.author.avatar %}
-                    <img src="{{ article.author.avatar.url }}" class="article-avatar">
-                {% else %}
-                    <img src="https://robohash.org/1" class="article-avatar">
-                {% endif %}
+                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
                 <div class="article-author-info">
-                    <span class="article-author">{{ article.author.username }}</span>
+                    <span class="article-author">{{ article.writer.username }}</span>
                     <span class="article-date">{{ article.date_created }}</span>
                 </div>
             </div>
             <h3 class="article-title">{{ article.title }}</h3>
             <div class="article-meta">
                 <span><strong>Event:</strong> {{ article.event }}</span>
-                <span><strong>Market:</strong> 
-                    {% if article.outcome.market.key == "h2h" %}
-                        Head 2 Head
-                    {% elif article.outcome.market.key == "totals" %}
-                        Over/Under
-                    {% elif article.outcome.market.key == "spreads" %}
-                        Spreads
-                    {% else %}
-                        {{ article.outcome.market.key }}
-                    {% endif %}
-                </span>
+                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
                 <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
             </div>
             <p class="article-content">{{ article.content }}</p>
         </div>
         {% endfor %}
-    </div>
-{% else %}
-    <div class="no-articles">
-        <h6>No Articles to display</h6>
-    </div>
-{% endif %}
+    {% else %}
+        <div class="no-articles">
+            <h6>No Articles to display</h6>
+        </div>
+    {% endif %}
+</div>
+
+<div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
 {% endblock content %}
+
+{% block js %}
+<script>
+    let page = 1;
+    let isLoading = false;
+
+    function loadMoreArticles() {
+        if (isLoading) return;
+        isLoading = true;
+        document.getElementById('loading').style.display = 'block';
+
+        fetch(`?page=${page + 1}`, {
+            headers: {
+                'x-requested-with': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.html) {
+                document.getElementById('articles-container').insertAdjacentHTML('beforeend', data.html);
+                page++;
+            }
+            if (!data.has_next) {
+                // No more pages to load
+                window.removeEventListener('scroll', handleScroll);
+            }
+            document.getElementById('loading').style.display = 'none';
+            isLoading = false;
+        })
+        .catch(() => {
+            document.getElementById('loading').style.display = 'none';
+            isLoading = false;
+        });
+    }
+
+    function handleScroll() {
+        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+        if (scrollTop + clientHeight >= scrollHeight - 5) {
+            loadMoreArticles();
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+</script>
+{% endblock js %}
