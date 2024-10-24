@@ -25,10 +25,12 @@ def client_feed(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Render only the articles list as JSON
         article_list_html = render(request, 'portal/blog/client/partials/article_list.html', {'articles': page_obj}).content.decode('utf-8')
+        print(f'more page:{article_list_html},page_obj.has_next():{page_obj.has_next()}')
         return JsonResponse({'html': article_list_html, 'has_next': page_obj.has_next()})
     
     # Pass the paginated articles to the template context
     context = {
         'articles': page_obj,
     }
+    print(page_obj)
     return render(request, 'portal/blog/client/client-feed.html', context)
