@@ -52,6 +52,8 @@
         isLoading = true;
         document.getElementById('loading').style.display = 'block';
 
+        console.log("Loading more articles, Page:", page + 1); // Debugging log
+
         fetch(`?page=${page + 1}`, {
             headers: {
                 'x-requested-with': 'XMLHttpRequest'
@@ -78,7 +80,9 @@
 
     // Handle the scroll event to trigger loading more articles
     function handleScroll() {
+        console.log("Scrolled, checking position..."); // Debugging log
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
+            console.log("Near bottom, loading more..."); // Debugging log
             loadMoreArticles();
         }
     }
@@ -95,4 +99,5 @@
         }
     });
 </script>
+
 {% endblock js %}
