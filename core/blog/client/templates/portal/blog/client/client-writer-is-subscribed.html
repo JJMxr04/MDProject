@@ -11,7 +11,7 @@
 <div class="profile-container container bg-white shadow-md p-5 form-layout rounded text-center">
     <div class="profile-header">
         {% if writer.avatar %}
-            <img src="{{ writer.avatar.url }}" class="profile-avatar rounded-circle">
+            <img src="{{ writer.avatar }}" class="profile-avatar rounded-circle">
         {% else %}
             <img src="https://robohash.org/1" class="profile-avatar rounded-circle">
         {% endif %}
