@@ -39,7 +39,6 @@
 </div>
 
 <div id="loading" class="text-center" style="display: none;">Loading more articles...</div>
-<button id="load-more-btn" class="btn btn-primary" style="display: none;" onclick="loadMoreArticles()">Load More</button>
 {% endblock content %}
 
 {% block js %}
@@ -47,7 +46,7 @@
     let page = 1;
     let isLoading = false;
 
-    // Ensure loadMoreArticles is defined globally
+    // Function to load more articles
     window.loadMoreArticles = function() {
         if (isLoading) return;
         isLoading = true;
@@ -62,14 +61,11 @@
         .then(data => {
             if (data.html) {
                 document.getElementById('articles-container').insertAdjacentHTML('beforeend', data.html);
-                page++; // Increment page number only after successful fetch
+                page++; // Increment page number after successful load
             }
             if (!data.has_next) {
-                // No more pages to load, hide the "Load More" button
-                document.getElementById('load-more-btn').style.display = 'none';
-            } else {
-                // Keep showing the "Load More" button if there are more pages
-                document.getElementById('load-more-btn').style.display = 'block';
+                // No more articles to load, remove the scroll event listener
+                window.removeEventListener('scroll', handleScroll);
             }
             document.getElementById('loading').style.display = 'none';
             isLoading = false;
@@ -80,11 +76,22 @@
         });
     }
 
-    // Initially, show the "Load More" button if there are articles to load
+    // Handle the scroll event to trigger loading more articles
+    function handleScroll() {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
+            loadMoreArticles();
+        }
+    }
+
+    // Add scroll event listener when the page loads
     document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('scroll', handleScroll);
+
+        // Check if there are more articles to load initially
         const hasMorePages = {{ articles.has_next|yesno:"true,false" }};
-        if (hasMorePages) {
-            document.getElementById('load-more-btn').style.display = 'block';
+        if (!hasMorePages) {
+            // Remove scroll listener if no more articles
+            window.removeEventListener('scroll', handleScroll);
         }
     });
 </script>
