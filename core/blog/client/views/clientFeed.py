@@ -37,8 +37,10 @@ def client_feed(request):
         'is_paginated': is_paginated,
     }
 
-    if request.is_ajax():
+    # Check if the request is an AJAX request
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # If the request is an AJAX request, render only the articles template
         return render(request, 'portal/blog/client/partials/article_list.html', context)
 
+    # For non-AJAX requests, render the full template
     return render(request, 'portal/blog/client/client-feed.html', context)
