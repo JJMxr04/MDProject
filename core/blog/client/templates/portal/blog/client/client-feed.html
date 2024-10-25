@@ -1,9 +1,11 @@
 {% extends "portal/blog/client/components/base_portal_client.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
+
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-feed.css' %}">
 {% endblock css %}
+
 {% block title %}My Articles{% endblock title %}
 
 {% block content %}
@@ -11,30 +13,49 @@
     <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
 </div>
 
-{% if articles %}
-    <div class="articles-container">
-        {% for article in articles %}
-        <div class="article-card">
-            <div class="article-header">
-                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
-                <div class="article-author-info">
-                    <span class="article-author">{{ article.writer.username }}</span>
-                    <span class="article-date">{{ article.date_created }}</span>
-                </div>
-            </div>
-            <h3 class="article-title">{{ article.title }}</h3>
-            <div class="article-meta">
-                <span><strong>Event:</strong> {{ article.event }}</span>
-                <span><strong>Market:</strong> {{ article.outcome.market.key }}</span>
-                <span><strong>Outcome:</strong> {{ article.outcome.name }} - {{ article.outcome.price }} - {{ article.outcome.point }}</span>
-            </div>
-            <p class="article-content">{{ article.content }}</p>
-        </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <div class="no-articles">
-        <h6>No Articles to display</h6>
-    </div>
-{% endif %}
+<div class="articles-container" id="articles-container">
+    {% include 'portal/blog/client/article_list.html' %}
+</div>
+
+<div id="load-more-container" style="text-align: center; margin: 20px 0;">
+    {% if is_paginated %}
+        <button id="load-more" class="infinite-more-link">Load More</button>
+    {% endif %}
+</div>
+
 {% endblock content %}
+
+{% block javascript %}
+    <script>
+        let currentPage = 2;
+        let isLoading = false;
+
+        function loadMoreArticles() {
+            if (isLoading) return;
+            isLoading = true;
+
+            fetch(`?page=${currentPage}`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data, 'text/html');
+                    const newArticles = doc.querySelector('#articles-container').innerHTML;
+
+                    document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
+
+                    // Check if there is a next page
+                    if (!doc.querySelector('#load-more')) {
+                        document.getElementById('load-more-container').remove();
+                    } else {
+                        currentPage++;
+                    }
+                })
+                .finally(() => {
+                    isLoading = false;
+                });
+        }
+
+        // Infinite scroll event
+        document.getElementById('load-more').addEventListener('click', loadMoreArticles);
+    </script>
+{% endblock javascript %}
