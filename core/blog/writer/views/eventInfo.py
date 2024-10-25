@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from core.blog.writer.decorator import writer_required
-from core.event.models import Event  # Adjust import according to your project's structure
-from django.utils import timezone
-from core.event.serializers.event import EventSerializer
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
+from django.db import models  # Import models here
+from core.blog.writer.decorator import writer_required
+from core.event.models import Event  # Adjust import according to your project's structure
 from datetime import timedelta
+from django.utils import timezone
+from core.event.serializers.event import EventSerializer
 
 @require_GET
 @login_required(login_url='/auth/login/')
@@ -25,13 +26,19 @@ def writer_events(request):
 
     # If there's a search term, filter the events
     if search_term:
-        # Change 'name' to 'title' or 'description' based on your requirement
-        events = events.filter(title__icontains=search_term)  # Use 'title' or another field instead of 'name'
+        # Filter by event title, sport title, home team, or away team
+        events = events.filter(
+            models.Q(title__icontains=search_term) |  # Event title
+            models.Q(sport_title__icontains=search_term) |  # Sport title
+            models.Q(home_team__icontains=search_term) |  # Home team
+            models.Q(away_team__icontains=search_term)  # Away team
+        )
 
     event_ser = EventSerializer(events, many=True).data
     return JsonResponse({
         'events': event_ser
     })
+
 
 
 
