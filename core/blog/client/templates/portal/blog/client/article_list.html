@@ -21,6 +21,7 @@
     </div>
 {% endif %}
 
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script>
     let currentPage = 2;
     let isLoading = false;
@@ -37,7 +38,7 @@
                 const newArticles = $(data).find('.articles-container').html();
                 $('#articles-container').append(newArticles);
 
-                // Check if there are more articles to load
+                // If no more articles, remove the load-more button
                 if (!$(data).find('#load-more').length) {
                     $('#load-more-container').remove();
                 } else {
@@ -50,13 +51,13 @@
         });
     }
 
-    $(window).scroll(function() {
+    // Infinite scroll functionality
+    $(window).on('scroll', function() {
+        // Check if near the bottom of the page
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
             loadMoreArticles();
         }
     });
 </script>
-
-<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 
 {% endblock content %}
