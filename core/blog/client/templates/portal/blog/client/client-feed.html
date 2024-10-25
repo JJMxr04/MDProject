@@ -16,9 +16,9 @@
         {% for article in articles %}
         <div class="article-card">
             <div class="article-header">
-                <img src="{{ article.writer.avatar.url }}" alt="{{ article.writer.username }}'s avatar" class="article-avatar">
+                <img src="{{ article.author.avatar.url }}" alt="{{ article.author.username }}'s avatar" class="article-avatar">
                 <div class="article-author-info">
-                    <span class="article-author">{{ article.writer.username }}</span>
+                    <span class="article-author">{{ article.author.username }}</span>
                     <span class="article-date">{{ article.date_created }}</span>
                 </div>
             </div>
@@ -48,57 +48,73 @@
     <script>
         let currentPage = 2;
         let isLoading = false;
-        let hasMoreArticles = true; // New variable to track if there are more articles
+        let hasMoreArticles = true;
 
         function loadMoreArticles() {
-            console.log("loading more");
-            if (isLoading || !hasMoreArticles) return; // Prevent loading if already loading or no more articles
-            isLoading = true;
-            document.getElementById('loading-message').style.display = 'block';
-            document.getElementById('load-more-button').style.display = 'none';
+    if (isLoading || !hasMoreArticles) return;
+    isLoading = true;
+    document.getElementById('loading-message').style.display = 'block';
+    document.getElementById('load-more-button').style.display = 'none';
 
-            fetch(`?page=${currentPage}`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
-                    const newArticles = doc.querySelector('.articles-container').innerHTML;
-
-                    if (newArticles.trim() !== "") {
-                        document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
-                        currentPage++; // Increment the page number
-                    } else {
-                        hasMoreArticles = false; // No more articles to load
-                        document.getElementById('load-more-button').style.display = 'none'; // Hide button if no more articles
-                    }
-
-                    // Hide the loading indicator
-                    document.getElementById('loading-message').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Error loading more articles:', error);
-                })
-                .finally(() => {
-                    isLoading = false;
-                });
+    fetch(`?page=${currentPage}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'  // Request JSON format
         }
+    })
+    .then(response => response.json())  // Parse as JSON
+    .then(data => {
+        const newArticles = data.articles.map(article => {
+            return `
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="${article.writer.avatar_url}" alt="${article.writer.username}'s avatar" class="article-avatar">
+                        <div class="article-author-info">
+                            <span class="article-author">${article.writer.username}</span>
+                            <span class="article-date">${article.date_created}</span>
+                        </div>
+                    </div>
+                    <h3 class="article-title">${article.title}</h3>
+                    <div class="article-meta">
+                        <span><strong>Event:</strong> ${article.event}</span>
+                        <span><strong>Market:</strong> ${article.market}</span>
+                        <span><strong>Outcome:</strong> ${article.outcome.name} - ${article.outcome.price} - ${article.outcome.point}</span>
+                    </div>
+                    <p class="article-content">${article.content}</p>
+                </div>`;
+        }).join('');
+
+        if (newArticles.trim() !== "") {
+            document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
+            currentPage++;
+        } else {
+            hasMoreArticles = false;
+            document.getElementById('load-more-button').style.display = 'none';
+        }
+
+        document.getElementById('loading-message').style.display = 'none';
+    })
+    .catch(error => {
+        console.error('Error loading more articles:', error);
+    })
+    .finally(() => {
+        isLoading = false;
+    });
+}
 
         function handleScroll() {
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrolledPosition = window.scrollY;
-            console.log('hasMoreArticles: ' + hasMoreArticles);
-            // Trigger loading more articles when scrolled near the bottom
+
             if (scrolledPosition >= scrollableHeight - 200 && !isLoading && hasMoreArticles) {
                 loadMoreArticles();
             }
         }
 
-        // Attach scroll event for infinite loading
         document.addEventListener('DOMContentLoaded', function () {
             if (document.querySelector('.articles-container')) {
                 window.addEventListener('scroll', handleScroll);
             }
-            // Show load more button initially
             document.getElementById('load-more-button').style.display = 'block';
         });
     </script>
