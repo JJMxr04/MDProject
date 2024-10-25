@@ -12,7 +12,7 @@
 </div>
 
 {% if articles %}
-    <div class="articles-container">
+    <div class="articles-container" id="articles-container">
         {% for article in articles %}
         <div class="article-card">
             <div class="article-header">
@@ -32,9 +32,58 @@
         </div>
         {% endfor %}
     </div>
+
+    <div id="load-more-container" style="text-align: center; margin: 20px 0;">
+        {% if is_paginated %}
+            <button id="load-more" class="infinite-more-link">Load More</button>
+        {% endif %}
+    </div>
 {% else %}
     <div class="no-articles">
         <h6>No Articles to display</h6>
     </div>
 {% endif %}
 {% endblock content %}
+
+{% block javascript %}
+    <script>
+        let currentPage = 2;
+        let isLoading = false;
+
+        function loadMoreArticles() {
+            if (isLoading) return;
+            isLoading = true;
+
+            fetch(`?page=${currentPage}`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data, 'text/html');
+                    const newArticles = doc.querySelector('.articles-container').innerHTML;
+
+                    document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
+
+                    // Check if there is a next page
+                    if (!doc.querySelector('#load-more')) {
+                        document.getElementById('load-more-container').remove();
+                    } else {
+                        currentPage++;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading more articles:', error);
+                })
+                .finally(() => {
+                    isLoading = false;
+                });
+        }
+
+        // Attach click event for "Load More" button
+        document.addEventListener('DOMContentLoaded', function () {
+            const loadMoreButton = document.getElementById('load-more');
+            if (loadMoreButton) {
+                loadMoreButton.addEventListener('click', loadMoreArticles);
+            }
+        });
+    </script>
+{% endblock javascript %}
