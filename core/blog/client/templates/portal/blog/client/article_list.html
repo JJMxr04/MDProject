@@ -34,9 +34,10 @@
             type: 'get',
             dataType: 'html',
             success: function(data) {
-                const newArticles = $(data).find('#articles-container').html();
+                const newArticles = $(data).find('.articles-container').html();
                 $('#articles-container').append(newArticles);
 
+                // Check if there are more articles to load
                 if (!$(data).find('#load-more').length) {
                     $('#load-more-container').remove();
                 } else {
@@ -55,6 +56,7 @@
         }
     });
 </script>
+
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 
 {% endblock content %}

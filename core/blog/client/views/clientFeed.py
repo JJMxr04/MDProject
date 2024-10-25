@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from core.blog.writer.models import Article
-from core.blog.client.models import Subscription  # Adjust import according to your project's structure
+from core.blog.client.models import Subscription
 
 @login_required(login_url='/auth/login/')
 def client_feed(request):
@@ -18,9 +18,9 @@ def client_feed(request):
         is_published=True
     ).order_by('-date_published')
     
-    # Paginate the articles, 10 articles per page
+    # Paginate the articles, 5 articles per page
     page = request.GET.get('page', 1)
-    paginator = Paginator(articles, 10)
+    paginator = Paginator(articles, 5)
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
