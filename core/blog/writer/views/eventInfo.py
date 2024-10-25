@@ -1,13 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from django.db import models  # Import models here
 from core.blog.writer.decorator import writer_required
-from core.event.models import Event  # Adjust import according to your project's structure
-from datetime import timedelta
+from core.event.models import Event, Sport  # Adjust import according to your project's structure
+from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
+from core.match.models import Match
+from core.match.serializers.match import MatchSerializer
+from core.game.models import Game
 from django.utils import timezone
-from core.event.serializers.event import EventSerializer
+from django.utils.dateparse import parse_date
+import json
+from uuid import UUID
+from django.core.serializers.json import DjangoJSONEncoder
+from datetime import datetime, timedelta
+
+
 
 @require_GET
 @login_required(login_url='/auth/login/')
