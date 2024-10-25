@@ -1,29 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from core.blog.writer.decorator import writer_required
-from core.event.models import Event, Sport  # Adjust import according to your project's structure
-from django.utils.dateparse import parse_date
-from core.event.serializers.event import EventSerializer
-import json
-from uuid import UUID
-from django.core.serializers.json import DjangoJSONEncoder
-
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from core.match.models import Match
-from core.match.serializers.match import MatchSerializer
-from core.event.models import Event
-from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
-from core.game.models import Game
-from django.contrib.auth.decorators import login_required
-import json
-
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET,require_POST
-from django.shortcuts import get_object_or_404
+from core.event.models import Event  # Adjust import according to your project's structure
 from django.utils import timezone
-
-from datetime import datetime, timedelta
+from core.event.serializers.event import EventSerializer
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from datetime import timedelta
 
 @require_GET
 @login_required(login_url='/auth/login/')
@@ -33,13 +16,24 @@ def writer_events(request):
     now = timezone.now()
     # Calculate the date one week from now
     one_week_later = now + timedelta(weeks=1)
-    
+
+    # Get the search term from query parameters
+    search_term = request.GET.get('search', '').strip()
+
     # Fetch unique events from today up to a week from now that have bookmakers
     events = Event.objects.filter(commence_time__range=(now, one_week_later), bookmakers__isnull=False).distinct()
+
+    # If there's a search term, filter the events
+    if search_term:
+        # Change 'name' to 'title' or 'description' based on your requirement
+        events = events.filter(title__icontains=search_term)  # Use 'title' or another field instead of 'name'
+
     event_ser = EventSerializer(events, many=True).data
     return JsonResponse({
         'events': event_ser
     })
+
+
 
 
 @require_GET

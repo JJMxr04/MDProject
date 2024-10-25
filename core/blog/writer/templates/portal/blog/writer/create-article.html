@@ -10,7 +10,11 @@
 <div class="row">
     <div class="col-md-4">
         <div class="bg-light shadow-md p-5 form-layout h-100 rounded equal-height" style="overflow-y: auto;">
-            <h3 class="mb-4 text-left"> Events</h3>
+            <h3 class="mb-4 text-left">Events</h3>
+            
+            <!-- Search Bar -->
+            <input type="text" id="event-search" placeholder="Search for events..." class="form-control mb-3" oninput="searchEvents()">
+
             <div id="event-list">
                 {% if available_events %}
                     {% for event in available_events %}
@@ -53,7 +57,7 @@
     </div>
     <div class="col-md-4">
         <div class="bg-light shadow-md p-5 form-layout h-100 rounded equal-height" style="overflow-y: auto;">
-            <h3 class="mb-4 text-left"> Bookmakers</h3>
+            <h3 class="mb-4 text-left">Bookmakers</h3>
             <div id="bookmakers">
                 <p class="no-bookmakers-message">No Bookmakers available for this period.</p>
             </div>
@@ -61,7 +65,7 @@
     </div>
     <div class="col-md-4">
         <div class="bg-white shadow-md p-5 form-layout mt-0 rounded">
-            <h3 class="mb-4 text-left"> 🤓 Create An Article 🤓</h3>
+            <h3 class="mb-4 text-left">🤓 Create An Article 🤓</h3>
             <form method="POST" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-group text-left">
@@ -79,8 +83,9 @@
 </div>
 
 <script>
-    function fetchEvents() {
-        const url = `{% url "core-portal:writer-events" %}`;
+    // Fetch events function with search capability
+    function fetchEvents(searchTerm = '') {
+        const url = `{% url "core-portal:writer-events" %}?search=${encodeURIComponent(searchTerm)}`;
 
         fetch(url, {
             method: 'GET',
@@ -141,6 +146,11 @@
 
         eventContainer.addEventListener('click', () => toggleEventSelection(eventContainer, event.id));
         eventList.appendChild(eventContainer);
+    }
+
+    function searchEvents() {
+        const searchTerm = document.getElementById('event-search').value;
+        fetchEvents(searchTerm); // Call fetchEvents with the search term
     }
 
     function toggleEventSelection(eventContainer, eventId) {
@@ -204,37 +214,25 @@
                     ${bookmaker.markets.map(market => `
                         <div class="market" data-key="${market.key}">
                             <h4 class="market-title">
-                                ${market.key === 'h2h' ? 'Head to Head' : 
-                                  market.key === 'totals' ? 'Totals' : 
-                                  market.key === 'spreads' ? 'Spreads' : 
-                                  market.title}
+                                ${market.title}
+                                <small>${market.type}</small>
                             </h4>
-                            <ul>
-                                ${market.outcomes.map(outcome => `
-                                    <li class="outcome" data-outcome-id="${outcome.id}" onclick="toggleOutcomeSelection(this)">
-                                        <span class="outcome-name">${outcome.name}</span>
-                                        <span class="point">${outcome.point}</span>
-                                        <span class="price">${outcome.price}</span>
-                                    </li>
-                                `).join('')}
-                            </ul>
+                            ${market.outcomes.map(outcome => `
+                                <div class="outcome">
+                                    <span>${outcome.name} (${outcome.price})</span>
+                                </div>
+                            `).join('')}
                         </div>
                     `).join('')}
                 `;
                 bookmakersContainer.appendChild(bookmakerElement);
             });
         } else {
-            bookmakersContainer.innerHTML = '<p>No bookmakers available.</p>';
+            bookmakersContainer.innerHTML = '<p class="no-bookmakers-message">No Bookmakers available for this period.</p>';
         }
     }
 
-    function toggleOutcomeSelection(outcomeElement) {
-        const outcomeIdInput = document.getElementById('outcome_id_input');
-        const isSelected = outcomeElement.classList.toggle('selected');
-        outcomeIdInput.value = isSelected ? outcomeElement.dataset.outcomeId : '';
-    }
-
-    window.onload = fetchEvents;
+    // Initial fetch for events
+    fetchEvents();
 </script>
-
 {% endblock content %}
