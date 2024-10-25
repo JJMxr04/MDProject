@@ -34,9 +34,8 @@
     </div>
 
     <div id="load-more-container" style="text-align: center; margin: 20px 0;">
-        {% if is_paginated %}
-            <button id="load-more" class="infinite-more-link">Load More</button>
-        {% endif %}
+        <button id="load-more-button" onclick="loadMoreArticles()" style="display: none;">Load More Articles</button>
+        <p id="loading-message" style="display: none;">Loading more articles...</p>
     </div>
 {% else %}
     <div class="no-articles">
@@ -49,26 +48,33 @@
     <script>
         let currentPage = 2;
         let isLoading = false;
+        let hasMoreArticles = true; // New variable to track if there are more articles
 
         function loadMoreArticles() {
-            if (isLoading) return;
+            console.log("loading more");
+            if (isLoading || !hasMoreArticles) return; // Prevent loading if already loading or no more articles
             isLoading = true;
+            document.getElementById('loading-message').style.display = 'block';
+            document.getElementById('load-more-button').style.display = 'none';
 
             fetch(`?page=${currentPage}`)
                 .then(response => response.text())
                 .then(data => {
+                    console.log(data);
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(data, 'text/html');
                     const newArticles = doc.querySelector('.articles-container').innerHTML;
 
-                    document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
-
-                    // Check if there is a next page
-                    if (!doc.querySelector('#load-more')) {
-                        document.getElementById('load-more-container').remove();
+                    if (newArticles.trim() !== "") {
+                        document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
+                        currentPage++; // Increment the page number
                     } else {
-                        currentPage++;
+                        hasMoreArticles = false; // No more articles to load
+                        document.getElementById('load-more-button').style.display = 'none'; // Hide button if no more articles
                     }
+
+                    // Hide the loading indicator
+                    document.getElementById('loading-message').style.display = 'none';
                 })
                 .catch(error => {
                     console.error('Error loading more articles:', error);
@@ -78,12 +84,23 @@
                 });
         }
 
-        // Attach click event for "Load More" button
-        document.addEventListener('DOMContentLoaded', function () {
-            const loadMoreButton = document.getElementById('load-more');
-            if (loadMoreButton) {
-                loadMoreButton.addEventListener('click', loadMoreArticles);
+        function handleScroll() {
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolledPosition = window.scrollY;
+            console.log('hasMoreArticles: ' + hasMoreArticles);
+            // Trigger loading more articles when scrolled near the bottom
+            if (scrolledPosition >= scrollableHeight - 200 && !isLoading && hasMoreArticles) {
+                loadMoreArticles();
             }
+        }
+
+        // Attach scroll event for infinite loading
+        document.addEventListener('DOMContentLoaded', function () {
+            if (document.querySelector('.articles-container')) {
+                window.addEventListener('scroll', handleScroll);
+            }
+            // Show load more button initially
+            document.getElementById('load-more-button').style.display = 'block';
         });
     </script>
 {% endblock javascript %}
