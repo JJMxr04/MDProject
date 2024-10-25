@@ -30,30 +30,37 @@
         let currentPage = 2;
         let isLoading = false;
 
-        function loadMoreArticles() {
-            if (isLoading) return;
-            isLoading = true;
+    function loadMoreArticles() {
+    if (isLoading) return;
+    isLoading = true;
+    document.getElementById('load-more').disabled = true; // Disable button
 
-            fetch(`?page=${currentPage}`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
-                    const newArticles = doc.querySelector('#articles-container').innerHTML;
+    fetch(`?page=${currentPage}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const newArticles = doc.querySelector('#articles-container').innerHTML;
 
-                    document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
+            document.getElementById('articles-container').insertAdjacentHTML('beforeend', newArticles);
 
-                    // Check if there is a next page
-                    if (!doc.querySelector('#load-more')) {
-                        document.getElementById('load-more-container').remove();
-                    } else {
-                        currentPage++;
-                    }
-                })
-                .finally(() => {
-                    isLoading = false;
-                });
-        }
+            if (!doc.querySelector('#load-more')) {
+                document.getElementById('load-more-container').remove();
+            } else {
+                currentPage++;
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        })
+        .finally(() => {
+            isLoading = false;
+            document.getElementById('load-more').disabled = false; // Re-enable button
+        });
+}
 
         // Infinite scroll event
         document.getElementById('load-more').addEventListener('click', loadMoreArticles);
