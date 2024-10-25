@@ -1,0 +1,60 @@
+{% extends "portal/blog/client/components/base_portal_client.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-feed.css' %}">
+{% endblock css %}
+{% block title %}My Articles{% endblock title %}
+
+{% block content %}
+<div class="container bg-white shadow-md p-5 form-layout text-center welcome-message">
+    <h5>🤓 Welcome to the Client feed, {{ user.username }} 🤓</h5>
+</div>
+
+<div class="articles-container" id="articles-container">
+    {% include 'portal/blog/client/article_list.html' %}
+</div>
+
+{% if is_paginated %}
+    <div id="load-more-container">
+        <a id="load-more" class="infinite-more-link" href="?page=2">More</a>
+    </div>
+{% endif %}
+
+<script>
+    let currentPage = 2;
+    let isLoading = false;
+
+    function loadMoreArticles() {
+        if (isLoading) return;
+        isLoading = true;
+
+        $.ajax({
+            url: "?page=" + currentPage,
+            type: 'get',
+            dataType: 'html',
+            success: function(data) {
+                const newArticles = $(data).find('#articles-container').html();
+                $('#articles-container').append(newArticles);
+
+                if (!$(data).find('#load-more').length) {
+                    $('#load-more-container').remove();
+                } else {
+                    currentPage++;
+                }
+            },
+            complete: function() {
+                isLoading = false;
+            }
+        });
+    }
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            loadMoreArticles();
+        }
+    });
+</script>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+
+{% endblock content %}

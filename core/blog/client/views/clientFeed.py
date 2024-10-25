@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from core.blog.writer.models import Article
@@ -12,11 +13,32 @@ def client_feed(request):
     subscribed_writers = subscriptions.values_list('writer', flat=True)
     
     # Get all articles from those writers, ordered by date_published
-    articles = Article.objects.filter(author__in=subscribed_writers,is_published=True).order_by('-date_published')
+    articles = Article.objects.filter(
+        author__in=subscribed_writers,
+        is_published=True
+    ).order_by('-date_published')
     
-    # Pass the articles to the template context
+    # Paginate the articles, 10 articles per page
+    page = request.GET.get('page', 1)
+    paginator = Paginator(articles, 10)
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+    
+    # Determine if there are more articles to load
+    is_paginated = articles.has_next()
+
+    # Pass the articles and pagination info to the template context
     context = {
-        'articles': articles
+        'articles': articles,
+        'is_paginated': is_paginated,
     }
+
+    if request.is_ajax():
+        # If the request is an AJAX request, render only the articles template
+        return render(request, 'portal/blog/client/partials/article_list.html', context)
 
     return render(request, 'portal/blog/client/client-feed.html', context)
