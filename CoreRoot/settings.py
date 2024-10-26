@@ -39,11 +39,14 @@ STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
 PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
-# DEBUG = False
 
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
-ALLOWED_HOSTS=['localhost']
+if os.environ.get('DEBUG') == 'True':
+    DEBUG = True
+else:
+    DEBUG = False
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
+# ALLOWED_HOSTS=['localhost']
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
 # CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
 
@@ -181,6 +184,10 @@ TEMPLATES = [
     },
 ]
 
+# settings.py
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 
@@ -198,36 +205,42 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=f"{os.environ.get('DATABASE_URL')}"
-#     )
-# }
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-        'NAME': 'postgres',  # Main database name
-        'USER': 'joe',
-        'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST', 'localhost'),
-        'PORT': os.environ.get('DBPORT', '5432'),
-        'TEST': {
-            'SERIALIZE': True,
-        },
-    },
-    'test_mirror': {
-        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-        'NAME': 'postgres',  # Mirroring the same main database
-        'USER': 'joe',
-        'PASSWORD': 'password',
-        'HOST': os.environ.get('DBHOST', 'localhost'),
-        'PORT': os.environ.get('DBPORT', '5432'),
-        'TEST': {
-            'MIRROR': 'default',  # Mirror the default database
-        },
-    },
+    'default': dj_database_url.config(
+        default=f"{os.environ.get('DATABASE_URL')}"
+    )
 }
+
+# Optional: Add test settings if needed
+DATABASES['default']['TEST'] = {
+    'SERIALIZE': True,
+}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+#         'NAME': 'postgres',  # Main database name
+#         'USER': 'postgres',
+#         'PASSWORD': 'password',
+#         'HOST': os.environ.get('DBHOST', 'localhost'),
+#         'PORT': os.environ.get('DBPORT', '5432'),
+#         'TEST': {
+#             'SERIALIZE': True,
+#         },
+#     },
+#     'test_mirror': {
+#         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+#         'NAME': 'postgres',  # Mirroring the same main database
+#         'USER': 'joe',
+#         'PASSWORD': 'password',
+#         'HOST': os.environ.get('DBHOST', 'localhost'),
+#         'PORT': os.environ.get('DBPORT', '5432'),
+#         'TEST': {
+#             'MIRROR': 'default',  # Mirror the default database
+#         },
+#     },
+# }
 
 
 
@@ -276,21 +289,21 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
-# AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
-# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_QUERYSTRING_AUTH = False
-# AWS_QUERYSTRING_AUTH = False
-# # Additional optional settings
-# AWS_S3_FILE_OVERWRITE = True
+AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_QUERYSTRING_AUTH = False
+# Additional optional settings
+AWS_S3_FILE_OVERWRITE = True
 # AWS_DEFAULT_ACL = 'public-read'
-# AWS_S3_SIGNATURE_VERSION = 's3v4'
-# CELERY_RESULT_EXTENDED = True
+AWS_DEFAULT_ACL = None
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+CELERY_RESULT_EXTENDED = True
 
 # Configure Django REST Framework settings
 REST_FRAMEWORK = {
@@ -322,19 +335,16 @@ AUTHENTICATION_BACKENDS = [
 
 
 # Media files (user-uploaded files)
-if not os.environ.get("DEBUG"):
-    MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-else:
-    MEDIA_URL = f'/media/'
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CORS_ALLOWED_ORIGINS = [
+# CORS_ALLOWED_ORIGINS = [
 
-"http://localhost:8000",
-"http://localhost:3000"
-]
+# "http://localhost:8000",
+# "http://localhost:3000"
+# ]
 
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
 LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
@@ -511,17 +521,17 @@ CACHES = {
 
 CELERY_BEAT_SCHEDULE = {}
 
-# # SSL/TLS settings
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_BROWSER_XSS_FILTER = True
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_HSTS_SECONDS = 31536000  # 1 year
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
-# SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+# SSL/TLS settings
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 # End of file
