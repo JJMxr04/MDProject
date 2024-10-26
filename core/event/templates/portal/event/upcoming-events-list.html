@@ -4,187 +4,100 @@
 {% block title %}Upcoming Events List{% endblock title %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'css/portal/event/upcoming_events_list.css' %}">
-    <div class="events-container offset2">
-        <h1>Upcoming Events</h1>
-        <div class="events-content">
-            <div class="filter-and-events">
-                <div class="sidebar">
-                    <h2>Filters</h2>
-                    <div class="filter-container">
-                        <input
-                            type="text"
-                            placeholder="Search events..."
-                            value="{{ search_query }}"
-                            oninput="updateFilter()"
-                            class="search-bar"
-                        />
-                        <select id="sportFilter" onchange="updateFilter()">
-                            <option value="">All Sports</option>
-                            {% for sport in sports %}
-                                <option value="{{ sport.key }}" {% if selected_sport == sport.key %}selected{% endif %}>
-                                    {{ sport.title }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                        <div class="date-filters">
-                            <label>
-                                Start Date:
-                                <input
-                                    type="date"
-                                    value="{{ start_date }}"
-                                    onchange="updateFilter()"
-                                />
-                            </label>
-                            <label>
-                                End Date:
-                                <input
-                                    type="date"
-                                    value="{{ end_date }}"
-                                    onchange="updateFilter()"
-                                />
-                            </label>
+<link rel="stylesheet" href="{% static 'css/portal/event/upcoming_events_list.css' %}">
+<div class="container">
+    <h1>Upcoming Events</h1>
+
+    <!-- Search and Filter Form -->
+    <div class="filter-form bg-white shadow-md p-3 mb-3 rounded">
+        <form method="get" action="" class="form-inline">
+            <input type="text" name="search" class="form-control mr-2" placeholder="Search events..." value="{{ search_query }}">
+            <select name="sport" class="form-control mr-2">
+                <option value="">All Sports</option>
+                {% for sport in sports %}
+                    <option value="{{ sport.key }}" {% if selected_sport == sport.key %}selected{% endif %}>{{ sport.title }}</option>
+                {% endfor %}
+            </select>
+            <input type="date" name="start_date" class="form-control mr-2" value="{{ start_date }}">
+            <input type="date" name="end_date" class="form-control mr-2" value="{{ end_date }}">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+
+    <!-- Events List -->
+    {% if page_obj %}
+        {% for event in page_obj %}
+            <div class="event-card bg-white shadow-md p-3 mb-3 rounded">
+                <a href="{% url 'core-portal:upcoming-events-detail' event.id %}">
+                    <div class="teams">
+                        <div class="team">
+                            {% if event.home_team_team.logo_url %}
+                                <img src="{{ event.home_team_team.logo_url.url }}" alt="{{ event.home_team }} logo" />
+                            {% else %}
+                            <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+                            {% endif %}
+                            <p>{{ event.home_team_team.team_name }}</p>
                         </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            {% if event.away_team_team.logo_url %}
+                                <img src="{{ event.away_team_team.logo_url.url }}" alt="{{ event.away_team }} logo" />
+                            {% else %}
+                            <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+                            {% endif %}
+                            <p>{{ event.away_team_team.team_name }}</p>
+                        </div>
+                        
                     </div>
-                </div>
-                <div class="events-list-container">
-                    {% for event in events %}
-                        <a href="{% url 'core-portal:upcoming-events-detail' event.id %}" class="event-card">
-                            <div key="{{ event.id }}" >
-                                <div class="teams">
-                                    <div class="team">
-                                        <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team }} logo" />
-                                        <p>{{ event.home_team_team.team_name }}</p>
-                                    </div>
-                                    <div class="vs">VS</div>
-                                    <div class="team">
-                                        <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team }} logo" />
-                                        <p>{{ event.away_team_team.team_name }}</p>
-                                    </div>
-                                </div>
-                                <h2>{{ event.title }}</h2>
-                                <p>{{ event.description }}</p>
-                                <p class="commence-time" data-time="{{ event.commence_time }}">
-                                    {{ event.commence_time }}
-                                </p>
-
-
-
-                            </div>
-                        </a>
-                    {% empty %}
-                        <p>No events found.</p>
-                    {% endfor %}
-                </div>
+                    <h3>{{ event.title }}</h3>
+                    <p>{{ event.description }}</p>
+                    <p class="commence-time">{{ event.commence_time }}</p>
+                </a>
             </div>
-        </div>
-        <div class="pagination">
-            {% if current_page > 1 %}
-                <button onclick="changePage({{ current_page }} - 1)">Previous</button>
-            {% endif %}
-
-            <!-- Display the first 3 pages -->
-            {% for page_num in page_range|slice:":3" %}
-                <button class="{% if page_num == current_page %}active{% endif %}" onclick="changePage({{ page_num }})">
-                    {{ page_num }}
-                </button>
-            {% endfor %}
-
-            <!-- Input box for page number -->
-            <input type="number" id="pageInput" placeholder="Page #"
-                   min="1" max="{{ total_pages }}" value="{{ current_page }}"
-                   onkeydown="if (event.key === 'Enter') { goToPage(); }" />
-            <!-- Display the last page if not already in the range -->
-            {% if total_pages > 3 %}
-                <span>...</span>
-                <button class="{% if total_pages == current_page %}active{% endif %}" onclick="changePage({{ total_pages }})">
-                    {{ total_pages }}
-                </button>
-            {% endif %}
-
-            {% if current_page < total_pages %}
-                <button onclick="changePage({{ current_page|add:'1' }})">Next</button>
-            {% endif %}
-            
-        </div>
-
-
-
-    <script>
-        function updateFilter() {
-            const searchQuery = document.querySelector('.search-bar').value;
-            const sportFilter = document.getElementById('sportFilter').value;
-            const startDate = document.querySelector('input[type="date"]:nth-of-type(1)').value;
-            const endDate = document.querySelector('input[type="date"]:nth-of-type(2)').value;
-            const params = new URLSearchParams({
-                search: searchQuery,
-                sport: sportFilter,
-                start_date: startDate,
-                end_date: endDate,
-                page: 1
-            });
-            window.location.search = params.toString();
-        }
-
-function changePage(page) {
-        const searchQuery = document.querySelector('.search-bar').value;
-        const sportFilter = document.getElementById('sportFilter').value;
-        const startDate = document.querySelector('input[type="date"]:nth-of-type(1)').value;
-        const endDate = document.querySelector('input[type="date"]:nth-of-type(2)').value;
-        const params = new URLSearchParams({
-            search: searchQuery,
-            sport: sportFilter,
-            start_date: startDate,
-            end_date: endDate,
-            page: page
-        });
-        window.location.search = params.toString();
-    }
-
-    function goToPage() {
-        const page = document.getElementById('pageInput').value;
-        if (page) {
-            changePage(page);
-        }
-    }
-
-    function debugEvents() {
-        console.log("Debugging events:");
-        console.log("{% if events %}Events found:{% else %}No events found in the template context.{% endif %}");
-        {% for event in events %}
-            console.log({
-                id: "{{ event.id }}",
-                title: "{{ event.title }}",
-                homeTeam: "{{ event.home_team_team.team_name }}",
-                awayTeam: "{{ event.away_team_team.team_name }}",
-                commenceTime: "{{ event.commence_time|date:"c" }}"
-            });
         {% endfor %}
-    }
 
-    document.addEventListener('DOMContentLoaded', debugEvents);
+        <!-- Pagination Controls -->
+        <div class="pagination-container">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="First">
+                                &laquo;&laquo;
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="Previous">
+                                &laquo;
+                            </a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
 
-        document.addEventListener('DOMContentLoaded', function() {
-        const timeElements = document.querySelectorAll('.commence-time');
-
-        timeElements.forEach(function(element) {
-            const timeString = element.getAttribute('data-time');
-            const date = new Date(timeString);  // Convert the string to a JavaScript Date object
-
-            // Format the date and time to a readable format
-            const options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            };
-            const formattedDate = date.toLocaleString('en-US', options);
-
-            // Replace the text content with the formatted date
-            element.textContent = formattedDate;
-        });
-    });
-    </script>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="Next">
+                                &raquo;
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="Last">
+                                &raquo;&raquo;
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% else %}
+        <div class="container bg-white shadow-md p-3 mb-3 rounded">
+            <p>No events found.</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock content %}
