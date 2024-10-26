@@ -14,7 +14,7 @@ def writer_subscribe(request, writer_id):
     writer = User.objects.filter(id=writer_id).first()
     print(f'writer:{writer}')
     # Check if the user is subscribed to the writer
-    is_subscribed = Subscription.objects.filter(subscriber=request.user,writer=writer).exists()
+    is_subscribed = Subscription.objects.filter(subscriber=request.user,active=True,writer=writer).exists()
     print(f'is_subbed:{is_subscribed}')
     writer_ser = WriterSerializer(writer).data
     print(f'writer_ser:{writer_ser}')
