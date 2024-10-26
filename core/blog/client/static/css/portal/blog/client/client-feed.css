@@ -13,7 +13,7 @@ body {
 }
 
 /* Articles Container */
-.articles-container {
+.articles-container { 
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -102,15 +102,12 @@ body {
     text-align: center;
 }
 
-.offset-2 {
-    margin-left: auto;
-    margin-right: auto;
-    }
-
 /* Responsive Styles */
 @media (max-width: 767px) {
+    /* Stack elements vertically on mobile */
     .article-card {
         margin-bottom: 20px;
+        padding: 15px;
     }
 
     .article-header {
@@ -120,5 +117,26 @@ body {
 
     .article-avatar {
         margin-bottom: 10px;
+    }
+
+    .article-title {
+        font-size: 1.3rem;
+    }
+
+    .article-meta,
+    .article-content {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles for comfortable reading and layout */
+    .article-card {
+        padding: 20px;
+        max-width: 600px;
+    }
+
+    .article-title {
+        font-size: 1.4rem;
     }
 }
