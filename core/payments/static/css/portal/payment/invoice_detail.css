@@ -1,6 +1,6 @@
 /* Container Styling */
-#container {
-  max-width: 600px;
+.container {
+  max-width: 800px; /* Increase width for larger screens */
   margin: auto;
   padding: 20px;
   background-color: #fff;
@@ -9,41 +9,64 @@
   margin-top: 20px;
 }
 
-/* Text Styling */
-.error-heading {
-  font-size: 2rem;
-  color: #d9534f;
-  margin-bottom: 10px;
+.bubble-bg {
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
 }
 
-.error-message {
-  font-size: 1.2rem;
-  color: #6c757d;
+/* Invoice Info Styling */
+.invoice-info {
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.invoice-table th, .invoice-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.invoice-table th {
+  background-color: #f2f2f2;
+}
+
+/* Button Styling */
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline for link */
+}
+
+.btn:hover {
+  background-color: #0056b3;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-  #container {
+  .container {
       padding: 15px;
-      margin-top: 15px;
   }
-  .error-heading {
-      font-size: 1.8rem;
-  }
-  .error-message {
-      font-size: 1rem;
+  .invoice-table th, .invoice-table td {
+      padding: 5px;
+      font-size: 14px; /* Slightly smaller font for smaller screens */
   }
 }
 
 @media (max-width: 480px) {
-  #container {
+  .container {
       padding: 10px;
-      margin-top: 10px;
   }
-  .error-heading {
-      font-size: 1.5rem;
-  }
-  .error-message {
-      font-size: 0.9rem;
+  .invoice-table th, .invoice-table td {
+      padding: 4px;
+      font-size: 12px; /* Further reduce font size for mobile */
   }
 }

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/portal/payment/checkout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal/payment/success-cancel-subscription.css' %}">
 {% endblock css %}
 
 {% block title %}
@@ -11,10 +11,10 @@
 {% endblock title %}
 
 {% block content %}
-  <div class="success-message text-center">
+  <div class="container success-message text-center">
     <h1 class="display-4 text-success">Subscription Canceled Successfully!</h1>
     <p class="lead">Your subscription has been canceled. We're sorry to see you go.</p>
     <p>If you have any questions or need further assistance, please contact our support team.</p>
-    <a href="{% url 'core-portal:client-writer-list' %}" class="btn btn-primary">Return to Subscriber</a>
+    <a href="{% url 'core-portal:client-writer-list' %}" class="btn btn-primary" aria-label="Return to Subscriber">Return to Subscriber</a>
   </div>
 {% endblock content %}
