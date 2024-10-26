@@ -2,38 +2,29 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block css %}
-<!-- Add any custom CSS here -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/blog/client/client-writer-list.css' %}">
 {% endblock css %}
 {% block title %}Writers{% endblock title %}
 
 {% block content %}
 <div class="container bg-white shadow-md p-5 form-layout text-center offset2">
     <h5> 🤓 Welcome to the Writers List, {{ user.username }} 🤓</h5>
-    
+
     <!-- Sub-navigation bar -->
-<!-- Sub-navigation bar -->
-<nav class="app-nav nav nav-tabs sub-nav justify-content-center">
-    <div class="limit-width d-flex" role="list">
-        <div role="listitem" class="sub-nav-item">
-            <a class="nav-link {% if not subscribed_only %}active{% endif %}" href="?subscribed_only=false">
-                <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
-                    <use xlink:href="#overview-28"></use>
-                </svg>
-                <span class="sub-nav-item-name gray">All Writers</span>
-            </a>
+    <nav class="app-nav nav nav-tabs sub-nav justify-content-center">
+        <div class="limit-width d-flex" role="list">
+            <div role="listitem" class="sub-nav-item">
+                <a class="nav-link {% if not subscribed_only %}active{% endif %}" href="?subscribed_only=false">
+                    All Writers
+                </a>
+            </div>
+            <div role="listitem" class="sub-nav-item">
+                <a class="nav-link {% if subscribed_only %}active{% endif %}" href="?subscribed_only=true">
+                    Subscribed Writers
+                </a>
+            </div>
         </div>
-
-        <div role="listitem" class="sub-nav-item">
-            <a class="nav-link {% if subscribed_only %}active{% endif %}" href="?subscribed_only=true">
-                <svg style="height: 24px; width: 24px;" class="icon malibu-icon fill-gray" aria-hidden="true">
-                    <use xlink:href="#team-28"></use>
-                </svg>
-                <span class="sub-nav-item-name gray">Subscribed Writers</span>
-            </a>
-        </div>
-    </div>
-</nav>
-
+    </nav>
 </div>
 
 <br>
@@ -47,10 +38,9 @@
 </div>
 
 <!-- Writers List -->
-{% if writers %}
-    {% for writer in writers %}
+{% if page_obj %}
+    {% for writer in page_obj %}
     <div class="container bg-white shadow-md p-5 form-layout rounded text-left position-relative">
-        <!-- Dropdown Menu positioned in the top right corner -->
         <div class="dropdown position-absolute" style="top: 10px; right: 10px;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; padding: 10px;">
                 ⋮
@@ -65,34 +55,53 @@
         {% else %}
             <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
         {% endif %}
-        <h3> {{ writer.first_name }} {{ writer.last_name }}</h3>
-
-        <br><br>
-        <h4> Writer Description:</h4>
-        <p> {{ writer.writer_description }}</p>
-
-        <br><br>
-
-        <h4> Leagues Writer Primarily likes to Bet:</h4>
-        {% if writer.tags.all %}
-            {% for tag in writer.tags.all %}
-                <p>{{ tag.name }}</p>
-            {% endfor %}
-        {% else %}
-            <p>No Tags</p>
-        {% endif %}
-
-        <br>
+        <h3>{{ writer.first_name }} {{ writer.last_name }}</h3>
+        <h4>Writer Description:</h4>
+        <p>{{ writer.writer_description }}</p>
     </div>
     {% endfor %}
+    
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}&subscribed_only={{ subscribed_only }}" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}&subscribed_only={{ subscribed_only }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}&subscribed_only={{ subscribed_only }}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}&subscribed_only={{ subscribed_only }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}&subscribed_only={{ subscribed_only }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 {% else %}
     <div class="container bg-white shadow-md p-5 form-layout rounded text-left">
-        <h6> No Writers to display</h6>
+        <h6>No Writers to display</h6>
     </div>
 {% endif %}
-
 {% endblock content %}
-
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

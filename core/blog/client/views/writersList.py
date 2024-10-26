@@ -1,16 +1,17 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from core.user.models import User
 from core.user.serializers import WriterSerializer
 from django.views.decorators.http import require_POST
 from core.blog.client.models import Subscription
+from django.http import JsonResponse
 
 @login_required(login_url='/auth/login/')
 @require_POST
 def toggle_subscription(request):
     writer_id = request.POST.get('writer_id')
     is_subscribed = request.POST.get('is_subscribed') == 'true'
-
     writer = User.objects.get(id=writer_id, is_writer=True)
     
     if is_subscribed:
@@ -24,11 +25,11 @@ def toggle_subscription(request):
 
 @login_required(login_url='/auth/login/')
 def writer_list(request):
-    # Get the search query and the subscribed filter
+    # Get the search query and subscribed filter
     query = request.GET.get('search', '')
-    subscribed_only = request.GET.get('subscribed_only', 'false').lower() == 'true'  # Toggle filter
-
-    # Get the user's subscriptions
+    subscribed_only = request.GET.get('subscribed_only', 'false').lower() == 'true'
+    
+    # Get the user's subscriptions if needed
     if subscribed_only:
         subscribed_writers = Subscription.objects.active_subscriptions(user=request.user).values_list('writer_id', flat=True)
         if query:
@@ -40,13 +41,16 @@ def writer_list(request):
             writers = User.objects.filter(is_writer=True, username__icontains=query)
         else:
             writers = User.objects.filter(is_writer=True)
+    
+    # Pagination
+    paginator = Paginator(writers, 5)  # Show 5 writers per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    writers_ser = WriterSerializer(writers,many=True).data
-    
     context = {
-        'writers': writers,
+        'page_obj': page_obj,  # Pass paginated object
         'search_query': query,
-        'subscribed_only': subscribed_only,  # Pass the current state to the template
+        'subscribed_only': subscribed_only,
     }
-    
+
     return render(request, 'portal/blog/client/client-writer-list.html', context)
