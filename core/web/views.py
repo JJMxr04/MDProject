@@ -7,7 +7,7 @@ def home(request):
 
 
 def about(request):
-    return render(request, 'public/about.html', {'title': 'About'})
+    return render(request, 'public/about.html')
 
 def privacy_policy(request):
     return render(request, 'public/privacyPolicy.html')
