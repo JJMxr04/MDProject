@@ -1,0 +1,86 @@
+{% extends "public/base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/public/services.css' %}">
+{% endblock css %}
+{% block content %}
+
+<div class="container services-container">
+
+    <!-- Logo Section -->
+    <div class="logo-section text-center py-4">
+        <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" alt="PBL Logo" class="logo-img">
+    </div>
+
+    <!-- Services Intro Section -->
+    <section class="services-intro-section py-5 text-center">
+        <h1 class="section-title">Our Services</h1>
+        <p class="section-description">At PBL, we offer a range of services designed to enhance your betting experience, providing the tools, resources, and opportunities for you to bet smarter and win bigger.</p>
+    </section>
+
+    <!-- Services Offered Section -->
+    <section class="services-offered-section py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/analytics.png' %}" class="service-image rounded" alt="Analytics Image">
+                    <h3 class="service-title">Advanced Analytics</h3>
+                    <p class="service-description">Gain access to in-depth data and insights that help you make well-informed betting decisions. Our advanced analytics provide you with the edge you need to stay ahead of the competition.</p>
+                </div>
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/community.png' %}" class="service-image rounded" alt="Community Image">
+                    <h3 class="service-title">Community Engagement</h3>
+                    <p class="service-description">Join a supportive community of bettors where you can share strategies, discuss trends, and collaborate on finding the best opportunities. Together, we make smarter bets.</p>
+                </div>
+                <div class="col-md-4 text-center animate-slide-up">
+                    <img src="{% static 'assets/Images/Home/education.png' %}" class="service-image rounded" alt="Education Image">
+                    <h3 class="service-title">Educational Resources</h3>
+                    <p class="service-description">Access a variety of learning materials, including tutorials, articles, and webinars designed to improve your betting skills. Whether you're a beginner or a seasoned bettor, we have something for you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Betting Tools Section -->
+    <section class="betting-tools-section py-5">
+        <div class="container text-center">
+            <h2 class="section-title">Betting Tools</h2>
+            <p class="section-description">Leverage our cutting-edge tools to enhance your betting strategies and outcomes.</p>
+            <div class="row">
+                <div class="col-md-6 animate-slide-left">
+                    <div class="tool-card">
+                        <h3>Odds Comparison</h3>
+                        <p>Compare odds across multiple platforms to ensure you're getting the best possible value for your bets. Our real-time updates keep you informed and ready to act.</p>
+                        <a href="#" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6 animate-slide-right">
+                    <div class="tool-card">
+                        <h3>Bet Tracking</h3>
+                        <p>Keep track of your betting history, analyze past performance, and discover trends. Our bet tracking tool helps you make data-driven decisions and improve your betting strategies.</p>
+                        <a href="#" class="btn btn-outline-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flexible Subscriptions Section -->
+    <section class="subscriptions-section py-5 bg-light text-center">
+        <div class="container">
+            <h2 class="section-title">Flexible Subscription Plans</h2>
+            <p class="section-description">Choose from a range of subscription options to suit your needs. Our plans provide access to exclusive features, including professional insights, premium analytics, and personalized betting tips.</p>
+            <a href="/pricing" class="btn btn-lg btn-primary">View Subscription Plans</a>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section py-5 text-center">
+        <h2 class="cta-title">Ready to Bet Smarter?</h2>
+        <p class="cta-description">Join PBL today and take advantage of our full suite of services to elevate your betting experience.</p>
+        <a href="/auth/register" class="btn btn-lg btn-primary">Sign Up Now</a>
+    </section>
+
+</div>
+
+{% endblock %}
