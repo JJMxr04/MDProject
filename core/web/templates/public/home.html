@@ -17,7 +17,7 @@
             <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
             <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
             <div class="text-center animate-fade-in">
-                <a href="/auth/waitlist/" class="btn btn-lg btn-primary">Join the Waitlist</a>
+                <a href="{%url 'core-auth:waitlist-list' %}" class="btn btn-lg btn-primary">Join the Waitlist</a>
             </div>
         </div>
     </section>
@@ -60,14 +60,14 @@
                 <div class="game-mode-card">
                     <h3>Individual Matches</h3>
                     <p>Challenge your peers in one-on-one matchups and show who's the best bettor. Strategic decisions and sharp predictions are key to victory.</p>
-                    <a href="#" class="btn btn-outline-primary">Join a Match</a>
+                    <a href="{%url 'core-auth:waitlist-list' %}" class="btn btn-outline-primary">Join a Match</a>
                 </div>
             </div>
             <div class="col-md-6 animate-slide-right">
                 <div class="game-mode-card">
                     <h3>Tournaments</h3>
                     <p>Enter high-stakes tournaments where the best bettors compete for supremacy. Bet smart, climb the leaderboard, and claim your prize!</p>
-                    <a href="#" class="btn btn-primary">Join a Tournament</a>
+                    <a href="{%url 'core-auth:waitlist-list' %}" class="btn btn-primary">Join a Tournament</a>
                 </div>
             </div>
         </div>
