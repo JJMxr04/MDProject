@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 import django_heroku
 import dj_database_url
+from celery.schedules import crontab
 
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
@@ -509,7 +510,12 @@ CACHES = {
     }
 }
 
-CELERY_BEAT_SCHEDULE = {}
+CELERY_BEAT_SCHEDULE = {
+    'backend_cleanup': {
+        'task': 'celery.backend_cleanup',
+        'schedule': crontab(minute=0, hour='*/1'),  # Runs every hour
+    },
+}
 
 # # SSL/TLS settings
 # SECURE_SSL_REDIRECT = True
