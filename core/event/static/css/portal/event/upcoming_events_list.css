@@ -1,4 +1,3 @@
-/* Ensure all elements fit within their parent containers */
 * {
     box-sizing: border-box;
   }
@@ -13,8 +12,8 @@
   }
   
   .container {
-    max-width: 1200px;
-    width: 100%;
+    width: 100%; /* Allow full width */
+    padding: 0 20px; /* Add horizontal padding */
   }
   
   header h1 {
@@ -99,6 +98,7 @@
   /* Teams section */
   .teams {
     display: flex;
+    flex-direction: row; /* Default to row for larger screens */
     justify-content: space-around;
     padding: 15px;
     background: #f7f7f7;
@@ -156,7 +156,9 @@
     }
   
     .teams {
-      flex-direction: column; /* Stack teams vertically */
+      flex-direction: column; /* Stack teams vertically on mobile */
+      align-items: center; /* Center align teams */
+      padding: 10px; /* Adjust padding for mobile */
     }
   
     .vs {
@@ -167,6 +169,11 @@
   @media (min-width: 768px) and (max-width: 1024px) {
     .event-card {
       width: calc(50% - 20px);
+    }
+  
+    .teams {
+      flex-direction: column; /* Stack teams vertically on tablet */
+      align-items: center; /* Center align teams */
     }
   }
   

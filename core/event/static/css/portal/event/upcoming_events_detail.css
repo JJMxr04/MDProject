@@ -37,9 +37,9 @@
 }
 
 .team img {
-    max-width: 100px;
+    max-width: 80px; /* Adjusted size for better alignment */
     height: auto;
-    border-radius: 50%;
+    border-radius: 10px; /* Changed to rounded corners */
 }
 
 .team p {
@@ -52,6 +52,30 @@
     font-size: 2em;
     font-weight: bold;
     color: #999;
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 767px) {
+    .teams {
+        flex-direction: column; /* Stacks items vertically */
+        text-align: center;
+    }
+
+    .vs {
+        margin: 10px 0; /* Adds space between the teams and "VS" */
+    }
+}
+
+/* Tablet View Adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .teams {
+        flex-direction: row; /* Switches back to horizontal layout */
+        justify-content: space-between;
+    }
+
+    .vs {
+        margin: 0; /* Removes extra margin */
+    }
 }
 
 /* Commence Time */
@@ -149,6 +173,6 @@ li {
 }
 
 .offset-2 {
-margin-left: auto;
-margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

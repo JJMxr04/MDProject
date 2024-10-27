@@ -8,7 +8,6 @@
 {% block title %}Event Details{% endblock title %}
 
 {% block content %}
-
     
     <div class="event-detail-container">
         <div class="teams">
@@ -30,7 +29,7 @@
         <!-- Bookmakers Section -->
         <div class="bookmakers-section">
             <h2>Bookmakers</h2>
-            {% if event.bookmakers%}
+            {% if event.bookmakers %}
                 {% for bookmaker in event.bookmakers %}
                     <div class="bookmaker">
                         <h3>{{ bookmaker.title }}</h3>
