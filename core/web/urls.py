@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.home, name='home'),  # Corrected path
     path('about/', views.about, name='about'),
     path('privacy-policy/', views.privacy_policy, name='private-policy'),
-    path('services/', views.privacy_policy, name='sevices'),
+    path('services/', views.privacy_policy, name='services'),
 
     path('contactus/',include(supportUrls))
     
