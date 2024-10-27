@@ -32,7 +32,7 @@ def upcoming_events_list(request):
 
     # Get filtered events and apply pagination
     events = Event.objects.filter(**filters).order_by('commence_time')
-    paginator = Paginator(events, 5)  # Show 5 events per page
+    paginator = Paginator(events, 21)  # Show 5 events per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

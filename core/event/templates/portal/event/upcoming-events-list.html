@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="{% static 'css/portal/event/upcoming_events_list.css' %}">
 
 <div class="container">
-    <h1>Upcoming Events</h1>
+    <header>
+        <h1>Upcoming Events</h1>
+    </header>
 
     <!-- Search and Filter Form -->
     <div class="filter-form bg-white shadow-md p-3 mb-3 rounded">
@@ -26,58 +28,62 @@
     </div>
 
     <!-- Events List -->
-    {% if page_obj %}
-        {% for event in page_obj %}
-            <div class="event-card bg-white shadow-md p-3 mb-3 rounded">
-                <a href="{% url 'core-portal:upcoming-events-detail' event.id %}">
-                    <div class="teams">
-                        <div class="team">
-                            {% if event.home_team_team.logo_url %}
-                                <img src="{{ event.home_team_team.logo_url.url }}" alt="{{ event.home_team }} logo" />
-                            {% else %}
-                                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
-                            {% endif %}
-                            <p>{{ event.home_team_team.team_name }}</p>
+    <section class="events-list-container">
+        {% if page_obj %}
+            {% for event in page_obj %}
+                <div class="event-card">
+                    <a href="{% url 'core-portal:upcoming-events-detail' event.id %}" class="event-link">
+                        <div class="teams">
+                            <div class="team">
+                                {% if event.home_team_team.logo_url %}
+                                    <img src="{{ event.home_team_team.logo_url.url }}" alt="{{ event.home_team }} logo" />
+                                {% else %}
+                                    <img src="https://robohash.org/1" alt="User Avatar">
+                                {% endif %}
+                                <p>{{ event.home_team_team.team_name }}</p>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                {% if event.away_team_team.logo_url %}
+                                    <img src="{{ event.away_team_team.logo_url.url }}" alt="{{ event.away_team }} logo" />
+                                {% else %}
+                                    <img src="https://robohash.org/1" alt="User Avatar">
+                                {% endif %}
+                                <p>{{ event.away_team_team.team_name }}</p>
+                            </div>
                         </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            {% if event.away_team_team.logo_url %}
-                                <img src="{{ event.away_team_team.logo_url.url }}" alt="{{ event.away_team }} logo" />
-                            {% else %}
-                                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
-                            {% endif %}
-                            <p>{{ event.away_team_team.team_name }}</p>
-                        </div>
-                    </div>
-                    <h3>{{ event.title }}</h3>
-                    <p>{{ event.description }}</p>
-                    <p class="commence-time">{{ event.commence_time }}</p>
-                </a>
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.description }}</p>
+                        <p class="commence-time">{{ event.commence_time }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="container bg-white shadow-md p-3 mb-3 rounded">
+                <p>No events found.</p>
             </div>
-        {% endfor %}
+        {% endif %}
+    </section>
 
-        <!-- Simple Pagination Controls -->
-        <div class="pagination-container">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
-                        </li>
-                    {% endif %}
-                    <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    {% else %}
-        <div class="container bg-white shadow-md p-3 mb-3 rounded">
-            <p>No events found.</p>
-        </div>
-    {% endif %}
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                    </li>
+                {% endif %}
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 </div>
 {% endblock content %}
