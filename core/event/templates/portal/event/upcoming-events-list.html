@@ -5,222 +5,6 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/portal/event/upcoming_events_list.css' %}">
-<style>
-    /* Main container for the events page */
-    .events-container {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    /* Wrapper for the content of the events section */
-    .events-content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Container that holds both the sidebar and the list of events */
-    .filter-and-events {
-        display: flex;
-        width: 100%;
-        align-items: flex-start;
-    }
-
-    /* Sidebar styles */
-    .sidebar {
-        width: 200px;
-        background-color: #f0f0f0;
-        padding: 20px;
-        margin-right: 20px;
-        border-radius: 10px;
-        height: auto;
-    }
-
-    .sidebar h2 {
-        margin-bottom: 10px;
-    }
-
-    /* Filter container inside the sidebar */
-    .filter-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .filter-container .search-bar {
-        margin-bottom: 10px;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    .filter-container select {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    /* Events list container */
-    .events-list-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        flex: 1;
-    }
-
-    /* Individual event card styles */
-    .event-card {
-        background: #fff;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        width: calc(33.333% - 20px); /* Adjusted for 3 columns */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden;
-        position: relative;
-        text-decoration: none; /* Removes underline */
-        color: inherit; /* Inherits the text color from the parent element */
-    }
-
-    .event-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .event-card h2 {
-        margin: 15px;
-        font-size: 1.5em;
-        color: #333;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
-    .event-card p {
-        margin: 5px 15px;
-        color: #666;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
-    /* Link that wraps the event card */
-    .event-link {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-        width: 100%;
-        height: 100%;
-    }
-
-    /* Teams section within event cards */
-    .teams {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f0f0f0;
-        padding: 10px;
-    }
-
-    .team {
-        text-align: center;
-        flex: 1;
-    }
-
-    .team img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 50%;
-    }
-
-    .team p {
-        margin: 0;
-        font-weight: bold;
-        color: #333;
-    }
-
-    /* Versus text between teams */
-    .vs {
-        font-size: 1.2em;
-        font-weight: bold;
-        color: #999;
-        padding: 0 10px;
-    }
-
-    /* Event commencement time */
-    .commence-time {
-        margin-top: 15px;
-        font-weight: bold;
-        color: #444;
-    }
-
-    /* Pagination styles */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .pagination button {
-        padding: 10px;
-        margin: 0 5px;
-        border: none;
-        background: #007bff;
-        color: #fff;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-    .pagination button.active {
-        background: #0056b3;
-    }
-
-    .pagination button:hover:not(.active) {
-        background: #0056b3;
-    }
-
-    .offset-2 {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Media Queries */
-
-    /* Small devices (phones) */
-    @media (max-width: 767px) {
-        .filter-and-events {
-            flex-direction: column;
-        }
-
-        .sidebar {
-            width: 100%;
-            margin-right: 0;
-            margin-bottom: 20px;
-        }
-
-        .event-card {
-            width: 100%;
-        }
-    }
-
-    /* Medium devices (tablets) */
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .event-card {
-            width: calc(50% - 20px); /* 2 cards per row */
-        }
-    }
-
-    /* Large devices (desktops) */
-    @media (min-width: 1025px) {
-        .event-card {
-            width: calc(33.333% - 20px); /* 3 cards per row */
-        }
-    }
-</style>
 
 <div class="container">
     <h1>Upcoming Events</h1>
@@ -251,7 +35,7 @@
                             {% if event.home_team_team.logo_url %}
                                 <img src="{{ event.home_team_team.logo_url.url }}" alt="{{ event.home_team }} logo" />
                             {% else %}
-                            <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+                                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
                             {% endif %}
                             <p>{{ event.home_team_team.team_name }}</p>
                         </div>
@@ -260,7 +44,7 @@
                             {% if event.away_team_team.logo_url %}
                                 <img src="{{ event.away_team_team.logo_url.url }}" alt="{{ event.away_team }} logo" />
                             {% else %}
-                            <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
+                                <img src="https://robohash.org/1" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="User Avatar">
                             {% endif %}
                             <p>{{ event.away_team_team.team_name }}</p>
                         </div>
@@ -272,39 +56,19 @@
             </div>
         {% endfor %}
 
-        <!-- Pagination Controls -->
+        <!-- Simple Pagination Controls -->
         <div class="pagination-container">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="First">
-                                &laquo;&laquo;
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="Previous">
-                                &laquo;
-                            </a>
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
                         </li>
                     {% endif %}
-                    
-                    {% for num in page_obj.paginator.page_range %}
-                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}">{{ num }}</a>
-                        </li>
-                    {% endfor %}
-
+                    <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
                     {% if page_obj.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="Next">
-                                &raquo;
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}&sport={{ selected_sport }}" aria-label="Last">
-                                &raquo;&raquo;
-                            </a>
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
                         </li>
                     {% endif %}
                 </ul>
