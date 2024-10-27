@@ -185,3 +185,9 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
+
+.logo-img {
+    max-width: 200px;
+    height: auto;
+}
+
