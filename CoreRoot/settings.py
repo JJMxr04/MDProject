@@ -164,8 +164,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'cookie_consent.middleware.CookieConsentMiddleware',
 
-
-
 ]
 
 COOKIE_CONSENT = {
