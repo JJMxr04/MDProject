@@ -17,6 +17,8 @@ from core.match.crons.matchUpdate import MatchCron
 sportCron = SportCron()
 eventCron = EventCron()
 matchCron = MatchCron()
+tournament2DayReminder = Tournament2DayReminder()
+bracketMaker = BracketMaker()
 # scheduler = BackgroundScheduler()
 
 @shared_task
@@ -25,10 +27,11 @@ def complete_matches_cron():
 
 @shared_task
 def tournament_cron_bracketMaker():
-    BracketMaker.create_brackets()
+
+    bracketMaker.create_brackets()
 @shared_task
 def tournament_cron_2_day_reminder():
-    Tournament2DayReminder.get_tournments_send_player_email()
+    tournament2DayReminder.get_tournments_send_player_email()
 
 @shared_task
 def sport_cron():

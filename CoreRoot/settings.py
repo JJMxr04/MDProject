@@ -521,13 +521,13 @@ CACHES = {
 }
 
 
-
 CELERY_BEAT_SCHEDULE = {
     'backend_cleanup': {
         'task': 'celery.backend_cleanup',
-        'schedule': timedelta(hours=1),  # Runs every hour
+        'schedule': crontab(minute=0, hour=0, day_of_month=1),  # Runs at midnight on the 1st of every month
     },
 }
+
 
 # SSL/TLS settings
 SECURE_SSL_REDIRECT = True
