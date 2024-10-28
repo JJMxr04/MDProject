@@ -13,4 +13,4 @@ def privacy_policy(request):
     return render(request, 'public/privacyPolicy.html')
 
 def services(request):
-    return render(request, 'public/services.html')
+    return render(request, 'public/privacyPolicy.html')
