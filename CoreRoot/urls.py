@@ -30,7 +30,7 @@ urlpatterns = [
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'),name='password_reset_complete'),
     
     
-
+    path("cookies/", include("cookie_consent.urls")),
 ]
 
 
