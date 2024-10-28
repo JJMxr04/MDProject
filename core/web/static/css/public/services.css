@@ -32,19 +32,49 @@
     background: #ffd1dc;
 }
 
-.btn-tier {
+/* General Button Styles */
+.btn-tier, .btn-primary {
     margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     background: #007bff;
     color: white;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
 }
 
-.btn-tier:hover {
+/* Button Hover Effect */
+.btn-tier:hover, .btn-primary:hover {
     background: #0056b3;
+    transform: translateY(-3px); /* Lift effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Button Active Effect */
+.btn-tier:active, .btn-primary:active {
+    background: #004085;
+    transform: translateY(1px); /* Push-down effect */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Pulsing Animation for Call to Action Button */
+.btn-primary.pulse {
+    background: #ffc107;
+    color: #343a40;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    animation: pulse-animation 1.5s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 /* Testimonials Styling */
@@ -112,20 +142,4 @@
     padding: 2rem;
     border-radius: 8px;
     margin-top: 2rem;
-}
-
-.btn-primary.pulse {
-    background: #ffc107;
-    color: #343a40;
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    animation: pulse-animation 2s infinite;
-}
-
-@keyframes pulse-animation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
 }
