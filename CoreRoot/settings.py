@@ -167,26 +167,26 @@ MIDDLEWARE = [
 
 ]
 
-COOKIE_CONSENT = {
-    'name': 'cookie_consent',
-    'expire_days': 365,
-    'max_age': 365 * 24 * 60 * 60,  # Max age of the cookie in seconds
-    'default_policy': 'opt-in',  # Recommend 'opt-in' for compliance
-    'groups': {
-        'necessary': {
-            'description': 'Necessary cookies that enable basic functionality',
-            'cookies': ['sessionid', 'csrftoken'],
-        },
-        'analytics': {
-            'description': 'Analytics cookies to improve our services',
-            'cookies': ['_ga', '_gid', '_gat'],  # Google Analytics cookies
-        },
-        'ads': {
-            'description': 'Advertising cookies to display targeted ads',
-            'cookies': ['_gads', 'IDE'],  # Google AdSense cookies
-        },
-    },
-}
+# COOKIE_CONSENT = {
+#     'name': 'cookie_consent',
+#     'expire_days': 365,
+#     'max_age': 365 * 24 * 60 * 60,  # Max age of the cookie in seconds
+#     'default_policy': 'opt-in',  # Recommend 'opt-in' for compliance
+#     'groups': {
+#         'necessary': {
+#             'description': 'Necessary cookies that enable basic functionality',
+#             'cookies': ['sessionid', 'csrftoken'],
+#         },
+#         'analytics': {
+#             'description': 'Analytics cookies to improve our services',
+#             'cookies': ['_ga', '_gid', '_gat'],  # Google Analytics cookies
+#         },
+#         'ads': {
+#             'description': 'Advertising cookies to display targeted ads',
+#             'cookies': ['_gads', 'IDE'],  # Google AdSense cookies
+#         },
+#     },
+# }
 
 
 ROOT_URLCONF = 'CoreRoot.urls'
@@ -548,17 +548,17 @@ CACHES = {
 } 
 
 # Cookie consent settings
-COOKIE_CONSENT_NAME = 'cookie_consent'  # Custom name for the cookie
-COOKIE_CONSENT_MAX_AGE = 365 * 24 * 60 * 60  # 1 year in seconds
-COOKIE_CONSENT_DOMAIN = None  # Use your domain if you want to restrict the cookie to a specific domain
-COOKIE_CONSENT_SECURE = not DEBUG  # Secure in production
-COOKIE_CONSENT_HTTPONLY = False  # Block JavaScript access for security
-COOKIE_CONSENT_SAMESITE = "Lax"  # Lax to allow navigation but restrict cross-site
-COOKIE_CONSENT_DECLINE = -1  # Decline value to represent non-consent
-COOKIE_CONSENT_ENABLED = lambda r: DEBUG or (r.user.is_authenticated and r.user.is_staff)  # Only for debug or staff
-COOKIE_CONSENT_OPT_OUT = False  # Opt-in by default
-COOKIE_CONSENT_CACHE_BACKEND = 'default'  # Caching backend to use
-COOKIE_CONSENT_LOG_ENABLED = True  # Log consent actions for audit
+# COOKIE_CONSENT_NAME = 'cookie_consent'  # Custom name for the cookie
+# COOKIE_CONSENT_MAX_AGE = 365 * 24 * 60 * 60  # 1 year in seconds
+# COOKIE_CONSENT_DOMAIN = None  # Use your domain if you want to restrict the cookie to a specific domain
+# COOKIE_CONSENT_SECURE = not DEBUG  # Secure in production
+# COOKIE_CONSENT_HTTPONLY = True  # Block JavaScript access for security
+# COOKIE_CONSENT_SAMESITE = "Lax"  # Lax to allow navigation but restrict cross-site
+# COOKIE_CONSENT_DECLINE = -1  # Decline value to represent non-consent
+# COOKIE_CONSENT_ENABLED = lambda r: DEBUG or (r.user.is_authenticated and r.user.is_staff)  # Only for debug or staff
+# COOKIE_CONSENT_OPT_OUT = False  # Opt-in by default
+# COOKIE_CONSENT_CACHE_BACKEND = 'default'  # Caching backend to use
+# COOKIE_CONSENT_LOG_ENABLED = True  # Log consent actions for audit
 
 
 
