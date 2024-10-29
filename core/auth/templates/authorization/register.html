@@ -5,53 +5,58 @@
 
 {% block css %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+
 {% endblock css %}
 
 {% block content %}
-<div class="row justify-content-center align-items-center">
-  <div class="col-md-6">
-    <div class="card bg-light text-black border-0 rounded-3 register-form-1">
-      <div class="card-body p-5 text-center">
-        <h2 class="fw-bold mb-2 text-uppercase text-black">Register</h2>
-        <p class="text-black-50 mb-5">Please enter your details to sign up!</p>
+<!--<div class="register-container container">-->
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card bg-light text-black border-0 rounded-3 register-form-1">
+        <div class="card-body p-5 text-center">
+          <h2 class="fw-bold mb-2 text-uppercase text-black">Register</h2>
+          <p class="text-black-50 mb-5">Please enter your details to sign up!</p>
 
-        <!-- Alert Messages -->
-        {% if messages %}
-          <div class="mb-4">
-            {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        <form method="post" action="{% url 'core-auth:register' %}" class="mb-4">
-          {% csrf_token %}
-          <div class="form-outline text-black form-black mb-4">
-            <h6>Username</h6>
-            {{ form.username }}
-            {% if form.username.errors %}
-              <div class="text-danger">
-                {% for error in form.username.errors %}
-                  <p>{{ error }}</p>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          
-          <!-- Repeat similar structure for other form fields -->
-
-          <button class="btnSubmit btn-lg px-5" type="submit">Sign Up</button>
+          <form method="post" action="{% url 'core-auth:register' %}" class="mb-4">
+            {% csrf_token %}
+            <div class="form-outline text-black form-black mb-4">
+              <h6>Username</h6>
+              {{ form.username }}
+            </div>
+            <div class="form-outline text-black form-black mb-4">
+              <h6>Email</h6>
+              {{ form.email }}
+            </div>
+            <div class="form-outline text-black form-black mb-4">
+              <h6>First Name</h6>
+              {{ form.first_name }}
+            </div>
+            <div class="form-outline text-black form-black mb-4">
+              <h6>Last Name</h6>
+              {{ form.last_name }}
+            </div>
+            <div class="form-outline text-black form-black mb-4">
+              <h6>Password</h6>
+              {{ form.password1 }}
+            </div>
+            <div class="form-outline text-black form-black mb-4">
+              <h6>Password Confirmation</h6>
+              {{ form.password2 }}
+            </div>
+            <div class="form-outline text-black form-black mb-4">
+              {{ form.register_as_writer }} <label for="register_as_writer">Register as a writer</label>
+            </div>
+            <button class="btnSubmit btn-lg px-5" type="submit">Sign Up</button>
         </form>
+        
 
-        <div>
-          <p class="mb-0 mt-4">Already have an account? <a href="/auth/login" class="link-login fw-bold text-black">Login</a></p>
-          <p class="mb-0 mt-4">Haven't signed up for the <a href="{% url 'core-auth:waitlist-list' %}" class="link-login fw-bold text-black">Waitlist?</a></p>
+          <div>
+            <p class="mb-0 mt-4">Already have an account? <a href="/auth/login" class="link-login fw-bold text-black">Login</a></p>
+            <p class="mb-0 mt-4">Havent signed up for the <a href="{%url 'core-auth:waitlist-list' %}" class="link-login fw-bold text-black">Waitlist?</a></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<!--</div>-->
 {% endblock content %}
