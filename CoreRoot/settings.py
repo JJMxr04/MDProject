@@ -121,7 +121,8 @@ INSTALLED_APPS = [
     "django_celery_beat",     # This was in the first list only
     "storages",
     'crispy_forms',
-    'crispy_bootstrap5',            # This was in the first list only
+    'crispy_bootstrap5',
+    'cookie_consent',            # This was in the first list only
 
     # MDProject Models
     'core.commands',
