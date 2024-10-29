@@ -3,9 +3,33 @@
 
 {% block title %}Dashboard{% endblock title %}
 
-
-
 {% block content %}
-    <h1>Portal Dashboard is current under development</h1>
-    <!-- Dashboard content goes here -->
+    <div class="dashboard-container">
+        <h1 class="dashboard-title">Portal Dashboard</h1>
+        <p class="dashboard-message">This portal is currently under development. Stay tuned for updates!</p>
+        <!-- Dashboard content goes here -->
+    </div>
+
+    <style>
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-message {
+            font-size: 1.2em;
+            color: #555;
+        }
+    </style>
 {% endblock content %}

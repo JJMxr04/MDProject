@@ -504,6 +504,9 @@ JAZZMIN_SETTINGS = {
     # "language_chooser": True,
 }
 
+CELERY_IMPORTS = ('core.cron.tasks',)
+
+
 
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
 CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
