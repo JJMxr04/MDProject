@@ -558,7 +558,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'print_cron_jobs': {
         'task': 'core.cron.tasks.print_cron_jobs',
-        'schedule': crontab(minute=0, hour=0),  # daily at midnight
+        'schedule': crontab(minute='*'),  # every minute
     },
 }
 
