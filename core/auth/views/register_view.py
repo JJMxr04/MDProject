@@ -20,7 +20,7 @@ class RegisterView(View):
             form.save_m2m()  # If your form has ManyToMany fields
 
             # Pass `request` to `send_activation_email`
-            send_activation_email(user, request)  # Pass request here
+            email.send_activation_email(user, request)  # Pass request here
             login(request, user)
             messages.success(request, 'Registration successful! You are now logged in.')
             return redirect('home')
