@@ -38,38 +38,6 @@
     </main>
     {% include "public/components/footer.html" %}
 
-    <!-- Cookie Consent Banner Template -->
-    {% url "cookie_consent_cookie_group_list" as url_cookies %}
-    <template id="cookie-consent__cookie-bar">
-        <div class="cookie-bar">
-            This site uses cookies for better performance and user experience. Do you agree to use these cookies?
-            <button type="button" class="cookie-consent__accept">Accept</button>
-            <button type="button" class="cookie-consent__decline">Decline</button>
-            <a href="{{ url_cookies }}">Cookies info</a>
-        </div>
-    </template>
-
-    <!-- Import the Cookie Consent JavaScript Module and Initialize -->
-    {% static "cookie_consent/cookiebar.module.js" as cookiebar_src %}
-    {% url 'cookie_consent_status' as status_url %}
-    <script type="module">
-        import {showCookieBar} from '{{ cookiebar_src }}';
-        showCookieBar({
-            statusUrl: '{{ status_url|escapejs }}',
-            templateSelector: '#cookie-consent__cookie-bar',
-            cookieGroupsSelector: '#cookie-consent__cookie-groups',
-            onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
-            onAccept: (event, cookieGroups) => {
-                const analyticsEnabled = cookieGroups.some(group => group.varname === 'analytics');
-                if (analyticsEnabled) {
-                    const template = document.getElementById('analytics-scripts').content.cloneNode(true);
-                    document.body.appendChild(template);
-                }
-                document.querySelector('body').classList.remove('with-cookie-bar');
-            },
-            onDecline: () => document.querySelector('body').classList.remove('with-cookie-bar'),
-        });
-    </script>
 
     <!-- Optional JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

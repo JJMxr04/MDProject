@@ -8,21 +8,35 @@
 {% block content %}
 <div class="container comp-container">
     <h2>Privacy Policy</h2>
-    
+
+
+
     <section class="form-group">
         <p>
             We respect your privacy and are committed to protecting any personal information you share with us. This privacy policy outlines our practices regarding data collection and usage on our website.
         </p>
 
-        <p><strong>Data Collection:</strong> We do not collect, store, or share any personal data for advertising or marketing purposes without your consent. We may collect basic non-personally identifiable information like your IP address for security and site functionality, but this data is not used to target ads or track your activity.</p>
+        <h4>Data Collection</h4>
+        <p>We collect and process only essential data as part of website functionality and for analytics purposes. For details on the type of data processed, refer to our <a href="https://help.consentmanager.net/books/cmp/page/8-update-your-privacy-policy?utm_medium=email&utm_content=welcomemail" target="_blank">Data Processing and Privacy Policy Guide</a>.</p>
 
-        <p><strong>Cookies:</strong> Our website uses cookies to enhance user experience and analyze site traffic. We utilize Google Analytics to help us understand how users interact with our site and Google AdSense to serve ads. These services may place cookies on your device. We do not use these cookies for targeted advertising without your explicit consent. You can manage your cookie preferences through our cookie consent banner.</p>
+        <h4>Consent Management</h4>
+        <p>We have integrated the consent management tool <a href="https://www.consentmanager.net" target="_blank">ConsentManager</a> by ConsentManager AB (Håltgelvågen 1b, 72348 Västerås, Sweden, mail@consentmanager.net) to facilitate the collection of user consent for data processing and the use of cookies or similar technologies. This tool allows you to consent to or reject certain functionalities on our website, including external elements, streaming content, statistical analysis, measurement, and personalized advertising. You can adjust your consent settings at any time.</p>
 
-        <p><strong>Third-Party Disclosure:</strong> We do not sell, trade, or share your personal information with any third parties for marketing or advertising purposes. We may share information with third-party services like Google Analytics and Google AdSense, but this is done under strict compliance with our privacy policy.</p>
+        <p>The purpose of integrating ConsentManager is to enable you to control your privacy settings on our website, while allowing us to meet legal obligations for documentation and compliance. ConsentManager processes personal data and information from your device, such as your IP address, and stores your settings as long as they remain active. Every two years, ConsentManager will prompt you to update your consent preferences, which will then be stored again for another two-year period.</p>
 
-        <p><strong>Your Rights:</strong> You have the right to accept or decline cookies when you visit our website. If you choose to decline cookies, you may still use our website, but your ability to use some features may be limited. If you have any concerns or questions regarding your privacy or our use of cookies, please feel free to reach out to us.</p>
+        <p>The legal basis for this processing is Art. 6 Para. 1 S. 1 lit. c) and Art. 6 Para. 3 S. 1 lit. a) in conjunction with Art. 7 Para. 1 GDPR, and additionally lit. f) for our legitimate interest in managing consent records for compliance. You can object to this processing by sending an email to mail@consentmanager.net, especially if you have specific reasons based on your particular situation.</p>
 
-        <p>If you have any questions or need further clarification, please contact us at our <a href="{% url 'core-web:contact-us' %}">support</a> page.</p>
+        <h4>Cookies</h4>
+        <p>Our website may use cookies to enhance user experience, analyze site usage, and enable Google services like Analytics and Ads. Any data collected through cookies is anonymized to protect your privacy. You can control cookie preferences to determine what data you choose to share.</p>
+
+        <h4>Google Analytics & Ads</h4>
+        <p>To improve our services, we use Google Analytics to gather insights about site traffic and Google Ads to support our business. This data helps us understand user preferences while upholding privacy standards. For more on Google’s data policies, please visit <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google's Privacy Policy</a>.</p>
+
+        <h4>Third-Party Disclosure</h4>
+        <p>We do not sell or share your personal information with third-party advertisers. All analytics and advertising data is anonymized and used solely to enhance site experience and service offerings.</p>
+
+        <h4>Your Rights</h4>
+        <p>You have the right to manage your cookie settings directly through your browser and through ConsentManager. If you wish to know more or exercise your data rights, please feel free to contact us at our <a href="{% url 'core-web:contact-us' %}">support</a> page.</p>
     </section>
 </div>
 {% endblock content %}
