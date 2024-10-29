@@ -524,8 +524,8 @@ JAZZMIN_SETTINGS = {
 }
 
 
-CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
-CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
+CELERY_BROKER_URL = f"{os.environ.get('REDIS_TLS_URL')}/0"
+CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_TLS_URL')}/1"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
@@ -537,7 +537,7 @@ broker_connection_retry_on_startup= True
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{os.environ.get('REDIS_URL')}/1",
+        "LOCATION": f"{os.environ.get('REDIS_TLS_URL')}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
