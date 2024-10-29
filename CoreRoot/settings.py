@@ -504,9 +504,6 @@ JAZZMIN_SETTINGS = {
     # "language_chooser": True,
 }
 
-CELERY_IMPORTS = ('core.cron.tasks',)
-
-
 
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
 CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
@@ -539,30 +536,30 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'celery.backend_cleanup',
         'schedule': crontab(minute=0, hour=0, day_of_month=1),  # Runs at midnight on the 1st of every month
     },
-    'complete_matches_cron': {
-        'task': 'core.cron.tasks.complete_matches_cron',
-        'schedule': crontab(minute=0, hour=0),  # every day at midnight
-    },
-    'tournament_cron_bracketMaker': {
-        'task': 'core.cron.tasks.tournament_cron_bracketMaker',
-        'schedule': crontab(hour=0, minute=0),  # every day at midnight
-    },
-    'tournament_cron_2_day_reminder': {
-        'task': 'core.cron.tasks.tournament_cron_2_day_reminder',
-        'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
-    },
-    'sport_cron': {
-        'task': 'core.cron.tasks.sport_cron',
-        'schedule': crontab(minute=0, hour=0),  # daily at midnight
-    },
-    'event_cron': {
-        'task': 'core.cron.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*/8'),  # every 8 hours, 3 times a day
-    },
-    'print_cron_jobs': {
-        'task': 'core.cron.tasks.print_cron_jobs',
-        'schedule': crontab(minute='*'),  # every minute
-    },
+    # 'complete_matches_cron': {
+    #     'task': 'core.cron.tasks.complete_matches_cron',
+    #     'schedule': crontab(minute=0, hour=0),  # every day at midnight
+    # },
+    # 'tournament_cron_bracketMaker': {
+    #     'task': 'core.cron.tasks.tournament_cron_bracketMaker',
+    #     'schedule': crontab(hour=0, minute=0),  # every day at midnight
+    # },
+    # 'tournament_cron_2_day_reminder': {
+    #     'task': 'core.cron.tasks.tournament_cron_2_day_reminder',
+    #     'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
+    # },
+    # 'sport_cron': {
+    #     'task': 'core.cron.tasks.sport_cron',
+    #     'schedule': crontab(minute=0, hour=0),  # daily at midnight
+    # },
+    # 'event_cron': {
+    #     'task': 'core.cron.tasks.event_cron',
+    #     'schedule': crontab(minute=0, hour='*/8'),  # every 8 hours, 3 times a day
+    # },
+    # 'print_cron_jobs': {
+    #     'task': 'core.cron.tasks.print_cron_jobs',
+    #     'schedule': crontab(minute=0, hour=0),  # daily at midnight
+    # },
 }
 
 
