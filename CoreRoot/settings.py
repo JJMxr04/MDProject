@@ -505,8 +505,8 @@ JAZZMIN_SETTINGS = {
 }
 
 
-CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
-CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
+CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0?ssl_cert_reqs=CERT_OPTIONAL"
+CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1?ssl_cert_reqs=CERT_OPTIONAL"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
