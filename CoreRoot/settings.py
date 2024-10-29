@@ -556,10 +556,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'core.crons.tasks.event_cron',
         'schedule': crontab(minute=0, hour='*/8'),  # every 8 hours, 3 times a day
     },
-    'print_cron_jobs': {
-        'task': 'core.crons.tasks.print_cron_jobs',
-        'schedule': crontab(minute='*'),  # every minute
-    },
+    # 'print_cron_jobs': {
+    #     'task': 'core.crons.tasks.print_cron_jobs',
+    #     'schedule': crontab(minute='*'),  # every minute
+    # },
 }
 
 
