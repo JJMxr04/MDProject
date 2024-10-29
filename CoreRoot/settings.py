@@ -121,7 +121,9 @@ INSTALLED_APPS = [
     "django_celery_beat",     # This was in the first list only
     "storages",
     'crispy_forms',
+
     'crispy_bootstrap5',            
+
 
     # MDProject Models
     'core.commands',
@@ -153,6 +155,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -164,6 +167,28 @@ MIDDLEWARE = [
 
 
 ]
+
+COOKIE_CONSENT = {
+    'name': 'cookie_consent',
+    'expire_days': 365,
+    'max_age': 365 * 24 * 60 * 60,  # Max age of the cookie in seconds
+    'default_policy': 'opt-in',  # Recommend 'opt-in' for compliance
+    'groups': {
+        'necessary': {
+            'description': 'Necessary cookies that enable basic functionality',
+            'cookies': ['sessionid', 'csrftoken'],
+        },
+        'analytics': {
+            'description': 'Analytics cookies to improve our services',
+            'cookies': ['_ga', '_gid', '_gat'],  # Google Analytics cookies
+        },
+        'ads': {
+            'description': 'Advertising cookies to display targeted ads',
+            'cookies': ['_gads', 'IDE'],  # Google AdSense cookies
+        },
+    },
+}
+
 
 ROOT_URLCONF = 'CoreRoot.urls'
 
