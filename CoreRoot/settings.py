@@ -523,7 +523,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             'SOCKET_CONNECT_TIMEOUT': 5,  # Optional, connection timeout
             'SOCKET_TIMEOUT': 5,           # Optional, request timeout
-            'ssl_cert_reqs': None          # Disables SSL verification
+          # Disables SSL verification
         },
     }
 } 
