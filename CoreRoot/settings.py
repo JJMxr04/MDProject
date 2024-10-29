@@ -122,7 +122,7 @@ INSTALLED_APPS = [
     "storages",
     'crispy_forms',
     'crispy_bootstrap5',
-    'cookie_consent',            # This was in the first list only
+               # This was in the first list only
 
     # MDProject Models
     'core.commands',
