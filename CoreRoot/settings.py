@@ -540,9 +540,27 @@ CACHES = {
         "LOCATION": f"{os.environ.get('REDIS_TLS_URL')}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'SOCKET_CONNECT_TIMEOUT': 5,  # Optional, connection timeout
+            'SOCKET_TIMEOUT': 5,           # Optional, request timeout
+            'ssl_cert_reqs': None          # Disables SSL verification
         },
     }
-}
+} 
+
+# Cookie consent settings
+COOKIE_CONSENT_NAME = 'cookie_consent'  # Custom name for the cookie
+COOKIE_CONSENT_MAX_AGE = 365 * 24 * 60 * 60  # 1 year in seconds
+COOKIE_CONSENT_DOMAIN = None  # Use your domain if you want to restrict the cookie to a specific domain
+COOKIE_CONSENT_SECURE = not DEBUG  # Secure in production
+COOKIE_CONSENT_HTTPONLY = True  # Block JavaScript access for security
+COOKIE_CONSENT_SAMESITE = "Lax"  # Lax to allow navigation but restrict cross-site
+COOKIE_CONSENT_DECLINE = -1  # Decline value to represent non-consent
+COOKIE_CONSENT_ENABLED = lambda r: DEBUG or (r.user.is_authenticated and r.user.is_staff)  # Only for debug or staff
+COOKIE_CONSENT_OPT_OUT = False  # Opt-in by default
+COOKIE_CONSENT_CACHE_BACKEND = 'default'  # Caching backend to use
+COOKIE_CONSENT_LOG_ENABLED = True  # Log consent actions for audit
+
 
 
 CELERY_BEAT_SCHEDULE = {
