@@ -17,7 +17,6 @@ from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 import django_heroku
 import dj_database_url
-from celery import Celery
 from celery.schedules import crontab
 
 def get_token_serializer():
@@ -511,7 +510,8 @@ CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'America/New_York'  # Replace with your desired timezone
+# CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'UTC'
 CELERY_RESULT_EXTENDED = True
 broker_connection_retry_on_startup= True
 
@@ -527,6 +527,7 @@ CACHES = {
         },
     }
 } 
+
 
 
 
@@ -560,7 +561,6 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute=0, hour=0),  # daily at midnight
     },
 }
-
 
 
 # SSL/TLS settings
