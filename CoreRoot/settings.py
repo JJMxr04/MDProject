@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 import django_heroku
 import dj_database_url
+from celery import Celery
 from celery.schedules import crontab
 
 def get_token_serializer():
@@ -510,8 +511,7 @@ CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'America/New_York'  # Replace with your desired timezone
 CELERY_RESULT_EXTENDED = True
 broker_connection_retry_on_startup= True
 
@@ -530,13 +530,37 @@ CACHES = {
 
 
 
-
 CELERY_BEAT_SCHEDULE = {
     'backend_cleanup': {
         'task': 'celery.backend_cleanup',
         'schedule': crontab(minute=0, hour=0, day_of_month=1),  # Runs at midnight on the 1st of every month
     },
+    'complete_matches_cron': {
+        'task': 'core.cron.tasks.complete_matches_cron',
+        'schedule': crontab(minute=0, hour=0),  # every day at midnight
+    },
+    'tournament_cron_bracketMaker': {
+        'task': 'core.cron.tasks.tournament_cron_bracketMaker',
+        'schedule': crontab(hour=0, minute=0),  # every day at midnight
+    },
+    'tournament_cron_2_day_reminder': {
+        'task': 'core.cron.tasks.tournament_cron_2_day_reminder',
+        'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
+    },
+    'sport_cron': {
+        'task': 'core.cron.tasks.sport_cron',
+        'schedule': crontab(minute=0, hour=0),  # daily at midnight
+    },
+    'event_cron': {
+        'task': 'core.cron.tasks.event_cron',
+        'schedule': crontab(minute=0, hour='*/8'),  # every 8 hours, 3 times a day
+    },
+    'print_cron_jobs': {
+        'task': 'core.cron.tasks.print_cron_jobs',
+        'schedule': crontab(minute=0, hour=0),  # daily at midnight
+    },
 }
+
 
 
 # SSL/TLS settings
