@@ -18,7 +18,7 @@ class RegisterView(View):
             user = form.save()
             login(request, user)
             messages.success(request, 'Registration successful! You are now logged in.')
-            return redirect('home')  # Replace 'home' with the name of your home page URL pattern
+            return redirect('core-portal:portal-dashboard')  # Replace 'home' with the name of your home page URL pattern
         else:
             messages.error(request, 'Registration failed. Please correct the errors below.')
             for field, errors in form.errors.items():
