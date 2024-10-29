@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from core.auth.forms.register_form import RegisterForm
 from django.contrib.auth import login
-from django.contrib import messages  # Import messages
+from django.contrib import messages
 
 class RegisterView(View):
     form_class = RegisterForm
@@ -20,6 +20,8 @@ class RegisterView(View):
             messages.success(request, 'Registration successful! You are now logged in.')
             return redirect('home')  # Replace 'home' with the name of your home page URL pattern
         else:
-            # Show an error message if form is not valid
-            messages.error(request, 'Registration failed. Please check the form for errors.')
+            messages.error(request, 'Registration failed. Please correct the errors below.')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.warning(request, f"{field.capitalize()}: {error}")
         return render(request, self.template_name, {'form': form})

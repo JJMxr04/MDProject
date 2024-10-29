@@ -29,29 +29,48 @@
 
         <form method="post" action="{% url 'core-auth:register' %}" class="mb-4">
           {% csrf_token %}
+          
           <div class="form-outline text-black form-black mb-4">
             <h6>Username</h6>
             {{ form.username }}
+            {% if form.username.errors %}
+              <div class="text-danger small">{{ form.username.errors.0 }}</div>
+            {% endif %}
           </div>
           <div class="form-outline text-black form-black mb-4">
             <h6>Email</h6>
             {{ form.email }}
+            {% if form.email.errors %}
+              <div class="text-danger small">{{ form.email.errors.0 }}</div>
+            {% endif %}
           </div>
           <div class="form-outline text-black form-black mb-4">
             <h6>First Name</h6>
             {{ form.first_name }}
+            {% if form.first_name.errors %}
+              <div class="text-danger small">{{ form.first_name.errors.0 }}</div>
+            {% endif %}
           </div>
           <div class="form-outline text-black form-black mb-4">
             <h6>Last Name</h6>
             {{ form.last_name }}
+            {% if form.last_name.errors %}
+              <div class="text-danger small">{{ form.last_name.errors.0 }}</div>
+            {% endif %}
           </div>
           <div class="form-outline text-black form-black mb-4">
             <h6>Password</h6>
             {{ form.password1 }}
+            {% if form.password1.errors %}
+              <div class="text-danger small">{{ form.password1.errors.0 }}</div>
+            {% endif %}
           </div>
           <div class="form-outline text-black form-black mb-4">
             <h6>Password Confirmation</h6>
             {{ form.password2 }}
+            {% if form.password2.errors %}
+              <div class="text-danger small">{{ form.password2.errors.0 }}</div>
+            {% endif %}
           </div>
           <div class="form-outline text-black form-black mb-4">
             {{ form.register_as_writer }} <label for="register_as_writer">Register as a writer</label>
