@@ -30,5 +30,4 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
             WaitlistEntry.objects.filter(email=user.email).update(activated=True)
-            email.send_activation_email(user,request)
         return user
