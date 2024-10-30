@@ -21,7 +21,7 @@ class RegisterForm(UserCreationForm):
             raise forms.ValidationError("You have not been approved to register")
         return email_address
 
-    def save(self, commit=True,request=request):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
         user.first_name = self.cleaned_data['first_name']
