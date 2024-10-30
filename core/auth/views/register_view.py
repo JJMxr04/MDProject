@@ -15,7 +15,7 @@ class RegisterView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(request=request)
             login(request, user)
             messages.success(request, 'Registration successful! You are now logged in.')
             return redirect('core-portal:portal-dashboard')  # Replace 'home' with the name of your home page URL pattern

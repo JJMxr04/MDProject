@@ -21,7 +21,7 @@ class RegisterForm(UserCreationForm):
             raise forms.ValidationError("You have not been approved to register")
         return email_address
 
-    def save(self, commit=True):
+    def save(self, commit=True,request=request):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
         user.first_name = self.cleaned_data['first_name']
@@ -30,5 +30,5 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
             WaitlistEntry.objects.filter(email=user.email).update(activated=True)
-            email.send_activation_email(user)
+            email.send_activation_email(user,request)
         return user
