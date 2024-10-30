@@ -14,7 +14,7 @@ def send_activation_email(user, request):
     signer = TimestampSigner()
     token = signer.sign(user.email)
 
-    url_pattern_name = 'core-api:activate'
+    url_pattern_name = 'core-auth:activate'
     url = reverse(url_pattern_name, kwargs={'token': token}).lstrip('/')
 
     link = request.build_absolute_uri('/') + url  # or your specific domain

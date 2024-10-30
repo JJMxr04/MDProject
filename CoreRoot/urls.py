@@ -12,7 +12,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     # path('admin/dashboard/', custom_admin_view, name='admin_dashboard'),
     path('admin/', admin.site.urls),
-    path('api/', include(('core.routers', 'core'), namespace="core-api")),
+    # path('api/', include(('core.routers', 'core'), namespace="core-api")),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),
