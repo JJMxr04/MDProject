@@ -3,105 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Template</title>
+  <title>Confirm Your Email</title>
   <style>
     /* General body styles */
     body {
       font-family: Arial, sans-serif;
-      background-color: #3D7EAA; /* Fallback solid color */
-      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
+      background-color: #3D7EAA; /* Fallback color */
+      background-image: linear-gradient(to right, #3D7EAA, #2B5876); /* Gradient colors from tournament invite */
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
     }
 
-    /* Email container styles */
-    .email-container {
-      max-width: 600px;
+    /* Centered wrapper for email content */
+    .email-wrapper {
       width: 100%;
+      max-width: 600px;
+      margin: auto;
+      background-color: #FFFFFF;
       padding: 20px;
-      border-radius: 5px;
-      text-align: center;
-      box-sizing: border-box;
-      background-color: transparent; /* Removed background color */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      border-radius: 8px;
     }
 
-    /* Headings */
+    /* Main heading style */
     h1 {
-      font-size: 28px;
+      font-size: 26px;
       color: #333333;
-      margin: 0 0 15px;
+      text-align: center;
     }
 
-    /* Paragraph styles */
+    /* Paragraph and link styling */
     p {
-      font-size: 14px;
+      font-size: 16px;
       color: #333333;
       line-height: 1.5;
-      margin: 0 0 15px;
+      text-align: center;
     }
 
-    /* List styles */
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0 0 15px;
-    }
-    li {
-      font-size: 14px;
-      color: #333333;
-      line-height: 1.5;
-    }
-
-    /* Button styles */
+    /* Button styling */
     .button {
       display: inline-block;
-      padding: 15px 20px;
-      background-color: #2CB543;
+      margin-top: 20px;
+      padding: 12px 30px;
+      background-color: #5C68E2;
       color: #FFFFFF;
       text-decoration: none;
-      border-radius: 50px;
-      font-size: 16px;
-      margin-top: 20px;
-      transition: background-color 0.3s ease;
+      border-radius: 6px;
+      font-size: 18px;
     }
 
-    .button:hover {
-      background-color: #239B3B;
+    /* Footer text styling */
+    .footer-text {
+      font-size: 12px;
+      color: #CCCCCC;
+      text-align: center;
+      margin-top: 20px;
     }
 
     /* Responsive styles */
-    @media (max-width: 600px) {
-      .email-container {
+    @media only screen and (max-width: 600px) {
+      .email-wrapper {
         padding: 15px;
       }
-
+      h1 {
+        font-size: 22px;
+      }
       .button {
-        padding: 12px 15px;
-        font-size: 14px;
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="email-container">
-    <h1>Welcome to the Tournament!</h1>
-    <p>Dear {{ username }},</p>
-    <p>Congratulations! You have successfully registered for the tournament. We are excited to have you join us for this thrilling event.</p>
-    <p>Here are the details of the tournament:</p>
-    <ul>
-      <li><strong>Date:</strong> {{ tournament_date }}</li>
-      <li><strong>Location:</strong> {{ tournament_location }}</li>
-      <li><strong>Prize:</strong> {{ tournament_prize }}</li>
-    </ul>
-    <p>We will be sending more information regarding the schedule and rules soon. Please ensure to check your email regularly for updates.</p>
-    <p>For any questions or additional information, feel free to reach out to our support team. We are here to help!</p>
-    <p>We look forward to seeing you at the tournament and wish you the best of luck!</p>
-    <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
-    <a href="{{ support_url }}" class="button">Contact Support</a>
+  <div class="email-wrapper">
+    <img src="https://ebkxpkp.stripocdn.email/content/guids/CABINET_67e080d830d87c17802bd9b4fe1c0912/images/55191618237638326.png" alt="Logo" width="100" height="72" style="display: block; margin: auto;">
+    <h1>Confirm Your Email</h1>
+    <p>You’ve received this message because your email address has been registered with our site. Please click the button below to verify your email address and confirm that you are the owner of this account.</p>
+    <p>If you did not register with us, please disregard this email.</p>
+    <a href="{{ activation_link }}" class="button">CONFIRM YOUR EMAIL</a>
+    <p class="footer-text">No longer want to receive these emails? <a href="#" style="color: #CCCCCC; text-decoration: underline;">Unsubscribe</a>.</p>
   </div>
 </body>
 </html>
