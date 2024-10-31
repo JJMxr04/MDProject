@@ -26,62 +26,76 @@
         <p>{{ event.description }}</p>
         <p class="commence-time" data-time="{{ event.commence_time }}">Commence Time: {{ event.commence_time }}</p>
 
-        <!-- Bookmakers Section -->
-        <div class="bookmakers-section">
-            <h2>Bookmakers</h2>
-            {% if event.bookmakers %}
-                {% for bookmaker in event.bookmakers %}
-                    <div class="bookmaker">
-                        <h3>{{ bookmaker.title }}</h3>
-                        {% for market in bookmaker.markets %}
-                            <div class="market" data-key="{{ market.key }}">
-                                <h4 class="market-title">{{ market.title }}</h4>
-                                <ul>
-                                    {% for outcome in market.outcomes %}
-                                        <li class="outcome">
-                                            <div class="outcome-name-container">
+        <!-- Container for Bookmakers and Posts Sections -->
+        <div class="content-sections">
+            <!-- Bookmakers Section -->
+            <div class="bookmakers-section scrollable">
+                <h2>Bookmakers</h2>
+                {% if event.bookmakers %}
+                    {% for bookmaker in event.bookmakers %}
+                        <div class="bookmaker">
+                            <h3>{{ bookmaker.title }}</h3>
+                            {% for market in bookmaker.markets %}
+                                <div class="market" data-key="{{ market.key }}">
+                                    <h4 class="market-title">{{ market.title }}</h4>
+                                    <ul>
+                                        {% for outcome in market.outcomes %}
+                                            <li class="outcome">
                                                 <span class="outcome-name">{{ outcome.name }}</span>
-                                            </div>
-                                            <div class="point-container">
                                                 <span class="point">{{ outcome.point }}</span>
-                                            </div>
-                                            <div class="price-container">
                                                 <span class="price">{{ outcome.price }}</span>
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No bookmakers found for this event.</p>
+                {% endif %}
+            </div>
+
+            <!-- Posts Section -->
+            <div class="posts-section">
+                <h2>Posts for {{ event.title }}</h2>
+
+                <!-- Input Section for Posts -->
+                <div class="input-section">
+                    <h3>Add a Post</h3>
+                    <form >
+                        {% csrf_token %}
+                        <textarea name="content" rows="3" placeholder="Write your post here..." required></textarea>
+                        <button type="submit">Post</button>
+                    </form>
+                </div>
+
+                {% if event.posts %}
+                    <div class="post-list">
+                        {% for post in event.posts %}
+                            <div class="post">
+                                <div class="post-header">
+                                    <span class="post-author">{{ post.author }}</span>
+                                    <span class="post-timestamp">{{ post.timestamp }}</span>
+                                </div>
+                                <div class="post-content">{{ post.content }}</div>
                             </div>
                         {% endfor %}
                     </div>
-                {% endfor %}
-            {% else %}
-                <p>No bookmakers found for this event.</p>
-            {% endif %}
+                {% else %}
+                    <p>No posts available for this event.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 
     <script>
-        // JavaScript function to get the market title
-        const getMarketTitle = (key) => {
-            switch (key.toLowerCase()) {
-                case 'h2h':
-                    return 'Head 2 Head';
-                case 'spreads':
-                    return 'Spreads';
-                case 'totals':
-                    return 'Over/Under';
-                default:
-                    return key;
-            }
-        };
-
         document.addEventListener('DOMContentLoaded', function() {
-            // Update commence time formatting
+            // JavaScript for dynamic content updates
             const timeElements = document.querySelectorAll('.commence-time');
             timeElements.forEach(function(element) {
                 const timeString = element.getAttribute('data-time');
-                const date = new Date(timeString);  // Convert the string to a JavaScript Date object
+                const date = new Date(timeString);
                 const options = {
                     year: 'numeric',
                     month: 'long',
@@ -90,16 +104,7 @@
                     minute: 'numeric',
                     hour12: true
                 };
-                const formattedDate = date.toLocaleString('en-US', options);
-                element.textContent = formattedDate;
-            });
-
-            // Update market titles using the getMarketTitle function
-            const marketElements = document.querySelectorAll('.market');
-            marketElements.forEach(function(element) {
-                const marketKey = element.getAttribute('data-key');
-                const marketTitleElement = element.querySelector('.market-title');
-                marketTitleElement.textContent = getMarketTitle(marketKey);
+                element.textContent = date.toLocaleString('en-US', options);
             });
         });
     </script>
