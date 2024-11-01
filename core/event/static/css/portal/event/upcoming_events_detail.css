@@ -1,22 +1,30 @@
-/* General Container */
-.event-detail-container {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Overall Container */
+.container {
+    margin: 20px auto;
+    padding: 0 20px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-/* Header Styles */
+/* Event Detail Container */
+.event-detail-container {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 30px;
+    background: linear-gradient(to bottom right, #f1f1f1, #fff);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+
 .event-detail-container h1 {
     font-size: 2.5em;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #222;
 }
 
 .event-detail-container p {
-    font-size: 1.2em;
+    font-size: 1.15em;
     color: #666;
 }
 
@@ -25,37 +33,52 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f0f0f0;
+    background: #f5f5f5;
     padding: 20px;
+<<<<<<< Updated upstream
     border-radius: 10px;
     margin-top: 20px;
     flex-wrap: wrap; /* Allow wrapping for smaller screens */
+=======
+    border-radius: 12px;
+    margin-top: 25px;
+>>>>>>> Stashed changes
 }
 
 .team {
     text-align: center;
     flex: 1;
+<<<<<<< Updated upstream
     min-width: 150px; /* Minimum width for each team card */
+=======
+    transition: transform 0.3s ease;
+}
+
+.team:hover {
+    transform: scale(1.05);
+>>>>>>> Stashed changes
 }
 
 .team img {
-    max-width: 80px; /* Adjusted size for better alignment */
+    max-width: 90px;
     height: auto;
-    border-radius: 10px; /* Changed to rounded corners */
+    border-radius: 50%;
+    border: 3px solid #ddd;
 }
 
 .team p {
     margin-top: 10px;
     font-weight: bold;
-    color: #333;
+    font-size: 1.1em;
 }
 
 .vs {
     font-size: 2em;
     font-weight: bold;
-    color: #999;
+    color: #888;
 }
 
+<<<<<<< Updated upstream
 /* Mobile View Adjustments */
 @media (max-width: 767px) {
     .teams {
@@ -97,10 +120,13 @@
 }
 
 /* Commence Time */
+=======
+>>>>>>> Stashed changes
 .commence-time {
-    margin-top: 20px;
+    margin-top: 25px;
     font-weight: bold;
-    color: #444;
+    font-size: 1.15em;
+    color: #555;
 }
 
 /* Container for Bookmakers and Posts */
@@ -113,6 +139,7 @@
 
 /* Bookmakers Section */
 .bookmakers-section {
+<<<<<<< Updated upstream
     flex: 1;
     background-color: #f9f9f9;
     border-radius: 8px;
@@ -122,6 +149,13 @@
     max-height: 400px;
     margin-top: 30px;
     min-width: 300px; /* Minimum width for the bookmakers section */
+=======
+    margin-top: 35px;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+>>>>>>> Stashed changes
 }
 
 .bookmakers-section h2 {
@@ -131,24 +165,33 @@
 }
 
 .bookmaker {
-    margin-bottom: 20px;
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 20px;
+    background: #fdfdfd;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease;
+}
+
+.bookmaker:hover {
+    transform: scale(1.02);
 }
 
 .bookmaker h3 {
-    font-size: 1.8em;
-    margin-bottom: 10px;
+    font-size: 1.6em;
     color: #333;
 }
 
-/* Markets within Bookmakers */
-.market {
-    margin-top: 10px;
+/* Post Section */
+.post-section {
+    margin-top: 40px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+<<<<<<< Updated upstream
 .market h4 {
     font-size: 1.5em;
     margin-bottom: 10px;
@@ -172,23 +215,38 @@
 .point-container,
 .price-container {
     flex: 1; /* Each container will take equal space */
+=======
+.post-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+>>>>>>> Stashed changes
     text-align: center;
 }
 
-.outcome-name {
-    font-weight: bold;
-    color: #333;
+/* Post Form */
+.post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.price {
-    font-weight: bold;
-    color: #333; /* Color for prices */
+.post-form textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
+    transition: border-color 0.3s ease;
 }
 
-.point {
-    color: #333; /* Color for points */
+.post-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
+<<<<<<< Updated upstream
 /* Posts Section */
 .posts-section {
     flex: 1;
@@ -241,6 +299,63 @@ li {
 .offset-2 {
     margin-left: auto;
     margin-right: auto;
+=======
+.post-form button {
+    align-self: flex-end;
+    padding: 12px 25px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Posts List */
+.posts-list .post-item {
+    padding: 18px;
+    margin-bottom: 15px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.post-item:hover {
+    transform: scale(1.01);
+}
+
+.post-item h4 {
+    font-size: 1.15em;
+    margin-bottom: 5px;
+}
+
+.post-item p {
+    font-size: 1em;
+    color: #444;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .teams {
+        flex-direction: column;
+    }
+
+    .vs {
+        font-size: 1.5em;
+        margin: 15px 0;
+    }
+
+    .post-form button {
+        align-self: center;
+    }
+>>>>>>> Stashed changes
 }
 
 /* New Post Input Section */

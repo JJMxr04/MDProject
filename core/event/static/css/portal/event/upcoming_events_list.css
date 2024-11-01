@@ -12,9 +12,12 @@
   }
   
   .container {
-    width: 100%; /* Allow full width */
-    padding: 0 20px; /* Add horizontal padding */
-  }
+    margin: 10px auto !important; /* Override any other margins */
+    padding: 0 10px; /* Ensure consistent padding */
+    max-width: 100%; /* Full width, no limit */
+    box-sizing: border-box; /* Include padding and border in element's width */
+}
+
   
   header h1 {
     font-size: 2em;

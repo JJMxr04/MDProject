@@ -26,6 +26,7 @@
         <p>{{ event.description }}</p>
         <p class="commence-time" data-time="{{ event.commence_time }}">Commence Time: {{ event.commence_time }}</p>
 
+<<<<<<< Updated upstream
         <!-- Container for Bookmakers and Posts Sections -->
         <div class="content-sections">
             <!-- Bookmakers Section -->
@@ -34,6 +35,15 @@
                 {% if event.bookmakers %}
                     {% for bookmaker in event.bookmakers %}
                         <div class="bookmaker">
+=======
+        <!-- Bookmakers Section -->
+        <div class="bookmakers-section">
+            <h2>Odds</h2>
+            <div class="bookmakers-scroll" style="overflow-x: auto; white-space: nowrap;">
+                {% if event.bookmakers %}
+                    {% for bookmaker in event.bookmakers %}
+                        <div class="bookmaker" style="display: inline-block; width: 300px; margin-right: 20px;">
+>>>>>>> Stashed changes
                             <h3>{{ bookmaker.title }}</h3>
                             {% for market in bookmaker.markets %}
                                 <div class="market" data-key="{{ market.key }}">
@@ -55,6 +65,7 @@
                     <p>No bookmakers found for this event.</p>
                 {% endif %}
             </div>
+<<<<<<< Updated upstream
 
             <!-- Posts Section -->
             <div class="posts-section">
@@ -86,8 +97,46 @@
                     <p>No posts available for this event.</p>
                 {% endif %}
             </div>
+=======
+>>>>>>> Stashed changes
         </div>
     </div>
+
+    <!-- Post Section -->
+    <div class="post-section">
+        <h2>Comments</h2>
+        
+        <!-- Post Form -->
+        <div class="post-form">
+            <div class="user-info">
+                {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+            {% else %}
+                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+            {% endif %}
+
+                <span class="username">{{ user.username }}</span>
+            </div>
+            <textarea name="content" placeholder="Share your thoughts on this event..." required></textarea>
+            <button type="submit">Post</button>
+        </div>
+        
+        <!-- Existing Posts -->
+        <div class="posts-list">
+            {% for post in event.posts.all %}
+                <div class="post-item">
+                    <div class="user-info">
+                        <img src="{{ post.user.profile.avatar_url }}" alt="{{ post.user.username }}'s avatar" class="avatar">
+                        <h4>{{ post.user.username }} <span class="text-muted">- {{ post.created_at }}</span></h4>
+                    </div>
+                    <p>{{ post.content }}</p>
+                </div>
+            {% empty %}
+                <p>No posts yet. Be the first to share an update!</p>
+            {% endfor %}
+        </div>
+    </div>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
