@@ -1,6 +1,41 @@
 from django.contrib import admin
-from .models import Event, Sport, Team, Bookmaker, Market, Outcome
+from .models import Event, Sport, Team, Bookmaker, Market, Outcome, Forum, Thread, Post
 
+# Inline for displaying associated threads within a forum
+class ThreadInline(admin.TabularInline):
+    model = Thread
+    extra = 0
+    fields = ['title', 'created_by', 'created_at']
+    readonly_fields = ['created_by', 'created_at']
+    show_change_link = True
+
+# Inline for displaying associated posts within a thread
+class PostInline(admin.TabularInline):
+    model = Post
+    extra = 0
+    fields = ['content', 'created_by', 'created_at', 'event']
+    readonly_fields = ['created_by', 'created_at']
+    show_change_link = True
+
+@admin.register(Forum)
+class ForumAdmin(admin.ModelAdmin):
+    list_display = ['name', 'created_at']
+    search_fields = ['name', 'description']
+    inlines = [ThreadInline]
+
+@admin.register(Thread)
+class ThreadAdmin(admin.ModelAdmin):
+    list_display = ['title', 'forum', 'created_by', 'created_at']
+    search_fields = ['title', 'forum__name', 'created_by__username']
+    inlines = [PostInline]
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['thread', 'event', 'created_by', 'created_at']
+    search_fields = ['content', 'created_by__username', 'thread__title', 'event__title']
+    list_filter = ['created_at']
+
+# Existing Event Admin class
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores', 'home_team_team', 'away_team_team']
@@ -21,16 +56,11 @@ class EventAdmin(admin.ModelAdmin):
 
     readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'home_team', 'home_team_team', 'away_team', 'away_team_team')
 
-    # def get_readonly_fields(self, request, obj=None):
-    #     readonly_fields = super().get_readonly_fields(request, obj)
-    #     if obj and obj.completed:
-    #         readonly_fields += ('scores',)
-    #     return readonly_fields
-
     def formatted_scores(self, obj):
         return "WIP"
-        # Add your logic for formatted scores here
     formatted_scores.short_description = 'Scores'
+
+# Other admin classes (TeamAdmin, SportAdmin, BookmakerAdmin, MarketAdmin, OutcomeAdmin) remain unchanged.
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
@@ -68,20 +98,20 @@ class SportAdmin(admin.ModelAdmin):
 @admin.register(Bookmaker)
 class BookmakerAdmin(admin.ModelAdmin):
     list_display = ['id', 'key', 'title', 'event', 'last_update']
-    search_fields = ['id', 'key', 'title', 'event__title', 'event__id']  # Added event__id for searching by event_id
+    search_fields = ['id', 'key', 'title', 'event__title', 'event__id']
     readonly_fields = ['id', 'last_update']
 
     fieldsets = (
         (None, {
-            'fields': ('id', 'event', 'last_update')  # Added missing comma here
+            'fields': ('id', 'event', 'last_update')
         }),
     )
 
 @admin.register(Market)
 class MarketAdmin(admin.ModelAdmin):
     list_display = ['key', 'bookmaker', 'last_update']
-    search_fields = ['key', 'bookmaker__title']  # Assuming 'name' field was a typo and should be 'title'
-    readonly_fields = ['id','last_update']
+    search_fields = ['key', 'bookmaker__title']
+    readonly_fields = ['id', 'last_update']
 
     fieldsets = (
         (None, {
@@ -91,12 +121,12 @@ class MarketAdmin(admin.ModelAdmin):
 
 @admin.register(Outcome)
 class OutcomeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'market', 'price','point']
+    list_display = ['name', 'market', 'price', 'point']
     search_fields = ['name', 'market__key']
     readonly_fields = ['price']
 
     fieldsets = (
         (None, {
-            'fields': ('name', 'market', 'price','point')
+            'fields': ('name', 'market', 'price', 'point')
         }),
     )
