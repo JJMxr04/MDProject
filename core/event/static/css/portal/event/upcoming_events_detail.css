@@ -35,28 +35,18 @@
     align-items: center;
     background: #f5f5f5;
     padding: 20px;
-<<<<<<< Updated upstream
-    border-radius: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
-=======
     border-radius: 12px;
     margin-top: 25px;
->>>>>>> Stashed changes
 }
 
 .team {
     text-align: center;
     flex: 1;
-<<<<<<< Updated upstream
-    min-width: 150px; /* Minimum width for each team card */
-=======
     transition: transform 0.3s ease;
 }
 
 .team:hover {
     transform: scale(1.05);
->>>>>>> Stashed changes
 }
 
 .team img {
@@ -78,50 +68,6 @@
     color: #888;
 }
 
-<<<<<<< Updated upstream
-/* Mobile View Adjustments */
-@media (max-width: 767px) {
-    .teams {
-        flex-direction: column; /* Stacks items vertically */
-        text-align: center;
-    }
-
-    .vs {
-        margin: 10px 0; /* Adds space between the teams and "VS" */
-    }
-
-    .event-detail-container h1 {
-        font-size: 2em; /* Reduce font size for mobile */
-    }
-
-    .event-detail-container p {
-        font-size: 1em; /* Reduce paragraph size for mobile */
-    }
-}
-
-/* Tablet View Adjustments */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .teams {
-        flex-direction: row; /* Switches back to horizontal layout */
-        justify-content: space-between;
-    }
-
-    .vs {
-        margin: 0; /* Removes extra margin */
-    }
-
-    .event-detail-container h1 {
-        font-size: 2.2em; /* Adjust for tablet */
-    }
-
-    .event-detail-container p {
-        font-size: 1.1em; /* Adjust for tablet */
-    }
-}
-
-/* Commence Time */
-=======
->>>>>>> Stashed changes
 .commence-time {
     margin-top: 25px;
     font-weight: bold;
@@ -139,23 +85,11 @@
 
 /* Bookmakers Section */
 .bookmakers-section {
-<<<<<<< Updated upstream
-    flex: 1;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 400px;
-    margin-top: 30px;
-    min-width: 300px; /* Minimum width for the bookmakers section */
-=======
     margin-top: 35px;
     padding: 25px;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
->>>>>>> Stashed changes
 }
 
 .bookmakers-section h2 {
@@ -191,35 +125,9 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-<<<<<<< Updated upstream
-.market h4 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #666;
-}
-
-/* Outcome Styles */
-.outcome {
-    font-size: 16px;
-    margin-bottom: 5px;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background-color: #f7f7f7;
-    display: flex; /* Flexbox layout for placing containers side by side */
-    justify-content: space-between;
-    align-items: center;
-}
-
-.outcome-name-container,
-.point-container,
-.price-container {
-    flex: 1; /* Each container will take equal space */
-=======
 .post-section h2 {
     font-size: 2em;
     margin-bottom: 20px;
->>>>>>> Stashed changes
     text-align: center;
 }
 
@@ -246,60 +154,6 @@
     outline: none;
 }
 
-<<<<<<< Updated upstream
-/* Posts Section */
-.posts-section {
-    flex: 1;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 400px;
-}
-
-.posts-section h2 {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.post {
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.post-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9em;
-    color: #666;
-}
-
-.post-content {
-    margin-top: 5px;
-    color: #333;
-}
-
-/* List Styles */
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 8px;
-    font-size: 1.2em;
-    color: #555;
-}
-
-.offset-2 {
-    margin-left: auto;
-    margin-right: auto;
-=======
 .post-form button {
     align-self: flex-end;
     padding: 12px 25px;
@@ -355,7 +209,6 @@ li {
     .post-form button {
         align-self: center;
     }
->>>>>>> Stashed changes
 }
 
 /* New Post Input Section */

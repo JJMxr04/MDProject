@@ -26,16 +26,6 @@
         <p>{{ event.description }}</p>
         <p class="commence-time" data-time="{{ event.commence_time }}">Commence Time: {{ event.commence_time }}</p>
 
-<<<<<<< Updated upstream
-        <!-- Container for Bookmakers and Posts Sections -->
-        <div class="content-sections">
-            <!-- Bookmakers Section -->
-            <div class="bookmakers-section scrollable">
-                <h2>Bookmakers</h2>
-                {% if event.bookmakers %}
-                    {% for bookmaker in event.bookmakers %}
-                        <div class="bookmaker">
-=======
         <!-- Bookmakers Section -->
         <div class="bookmakers-section">
             <h2>Odds</h2>
@@ -43,7 +33,6 @@
                 {% if event.bookmakers %}
                     {% for bookmaker in event.bookmakers %}
                         <div class="bookmaker" style="display: inline-block; width: 300px; margin-right: 20px;">
->>>>>>> Stashed changes
                             <h3>{{ bookmaker.title }}</h3>
                             {% for market in bookmaker.markets %}
                                 <div class="market" data-key="{{ market.key }}">
@@ -65,40 +54,6 @@
                     <p>No bookmakers found for this event.</p>
                 {% endif %}
             </div>
-<<<<<<< Updated upstream
-
-            <!-- Posts Section -->
-            <div class="posts-section">
-                <h2>Posts for {{ event.title }}</h2>
-
-                <!-- Input Section for Posts -->
-                <div class="input-section">
-                    <h3>Add a Post</h3>
-                    <form >
-                        {% csrf_token %}
-                        <textarea name="content" rows="3" placeholder="Write your post here..." required></textarea>
-                        <button type="submit">Post</button>
-                    </form>
-                </div>
-
-                {% if event.posts %}
-                    <div class="post-list">
-                        {% for post in event.posts %}
-                            <div class="post">
-                                <div class="post-header">
-                                    <span class="post-author">{{ post.author }}</span>
-                                    <span class="post-timestamp">{{ post.timestamp }}</span>
-                                </div>
-                                <div class="post-content">{{ post.content }}</div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p>No posts available for this event.</p>
-                {% endif %}
-            </div>
-=======
->>>>>>> Stashed changes
         </div>
     </div>
 
