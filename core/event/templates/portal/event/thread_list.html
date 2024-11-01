@@ -1,0 +1,30 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/event/thread_list.css' %}">
+{% endblock css %}
+
+{% block title %}Forum Threads{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Threads in {{ forum.name }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group">
+                {% for thread in threads %}
+                    <li class="list-group-item">
+                        <a href="{% url 'core-portal:thread_detail' thread.id %}" class="thread-link">{{ thread.title }}</a>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No threads available in this forum.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="mt-3">
+        <a href="{% url 'core-portal:create_thread' forum.id %}" class="btn btn-primary">Create New Thread</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/event/forum_list.css' %}">
+{% endblock css %}
+
+{% block title %}Event Details{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Forums</h1>
+        <div class="row">
+            {% for forum in forums %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'core-portal:thread_list' forum.id %}" class="forum-link">{{ forum.name }}</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        No forums available.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
