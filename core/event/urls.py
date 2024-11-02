@@ -13,5 +13,6 @@ urlpatterns = [
     # path('forums/<int:forum_id>/threads/create/', views.create_thread, name='create_thread'),
     # path('threads/<int:thread_id>/posts/create/', views.create_post, name='create_post_thread'),
     path('<str:event_id>/posts/create/', views.create_post, name='create_post_event'),
+    path('posts/<int:post_id>/reply/', views.create_reply, name='create_reply'),
     
 ]

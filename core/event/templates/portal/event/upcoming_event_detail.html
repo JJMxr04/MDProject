@@ -61,7 +61,6 @@
     <div class="post-section">
         <h2>Comments</h2>
         
-        
         <!-- Post Form -->
         <form method="post" action="{% url 'core-portal:create_post_event' event.id %}" class="post-form">
             {% csrf_token %}
@@ -73,55 +72,92 @@
                 {% endif %}
                 <span class="username">{{ user.username }}</span>
             </div>
-            {{ form.content }} <!-- Renders the 'content' field input box -->
-            {{ form.thread }}  <!-- Hidden field for thread association (if needed) -->
-            {{ form.event }}   <!-- Hidden field for event association (already set to event ID) -->
+            {{ post_form.content }}
+            <input type="hidden" name="thread" value="{{ thread.id }}">
+            <input type="hidden" name="event" value="{{ event.id }}">
             <button type="submit">Post</button>
         </form>
 
-        
-        <!-- Existing Posts -->
+        <!-- Display each post and its replies -->
         <div class="posts-list">
             {% for post in event_posts %}
                 <div class="post-item">
                     <div class="user-info">
-
-                        <h4>                        
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% else %}
-                            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                        {% endif %}
-                        {{ post.created_by.username }} 
-                        <span class="text-muted">- {{ post.created_at }}</span>
-                    </h4>
+                        <h4>
+                            {% if post.created_by.avatar %}
+                                <img src="{{ post.created_by.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                            {% else %}
+                                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                            {% endif %}
+                            {{ post.created_by.username }}
+                            <span class="text-muted">- {{ post.created_at }}</span>
+                        </h4>
                     </div>
                     <p>{{ post.content }}</p>
+
+                    <!-- Display Replies -->
+                    <div class="replies-list">
+                        {% for reply in post.replies.all %}
+                            <div class="reply-item">
+                                <strong>{{ reply.created_by.username }}</strong> - {{ reply.created_at }}
+                                <p>{{ reply.content }}</p>
+                            </div>
+                        {% empty %}
+
+                        {% endfor %}
+                    </div>
+
+                    <!-- Reply Icon and Toggle Reply Form -->
+                    {% if user.is_authenticated %}
+                        <div class="reply-section">
+                            <button type="button" class="reply-icon" onclick="toggleReplyForm('{{ post.id }}')">Reply</button>
+                            
+                            <!-- Hidden Reply Form -->
+                            <div id="reply-form-{{ post.id }}" class="reply-form hidden">
+                                <form method="post" action="{% url 'core-portal:create_reply' post.id %}">
+                                    {% csrf_token %}
+                                    <textarea name="content" rows="2" placeholder="Write your reply here..." required></textarea>
+                                    <button type="submit">Submit Reply</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             {% empty %}
                 <p>No posts yet. Be the first to share an update!</p>
             {% endfor %}
         </div>
     </div>
-    
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // JavaScript for dynamic content updates
-            const timeElements = document.querySelectorAll('.commence-time');
-            timeElements.forEach(function(element) {
-                const timeString = element.getAttribute('data-time');
-                const date = new Date(timeString);
-                const options = {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                };
-                element.textContent = date.toLocaleString('en-US', options);
-            });
+    // Function to toggle reply form visibility
+    function toggleReplyForm(postId) {
+        const replyForm = document.getElementById(`reply-form-${postId}`);
+        if (replyForm.classList.contains('hidden')) {
+            replyForm.classList.remove('hidden');
+        } else {
+            replyForm.classList.add('hidden');
+        }
+    }
+
+    // JavaScript for updating commence time format
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeElements = document.querySelectorAll('.commence-time');
+        timeElements.forEach(function(element) {
+            const timeString = element.getAttribute('data-time');
+            const date = new Date(timeString);
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            };
+            element.textContent = date.toLocaleString('en-US', options);
         });
+    });
     </script>
 {% endblock content %}
+
+

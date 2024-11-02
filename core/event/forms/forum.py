@@ -1,5 +1,5 @@
 from django import forms
-from core.event.models import Thread, Post
+from core.event.models import Thread, Post, Reply
 from django.core.exceptions import ValidationError
 
 class ThreadForm(forms.ModelForm):
@@ -32,3 +32,8 @@ class PostForm(forms.ModelForm):
             raise ValidationError("A post cannot be associated with both a thread and an event.")
         
         return cleaned_data
+
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['content']

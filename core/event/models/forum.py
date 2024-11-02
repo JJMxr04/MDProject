@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from core.event.models import Event
 from django.conf import settings
+
 User = settings.AUTH_USER_MODEL
 
 class Forum(models.Model):
@@ -37,3 +38,12 @@ class Post(models.Model):
             raise ValidationError("Post must be associated with either a thread or an event.")
         if self.thread and self.event:
             raise ValidationError("Post cannot be associated with both a thread and an event.")
+
+class Reply(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="replies")
+    content = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Reply by {self.created_by} on {self.post}"

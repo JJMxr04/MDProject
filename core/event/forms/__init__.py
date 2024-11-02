@@ -1,1 +1,1 @@
-from .forum import PostForm, ThreadForm
+from .forum import PostForm, ThreadForm, ReplyForm

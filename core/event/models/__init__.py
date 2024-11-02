@@ -4,4 +4,4 @@ from .team import Team
 from .market import Market
 from .bookmaker import Bookmaker
 from .outcome import Outcome
-from .forum import Forum, Thread, Post
+from .forum import Forum, Thread, Post, Reply
