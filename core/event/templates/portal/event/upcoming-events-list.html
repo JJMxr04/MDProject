@@ -86,4 +86,24 @@
         </nav>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // JavaScript for dynamic content updates
+        const timeElements = document.querySelectorAll('.commence-time');
+        timeElements.forEach(function(element) {
+            const timeString = element.getAttribute('data-time');
+            const date = new Date(timeString);
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            };
+            element.textContent = date.toLocaleString('en-US', options);
+        });
+    });
+</script>
 {% endblock content %}
