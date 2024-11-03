@@ -81,7 +81,7 @@ class MatchManager(AbstractManager):
 
     def match_game_event_update(self, games, instance):
         for game in games:
-            match = Match.objects.get(id=game.match_id)
+            match = self.get(id=game.match_id)
             Game.objects.game_event_update(game=game, instance=instance)
         
             if (game == match.player_1_game_1) and (not match.player_1_game_1_completed):
