@@ -113,14 +113,26 @@ class MatchManager(AbstractManager):
                 match.golden_game_completed = True
             if (game == match.golden_game):
                 if Game.objects.get_owner_correctness(game):
-                    match.player_1_score += 2
+                    if game.owner == match.player_1:
+                        match.player_1_score += 2
+                    if game.owner == match.player_2:
+                        match.player_2_score += 2
                 if Game.objects.get_player_2_correctness(game):
-                    match.player_2_score += 2
+                    if game.player_2 == match.player_1:
+                        match.player_1_score += 2
+                    if game.player_2 == match.player_2:
+                        match.player_2_score += 2
             else:
                 if Game.objects.get_owner_correctness(game):
-                    match.player_1_score += 1
+                    if game.owner == match.player_1:
+                        match.player_1_score += 1
+                    if game.owner == match.player_2:
+                        match.player_2_score += 1
                 if Game.objects.get_player_2_correctness(game):
-                    match.player_2_score += 1
+                    if game.player_2 == match.player_1:
+                        match.player_1_score += 1
+                    if game.player_2 == match.player_2:
+                        match.player_2_score += 1
             match.save()
             if match.golden_game_completed and match.player_1_game_1_completed and match.player_1_game_2_completed and match.player_1_game_3_completed and match.player_1_game_4_completed and match.player_1_game_5_completed and match.player_2_game_1_completed and match.player_2_game_2_completed and match.player_2_game_3_completed and match.player_2_game_4_completed and match.player_2_game_5_completed:
                 self.calcutate_winner(match)
