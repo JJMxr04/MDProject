@@ -10,5 +10,7 @@ import uuid
 
 @receiver(post_save, sender=Event)
 def update_games_on_event_update(sender, instance, **kwargs):
+    if  not instance.completed:
+        return 
     games = Game.objects.filter(event=instance)
     Match.objects.match_game_event_update(games=games,instance=instance)

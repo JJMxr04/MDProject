@@ -105,6 +105,7 @@ class GameManager(AbstractManager):
         game.winner = instance.winner
         game.completed = instance.completed
         game.save()
+        return game
 
 
 class Game(AbstractModel):
