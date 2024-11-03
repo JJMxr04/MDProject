@@ -17,7 +17,6 @@ from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 import django_heroku
 import dj_database_url
-from celery.schedules import crontab
 
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
@@ -40,14 +39,11 @@ STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
 PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG')
+# DEBUG = False
 
-if os.environ.get('DEBUG') == 'True':
-    DEBUG = True
-else:
-    DEBUG = False
-
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
-# ALLOWED_HOSTS=['localhost']
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
+ALLOWED_HOSTS=['localhost']
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
 # CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
 
@@ -121,8 +117,7 @@ INSTALLED_APPS = [
     "django_celery_beat",     # This was in the first list only
     "storages",
     'crispy_forms',
-    'crispy_bootstrap5',
-               # This was in the first list only
+    'crispy_bootstrap5',            # This was in the first list only
 
     # MDProject Models
     'core.commands',
@@ -154,7 +149,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -166,9 +160,6 @@ MIDDLEWARE = [
 
 
 ]
-
-
-
 
 ROOT_URLCONF = 'CoreRoot.urls'
 
@@ -190,10 +181,6 @@ TEMPLATES = [
     },
 ]
 
-# settings.py
-X_FRAME_OPTIONS = 'ALLOWALL'
-
-
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 
@@ -211,42 +198,36 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=f"{os.environ.get('DATABASE_URL')}"
+#     )
+# }
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"{os.environ.get('DATABASE_URL')}"
-    )
+    'default': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'postgres',  # Main database name
+        'USER': 'joe',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'SERIALIZE': True,
+        },
+    },
+    'test_mirror': {
+        'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
+        'NAME': 'postgres',  # Mirroring the same main database
+        'USER': 'joe',
+        'PASSWORD': 'password',
+        'HOST': os.environ.get('DBHOST', 'localhost'),
+        'PORT': os.environ.get('DBPORT', '5432'),
+        'TEST': {
+            'MIRROR': 'default',  # Mirror the default database
+        },
+    },
 }
-
-# Optional: Add test settings if needed
-DATABASES['default']['TEST'] = {
-    'SERIALIZE': True,
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-#         'NAME': 'postgres',  # Main database name
-#         'USER': 'postgres',
-#         'PASSWORD': 'password',
-#         'HOST': os.environ.get('DBHOST', 'localhost'),
-#         'PORT': os.environ.get('DBPORT', '5432'),
-#         'TEST': {
-#             'SERIALIZE': True,
-#         },
-#     },
-#     'test_mirror': {
-#         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-#         'NAME': 'postgres',  # Mirroring the same main database
-#         'USER': 'joe',
-#         'PASSWORD': 'password',
-#         'HOST': os.environ.get('DBHOST', 'localhost'),
-#         'PORT': os.environ.get('DBPORT', '5432'),
-#         'TEST': {
-#             'MIRROR': 'default',  # Mirror the default database
-#         },
-#     },
-# }
 
 
 
@@ -295,21 +276,21 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_QUERYSTRING_AUTH = False
-# Additional optional settings
-AWS_S3_FILE_OVERWRITE = True
+# AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
+# AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_QUERYSTRING_AUTH = False
+# AWS_QUERYSTRING_AUTH = False
+# # Additional optional settings
+# AWS_S3_FILE_OVERWRITE = True
 # AWS_DEFAULT_ACL = 'public-read'
-AWS_DEFAULT_ACL = None
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-CELERY_RESULT_EXTENDED = True
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+# CELERY_RESULT_EXTENDED = True
 
 # Configure Django REST Framework settings
 REST_FRAMEWORK = {
@@ -341,16 +322,19 @@ AUTHENTICATION_BACKENDS = [
 
 
 # Media files (user-uploaded files)
-MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+if not os.environ.get("DEBUG"):
+    MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+else:
+    MEDIA_URL = f'/media/'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = [
 
-# "http://localhost:8000",
-# "http://localhost:3000"
-# ]
+"http://localhost:8000",
+"http://localhost:3000"
+]
 
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
 LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
@@ -511,7 +495,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
-CELERY_TIMEZONE = 'America/New_York'
+CELERY_TIMEZONE = 'UTC'
 CELERY_RESULT_EXTENDED = True
 broker_connection_retry_on_startup= True
 
@@ -521,59 +505,23 @@ CACHES = {
         "LOCATION": f"{os.environ.get('REDIS_URL')}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            'SOCKET_CONNECT_TIMEOUT': 5,  # Optional, connection timeout
-            'SOCKET_TIMEOUT': 5,           # Optional, request timeout
-          # Disables SSL verification
         },
     }
-} 
-
-
-
-
-CELERY_BEAT_SCHEDULE = {
-    'backend_cleanup': {
-        'task': 'celery.backend_cleanup',
-        'schedule': crontab(minute=0, hour=0, day_of_month=1),  # Runs at midnight on the 1st of every month
-    },
-    'complete_matches_cron': {
-        'task': 'core.crons.tasks.complete_matches_cron',
-        'schedule': crontab(minute=0, hour=0),  # every day at midnight
-    },
-    'tournament_cron_bracketMaker': {
-        'task': 'core.crons.tasks.tournament_cron_bracketMaker',
-        'schedule': crontab(hour=0, minute=0),  # every day at midnight
-    },
-    'tournament_cron_2_day_reminder': {
-        'task': 'core.crons.tasks.tournament_cron_2_day_reminder',
-        'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
-    },
-    'sport_cron': {
-        'task': 'core.crons.tasks.sport_cron',
-        'schedule': crontab(minute=0, hour=0),  # daily at midnight
-    },
-    'event_cron': {
-        'task': 'core.crons.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*/8'),  # every 8 hours, 3 times a day
-    },
-    # 'print_cron_jobs': {
-    #     'task': 'core.crons.tasks.print_cron_jobs',
-    #     'schedule': crontab(minute='*'),  # every minute
-    # },
 }
 
+CELERY_BEAT_SCHEDULE = {}
 
-# SSL/TLS settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+# # SSL/TLS settings
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_HSTS_SECONDS = 31536000  # 1 year
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # End of file
