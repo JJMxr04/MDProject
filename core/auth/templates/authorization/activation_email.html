@@ -1,0 +1,17 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Register{% endblock title %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<h1> Activate Your Account</h1>
+<p> Thank you for registering!</p>
+<p> You have been sent an email with a link to activate your account </p>
+<p>Please click on the link in the email and then navigater back to the site to login</p>
+<p>If you are having trouble finding your email, please contact support at Contact Us</p>
+{% endblock content %}

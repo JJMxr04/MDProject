@@ -22,3 +22,6 @@ class ActivateUserView(View):
         
         except SignatureExpired:
             return HttpResponse("Activation link has expired.", status=400)
+        
+def activate_yoour_account(request):
+    return render(request, 'authorization/activation_email.html')

@@ -19,7 +19,7 @@ class RegisterView(View):
             user = form.save()
             email.send_activation_email(user,request)
             messages.success(request, 'Registration successful! You are now logged in.')
-            return redirect('core-auth:login')  # Replace 'home' with the name of your home page URL pattern
+            return redirect('core-auth:activation-email')  # Replace 'home' with the name of your home page URL pattern
         else:
             messages.error(request, 'Registration failed. Please correct the errors below.')
             for field, errors in form.errors.items():
