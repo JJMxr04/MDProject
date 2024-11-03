@@ -12,7 +12,11 @@
     <!-- Player Cards -->
     <div class="player-cards">
         <div class="player-card">
+            {% if match.player_1.avatar %}
             <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
+            {% else %}
+                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+            {% endif %}
             <h2>{{ match.player_1.username }}</h2>
         </div>
        

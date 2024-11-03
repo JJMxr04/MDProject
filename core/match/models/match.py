@@ -14,6 +14,8 @@ from core.match.models.TieBreaker import TieBreaker
 from datetime import datetime
 import uuid
 from rest_framework.response import Response
+from django.utils import timezone
+from datetime import timedelta
 
 
 class MatchManager(AbstractManager):
@@ -57,23 +59,20 @@ class MatchManager(AbstractManager):
             return None
         match.match_state = "accepted"
         match.player_2 = player_2
+        match.end_date = timezone.now() + timedelta(days=7)  # Set end_date to 7 days after now
+
+        # Creating games for both players
         match.player_1_game_1 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_1_game_2 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_1_game_3 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_1_game_4 = Game.objects.create_game(match.player_1, match.player_2, match)
         match.player_1_game_5 = Game.objects.create_game(match.player_1, match.player_2, match)
 
-        match.player_2_game_1 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_2 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_3 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_4 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_5 = Game.objects.create_game(match.player_1, match.player_2, match)
-        match.player_2_game_1 = Game.objects.create_game(match.player_2,match.player_1, match)
+        match.player_2_game_1 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_2 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_3 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_4 = Game.objects.create_game(match.player_2, match.player_1, match)
         match.player_2_game_5 = Game.objects.create_game(match.player_2, match.player_1, match)
-
 
         match.golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
         match.save()
@@ -199,7 +198,7 @@ class Match(AbstractModel):
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match', null=True, default=None)
 
     player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_match',null=True,default=None)
-    winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match',null=True,default=None)
+    winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_match',null=True,default=None,blank=True)
     match_state = models.CharField(max_length=10, default='created', null=False, blank=False) #created, completed
 
     match_type = models.CharField(max_length=10, default='public', null=False, blank=False)

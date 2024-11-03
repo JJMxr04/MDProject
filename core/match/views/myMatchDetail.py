@@ -18,21 +18,32 @@ from datetime import datetime, timedelta
 
 import uuid
 
+
+
 @login_required(login_url='/auth/login/')
 def my_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     is_player_in_match = request.user.id in [match.player_1.id, match.player_2.id]
-    events = EventSerializer(Event.objects.filter(commence_time__gte=timezone.now() + timedelta(hours=8.25), commence_time__lte=match.end_date)[:5], many=True).data
+    
+    # Filtering events if `match.end_date` is not None
+    if match.end_date:
+        events = Event.objects.filter(
+            commence_time__gte=timezone.now() + timedelta(hours=8.25),
+            commence_time__lte=match.end_date
+        )
+    else:
+        events = Event.objects.none()  # Return an empty queryset if end_date is None
+    
+    events_ser = EventSerializer(events, many=True).data if events else []
 
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
-        'available_events': events,
-        # 'player_1_games': match.player_1_games.all(),
-        # 'player_2_games': match.player_2_games.all(),
+        'available_events': events_ser,
     }
     
     return render(request, 'portal/match/my_match_detail.html', context)
+
 
 @require_POST
 @login_required(login_url='/auth/login/')

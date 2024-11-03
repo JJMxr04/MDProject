@@ -12,12 +12,20 @@
     <!-- Player Cards -->
     <div class="player-cards">
         <div class="player-card">
+            {% if match.player_1.avatar %}
             <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
+            {% else %}
+                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+            {% endif %}
             <h2>{{ match.player_1.username }}</h2>
             <p>Score: {{ match.player_1_score }}</p>
         </div>
         <div class="player-card">
+            {% if match.player_2.avatar %}
             <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
+            {% else %}
+                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+            {% endif %}
             <h2>{{ match.player_2.username }}</h2>
             <p>Score: {{ match.player_2_score }}</p>
         </div>
@@ -96,7 +104,7 @@
     <!-- Player 1 and 2 Games -->
     <div class="player-games-container">
         <div class="player-games">
-            <h3>Player 1 Games</h3>
+            <h3>{{ match.player_1.username }}'s Games</h3>
             {% if match.player_1_game_1.event %}
                 <div class="small-game-event" id="player-1-game-1-id" value="{{ match.player_1_game_1.id }}" onclick="openPlayer1Game1Popup()">
                     <div class="golden-game">
@@ -356,7 +364,7 @@
             {% endif %}
         </div>
         <div class="player-games">
-            <h3>Player 2 Games</h3>
+            <h3>{{ match.player_2.username }}'s Games</h3>
             {% if match.player_2_game_1.event %}
                 <div class="small-game-event" id="player-2-game-1-id" value="{{ match.player_2_game_1.id }}" onclick="openPlayer2Game1Popup()">
                     <div class="golden-game" >

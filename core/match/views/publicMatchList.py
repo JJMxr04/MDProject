@@ -94,22 +94,12 @@ def public_match_detail_view(request, match_id):
 @require_POST
 @login_required(login_url='/auth/login/')
 def accept_public_match_view(request, match_id):
-    print(1)
     data = json.loads(request.body)  # Decode and parse JSON body
     if data.get('action') == 'accept':  # Updated line
-    # Create a new match
-        print(2)
         try:
-            print(3)
             user = request.user
-            # Assuming you have a way to get Player objects from usernames
-            print(4)
             match = Match.objects.get(id=match_id)
-            print(5)
             a_match = Match.objects.accept_match(match,user)
-            print(6)
-            # Redirect or return a response after creation
-            print(7)
 
 
 
