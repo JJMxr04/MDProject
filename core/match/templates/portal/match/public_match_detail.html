@@ -40,6 +40,12 @@
     </button>
 </div>
 
+<!-- Add this right after the opening match-detail div -->
+<div id="loading-overlay" style="display: none;">
+    <div class="loading-spinner"></div>
+    <p>Processing...</p>
+</div>
+
 <div id="acceptMatchPopup" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="close" onclick="closePopup()">&times;</span>
@@ -51,6 +57,46 @@
     </div>
 </div>
 
+<style>
+    #loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    #loading-overlay p {
+        color: white;
+        margin-top: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Ensure modal stays below loading overlay */
+    .modal {
+        z-index: 9999;
+    }
+</style>
+
 <script>
     function showPopup() {
         document.getElementById('acceptMatchPopup').style.display = 'flex';
@@ -60,32 +106,42 @@
         document.getElementById('acceptMatchPopup').style.display = 'none';
     }
     
+    function showLoading() {
+        document.getElementById('loading-overlay').style.display = 'flex';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading-overlay').style.display = 'none';
+    }
+    
     function submitMatch() {
-        // Send a POST request to create a match
+        showLoading(); // Show loading overlay
+        closePopup(); // Close the confirmation popup
+
         fetch("{% url 'core-portal:portal-accept-public-match' match.id%}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+                'X-CSRFToken': '{{ csrf_token }}'
             },
             body: JSON.stringify({
-                // Add any necessary data for match creation here
                 'action': 'accept'
             })
         })
         .then(response => {
             if (response.ok) {
-                alert("Match created!"); // Notify user of success
-                closePopup();
                 window.location.href = "{% url 'core-portal:portal-my-match-detail' match.id %}"; // Redirect to match detail
-                // Close the popup after submission
             } else {
-                alert("Error creating match."); // Notify user of error
+                hideLoading();
+                alert("Error accepting match."); // Notify user of error
+                showPopup(); // Reopen the confirmation popup if there was an error
             }
         })
         .catch(error => {
+            hideLoading();
             console.error('Error:', error);
             alert("An error occurred."); // Notify user of error
+            showPopup(); // Reopen the confirmation popup if there was an error
         });
     }
 </script>
