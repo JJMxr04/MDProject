@@ -22,9 +22,9 @@
         </div>
         <div class="player-card">
             {% if match.player_2.avatar %}
-            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
+                <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
             {% else %}
-                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                <img src="https://robohash.org/2" class="rounded-circle" width="36" height="36" alt="User Avatar">
             {% endif %}
             <h2>{{ match.player_2.username }}</h2>
             <p>Score: {{ match.player_2_score }}</p>
@@ -898,6 +898,11 @@
         </div>
     </div>
 
+    <!-- Loading Overlay - Place this right after the opening <div class="match-detail"> -->
+    <div id="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Processing...</p>
+    </div>
 
     <!-- Event Popup -->
     <div id="event-popup" style="display: none;">
@@ -984,6 +989,46 @@
         </div>
     </div>
 </div>
+
+<style>
+    #loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    #loading-overlay p {
+        color: white;
+        margin-top: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Ensure popups have a lower z-index than the loading overlay */
+    .popup {
+        z-index: 9999;
+    }
+</style>
 
 <script>
     let selected_event = null;
@@ -1176,19 +1221,13 @@
     document.getElementById('upload-form').addEventListener('submit', function(e) {
         e.preventDefault();
         if (selected_event && selected_outcome) {
-            console.log('Submitting selection:');
-            console.log('Event ID:', selected_event);
-            console.log('Outcome ID:', selected_outcome);
-        
+            showLoading(); // Show loading overlay
             
-            // Prepare the data to send
             const data = {
                 event_id: selected_event,
                 player_choice: selected_outcome
             };
-            console.log('data ', data)
 
-            // Send the data to the server
             fetch('{% url "core-portal:portal-upload_pick" match.id %}', {
                 method: 'POST',
                 headers: {
@@ -1204,19 +1243,16 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
-                // Handle successful submission
+                hideLoading(); // Hide loading overlay
                 alert('Pick uploaded successfully!');
-                // Reload the page
                 window.location.reload();
             })
             .catch((error) => {
+                hideLoading(); // Hide loading overlay
                 console.error('Error:', error);
-                // Handle errors (e.g., show an error message)
                 alert('Error uploading pick. Please try again.');
             });
         } else {
-            console.log('Please select both an event and an outcome before submitting.');
             alert('Please select both an event and an outcome before submitting.');
         }
     });
@@ -1405,25 +1441,14 @@
     }
 
     function submitGameSelection(gameId) {
-        console.log('Submitting selection:');
-        console.log('Event ID:', selected_event);
-        console.log('Outcome ID:', selected_outcome);
-        
-
         if (selected_event && selected_outcome) {
-            console.log('Submitting selection:');
-            console.log('Event ID:', selected_event);
-            console.log('Outcome ID:', selected_outcome);
-        
+            showLoading(); // Show loading overlay
             
-            // Prepare the data to send
             const data = {
                 event_id: selected_event,
                 player_choice: selected_outcome
             };
-            console.log('data ', data)
 
-            // Send the data to the server
             fetch(`{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', gameId), {
                 method: 'POST',
                 headers: {
@@ -1439,19 +1464,16 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
-                // Handle successful submission
+                hideLoading(); // Hide loading overlay
                 alert('Outcome selected successfully!');
-                // Reload the page
                 window.location.reload();
             })
             .catch((error) => {
+                hideLoading(); // Hide loading overlay
                 console.error('Error:', error);
-                // Handle errors (e.g., show an error message)
                 alert('Error uploading pick. Please try again.');
             });
         } else {
-            console.log('Please select an outcome before submitting.');
             alert('Please select an outcome before submitting.');
         }
     }
@@ -1496,6 +1518,13 @@
         })
     }
 
-    
+    function showLoading() {
+        document.getElementById('loading-overlay').style.display = 'flex';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading-overlay').style.display = 'none';
+    }
+
 </script>
 {% endblock %}
