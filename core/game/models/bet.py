@@ -15,16 +15,25 @@ import ast
 class BetManager(AbstractManager):
 
     def create_bet(self,market=None):
-        return self.create(market=market, owner_outcome=None, player_2_outcome=None)
+        return self.create(
+            market=market,
+            owner_outcome=None,
+            player_2_outcome=None,
+            owner_outcome_correct=False,
+            player_2_outcome_correct=False,
+            is_processed=False
+        )
 
     def calculate_owner_choice(self, bet, event):
         if not bet.owner_outcome:
             return False
 
+        result = False
         if bet.market.key == 'h2h':
             if event.winner == 'tie':
-                return bet.owner_outcome.name == 'draw'
-            return event.winner == bet.owner_outcome.name
+                result = bet.owner_outcome.name == 'draw'
+            else:
+                result = event.winner == bet.owner_outcome.name
 
         if bet.market.key == 'totals':
             try:
@@ -32,9 +41,9 @@ class BetManager(AbstractManager):
                 points = int(scores[0]['score']) + int(scores[1]['score'])
                 bet_points = bet.owner_outcome.point
                 if bet.owner_outcome.name == 'Over':
-                    return (points > bet_points)
+                    result = (points > bet_points)
                 if bet.owner_outcome.name == 'Under':
-                    return bet_points > points
+                    result = bet_points > points
             except (ValueError, TypeError, IndexError) as e:
                 return False
 
@@ -47,22 +56,30 @@ class BetManager(AbstractManager):
                 if bet.owner_outcome.point < 0:
                     if winner != bet.owner_outcome.name:
                         return False
-                    return abs(points_diff) >= abs(bet.owner_outcome.point)
+                    result = abs(points_diff) >= abs(bet.owner_outcome.point)
                 else:
                     if winner == bet.owner_outcome.name:
-                        return True
-                    return abs(points_diff) < abs(bet.owner_outcome.point)
+                        result = True
+                    result = abs(points_diff) < abs(bet.owner_outcome.point)
             except (ValueError, TypeError, IndexError) as e:
                 return False
+
+        # Store the result
+        bet.owner_outcome_correct = result
+        bet.is_processed = True
+        bet.save()
+        return result
 
     def calculate_player_2_choice(self, bet, event):
         if not bet.player_2_outcome:
             return False
 
+        result = False
         if bet.market.key == 'h2h':
             if event.winner == 'tie':
-                return bet.player_2_outcome.name == 'draw'
-            return event.winner == bet.player_2_outcome.name
+                result = bet.player_2_outcome.name == 'draw'
+            else:
+                result = event.winner == bet.player_2_outcome.name
 
         if bet.market.key == 'totals':
             try:
@@ -70,9 +87,9 @@ class BetManager(AbstractManager):
                 points = int(scores[0]['score']) + int(scores[1]['score'])
                 bet_points = bet.player_2_outcome.point
                 if bet.player_2_outcome.name == 'Over':
-                    return (points > bet_points)
+                    result = (points > bet_points)
                 if bet.player_2_outcome.name == 'Under':
-                    return bet_points > points
+                    result = bet_points > points
             except (ValueError, TypeError, IndexError) as e:
                 return False
 
@@ -85,13 +102,19 @@ class BetManager(AbstractManager):
                 if bet.player_2_outcome.point < 0:
                     if winner != bet.player_2_outcome.name:
                         return False
-                    return abs(points_diff) >= abs(bet.player_2_outcome.point)
+                    result = abs(points_diff) >= abs(bet.player_2_outcome.point)
                 else:
                     if winner == bet.player_2_outcome.name:
-                        return True
-                    return abs(points_diff) < abs(bet.player_2_outcome.point)
+                        result = True
+                    result = abs(points_diff) < abs(bet.player_2_outcome.point)
             except (ValueError, TypeError, IndexError) as e:
                 return False
+
+        # Store the result
+        bet.player_2_outcome_correct = result
+        bet.is_processed = True
+        bet.save()
+        return result
 
     def set_owner_outcome(self, bet, outcome):
         bet.market = outcome.market
@@ -114,6 +137,9 @@ class Bet(AbstractModel):
                                       blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
+    owner_outcome_correct = models.BooleanField(default=False)
+    player_2_outcome_correct = models.BooleanField(default=False)
+    is_processed = models.BooleanField(default=False)
     objects = BetManager()
     class Meta:
         db_table = 'core.bet'

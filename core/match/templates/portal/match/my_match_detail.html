@@ -99,6 +99,37 @@
                 {% endif %}
             </p>
         </div>
+        <div class="correct-outcomes">
+            <div class="correct-outcomes-header">
+                <i class="fas fa-trophy"></i>
+                <span>Correct Picks</span>
+            </div>
+            <div class="avatar-container">
+                {% if match.golden_game.bet.owner_outcome_correct %}
+                    <div class="avatar-wrapper correct">
+                        {% if match.player_1.avatar %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% else %}
+                            <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        <span class="username">{{ match.player_1.username }}</span>
+                    </div>
+                {% endif %}
+                {% if match.golden_game.bet.player_2_outcome_correct %}
+                    <div class="avatar-wrapper correct">
+                        {% if match.player_2.avatar %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% else %}
+                            <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
+                        <span class="username">{{ match.player_2.username }}</span>
+                    </div>
+                {% endif %}
+                {% if not match.golden_game.bet.owner_outcome_correct and not match.golden_game.bet.player_2_outcome_correct %}
+                    <div class="no-picks">No correct picks yet</div>
+                {% endif %}
+            </div>
+        </div>
     </div>
     {% endif %}
 
@@ -154,6 +185,14 @@
                             {% endif %}
                         </p>
                     </div>
+                    <div class="correct-outcomes">
+                        {% if match.player_1_game_1.bet.owner_outcome_correct %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        {% if match.player_1_game_1.bet.player_2_outcome_correct %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
+                    </div>
                 </div>
             {% else %}
                 <p>No pick for Game 1</p>
@@ -205,6 +244,14 @@
                                 Pending
                             {% endif %}
                         </p>
+                    </div>
+                    <div class="correct-outcomes">
+                        {% if match.player_1_game_2.bet.owner_outcome_correct %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        {% if match.player_1_game_2.bet.player_2_outcome_correct %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
                     </div>
             </div>
             {% else %}
@@ -259,6 +306,15 @@
                             {% endif %}
                         </p>
                     </div>
+                    <div class="correct-outcomes">
+                        <h4> Correct Guess</h4>
+                        {% if match.player_1_game_3.bet.owner_outcome_correct %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        {% if match.player_1_game_3.bet.player_2_outcome_correct %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 3</p>
@@ -312,6 +368,14 @@
                             {% endif %}
                         </p>
                     </div>
+                    <div class="correct-outcomes">
+                        {% if match.player_1_game_4.bet.owner_outcome_correct %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        {% if match.player_1_game_4.bet.player_2_outcome_correct %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 4</p>
@@ -363,6 +427,14 @@
                                 Pending
                             {% endif %}
                         </p>
+                    </div>
+                    <div class="correct-outcomes">
+                        {% if match.player_1_game_5.bet.owner_outcome_correct %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        {% if match.player_1_game_5.bet.player_2_outcome_correct %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
                     </div>
             </div>
             {% else %}
@@ -419,6 +491,14 @@
                             {% endif %}
                         </p>
                     </div>
+                    <div class="correct-outcomes">
+                        {% if match.player_2_game_1.bet.owner_outcome_correct %}
+                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                        {% endif %}
+                        {% if match.player_2_game_1.bet.player_2_outcome_correct %}
+                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                        {% endif %}
+                    </div>
                 </div>
             {% else %}
                 <p>No pick for Game 1</p>
@@ -470,6 +550,14 @@
                             Pending
                         {% endif %}
                     </p>
+                </div>
+                <div class="correct-outcomes">
+                    {% if match.player_2_game_2.bet.owner_outcome_correct %}
+                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                    {% endif %}
+                    {% if match.player_2_game_2.bet.player_2_outcome_correct %}
+                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                    {% endif %}
                 </div>
             </div>
             {% else %}
@@ -523,6 +611,14 @@
                         {% endif %}
                     </p>
                 </div>
+                <div class="correct-outcomes">
+                    {% if match.player_2_game_3.bet.owner_outcome_correct %}
+                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                    {% endif %}
+                    {% if match.player_2_game_3.bet.player_2_outcome_correct %}
+                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                    {% endif %}
+                </div>
             </div>
             {% else %}
                 <p>No pick for Game 3</p>
@@ -575,6 +671,14 @@
                         {% endif %}
                     </p>
                 </div>
+                <div class="correct-outcomes">
+                    {% if match.player_2_game_4.bet.owner_outcome_correct %}
+                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                    {% endif %}
+                    {% if match.player_2_game_4.bet.player_2_outcome_correct %}
+                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                    {% endif %}
+                </div>
             </div>
             {% else %}
                 <p>No pick for Game 4</p>
@@ -626,6 +730,14 @@
                             Pending
                         {% endif %}
                     </p>
+                </div>
+                <div class="correct-outcomes">
+                    {% if match.player_2_game_5.bet.owner_outcome_correct %}
+                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                    {% endif %}
+                    {% if match.player_2_game_5.bet.player_2_outcome_correct %}
+                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                    {% endif %}
                 </div>
             </div>
             {% else %}
