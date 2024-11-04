@@ -53,23 +53,25 @@
     <!-- Golden Game Section -->
     {% if match.golden_game %}
     <div class="golden-game-card" type="UUID" id="golden-game-id" value="{{ match.golden_game.id }}" onclick="openGoldenGamePopup()">
-        <h3>Golden Game - <strong>Sport:</strong> {{ match.golden_game.event.group }} - <strong>League:</strong> {{ match.golden_game.event.sport_title }} </h3>
+        <h3>Golden Game </h3>
+        <h4><strong>{{ match.golden_game.event.group }} -  {{ match.golden_game.event.sport_title }} - 
+            <script>
+                document.write(new Date('{{ match.golden_game.event.commence_time }}').toLocaleString())
+            </script>
+        </strong> </h4>
         <div class="golden-game">
             <div class="team">
                 {% if match.golden_game.event.home_team_team.logo_url %}
                     <img src="{{ match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ match.golden_game.event.home_team_team }}">
                 {% endif %}
                 <h4>{{ match.golden_game.event.home_team_team }}</h4>
-                <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
             </div>
 
             <div class="team">
                 {% if match.golden_game.event.away_team_team.logo_url %}
                     <img src="{{ match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ match.golden_game.event.away_team_team }}">
-                {% else %}
-                    <h4>{{ match.golden_game.event.away_team_team }}</h4>
                 {% endif %}
-                <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
+                <h4>{{ match.golden_game.event.away_team_team }}</h4>
             </div>
 
         </div>
@@ -106,23 +108,24 @@
             <h3>{{ match.player_1.username }}'s Games</h3>
             {% if match.player_1_game_1.event %}
                 <div class="small-game-event" id="player-1-game-1-id" value="{{ match.player_1_game_1.id }}" onclick="openPlayer1Game1Popup()">
+                    <h4><strong>{{ match.player_1_game_1.event.group }} - {{ match.player_1_game_1.event.sport_title }} - 
+                        <script>
+                            document.write(new Date('{{ match.player_1_game_1.event.commence_time }}').toLocaleString())
+                        </script>
+                    </strong></h4>
                     <div class="golden-game">
                         <div class="team">
                             {% if match.player_1_game_1.event.home_team_team.logo_url %}
-                                <img src="{{ match.player_1_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.home_team }}">
-                            {% else %}
-                                <h4>{{ match.player_1_game_1.event.home_team }}</h4>
+                                <img src="{{ match.player_1_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.home_team_team }}">
                             {% endif %}
-                            <p><strong>Sport:</strong> {{ match.player_1_game_1.event.sport_title }}</p>
+                            <h4>{{ match.player_1_game_1.event.home_team_team }}</h4>
                         </div>
             
                         <div class="team">
                             {% if match.player_1_game_1.event.away_team_team.logo_url %}
-                                <img src="{{ match.player_1_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.away_team }}">
-                            {% else %}
-                                <h4>{{ match.player_1_game_1.event.away_team }}</h4>
+                                <img src="{{ match.player_1_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.away_team_team }}">
                             {% endif %}
-                            <p><strong>Sport:</strong> {{ match.player_1_game_1.event.sport_title }}</p>
+                            <h4>{{ match.player_1_game_1.event.away_team_team }}</h4>
                         </div>
                     </div>
                     
@@ -157,23 +160,24 @@
             {% endif %}
             {% if match.player_1_game_2.event %}
             <div class="small-game-event" id="player-1-game-2-id" value="{{ match.player_1_game_2.id }}" onclick="openPlayer1Game2Popup()">
+                <h4><strong>{{ match.player_1_game_2.event.group }} - {{ match.player_1_game_2.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_1_game_2.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_2.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.home_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_2.event.home_team }}</h4>
+                            <img src="{{ match.player_1_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.home_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_2.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_2.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_1_game_2.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.away_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_2.event.away_team }}</h4>
+                            <img src="{{ match.player_1_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.away_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_2.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_2.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -208,23 +212,24 @@
             {% endif %}
             {% if match.player_1_game_3.event %}
             <div class="small-game-event" id="player-1-game-3-id" value="{{ match.player_1_game_3.id }}" onclick="openPlayer1Game3Popup()">
+                <h4><strong>{{ match.player_1_game_3.event.group }} - {{ match.player_1_game_3.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_1_game_3.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_3.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.home_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_3.event.home_team }}</h4>
+                            <img src="{{ match.player_1_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.home_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_3.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_3.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_1_game_3.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.away_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_3.event.away_team }}</h4>
+                            <img src="{{ match.player_1_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.away_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_3.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_3.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -260,23 +265,24 @@
             {% endif %}
             {% if match.player_1_game_4.event %}
             <div class="small-game-event" id="player-1-game-4-id" value="{{ match.player_1_game_4.id }}" onclick="openPlayer1Game4Popup()">
+                <h4><strong>{{ match.player_1_game_4.event.group }} - {{ match.player_1_game_4.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_1_game_4.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_4.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.home_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_4.event.home_team }}</h4>
+                            <img src="{{ match.player_1_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.home_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_4.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_4.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_1_game_4.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.away_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_4.event.away_team }}</h4>
+                            <img src="{{ match.player_1_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.away_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_4.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_4.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -312,23 +318,24 @@
             {% endif %}
             {% if match.player_1_game_5.event %}
             <div class="small-game-event" id="player-1-game-5-id" value="{{ match.player_1_game_5.id }}" onclick="openPlayer1Game5Popup()">
+                <h4><strong>{{ match.player_1_game_5.event.group }} - {{ match.player_1_game_5.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_1_game_5.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_1_game_5.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.home_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_5.event.home_team }}</h4>
+                            <img src="{{ match.player_1_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.home_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_5.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_5.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_1_game_5.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.away_team }}">
-                        {% else %}
-                            <h4>{{ match.player_1_game_5.event.away_team }}</h4>
+                            <img src="{{ match.player_1_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.away_team_team }}">
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_1_game_5.event.sport_title }}</p>
+                        <h4>{{ match.player_1_game_5.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -366,23 +373,24 @@
             <h3>{{ match.player_2.username }}'s Games</h3>
             {% if match.player_2_game_1.event %}
                 <div class="small-game-event" id="player-2-game-1-id" value="{{ match.player_2_game_1.id }}" onclick="openPlayer2Game1Popup()">
+                    <h4><strong>{{ match.player_2_game_1.event.group }} - {{ match.player_2_game_1.event.sport_title }} - 
+                        <script>
+                            document.write(new Date('{{ match.player_2_game_1.event.commence_time }}').toLocaleString())
+                        </script>
+                    </strong></h4>
                     <div class="golden-game" >
                         <div class="team">
                             {% if match.player_2_game_1.event.home_team_team.logo_url %}
                                 <img src="{{ match.player_2_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.home_team_team }}">
-                            {% else %}
-                                <h4>{{ match.player_2_game_1.event.home_team }}</h4>
                             {% endif %}
-                            <p><strong>Sport:</strong> {{ match.player_2_game_1.event.sport_title }}</p>
+                            <h4>{{ match.player_2_game_1.event.home_team_team }}</h4>
                         </div>
             
                         <div class="team">
                             {% if match.player_2_game_1.event.away_team_team.logo_url %}
                                 <img src="{{ match.player_2_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.away_team_team }}">
-                            {% else %}
-                                <h4>{{ match.player_2_game_1.event.away_team }}</h4>
                             {% endif %}
-                            <p><strong>Sport:</strong> {{ match.player_2_game_1.event.sport_title }}</p>
+                            <h4>{{ match.player_2_game_1.event.away_team_team }}</h4>
                         </div>
                     </div>
                     
@@ -417,23 +425,24 @@
             {% endif %}
             {% if match.player_2_game_2.event %}
             <div class="small-game-event" id="player-2-game-2-id" value="{{ match.player_2_game_2.id }}" onclick="openPlayer2Game2Popup()">
+                <h4><strong>{{ match.player_2_game_2.event.group }} - {{ match.player_2_game_2.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_2_game_2.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_2.event.home_team_team.logo_url %}
                             <img src="{{ match.player_2_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.home_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_2.event.home_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_2.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_2.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_2_game_2.event.away_team_team.logo_url %}
                             <img src="{{ match.player_2_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.away_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_2.event.away_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_2.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_2.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -468,23 +477,24 @@
             {% endif %}
             {% if match.player_2_game_3.event %}
             <div class="small-game-event" id="player-2-game-3-id" value="{{ match.player_2_game_3.id }}" onclick="openPlayer2Game3Popup()">
+                <h4><strong>{{ match.player_2_game_3.event.group }} - {{ match.player_2_game_3.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_2_game_3.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_3.event.home_team_team.logo_url %}
                             <img src="{{ match.player_2_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.home_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_3.event.home_team}}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_3.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_3.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_2_game_3.event.away_team_team.logo_url %}
                             <img src="{{ match.player_2_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.away_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_3.event.away_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_3.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_3.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -518,24 +528,25 @@
                 <p>No pick for Game 3</p>
             {% endif %}
             {% if match.player_2_game_4.event %}
-            <div class="small-game-event" id="player-2-game-4-id" value="{{ match.player_2_game_4.id }}" onclick="openPlayer2Game5Popup()">
+            <div class="small-game-event" id="player-2-game-4-id" value="{{ match.player_2_game_4.id }}" onclick="openPlayer2Game4Popup()">
+                <h4><strong>{{ match.player_2_game_4.event.group }} - {{ match.player_2_game_4.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_2_game_4.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_4.event.home_team_team.logo_url %}
                             <img src="{{ match.player_2_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.home_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_4.event.home_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_4.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_4.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_2_game_4.event.away_team_team.logo_url %}
                             <img src="{{ match.player_2_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.away_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_4.event.away_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_4.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_4.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -570,23 +581,24 @@
             {% endif %}
             {% if match.player_2_game_5.event %}
             <div class="small-game-event" id="player-2-game-5-id" value="{{ match.player_2_game_5.id }}" onclick="openPlayer2Game5Popup()">
+                <h4><strong>{{ match.player_2_game_5.event.group }} - {{ match.player_2_game_5.event.sport_title }} - 
+                    <script>
+                        document.write(new Date('{{ match.player_2_game_5.event.commence_time }}').toLocaleString())
+                    </script>
+                </strong></h4>
                 <div class="golden-game">
                     <div class="team">
                         {% if match.player_2_game_5.event.home_team_team.logo_url %}
                             <img src="{{ match.player_2_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.home_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_5.event.home_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_5.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_5.event.home_team_team }}</h4>
                     </div>
         
                     <div class="team">
                         {% if match.player_2_game_5.event.away_team_team.logo_url %}
                             <img src="{{ match.player_2_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.away_team_team }}">
-                        {% else %}
-                            <h4>{{ match.player_2_game_5.event.away_team }}</h4>
                         {% endif %}
-                        <p><strong>Sport:</strong> {{ match.player_2_game_5.event.sport_title }}</p>
+                        <h4>{{ match.player_2_game_5.event.away_team_team }}</h4>
                     </div>
                 </div>
                 
@@ -676,7 +688,11 @@
                                         <div class="event-body">
                                             <p><strong>Sport:</strong> {{ event.sport_title }}</p>
                                             <p><strong>Description:</strong> {{ event.description }}</p>
-                                            <p><strong>Commence Time:</strong> {{ event.commence_time }}</p>
+                                            <p><strong>Commence Time:</strong>
+                                                <script>
+                                                    document.write(new Date('{{ event.commence_time }}').toLocaleString())
+                                                </script>
+                                            </p>
                                         </div>
                                     </div>
                                 </button>
