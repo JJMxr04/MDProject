@@ -102,32 +102,25 @@
         <div class="correct-outcomes">
             <div class="correct-outcomes-header">
                 <i class="fas fa-trophy"></i>
-                <span>Correct Picks</span>
+                <span>Player Picks</span>
             </div>
             <div class="avatar-container">
-                {% if match.golden_game.bet.owner_outcome_correct %}
-                    <div class="avatar-wrapper correct">
-                        {% if match.player_1.avatar %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% else %}
-                            <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        <span class="username">{{ match.player_1.username }}</span>
-                    </div>
-                {% endif %}
-                {% if match.golden_game.bet.player_2_outcome_correct %}
-                    <div class="avatar-wrapper correct">
-                        {% if match.player_2.avatar %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% else %}
-                            <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
-                        <span class="username">{{ match.player_2.username }}</span>
-                    </div>
-                {% endif %}
-                {% if not match.golden_game.bet.owner_outcome_correct and not match.golden_game.bet.player_2_outcome_correct %}
-                    <div class="no-picks">No correct picks yet</div>
-                {% endif %}
+                <div class="avatar-wrapper {% if match.golden_game_completed %}{% if match.golden_game.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
+                    {% if match.player_1.avatar %}
+                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                    {% else %}
+                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                    {% endif %}
+                    <span class="username">{{ match.player_1.username }}</span>
+                </div>
+                <div class="avatar-wrapper {% if match.golden_game_completed %}{% if match.golden_game.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
+                    {% if match.player_2.avatar %}
+                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                    {% else %}
+                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                    {% endif %}
+                    <span class="username">{{ match.player_2.username }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -186,12 +179,35 @@
                         </p>
                     </div>
                     <div class="correct-outcomes">
-                        {% if match.player_1_game_1.bet.owner_outcome_correct %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        {% if match.player_1_game_1.bet.player_2_outcome_correct %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_1_game_1.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_1_game_1.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_1_game_1.bet.owner_outcome_correct and not match.player_1_game_1.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% else %}
@@ -246,12 +262,35 @@
                         </p>
                     </div>
                     <div class="correct-outcomes">
-                        {% if match.player_1_game_2.bet.owner_outcome_correct %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        {% if match.player_1_game_2.bet.player_2_outcome_correct %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_1_game_2.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_1_game_2.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_1_game_2.bet.owner_outcome_correct and not match.player_1_game_2.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
                     </div>
             </div>
             {% else %}
@@ -307,13 +346,35 @@
                         </p>
                     </div>
                     <div class="correct-outcomes">
-                        <h4> Correct Guess</h4>
-                        {% if match.player_1_game_3.bet.owner_outcome_correct %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        {% if match.player_1_game_3.bet.player_2_outcome_correct %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_1_game_3.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_1_game_3.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_1_game_3.bet.owner_outcome_correct and not match.player_1_game_3.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
                     </div>
             </div>
             {% else %}
@@ -369,12 +430,35 @@
                         </p>
                     </div>
                     <div class="correct-outcomes">
-                        {% if match.player_1_game_4.bet.owner_outcome_correct %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        {% if match.player_1_game_4.bet.player_2_outcome_correct %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_1_game_4.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_1_game_4.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_1_game_4.bet.owner_outcome_correct and not match.player_1_game_4.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
                     </div>
             </div>
             {% else %}
@@ -429,12 +513,35 @@
                         </p>
                     </div>
                     <div class="correct-outcomes">
-                        {% if match.player_1_game_5.bet.owner_outcome_correct %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        {% if match.player_1_game_5.bet.player_2_outcome_correct %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_1_game_5.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_1_game_5.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_1_game_5.bet.owner_outcome_correct and not match.player_1_game_5.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
                     </div>
             </div>
             {% else %}
@@ -492,12 +599,35 @@
                         </p>
                     </div>
                     <div class="correct-outcomes">
-                        {% if match.player_2_game_1.bet.owner_outcome_correct %}
-                            <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                        {% endif %}
-                        {% if match.player_2_game_1.bet.player_2_outcome_correct %}
-                            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                        {% endif %}
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_2_game_1.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_2_game_1.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_2_game_1.bet.owner_outcome_correct and not match.player_2_game_1.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% else %}
@@ -552,12 +682,35 @@
                     </p>
                 </div>
                 <div class="correct-outcomes">
-                    {% if match.player_2_game_2.bet.owner_outcome_correct %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    {% if match.player_2_game_2.bet.player_2_outcome_correct %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
+                    <div class="correct-outcomes-header">
+                        <i class="fas fa-trophy"></i>
+                        <span>Correct Picks</span>
+                    </div>
+                    <div class="avatar-container">
+                        {% if match.player_2_game_2.bet.owner_outcome_correct %}
+                            <div class="avatar-wrapper correct">
+                                {% if match.player_1.avatar %}
+                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                {% else %}
+                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                {% endif %}
+                                <span class="username">{{ match.player_1.username }}</span>
+                            </div>
+                        {% endif %}
+                        {% if match.player_2_game_2.bet.player_2_outcome_correct %}
+                            <div class="avatar-wrapper correct">
+                                {% if match.player_2.avatar %}
+                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                {% else %}
+                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                {% endif %}
+                                <span class="username">{{ match.player_2.username }}</span>
+                            </div>
+                        {% endif %}
+                        {% if not match.player_2_game_2.bet.owner_outcome_correct and not match.player_2_game_2.bet.player_2_outcome_correct %}
+                            <div class="no-picks">No correct picks yet</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% else %}
@@ -612,12 +765,35 @@
                     </p>
                 </div>
                 <div class="correct-outcomes">
-                    {% if match.player_2_game_3.bet.owner_outcome_correct %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    {% if match.player_2_game_3.bet.player_2_outcome_correct %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
+                    <div class="correct-outcomes-header">
+                        <i class="fas fa-trophy"></i>
+                        <span>Correct Picks</span>
+                    </div>
+                    <div class="avatar-container">
+                        {% if match.player_2_game_3.bet.owner_outcome_correct %}
+                            <div class="avatar-wrapper correct">
+                                {% if match.player_1.avatar %}
+                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                {% else %}
+                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                {% endif %}
+                                <span class="username">{{ match.player_1.username }}</span>
+                            </div>
+                        {% endif %}
+                        {% if match.player_2_game_3.bet.player_2_outcome_correct %}
+                            <div class="avatar-wrapper correct">
+                                {% if match.player_2.avatar %}
+                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                {% else %}
+                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                {% endif %}
+                                <span class="username">{{ match.player_2.username }}</span>
+                            </div>
+                        {% endif %}
+                        {% if not match.player_2_game_3.bet.owner_outcome_correct and not match.player_2_game_3.bet.player_2_outcome_correct %}
+                            <div class="no-picks">No correct picks yet</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% else %}
@@ -672,12 +848,35 @@
                     </p>
                 </div>
                 <div class="correct-outcomes">
-                    {% if match.player_2_game_4.bet.owner_outcome_correct %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    {% if match.player_2_game_4.bet.player_2_outcome_correct %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
+                    <div class="correct-outcomes-header">
+                        <i class="fas fa-trophy"></i>
+                        <span>Correct Picks</span>
+                    </div>
+                    <div class="avatar-container">
+                        {% if match.player_2_game_4.bet.owner_outcome_correct %}
+                            <div class="avatar-wrapper correct">
+                                {% if match.player_1.avatar %}
+                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                {% else %}
+                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                {% endif %}
+                                <span class="username">{{ match.player_1.username }}</span>
+                            </div>
+                        {% endif %}
+                        {% if match.player_2_game_4.bet.player_2_outcome_correct %}
+                            <div class="avatar-wrapper correct">
+                                {% if match.player_2.avatar %}
+                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                {% else %}
+                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                {% endif %}
+                                <span class="username">{{ match.player_2.username }}</span>
+                            </div>
+                        {% endif %}
+                        {% if not match.player_2_game_4.bet.owner_outcome_correct and not match.player_2_game_4.bet.player_2_outcome_correct %}
+                            <div class="no-picks">No correct picks yet</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% else %}
@@ -706,39 +905,62 @@
                     </div>
                 </div>
                 
-                <!-- Bet Information -->
-                <div class="bet-info">
-                    <h4>Bet Details:</h4>
-                    <p><strong>Market:</strong> 
-                        {% if match.player_2_game_5.bet.market.key == 'h2h' %}
-                            Head to Head
-                        {% elif match.player_2_game_5.bet.market.key == 'spreads' %}
-                            Spread
-                        {% elif match.player_2_game_5.bet.market.key == 'totals' %}
-                            Totals
-                        {% else %}
-                            {{ match.player_2_game_5.bet.market.key }}
-                        {% endif %}
-                    </p>
-                    <p><strong>{{ match.player_2_game_5.owner.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.owner_outcome}}</p>
-                    <p><strong>{{ match.player_2_game_5.player_2.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.player_2_outcome}}</p>
+                    <!-- Bet Information -->
+                    <div class="bet-info">
+                        <h4>Bet Details:</h4>
+                        <p><strong>Market:</strong> 
+                            {% if match.player_2_game_5.bet.market.key == 'h2h' %}
+                                Head to Head
+                            {% elif match.player_2_game_5.bet.market.key == 'spreads' %}
+                                Spread
+                            {% elif match.player_2_game_5.bet.market.key == 'totals' %}
+                                Totals
+                            {% else %}
+                                {{ match.player_2_game_5.bet.market.key }}
+                            {% endif %}
+                        </p>
+                        <p><strong>{{ match.player_2_game_5.owner.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.owner_outcome}}</p>
+                        <p><strong>{{ match.player_2_game_5.player_2.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.player_2_outcome}}</p>
 
-                    <p><strong>Status:</strong> 
-                        {% if match.player_2_game_5_completed %}
-                            Completed
-                        {% else %}
-                            Pending
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="correct-outcomes">
-                    {% if match.player_2_game_5.bet.owner_outcome_correct %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    {% if match.player_2_game_5.bet.player_2_outcome_correct %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                </div>
+                        <p><strong>Status:</strong> 
+                            {% if match.player_2_game_5_completed %}
+                                Completed
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="correct-outcomes">
+                        <div class="correct-outcomes-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Correct Picks</span>
+                        </div>
+                        <div class="avatar-container">
+                            {% if match.player_2_game_5.bet.owner_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_1.avatar %}
+                                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_1.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if match.player_2_game_5.bet.player_2_outcome_correct %}
+                                <div class="avatar-wrapper correct">
+                                    {% if match.player_2.avatar %}
+                                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% else %}
+                                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
+                                    {% endif %}
+                                    <span class="username">{{ match.player_2.username }}</span>
+                                </div>
+                            {% endif %}
+                            {% if not match.player_2_game_5.bet.owner_outcome_correct and not match.player_2_game_5.bet.player_2_outcome_correct %}
+                                <div class="no-picks">No correct picks yet</div>
+                            {% endif %}
+                        </div>
+                    </div>
             </div>
             {% else %}
                 <p>No pick for Game 5</p>
