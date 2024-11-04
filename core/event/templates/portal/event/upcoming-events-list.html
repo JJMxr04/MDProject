@@ -54,7 +54,7 @@
                         </div>
                         <h3>{{ event.title }}</h3>
                         <p>{{ event.description }}</p>
-                        <p class="commence-time">{{ event.commence_time }}</p>
+                        <p class="commence-time" data-time="{{ event.commence_time }}"></p>
                     </a>
                 </div>
             {% endfor %}
@@ -93,16 +93,7 @@
         const timeElements = document.querySelectorAll('.commence-time');
         timeElements.forEach(function(element) {
             const timeString = element.getAttribute('data-time');
-            const date = new Date(timeString);
-            const options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            };
-            element.textContent = date.toLocaleString('en-US', options);
+            element.textContent = new Date(timeString).toLocaleString();
         });
     });
 </script>
