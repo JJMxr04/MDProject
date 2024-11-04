@@ -9,6 +9,44 @@
             width: 100%;
             margin-bottom: 10px;
         }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        #loading-overlay p {
+            color: white;
+            margin-top: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Ensure modal stays below loading overlay */
+        .modal {
+            z-index: 9999;
+        }
     </style>
 {% endblock css %}
 
@@ -98,6 +136,12 @@
     </div>
 </div>
 
+<!-- Add this right after the opening matches-container div -->
+<div id="loading-overlay" style="display: none;">
+    <div class="loading-spinner"></div>
+    <p>Processing...</p>
+</div>
+
 <script>
 function showPopup() {
     document.getElementById('createMatchPopup').style.display = 'flex';
@@ -107,9 +151,20 @@ function closePopup() {
     document.getElementById('createMatchPopup').style.display = 'none';
 }
 
+function showLoading() {
+    document.getElementById('loading-overlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loading-overlay').style.display = 'none';
+}
+
 function submitCreateMatchForm() {
     const form = document.getElementById('createMatchForm');
     const formData = new FormData(form);
+
+    showLoading(); // Show loading overlay
+    closePopup(); // Close the modal while loading
 
     fetch(form.action, {
         method: 'POST',
@@ -121,15 +176,20 @@ function submitCreateMatchForm() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            hideLoading();
             alert('Match created successfully.');
+            window.location.reload(); // Reload the page to show new match
         } else {
+            hideLoading();
             alert(`Error: ${data.message}`);
+            showPopup(); // Reopen the modal if there was an error
         }
-        closePopup();
     })
     .catch(error => {
+        hideLoading();
         alert('An unexpected error occurred.');
         console.error(error);
+        showPopup(); // Reopen the modal if there was an error
     });
 }
 </script>
