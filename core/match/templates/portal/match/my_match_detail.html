@@ -53,14 +53,13 @@
     <!-- Golden Game Section -->
     {% if match.golden_game %}
     <div class="golden-game-card" type="UUID" id="golden-game-id" value="{{ match.golden_game.id }}" onclick="openGoldenGamePopup()">
-        <h3>Golden Game</h3>
+        <h3>Golden Game - <strong>Sport:</strong> {{ match.golden_game.event.group }} - <strong>League:</strong> {{ match.golden_game.event.sport_title }} </h3>
         <div class="golden-game">
             <div class="team">
                 {% if match.golden_game.event.home_team_team.logo_url %}
                     <img src="{{ match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ match.golden_game.event.home_team_team }}">
-                {% else %}
-                    <h4>{{ match.golden_game.event.home_team_team }}</h4>
                 {% endif %}
+                <h4>{{ match.golden_game.event.home_team_team }}</h4>
                 <p><strong>Sport:</strong> {{ match.golden_game.event.sport_title }}</p>
             </div>
 
