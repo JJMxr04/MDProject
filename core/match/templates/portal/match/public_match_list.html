@@ -102,8 +102,6 @@
                         <tr>
                             <th>Match ID</th>
                             <th>Player 1</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,8 +109,6 @@
                         <tr onclick="window.location='{% url 'core-portal:portal-public-match-detail' match.id %}'">
                             <td>{{ match.id }}</td>
                             <td>{{ match.player_1.username }}</td>
-                            <td>{{ match.start_date }}</td>
-                            <td>{{ match.end_date }}</td>
                         </tr>
                         {% empty %}
                         <tr>
