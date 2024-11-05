@@ -39,3 +39,4 @@ def remove_friend_action(request, friend_id):
         request.user.friends.remove(friend)
         messages.success(request, f'Removed {friend.name} from your friends list.')
     return redirect('core-portal:friend_search')
+
