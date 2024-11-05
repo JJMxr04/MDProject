@@ -59,6 +59,7 @@ class MatchManager(AbstractManager):
             return None
         match.match_state = "accepted"
         match.player_2 = player_2
+        match.end_date = timezone.now()
         match.end_date = timezone.now() + timedelta(days=7)  # Set end_date to 7 days after now
 
         # Creating games for both players
