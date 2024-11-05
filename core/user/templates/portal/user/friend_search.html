@@ -1,0 +1,184 @@
+{% extends "portal/base_portal.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Left Column - Friend Code and Search -->
+        <div class="col-md-7">
+            <!-- Your Friend Code Card -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Your Friend Code</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <code id="friend-code" class="p-2 bg-light fs-4">{{ user_friend_code }}</code>
+                        </div>
+                        <div class="btn-group">
+                            <button onclick="copyFriendCode()" class="btn btn-outline-secondary">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <form method="POST" action="{% url 'core-portal:regenerate_friend_code' %}" 
+                                  class="d-inline" id="regenerate-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-sync"></i> New Code
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <small class="text-muted mt-2 d-block">
+                        Share this code with friends to let them find you.
+                    </small>
+                </div>
+            </div>
+
+            <!-- Search Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Find Friends</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Search Form -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="friend_code">Enter Friend Code:</label>
+                            <input type="text" class="form-control" id="friend_code" name="friend_code" 
+                                   placeholder="Enter 8-character code" maxlength="8" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Search</button>
+                    </form>
+
+                    <!-- Display Messages -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} mt-3">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Display Found User -->
+                    {% if found_user %}
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    {% if found_user.avatar %}
+                                        <img src="{{ found_user.avatar.url }}" class="rounded-circle mr-3" 
+                                             style="width: 64px; height: 64px; object-fit: cover;">
+                                    {% endif %}
+                                    <div>
+                                        <h5 class="card-title mb-1">{{ found_user.name }}</h5>
+                                        <p class="card-text text-muted">@{{ found_user.username }}</p>
+                                        {% if found_user.bio %}
+                                            <p class="card-text">{{ found_user.bio }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                {% if found_user != request.user %}
+                                    {% if not is_friend %}
+                                        <form method="POST" action="{% url 'core-portal:add_friend_action' found_user.id %}" 
+                                              class="mt-3">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success">Add Friend</button>
+                                        </form>
+                                    {% else %}
+                                        <button class="btn btn-secondary mt-3" disabled>Already Friends</button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column - Friends List -->
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Your Friends</h4>
+                </div>
+                <div class="card-body">
+                    {% if friends %}
+                        <div class="list-group">
+                            {% for friend in friends %}
+                                <div class="list-group-item">
+                                    <div class="d-flex align-items-center">
+                                        {% if friend.avatar %}
+                                            <img src="{{ friend.avatar.url }}" class="rounded-circle me-3" 
+                                                 style="width: 48px; height: 48px; object-fit: cover;">
+                                        {% endif %}
+                                        <div>
+                                            <h6 class="mb-0">{{ friend.name }}</h6>
+                                            <small class="text-muted">@{{ friend.username }}</small>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <form method="POST" action="{% url 'core-portal:remove_friend_action' friend.id %}" 
+                                                  class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="fas fa-user-minus"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center my-3">You haven't added any friends yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyFriendCode() {
+    const codeElement = document.getElementById('friend-code');
+    navigator.clipboard.writeText(codeElement.textContent.trim())
+        .then(() => {
+            alert('Friend code copied to clipboard!');
+        })
+        .catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+}
+
+// Optional: Use AJAX for regenerating the code
+document.getElementById('regenerate-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (!confirm('Are you sure you want to generate a new friend code? The old one will no longer work.')) {
+        return;
+    }
+
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': this.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('friend-code').textContent = data.new_code;
+            alert('Friend code updated successfully!');
+        } else {
+            alert('Failed to update friend code: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while updating your friend code.');
+    });
+});
+</script>
+{% endblock %}
