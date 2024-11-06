@@ -67,15 +67,11 @@
                     <div id="createMatchPopup" class="modal" style="display:none;">
                         <div class="modal-content">
                             <span class="close" onclick="closePopup()">&times;</span>
-                            <h2>Create Match</h2>
+                            <h2>Create Public Match</h2>
                             <form method="POST" id="createMatchForm" action="{% url 'core-portal:portal-create-public-match' %}">
                                 {% csrf_token %}
-                                
-                                <!-- Invite Form Integration -->
-                                {{ form|crispy }}
-
                                 <div>
-                                    <button type="button" class="btn btn-primary" onclick="submitCreateMatchForm()">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="submitCreateMatchForm()">Create</button>
                                     <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
                                 </div>
                             </form>
@@ -102,8 +98,6 @@
                         <tr>
                             <th>Match ID</th>
                             <th>Player 1</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,8 +105,6 @@
                         <tr onclick="window.location='{% url 'core-portal:portal-public-match-detail' match.id %}'">
                             <td>{{ match.id }}</td>
                             <td>{{ match.player_1.username }}</td>
-                            <td>{{ match.start_date }}</td>
-                            <td>{{ match.end_date }}</td>
                         </tr>
                         {% empty %}
                         <tr>
@@ -162,9 +154,11 @@ function hideLoading() {
 function submitCreateMatchForm() {
     const form = document.getElementById('createMatchForm');
     const formData = new FormData(form);
+    formData.append('type', 'public');
+    formData.append('player', '');
 
-    showLoading(); // Show loading overlay
-    closePopup(); // Close the modal while loading
+    showLoading();
+    closePopup();
 
     fetch(form.action, {
         method: 'POST',
@@ -178,18 +172,18 @@ function submitCreateMatchForm() {
         if (data.status === 'success') {
             hideLoading();
             alert('Match created successfully.');
-            window.location.reload(); // Reload the page to show new match
+            window.location.reload();
         } else {
             hideLoading();
             alert(`Error: ${data.message}`);
-            showPopup(); // Reopen the modal if there was an error
+            showPopup();
         }
     })
     .catch(error => {
         hideLoading();
         alert('An unexpected error occurred.');
         console.error(error);
-        showPopup(); // Reopen the modal if there was an error
+        showPopup();
     });
 }
 </script>

@@ -7,6 +7,8 @@ from core.abstract.models import AbstractModel, AbstractManager
 import os
 from django.contrib.auth.hashers import make_password, check_password
 from core.blog.writer.models import Tag
+import random
+import string
 
 
 def user_avatar_upload_path(instance, filename):
@@ -88,6 +90,13 @@ class UserManager(BaseUserManager, AbstractManager):
         user.is_admin = True
         user.save()
 
+    def get_by_friend_code(self, friend_code):
+        try:
+            instance = self.get(friend_code=friend_code)
+            return instance
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            return Http404
+
 
 class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     public_id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False)
@@ -109,7 +118,13 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     writer_description = models.TextField(null=True)
     stripe_account_id = models.CharField(max_length=255)
     stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
-
+    friends = models.ManyToManyField(
+        'self',
+        symmetrical=True,
+        blank=True,
+        related_name='user_friends'
+    )
+    friend_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -122,6 +137,52 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def add_friend(self, user):
+        """Add a new friend"""
+        if user != self:
+            self.friends.add(user)
+            
+    def remove_friend(self, user):
+        """Remove a friend"""
+        self.friends.remove(user)
+    
+    def get_friends(self):
+        """Return QuerySet of all friends"""
+        return self.friends.all()
+    
+    def is_friend(self, user):
+        """Check if given user is a friend"""
+        return self.friends.filter(id=user.id).exists()
+
+    def save(self, *args, **kwargs):
+        if not self.friend_code:
+            self.friend_code = self.generate_friend_code()
+        super().save(*args, **kwargs)
+    
+    @staticmethod
+    def generate_friend_code():
+        """Generate a random 8-character friend code"""
+        while True:
+            # Generate code: 8 characters, uppercase letters and numbers
+            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+            # Check if code already exists
+            if not User.objects.filter(friend_code=code).exists():
+                return code
+    
+    @classmethod
+    def find_by_friend_code(cls, code):
+        """Find a user by their friend code"""
+        try:
+            return cls.objects.get(friend_code=code)
+        except cls.DoesNotExist:
+            return None
+
+    def regenerate_friend_code(self):
+        """Generate a new friend code and save it"""
+        self.friend_code = self.generate_friend_code()
+        self.save(update_fields=['friend_code'])
+        return self.friend_code
 
 
 

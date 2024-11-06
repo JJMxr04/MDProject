@@ -72,6 +72,7 @@ class InviteManager(AbstractManager):
                 from core.tournament.models import Tournament
                 tournament= Tournament.objects.get(id=invite.obj_id)
                 Emails.send_tournament_acceptance_confirmation(invite.player, tournament)
+            invite.delete()
             return True
         except Error as e:
             print(e)
