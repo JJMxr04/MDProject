@@ -1,4 +1,3 @@
-
 import json
 import os
 import sys
@@ -228,35 +227,42 @@ class EventCron():
             for bookmaker_data in event_data['bookmakers']:
                 bookmaker_id = bookmaker_data.get('id')
 
-                # Handle last_update to ensure it's in the correct format
-                last_update = bookmaker_data.get('last_update')
+                # Ensure last_update is in the correct format
+                last_update = bookmaker_data.get('last_update', datetime.now(timezone.utc).isoformat())
                 if isinstance(last_update, datetime):
                     last_update_str = last_update.isoformat()
                 else:
-                    last_update_str = last_update or timezone.now().isoformat()
+                    last_update_str = last_update
 
-                bookmaker_instance, _ = Bookmaker.objects.get_or_create(
-                    id=bookmaker_id,
-                    defaults={'event': event_instance, 'last_update': last_update_str,
-                            'key': bookmaker_data.get('key'), 'title': bookmaker_data.get('title')}
-                )
+                # Manually check for existing bookmaker
+                bookmaker_instance = Bookmaker.objects.filter(event=event_instance, key=bookmaker_data.get('key')).first()
 
-                # Process markets - Ensure only one market with the same key and bookmaker
+                if not bookmaker_instance:
+                    # Create a new bookmaker if it doesn't exist
+                    bookmaker_instance = Bookmaker.objects.create(
+                        id=bookmaker_id,
+                        event=event_instance,
+                        last_update=last_update_str,
+                        key=bookmaker_data.get('key'),
+                        title=bookmaker_data.get('title')
+                    )
+                else:
+                    # Update the existing bookmaker's last_update
+                    bookmaker_instance.last_update = last_update_str
+                    bookmaker_instance.save()
+
+                # Process markets - Update or create to avoid duplicates
                 for market_data in bookmaker_data.get('markets', []):
                     market_key = market_data.get('key')
 
-                    try:
-                        market_instance = Market.objects.get(key=market_key, bookmaker=bookmaker_instance)
-                    except Market.MultipleObjectsReturned:
-                        market_instance = Market.objects.filter(key=market_key, bookmaker=bookmaker_instance).first()
-                    except Market.DoesNotExist:
-                        market_instance = Market.objects.create(
-                            key=market_key,
-                            bookmaker=bookmaker_instance,
-                            last_update=last_update_str  # Ensure last_update is set
-                        )
+                    # Update or create market instance
+                    market_instance, _ = Market.objects.update_or_create(
+                        key=market_key,
+                        bookmaker=bookmaker_instance,
+                        defaults={'last_update': last_update_str}
+                    )
 
-                    # Update the market instance
+                    # Update market instance with serialized data
                     market_serializer = MarketSerializer(market_instance, data=market_data, partial=True)
                     if market_serializer.is_valid():
                         market_serializer.save()
@@ -268,14 +274,14 @@ class EventCron():
                     for outcome_data in market_data.get('outcomes', []):
                         outcome_name = outcome_data.get('name')
 
-                        # Update or create outcome if one with the same name exists for this market
+                        # Update or create outcome instance
                         outcome_instance, _ = Outcome.objects.update_or_create(
                             name=outcome_name,
                             market=market_instance,
                             defaults=outcome_data
                         )
 
-                        # Update the outcome instance if needed
+                        # Update outcome instance with serialized data
                         outcome_serializer = OutcomeSerializer(outcome_instance, data=outcome_data, partial=True)
                         if outcome_serializer.is_valid():
                             outcome_serializer.save()
@@ -283,6 +289,7 @@ class EventCron():
                             print("Validation errors in outcome:")
                             print(outcome_serializer.errors)
 
+                # Ensure the event instance is saved after processing bookmakers and markets
                 event_instance.save()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
 
