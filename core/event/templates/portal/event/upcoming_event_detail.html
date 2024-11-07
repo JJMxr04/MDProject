@@ -36,15 +36,30 @@
                             <h3>{{ bookmaker.title }}</h3>
                             {% for market in bookmaker.markets %}
                                 <div class="market" data-key="{{ market.key }}">
-                                    <h4 class="market-title">{{ market.title }}</h4>
+                                    <h4 class="market-title">
+                                        {% if market.key == 'h2h' %}
+                                            Head 2 Head
+                                        {% elif market.key == 'totals' %}
+                                            Totals
+                                        {% elif market.key == 'spreads' %}
+                                            Spreads
+                                        {% else %}
+                                            {{ market.key }}
+                                        {% endif %}
+                                    </h4>
                                     <ul>
+
                                         {% for outcome in market.outcomes %}
-                                            <li class="outcome">
-                                                <span class="outcome-name">{{ outcome.name }}</span>
-                                                <span class="point">{{ outcome.point }}</span>
-                                                <span class="price">{{ outcome.price }}</span>
+                                            <li class="outcome" >
+                                                <span class="outcome-name" style="color: #007bff; font-weight: bold;">{{ outcome.name }}</span>
+                                                <span style="color: #007bff; ">|</span>
+                                                <span class="point" style="color: #333;">{{ outcome.point }}</span>
+                                                <span style="color: #007bff;">|</span>
+                                                <span class="price" style="color: #28a745;">{{ outcome.price }}</span>
                                             </li>
+                                            <hr>
                                         {% endfor %}
+
                                     </ul>
                                 </div>
                             {% endfor %}
@@ -159,5 +174,3 @@
     });
     </script>
 {% endblock content %}
-
-

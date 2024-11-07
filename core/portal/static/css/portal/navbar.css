@@ -10,17 +10,26 @@
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
+    display: flex;
+    align-items: center; /* Ensures vertical centering */
 }
 
 /* Responsive image logo */
 .navbar-logo {
-    max-width: 150px; /* Maximum width */
-    max-height: 50px; /* Maximum height */
-    width: 100%; /* Responsive width */
+    max-width: 150px; /* Adjust as needed */
+    max-height: 50px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
     height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensures the image scales while maintaining its aspect ratio */
+}
+
+/* Adjustments for iOS compatibility */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .navbar-logo {
+        max-width: 150px;
+        max-height: 50px;
+        object-fit: contain;
+    }
 }
 
 .navbar-nav {
@@ -78,68 +87,14 @@
     }
 
     .navbar-collapse {
-        background-color: #3D7EAA; /* Matching navbar background color in collapsed view */
-        border-radius: 15px; /* Apply border radius to match the navbar style */
+        background-color: #3D7EAA; /* Match background for collapsible menu */
+        border-radius: 10px; /* Rounded corners for collapsible menu */
+        padding: 10px; /* Add padding for content */
+        width: 100%; /* Ensure it takes full width */
     }
 
-    .navbar-collapse .navbar-nav {
-        flex-direction: column;
-        align-items: center;
-        background-color: #3D7EAA;
-        border-radius: 15px;
+    .navbar-nav .nav-item {
+        width: 100%; /* Ensure nav items take full width */
+        text-align: left; /* Align text to the left */
     }
-
-    .navbar-collapse .navbar-nav .nav-item {
-        margin-bottom: 10px;
-    }
-
-    .navbar-collapse .navbar-nav .nav-item:last-child {
-        margin-bottom: 0;
-    }
-}
-
-/* Mobile Styles */
-@media (max-width: 767.98px) {
-    .navbar {
-        padding: 10px;
-    }
-
-    .navbar-brand {
-        font-size: 1.25rem;
-    }
-
-    .navbar-collapse .navbar-nav .nav-item .nav-link {
-        padding: 12px 15px;
-    }
-
-    .navbar-nav .nav-item:hover .dropdown-menu {
-        display: block;
-        position: static; /* Allow dropdowns to expand properly on mobile */
-        margin-top: 5px;
-    }
-
-    .navbar-nav .nav-item .dropdown-menu {
-        min-width: 100%;
-        box-shadow: none;
-    }
-
-    .navbar-collapse {
-        background-color: #3D7EAA; /* Ensures consistent background in mobile collapsed view */
-    }
-}
-
-.notification-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
-}
-
-.notification-dropdown {
-    max-height: 300px;
-    overflow-y: auto;
 }

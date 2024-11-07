@@ -203,35 +203,34 @@
     }
 
     function displayBookmakers(bookmakers) {
-        const bookmakersContainer = document.getElementById('bookmakers');
-        bookmakersContainer.innerHTML = '';
+    const bookmakersContainer = document.getElementById('bookmakers');
+    bookmakersContainer.innerHTML = '';
 
-        if (Array.isArray(bookmakers) && bookmakers.length > 0) {
-            bookmakers.forEach(bookmaker => {
-                const bookmakerElement = document.createElement('div');
-                bookmakerElement.className = 'bookmaker';
-                bookmakerElement.innerHTML = `
-                    <h3>${bookmaker.title}</h3>
-                    ${bookmaker.markets.map(market => `
-                        <div class="market" data-key="${market.key}">
-                            <h4 class="market-title">
-                                ${market.title}
-                                <small>${market.type}</small>
-                            </h4>
-                            ${market.outcomes.map(outcome => `
-                                <div class="outcome">
-                                    <span>${outcome.name} (${outcome.price})</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `).join('')}
-                `;
-                bookmakersContainer.appendChild(bookmakerElement);
-            });
-        } else {
-            bookmakersContainer.innerHTML = '<p class="no-bookmakers-message">No Bookmakers available for this period.</p>';
-        }
+    if (Array.isArray(bookmakers) && bookmakers.length > 0) {
+        bookmakers.forEach(bookmaker => {
+            const bookmakerElement = document.createElement('div');
+            bookmakerElement.className = 'bookmaker';
+            bookmakerElement.innerHTML = `
+                <h3>${bookmaker.title}</h3>
+                ${bookmaker.markets.map(market => `
+                    <div class="market" data-key="${market.key}">
+                        <h4 class="market-title">
+                            ${market.key === 'h2h' ? 'Head 2 Head' : market.key === 'totals' ? 'Totals' : market.key === 'spreads' ? 'Spreads' : market.key}
+                        </h4>
+                        ${market.outcomes.map(outcome => `
+                            <div class="outcome">
+                                <span>${outcome.name} (${outcome.price})</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `).join('')}
+            `;
+            bookmakersContainer.appendChild(bookmakerElement);
+        });
+    } else {
+        bookmakersContainer.innerHTML = '<p class="no-bookmakers-message">No Bookmakers available for this period.</p>';
     }
+}
 
     // Initial fetch for events
     fetchEvents();
