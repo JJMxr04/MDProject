@@ -237,7 +237,8 @@ class EventCron():
 
                 bookmaker_instance, _ = Bookmaker.objects.get_or_create(
                     id=bookmaker_id,
-                    defaults={'event': event_instance, 'last_update': last_update_str,'key':bookmaker_data.get('key'),'title':bookmaker_data.get('title')}
+                    defaults={'event': event_instance, 'last_update': last_update_str,
+                            'key': bookmaker_data.get('key'), 'title': bookmaker_data.get('title')}
                 )
 
                 # Process markets - Ensure only one market with the same key and bookmaker
@@ -266,7 +267,9 @@ class EventCron():
                     # Process outcomes for the market
                     for outcome_data in market_data.get('outcomes', []):
                         outcome_name = outcome_data.get('name')
-                        outcome_instance, _ = Outcome.objects.get_or_create(
+
+                        # Update or create outcome if one with the same name exists for this market
+                        outcome_instance, _ = Outcome.objects.update_or_create(
                             name=outcome_name,
                             market=market_instance,
                             defaults=outcome_data
