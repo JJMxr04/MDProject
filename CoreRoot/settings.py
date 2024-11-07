@@ -552,10 +552,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'core.crons.tasks.sport_cron',
         'schedule': crontab(minute=0, hour=0),  # daily at midnight
     },
-    'event_cron': {
-        'task': 'core.crons.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*'),  # runs every hour
-    },
+    # 'event_cron': {
+    #     'task': 'core.crons.tasks.event_cron',
+    #     'schedule': crontab(minute=0, hour='*'),  # runs every hour
+    # },
     # 'print_cron_jobs': {
     #     'task': 'core.crons.tasks.print_cron_jobs',
     #     'schedule': crontab(minute='*'),  # every minute
