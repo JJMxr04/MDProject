@@ -81,7 +81,7 @@ class GameManager(AbstractManager):
                 if game.bet.owner_outcome is None:
                     Bet.objects.set_owner_outcome(game.bet,outcome)
 
-            if current_user == game.player_2:
+            elif current_user == game.player_2:
                 if game.bet.player_2_outcome is None:
                     Bet.objects.set_player_2_outcome(game.bet,outcome)
         game.save()
