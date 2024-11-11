@@ -92,45 +92,52 @@ class MatchManager(AbstractManager):
                 if match.player_1_game_1_completed:
                     continue
                 match.player_1_game_1_completed = True
-            if (game == match.player_1_game_2):
+            elif (game == match.player_1_game_2):
                 if match.player_1_game_2_completed:
                     continue
                 match.player_1_game_2_completed = True
-            if (game == match.player_1_game_3):
+            elif (game == match.player_1_game_3):
                 if match.player_1_game_3_completed:
                     continue
                 match.player_1_game_3_completed = True
-            if (game == match.player_1_game_4):
+            elif (game == match.player_1_game_4):
                 if match.player_1_game_4_completed:
                     continue
                 match.player_1_game_4_completed = True
-            if (game == match.player_1_game_5):
+            elif (game == match.player_1_game_5):
                 if match.player_1_game_5_completed:
                     continue
                 match.player_1_game_5_completed = True
 
-            if (game == match.player_2_game_1):
+            elif (game == match.player_2_game_1):
                 if match.player_2_game_1_completed:
                     continue
                 match.player_2_game_1_completed = True
-            if (game == match.player_2_game_2):
+            elif (game == match.player_2_game_2):
                 if match.player_2_game_2_completed:
                     continue
                 match.player_2_game_2_completed = True
-            if (game == match.player_2_game_3):
+            elif (game == match.player_2_game_3):
                 if match.player_2_game_3_completed:
                     continue
                 match.player_2_game_3_completed = True
-            if (game == match.player_2_game_4):
+            elif (game == match.player_2_game_4):
                 if match.player_2_game_4_completed:
                     continue
                 match.player_2_game_4_completed = True
-            if (game == match.player_2_game_5):
+            elif (game == match.player_2_game_5):
                 if match.player_2_game_5_completed:
                     continue
                 match.player_2_game_5_completed = True
-            if (game == match.golden_game) and not match.golden_game_completed:
+            elif (game == match.golden_game) and not match.golden_game_completed:
+                if match.golden_game_completed:
+                    continue
                 match.golden_game_completed = True
+
+
+
+
+                
             if (game == match.golden_game):
                 if Game.objects.get_owner_correctness(game):
                     if game.owner == match.player_1:
