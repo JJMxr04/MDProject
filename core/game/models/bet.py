@@ -26,6 +26,8 @@ class BetManager(AbstractManager):
 
     def calculate_owner_choice(self, bet, event):
         if not bet.owner_outcome:
+            bet.is_processed = True
+            bet.save()
             return False
 
         result = False
@@ -34,8 +36,9 @@ class BetManager(AbstractManager):
                 result = bet.owner_outcome.name == 'draw'
             else:
                 result = event.winner == bet.owner_outcome.name
+            return
 
-        if bet.market.key == 'totals':
+        elif bet.market.key == 'totals':
             try:
                 scores = event.scores
                 points = int(scores[0]['score']) + int(scores[1]['score'])
@@ -47,7 +50,7 @@ class BetManager(AbstractManager):
             except (ValueError, TypeError, IndexError) as e:
                 return False
 
-        if bet.market.key == 'spreads':
+        elif bet.market.key == 'spreads':
             try:
                 scores = list(event.scores)
                 points_diff = int(scores[0]['score']) - int(scores[1]['score'])
@@ -55,12 +58,14 @@ class BetManager(AbstractManager):
 
                 if bet.owner_outcome.point < 0:
                     if winner != bet.owner_outcome.name:
-                        return False
-                    result = abs(points_diff) >= abs(bet.owner_outcome.point)
+                        result =  False
+                    else:
+                        result = abs(points_diff) >= abs(bet.owner_outcome.point)
                 else:
                     if winner == bet.owner_outcome.name:
                         result = True
-                    result = abs(points_diff) < abs(bet.owner_outcome.point)
+                    else:
+                        result = abs(points_diff) < abs(bet.owner_outcome.point)
             except (ValueError, TypeError, IndexError) as e:
                 return False
 
