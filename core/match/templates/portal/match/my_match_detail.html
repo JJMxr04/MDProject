@@ -553,7 +553,7 @@
                 {% endif %}
             </p>
             <p><strong>{{ match.player_2_game_1.owner.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_1.player_1.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.player_2_outcome}}</p>
+            <p><strong>{{ match.player_2_game_1.player_2.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.player_2_outcome}}</p>
 
             <p><strong>Status:</strong> 
                 {% if match.player_2_game_1_completed %}
@@ -630,7 +630,7 @@
                 {% endif %}
             </p>
             <p><strong>{{ match.player_2_game_2.owner.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_2.player_1.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.player_2_outcome}}</p>
+            <p><strong>{{ match.player_2_game_2.player_2.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.player_2_outcome}}</p>
 
             <p><strong>Status:</strong> 
                 {% if match.player_2_game_2_completed %}
@@ -707,7 +707,7 @@
                 {% endif %}
             </p>
             <p><strong>{{ match.player_2_game_3.owner.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_3.player_1.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.player_2_outcome}}</p>
+            <p><strong>{{ match.player_2_game_3.player_2.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.player_2_outcome}}</p>
 
             <p><strong>Status:</strong> 
                 {% if match.player_2_game_3_completed %}
@@ -784,7 +784,7 @@
                 {% endif %}
             </p>
             <p><strong>{{ match.player_2_game_4.owner.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_4.player_1.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.player_2_outcome}}</p>
+            <p><strong>{{ match.player_2_game_4.player_2.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.player_2_outcome}}</p>
 
             <p><strong>Status:</strong> 
                 {% if match.player_2_game_4_completed %}
@@ -861,7 +861,7 @@
                 {% endif %}
             </p>
             <p><strong>{{ match.player_2_game_5.owner.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_5.player_1.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.player_2_outcome}}</p>
+            <p><strong>{{ match.player_2_game_5.player_2.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.player_2_outcome}}</p>
 
             <p><strong>Status:</strong> 
                 {% if match.player_2_game_5_completed %}
@@ -891,7 +891,7 @@
                     {% else %}
                         <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
                     {% endif %}
-                    <span class="username">{{ match.player_1.username }}</span>
+                    <span class="username">{{ match.player_2.username }}</span>
                 </div>
             </div>
         </div>
