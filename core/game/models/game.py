@@ -27,6 +27,15 @@ class GameManager(AbstractManager):
         return Bet.objects.calculate_player_2_choice(bet,event)
 
     def update_by_id(self, id, current_user, data):
+
+
+
+
+        # this function needs to :
+        # 1) if the game is none: return false, false
+        # 2) check if the user making the original request is apart of the game
+        # 3) if its the owner, update the event, and the bets market, and outcome
+        # 4) if its player 2) just update the bet, market and outcome
         game = self.filter(id=id).first()
         new_game = False
 
@@ -84,6 +93,9 @@ class GameManager(AbstractManager):
             elif current_user == game.player_2:
                 if game.bet.player_2_outcome is None:
                     Bet.objects.set_player_2_outcome(game.bet,outcome)
+            if game.bet.is_owner_outcome_processed and game.bet.is_player_2_outcome_processed:
+                game.bet.is_processed
+                game.bet.save()
         game.save()
         # Email
         if current_user == game.owner:
@@ -121,7 +133,7 @@ class Game(AbstractModel):
     winner = models.CharField(max_length=200, default=None, null=True, blank=True)
     owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
     player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='games', null=True, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.SET_NULL, related_name='games', null=True, blank=True)
     bet = models.ForeignKey(Bet, on_delete=models.CASCADE, related_name='game_bet', null=True, blank=True)
     objects = GameManager()
 

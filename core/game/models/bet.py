@@ -26,8 +26,6 @@ class BetManager(AbstractManager):
 
     def calculate_owner_choice(self, bet, event):
         if not bet.owner_outcome:
-            bet.is_processed = True
-            bet.save()
             return False
 
         result = False
@@ -36,7 +34,6 @@ class BetManager(AbstractManager):
                 result = bet.owner_outcome.name == 'draw'
             else:
                 result = event.winner == bet.owner_outcome.name
-            return
 
         elif bet.market.key == 'totals':
             try:
@@ -71,7 +68,7 @@ class BetManager(AbstractManager):
 
         # Store the result
         bet.owner_outcome_correct = result
-        bet.is_processed = True
+        bet.is_owner_outcome_processed = True
         bet.save()
         return result
 
@@ -117,7 +114,7 @@ class BetManager(AbstractManager):
 
         # Store the result
         bet.player_2_outcome_correct = result
-        bet.is_processed = True
+        bet.is_player_2_outcome_processed = True
         bet.save()
         return result
 
@@ -144,6 +141,8 @@ class Bet(AbstractModel):
     updated_at = models.DateTimeField(auto_now=True)
     owner_outcome_correct = models.BooleanField(default=False)
     player_2_outcome_correct = models.BooleanField(default=False)
+    is_owner_outcome_processed = models.BooleanField(default=False)
+    is_player_2_outcome_processed = models.BooleanField(default=False)
     is_processed = models.BooleanField(default=False)
     objects = BetManager()
     class Meta:
