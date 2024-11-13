@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from core.match.models import Match
+from core.match.models import Match, TieBreaker
 from core.match.serializers.match import MatchSerializer
 from core.game.models import Game
 from core.event.models import Event
@@ -20,10 +20,7 @@ import uuid
 
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from core.match.models import Match
 from core.match.serializers.match import MatchSerializer
-from core.game.models import Game
-from core.event.models import Event
 from core.event.serializers.event import EventSerializer
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -104,3 +101,36 @@ def player_2_select_outcome(request, game_id):
         # Log any errors during the update process
         print(f"Error updating game with id {game_id}: {e}")
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    
+
+@require_POST
+@login_required(login_url='/auth/login/')
+def upload_tiebreaker_score(request, match_id):
+    match = get_object_or_404(Match, id=match_id)
+    print('hitting')
+
+    if match.match_state == 'completed':
+        return JsonResponse({'status': 'error', 'message': 'Match Completed'}, status=403)
+    
+    # Check if the user is one of the players in the match
+    if (request.user != match.player_1) and (request.user != match.player_2):
+        return JsonResponse({'status': 'error', 'message': 'Unauthorized user'}, status=403)
+
+    data = json.loads(request.body)
+    tiebreaker_score = data.get('tiebreaker_score')
+
+    # Validate the tiebreaker score
+    if tiebreaker_score is None:
+        return JsonResponse({'status': 'error', 'message': 'Tiebreaker score is required'}, status=400)
+
+    try:
+        if request.user == match.tiebreaker.golden_game.owner:
+            TieBreaker.objects.set_owner_total(tiebreaker=match.tiebreaker,total=tiebreaker_score)
+        elif request.user == match.tiebreaker.golden_game.player_2:
+            TieBreaker.objects.set_player_2_total(tiebreaker=match.tiebreaker,total=tiebreaker_score)
+        # Update the match with the tiebreaker score
+        match.save()
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    

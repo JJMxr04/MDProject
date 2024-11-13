@@ -1,4 +1,4 @@
-from .myMatchDetail import my_match_detail_view, upload_pick, player_2_select_outcome
+from .myMatchDetail import my_match_detail_view, upload_pick, player_2_select_outcome,upload_tiebreaker_score
 from .eventOutcome import event_outcomes
 from .eventMarket import event_markets
 from .myMatchList import my_match_list_view
