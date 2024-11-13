@@ -33,6 +33,7 @@ class MatchManager(AbstractManager):
         elif match.player_2_score > match.player_1_score:
             match.winner = match.player_2
         elif match.player_1_score == match.player_2_score:
+            match.tiebreaker = TieBreaker.objects.create(golden_game=match.golden_game)
             match.winner = TieBreaker.objects.calculate_winner(match.tiebreaker)
         match.match_state = "completed"
         match.save()
@@ -160,7 +161,7 @@ class MatchManager(AbstractManager):
                         match.player_2_score += 1
             match.save()
             if match.golden_game_completed and match.player_1_game_1_completed and match.player_1_game_2_completed and match.player_1_game_3_completed and match.player_1_game_4_completed and match.player_1_game_5_completed and match.player_2_game_1_completed and match.player_2_game_2_completed and match.player_2_game_3_completed and match.player_2_game_4_completed and match.player_2_game_5_completed:
-                self.calcutate_winner(match)
+                self.calculate_winner(match)
 
     def upload_pick(self, player, match, data):
         if (match.player_1 != player) and (match.player_2 != player):

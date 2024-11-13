@@ -11,7 +11,10 @@
     
     <!-- Player Cards -->
     <div class="player-cards">
-        <div class="player-card">
+        <div class="player-card {% if match.winner == match.player_1 %}winner{% endif %}">
+            {% if match.winner == match.player_1 %}
+            <div class="winner-label">*Winner*</div>
+            {% endif %}
             {% if match.player_1.avatar %}
             <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
             {% else %}
@@ -20,7 +23,10 @@
             <h2>{{ match.player_1.username }}</h2>
             <p>Score: {{ match.player_1_score }}</p>
         </div>
-        <div class="player-card">
+        <div class="player-card {% if match.winner == match.player_2 %}winner{% endif %}">
+            {% if match.winner == match.player_2 %}
+            <div class="winner-label">*Winner*</div>
+            {% endif %}
             {% if match.player_2.avatar %}
                 <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
             {% else %}
@@ -40,6 +46,8 @@
     <button class="upload-button" onclick="openUploadPopup()">Upload A Pick</button>
     {% endif %}
 
+
+
     <!-- Match Information -->
     <div class="game-info">
         <h2>Match Information</h2>
@@ -53,6 +61,45 @@
             {% endif %}
         </p>
     </div>
+
+    <!-- Break between Tiebreaker and Golden Game -->
+    <hr> <!-- This creates a horizontal line break -->
+
+ <!-- Tiebreaker Section -->
+<!-- Tiebreaker Section -->
+<div class="tiebreaker-section">
+    <h2>Tiebreaker Information</h2>
+    {% if match.tiebreaker %}
+        <p><strong>Winner:</strong> {{ match.tiebreaker.winner.username }}</p>
+        <p><strong>Golden Game:</strong> {{ match.tiebreaker.golden_game.home_team }} Vs. {{ match.tiebreaker.golden_game.away_team }}</p>
+        <p><strong>Total:</strong> {{ match.tiebreaker.total }}</p>
+        <p><strong>{{match.golden_game.owner.username}}'s Total:</strong> {{ match.tiebreaker.owner_total }}</p>
+        <p><strong>{{match.golden_game.player_2.username}}'s Total:</strong> {{ match.tiebreaker.player_2_total }}</p>
+    {% else %}
+        <p>No tiebreaker information available.</p>
+    {% endif %}
+    
+    <!-- Button to submit tiebreaker score -->
+    <button id="tiebreaker-button" onclick="openTiebreakerPopup()">Submit Your Tiebreaker Score</button>
+</div>
+
+<!-- Tiebreaker Popup -->
+<div id="tiebreaker-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close" onclick="closeTiebreakerPopup()">&times;</span>
+        <h2>Tiebreaker Submission</h2>
+        <form id="tiebreaker-form">
+            <label for="tiebreaker-score">Enter your tiebreaker score:</label>
+            <input type="number" id="tiebreaker-score" name="tiebreaker-score" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+    <!-- Break between Tiebreaker and Golden Game -->
+    <hr> <!-- This creates a horizontal line break -->
 
     <!-- Golden Game Section -->
     {% if match.golden_game %}
@@ -77,7 +124,6 @@
                 {% endif %}
                 <h4>{{ match.golden_game.event.away_team_team }}</h4>
             </div>
-
         </div>
         <div class="bet-info">
             <h4>Bet Details:</h4>
@@ -903,100 +949,8 @@
 {% else %}
     <p>No pick for Game 5</p>
 {% endif %}
-                           
-        </div>
-    </div>
 
-    <!-- Loading Overlay - Place this right after the opening <div class="match-detail"> -->
-    <div id="loading-overlay" style="display: none;">
-        <div class="loading-spinner"></div>
-        <p>Processing...</p>
-    </div>
 
-    <!-- Event Popup -->
-    <div id="event-popup" style="display: none;">
-        <!-- Add dynamic event content here -->
-    </div>
-
-    <!-- Golden Game Popup -->
-    <div id="golden-game-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" onclick="closeGamePopup()">&times;</span>
-            <h2>Golden Game Selection</h2>
-            <hr class="divider">
-            <div id="golden-game-popup-card">
-                <!-- Game details will be loaded here -->
-            </div>
-            <hr class="divider">
-
-            <!-- New section for markets and outcomes -->
-            <div id="golden-game-markets">
-                <!-- Markets and outcomes will be loaded here -->
-            </div>
-
-            <hr class="divider">
-        </div>
-    </div>
-
-    <!-- Upload Popup -->
-    <div id="upload-popup" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closeUploadPopup()">&times;</span>
-            <h2>Upload Your Pick</h2>
-            <hr class="divider">
-
-                <div id="event-list">
-                    {% if available_events %}
-                        {% for event in available_events %}
-                            <div class="event-container">
-                                <button class="event-card" data-event-id="{{ event.id }}">
-                                    <div class="event-info">
-                                        <div class="team">
-                                            <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.name }}">
-                                            <h4>{{ event.home_team_team.team_name }}</h4>
-                                        </div>
-                                        <div class="vs-text">
-                                            <h4>Vs</h4>
-                                        </div>
-                                        <div class="team">
-                                            <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.name }}">
-                                            <h4>{{ event.away_team_team.team_name }}</h4>
-                                        </div>
-                        
-                                        <div class="event-body">
-                                            <p><strong>Sport:</strong> {{ event.sport_title }}</p>
-                                            <p><strong>Description:</strong> {{ event.description }}</p>
-                                            <p><strong>Commence Time:</strong>
-                                                <script>
-                                                    document.write(new Date('{{ event.commence_time }}').toLocaleString())
-                                                </script>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </button>
-
-                                <div class="bookmakers-section" id="bookmakers-section-{{ event.id }}">
-                                    <h2>Bookmakers</h2>
-                                    <div class="bookmakers-container">
-                                        <!-- Bookmakers will be loaded dynamically here -->
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    
-                    {% else %}
-                        <p class="no-events-message">No events available for this match period.</p>
-                    {% endif %}
-                </div>
-                
-
-            <hr class="divider">
-            <form id="upload-form" enctype="multipart/form-data">
-                {% csrf_token %}
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
 </div>
 
 <style>
@@ -1036,6 +990,38 @@
     /* Ensure popups have a lower z-index than the loading overlay */
     .popup {
         z-index: 9999;
+    }
+
+    .popup {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .popup-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px; /* Adjust width as needed */
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
     }
 </style>
 
@@ -1534,6 +1520,28 @@
     function hideLoading() {
         document.getElementById('loading-overlay').style.display = 'none';
     }
+
+    function openTiebreakerPopup() {
+        const tiebreakerPopup = document.getElementById("tiebreaker-popup");
+        if (tiebreakerPopup) {
+            tiebreakerPopup.style.display = "block";
+        } else {
+            console.error("Tiebreaker popup element not found.");
+        }
+    }
+
+    function closeTiebreakerPopup() {
+        document.getElementById("tiebreaker-popup").style.display = "none";
+    }
+
+    // Handle form submission
+    document.getElementById('tiebreaker-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const score = document.getElementById('tiebreaker-score').value;
+        // Add your form submission logic here
+        alert(`Tiebreaker score submitted: ${score}`); // Placeholder for submission logic
+        closeTiebreakerPopup(); // Close the popup after submission
+    });
 
 </script>
 {% endblock %}

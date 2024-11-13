@@ -12,21 +12,38 @@ from core.game.models import Game
 
 class TieBreakerManager(AbstractManager):
 
-    def set_owner_total(tiebreaker,total):
+    def set_owner_total(self,tiebreaker,total):
         tiebreaker.owner_total=total
         tiebreaker.save()
 
-    def set_player_2_total(tiebreaker,total):
+    def set_player_2_total(self,tiebreaker,total):
         tiebreaker.owner_total=total
         tiebreaker.save()
 
-    def calculate_event_total(tiebreaker):
+    def calculate_event_total(self,tiebreaker):
         scores = tiebreaker.golden_game.event.scores
-        event_total = scores[0]['score']+ scores[0]['scores']
+        event_total = int(scores[0]['score'])+ int(scores[0]['score'])
         tiebreaker.total = event_total
 
         tiebreaker.save()
         return tiebreaker.total
+    
+    def calculate_winner(self,tiebreaker):
+        total = self.calculate_event_total(tiebreaker=tiebreaker)
+        owner_dif = abs(tiebreaker.owner_total - total)
+        player_2_dif = abs(tiebreaker.player_2_total - total)
+
+        if owner_dif < player_2_dif:
+            tiebreaker.winner = tiebreaker.golden_game.owner
+            tiebreaker.save()
+            return tiebreaker.winner
+        elif player_2_dif < owner_dif:
+            tiebreaker.winner = tiebreaker.golden_game.player_2
+            tiebreaker.save()
+            return tiebreaker.winner
+        else:
+            return self.calculate_winner_random(tiebreaker,tiebreaker.golden_game.owner,tiebreaker.golden_game.player_2)
+
 
 
 
@@ -46,9 +63,9 @@ class TieBreaker(AbstractModel):
     golden_game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='tiebreaker_golden_game', blank=False, null=True,
                                     default=None)
     
-    total = models.IntField(default=0)
-    owner_total=models.IntField(default=0)
-    player_2_total=models.IntField(default=0)
+    total = models.IntegerField(default=0)
+    owner_total=models.IntegerField(default=0)
+    player_2_total=models.IntegerField(default=0)
     
     objects = TieBreakerManager()
 

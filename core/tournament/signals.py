@@ -17,9 +17,12 @@ from core.mail.models import Emails
 @receiver(post_save, sender=Match)
 def update_round_match(sender, instance, **kwargs):
     match = instance
+
     if match.match_state != "completed":
         return
     round = Round.objects.get_round_by_match(match=match)
+    if not round:
+        return
 
     round.completed = True
 
