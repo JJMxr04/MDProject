@@ -1587,5 +1587,41 @@
         document.getElementById("tiebreaker-popup").style.display = "none";
     }
 
+    function submitTiebreakerScore(matchId,total) {
+
+        showLoading(); // Show loading overlay
+        
+        const data = {
+            tiebreaker_score : total
+        };
+
+        fetch(`{% url "core-portal:portal-upload-tiebreaker-score" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', matchId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            hideLoading(); // Hide loading overlay
+            alert('Outcome selected successfully!');
+            window.location.reload();
+        })
+        .catch((error) => {
+            hideLoading(); // Hide loading overlay
+            console.error('Error:', error);
+            alert('Error uploading pick. Please try again.');
+        });
+
+    }
+
+
 </script>
 {% endblock %}
