@@ -33,7 +33,6 @@ class MatchManager(AbstractManager):
         elif match.player_2_score > match.player_1_score:
             match.winner = match.player_2
         elif match.player_1_score == match.player_2_score:
-            match.tiebreaker = TieBreaker.objects.create(golden_game=match.golden_game)
             match.winner = TieBreaker.objects.calculate_winner(match.tiebreaker)
         match.match_state = "completed"
         match.save()
