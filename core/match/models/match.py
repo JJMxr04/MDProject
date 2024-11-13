@@ -7,10 +7,8 @@ from django.http import Http404
 from django.utils import timezone
 from datetime import datetime, timedelta
 from core.user.models import User
-from core.event.models import Event
-from core.game.models import Game
 from core.mail.models import Emails
-from core.match.models.TieBreaker import TieBreaker
+from core.match.models.TieBreaker import TieBreaker, Game, Event
 from datetime import datetime
 import uuid
 from rest_framework.response import Response
@@ -35,8 +33,7 @@ class MatchManager(AbstractManager):
         elif match.player_2_score > match.player_1_score:
             match.winner = match.player_2
         elif match.player_1_score == match.player_2_score:
-            match.tiebreaker = TieBreaker.objects.create()
-            match.winner = TieBreaker.objects.calculate_winner(match.tiebreaker,match.player_1,match.player_2)
+            match.winner = TieBreaker.objects.calculate_winner(match.tiebreaker)
         match.match_state = "completed"
         match.save()
 
@@ -76,6 +73,7 @@ class MatchManager(AbstractManager):
         match.player_2_game_5 = Game.objects.create_game(match.player_2, match.player_1, match)
 
         match.golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
+        match.tiebreaker = TieBreaker.objects.create(golden_game=match.golden_game)
         match.save()
 
         return match
