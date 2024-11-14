@@ -15,6 +15,7 @@ import json
 from django.utils import timezone
 
 from datetime import datetime, timedelta
+import pytz  # Make sure to import pytz for timezone handling
 
 import uuid
 
@@ -32,10 +33,14 @@ def my_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     is_player_in_match = request.user.id in [match.player_1.id, match.player_2.id]
     
+    # Get the current time in UTC and format it as a string
+    current_time_utc = timezone.now() + timedelta(hours=8)
+    current_time_str = current_time_utc.strftime("%Y-%m-%dT%H:%M:%SZ")  # Format to match the string format
+
     # Filtering events to only include those that are 8 hours or greater from now in UTC and not completed
     if match.end_date:
         events = Event.objects.filter(
-            commence_time__gte=timezone.now() + timedelta(hours=8),  # Ensure this is in UTC
+            commence_time__gte=current_time_str,  # Compare with the string representation
             commence_time__lte=match.end_date,
             completed=False  # Filter for events that are not completed
         ).order_by('commence_time')  # Sort events by commence_time from earliest to latest
