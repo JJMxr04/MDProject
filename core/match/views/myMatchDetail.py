@@ -28,7 +28,7 @@ from django.utils import timezone
 from datetime import timedelta
 import json
 
-from core.match.decorators import player_in_match_required
+from core.match.decorators import player_in_match_required, player_in_game_required
 
 @login_required(login_url='/auth/login/')
 @player_in_match_required
@@ -78,7 +78,7 @@ def upload_pick(request, match_id):
     
 @require_POST
 @login_required(login_url='/auth/login/')
-# @player_in_match_required
+@player_in_game_required
 def player_2_select_outcome(request, game_id):
     
     try:
