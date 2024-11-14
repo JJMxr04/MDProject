@@ -28,7 +28,10 @@ from django.utils import timezone
 from datetime import timedelta
 import json
 
+from core.match.decorators import player_in_match_required
+
 @login_required(login_url='/auth/login/')
+@player_in_match_required
 def my_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     is_player_in_match = request.user.id in [match.player_1.id, match.player_2.id]
@@ -60,6 +63,7 @@ def my_match_detail_view(request, match_id):
 
 @require_POST
 @login_required(login_url='/auth/login/')
+@player_in_match_required
 def upload_pick(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     data = json.loads(request.body)
@@ -74,6 +78,7 @@ def upload_pick(request, match_id):
     
 @require_POST
 @login_required(login_url='/auth/login/')
+@player_in_match_required
 def player_2_select_outcome(request, game_id):
     # Log the received game_id
     print(f"Received game_id: {game_id}")
@@ -111,6 +116,7 @@ def player_2_select_outcome(request, game_id):
 
 @require_POST
 @login_required(login_url='/auth/login/')
+@player_in_match_required
 def upload_tiebreaker_score(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     print('hitting')

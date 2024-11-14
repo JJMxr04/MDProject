@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from core.match.models import Match  # Assuming you have a Match model
+from django.db.models import Q
 
 def my_match_list_view(request):
     search_query = request.GET.get('search', '')
@@ -10,7 +11,10 @@ def my_match_list_view(request):
     page = request.GET.get('page', 1)
 
     # Filter the matches based on search query, state, and date range
-    matches = Match.objects.all()
+
+
+    matches = Match.objects.filter(Q(player_1=request.user) | Q(player_2=request.user))
+
 
     if search_query:
         matches = matches.filter(player_1__username__icontains=search_query) | \
