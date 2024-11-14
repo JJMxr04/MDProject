@@ -14,6 +14,7 @@ urlpatterns = [
     path('<uuid:match_id>/upload_pick/', views.upload_pick, name='portal-upload_pick'),
     path('event/<uuid:event_id>/outcomes/', views.event_outcomes, name='portal-match-event-outcomes'),
     path('game/<uuid:game_id>/market/', views.event_markets, name='portal-match-event-market'),
+    path('<uuid:match_id>/game/<uuid:game_id>/market/', views.event_markets, name='portal-match-event-market'),
     path('game/<uuid:game_id>/player_2_select_outcome/', views.player_2_select_outcome, name='portal-match-game-player_2_select_outcome'),
     path('<uuid:match_id>/tiebreaker', views.upload_tiebreaker_score, name='portal-upload-tiebreaker-score'),
 

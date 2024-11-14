@@ -78,10 +78,8 @@ def upload_pick(request, match_id):
     
 @require_POST
 @login_required(login_url='/auth/login/')
-@player_in_match_required
+# @player_in_match_required
 def player_2_select_outcome(request, game_id):
-    # Log the received game_id
-    print(f"Received game_id: {game_id}")
     
     try:
         # Convert game_id to UUID
