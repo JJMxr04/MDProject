@@ -78,7 +78,7 @@ def upload_pick(request, match_id):
     
 @require_POST
 @login_required(login_url='/auth/login/')
-@player_in_game_required
+# @player_in_game_required
 def player_2_select_outcome(request, game_id):
     
     try:
