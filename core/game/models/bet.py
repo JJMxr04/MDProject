@@ -26,6 +26,8 @@ class BetManager(AbstractManager):
 
     def calculate_owner_choice(self, bet, event):
         if not bet.owner_outcome:
+            bet.is_owner_outcome_processed = True
+            bet.save()
             return False
 
         result = False
@@ -74,6 +76,8 @@ class BetManager(AbstractManager):
 
     def calculate_player_2_choice(self, bet, event):
         if not bet.player_2_outcome:
+            bet.is_player_2_outcome_processed = True
+            bet.save()
             return False
 
         result = False
