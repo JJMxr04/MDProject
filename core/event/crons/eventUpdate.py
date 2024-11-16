@@ -328,6 +328,7 @@ class EventCron():
             'mma_mixed_martial_arts',
             'politics_us_presidential_election_winner',
             'soccer_africa_cup_of_nations',
+            'soccer_brazil_serie_b',
             'soccer_fifa_world_cup_winner',
             'soccer_uefa_nations_league',
             'tennis_atp_aus_open_singles',
