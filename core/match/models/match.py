@@ -83,6 +83,8 @@ class MatchManager(AbstractManager):
             match = self.get_object_by_id(id=game.match_id)
             if match is None:
                 continue
+            if match.type == 'completed':
+                continue
 
             game = Game.objects.game_event_update(game=game, instance=instance)
 
@@ -162,7 +164,7 @@ class MatchManager(AbstractManager):
                     elif game.player_2 == match.player_2:
                         match.player_2_score += 1
             match.save()
-            if match.golden_game_completed and match.player_1_game_1_completed and match.player_1_game_2_completed and match.player_1_game_3_completed and match.player_1_game_4_completed and match.player_1_game_5_completed and match.player_2_game_1_completed and match.player_2_game_2_completed and match.player_2_game_3_completed and match.player_2_game_4_completed and match.player_2_game_5_completed:
+            if  match.golden_game_completed and match.player_1_game_1_completed and match.player_1_game_2_completed and match.player_1_game_3_completed and match.player_1_game_4_completed and match.player_1_game_5_completed and match.player_2_game_1_completed and match.player_2_game_2_completed and match.player_2_game_3_completed and match.player_2_game_4_completed and match.player_2_game_5_completed:
                 self.calculate_winner(match)
 
     def upload_pick(self, player, match, data):
