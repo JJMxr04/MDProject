@@ -83,7 +83,7 @@ class MatchManager(AbstractManager):
             match = self.get_object_by_id(id=game.match_id)
             if match is None:
                 continue
-            if match.type == 'completed':
+            if match.match_state == 'completed':
                 continue
 
             game = Game.objects.game_event_update(game=game, instance=instance)
