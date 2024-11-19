@@ -32,7 +32,7 @@ class BetManager(AbstractManager):
 
         result = False
         if bet.market.key == 'h2h':
-            if event.winner == 'tie':
+            if event.winner == 'Tie':
                 result = bet.owner_outcome.name == 'draw'
             else:
                 result = event.winner == bet.owner_outcome.name
@@ -82,12 +82,12 @@ class BetManager(AbstractManager):
 
         result = False
         if bet.market.key == 'h2h':
-            if event.winner == 'tie':
+            if event.winner == 'Tie':
                 result = bet.player_2_outcome.name == 'draw'
             else:
                 result = event.winner == bet.player_2_outcome.name
 
-        if bet.market.key == 'totals':
+        elif bet.market.key == 'totals':
             try:
                 scores = event.scores
                 points = int(scores[0]['score']) + int(scores[1]['score'])
@@ -99,7 +99,7 @@ class BetManager(AbstractManager):
             except (ValueError, TypeError, IndexError) as e:
                 return False
 
-        if bet.market.key == 'spreads':
+        elif bet.market.key == 'spreads':
             try:
                 scores = list(event.scores)
                 points_diff = int(scores[0]['score']) - int(scores[1]['score'])
