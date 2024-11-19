@@ -5,58 +5,75 @@
 {% endblock css %}
 {% block content %}
 <div class="rules-container">
-    <!-- Context Bar -->
-    <div class="context-bar">
-        <button class="context-btn" onclick="showSection('tournament-structure')">Tournament Structure</button>
-        <button class="context-btn" onclick="showSection('match-structure')">Match Structure</button>
-        <button class="context-btn" onclick="showSection('scoring-system')">Scoring System</button>
-        <button class="context-btn" onclick="showSection('gameplay-details')">Gameplay Details</button>
-        <button class="context-btn" onclick="showSection('golden-game')">Golden Game Rules</button>
-        <button class="context-btn" onclick="showSection('tiebreakers')">Tiebreakers</button>
+    <h1>Full Game Rules Explanation</h1>
+
+    <!-- Table of Contents -->
+    <div class="table-of-contents">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#tournament-structure">Tournament Structure</a></li>
+            <li><a href="#match-structure">Match Structure</a></li>
+            <li><a href="#scoring-system">Scoring System</a></li>
+            <li><a href="#offensive-defensive-picks">Offensive and Defensive Picks</a></li>
+            <li><a href="#gameplay-details">Gameplay Details</a></li>
+            <li><a href="#golden-game-rules">Golden Game Rules</a></li>
+            <li><a href="#tiebreakers">Tiebreakers</a></li>
+        </ul>
     </div>
 
     <!-- Rules Sections -->
     <div id="tournament-structure" class="rules-section">
         <h2>Tournament Structure</h2>
-        <p>Each tournament round consists of a single match. Matches are played between two teams and comprise 11 games...</p>
+        <p>Each tournament round consists of a single match...</p>
+        <p>Matches are played between two teams and comprise 11 games...</p>
     </div>
 
-    <div id="match-structure" class="rules-section" style="display:none;">
+    <div id="match-structure" class="rules-section">
         <h2>Match Structure</h2>
         <p>Each match includes 11 individual games, each based on events with predetermined market outcomes...</p>
+        <p>Golden Game: This pivotal game holds double value and must be predicted by both teams.</p>
     </div>
 
-    <div id="scoring-system" class="rules-section" style="display:none;">
+    <div id="scoring-system" class="rules-section">
         <h2>Scoring System</h2>
         <p>Teams score points by correctly predicting event outcomes...</p>
+        <p>The Golden Game is worth 2 points, offering a strategic edge...</p>
     </div>
 
-    <div id="gameplay-details" class="rules-section" style="display:none;">
+    <div id="offensive-defensive-picks" class="rules-section">
+        <h2>Offensive and Defensive Picks</h2>
+        <p>Teams alternate between offensive and defensive roles...</p>
+        <p>Hidden Picks: In 4 out of 5 uploads, the defensive team does not know the offensive team's selection...</p>
+    </div>
+
+    <div id="gameplay-details" class="rules-section">
         <h2>Gameplay Details</h2>
         <p>Submission Time: Offensive uploads must be submitted at least 6 hours before the game time...</p>
+        <p>Points Disclosure: Points are revealed once the event concludes...</p>
     </div>
 
-    <div id="golden-game" class="rules-section" style="display:none;">
+    <div id="golden-game-rules" class="rules-section">
         <h2>Golden Game Rules</h2>
         <p>Paradise Sports uploads the Golden Game, which is worth 2 points...</p>
     </div>
 
-    <div id="tiebreakers" class="rules-section" style="display:none;">
+    <div id="tiebreakers" class="rules-section">
         <h2>Tiebreakers</h2>
-        <p>First Tiebreaker: The total points predicted for the Golden Game...</p>
+        <p>First Tiebreaker: The total points predicted for the Golden Game are used to break ties...</p>
+        <p>Second Tiebreaker: Each team submits one extra game that cannot be chosen by the opponent...</p>
     </div>
 </div>
 
 <script>
-    function showSection(sectionId) {
-        // Hide all sections
-        const sections = document.querySelectorAll('.rules-section');
-        sections.forEach(section => section.style.display = 'none');
-    
-        // Show the selected section
-        document.getElementById(sectionId).style.display = 'block';
-    }
+    document.querySelectorAll('.table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
     </script>
     
-{% endblock content %}
 
+{% endblock content %}

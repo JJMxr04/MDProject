@@ -1,34 +1,50 @@
-/* Context Bar */
-.context-bar {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+/* Rules Container */
+.rules-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Table of Contents */
+.table-of-contents {
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     margin-bottom: 20px;
 }
 
-.context-btn {
-    padding: 10px 15px;
-    background-color: #5CACEE;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.table-of-contents h2 {
+    margin-top: 0;
 }
 
-.context-btn:hover {
-    background-color: #1E90FF;
+.table-of-contents ul {
+    list-style: none;
+    padding: 0;
 }
 
-/* Rules Section */
+.table-of-contents li {
+    margin: 5px 0;
+}
+
+.table-of-contents a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+.table-of-contents a:hover {
+    text-decoration: underline;
+}
+
+/* Section Styling */
 .rules-section {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
 .rules-section h2 {
     color: #333;
-    margin-bottom: 10px;
+    border-bottom: 2px solid #007BFF;
+    padding-bottom: 5px;
 }
