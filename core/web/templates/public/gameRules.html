@@ -4,9 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/public/gameRules.css' %}">
 {% endblock css %}
 {% block content %}
-<div class="rules-container">
-    <h1>Full Game Rules Explanation</h1>
-
+<div class="rules-page">
     <!-- Table of Contents -->
     <div class="table-of-contents">
         <h2>Table of Contents</h2>
@@ -21,46 +19,50 @@
         </ul>
     </div>
 
-    <!-- Rules Sections -->
-    <div id="tournament-structure" class="rules-section">
-        <h2>Tournament Structure</h2>
-        <p>Each tournament round consists of a single match...</p>
-        <p>Matches are played between two teams and comprise 11 games...</p>
-    </div>
+    <!-- Rules Content -->
+    <div class="rules-container">
+        <h1>Full Game Rules Explanation</h1>
 
-    <div id="match-structure" class="rules-section">
-        <h2>Match Structure</h2>
-        <p>Each match includes 11 individual games, each based on events with predetermined market outcomes...</p>
-        <p>Golden Game: This pivotal game holds double value and must be predicted by both teams.</p>
-    </div>
+        <div id="tournament-structure" class="rules-section">
+            <h2>Tournament Structure</h2>
+            <p>Each tournament round consists of a single match...</p>
+            <p>Matches are played between two teams and comprise 11 games...</p>
+        </div>
 
-    <div id="scoring-system" class="rules-section">
-        <h2>Scoring System</h2>
-        <p>Teams score points by correctly predicting event outcomes...</p>
-        <p>The Golden Game is worth 2 points, offering a strategic edge...</p>
-    </div>
+        <div id="match-structure" class="rules-section">
+            <h2>Match Structure</h2>
+            <p>Each match includes 11 individual games, each based on events with predetermined market outcomes...</p>
+            <p>Golden Game: This pivotal game holds double value and must be predicted by both teams.</p>
+        </div>
 
-    <div id="offensive-defensive-picks" class="rules-section">
-        <h2>Offensive and Defensive Picks</h2>
-        <p>Teams alternate between offensive and defensive roles...</p>
-        <p>Hidden Picks: In 4 out of 5 uploads, the defensive team does not know the offensive team's selection...</p>
-    </div>
+        <div id="scoring-system" class="rules-section">
+            <h2>Scoring System</h2>
+            <p>Teams score points by correctly predicting event outcomes...</p>
+            <p>The Golden Game is worth 2 points, offering a strategic edge...</p>
+        </div>
 
-    <div id="gameplay-details" class="rules-section">
-        <h2>Gameplay Details</h2>
-        <p>Submission Time: Offensive uploads must be submitted at least 6 hours before the game time...</p>
-        <p>Points Disclosure: Points are revealed once the event concludes...</p>
-    </div>
+        <div id="offensive-defensive-picks" class="rules-section">
+            <h2>Offensive and Defensive Picks</h2>
+            <p>Teams alternate between offensive and defensive roles...</p>
+            <p>Hidden Picks: In 4 out of 5 uploads, the defensive team does not know the offensive team's selection...</p>
+        </div>
 
-    <div id="golden-game-rules" class="rules-section">
-        <h2>Golden Game Rules</h2>
-        <p>Paradise Sports uploads the Golden Game, which is worth 2 points...</p>
-    </div>
+        <div id="gameplay-details" class="rules-section">
+            <h2>Gameplay Details</h2>
+            <p>Submission Time: Offensive uploads must be submitted at least 6 hours before the game time...</p>
+            <p>Points Disclosure: Points are revealed once the event concludes...</p>
+        </div>
 
-    <div id="tiebreakers" class="rules-section">
-        <h2>Tiebreakers</h2>
-        <p>First Tiebreaker: The total points predicted for the Golden Game are used to break ties...</p>
-        <p>Second Tiebreaker: Each team submits one extra game that cannot be chosen by the opponent...</p>
+        <div id="golden-game-rules" class="rules-section">
+            <h2>Golden Game Rules</h2>
+            <p>Paradise Sports uploads the Golden Game, which is worth 2 points...</p>
+        </div>
+
+        <div id="tiebreakers" class="rules-section">
+            <h2>Tiebreakers</h2>
+            <p>First Tiebreaker: The total points predicted for the Golden Game are used to break ties...</p>
+            <p>Second Tiebreaker: Each team submits one extra game that cannot be chosen by the opponent...</p>
+        </div>
     </div>
 </div>
 
@@ -73,7 +75,5 @@
             });
         });
     });
-    </script>
-    
-
+</script>
 {% endblock content %}
