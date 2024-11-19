@@ -16,4 +16,4 @@ def services(request):
     return render(request, 'public/service.html')
 
 def gameRules(request):
-    return render(request, 'public/gameRules.html')
+    return render(request, 'public/theGameRules.html')
