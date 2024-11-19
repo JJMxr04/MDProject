@@ -69,10 +69,11 @@ class EventCron():
 
             event_id = uuid.UUID(event_data.get("id"))
             existing_event = Event.objects.filter(id=event_id).first()
-            if existing_event.completed:
-                continue
+
             # Update existing event or create a new one
             if existing_event:
+                if existing_event.completed:
+                    continue
                 
                 event_schema = EventSerializer(existing_event, data=event_data, partial=True)
             else:
