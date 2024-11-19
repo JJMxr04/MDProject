@@ -14,3 +14,6 @@ def privacy_policy(request):
 
 def services(request):
     return render(request, 'public/service.html')
+
+def gameRules(request):
+    return render(request, 'public/gameRules.html')

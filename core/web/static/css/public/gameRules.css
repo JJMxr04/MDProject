@@ -1,0 +1,34 @@
+/* Context Bar */
+.context-bar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.context-btn {
+    padding: 10px 15px;
+    background-color: #5CACEE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.context-btn:hover {
+    background-color: #1E90FF;
+}
+
+/* Rules Section */
+.rules-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.rules-section h2 {
+    color: #333;
+    margin-bottom: 10px;
+}

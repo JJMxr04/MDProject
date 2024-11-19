@@ -1,0 +1,62 @@
+{% extends "public/base.html" %}
+{% load static %} 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/public/gameRules.css' %}">
+{% endblock css %}
+{% block content %}
+<div class="rules-container">
+    <!-- Context Bar -->
+    <div class="context-bar">
+        <button class="context-btn" onclick="showSection('tournament-structure')">Tournament Structure</button>
+        <button class="context-btn" onclick="showSection('match-structure')">Match Structure</button>
+        <button class="context-btn" onclick="showSection('scoring-system')">Scoring System</button>
+        <button class="context-btn" onclick="showSection('gameplay-details')">Gameplay Details</button>
+        <button class="context-btn" onclick="showSection('golden-game')">Golden Game Rules</button>
+        <button class="context-btn" onclick="showSection('tiebreakers')">Tiebreakers</button>
+    </div>
+
+    <!-- Rules Sections -->
+    <div id="tournament-structure" class="rules-section">
+        <h2>Tournament Structure</h2>
+        <p>Each tournament round consists of a single match. Matches are played between two teams and comprise 11 games...</p>
+    </div>
+
+    <div id="match-structure" class="rules-section" style="display:none;">
+        <h2>Match Structure</h2>
+        <p>Each match includes 11 individual games, each based on events with predetermined market outcomes...</p>
+    </div>
+
+    <div id="scoring-system" class="rules-section" style="display:none;">
+        <h2>Scoring System</h2>
+        <p>Teams score points by correctly predicting event outcomes...</p>
+    </div>
+
+    <div id="gameplay-details" class="rules-section" style="display:none;">
+        <h2>Gameplay Details</h2>
+        <p>Submission Time: Offensive uploads must be submitted at least 6 hours before the game time...</p>
+    </div>
+
+    <div id="golden-game" class="rules-section" style="display:none;">
+        <h2>Golden Game Rules</h2>
+        <p>Paradise Sports uploads the Golden Game, which is worth 2 points...</p>
+    </div>
+
+    <div id="tiebreakers" class="rules-section" style="display:none;">
+        <h2>Tiebreakers</h2>
+        <p>First Tiebreaker: The total points predicted for the Golden Game...</p>
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.rules-section');
+        sections.forEach(section => section.style.display = 'none');
+    
+        // Show the selected section
+        document.getElementById(sectionId).style.display = 'block';
+    }
+    </script>
+    
+{% endblock content %}
+
