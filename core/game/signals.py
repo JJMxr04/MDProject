@@ -12,5 +12,5 @@ import uuid
 def update_games_on_event_update(sender, instance, **kwargs):
     if  not instance.completed:
         return 
-    games = Game.objects.filter(event=instance)
+    games = Game.objects.filter(event=instance,completed=False)
     Match.objects.match_game_event_update(games=games,instance=instance)
