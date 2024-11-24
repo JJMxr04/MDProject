@@ -136,10 +136,10 @@ class BetManager(AbstractManager):
         bet.save()
 
 class Bet(AbstractModel):
-    market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='bet_market', null=True,
+    market = models.ForeignKey(Market, on_delete=models.SET_NULL, related_name='bet_market', null=True,
                                       blank=True)
-    owner_outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, related_name='bet_owner_outcome', null=True, blank=True)
-    player_2_outcome = models.ForeignKey(Outcome, on_delete=models.CASCADE, related_name='bet_player_2_outcome', null=True,
+    owner_outcome = models.ForeignKey(Outcome, on_delete=models.SET_NULL, related_name='bet_owner_outcome', null=True, blank=True)
+    player_2_outcome = models.ForeignKey(Outcome, on_delete=models.SET_NULL, related_name='bet_player_2_outcome', null=True,
                                       blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
