@@ -21,7 +21,7 @@ from core.event.models.bookmaker import Bookmaker
 from core.event.models.market import Market
 from core.event.models.outcome import Outcome
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 teamCron = TeamCron()
 
@@ -324,8 +324,23 @@ class EventCron():
             if sport.key not in broken_leagues:
                 self.get_sport_events(sport)
                 self.get_sport_odds(sport)
-            
+    
+    
+    def delete_outdated_events(self):
+        # Get the current time in UTC
+        current_time = timezone.now()
+        # Filter events that are not completed and have a commence_time that is 4 hours or more in the past
+        outdated_events = Event.objects.filter(completed=False, commence_time__lt=current_time - timedelta(hours=4))
+        outdated_events.delete()
+
 def update_all_events():
     eventCron = EventCron()
     eventCron.update_all_events()
     # eventCron.get_upcoming_odds()
+
+def delete_outdated_events():
+    eventCron = EventCron()
+    eventCron.delete_outdated_events()
+
+
+

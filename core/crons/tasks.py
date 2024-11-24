@@ -49,6 +49,11 @@ def event_test_cron():
 @shared_task
 def event_odds_test_cron():
     eventCron.get_upcoming_odds()
+
+@shared_task
+def event_delete_outdated_cron():
+    eventCron.delete_outdated_events()
+
 @shared_task
 def print_cron_jobs():
     print('Scheduled and  print cron job completed')
