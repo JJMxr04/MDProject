@@ -9,11 +9,12 @@ class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='Required. Enter a valid email address.')
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    register_as_writer = forms.BooleanField(required=False, label='Register as a writer', initial=False)
+    # register_as_writer = forms.BooleanField(required=False, label='Register as a writer', initial=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'register_as_writer')
+        # fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'register_as_writer')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', )
 
     def clean_email(self):
         email_address = self.cleaned_data.get('email')
@@ -26,7 +27,7 @@ class RegisterForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.is_writer = self.cleaned_data.get('register_as_writer', False)  # Set 'is_writer' field
+        # user.is_writer = self.cleaned_data.get('register_as_writer', False)  # Set 'is_writer' field
         if commit:
             user.save()
             WaitlistEntry.objects.filter(email=user.email).update(activated=True)
