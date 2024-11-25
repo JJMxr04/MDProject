@@ -556,10 +556,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'core.crons.tasks.event_cron',
         'schedule': crontab(minute=0, hour='*'),  # runs every hour
     },
-    'event_delete_outdated_cron': {
-        'task': 'core.crons.tasks.event_delete_outdated_cron',
-        'schedule': crontab(minute=0, hour='*'),  # runs every hour
-    },
+    # 'event_delete_outdated_cron': {
+    #     'task': 'core.crons.tasks.event_delete_outdated_cron',
+    #     'schedule': crontab(minute=0, hour='*'),  # runs every hour
+    # },
     # 'print_cron_jobs': {
     #     'task': 'core.crons.tasks.print_cron_jobs',
     #     'schedule': crontab(minute='*'),  # every minute
