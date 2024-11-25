@@ -397,10 +397,10 @@ class EventCron():
     
     def delete_outdated_events(self):
         # Get the current time in UTC
-        current_time = datetime.now()
+        current_time = datetime.now(timezone.utc)
         # Filter events that are not completed and have a commence_time that is 4 hours or more in the past
         outdated_events = Event.objects.filter(completed=False, commence_time__lt=current_time - timedelta(hours=4))
-        
+        print(outdated_events)
         # Delete the outdated events
         outdated_events.delete()
 
