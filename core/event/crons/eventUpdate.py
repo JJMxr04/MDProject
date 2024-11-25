@@ -21,9 +21,9 @@ from core.event.models.bookmaker import Bookmaker
 from core.event.models.market import Market
 from core.event.models.outcome import Outcome
 
-from django.utils import timezone
 
-from datetime import datetime, timedelta
+
+from datetime import datetime, timezone, timedelta
 
 teamCron = TeamCron()
 
