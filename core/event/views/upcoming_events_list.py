@@ -20,6 +20,9 @@ def upcoming_events_list(request):
     # Determine end date, capping it at max_end_date
     end_date = min(user_end_date, max_end_date) if user_end_date else max_end_date
 
+    # Set minimum start date to today
+    min_start_date = timezone.now().date()
+
     # Set up filters
     filters = {'completed': False}
     if search_query:
@@ -28,6 +31,8 @@ def upcoming_events_list(request):
         filters['sport_key'] = selected_sport
     if start_date:
         filters['commence_time__gte'] = start_date
+    else:
+        filters['commence_time__gte'] = min_start_date
     filters['commence_time__lte'] = end_date
 
     # Get filtered events and apply pagination
