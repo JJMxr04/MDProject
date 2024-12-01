@@ -21,7 +21,7 @@ def upcoming_events_list(request):
     end_date = min(user_end_date, max_end_date) if user_end_date else max_end_date
 
     # Set minimum start date to today
-    min_start_date = timezone.now().date()
+    min_start_date = timezone.now().date() + timedelta(days=1)
 
     # Set up filters
     filters = {'completed': False}
