@@ -10,12 +10,15 @@ import threading
 from core.event.crons.sportUpdate import SportCron
 from core.event.models.sport import Sport
 from core.event.crons.eventUpdate import EventCron
+from core.event.crons.deleteEvents import DeleteEventCron
 from core.tournament.crons.BracketMaker import BracketMaker
 from core.tournament.crons.TournamentReminder import Tournament2DayReminder
 from core.match.crons.matchUpdate import MatchCron
 
+
 sportCron = SportCron()
 eventCron = EventCron()
+deleteEventCron = DeleteEventCron()
 matchCron = MatchCron()
 tournament2DayReminder = Tournament2DayReminder()
 bracketMaker = BracketMaker()
@@ -52,7 +55,7 @@ def event_odds_test_cron():
 
 @shared_task
 def event_delete_outdated_cron():
-    eventCron.delete_outdated_events()
+    deleteEventCron.delete_outdated_events()
 
 @shared_task
 def print_cron_jobs():

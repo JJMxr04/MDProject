@@ -47,12 +47,12 @@ app.conf.beat_schedule = {
     },
     'event_cron': {
         'task': 'core.crons.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*'),  # runs every hour
+        'schedule': crontab(minute=0, hour='*/4'),  # runs every hour
     },
-    # 'event_delete_outdated_cron': {
-    #     'task': 'core.crons.tasks.event_delete_outdated_cron',
-    #     'schedule': crontab(minute=0, hour='*'),  # runs every hour
-    # },
+    'event_delete_outdated_cron': {
+        'task': 'core.crons.tasks.event_delete_outdated_cron',
+        'schedule': crontab(minute=0, hour='*/4'),  # runs every hour
+    },
     # 'print_cron_jobs': {
     #     'task': 'core.crons.tasks.print_cron_jobs',
     #     'schedule': crontab(minute='*'),  # every minute
