@@ -11,14 +11,13 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # path('admin/dashboard/', custom_admin_view, name='admin_dashboard'),
+    path('admin/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),
     path('admin/', admin.site.urls),
-    # path('api/', include(('core.routers', 'core'), namespace="core-api")),
+    path('api/', include(('core.event.api_urls', 'core-event-api'), namespace='core-event-api')),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),
     path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
-    # main project urls.py
-    path('administration/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')), 
     # path('mail/', include(('core.mail.urls', 'core-mail'), namespace='core-mail')), # Updated path
 
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

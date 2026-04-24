@@ -1,0 +1,19 @@
+{# Expects: modal_id, title, body_include (template path), confirm_label (optional),
+   confirm_action (optional string — hooked in JS via data-action), cancel_label (optional) #}
+<div class="modal-ui" id="{{ modal_id }}" role="dialog" aria-modal="true" aria-labelledby="{{ modal_id }}-title" data-modal>
+    <div class="modal-ui__content">
+        <header class="modal-ui__header">
+            <h2 id="{{ modal_id }}-title">{{ title }}</h2>
+            <button type="button" class="modal-ui__close" data-modal-close aria-label="Close">&times;</button>
+        </header>
+        <div class="modal-ui__body">
+            {% include body_include %}
+        </div>
+        <footer class="modal-ui__footer">
+            <button type="button" class="btn-ui btn-ui--secondary" data-modal-close>{{ cancel_label|default:"Cancel" }}</button>
+            {% if confirm_label %}
+                <button type="button" class="btn-ui btn-ui--primary" data-action="{{ confirm_action }}">{{ confirm_label }}</button>
+            {% endif %}
+        </footer>
+    </div>
+</div>

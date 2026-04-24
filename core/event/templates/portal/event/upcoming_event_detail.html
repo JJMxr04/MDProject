@@ -1,176 +1,213 @@
-{% extends "portal/base_portal.html" %}
+{% extends "portal/base_app.html" %}
 {% load static %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/event/upcoming_events_detail.css' %}">
-{% endblock css %}
-
-{% block title %}Event Details{% endblock title %}
+{% block title %}{{ event.home_team.name|default:"TBD" }} vs {{ event.away_team.name|default:"TBD" }}{% endblock title %}
 
 {% block content %}
-    
-    <div class="event-detail-container">
-        <div class="teams">
-            <div class="team">
-                <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.team_name }} logo" />
-                <p>{{ event.home_team_team.team_name }}</p>
-            </div>
-            <div class="vs">VS</div>
-            <div class="team">
-                <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.team_name }} logo" />
-                <p>{{ event.away_team_team.team_name }}</p>
-            </div>
-        </div>
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+    <ol>
+        <li><a href="{% url 'core-portal:upcoming-events' %}">Events</a></li>
+        <li><span aria-current="page">{{ event.home_team.name|default:"TBD" }} vs {{ event.away_team.name|default:"TBD" }}</span></li>
+    </ol>
+</nav>
 
-        <h1>{{ event.title }}</h1>
-        <p>{{ event.description }}</p>
-        <p class="commence-time" data-time="{{ event.commence_time }}">Commence Time: {{ event.commence_time }}</p>
-
-        <!-- Bookmakers Section -->
-        <div class="bookmakers-section">
-            <h2>Odds</h2>
-            <div class="bookmakers-scroll" style="overflow-x: auto; white-space: nowrap;">
-                {% if event.bookmakers %}
-                    {% for bookmaker in event.bookmakers %}
-                        <div class="bookmaker" style="display: inline-block; width: 300px; margin-right: 20px;">
-                            <h3>{{ bookmaker.title }}</h3>
-                            {% for market in bookmaker.markets %}
-                                <div class="market" data-key="{{ market.key }}">
-                                    <h4 class="market-title">
-                                        {% if market.key == 'h2h' %}
-                                            Head 2 Head
-                                        {% elif market.key == 'totals' %}
-                                            Totals
-                                        {% elif market.key == 'spreads' %}
-                                            Spreads
-                                        {% else %}
-                                            {{ market.key }}
-                                        {% endif %}
-                                    </h4>
-                                    <ul>
-
-                                        {% for outcome in market.outcomes %}
-                                            <li class="outcome" >
-                                                <span class="outcome-name" style="color: #007bff; font-weight: bold;">{{ outcome.name }}</span>
-                                                <span style="color: #007bff; ">|</span>
-                                                <span class="point" style="color: #333;">{{ outcome.point }}</span>
-                                                <span style="color: #007bff;">|</span>
-                                                <span class="price" style="color: #28a745;">{{ outcome.price }}</span>
-                                            </li>
-                                            <hr>
-                                        {% endfor %}
-
-                                    </ul>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>No bookmakers found for this event.</p>
-                {% endif %}
-            </div>
-        </div>
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">
+            {{ event.home_team.name|default:"TBD" }} <span class="text-muted">vs</span> {{ event.away_team.name|default:"TBD" }}
+        </h1>
+        <p class="page-header__subtitle">
+            {% if event.sport %}<span class="badge-ui badge-ui--info">{{ event.sport.name|capfirst }}</span>&nbsp;{% endif %}
+            {% if event.tournament_name %}{{ event.tournament_name }}{% endif %}
+            {% if event.season_name %}&nbsp;&middot;&nbsp; {{ event.season_name }}{% endif %}
+        </p>
     </div>
+</header>
 
-    <!-- Post Section -->
-    <div class="post-section">
-        <h2>Comments</h2>
-        
-        <!-- Post Form -->
-        <form method="post" action="{% url 'core-portal:create_post_event' event.id %}" class="post-form">
-            {% csrf_token %}
-            <div class="user-info">
-                {% if user.avatar %}
-                    <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
+<section class="card-ui mb-6">
+    <div class="card-ui__body">
+        <div class="event-detail-teams">
+            <div class="event-detail-team">
+                {% if event.home_team.logo_url %}
+                    <img src="{{ event.home_team.logo_url.url }}" alt="">
                 {% else %}
-                    <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
+                    <span class="event-detail-team__initials" aria-hidden="true">
+                        {{ event.home_team.name|default:"?"|slice:":1"|upper }}
+                    </span>
                 {% endif %}
-                <span class="username">{{ user.username }}</span>
+                <h2 class="event-detail-team__name">{{ event.home_team.name|default:"TBD" }}</h2>
+                {% if event.home_score is not None %}
+                    <div class="event-detail-team__score {% if event.winner_code == 1 %}is-winner{% endif %}">{{ event.home_score }}</div>
+                {% endif %}
             </div>
-            {{ post_form.content }}
-            <input type="hidden" name="thread" value="{{ thread.id }}">
-            <input type="hidden" name="event" value="{{ event.id }}">
-            <button type="submit">Post</button>
-        </form>
 
-        <!-- Display each post and its replies -->
-        <div class="posts-list">
-            {% for post in event_posts %}
-                <div class="post-item">
-                    <div class="user-info">
-                        <h4>
-                            {% if post.created_by.avatar %}
-                                <img src="{{ post.created_by.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                            {% else %}
-                                <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-                            {% endif %}
-                            {{ post.created_by.username }}
-                            <span class="text-muted">- {{ post.created_at }}</span>
-                        </h4>
-                    </div>
-                    <p>{{ post.content }}</p>
-
-                    <!-- Display Replies -->
-                    <div class="replies-list">
-                        {% for reply in post.replies.all %}
-                            <div class="reply-item">
-                                <strong>{{ reply.created_by.username }}</strong> - {{ reply.created_at }}
-                                <p>{{ reply.content }}</p>
-                            </div>
-                        {% empty %}
-
-                        {% endfor %}
-                    </div>
-
-                    <!-- Reply Icon and Toggle Reply Form -->
-                    {% if user.is_authenticated %}
-                        <div class="reply-section">
-                            <button type="button" class="reply-icon" onclick="toggleReplyForm('{{ post.id }}')">Reply</button>
-                            
-                            <!-- Hidden Reply Form -->
-                            <div id="reply-form-{{ post.id }}" class="reply-form hidden">
-                                <form method="post" action="{% url 'core-portal:create_reply' post.id %}">
-                                    {% csrf_token %}
-                                    <textarea name="content" rows="2" placeholder="Write your reply here..." required></textarea>
-                                    <button type="submit">Submit Reply</button>
-                                </form>
-                            </div>
-                        </div>
+            <div class="event-detail-center">
+                <div class="event-detail-vs">VS</div>
+                {% if event.status_type %}
+                    {% if event.status_type == "finished" %}<span class="badge-ui badge-ui--success">Final</span>
+                    {% elif event.status_type == "inprogress" %}<span class="badge-ui badge-ui--primary">Live</span>
+                    {% elif event.status_type == "notstarted" %}<span class="badge-ui badge-ui--info">Upcoming</span>
+                    {% elif event.status_type == "postponed" %}<span class="badge-ui badge-ui--warning">Postponed</span>
+                    {% elif event.status_type == "canceled" %}<span class="badge-ui badge-ui--danger">Canceled</span>
+                    {% else %}<span class="badge-ui badge-ui--muted">{{ event.status_type|capfirst }}</span>
                     {% endif %}
-                </div>
-            {% empty %}
-                <p>No posts yet. Be the first to share an update!</p>
-            {% endfor %}
+                {% endif %}
+                {% if event.start_time %}
+                    <time class="event-detail-time" datetime="{{ event.start_time|date:'c' }}">
+                        {{ event.start_time|date:"M j, Y · g:i A" }}
+                    </time>
+                {% endif %}
+            </div>
+
+            <div class="event-detail-team">
+                {% if event.away_team.logo_url %}
+                    <img src="{{ event.away_team.logo_url.url }}" alt="">
+                {% else %}
+                    <span class="event-detail-team__initials" aria-hidden="true">
+                        {{ event.away_team.name|default:"?"|slice:":1"|upper }}
+                    </span>
+                {% endif %}
+                <h2 class="event-detail-team__name">{{ event.away_team.name|default:"TBD" }}</h2>
+                {% if event.away_score is not None %}
+                    <div class="event-detail-team__score {% if event.winner_code == 2 %}is-winner{% endif %}">{{ event.away_score }}</div>
+                {% endif %}
+            </div>
         </div>
     </div>
+</section>
 
-    <script>
-    // Function to toggle reply form visibility
-    function toggleReplyForm(postId) {
-        const replyForm = document.getElementById(`reply-form-${postId}`);
-        if (replyForm.classList.contains('hidden')) {
-            replyForm.classList.remove('hidden');
-        } else {
-            replyForm.classList.add('hidden');
-        }
+<section class="card-ui">
+    <header class="card-ui__header">
+        <h2>Markets & odds</h2>
+        <span class="badge-ui badge-ui--muted">{{ markets|length }}</span>
+    </header>
+    <div class="card-ui__body">
+        {% if markets %}
+            <div class="markets-grid">
+                {% for market in markets %}
+                <div class="market-card {% if market.suspended %}is-suspended{% endif %}">
+                    <div class="market-card__title">
+                        {% if market.category == "MONEYLINE" %}Moneyline
+                        {% elif market.category == "SPREAD" %}Spread
+                        {% elif market.category == "TOTAL" %}Total
+                        {% else %}{{ market.category|default:"Market"|capfirst }}{% endif %}
+                        {% if market.line is not None %}<span class="market-card__line">{{ market.line }}</span>{% endif %}
+                        {% if market.scope and market.scope != "FULL_GAME" %}
+                            <span class="market-card__scope">{{ market.scope|lower }}</span>
+                        {% endif %}
+                    </div>
+                    <ul class="market-card__selections">
+                        {% for sel in market.selections %}
+                            <li class="{% if sel.suspended %}is-suspended{% endif %}">
+                                <span class="market-card__selection-name">{{ sel.label|default:sel.type|default:"—" }}</span>
+                                {% if sel.odds.american is not None %}
+                                    <span class="market-card__price {% if sel.movement %}is-{{ sel.movement }}{% endif %}">
+                                        {% if sel.odds.american > 0 %}+{% endif %}{{ sel.odds.american }}
+                                    </span>
+                                {% elif sel.odds.decimal is not None %}
+                                    <span class="market-card__price">{{ sel.odds.decimal }}</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {% include "portal/components/_empty_state.html" with icon="bar-chart" title="No markets available yet." body="Odds usually post a few hours before start time." %}
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .event-detail-teams {
+        display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+        gap: var(--space-5);
+    }
+    .event-detail-team {
+        display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+        text-align: center;
+    }
+    .event-detail-team img {
+        width: 96px; height: 96px; object-fit: contain;
+        background: var(--surface-muted); border-radius: var(--radius-lg);
+        padding: var(--space-2);
+    }
+    .event-detail-team__initials {
+        width: 96px; height: 96px;
+        display: grid; place-items: center;
+        background: var(--surface-muted); border-radius: var(--radius-lg);
+        font-weight: var(--weight-bold); color: var(--brand-blue-dark);
+        font-size: var(--text-3xl);
+    }
+    .event-detail-team__name {
+        margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold);
+    }
+    .event-detail-team__score {
+        font-size: var(--text-3xl); font-weight: var(--weight-bold);
+        color: var(--text-secondary);
+    }
+    .event-detail-team__score.is-winner { color: var(--state-success); }
+
+    .event-detail-center {
+        display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+    }
+    .event-detail-vs {
+        font-size: var(--text-sm); font-weight: var(--weight-bold);
+        color: var(--text-secondary); letter-spacing: .1em;
+    }
+    .event-detail-time {
+        font-size: var(--text-sm); color: var(--text-secondary);
     }
 
-    // JavaScript for updating commence time format
-    document.addEventListener('DOMContentLoaded', function() {
-        const timeElements = document.querySelectorAll('.commence-time');
-        timeElements.forEach(function(element) {
-            const timeString = element.getAttribute('data-time');
-            const date = new Date(timeString);
-            const options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            };
-            element.textContent = date.toLocaleString('en-US', options);
-        });
-    });
-    </script>
-{% endblock content %}
+    .markets-grid {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: var(--space-4);
+    }
+    .market-card {
+        padding: var(--space-4);
+        background: var(--surface-muted);
+        border-radius: var(--radius-md);
+    }
+    .market-card.is-suspended { opacity: .55; }
+    .market-card__title {
+        font-weight: var(--weight-semibold);
+        margin-bottom: var(--space-3);
+        font-size: var(--text-sm);
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        color: var(--text-secondary);
+        display: flex; align-items: center; gap: var(--space-2);
+    }
+    .market-card__line {
+        background: var(--surface-card); padding: 0 var(--space-2);
+        border-radius: var(--radius-sm); color: var(--text-primary);
+    }
+    .market-card__scope {
+        font-size: var(--text-xs); text-transform: lowercase;
+        color: var(--text-secondary);
+    }
+    .market-card__selections { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+    .market-card__selections li {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: var(--space-2); background: var(--surface-card);
+        border-radius: var(--radius-sm);
+        font-size: var(--text-sm);
+    }
+    .market-card__selections li.is-suspended {
+        opacity: .5; text-decoration: line-through;
+    }
+    .market-card__price {
+        font-weight: var(--weight-semibold); color: var(--brand-blue-dark);
+        font-variant-numeric: tabular-nums;
+    }
+    .market-card__price.is-up   { color: var(--state-success); }
+    .market-card__price.is-down { color: var(--state-danger); }
+
+    @media (max-width: 640px) {
+        .event-detail-teams { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock css %}

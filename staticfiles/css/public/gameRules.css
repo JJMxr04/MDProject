@@ -1,0 +1,105 @@
+/* Rules Page Layout */
+.rules-page {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+/* Table of Contents */
+.table-of-contents {
+    flex: 1 1 25%;
+    max-width: 300px;
+    margin-right: 20px;
+    padding: 15px;
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    position: sticky; /* Make it stick */
+    top: 20px; /* Distance from the top when scrolling */
+    height: max-content; /* Adjust height to fit content */
+}
+
+.table-of-contents h2 {
+    margin-top: 0;
+    font-size: 1.25rem;
+}
+
+.table-of-contents ul {
+    list-style: none;
+    padding: 0;
+}
+
+.table-of-contents li {
+    margin: 10px 0;
+}
+
+.table-of-contents a {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.table-of-contents a:hover {
+    text-decoration: underline;
+}
+
+/* Rules Container */
+.rules-container {
+    flex: 1 1 70%;
+    max-width: calc(100% - 320px);
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.rules-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.rules-section {
+    margin-bottom: 20px;
+}
+
+.rules-section h2 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #007BFF;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .rules-page {
+        flex-direction: column;
+    }
+
+    .table-of-contents {
+        max-width: 100%;
+        margin-bottom: 20px;
+        position: static; /* Remove sticky for smaller screens */
+    }
+
+    .rules-container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-of-contents h2 {
+        font-size: 1rem;
+    }
+
+    .table-of-contents a {
+        font-size: 0.875rem;
+    }
+
+    .rules-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .rules-section h2 {
+        font-size: 1.25rem;
+    }
+}

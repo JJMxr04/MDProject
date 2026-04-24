@@ -1,132 +1,87 @@
 from django.contrib import admin
-from .models import Event, Sport, Team, Bookmaker, Market, Outcome, Forum, Thread, Post
 
-# Inline for displaying associated threads within a forum
-class ThreadInline(admin.TabularInline):
-    model = Thread
-    extra = 0
-    fields = ['title', 'created_by', 'created_at']
-    readonly_fields = ['created_by', 'created_at']
-    show_change_link = True
+from .models import Event, Market, OddsQuote, Selection, Sport, Team
 
-# Inline for displaying associated posts within a thread
-class PostInline(admin.TabularInline):
-    model = Post
-    extra = 0
-    fields = ['content', 'created_by', 'created_at', 'event']
-    readonly_fields = ['created_by', 'created_at']
-    show_change_link = True
 
-@admin.register(Forum)
-class ForumAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at']
-    search_fields = ['name', 'description']
-    inlines = [ThreadInline]
-
-@admin.register(Thread)
-class ThreadAdmin(admin.ModelAdmin):
-    list_display = ['title', 'forum', 'created_by', 'created_at']
-    search_fields = ['title', 'forum__name', 'created_by__username']
-    inlines = [PostInline]
-
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
-    list_display = ['thread', 'event', 'created_by', 'created_at']
-    search_fields = ['content', 'created_by__username', 'thread__title', 'event__title']
-    list_filter = ['created_at']
-
-# Existing Event Admin class
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['title', 'sport_title', 'group', 'commence_time', 'completed', 'winner', 'formatted_scores', 'home_team_team', 'away_team_team']
-    list_filter = ['sport_title', 'group', 'completed']
-    search_fields = ['title', 'description', 'sport_title', 'group', 'winner', 'commence_time', 'completed', 'home_team_team__team_name', 'away_team_team__team_name']
+    list_display = [
+        "id",
+        "sport",
+        "tournament_name",
+        "start_time",
+        "status_type",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "winner",
+    ]
+    list_filter = ["sport", "status_type", "tournament_name", "completed"]
+    search_fields = [
+        "id",
+        "slug",
+        "tournament_name",
+        "winner",
+        "home_team__name",
+        "away_team__name",
+    ]
+    readonly_fields = [
+        "id",
+        "public_id",
+        "created",
+        "updated",
+        "scores_payload",
+        "status_code",
+    ]
 
-    fieldsets = (
-        (None, {
-            'fields': ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'completed', 'winner')
-        }),
-        ('Teams', {
-            'fields': ('home_team', 'home_team_team', 'away_team', 'away_team_team')
-        }),
-        ('Scores', {
-            'fields': ('scores',)
-        }),
-    )
-
-    readonly_fields = ('sport_key', 'sport_title', 'title', 'group', 'description', 'commence_time', 'home_team', 'home_team_team', 'away_team', 'away_team_team')
-
-    def formatted_scores(self, obj):
-        return "WIP"
-    formatted_scores.short_description = 'Scores'
-
-# Other admin classes (TeamAdmin, SportAdmin, BookmakerAdmin, MarketAdmin, OutcomeAdmin) remain unchanged.
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['team_name', 'title', 'group', 'team_id', 'logo_url', 'country', 'country_code']
-    search_fields = ['team_name', 'title', 'team_id', 'country']
-    readonly_fields = ['public_id']
+    list_display = ["id", "name", "short_name", "name_code", "sport", "country_alpha2"]
+    list_filter = ["sport", "gender", "national"]
+    search_fields = ["id", "name", "slug", "short_name", "name_code"]
+    readonly_fields = ["id", "public_id", "created", "updated"]
 
-    fieldsets = (
-        (None, {
-            'fields': ('team_name', 'title', 'group', 'team_id', 'logo_url', 'country', 'country_code')
-        }),
-        ('Identifiers', {
-            'fields': ('public_id',),
-            'classes': ('collapse',),
-        }),
-    )
 
 @admin.register(Sport)
 class SportAdmin(admin.ModelAdmin):
-    list_display = ['key', 'title', 'group', 'active', 'has_outrights', 'created', 'updated']
-    list_filter = ['active', 'has_outrights']
-    search_fields = ['key', 'title', 'group', 'description']
-    readonly_fields = ['created', 'updated']
+    list_display = ["id", "slug", "name", "active", "created", "updated"]
+    list_filter = ["active"]
+    search_fields = ["id", "slug", "name"]
+    readonly_fields = ["created", "updated"]
 
-    fieldsets = (
-        (None, {
-            'fields': ('key', 'title', 'group', 'description', 'active', 'has_outrights')
-        }),
-        ('Timestamps', {
-            'fields': ('created', 'updated'),
-            'classes': ('collapse',),
-        }),
-    )
-
-@admin.register(Bookmaker)
-class BookmakerAdmin(admin.ModelAdmin):
-    list_display = ['id', 'key', 'title', 'event', 'last_update']
-    search_fields = ['id', 'key', 'title', 'event__title', 'event__id']
-    readonly_fields = ['id', 'last_update']
-
-    fieldsets = (
-        (None, {
-            'fields': ('id', 'event', 'last_update')
-        }),
-    )
 
 @admin.register(Market)
 class MarketAdmin(admin.ModelAdmin):
-    list_display = ['key', 'bookmaker', 'last_update']
-    search_fields = ['key', 'bookmaker__title']
-    readonly_fields = ['id', 'last_update']
+    list_display = ["id", "event", "category", "type", "scope", "line", "is_live", "suspended", "last_updated"]
+    list_filter = ["category", "scope", "type", "is_live", "suspended", "sport"]
+    search_fields = ["id", "event__id", "type"]
+    readonly_fields = ["id", "provider", "provider_market_id", "provider_choice_group", "created", "updated"]
 
-    fieldsets = (
-        (None, {
-            'fields': ('key', 'bookmaker', 'last_update')
-        }),
-    )
 
-@admin.register(Outcome)
-class OutcomeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'market', 'price', 'point']
-    search_fields = ['name', 'market__key']
-    readonly_fields = ['price']
+@admin.register(Selection)
+class SelectionAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "market",
+        "type",
+        "label",
+        "decimal_odds",
+        "movement",
+        "suspended",
+        "settlement_status",
+        "settled_at",
+        "settlement_source",
+    ]
+    list_filter = ["settlement_status", "settlement_source", "type", "suspended"]
+    search_fields = ["id", "market__id", "label"]
+    readonly_fields = ["id", "created", "updated"]
 
-    fieldsets = (
-        (None, {
-            'fields': ('name', 'market', 'price', 'point')
-        }),
-    )
+
+@admin.register(OddsQuote)
+class OddsQuoteAdmin(admin.ModelAdmin):
+    list_display = ["id", "selection", "decimal_odds", "captured_at"]
+    list_filter = ["captured_at"]
+    search_fields = ["selection__id"]
+    readonly_fields = ["id", "selection", "decimal_odds", "captured_at"]

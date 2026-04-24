@@ -1,0 +1,45 @@
+/* Base styling */
+body {
+    background-color: #f4f4f9; /* Light background color for better contrast */
+    font-family: Arial, sans-serif; /* Clean and modern font */
+}
+
+h1 {
+    color: #343a40; /* Dark color for the heading */
+    font-size: 2.5rem; /* Larger font size for visibility */
+}
+
+.container {
+    max-width: 600px; /* Limit the width of the form for better readability */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Padding around the container */
+}
+
+form {
+    background-color: #ffffff; /* White background for the form */
+    border: 1px solid #ced4da; /* Light border around the form */
+    border-radius: 0.5rem; /* Rounded corners */
+    padding: 20px; /* Padding around the form elements */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+button {
+    width: 100%; /* Full-width button for better usability */
+}
+
+a.btn {
+    display: inline-block; /* Ensure the button and link are treated as buttons */
+    margin-top: 10px; /* Space above the back button */
+    text-align: center; /* Center text in button */
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2rem; /* Smaller font size on mobile */
+    }
+
+    .container {
+        padding: 15px; /* Adjust padding for smaller screens */
+    }
+}

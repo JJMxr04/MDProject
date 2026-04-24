@@ -312,7 +312,7 @@ function copyFriendCode() {
     const codeElement = document.getElementById('friend-code');
     navigator.clipboard.writeText(codeElement.textContent.trim())
         .then(() => {
-            alert('Friend code copied to clipboard!');
+            window.toast('Friend code copied to clipboard!', {variant: 'success'});
         })
         .catch(err => {
             console.error('Failed to copy text: ', err);
@@ -338,14 +338,14 @@ document.getElementById('regenerate-form').addEventListener('submit', function(e
     .then(data => {
         if (data.success) {
             document.getElementById('friend-code').textContent = data.new_code;
-            alert('Friend code updated successfully!');
+            window.toast('Friend code updated successfully!', {variant: 'success'});
         } else {
-            alert('Failed to update friend code: ' + data.error);
+            window.toast('Failed to update friend code: ', {variant: 'danger'});
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while updating your friend code.');
+        window.toast('An error occurred while updating your friend code.', {variant: 'danger'});
     });
 });
 

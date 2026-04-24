@@ -1,0 +1,9 @@
+{# Expects: title, body (optional), icon (optional), action_label (optional), action_href (optional) #}
+<div class="empty-state">
+    <div class="empty-state__icon"><i class="bi bi-{{ icon|default:'inbox' }}" aria-hidden="true"></i></div>
+    <h2 class="empty-state__title">{{ title }}</h2>
+    {% if body %}<p class="empty-state__body">{{ body }}</p>{% endif %}
+    {% if action_label and action_href %}
+        <a class="btn-ui btn-ui--primary" href="{{ action_href }}">{{ action_label }}</a>
+    {% endif %}
+</div>

@@ -324,7 +324,9 @@ class PlayerManager(AbstractManager):
 class Tournament(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, default='')
     start_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True, blank=True)
     state = models.CharField(max_length=10, default='created')  # created, inprogress, completed,aborted
     max_accepted_players = models.IntegerField()
     levels = models.FloatField(default=0)
@@ -340,6 +342,8 @@ class Tournament(models.Model):
 
     def save(self, *args, **kwargs):
         self.levels = self.__class__.objects.get_tourny_level(self.max_accepted_players)
+        if not self.end_date and self.start_date:
+            self.end_date = self.__class__.objects.get_end_date(self.start_date, self.levels)
         super().save(*args, **kwargs)
 
     def __str__(self):

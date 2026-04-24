@@ -1,63 +1,40 @@
 from django.db import models
-from core.abstract.models import AbstractModel, AbstractManager
-from datetime import datetime, timedelta
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 
 
 class SportManager(models.Manager):
+    def active(self):
+        return self.filter(active=True)
 
-    def get_active_sports_obj(self):
-        return self.filter(active=True).all()
+    def get_by_slug(self, slug):
+        return self.filter(slug=slug).first()
 
-    def get_by_key(self,key):
-        return self.filter(key=key).first()
-
-
-    def get_sport_state(self, key, active, has_outrights):
-
-        sport = self.filter(key=key).first()
-        if sport == None:
-            return False
-        if (sport.active is not active):
-            sport.active = active
-            sport.has_outrights = has_outrights
-            Sport.save()
-        return True  # There is a sport and Modification successful is completed
-
-    def get_active_sports(self):
-        return self.filter(active=True).all()
-
-    def get_all_sport_keys(self):
-        try:
-            # Query all distinct keys from the Event table
-            keys = self.values('key').distinct()
-
-            # Extract keys from the result and convert them to a list
-            key_list = [key[0] for key in keys]
-
-            return key_list
-        except Exception as e:
-            print(f"An error occurred: {e}")
+    def upsert_from_payload(self, payload):
+        sport_id = payload.get("id")
+        if sport_id is None:
             return None
-
-
+        obj, _ = self.update_or_create(
+            id=sport_id,
+            defaults={
+                "slug": payload.get("slug") or "",
+                "name": payload.get("name") or "",
+            },
+        )
+        return obj
 
 
 class Sport(models.Model):
-    key = models.CharField(max_length=255, primary_key=True)
-    group = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    id = models.IntegerField(primary_key=True)
+    slug = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=128)
     active = models.BooleanField(default=False)
-    has_outrights = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     objects = SportManager()
 
     class Meta:
-        db_table = 'core_sport'
+        db_table = "core_sport"
+        ordering = ["name"]
 
     def __str__(self):
-        return f"{self.title}"
+        return self.name

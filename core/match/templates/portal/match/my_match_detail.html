@@ -1,49 +1,72 @@
-{% extends "portal/base_portal.html" %}
-{% load static %}
+{% extends "portal/base_app.html" %}
+{% load static portal_state %}
+
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
+    <style>
+        .match-header-ui {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: var(--space-5);
+            padding: var(--space-5);
+            margin-bottom: var(--space-5);
+        }
+        .match-header-ui__side {
+            display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+            text-align: center;
+        }
+        .match-header-ui__name { font-weight: var(--weight-semibold); }
+        .match-header-ui__score { font-size: var(--text-3xl); font-weight: var(--weight-bold); line-height: 1; }
+        .match-header-ui__side.is-winner { color: var(--state-success); }
+        .match-header-ui__side.is-winner::after {
+            content: "Winner"; font-size: var(--text-xs); text-transform: uppercase;
+            letter-spacing: .06em; color: var(--state-success);
+            font-weight: var(--weight-semibold);
+        }
+        .match-header-ui__center { display: flex; flex-direction: column; gap: var(--space-2); align-items: center; }
+        .match-header-ui__vs { color: var(--text-secondary); font-weight: var(--weight-semibold); font-size: var(--text-sm); }
+    </style>
 {% endblock css %}
 
 {% block content %}
+{% include "portal/components/_breadcrumbs.html" with crumbs=crumbs|default:'[{"label":"Matches","href":"/web/portal/match/me/"},{"label":"Match detail"}]' %}
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+    <ol>
+        <li><a href="/web/portal/match/me/">Matches</a></li>
+        <li><span aria-current="page">Match detail</span></li>
+    </ol>
+</nav>
+
 <div class="match-detail">
-    <h1><strong>Match Details</strong></h1>
-    <p>Match ID: {{ match.id }}</p>
-    
-<!-- Player Cards -->
-<div class="player-cards">
-    <div class="player-card {% if match.winner == match.player_1 %}winner{% endif %}">
-        {% if match.winner == match.player_1 %}
-        <div class="winner-label">*Winner*</div>
-        {% endif %}
-        {% if match.player_1.avatar %}
-        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}'s avatar" class="avatar">
-        {% else %}
-            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-        {% endif %}
-        <h2>{{ match.player_1.username }}</h2>
-        <p>Score: {{ match.player_1_score }}</p>
-    </div>
-    <div class="player-card {% if match.winner == match.player_2 %}winner{% endif %}">
-        {% if match.winner == match.player_2 %}
-        <div class="winner-label">*Winner*</div>
-        {% endif %}
-        {% if match.player_2.avatar %}
-            <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}'s avatar" class="avatar">
-        {% else %}
-            <img src="https://robohash.org/2" class="rounded-circle" width="36" height="36" alt="User Avatar">
-        {% endif %}
-        <h2>{{ match.player_2.username }}</h2>
-        <p>Score: {{ match.player_2_score }}</p>
-    </div>
-</div>
+    <section class="card-ui match-header-ui">
+        <div class="match-header-ui__side {% if match.winner == match.player_1 %}is-winner{% endif %}">
+            {% include "portal/components/_avatar.html" with user=match.player_1 size=64 %}
+            <div class="match-header-ui__name">{{ match.player_1.username }}</div>
+            <div class="match-header-ui__score">{{ match.player_1_score }}</div>
+        </div>
+        <div class="match-header-ui__center">
+            <span class="match-header-ui__vs">VS</span>
+            {% include "portal/components/_badge.html" with state=match.match_state %}
+        </div>
+        <div class="match-header-ui__side {% if match.winner == match.player_2 %}is-winner{% endif %}">
+            {% if match.player_2 %}
+                {% include "portal/components/_avatar.html" with user=match.player_2 size=64 %}
+                <div class="match-header-ui__name">{{ match.player_2.username }}</div>
+                <div class="match-header-ui__score">{{ match.player_2_score }}</div>
+            {% else %}
+                <div class="avatar" style="--avatar-size: 64px;"><span class="avatar__initials">?</span></div>
+                <div class="match-header-ui__name text-muted">Waiting for opponent</div>
+            {% endif %}
+        </div>
+    </section>
 
-<div class="warning-message">
-    <p>Please note that if the event and outcome you selected are no longer there, the game may have been removed, postponed, etc.</p>
-</div>
+    <div class="warning-message">
+        <p>If the event you selected was postponed or canceled, your slot reopens for a new pick (until the match end date).</p>
+    </div>
 
-    <!-- Upload Button -->
     {% if is_player_in_match %}
-    <button class="upload-button" onclick="openUploadPopup()">Upload A Pick</button>
+        <button class="upload-button" onclick="openUploadPopup()">Upload A Pick</button>
     {% endif %}
 
     <!-- Match Information -->
@@ -52,991 +75,142 @@
         <p><strong>Start Date:</strong> {{ match.start_date }}</p>
         <p><strong>End Date:</strong> {{ match.end_date }}</p>
         <p><strong>Winner:</strong>
-            {% if match.winner %}
-                {{ match.winner.username }}
-            {% else %}
-                TBD
-            {% endif %}
+            {% if match.winner %}{{ match.winner.username }}{% else %}TBD{% endif %}
         </p>
     </div>
 
-        <!-- Break between Tiebreaker and Golden Game -->
-        <hr> <!-- This creates a horizontal line break -->
+    <hr>
 
-        <!-- Tiebreaker Section -->
-       <!-- Tiebreaker Section -->
-       <div class="tiebreaker-section">
-           <h2>Tiebreaker Information</h2>
-           {% if match.tiebreaker %}
-               <p><strong>Winner:</strong> {{ match.tiebreaker.winner.username }}</p>
-               <p><strong>Golden Game:</strong> {{ match.tiebreaker.golden_game.home_team }} Vs. {{ match.tiebreaker.golden_game.away_team }}</p>
-               <p><strong>Total:</strong> {{ match.tiebreaker.total }}</p>
-               <p><strong>{{match.golden_game.owner.username}}'s Total:</strong> {{ match.tiebreaker.owner_total }}</p>
-               <p><strong>{{match.golden_game.player_2.username}}'s Total:</strong> {{ match.tiebreaker.player_2_total }}</p>
-           {% else %}
-               <p>No tiebreaker information available.</p>
-           {% endif %}
-           
-           <!-- Button to submit tiebreaker score -->
-           <button id="tiebreaker-button" onclick="openTiebreakerPopup()">Submit Your Tiebreaker Score</button>
-       </div>
-       
-       <!-- Tiebreaker Popup -->
-       <div id="tiebreaker-popup" class="popup" style="display: none;">
-           <div class="popup-content">
-               <span class="close" onclick="closeTiebreakerPopup()">&times;</span>
-               <h2>Tiebreaker Submission</h2>
-               <form id="tiebreaker-form">
-                   <label for="tiebreaker-score">Enter your tiebreaker score:</label>
-                   <input type="number" id="tiebreaker-score" name="tiebreaker-score" required>
-                   <button type="submit">Submit</button>
-               </form>
-           </div>
-       </div>
-       
-       
-       
-           <!-- Break between Tiebreaker and Golden Game -->
-           <hr> <!-- This creates a horizontal line break -->
-
-    <!-- Golden Game Section -->
-    {% if match.golden_game %}
-    <div class="golden-game-card" type="UUID" id="golden-game-id" value="{{ match.golden_game.id }}" onclick="openGoldenGamePopup()">
-        <h3>Golden Game </h3>
-        <h4><strong>{{ match.golden_game.event.group }} -  {{ match.golden_game.event.sport_title }} - 
-            <script>
-                document.write(new Date('{{ match.golden_game.event.commence_time }}').toLocaleString())
-            </script>
-        </strong> </h4>
-        <div class="golden-game">
-            <div class="team">
-                {% if match.golden_game.event.home_team_team.logo_url %}
-                    <img src="{{ match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ match.golden_game.event.home_team_team }}">
-                {% endif %}
-                <h4>{{ match.golden_game.event.home_team_team }}</h4>
-            </div>
-
-            <div class="team">
-                {% if match.golden_game.event.away_team_team.logo_url %}
-                    <img src="{{ match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ match.golden_game.event.away_team_team }}">
-                {% endif %}
-                <h4>{{ match.golden_game.event.away_team_team }}</h4>
-            </div>
-
-        </div>
-        <div class="bet-info">
-            <h4>Bet Details:</h4>
-            <p><strong>Market:</strong> 
-                {% if match.golden_game.bet.market.key == 'h2h' %}
-                    Head to Head
-                {% elif match.golden_game.bet.market.key == 'spreads' %}
-                    Spread
-                {% elif match.golden_game.bet.market.key == 'totals' %}
-                    Totals
-                {% else %}
-                    {{ match.golden_game.bet.market.key }}
-                {% endif %}
+    <!-- Tiebreaker Section -->
+    <div class="tiebreaker-section">
+        <h2>Tiebreaker Information</h2>
+        {% if match.tiebreaker %}
+            <p><strong>Winner:</strong>
+                {% if match.tiebreaker.winner %}{{ match.tiebreaker.winner.username }}{% else %}TBD{% endif %}
             </p>
-            <p><strong>{{ match.golden_game.owner.username }}'s Selection:</strong> {{ match.golden_game.bet.owner_outcome}}</p>
-            <p><strong>{{ match.golden_game.player_2.username }}'s Selection:</strong> {{ match.golden_game.bet.player_2_outcome}}</p>
-
-            <p><strong>Status:</strong> 
-                {% if match.golden_game_completed %}
-                    Completed
-                {% else %}
-                    Pending
+            {% with gg=match.golden_game %}
+                {% if gg and gg.event %}
+                    <p><strong>Golden Game:</strong>
+                        {{ gg.event.home_team.name|default:"TBD" }}
+                        Vs.
+                        {{ gg.event.away_team.name|default:"TBD" }}
+                    </p>
                 {% endif %}
-            </p>
-        </div>
-        <div class="correct-outcomes">
-            <div class="correct-outcomes-header">
-                <i class="fas fa-trophy"></i>
-                <span>Player Picks</span>
-            </div>
-            <div class="avatar-container">
-                <div class="avatar-wrapper {% if match.golden_game_completed %}{% if match.golden_game.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_1.avatar %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_1.username }}</span>
-                </div>
-                <div class="avatar-wrapper {% if match.golden_game_completed %}{% if match.golden_game.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_2.avatar %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-            </div>
+                <p><strong>Total:</strong> {{ match.tiebreaker.total }}</p>
+                {% if gg %}
+                    <p><strong>{{ gg.owner.username }}'s Total:</strong> {{ match.tiebreaker.owner_total }}</p>
+                    <p><strong>{{ gg.player_2.username }}'s Total:</strong> {{ match.tiebreaker.player_2_total }}</p>
+                {% endif %}
+            {% endwith %}
+        {% else %}
+            <p>No tiebreaker information available.</p>
+        {% endif %}
+
+        <button id="tiebreaker-button" onclick="openTiebreakerPopup()">Submit Your Tiebreaker Score</button>
+    </div>
+
+    <!-- Tiebreaker Popup -->
+    <div id="tiebreaker-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span class="close" onclick="closeTiebreakerPopup()">&times;</span>
+            <h2>Tiebreaker Submission</h2>
+            <form id="tiebreaker-form">
+                <label for="tiebreaker-score">Enter your tiebreaker score:</label>
+                <input type="number" id="tiebreaker-score" name="tiebreaker-score" required>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     </div>
-    {% endif %}
 
-    <!-- Player 1 and 2 Games -->
+    <hr>
+
+    <!-- Golden Game Section -->
+    {% with gg=match.golden_game %}
+        {% if gg %}
+            {% include "portal/match/_game_card.html" with game=gg slot_label="Golden Game" dom_id="golden-game-id" is_golden=True %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Per-player game cards -->
     <div class="player-games-container">
         <div class="player-games">
             <h3>{{ match.player_1.username }}'s Games</h3>
-            {% if match.player_1_game_1.event %}
-                <div class="small-game-event" id="player-1-game-1-id" value="{{ match.player_1_game_1.id }}" onclick="openPlayer1Game1Popup()">
-                    <h4><strong>{{ match.player_1_game_1.event.group }} - {{ match.player_1_game_1.event.sport_title }} - 
-                        <script>
-                            document.write(new Date('{{ match.player_1_game_1.event.commence_time }}').toLocaleString())
-                        </script>
-                    </strong></h4>
-                    <div class="golden-game">
-                        <div class="team">
-                            {% if match.player_1_game_1.event.home_team_team.logo_url %}
-                                <img src="{{ match.player_1_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.home_team_team }}">
-                            {% endif %}
-                            <h4>{{ match.player_1_game_1.event.home_team_team }}</h4>
-                        </div>
-            
-                        <div class="team">
-                            {% if match.player_1_game_1.event.away_team_team.logo_url %}
-                                <img src="{{ match.player_1_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_1.event.away_team_team }}">
-                            {% endif %}
-                            <h4>{{ match.player_1_game_1.event.away_team_team }}</h4>
-                        </div>
-                    </div>
-                    
-                    <!-- Bet Information -->
-                    <div class="bet-info">
-                        <h4>Bet Details:</h4>
-                        <p><strong>Market:</strong> 
-                            {% if match.player_1_game_1.bet.market.key == 'h2h' %}
-                                Head to Head
-                            {% elif match.player_1_game_1.bet.market.key == 'spreads' %}
-                                Spread
-                            {% elif match.player_1_game_1.bet.market.key == 'totals' %}
-                                Totals
-                            {% else %}
-                                {{ match.player_1_game_1.bet.market.key }}
-                            {% endif %}
-                        </p>
-                        <p><strong>{{ match.player_1_game_1.owner.username }}'s Selection:</strong> {{ match.player_1_game_1.bet.owner_outcome}}</p>
-                        <p><strong>{{ match.player_1_game_1.player_2.username }}'s Selection:</strong> {{ match.player_1_game_1.bet.player_2_outcome}}</p>
-
-                        <p><strong>Status:</strong> 
-                            {% if match.player_1_game_1_completed %}
-                                Completed
-                            {% else %}
-                                Pending
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="correct-outcomes">
-                        <div class="correct-outcomes-header">
-                            <i class="fas fa-trophy"></i>
-                            <span>Player Picks</span>
-                        </div>
-                        <div class="avatar-container">
-                            <div class="avatar-wrapper {% if match.player_1_game_1_completed %}{% if match.player_1_game_1.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_1.avatar %}
-                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_1.username }}</span>
-                            </div>
-                            <div class="avatar-wrapper {% if match.player_1_game_1_completed %}{% if match.player_1_game_1.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_2.avatar %}
-                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_2.username }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <p>No pick for Game 1</p>
-            {% endif %}
-            {% if match.player_1_game_2.event %}
-            <div class="small-game-event" id="player-1-game-2-id" value="{{ match.player_1_game_2.id }}" onclick="openPlayer1Game2Popup()">
-                <h4><strong>{{ match.player_1_game_2.event.group }} - {{ match.player_1_game_2.event.sport_title }} - 
-                    <script>
-                        document.write(new Date('{{ match.player_1_game_2.event.commence_time }}').toLocaleString())
-                    </script>
-                </strong></h4>
-                <div class="golden-game">
-                    <div class="team">
-                        {% if match.player_1_game_2.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.home_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_2.event.home_team_team }}</h4>
-                    </div>
-        
-                    <div class="team">
-                        {% if match.player_1_game_2.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_2.event.away_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_2.event.away_team_team }}</h4>
-                    </div>
-                </div>
-                
-                    <!-- Bet Information -->
-                    <div class="bet-info">
-                        <h4>Bet Details:</h4>
-                        <p><strong>Market:</strong> 
-                            {% if match.player_1_game_2.bet.market.key == 'h2h' %}
-                                Head to Head
-                            {% elif match.player_1_game_2.bet.market.key == 'spreads' %}
-                                Spread
-                            {% elif match.player_1_game_2.bet.market.key == 'totals' %}
-                                Totals
-                            {% else %}
-                                {{ match.player_1_game_2.bet.market.key }}
-                            {% endif %}
-                        </p>
-                        <p><strong>{{ match.player_1_game_2.owner.username }}'s Selection:</strong> {{ match.player_1_game_2.bet.owner_outcome}}</p>
-                        <p><strong>{{ match.player_1_game_2.player_2.username }}'s Selection:</strong> {{ match.player_1_game_2.bet.player_2_outcome}}</p>
-
-                        <p><strong>Status:</strong> 
-                            {% if match.player_1_game_2_completed %}
-                                Completed
-                            {% else %}
-                                Pending
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="correct-outcomes">
-                        <div class="correct-outcomes-header">
-                            <i class="fas fa-trophy"></i>
-                            <span>Player Picks</span>
-                        </div>
-                        <div class="avatar-container">
-                            <div class="avatar-wrapper {% if match.player_1_game_2_completed %}{% if match.player_1_game_2.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_1.avatar %}
-                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_1.username }}</span>
-                            </div>
-                            <div class="avatar-wrapper {% if match.player_1_game_2_completed %}{% if match.player_1_game_2.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_2.avatar %}
-                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_2.username }}</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            {% else %}
-                <p>No pick for Game 2</p>
-            {% endif %}
-            {% if match.player_1_game_3.event %}
-            <div class="small-game-event" id="player-1-game-3-id" value="{{ match.player_1_game_3.id }}" onclick="openPlayer1Game3Popup()">
-                <h4><strong>{{ match.player_1_game_3.event.group }} - {{ match.player_1_game_3.event.sport_title }} - 
-                    <script>
-                        document.write(new Date('{{ match.player_1_game_3.event.commence_time }}').toLocaleString())
-                    </script>
-                </strong></h4>
-                <div class="golden-game">
-                    <div class="team">
-                        {% if match.player_1_game_3.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.home_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_3.event.home_team_team }}</h4>
-                    </div>
-        
-                    <div class="team">
-                        {% if match.player_1_game_3.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_3.event.away_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_3.event.away_team_team }}</h4>
-                    </div>
-                </div>
-                
-                <!-- Bet Information -->
-                    <!-- Bet Information -->
-                    <div class="bet-info">
-                        <h4>Bet Details:</h4>
-                        <p><strong>Market:</strong> 
-                            {% if match.player_1_game_3.bet.market.key == 'h2h' %}
-                                Head to Head
-                            {% elif match.player_1_game_3.bet.market.key == 'spreads' %}
-                                Spread
-                            {% elif match.player_1_game_3.bet.market.key == 'totals' %}
-                                Totals
-                            {% else %}
-                                {{ match.player_1_game_3.bet.market.key }}
-                            {% endif %}
-                        </p>
-                        <p><strong>{{ match.player_1_game_3.owner.username }}'s Selection:</strong> {{ match.player_1_game_3.bet.owner_outcome}}</p>
-                        <p><strong>{{ match.player_1_game_3.player_2.username }}'s Selection:</strong> {{ match.player_1_game_3.bet.player_2_outcome}}</p>
-
-                        <p><strong>Status:</strong> 
-                            {% if match.player_1_game_3_completed %}
-                                Completed
-                            {% else %}
-                                Pending
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="correct-outcomes">
-                        <div class="correct-outcomes-header">
-                            <i class="fas fa-trophy"></i>
-                            <span>Player Picks</span>
-                        </div>
-                        <div class="avatar-container">
-                            <div class="avatar-wrapper {% if match.player_1_game_3_completed %}{% if match.player_1_game_3.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_1.avatar %}
-                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_1.username }}</span>
-                            </div>
-                            <div class="avatar-wrapper {% if match.player_1_game_3_completed %}{% if match.player_1_game_3.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_2.avatar %}
-                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_2.username }}</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            {% else %}
-                <p>No pick for Game 3</p>
-            {% endif %}
-            {% if match.player_1_game_4.event %}
-            <div class="small-game-event" id="player-1-game-4-id" value="{{ match.player_1_game_4.id }}" onclick="openPlayer1Game4Popup()">
-                <h4><strong>{{ match.player_1_game_4.event.group }} - {{ match.player_1_game_4.event.sport_title }} - 
-                    <script>
-                        document.write(new Date('{{ match.player_1_game_4.event.commence_time }}').toLocaleString())
-                    </script>
-                </strong></h4>
-                <div class="golden-game">
-                    <div class="team">
-                        {% if match.player_1_game_4.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.home_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_4.event.home_team_team }}</h4>
-                    </div>
-        
-                    <div class="team">
-                        {% if match.player_1_game_4.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_4.event.away_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_4.event.away_team_team }}</h4>
-                    </div>
-                </div>
-                
-                <!-- Bet Information -->
-                    <!-- Bet Information -->
-                    <div class="bet-info">
-                        <h4>Bet Details:</h4>
-                        <p><strong>Market:</strong> 
-                            {% if match.player_1_game_4.bet.market.key == 'h2h' %}
-                                Head to Head
-                            {% elif match.player_1_game_4.bet.market.key == 'spreads' %}
-                                Spread
-                            {% elif match.player_1_game_4.bet.market.key == 'totals' %}
-                                Totals
-                            {% else %}
-                                {{ match.player_1_game_4.bet.market.key }}
-                            {% endif %}
-                        </p>
-                        <p><strong>{{ match.player_1_game_4.owner.username }}'s Selection:</strong> {{ match.player_1_game_4.bet.owner_outcome}}</p>
-                        <p><strong>{{ match.player_1_game_4.player_2.username }}'s Selection:</strong> {{ match.player_1_game_4.bet.player_2_outcome}}</p>
-
-                        <p><strong>Status:</strong> 
-                            {% if match.player_1_game_4_completed %}
-                                Completed
-                            {% else %}
-                                Pending
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="correct-outcomes">
-                        <div class="correct-outcomes-header">
-                            <i class="fas fa-trophy"></i>
-                            <span>Player Picks</span>
-                        </div>
-                        <div class="avatar-container">
-                            <div class="avatar-wrapper {% if match.player_1_game_4_completed %}{% if match.player_1_game_4.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_1.avatar %}
-                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_1.username }}</span>
-                            </div>
-                            <div class="avatar-wrapper {% if match.player_1_game_4_completed %}{% if match.player_1_game_4.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_2.avatar %}
-                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_2.username }}</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            {% else %}
-                <p>No pick for Game 4</p>
-            {% endif %}
-            {% if match.player_1_game_5.event %}
-            <div class="small-game-event" id="player-1-game-5-id" value="{{ match.player_1_game_5.id }}" onclick="openPlayer1Game5Popup()">
-                <h4><strong>{{ match.player_1_game_5.event.group }} - {{ match.player_1_game_5.event.sport_title }} - 
-                    <script>
-                        document.write(new Date('{{ match.player_1_game_5.event.commence_time }}').toLocaleString())
-                    </script>
-                </strong></h4>
-                <div class="golden-game">
-                    <div class="team">
-                        {% if match.player_1_game_5.event.home_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.home_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_5.event.home_team_team }}</h4>
-                    </div>
-        
-                    <div class="team">
-                        {% if match.player_1_game_5.event.away_team_team.logo_url %}
-                            <img src="{{ match.player_1_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_1_game_5.event.away_team_team }}">
-                        {% endif %}
-                        <h4>{{ match.player_1_game_5.event.away_team_team }}</h4>
-                    </div>
-                </div>
-                
-                    <!-- Bet Information -->
-                    <div class="bet-info">
-                        <h4>Bet Details:</h4>
-                        <p><strong>Market:</strong> 
-                            {% if match.player_1_game_5.bet.market.key == 'h2h' %}
-                                Head to Head
-                            {% elif match.player_1_game_5.bet.market.key == 'spreads' %}
-                                Spread
-                            {% elif match.player_1_game_5.bet.market.key == 'totals' %}
-                                Totals
-                            {% else %}
-                                {{ match.player_1_game_5.bet.market.key }}
-                            {% endif %}
-                        </p>
-                        <p><strong>{{ match.player_1_game_5.owner.username }}'s Selection:</strong> {{ match.player_1_game_5.bet.owner_outcome}}</p>
-                        <p><strong>{{ match.player_1_game_5.player_2.username }}'s Selection:</strong> {{ match.player_1_game_5.bet.player_2_outcome}}</p>
-
-                        <p><strong>Status:</strong> 
-                            {% if match.player_1_game_5_completed %}
-                                Completed
-                            {% else %}
-                                Pending
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="correct-outcomes">
-                        <div class="correct-outcomes-header">
-                            <i class="fas fa-trophy"></i>
-                            <span>Player Picks</span>
-                        </div>
-                        <div class="avatar-container">
-                            <div class="avatar-wrapper {% if match.player_1_game_5_completed %}{% if match.player_1_game_5.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_1.avatar %}
-                                    <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_1.username }}</span>
-                            </div>
-                            <div class="avatar-wrapper {% if match.player_1_game_5_completed %}{% if match.player_1_game_5.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                                {% if match.player_2.avatar %}
-                                    <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% else %}
-                                    <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                                {% endif %}
-                                <span class="username">{{ match.player_2.username }}</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            {% else %}
-                <p>No pick for Game 5</p>
-            {% endif %}
+            {% for game in player_1_games %}
+                {% include "portal/match/_game_card.html" with game=game slot_label="Game"|add:" "|add:game.slot|stringformat:"d" dom_id="player-1-game-"|add:game.slot|stringformat:"d" is_golden=False %}
+            {% empty %}
+                <p>No slots created.</p>
+            {% endfor %}
         </div>
+
         <div class="player-games">
             <h3>{{ match.player_2.username }}'s Games</h3>
-            {% if match.player_2_game_1.event %}
-    <div class="small-game-event" id="player-2-game-1-id" value="{{ match.player_2_game_1.id }}" onclick="openPlayer2Game1Popup()">
-        <h4><strong>{{ match.player_2_game_1.event.group }} - {{ match.player_2_game_1.event.sport_title }} - 
-            <script>
-                document.write(new Date('{{ match.player_2_game_1.event.commence_time }}').toLocaleString())
-            </script>
-        </strong></h4>
-        <div class="golden-game">
-            <div class="team">
-                {% if match.player_2_game_1.event.home_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_1.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.home_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_1.event.home_team_team }}</h4>
-            </div>
-
-            <div class="team">
-                {% if match.player_2_game_1.event.away_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_1.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_1.event.away_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_1.event.away_team_team }}</h4>
-            </div>
-        </div>
-        
-        <!-- Bet Information -->
-        <div class="bet-info">
-            <h4>Bet Details:</h4>
-            <p><strong>Market:</strong> 
-                {% if match.player_2_game_1.bet.market.key == 'h2h' %}
-                    Head to Head
-                {% elif match.player_2_game_1.bet.market.key == 'spreads' %}
-                    Spread
-                {% elif match.player_2_game_1.bet.market.key == 'totals' %}
-                    Totals
-                {% else %}
-                    {{ match.player_2_game_1.bet.market.key }}
-                {% endif %}
-            </p>
-            <p><strong>{{ match.player_2_game_1.owner.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_1.player_2.username }}'s Selection:</strong> {{ match.player_2_game_1.bet.player_2_outcome}}</p>
-
-            <p><strong>Status:</strong> 
-                {% if match.player_2_game_1_completed %}
-                    Completed
-                {% else %}
-                    Pending
-                {% endif %}
-            </p>
-        </div>
-        <div class="correct-outcomes">
-            <div class="correct-outcomes-header">
-                <i class="fas fa-trophy"></i>
-                <span>Player Picks</span>
-            </div>
-            <div class="avatar-container">
-                <div class="avatar-wrapper {% if match.player_2_game_1_completed %}{% if match.player_2_game_1.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_2.avatar %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-                <div class="avatar-wrapper {% if match.player_2_game_1_completed %}{% if match.player_2_game_1.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_1.avatar %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_1.username }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-{% else %}
-    <p>No pick for Game 1</p>
-{% endif %}
-
-{% if match.player_2_game_2.event %}
-    <div class="small-game-event" id="player-2-game-2-id" value="{{ match.player_2_game_2.id }}" onclick="openPlayer2Game2Popup()">
-        <h4><strong>{{ match.player_2_game_2.event.group }} - {{ match.player_2_game_2.event.sport_title }} - 
-            <script>
-                document.write(new Date('{{ match.player_2_game_2.event.commence_time }}').toLocaleString())
-            </script>
-        </strong></h4>
-        <div class="golden-game">
-            <div class="team">
-                {% if match.player_2_game_2.event.home_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_2.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.home_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_2.event.home_team_team }}</h4>
-            </div>
-
-            <div class="team">
-                {% if match.player_2_game_2.event.away_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_2.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_2.event.away_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_2.event.away_team_team }}</h4>
-            </div>
-        </div>
-        
-        <!-- Bet Information -->
-        <div class="bet-info">
-            <h4>Bet Details:</h4>
-            <p><strong>Market:</strong> 
-                {% if match.player_2_game_2.bet.market.key == 'h2h' %}
-                    Head to Head
-                {% elif match.player_2_game_2.bet.market.key == 'spreads' %}
-                    Spread
-                {% elif match.player_2_game_2.bet.market.key == 'totals' %}
-                    Totals
-                {% else %}
-                    {{ match.player_2_game_2.bet.market.key }}
-                {% endif %}
-            </p>
-            <p><strong>{{ match.player_2_game_2.owner.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_2.player_2.username }}'s Selection:</strong> {{ match.player_2_game_2.bet.player_2_outcome}}</p>
-
-            <p><strong>Status:</strong> 
-                {% if match.player_2_game_2_completed %}
-                    Completed
-                {% else %}
-                    Pending
-                {% endif %}
-            </p>
-        </div>
-        <div class="correct-outcomes">
-            <div class="correct-outcomes-header">
-                <i class="fas fa-trophy"></i>
-                <span>Player Picks</span>
-            </div>
-            <div class="avatar-container">
-                <div class="avatar-wrapper {% if match.player_2_game_2_completed %}{% if match.player_2_game_2.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_2.avatar %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-                <div class="avatar-wrapper {% if match.player_2_game_2_completed %}{% if match.player_2_game_2.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_1.avatar %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_1.username }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-{% else %}
-    <p>No pick for Game 2</p>
-{% endif %}
-
-{% if match.player_2_game_3.event %}
-    <div class="small-game-event" id="player-2-game-3-id" value="{{ match.player_2_game_3.id }}" onclick="openPlayer2Game3Popup()">
-        <h4><strong>{{ match.player_2_game_3.event.group }} - {{ match.player_2_game_3.event.sport_title }} - 
-            <script>
-                document.write(new Date('{{ match.player_2_game_3.event.commence_time }}').toLocaleString())
-            </script>
-        </strong></h4>
-        <div class="golden-game">
-            <div class="team">
-                {% if match.player_2_game_3.event.home_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_3.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.home_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_3.event.home_team_team }}</h4>
-            </div>
-
-            <div class="team">
-                {% if match.player_2_game_3.event.away_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_3.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_3.event.away_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_3.event.away_team_team }}</h4>
-            </div>
-        </div>
-        
-        <!-- Bet Information -->
-        <div class="bet-info">
-            <h4>Bet Details:</h4>
-            <p><strong>Market:</strong> 
-                {% if match.player_2_game_3.bet.market.key == 'h2h' %}
-                    Head to Head
-                {% elif match.player_2_game_3.bet.market.key == 'spreads' %}
-                    Spread
-                {% elif match.player_2_game_3.bet.market.key == 'totals' %}
-                    Totals
-                {% else %}
-                    {{ match.player_2_game_3.bet.market.key }}
-                {% endif %}
-            </p>
-            <p><strong>{{ match.player_2_game_3.owner.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_3.player_2.username }}'s Selection:</strong> {{ match.player_2_game_3.bet.player_2_outcome}}</p>
-
-            <p><strong>Status:</strong> 
-                {% if match.player_2_game_3_completed %}
-                    Completed
-                {% else %}
-                    Pending
-                {% endif %}
-            </p>
-        </div>
-        <div class="correct-outcomes">
-            <div class="correct-outcomes-header">
-                <i class="fas fa-trophy"></i>
-                <span>Player Picks</span>
-            </div>
-            <div class="avatar-container">
-                <div class="avatar-wrapper {% if match.player_2_game_3_completed %}{% if match.player_2_game_3.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_2.avatar %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-                <div class="avatar-wrapper {% if match.player_2_game_3_completed %}{% if match.player_2_game_3.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_1.avatar %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_1.username }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-{% else %}
-    <p>No pick for Game 3</p>
-{% endif %}
-
-{% if match.player_2_game_4.event %}
-    <div class="small-game-event" id="player-2-game-4-id" value="{{ match.player_2_game_4.id }}" onclick="openPlayer2Game4Popup()">
-        <h4><strong>{{ match.player_2_game_4.event.group }} - {{ match.player_2_game_4.event.sport_title }} - 
-            <script>
-                document.write(new Date('{{ match.player_2_game_4.event.commence_time }}').toLocaleString())
-            </script>
-        </strong></h4>
-        <div class="golden-game">
-            <div class="team">
-                {% if match.player_2_game_4.event.home_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_4.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.home_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_4.event.home_team_team }}</h4>
-            </div>
-
-            <div class="team">
-                {% if match.player_2_game_4.event.away_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_4.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_4.event.away_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_4.event.away_team_team }}</h4>
-            </div>
-        </div>
-        
-        <!-- Bet Information -->
-        <div class="bet-info">
-            <h4>Bet Details:</h4>
-            <p><strong>Market:</strong> 
-                {% if match.player_2_game_4.bet.market.key == 'h2h' %}
-                    Head to Head
-                {% elif match.player_2_game_4.bet.market.key == 'spreads' %}
-                    Spread
-                {% elif match.player_2_game_4.bet.market.key == 'totals' %}
-                    Totals
-                {% else %}
-                    {{ match.player_2_game_4.bet.market.key }}
-                {% endif %}
-            </p>
-            <p><strong>{{ match.player_2_game_4.owner.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_4.player_2.username }}'s Selection:</strong> {{ match.player_2_game_4.bet.player_2_outcome}}</p>
-
-            <p><strong>Status:</strong> 
-                {% if match.player_2_game_4_completed %}
-                    Completed
-                {% else %}
-                    Pending
-                {% endif %}
-            </p>
-        </div>
-        <div class="correct-outcomes">
-            <div class="correct-outcomes-header">
-                <i class="fas fa-trophy"></i>
-                <span>Player Picks</span>
-            </div>
-            <div class="avatar-container">
-                <div class="avatar-wrapper {% if match.player_2_game_4_completed %}{% if match.player_2_game_4.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_2.avatar %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-                <div class="avatar-wrapper {% if match.player_2_game_4_completed %}{% if match.player_2_game_4.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_1.avatar %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_1.username }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-{% else %}
-    <p>No pick for Game 4</p>
-{% endif %}
-
-{% if match.player_2_game_5.event %}
-    <div class="small-game-event" id="player-2-game-5-id" value="{{ match.player_2_game_5.id }}" onclick="openPlayer2Game5Popup()">
-        <h4><strong>{{ match.player_2_game_5.event.group }} - {{ match.player_2_game_5.event.sport_title }} - 
-            <script>
-                document.write(new Date('{{ match.player_2_game_5.event.commence_time }}').toLocaleString())
-            </script>
-        </strong></h4>
-        <div class="golden-game">
-            <div class="team">
-                {% if match.player_2_game_5.event.home_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_5.event.home_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.home_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_5.event.home_team_team }}</h4>
-            </div>
-
-            <div class="team">
-                {% if match.player_2_game_5.event.away_team_team.logo_url %}
-                    <img src="{{ match.player_2_game_5.event.away_team_team.logo_url.url }}" alt="{{ match.player_2_game_5.event.away_team_team }}">
-                {% endif %}
-                <h4>{{ match.player_2_game_5.event.away_team_team }}</h4>
-            </div>
-        </div>
-        
-        <!-- Bet Information -->
-        <div class="bet-info">
-            <h4>Bet Details:</h4>
-            <p><strong>Market:</strong> 
-                {% if match.player_2_game_5.bet.market.key == 'h2h' %}
-                    Head to Head
-                {% elif match.player_2_game_5.bet.market.key == 'spreads' %}
-                    Spread
-                {% elif match.player_2_game_5.bet.market.key == 'totals' %}
-                    Totals
-                {% else %}
-                    {{ match.player_2_game_5.bet.market.key }}
-                {% endif %}
-            </p>
-            <p><strong>{{ match.player_2_game_5.owner.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.owner_outcome}}</p>
-            <p><strong>{{ match.player_2_game_5.player_2.username }}'s Selection:</strong> {{ match.player_2_game_5.bet.player_2_outcome}}</p>
-
-            <p><strong>Status:</strong> 
-                {% if match.player_2_game_5_completed %}
-                    Completed
-                {% else %}
-                    Pending
-                {% endif %}
-            </p>
-        </div>
-        <div class="correct-outcomes">
-            <div class="correct-outcomes-header">
-                <i class="fas fa-trophy"></i>
-                <span>Player Picks</span>
-            </div>
-            <div class="avatar-container">
-                <div class="avatar-wrapper {% if match.player_2_game_5_completed %}{% if match.player_2_game_5.bet.owner_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_2.avatar %}
-                        <img src="{{ match.player_2.avatar.url }}" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/2" alt="{{ match.player_2.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-                <div class="avatar-wrapper {% if match.player_2_game_5_completed %}{% if match.player_2_game_5.bet.player_2_outcome_correct %}correct{% else %}incorrect{% endif %}{% else %}pending{% endif %}">
-                    {% if match.player_1.avatar %}
-                        <img src="{{ match.player_1.avatar.url }}" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% else %}
-                        <img src="https://robohash.org/1" alt="{{ match.player_1.username }}" class="avatar-small">
-                    {% endif %}
-                    <span class="username">{{ match.player_2.username }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-{% else %}
-    <p>No pick for Game 5</p>
-{% endif %}
-                           
+            {% for game in player_2_games %}
+                {% include "portal/match/_game_card.html" with game=game slot_label="Game"|add:" "|add:game.slot|stringformat:"d" dom_id="player-2-game-"|add:game.slot|stringformat:"d" is_golden=False %}
+            {% empty %}
+                <p>No slots created.</p>
+            {% endfor %}
         </div>
     </div>
 
-    <!-- Loading Overlay - Place this right after the opening <div class="match-detail"> -->
+    <!-- Loading Overlay -->
     <div id="loading-overlay" style="display: none;">
         <div class="loading-spinner"></div>
         <p>Processing...</p>
     </div>
 
-    <!-- Event Popup -->
-    <div id="event-popup" style="display: none;">
-        <!-- Add dynamic event content here -->
-    </div>
-
-    <!-- Golden Game Popup -->
-    <div id="golden-game-popup" class="popup" style="display: none;">
+    <!-- Game Detail / Selection Popup -->
+    <div id="game-popup" class="popup" style="display: none;">
         <div class="popup-content">
             <span class="close" onclick="closeGamePopup()">&times;</span>
-            <h2>Golden Game Selection</h2>
+            <h2>Make Your Pick</h2>
             <hr class="divider">
-            <div id="golden-game-popup-card">
-                <!-- Game details will be loaded here -->
-            </div>
+            <div id="game-popup-card"></div>
             <hr class="divider">
-
-            <!-- New section for markets and outcomes -->
-            <div id="golden-game-markets">
-                <!-- Markets and outcomes will be loaded here -->
-            </div>
-
+            <div id="game-popup-markets"></div>
             <hr class="divider">
         </div>
     </div>
 
     <!-- Upload Popup -->
-    <div id="upload-popup" class="popup">
+    <div id="upload-popup" class="popup" style="display: none;">
         <div class="popup-content">
             <span class="close" onclick="closeUploadPopup()">&times;</span>
             <h2>Upload Your Pick</h2>
             <hr class="divider">
-
-                <div id="event-list">
-                    {% if available_events %}
-                        {% for event in available_events %}
-                            <div class="event-container">
-                                <button class="event-card" data-event-id="{{ event.id }}">
-                                    <div class="event-info">
-                                        <div class="team">
-                                            <img src="{{ event.home_team_team.logo_url }}" alt="{{ event.home_team_team.name }}">
-                                            <h4>{{ event.home_team_team.team_name }}</h4>
-                                        </div>
-                                        <div class="vs-text">
-                                            <h4>Vs</h4>
-                                        </div>
-                                        <div class="team">
-                                            <img src="{{ event.away_team_team.logo_url }}" alt="{{ event.away_team_team.name }}">
-                                            <h4>{{ event.away_team_team.team_name }}</h4>
-                                        </div>
-                        
-                                        <div class="event-body">
-                                            <p><strong>Sport:</strong> {{ event.sport_title }}</p>
-                                            <p><strong>Description:</strong> {{ event.description }}</p>
-                                            <p><strong>Commence Time:</strong>
-                                                <script>
-                                                    document.write(new Date('{{ event.commence_time }}').toLocaleString())
-                                                </script>
-                                            </p>
-                                        </div>
+            <div id="event-list">
+                {% if available_events %}
+                    {% for event in available_events %}
+                        <div class="event-container">
+                            <button class="event-card" data-event-id="{{ event.event_id }}">
+                                <div class="event-info">
+                                    <div class="team">
+                                        {% if event.home_team %}<h4>{{ event.home_team.name }}</h4>{% endif %}
                                     </div>
-                                </button>
-
-                                <div class="bookmakers-section" id="bookmakers-section-{{ event.id }}">
-                                    <h2>Bookmakers</h2>
-                                    <div class="bookmakers-container">
-                                        <!-- Bookmakers will be loaded dynamically here -->
+                                    <div class="vs-text"><h4>Vs</h4></div>
+                                    <div class="team">
+                                        {% if event.away_team %}<h4>{{ event.away_team.name }}</h4>{% endif %}
+                                    </div>
+                                    <div class="event-body">
+                                        <p><strong>Sport:</strong> {{ event.sport }}</p>
+                                        <p><strong>League:</strong> {{ event.league.name }}</p>
+                                        <p><strong>Start Time:</strong>
+                                            <script>document.write(new Date('{{ event.start_time }}').toLocaleString())</script>
+                                        </p>
                                     </div>
                                 </div>
+                            </button>
+                            <div class="markets-section" id="markets-section-{{ event.event_id }}" style="display: none;">
+                                <h2>Markets</h2>
+                                <div class="markets-container"></div>
                             </div>
-                        {% endfor %}
-                    
-                    {% else %}
-                        <p class="no-events-message">No events available for this match period.</p>
-                    {% endif %}
-                </div>
-                
-
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-events-message">No events available for this match period.</p>
+                {% endif %}
+            </div>
             <hr class="divider">
-            <form id="upload-form" enctype="multipart/form-data">
+            <form id="upload-form">
                 {% csrf_token %}
                 <button type="submit">Submit</button>
             </form>
@@ -1046,596 +220,266 @@
 
 <style>
     #loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
         z-index: 10000;
     }
-
     .loading-spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        border: 4px solid #f3f3f3; border-top: 4px solid #3498db;
+        border-radius: 50%; width: 40px; height: 40px;
         animation: spin 1s linear infinite;
     }
-
-    #loading-overlay p {
-        color: white;
-        margin-top: 10px;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Ensure popups have a lower z-index than the loading overlay */
-    .popup {
-        z-index: 9999;
-    }
+    #loading-overlay p { color: white; margin-top: 10px; }
+    @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
+    .popup { z-index: 9999; }
+    .selection.selected { outline: 2px solid #3498db; }
 </style>
 
 <script>
-    let selected_event = null;
-    let selected_outcome = null;
+let selectedEventId = null;
+let selectedSelectionId = null;
 
-    document.querySelectorAll('.event-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const eventId = this.dataset.eventId;
-            selected_event = eventId;
-            selected_outcome = null; // Reset selected outcome when a new event is selected
-            const selectedEventContainer = this.closest('.event-container');
-            const selectedBookmakerSection = document.getElementById(`bookmakers-section-${eventId}`);
-            
-            // Hide all event containers except the selected one
-            document.querySelectorAll('.event-container').forEach(container => {
-                if (container !== selectedEventContainer) {
-                    container.style.display = 'none';
-                }
-            });
+const URL_EVENT_MARKETS = '{% url "core-portal:portal-match-event-market" "00000000-0000-0000-0000-000000000000" %}';
+const URL_EVENT_OUTCOMES = '{% url "core-portal:portal-match-event-outcomes" 0 %}';
+const URL_PLAYER_2_PICK = '{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}';
+const URL_UPLOAD_PICK = '{% url "core-portal:portal-upload_pick" match.id %}';
+const URL_TIEBREAKER = '{% url "core-portal:portal-upload-tiebreaker-score" match.id %}';
+const CSRF_TOKEN = '{{ csrf_token }}';
 
-            // Show the selected event container
-            selectedEventContainer.style.display = 'block';
+function showLoading() { document.getElementById('loading-overlay').style.display = 'flex'; }
+function hideLoading() { document.getElementById('loading-overlay').style.display = 'none'; }
 
-            // Hide all bookmaker sections
-            document.querySelectorAll('.bookmakers-section').forEach(section => {
-                section.style.display = 'none';
-            });
-
-            // Show the selected bookmaker section
-            selectedBookmakerSection.style.display = 'block';
-
-            // Deselect all event cards
-            document.querySelectorAll('.event-card').forEach(otherCard => {
-                otherCard.classList.remove('selected');
-            });
-
-            // Select the clicked event card
-            this.classList.add('selected');
-
-            // Show the back button
-            document.getElementById('back-to-events').style.display = 'block';
-
-            // Fetch and display bookmakers for the selected event
-            fetchBookmakers(eventId);
-
-            console.log('Selected Event ID:', selected_event);
-        });
-    });
-
-    function fetchBookmakers(eventId) {
-        console.log('Fetching bookmakers for event:', eventId);
-        
-        // Convert eventId to UUID format
-        const uuidEventId = convertToUUID(eventId);
-        
-        const url = `{% url "core-portal:portal-match-event-outcomes" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', uuidEventId);
-        
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => {
-            console.log('Response received:', response);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+// --- Per-game popup: shows the locked event + markets, lets user pick a Selection.
+function openGamePopupById(gameId) {
+    const url = URL_EVENT_MARKETS.replace('00000000-0000-0000-0000-000000000000', gameId);
+    fetch(url)
+        .then(r => r.json())
         .then(data => {
-
-
-            const bookmakerContainer = document.querySelector(`#bookmakers-section-${eventId} .bookmakers-container`);
-            const bookmakers=data.event_bookmakers.bookmakers;
-            
-            if (!bookmakers || bookmakers.length === 0) {
-                bookmakerContainer.innerHTML = '<p class="no-bookmakers">No Bookmakers</p>';
-                return;
-            }
-
-
-            bookmakers.forEach(bookmaker => {
-                const bookmakerElement = document.createElement('div');
-                bookmakerElement.className = 'bookmaker';
-                bookmakerElement.innerHTML = `
-                    <h3>${bookmaker.title}</h3>
-                    ${bookmaker.markets.map(market => `
-                        <div class="market" data-key="${market.key}">
-                            <h4 class="market-title">
-                                ${market.key === 'h2h' ? 'Head 2 Head' :
-                                  market.key === 'totals' ? 'Over / Under' :
-                                  market.key === 'spreads' ? 'Spreads' :
-                                  market.title}
-                            </h4>
-                            <ul>
-                                ${market.outcomes.map(outcome => `
-                                    <li class="outcome" data-outcome-id="${outcome.id}">
-                                        <span class="outcome-name">${outcome.name}</span>
-                                        <span class="point">${outcome.point || ''}</span>
-                                        <span class="price">${outcome.price}</span>
-                                    </li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    `).join('')}
-                `;
-                bookmakerContainer.appendChild(bookmakerElement);
-            });
-
-            // Add event listeners to the newly created outcomes
-            addOutcomeEventListeners();
+            renderGamePopup(gameId, data);
+            document.getElementById('game-popup').style.display = 'block';
         })
-        .catch(error => {
-            console.error('Error in fetchBookmakers:', error);
-            const bookmakerContainer = document.querySelector(`#bookmakers-section-${eventId} .bookmakers-container`);
-            if (bookmakerContainer) {
-                bookmakerContainer.innerHTML = `<p class="error-message">Error loading bookmakers: ${error.message}. Please try again.</p>`;
-            } else {
-                console.error(`Bookmaker container not found for event ${eventId} during error handling`);
-            }
-        });
+        .catch(err => { console.error(err); window.toast('Failed to load game.', {variant: 'danger'}); });
+}
+
+function renderGamePopup(gameId, data) {
+    const card = document.getElementById('game-popup-card');
+    const event = data.event;
+    if (event) {
+        selectedEventId = event.event_id;
+        card.innerHTML = `
+            <div class="golden-game">
+                <div class="team"><h4>${event.home_team ? event.home_team.name : 'TBD'}</h4></div>
+                <div class="team"><h4>${event.away_team ? event.away_team.name : 'TBD'}</h4></div>
+            </div>
+            <p><strong>Sport:</strong> ${event.sport || ''}</p>
+            <p><strong>League:</strong> ${event.league ? event.league.name : ''}</p>
+            <p><strong>Start:</strong> ${new Date(event.start_time).toLocaleString()}</p>
+        `;
+    } else {
+        card.innerHTML = '<p>No event locked to this slot yet.</p>';
     }
 
-    function convertToUUID(id) {
-        // Remove any non-hexadecimal characters
-        id = id.replace(/[^0-9a-f]/gi, '');
-        
-        // Pad the string to ensure it's long enough
-        while (id.length < 32) {
-            id += '0';
-        }
-        
-        // Insert hyphens to create UUID format
-        return id.substr(0,8) + '-' + id.substr(8,4) + '-' + id.substr(12,4) + '-' + id.substr(16,4) + '-' + id.substr(20);
+    const markets = document.getElementById('game-popup-markets');
+    markets.innerHTML = '';
+
+    // Show what's already picked, plus the option to pick a new selection.
+    const existing = [];
+    if (data.owner_market) existing.push({ side: 'Owner', market: data.owner_market, outcome: data.owner_outcome });
+    if (data.player_2_market) existing.push({ side: 'Opponent', market: data.player_2_market, outcome: data.player_2_outcome });
+
+    if (existing.length) {
+        const el = document.createElement('div');
+        el.innerHTML = '<h3>Existing picks</h3>' + existing.map(e =>
+            `<p><strong>${e.side}:</strong> ${e.outcome ? e.outcome.label : '—'} (${e.market.category})</p>`
+        ).join('');
+        markets.appendChild(el);
     }
 
-    function addOutcomeEventListeners() {
-        document.querySelectorAll('.outcome').forEach(outcome => {
-            outcome.addEventListener('click', function() {
-                const outcomeId = this.dataset.outcomeId;
-                selected_outcome = outcomeId;
-
-                // Deselect all outcomes
-                document.querySelectorAll('.outcome').forEach(otherOutcome => {
-                    otherOutcome.classList.remove('selected');
-                });
-
-                // Select the clicked outcome
-                this.classList.add('selected');
-
-                console.log('Selected Outcome ID:', selected_outcome);
-            });
-        });
+    // Pull the full markets list so the user can pick a Selection.
+    if (event) {
+        fetch(URL_EVENT_OUTCOMES.replace(/\/0\//, `/${event.event_id}/`))
+            .then(r => r.json())
+            .then(payload => renderMarketSelectors(gameId, payload.event ? payload.event.markets : []));
     }
+}
 
-    // Add a "Back" button to return to the list of events
-    const backButton = document.createElement('button');
-    backButton.textContent = 'Back to All Events';
-    backButton.id = 'back-to-events';
-    backButton.style.display = 'none';
-    document.querySelector('#event-list').insertAdjacentElement('beforebegin', backButton);
+function renderMarketSelectors(gameId, marketList) {
+    const container = document.getElementById('game-popup-markets');
+    if (!marketList || !marketList.length) {
+        container.innerHTML += '<p>No markets available for this event yet.</p>';
+        return;
+    }
+    const wrap = document.createElement('div');
+    wrap.innerHTML = '<h3>Pick a Selection</h3>';
+    marketList.forEach(market => {
+        const m = document.createElement('div');
+        m.className = 'market';
+        m.innerHTML = `
+            <h4>${market.category} — ${market.scope}${market.line != null ? ' @ ' + market.line : ''}</h4>
+            <ul class="selections-list">
+                ${market.selections.map(s => `
+                    <li class="selection" data-selection-id="${s.selection_id}">
+                        ${s.label} @ ${s.odds.decimal} (${s.odds.american})
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+        wrap.appendChild(m);
+    });
+    container.appendChild(wrap);
 
-    backButton.addEventListener('click', function() {
-        // Show all event containers
-        document.querySelectorAll('.event-container').forEach(container => {
-            container.style.display = 'block';
+    container.querySelectorAll('.selection').forEach(li => {
+        li.addEventListener('click', () => {
+            container.querySelectorAll('.selection').forEach(o => o.classList.remove('selected'));
+            li.classList.add('selected');
+            selectedSelectionId = li.dataset.selectionId;
         });
-
-        // Hide all bookmaker sections
-        document.querySelectorAll('.bookmakers-section').forEach(section => {
-            section.style.display = 'none';
-        });
-
-        // Deselect all event cards and outcomes
-        document.querySelectorAll('.event-card, .outcome').forEach(element => {
-            element.classList.remove('selected');
-        });
-
-        // Hide the back button
-        this.style.display = 'none';
-
-        // Reset selected event and outcome
-        selected_event = null;
-        selected_outcome = null;
     });
 
-    // Modify the existing form submission
-    document.getElementById('upload-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (selected_event && selected_outcome) {
-            showLoading(); // Show loading overlay
-            
-            const data = {
-                event_id: selected_event,
-                player_choice: selected_outcome
-            };
+    const submit = document.createElement('button');
+    submit.textContent = 'Submit Selection';
+    submit.addEventListener('click', () => submitGameSelection(gameId));
+    container.appendChild(submit);
+}
 
-            fetch('{% url "core-portal:portal-upload_pick" match.id %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                hideLoading(); // Hide loading overlay
-                alert('Pick uploaded successfully!');
-                window.location.reload();
-            })
-            .catch((error) => {
-                hideLoading(); // Hide loading overlay
-                console.error('Error:', error);
-                alert('Error uploading pick. Please try again.');
-            });
-        } else {
-            alert('Please select both an event and an outcome before submitting.');
-        }
+function submitGameSelection(gameId) {
+    if (!selectedEventId || !selectedSelectionId) {
+        window.toast('Pick a selection first.', {variant: 'info'});
+        return;
+    }
+    showLoading();
+    const body = JSON.stringify({ event_id: selectedEventId, player_choice: selectedSelectionId });
+    const url = URL_PLAYER_2_PICK.replace('00000000-0000-0000-0000-000000000000', gameId);
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
+        body,
+    })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(() => { hideLoading(); window.toast('Pick saved!', {variant: 'success'}); window.location.reload(); })
+    .catch(err => { hideLoading(); console.error(err); window.toast('Pick failed: ', {variant: 'danger'}); });
+}
+
+// --- Upload popup: choose an event, fetch its markets, pick a selection, post.
+document.querySelectorAll('.event-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const eventId = this.dataset.eventId;
+        selectedEventId = eventId;
+        selectedSelectionId = null;
+
+        document.querySelectorAll('.event-container').forEach(c => {
+            c.style.display = c.contains(this) ? 'block' : 'none';
+        });
+        document.querySelectorAll('.markets-section').forEach(s => s.style.display = 'none');
+        const marketsSection = document.getElementById(`markets-section-${eventId}`);
+        marketsSection.style.display = 'block';
+
+        document.querySelectorAll('.event-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+        document.getElementById('back-to-events').style.display = 'block';
+
+        loadMarketsForUploadPopup(eventId);
     });
+});
 
-    function openPopup() {
-        document.getElementById("event-popup").style.display = "block";
-    }
+function loadMarketsForUploadPopup(eventId) {
+    const container = document.querySelector(`#markets-section-${eventId} .markets-container`);
+    container.innerHTML = '<p>Loading…</p>';
+    fetch(URL_EVENT_OUTCOMES.replace(/\/0\//, `/${eventId}/`))
+        .then(r => r.json())
+        .then(payload => {
+            const markets = (payload.event || {}).markets || [];
+            if (!markets.length) { container.innerHTML = '<p>No markets available.</p>'; return; }
+            container.innerHTML = markets.map(market => `
+                <div class="market" data-market-id="${market.market_id}">
+                    <h4>${market.category} — ${market.scope}${market.line != null ? ' @ ' + market.line : ''}</h4>
+                    <ul>
+                        ${market.selections.map(s => `
+                            <li class="selection" data-selection-id="${s.selection_id}">
+                                ${s.label} @ ${s.odds.decimal} (${s.odds.american})
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `).join('');
 
-    function openGoldenGamePopup() {
-
-        let gameElement = document.getElementById('golden-game-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer1Game1Popup() {
-
-        let gameElement = document.getElementById('player-1-game-1-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer1Game2Popup() {
-
-        let gameElement = document.getElementById('player-1-game-2-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer1Game3Popup() {
-
-        let gameElement = document.getElementById('player-1-game-3-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer1Game4Popup() {
-
-        let gameElement = document.getElementById('player-1-game-4-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-
-    function openPlayer1Game5Popup() {
-
-        let gameElement = document.getElementById('player-1-game-5-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-
-    function openPlayer2Game1Popup() {
-
-        let gameElement = document.getElementById('player-2-game-1-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer2Game2Popup() {
-
-        let gameElement = document.getElementById('player-2-game-2-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer2Game3Popup() {
-
-        let gameElement = document.getElementById('player-2-game-3-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer2Game4Popup() {
-
-        let gameElement = document.getElementById('player-2-game-4-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-    function openPlayer2Game5Popup() {
-
-        let gameElement = document.getElementById('player-2-game-5-id');
-        let gameId = gameElement.getAttribute('value');
-        openGamePopup(gameId)
-    }
-
-
-
-
-
-    function openGamePopup(gameId) {
-        document.getElementById("golden-game-popup").style.display = "block";
-        
-        // Fetch markets and outcomes for the golden game
-
-        fetch(`{% url "core-portal:portal-match-event-market" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', gameId))
-            .then(response => response.json())
-            .then(data => {
-                displayGame(data);
-                displayGameMarketsAndOutcomes(gameId,data);
-            })
-            .catch(error => {
-                console.error('Error fetching golden game markets:', error);
-            });
-        selected_event = data.event.id;
-    }
-
-    function displayGame(data) {
-        const gameContainer = document.getElementById('golden-game-popup-card');
-        gameContainer.innerHTML = '';
-        const event = data.event;
-        selected_event = event.id;
-
-        const gameElement = document.createElement('div');
-        gameElement.className = "golden-game";
-        gameElement.innerHTML = `
-            <div class="team">
-                ${event.home_team_team.logo_url 
-                    ? `<img src="${event.home_team_team.logo_url}" alt="${event.home_team}">`
-                    : `<h4>${event.home_team}</h4>`
-                }
-                <p><strong>Sport:</strong> ${event.sport_title}</p>
-            </div>
-            <div class="team">
-                ${event.away_team_team.logo_url 
-                    ? `<img src="${event.away_team_team.logo_url}" alt="${event.away_team}">`
-                    : `<h4>${event.away_team}</h4>`
-                }
-                <p><strong>Sport:</strong> ${event.sport_title}</p>
-            </div>
-        `;
-        
-        const infoElement = document.createElement('div');
-        infoElement.className = "event-info";
-        infoElement.innerHTML = `
-            <p><strong>Description:</strong> ${event.description}</p>
-            <p><strong>Commence Time:</strong> ${new Date(event.commence_time).toLocaleString()}</p>
-        `;
-
-        gameContainer.appendChild(gameElement);
-        gameContainer.appendChild(infoElement);
-    }
-
-
-    function displayGameMarketsAndOutcomes(gameId,data) {
-        
-        const marketsContainer = document.getElementById('golden-game-markets');
-        marketsContainer.innerHTML = '';
-        console.log('data ', data);
-        const event_market = data.event_market;
-        const outcomes = event_market.outcomes;
-        selected_event = data.event.id;
-
-        if (outcomes && outcomes.length > 0) {
-            const marketElement = document.createElement('div');
-            marketElement.className = 'market';
-            marketElement.innerHTML = `
-                <h3>${event_market.key === 'h2h' ? 'Head to Head' : 
-                      event_market.key === 'spreads' ? 'Spread' : 
-                      event_market.key === 'totals' ? 'Totals' : 
-                      event_market.key}</h3>
-                <ul class="outcomes-list">
-                    ${outcomes.map(outcome => `
-                        <li class="outcome" data-outcome-id="${outcome.id}">
-                            <span>${outcome.name}</span>
-                            ${outcome.point ? `<span>Point: ${outcome.point}</span>` : ''}
-                            <span>Price: ${outcome.price}</span>
-                        </li>
-                    `).join('')}
-                </ul>
-            `;
-            marketsContainer.appendChild(marketElement);
-
-            // Add click event listeners to outcomes
-            marketsContainer.querySelectorAll('.outcome').forEach(outcomeElement => {
-                outcomeElement.addEventListener('click', function() {
-                    // Remove 'selected' class from all outcomes
-                    marketsContainer.querySelectorAll('.outcome').forEach(el => el.classList.remove('selected'));
-                    // Add 'selected' class to clicked outcome
-                    this.classList.add('selected');
-                    // Update selected_outcome
-                    selected_outcome = this.dataset.outcomeId;
-                    console.log('Selected Golden Game Outcome:', selected_outcome);
+            container.querySelectorAll('.selection').forEach(li => {
+                li.addEventListener('click', () => {
+                    container.querySelectorAll('.selection').forEach(o => o.classList.remove('selected'));
+                    li.classList.add('selected');
+                    selectedSelectionId = li.dataset.selectionId;
                 });
             });
-        } else {
-            marketsContainer.innerHTML = '<p>No markets available for this game.</p>';
-        }
-
-        // Add a submit button
-        const submitButton = document.createElement('button');
-        submitButton.textContent = 'Submit Selection';
-        submitButton.addEventListener('click', () =>submitGameSelection(gameId));
-        marketsContainer.appendChild(submitButton);
-    }
-
-    function submitGameSelection(gameId) {
-        if (selected_event && selected_outcome) {
-            showLoading(); // Show loading overlay
-            
-            const data = {
-                event_id: selected_event,
-                player_choice: selected_outcome
-            };
-
-            fetch(`{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', gameId), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                hideLoading(); // Hide loading overlay
-                alert('Outcome selected successfully!');
-                window.location.reload();
-            })
-            .catch((error) => {
-                hideLoading(); // Hide loading overlay
-                console.error('Error:', error);
-                alert('Error uploading pick. Please try again.');
-            });
-        } else {
-            alert('Please select an outcome before submitting.');
-        }
-    }
-
-    function openSmallGameEventPopup(gameId) {
-        document.getElementById("small-game-event-popup").style.display = "block";
-    }
-
-    function openUploadPopup() {
-        document.getElementById("upload-popup").style.display = "block";
-    }
-
-    function closeUploadPopup() {
-        document.getElementById("upload-popup").style.display = "none";
-        selected_event = null;
-        selected_outcome = null;
-    }
-    function closeGamePopup() {
-        document.getElementById("golden-game-popup").style.display = "none";
-        selected_event = null;
-        selected_outcome = null;
-    }
-
-    // Close the popup if the user clicks outside of it
-    window.onclick = function(event) {
-        var popup = document.getElementById("upload-popup");
-        if (event.target == popup) {
-            popup.style.display = "none";
-        }
-    }
-
-    window.onclick = function(event) {
-        var popup = document.getElementById("golden-game-popup");
-        if (event.target == popup) {
-            popup.style.display = "none";
-        }
-    }
-
-    function displayMarketsAndOutcomes(bookmakers){
-        document.querySelectorAll('.bookmaker').forEach(function(bookmakerElement){
-            bookmakerElement.style.display='block';
         })
-    }
+        .catch(err => { console.error(err); container.innerHTML = '<p>Error loading markets.</p>'; });
+}
 
-    function showLoading() {
-        document.getElementById('loading-overlay').style.display = 'flex';
-    }
-
-    function hideLoading() {
-        document.getElementById('loading-overlay').style.display = 'none';
-    }
-
-    function openTiebreakerPopup() {
-        const tiebreakerPopup = document.getElementById("tiebreaker-popup");
-        if (tiebreakerPopup) {
-            tiebreakerPopup.style.display = "block";
-        } else {
-            console.error("Tiebreaker popup element not found.");
-        }
-    }
-
-    function closeTiebreakerPopup() {
-        document.getElementById("tiebreaker-popup").style.display = "none";
-    }
-
-    function submitTiebreakerScore(matchId,total) {
-
-        showLoading(); // Show loading overlay
-        
-        const data = {
-            tiebreaker_score : total
-        };
-
-        fetch(`{% url "core-portal:portal-upload-tiebreaker-score" "00000000-0000-0000-0000-000000000000" %}`.replace('00000000-0000-0000-0000-000000000000', matchId), {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            hideLoading(); // Hide loading overlay
-            alert(' Tiebreaker Score Submitted successfully!');
-            window.location.reload();
-        })
-        .catch((error) => {
-            hideLoading(); // Hide loading overlay
-            console.error('Error:', error);
-            alert('Error uploading Tiebreaker Score. Please try again.');
-        });
-
-    }
-
-    // Add event listener for tiebreaker form submission
-    document.getElementById('tiebreaker-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
-        const total = document.getElementById('tiebreaker-score').value; // Get the tiebreaker score
-        const matchId = '{{ match.id }}'; // Assuming match.id is available in the template
-        submitTiebreakerScore(matchId, total); // Call the function with matchId and total
-        closeTiebreakerPopup(); // Close the popup after submission
+// Back button for the upload popup event list.
+(function setupBackButton() {
+    const eventList = document.getElementById('event-list');
+    if (!eventList) return;
+    const backBtn = document.createElement('button');
+    backBtn.id = 'back-to-events';
+    backBtn.textContent = 'Back to All Events';
+    backBtn.style.display = 'none';
+    eventList.insertAdjacentElement('beforebegin', backBtn);
+    backBtn.addEventListener('click', () => {
+        document.querySelectorAll('.event-container').forEach(c => c.style.display = 'block');
+        document.querySelectorAll('.markets-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.event-card, .selection').forEach(el => el.classList.remove('selected'));
+        backBtn.style.display = 'none';
+        selectedEventId = null;
+        selectedSelectionId = null;
     });
+})();
 
+document.getElementById('upload-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!selectedEventId || !selectedSelectionId) {
+        window.toast('Pick an event and a selection first.', {variant: 'info'});
+        return;
+    }
+    showLoading();
+    fetch(URL_UPLOAD_PICK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
+        body: JSON.stringify({ event_id: selectedEventId, player_choice: selectedSelectionId }),
+    })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(() => { hideLoading(); window.toast('Pick uploaded!', {variant: 'success'}); window.location.reload(); })
+    .catch(err => { hideLoading(); console.error(err); window.toast('Upload failed: ', {variant: 'danger'}); });
+});
+
+function openUploadPopup()  { document.getElementById('upload-popup').style.display = 'block'; }
+function closeUploadPopup() { document.getElementById('upload-popup').style.display = 'none'; selectedEventId=null; selectedSelectionId=null; }
+function closeGamePopup()   { document.getElementById('game-popup').style.display = 'none'; selectedEventId=null; selectedSelectionId=null; }
+
+// Click-outside-to-close for both popups.
+window.addEventListener('click', function(event) {
+    ['upload-popup', 'game-popup', 'tiebreaker-popup'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && event.target === el) el.style.display = 'none';
+    });
+});
+
+// --- Tiebreaker
+function openTiebreakerPopup()  { document.getElementById('tiebreaker-popup').style.display = 'block'; }
+function closeTiebreakerPopup() { document.getElementById('tiebreaker-popup').style.display = 'none'; }
+
+document.getElementById('tiebreaker-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const total = document.getElementById('tiebreaker-score').value;
+    showLoading();
+    fetch(URL_TIEBREAKER, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
+        body: JSON.stringify({ tiebreaker_score: total }),
+    })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(() => { hideLoading(); window.toast('Score submitted!', {variant: 'success'}); window.location.reload(); })
+    .catch(err => { hideLoading(); console.error(err); window.toast('Submit failed: ', {variant: 'danger'}); });
+    closeTiebreakerPopup();
+});
 </script>
-{% endblock %}
+{% endblock content %}

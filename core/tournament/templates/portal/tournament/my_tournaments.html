@@ -1,86 +1,86 @@
-{% extends "portal/base_portal.html" %}
-{% load static %}
+{% extends "portal/base_app.html" %}
+{% load static portal_state portal_qs %}
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/portal/tournament/my_tournament.css' %}">
-{% endblock css %}
+{% block title %}Tournaments{% endblock title %}
 
 {% block content %}
-<div class="tournaments-container">
-    <h1>My Tournaments</h1>
-    <div class="tournaments-content">
-        <div class="filter-and-tournaments">
-            <div class="sidebar">
-                <h2>Filters</h2>
-                <div class="filter-container">
-                    <form method="get">
-                        <input
-                            type="text"
-                            name="query"
-                            placeholder="Search tournaments..."
-                            value="{{ search_query }}"
-                            class="search-bar"
-                        />
-                        <select name="state" onchange="this.form.submit()">
-                            <option value="">All States</option>
-                            {% for state in states %}
-                                <option value="{{ state.key }}" {% if selected_state == state.key %}selected{% endif %}>
-                                    {{ state.title }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                        <div class="date-filters">
-                            <label>
-                                Start Date:
-                                <input
-                                    type="date"
-                                    name="start_date"
-                                    value="{{ start_date }}"
-                                    onchange="this.form.submit()"
-                                />
-                            </label>
-                            <label>
-                                End Date:
-                                <input
-                                    type="date"
-                                    name="end_date"
-                                    value="{{ end_date }}"
-                                    onchange="this.form.submit()"
-                                />
-                            </label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="tournaments-list-table-container">
-                <table class="tournaments-list-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Start Date</th>
-                            <th>State</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tournament in tournaments %}
-                            <tr onclick="window.location.href='{% url 'core-portal:portal-my-tournament-detail' tournament.id %}'">
-                                <td>{{ tournament.name }}</td>
-                                <td>{{ tournament.start_date|date:'F j, Y' }}</td>
-                                <td>{{ tournament.state }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Tournaments</h1>
+        <p class="page-header__subtitle">Your tournaments, past and present.</p>
     </div>
-    <div class="pagination">
-        {% for page_num in tournaments.paginator.page_range %}
-            <a href="?page={{ page_num }}{% if selected_state %}&state={{ selected_state }}{% endif %}{% if search_query %}&query={{ search_query }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}"
-               class="{% if tournaments.number == page_num %}active{% endif %}">
-                {{ page_num }}
-            </a>
+</header>
+
+<form method="get" class="filter-bar">
+    <div class="filter-bar__tabs" role="tablist" aria-label="Filter by status">
+        {% for f in quick_filters %}
+            <button type="submit" name="state" value="{{ f.value }}"
+                    class="filter-bar__tab {% if f.is_active %}is-active{% endif %}"
+                    aria-pressed="{{ f.is_active|yesno:'true,false' }}">
+                {{ f.label }}
+            </button>
         {% endfor %}
     </div>
+    <div class="filter-bar__controls">
+        <div class="field">
+            <input type="text" name="query" class="field-input" placeholder="Search tournaments…" value="{{ search_query }}">
+        </div>
+        <div class="field">
+            <input type="date" name="start_date" class="field-input" value="{{ start_date }}" aria-label="Earliest start date">
+        </div>
+        <div class="field">
+            <input type="date" name="end_date" class="field-input" value="{{ end_date }}" aria-label="Latest start date">
+        </div>
+        <button type="submit" class="btn-ui btn-ui--secondary btn-ui--sm">Apply</button>
+    </div>
+</form>
+
+{% querystring_without_page as qs %}
+
+{% if tournaments.object_list %}
+<div class="card-ui">
+    <table class="table-ui">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Players</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Start</th>
+                <th scope="col">State</th>
+                <th scope="col" aria-label="Open"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tournaments %}
+            <tr>
+                <td>
+                    <a class="table-ui__row-link fw-semibold" href="{% url 'core-portal:core-portal-tournament:portal-my-tournament-detail' t.id %}">
+                        {{ t.name }}
+                    </a>
+                </td>
+                <td>{{ t.accepted_count }} / {{ t.max_accepted_players }}</td>
+                <td>
+                    {% if t.rounds_total %}
+                        <div style="display:flex;align-items:center;gap:var(--space-2);">
+                            <div style="flex:1;height:4px;background:var(--surface-muted);border-radius:2px;overflow:hidden;max-width:120px;">
+                                <div style="height:100%;background:var(--brand-blue);width:{% widthratio t.rounds_completed t.rounds_total 100 %}%;"></div>
+                            </div>
+                            <small class="text-muted">{{ t.rounds_completed }}/{{ t.rounds_total }}</small>
+                        </div>
+                    {% else %}
+                        <small class="text-muted">—</small>
+                    {% endif %}
+                </td>
+                <td>{{ t.start_date|date:"M j, Y" }}</td>
+                <td>{% include "portal/components/_badge.html" with state=t.state %}</td>
+                <td class="text-end"><i class="bi bi-chevron-right" aria-hidden="true" style="color:var(--text-secondary);"></i></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
+{% include "portal/components/_pagination.html" with page_obj=tournaments querystring=qs %}
+{% else %}
+    {% include "portal/components/_empty_state.html" with icon="trophy" title="No tournaments match these filters." body="Try clearing filters or wait for the next round of signups." %}
+{% endif %}
 {% endblock content %}

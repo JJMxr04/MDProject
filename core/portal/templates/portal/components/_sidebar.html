@@ -1,0 +1,11 @@
+{% load portal_nav %}
+<nav class="sidenav" aria-label="Primary">
+    <ul class="sidenav__list">
+        {% sidenav_item url="core-portal:portal-dashboard" icon="house" label="Dashboard" %}
+        {% sidenav_item url="core-portal:upcoming-events" icon="calendar-event" label="Events" prefix="/web/portal/event/" %}
+        {% sidenav_item url="core-portal:portal-my-match-list" icon="controller" label="Matches" prefix="/web/portal/match/" %}
+        {% sidenav_item url="core-portal:core-portal-tournament:portal-my-tournaments" icon="trophy" label="Tournaments" prefix="/web/portal/tournament/" %}
+        {% sidenav_item url="core-portal:friend_search" icon="people" label="Friends" prefix="/web/portal/user/" %}
+        {% sidenav_item url="core-portal:invite-list" icon="envelope" label="Invites" prefix="/web/portal/mail/" %}
+    </ul>
+</nav>

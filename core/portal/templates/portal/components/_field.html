@@ -1,0 +1,10 @@
+{# Expects: field (bound form field). Optional: hint (str). #}
+{% load portal_forms %}
+<div class="field {% if field.errors %}has-error{% endif %}">
+    <label for="{{ field.id_for_label }}" class="field-label">
+        {{ field.label }}{% if field.field.required %}<span aria-hidden="true"> *</span>{% endif %}
+    </label>
+    {{ field|add_class:"field-input" }}
+    {% if hint and not field.errors %}<div class="field-hint">{{ hint }}</div>{% endif %}
+    {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+</div>

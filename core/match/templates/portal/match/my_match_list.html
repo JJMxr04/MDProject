@@ -1,87 +1,83 @@
-{% extends "portal/base_portal.html" %}
-{% load static %}
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_list.css' %}">
-{% endblock css %}
+{% extends "portal/base_app.html" %}
+{% load static portal_state portal_qs %}
+
+{% block title %}My matches{% endblock title %}
 
 {% block content %}
-<div class="matches-container">
-    <h1>My Matches</h1>
-    <div class="matches-content">
-        <div class="filter-and-matches">
-            <!-- Sidebar with Filters -->
-            <div class="sidebar">
-                <h2>Filters</h2>
-                <div class="filter-container">
-                    <form method="get">
-                        <input
-                            type="text"
-                            name="search"
-                            placeholder="Search matches..."
-                            value="{{ search_query }}"
-                            class="search-bar"
-                        />
-                        <select name="state">
-                            <option value="">All States</option>
-                            <option value="accepted" {% if state == "accepted" %}selected{% endif %}>Accepted</option>
-                            <option value="pending" {% if state == "pending" %}selected{% endif %}>Pending</option>
-                            <option value="completed" {% if state == "completed" %}selected{% endif %}>Completed</option>
-                        </select>
-                        <div class="date-filters">
-                            <label>
-                                Start Date:
-                                <input type="date" name="start_date" value="{{ start_date }}" />
-                            </label>
-                            <label>
-                                End Date:
-                                <input type="date" name="end_date" value="{{ end_date }}" />
-                            </label>
-                        </div>
-                        <button type="submit">Filter</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Matches List -->
-            <div class="matches-list-table-container">
-                <table class="matches-list-table">
-                    <thead>
-                        <tr>
-                            <th>Match ID</th>
-                            <th>Player 1</th>
-                            <th>Player 2</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for match in matches %}
-                        <tr onclick="window.location='{% url 'core-portal:portal-my-match-detail' match.id %}'">
-                            <td>{{ match.id }}</td>
-                            <td>{{ match.player_1.username }}</td>
-                            <td>{{ match.player_2.username }}</td>
-                            <td>{{ match.start_date }}</td>
-                            <td>{{ match.end_date }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5">No matches found</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <div class="pagination">
-                    {% for page_num in matches.paginator.page_range %}
-                        <a href="?page={{ page_num }}&search={{ search_query }}&state={{ state }}&start_date={{ start_date }}&end_date={{ end_date }}"
-                           class="{% if matches.number == page_num %}active{% endif %}">
-                           {{ page_num }}
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">My matches</h1>
+        <p class="page-header__subtitle">Matches you've created or accepted.</p>
     </div>
+    <div class="page-header__actions">
+        <a class="btn-ui btn-ui--primary" href="{% url 'core-portal:portal-public-match-list' %}">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i> New match
+        </a>
+    </div>
+</header>
+
+<form method="get" class="filter-bar">
+    <div class="filter-bar__tabs" role="tablist" aria-label="Filter by status">
+        {% for f in quick_filters %}
+            <button type="submit" name="state" value="{{ f.value }}"
+                    class="filter-bar__tab {% if f.is_active %}is-active{% endif %}"
+                    aria-pressed="{{ f.is_active|yesno:'true,false' }}">
+                {{ f.label }}
+            </button>
+        {% endfor %}
+    </div>
+    <div class="filter-bar__controls">
+        <div class="field">
+            <input type="text" name="search" class="field-input" placeholder="Search matches…" value="{{ search_query }}">
+        </div>
+        <div class="field">
+            <input type="date" name="start_date" class="field-input" value="{{ start_date }}" aria-label="Start date">
+        </div>
+        <div class="field">
+            <input type="date" name="end_date" class="field-input" value="{{ end_date }}" aria-label="End date">
+        </div>
+        <button type="submit" class="btn-ui btn-ui--secondary btn-ui--sm">Apply</button>
+    </div>
+</form>
+
+{% querystring_without_page as qs %}
+
+{% if matches.object_list %}
+<div class="card-ui">
+    <table class="table-ui">
+        <thead>
+            <tr>
+                <th scope="col">Opponent</th>
+                <th scope="col">Status</th>
+                <th scope="col">Start</th>
+                <th scope="col">Ends</th>
+                <th scope="col" aria-label="Open"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+            <tr>
+                <td>
+                    <a class="table-ui__row-link d-flex align-items-center gap-3" href="{% url 'core-portal:portal-my-match-detail' match.id %}">
+                        {% if match.opponent %}
+                            {% include "portal/components/_avatar.html" with user=match.opponent size=32 %}
+                            <span>{{ match.opponent.username }}</span>
+                        {% else %}
+                            <span class="text-muted">Awaiting player</span>
+                        {% endif %}
+                    </a>
+                </td>
+                <td>{% include "portal/components/_badge.html" with state=match.match_state %}</td>
+                <td>{{ match.start_date|date:"M j, Y" }}</td>
+                <td>{% if match.end_date %}{{ match.end_date|date:"M j, Y" }}{% else %}—{% endif %}</td>
+                <td class="text-end"><i class="bi bi-chevron-right" aria-hidden="true" style="color: var(--text-secondary);"></i></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-{% endblock %}
+{% include "portal/components/_pagination.html" with page_obj=matches querystring=qs %}
+{% else %}
+    {% include "portal/components/_empty_state.html" with icon="controller" title="No matches yet" body="Create a public match or accept an invite from a friend." action_label="Browse public matches" action_href="/web/portal/match/public/" %}
+{% endif %}
+{% endblock content %}

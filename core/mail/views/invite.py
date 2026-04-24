@@ -25,7 +25,7 @@ def create_invite(request):
             invite.sender = request.user  # Automatically set the sender to the current user
             invite.invited_date = timezone.now()  # Set the invited date to now
             invite.save()
-            return redirect('core-portal:invite_success')  # Redirect to a success page or wherever you want
+            return redirect('core-portal:invite-success')  # Redirect to a success page or wherever you want
     else:
         form = InviteForm()
 
@@ -62,7 +62,7 @@ def accept_invite(request, invite_id):
 
 @login_required(login_url='/auth/login/')
 def success_invite(request):
-    return render(request, 'portl/notifications/invite/invite_success.html')
+    return render(request, 'portal/notifications/invite/invite_success.html')
 
 
 @login_required(login_url='/auth/login/')
@@ -74,4 +74,4 @@ def invite_list(request):
     }
 
 
-    return render(request, 'portl/notifications/invite/invite_list.html', content)
+    return render(request, 'portal/notifications/invite/invite_list.html', content)

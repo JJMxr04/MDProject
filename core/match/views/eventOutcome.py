@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from core.match.models import Match
 from core.match.serializers.match import MatchSerializer
 from core.event.models import Event
-from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
+from core.event.serializers.event import EventSerializer, EventWithMarketsSerializer
 from core.game.models import Game
 from django.contrib.auth.decorators import login_required
 import json
@@ -21,10 +21,7 @@ from datetime import datetime, timedelta
 def event_outcomes(request, event_id):
 
     event = get_object_or_404(Event, id=event_id)
-    event_bookmaker_serializer = EventBookmakerSerializer(event).data
-
-    # Return the serialized data as a JSON response
     return JsonResponse({
-        'event_bookmakers': event_bookmaker_serializer
+        'event': EventWithMarketsSerializer(event).data,
     })
 

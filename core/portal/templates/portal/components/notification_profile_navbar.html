@@ -24,9 +24,6 @@
         <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>
         <li><a class="dropdown-item" href="{% url 'core-portal:friend_search' %}">Friends</a></li>
         <li><hr class="dropdown-divider" /></li>
-        {% if not user.is_writer or user.is_staff %}
-            <li><a class="dropdown-item" href="{% url 'core-portal:manage-subscriptions' %}">Manage Subscriptions</a></li>
-        {% endif %} 
         <li>
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}

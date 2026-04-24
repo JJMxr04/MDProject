@@ -1,4 +1,4 @@
-{% extends "portal/base_portal.html" %}
+{% extends "portal/base_app.html" %}
 {% load static %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/public_match_detail.css' %}">
@@ -133,14 +133,14 @@
                 window.location.href = "{% url 'core-portal:portal-my-match-detail' match.id %}"; // Redirect to match detail
             } else {
                 hideLoading();
-                alert("Error accepting match."); // Notify user of error
+                window.toast("Error accepting match.", {variant: 'danger'}); // Notify user of error
                 showPopup(); // Reopen the confirmation popup if there was an error
             }
         })
         .catch(error => {
             hideLoading();
             console.error('Error:', error);
-            alert("An error occurred."); // Notify user of error
+            window.toast("An error occurred.", {variant: 'danger'}); // Notify user of error
             showPopup(); // Reopen the confirmation popup if there was an error
         });
     }

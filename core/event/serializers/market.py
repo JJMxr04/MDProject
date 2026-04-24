@@ -1,28 +1,37 @@
 from rest_framework import serializers
-from core.event.models.market import Market
-from core.event.serializers.outcome import OutcomeSerializer
-from core.abstract.serializers import AbstractSerializer
-from uuid import uuid4
 
-class MarketSerializer(AbstractSerializer):
-    id = serializers.UUIDField(required=False, format='hex', allow_null=True)
-    created = serializers.DateTimeField(read_only=True)
-    updated = serializers.DateTimeField(read_only=True)
-    outcomes = OutcomeSerializer(many=True, read_only=True)  # Include outcomes associated with this market
+from core.event.models import Market
+
+from .selection import SelectionSerializer
+
+
+class MarketSerializer(serializers.ModelSerializer):
+    market_id = serializers.CharField(source="id", read_only=True)
+    selections = SelectionSerializer(many=True, read_only=True)
+    line = serializers.SerializerMethodField()
+    subject = serializers.SerializerMethodField()
 
     class Meta:
         model = Market
-        fields = '__all__'
-        read_only_fields = ['created', 'updated']
+        fields = [
+            "market_id",
+            "category",
+            "type",
+            "scope",
+            "line",
+            "side",
+            "subject",
+            "suspended",
+            "is_live",
+            "last_updated",
+            "selections",
+        ]
 
-    def create(self, validated_data):
-        # Generate a UUID if 'id' is not provided
-        if 'id' not in validated_data:
-            validated_data['id'] = uuid4()
+    def get_line(self, obj):
+        return float(obj.line) if obj.line is not None else None
 
-        return super().create(validated_data)
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['outcomes'] = OutcomeSerializer(instance.outcomes.all(), many=True).data
-        return rep
+    def get_subject(self, obj):
+        if obj.subject_team_id:
+            team = obj.subject_team
+            return {"kind": "team", "id": team.id, "name": team.name}
+        return None

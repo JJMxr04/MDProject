@@ -3,8 +3,9 @@ from django.http import JsonResponse
 from core.match.models import Match, TieBreaker
 from core.match.serializers.match import MatchSerializer
 from core.game.models import Game
+from core.game.models.game import PickError
 from core.event.models import Event
-from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
+from core.event.serializers.event import EventSerializer, EventWithMarketsSerializer
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -34,30 +35,37 @@ from core.match.decorators import player_in_match_required, player_in_game_requi
 @player_in_match_required
 def my_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
-    is_player_in_match = request.user.id in [match.player_1.id, match.player_2.id]
-    
-    # Get the current time in UTC and format it as a string
-    current_time_utc = timezone.now() + timedelta(hours=8)
-    current_time_str = current_time_utc.strftime("%Y-%m-%dT%H:%M:%SZ")  # Format to match the string format
+    is_player_in_match = match.player_2 is not None and request.user.id in [
+        match.player_1.id,
+        match.player_2.id,
+    ]
 
-    # Filtering events to only include those that are 8 hours or greater from now in UTC and not completed
+    # Events at least 8 hours out, before match end_date, not yet completed
+    cutoff = timezone.now() + timedelta(hours=8)
     if match.end_date:
         events = Event.objects.filter(
-            commence_time__gte=current_time_str,  # Compare with the string representation
-            commence_time__lte=match.end_date,
-            completed=False  # Filter for events that are not completed
-        ).order_by('commence_time')  # Sort events by commence_time from earliest to latest
+            start_time__gte=cutoff,
+            start_time__lte=match.end_date,
+            completed=False,
+        ).select_related("sport", "home_team", "away_team").order_by("start_time")
     else:
-        events = Event.objects.none()  # Return an empty queryset if end_date is None
-    
+        events = Event.objects.none()
+
     events_ser = EventSerializer(events, many=True).data if events else []
+
+    player_1_games = list(match.regular_games_for(match.player_1)) if match.player_1 else []
+    player_2_games = (
+        list(match.regular_games_for(match.player_2)) if match.player_2 else []
+    )
 
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
         'available_events': events_ser,
+        'player_1_games': player_1_games,
+        'player_2_games': player_2_games,
     }
-    
+
     return render(request, 'portal/match/my_match_detail.html', context)
 
 
@@ -103,11 +111,16 @@ def player_2_select_outcome(request, game_id):
     user = request.user
 
     try:
-        # Attempt to update the game object
-        Game.objects.update_by_id(id=game.id, current_user=user, data=data)
+        Game.objects.upload_pick(
+            current_user=user,
+            match=game.match,
+            event_id=data.get("event_id") or (game.event_id if game.event else None),
+            selection_id=data.get("player_choice"),
+        )
         return JsonResponse({'status': 'success'})
+    except PickError as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     except Exception as e:
-        # Log any errors during the update process
         print(f"Error updating game with id {game_id}: {e}")
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     

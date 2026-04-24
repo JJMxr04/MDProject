@@ -1,0 +1,104 @@
+{% comment %}
+Per-game card. Renders one Game (regular slot or golden).
+
+Required context:
+  - game        : Game instance (or None for an empty slot)
+  - slot_label  : human label for the slot (e.g. "Game 3", "Golden Game")
+  - dom_id      : unique DOM id for the click handler
+  - match       : the parent Match (for player_1 / player_2 lookups)
+  - is_golden   : bool, drives the styling
+{% endcomment %}
+
+{% if game and game.event %}
+    {% with bet=game.bet event=game.event %}
+    <div class="{% if is_golden %}golden-game-card{% else %}small-game-event{% endif %}"
+         id="{{ dom_id }}" data-game-id="{{ game.id }}"
+         onclick="openGamePopupById('{{ game.id }}')">
+        <h3>{{ slot_label }}</h3>
+        <h4><strong>
+            {{ event.tournament_name }}{% if event.sport %} — {{ event.sport.name }}{% endif %}
+            <script>document.write(new Date('{{ event.start_time|date:"c" }}').toLocaleString())</script>
+        </strong></h4>
+
+        <div class="golden-game">
+            <div class="team">
+                {% if event.home_team.logo_url %}
+                    <img src="{{ event.home_team.logo_url.url }}" alt="{{ event.home_team.name }}">
+                {% endif %}
+                <h4>{{ event.home_team.name|default:"TBD" }}</h4>
+            </div>
+            <div class="team">
+                {% if event.away_team.logo_url %}
+                    <img src="{{ event.away_team.logo_url.url }}" alt="{{ event.away_team.name }}">
+                {% endif %}
+                <h4>{{ event.away_team.name|default:"TBD" }}</h4>
+            </div>
+        </div>
+
+        <div class="bet-info">
+            <h4>Bet Details:</h4>
+            {% if bet.owner_outcome %}
+                <p><strong>Market:</strong>
+                    {% with cat=bet.owner_outcome.market.category %}
+                        {% if cat == "MONEYLINE" %}Moneyline
+                        {% elif cat == "SPREAD" %}Spread
+                        {% elif cat == "TOTAL" %}Total
+                        {% elif cat == "PROPS_GAME" %}Game Prop
+                        {% elif cat == "PROPS_TEAM" %}Team Prop
+                        {% else %}{{ cat }}{% endif %}
+                    {% endwith %}
+                    ({{ bet.owner_outcome.market.scope }})
+                </p>
+                <p><strong>{{ game.owner.username }}'s Selection:</strong>
+                    {{ bet.owner_outcome.label }}
+                    @ {{ bet.owner_decimal_odds_at_pick|default:bet.owner_outcome.decimal_odds }}
+                </p>
+            {% else %}
+                <p><strong>{{ game.owner.username }}'s Selection:</strong> <em>not picked</em></p>
+            {% endif %}
+
+            {% if bet.player_2_outcome %}
+                <p><strong>{{ game.player_2.username }}'s Selection:</strong>
+                    {{ bet.player_2_outcome.label }}
+                    @ {{ bet.player_2_decimal_odds_at_pick|default:bet.player_2_outcome.decimal_odds }}
+                </p>
+            {% else %}
+                <p><strong>{{ game.player_2.username }}'s Selection:</strong> <em>not picked</em></p>
+            {% endif %}
+
+            <p><strong>Status:</strong>
+                {% if game.is_settled %}Completed{% else %}Pending{% endif %}
+            </p>
+        </div>
+
+        <div class="correct-outcomes">
+            <div class="correct-outcomes-header">
+                <i class="fas fa-trophy"></i>
+                <span>Player Picks</span>
+            </div>
+            <div class="avatar-container">
+                {% with owner_status=bet.owner_outcome.settlement_status p2_status=bet.player_2_outcome.settlement_status %}
+                <div class="avatar-wrapper {% if owner_status == 'WON' %}correct{% elif owner_status == 'LOST' %}incorrect{% else %}pending{% endif %}">
+                    {% if game.owner.avatar %}
+                        <img src="{{ game.owner.avatar.url }}" alt="{{ game.owner.username }}" class="avatar-small">
+                    {% else %}
+                        <img src="https://robohash.org/{{ game.owner.username }}" alt="{{ game.owner.username }}" class="avatar-small">
+                    {% endif %}
+                    <span class="username">{{ game.owner.username }}</span>
+                </div>
+                <div class="avatar-wrapper {% if p2_status == 'WON' %}correct{% elif p2_status == 'LOST' %}incorrect{% else %}pending{% endif %}">
+                    {% if game.player_2.avatar %}
+                        <img src="{{ game.player_2.avatar.url }}" alt="{{ game.player_2.username }}" class="avatar-small">
+                    {% else %}
+                        <img src="https://robohash.org/{{ game.player_2.username }}" alt="{{ game.player_2.username }}" class="avatar-small">
+                    {% endif %}
+                    <span class="username">{{ game.player_2.username }}</span>
+                </div>
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+{% else %}
+    <p>No pick for {{ slot_label }}</p>
+{% endif %}

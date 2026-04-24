@@ -1,0 +1,100 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django: Runserver",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["runserver", "0.0.0.0:8000"],
+            "django": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Migrate",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["migrate"],
+            "django": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings"
+            }
+        },
+        {
+            "name": "Django: Make Migrations",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["makemigrations"],
+            "django": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings"
+            }
+        },
+        {
+            "name": "Django: Shell",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["shell"],
+            "django": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings"
+            }
+        },
+        {
+            "name": "Django: Collect Static",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["collectstatic", "--noinput"],
+            "django": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings"
+            }
+        },
+        {
+            "name": "Celery: Worker",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "module": "celery",
+            "args": ["-A", "CoreRoot", "worker", "--loglevel=info", "--pool=solo"],
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings",
+                "OBJC_DISABLE_INITIALIZE_FORK_SAFETY": "YES"
+            }
+        },
+        {
+            "name": "Celery: Beat",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/venv/bin/python",
+            "module": "celery",
+            "args": ["-A", "CoreRoot", "beat", "--loglevel=info"],
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "CoreRoot.settings",
+                "OBJC_DISABLE_INITIALIZE_FORK_SAFETY": "YES"
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack: Django + Celery",
+            "configurations": [
+                "Django: Runserver",
+                "Celery: Worker",
+                "Celery: Beat"
+            ]
+        }
+    ]
+}

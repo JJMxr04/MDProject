@@ -1,0 +1,8 @@
+{# Expects: user (a User instance), size (px, optional, default 40) #}
+<span class="avatar" style="--avatar-size: {{ size|default:40 }}px;" aria-hidden="true">
+    {% if user.avatar %}
+        <img src="{{ user.avatar.url }}" alt="">
+    {% else %}
+        <span class="avatar__initials">{{ user.first_name|default:user.username|slice:":1"|upper }}</span>
+    {% endif %}
+</span>

@@ -1,0 +1,74 @@
+{% extends "portal/base_app.html" %}
+{% load static portal_state %}
+
+{% block title %}Invites{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Invites</h1>
+        <p class="page-header__subtitle">Match and tournament invites sent to you.</p>
+    </div>
+</header>
+
+{% if invites %}
+<div class="card-ui">
+    <ul class="list-group list-group-flush" style="margin:0;">
+        {% for invite in invites %}
+        <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
+            {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
+            <div class="flex-grow-1">
+                <div class="fw-semibold">{{ invite.sender.username }} invited you to a {{ invite.get_type_display }}</div>
+                <div class="small text-muted">
+                    {% include "portal/components/_badge.html" with state=invite.state %}
+                    &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
+                </div>
+            </div>
+            {% if invite.state == 'sent' %}
+            <div class="d-flex gap-2">
+                <button class="btn-ui btn-ui--primary btn-ui--sm" onclick="handleInviteAction('{{ invite.id }}', 'accept')">
+                    Accept
+                </button>
+                <button class="btn-ui btn-ui--secondary btn-ui--sm" onclick="handleInviteAction('{{ invite.id }}', 'reject')">
+                    Decline
+                </button>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+    {% include "portal/components/_empty_state.html" with icon="envelope-open" title="No invites." body="Friends can invite you to matches — your inbox will show them here." %}
+{% endif %}
+{% endblock content %}
+
+{% block scripts %}
+<script>
+function handleInviteAction(inviteId, action) {
+    const overlay = document.querySelector('[data-loading-overlay]');
+    overlay.hidden = false;
+    const url = "{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}".replace('PLACEHOLDER', inviteId);
+    fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+        body: JSON.stringify({'action': action}),
+    })
+    .then(r => r.json())
+    .then(data => {
+        overlay.hidden = true;
+        if (data.success) {
+            window.toast(action === 'accept' ? 'Invite accepted.' : 'Invite declined.', {variant: 'success'});
+            setTimeout(() => window.location.reload(), 600);
+        } else {
+            window.toast('Error processing invite. Please try again.', {variant: 'danger'});
+        }
+    })
+    .catch((err) => {
+        overlay.hidden = true;
+        console.error(err);
+        window.toast('Error processing invite. Please try again.', {variant: 'danger'});
+    });
+}
+</script>
+{% endblock scripts %}

@@ -1,0 +1,17 @@
+{# Expects: label, value, icon (bi-* name), href (optional), trend (optional signed int) #}
+{% if href %}
+<a class="stat-card" href="{{ href }}">
+{% else %}
+<div class="stat-card stat-card--static">
+{% endif %}
+    <div class="stat-card__icon"><i class="bi bi-{{ icon|default:'bar-chart' }}" aria-hidden="true"></i></div>
+    <div class="stat-card__body">
+        <div class="stat-card__label">{{ label }}</div>
+        <div class="stat-card__value">{{ value }}</div>
+        {% if trend is not None and trend != 0 %}
+            <div class="stat-card__trend {% if trend > 0 %}is-up{% else %}is-down{% endif %}">
+                {% if trend > 0 %}+{% endif %}{{ trend }} this week
+            </div>
+        {% endif %}
+    </div>
+{% if href %}</a>{% else %}</div>{% endif %}

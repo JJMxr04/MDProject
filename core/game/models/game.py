@@ -1,141 +1,237 @@
 import random
 import uuid
-from django.db import models
-from core.abstract.models import AbstractModel, AbstractManager
-from datetime import datetime, timedelta
+from datetime import timedelta
+
+from django.db import models, transaction
 from django.utils import timezone
-from core.event.models.bookmaker import Bookmaker
-from core.user.models import User
-# from core.event.models import Event
+
+from core.abstract.models import AbstractManager, AbstractModel
+from core.event.models import Event, Market, Selection
+from core.game.models.bet import Bet
 from core.mail.models import Emails
-from core.game.models.bet import Bet,Outcome, Event,Market
+from core.match.scoring import DEADLINE_BUFFER
+from core.user.models import User
+
+
+class PickError(Exception):
+    """Raised by Game.objects.upload_pick on validation failures."""
+
 
 class GameManager(AbstractManager):
-    def create_game(self, owner, player_2, match, event=None, commence_time=None, deadline_time=None, completed=False,
-                    home_team=None, away_team=None, winner=None,bet_market=None):
-        return self.create(owner=owner, player_2=player_2, match_id=match.id, event=event, commence_time=commence_time,
-                           deadline_time=deadline_time, completed=completed, home_team=home_team,
-                           away_team=away_team, winner=winner,bet=Bet.objects.create_bet(bet_market))
-    
-    def get_owner_correctness(self, game):
-        bet= game.bet
-        event= game.event
-        return Bet.objects.calculate_owner_choice(bet,event)
-    def get_player_2_correctness(self, game):
-        bet= game.bet
-        event= game.event
-        return Bet.objects.calculate_player_2_choice(bet,event)
+    def create_game(self, *, match, owner, player_2, slot: int, is_golden: bool = False, event=None):
+        return self.create(
+            match=match,
+            owner=owner,
+            player_2=player_2,
+            slot=slot,
+            is_golden=is_golden,
+            event=event,
+            bet=Bet.objects.create_bet(),
+        )
 
-    def update_by_id(self, id, current_user, data):
+    @transaction.atomic
+    def upload_pick(self, *, current_user, match, event_id, selection_id):
+        """Owner or opponent picks a Selection for one slot in a Match.
 
+        Returns the Game row that was updated.
+        Raises PickError on validation failures.
 
+        Rules (from api-switch/game-match-audit-plan.md §5.1):
+          - Owner must be picking ≥ 8h before event start.
+          - Opponent must pick before event start.
+          - No two slots in the same Match may share the same (event, market).
+        """
+        if current_user not in (match.player_1, match.player_2):
+            raise PickError("Not a participant of this match")
+        if match.match_state != "accepted":
+            raise PickError("Match not active")
 
+        try:
+            event_pk = int(event_id)
+        except (TypeError, ValueError):
+            raise PickError("Invalid event_id")
+        try:
+            selection_pk = int(selection_id)
+        except (TypeError, ValueError):
+            raise PickError("Invalid selection_id")
 
-        # this function needs to :
-        # 1) if the game is none: return false, false
-        # 2) check if the user making the original request is apart of the game
-        # 3) if its the owner, update the event, and the bets market, and outcome
-        # 4) if its player 2) just update the bet, market and outcome
-        game = self.filter(id=id).first()
-        new_game = False
+        try:
+            selection = Selection.objects.select_related(
+                "market", "market__event"
+            ).get(pk=selection_pk)
+        except Selection.DoesNotExist:
+            raise PickError("Selection not found")
+        if selection.market.event_id != event_pk:
+            raise PickError("Selection does not belong to that event")
 
-        if game is None:
+        event = selection.market.event
+        if event.start_time is None:
+            raise PickError("Event has no start time")
 
-            # If the game does not exist, return false
-            return False, False
+        now = timezone.now()
+        is_owner_side = current_user == match.player_1
+        target_owner = match.player_1 if is_owner_side else match.player_2
 
-        if (current_user != game.owner) and (current_user != game.player_2):
+        # Locate the slot. The owner of a slot is the side whose pick "claims"
+        # the event for that game. If the slot is empty (event is None), the
+        # current user is acting as owner; otherwise they're acting as opponent
+        # on a slot some other user already claimed.
+        owned_slots = list(
+            self.filter(match=match, owner=target_owner).select_related(
+                "bet", "bet__owner_outcome", "bet__player_2_outcome", "event"
+            ).order_by("is_golden", "slot")
+        )
+        # First, check if this user is the opponent on an existing game holding
+        # this event — i.e. the other side already claimed it.
+        opp_game = next(
+            (g for g in self.filter(match=match, player_2=current_user, event_id=event_pk)
+                  .select_related("bet", "event")), None,
+        )
+        if opp_game is not None:
+            return self._apply_opponent_pick(opp_game, selection, now)
 
-            return False, False
+        # Otherwise current user is acting as owner on one of their own slots.
+        # Anti-duplicate: same (event, market) cannot appear twice in this match.
+        existing_market_pairs = set(
+            self.filter(match=match)
+            .exclude(event__isnull=True)
+            .values_list("event_id", "bet__owner_outcome__market_id")
+        )
+        if (event_pk, selection.market_id) in existing_market_pairs:
+            raise PickError("This event/market combination has already been picked")
 
-        if current_user == game.owner:
-            if game.event is None:
-                new_game = True
-                event = Event.objects.get_object_by_id(uuid.UUID(data.get("event_id")))
-                if event is None:
-                    return False, False
-                
-                commence_time_str = event.commence_time
-                # Convert the commence_time string to a datetime object
-                commence_time = timezone.make_aware(datetime.strptime(commence_time_str, '%Y-%m-%dT%H:%M:%SZ'))
-                # Check if the commence time is at least 8 hours from now
-                current_time = timezone.now()
-                if commence_time < current_time + timedelta(hours=8):
-                    return False, False
-                game.event = event
-                game.home_team = event.home_team
-                game.away_team = event.away_team
-                game.commence_time = commence_time
-                game.deadline_time = commence_time - timedelta(hours=8)
-                game.save()
+        # Owner deadline.
+        if event.start_time - now < DEADLINE_BUFFER:
+            raise PickError("Owner picks must be made at least 8 hours before event start")
 
-        if current_user == game.player_2 and game.bet.owner_outcome is None:
-            return False, False
+        # Find first empty slot for this user.
+        empty_slot = next((g for g in owned_slots if g.event_id is None), None)
+        if empty_slot is None:
+            raise PickError("All your slots already have an event")
 
-        # Check if the event has already started
-        current_time = timezone.now()
-        if game.commence_time and game.commence_time <= current_time:
-            return False, False
+        empty_slot.event = event
+        empty_slot.save(update_fields=["event"])
+        Bet.objects.set_owner_outcome(empty_slot.bet, selection)
 
-        if data.get("player_choice"):
-            player_choice = data.get("player_choice")
-            outcome=Outcome.objects.filter(id=player_choice).first()
-            if Outcome is None and current_user != game.owner:
-                return False, False
-            if Outcome is None and current_user == game.owner:
-                Bet.objects.set_market(game.bet,outcome.market)
-            game = self.filter(id=id).first()
+        Emails.send_opponent_pick_notification(empty_slot.player_2, current_user.username)
+        return empty_slot
 
-            if current_user == game.owner:
-                if game.bet.owner_outcome is None:
-                    Bet.objects.set_owner_outcome(game.bet,outcome)
-
-            elif current_user == game.player_2:
-                if game.bet.player_2_outcome is None:
-                    Bet.objects.set_player_2_outcome(game.bet,outcome)
-            if game.bet.is_owner_outcome_processed and game.bet.is_player_2_outcome_processed:
-                game.bet.is_processed
-                game.bet.save()
-        game.save()
-        # Email
-        if current_user == game.owner:
-            Emails.send_opponent_pick_notification(game.player_2,game.owner.username)
-        if current_user == game.player_2:
-            Emails.send_opponent_pick_notification(game.owner,game.player_2.username)
-
-        return new_game, game
+    def _apply_opponent_pick(self, game, selection: Selection, now):
+        if game.event is None or game.event.start_time is None:
+            raise PickError("Slot has no event yet")
+        if game.event.start_time <= now:
+            raise PickError("Event has already started; opponent pick window closed")
+        if selection.market.event_id != game.event_id:
+            raise PickError("Selection does not belong to this game's event")
+        if game.bet.owner_outcome is None:
+            raise PickError("Owner has not picked yet on this slot")
+        Bet.objects.set_player_2_outcome(game.bet, selection)
+        Emails.send_opponent_pick_notification(game.owner, game.player_2.username)
+        return game
 
     def get_golden_game(self, player_1, player_2, match):
-        event = Event.objects.get_random_golden()
-        bookmaker = Bookmaker.objects.filter(event=event).first()
-        markets = Market.objects.filter(bookmaker=bookmaker)
-        market = random.choice(markets)
-        return Game.objects.create_game(player_1, player_2, match, event, event.commence_time, None, event.completed,
-                                        event.home_team, event.away_team,bet_market=market)
+        now = timezone.now()
+        window_start = now + timedelta(days=5)
+        window_end = now + timedelta(days=7)
+        event = (
+            Event.objects.filter(
+                completed=False,
+                start_time__range=(window_start, window_end),
+            )
+            .order_by("?")
+            .first()
+        )
+        bet_market = None
+        if event is not None:
+            markets = list(
+                Market.objects.filter(
+                    event=event, category="MONEYLINE", scope="FULL_GAME"
+                )
+            )
+            bet_market = random.choice(markets) if markets else None
 
-    def game_event_update(self, game, instance):
-        game.winner = instance.winner
-        game.completed = instance.completed
-        game.save()
+        game = self.create_game(
+            match=match,
+            owner=player_1,
+            player_2=player_2,
+            slot=0,
+            is_golden=True,
+            event=event,
+        )
+        if bet_market is not None:
+            # Pre-seed with a default selection (HOME) so the slot displays
+            # something on the UI before either player makes a pick. This is
+            # only auto-data; either player can still override via upload_pick.
+            home_selection = bet_market.selections.filter(type="HOME").first()
+            if home_selection is not None:
+                Bet.objects.set_owner_outcome(game.bet, home_selection)
         return game
 
 
 class Game(AbstractModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_game')
-    player_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player_2_game')
-    match_id = models.CharField(max_length=200, default='0', null=False, blank=False)
-    commence_time = models.DateTimeField(default=None, null=True, blank=True)
-    deadline_time = models.DateTimeField(default=None, null=True, blank=True)
-    completed = models.BooleanField(default=False)
-    home_team = models.CharField(max_length=200, default=None, null=True, blank=True)
-    away_team = models.CharField(max_length=200, default=None, null=True, blank=True)
-    winner = models.CharField(max_length=200, default=None, null=True, blank=True)
-    owner_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
-    player_2_choice = models.CharField(max_length=200, default=None, null=True, blank=True)
-    event = models.ForeignKey(Event, on_delete=models.SET_NULL, related_name='games', null=True, blank=True)
-    bet = models.ForeignKey(Bet, on_delete=models.CASCADE, related_name='game_bet', null=True, blank=True)
+    match = models.ForeignKey(
+        "core_match.Match", on_delete=models.CASCADE, related_name="games"
+    )
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="owner_game"
+    )
+    player_2 = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="player_2_game"
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.PROTECT,
+        related_name="games",
+        null=True,
+        blank=True,
+    )
+    bet = models.OneToOneField(
+        Bet, on_delete=models.CASCADE, related_name="game", null=True, blank=True
+    )
+
+    is_golden = models.BooleanField(default=False)
+    slot = models.SmallIntegerField(default=0)
+
     objects = GameManager()
 
     class Meta:
-        db_table = 'core.game'
+        db_table = "core.game"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["match", "owner", "slot", "is_golden"],
+                name="uq_game_match_owner_slot_golden",
+            ),
+        ]
+
+    @property
+    def commence_time(self):
+        return self.event.start_time if self.event else None
+
+    @property
+    def deadline_time(self):
+        return (self.commence_time - DEADLINE_BUFFER) if self.commence_time else None
+
+    @property
+    def home_team(self):
+        return self.event.home_team if self.event else None
+
+    @property
+    def away_team(self):
+        return self.event.away_team if self.event else None
+
+    @property
+    def winner(self):
+        return self.event.winner if self.event else None
+
+    @property
+    def is_settled(self) -> bool:
+        owner_done = (
+            self.bet.owner_outcome is not None
+            and self.bet.owner_outcome.settlement_status != "PENDING"
+        )
+        player_2_done = (
+            self.bet.player_2_outcome is not None
+            and self.bet.player_2_outcome.settlement_status != "PENDING"
+        )
+        return owner_done and player_2_done

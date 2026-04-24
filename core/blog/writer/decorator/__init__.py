@@ -1,1 +1,0 @@
-from .writerRequired import writer_required, author_required

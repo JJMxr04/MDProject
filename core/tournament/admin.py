@@ -1,14 +1,14 @@
-from django.contrib import admin
-from django.urls import path, reverse
-from django.shortcuts import render
+from django.contrib import admin, messages
 from django.http import Http404, HttpResponseRedirect
-from django.contrib import messages
-from django.utils.html import format_html
-from core.user.models import User
-from .models.tournament import Tournament, Player, Round
-from core.mail.models import Invite
-from uuid import UUID  # Import UUID for type checking
+from django.shortcuts import render
+from django.urls import path, reverse
 from django.utils import timezone
+from django.utils.html import format_html
+
+from core.mail.models import Invite
+from core.user.models import User
+
+from .models.tournament import Player, Round, Tournament
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):

@@ -1,0 +1,179 @@
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #3D7EAA, #FFE47A);
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Container Styling */
+  .container.subscription-container {
+    padding: 2rem;
+    background-color: #fff; /* White background to make content pop */
+    max-width: 1200px;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  /* Section Styling */
+  .section-title {
+    font-size: 2rem;
+    color: #333; /* Darker heading for contrast */
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  /* Adding Extra Space Between Sections */
+  .features-section {
+    margin-bottom: 3rem; /* Add space between the plans and game experience */
+  }
+  
+  .betting-game-section {
+    background-color: #FFE47A; /* Sand yellow background from footer section */
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Tier Card Styling */
+  .single-tier-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 300px;
+    margin: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .single-tier-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .tier-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 1rem 0;
+  }
+  
+  .tier-price {
+    font-size: 1.4rem;
+    color: #e67e22;
+    font-weight: bold;
+  }
+  
+  .tier-description, .tier-benefits li {
+    color: #34495e;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .tier-benefits {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  
+  .tier-benefits li {
+    padding: 0.5rem 0;
+  }
+  
+  /* Button Styling */
+  .btn-primary {
+    margin-top: 1rem;
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    background-color: #5CACEE; /* Matches footer link color */
+    color: white;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1E90FF;
+    transform: translateY(-3px);
+  }
+  
+  .btn-primary:active {
+    background-color: #004085;
+    transform: translateY(1px);
+  }
+  
+  /* Betting Content Styling */
+  .betting-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .betting-info {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-title {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .feature-description, .goals-list li {
+    color: #34495e;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .goals-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  
+  /* Call to Action Section */
+  .cta-section {
+    text-align: center;
+    background-color: #5CACEE;
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 3rem;
+  }
+  
+  .cta-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .cta-description {
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    margin: 0.5rem 0 1.5rem;
+  }
+  
+  /* Pulsing Button Animation */
+  .btn-primary.pulse {
+    background-color: #FFE47A;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    animation: pulse-animation 1.5s infinite;
+  }
+  
+  @keyframes pulse-animation {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  

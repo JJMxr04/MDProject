@@ -5,10 +5,8 @@ from django.core.management.commands.runserver import Command as BaseCommand
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger  # Add this line
 from datetime import datetime
-from core.event.crons.sportUpdate import SportCron
 from core.event.crons.eventUpdate import EventCron
-#
-sportCron = SportCron()
+
 eventCron = EventCron()
 
 
@@ -28,9 +26,6 @@ class Command(BaseCommand):
         scheduler = BackgroundScheduler()
         scheduler.start()
 
-        def sport_cron():
-            sportCron.get_sports()
-
         def event_cron():
             eventCron.update_all_events()
 
@@ -39,18 +34,10 @@ class Command(BaseCommand):
 
 
         scheduler.add_job(
-            sport_cron,
-            trigger=IntervalTrigger(seconds=24*60*60),  # Run every 60 seconds
-            id='sport_cron',
-            name='Print current time',
-            replace_existing=True,
-        )
-
-        scheduler.add_job(
             event_cron,
-            trigger=IntervalTrigger(seconds=6*60*60),  # Run every 60 seconds
+            trigger=IntervalTrigger(seconds=12*60*60),  # every 12 hours (Option A)
             id='event_cron',
-            name='Print current time',
+            name='SofaScore event ingest',
             replace_existing=True,
         )
 

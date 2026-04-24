@@ -6,7 +6,6 @@ from django.http import Http404
 from core.abstract.models import AbstractModel, AbstractManager
 import os
 from django.contrib.auth.hashers import make_password, check_password
-from core.blog.writer.models import Tag
 import random
 import string
 
@@ -112,12 +111,8 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     activated_link = models.BooleanField(default=False)
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
-    created = models.DateTimeField(auto_now=True)
-    updated = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, related_name='users', blank=True,verbose_name="What leagues do you plan on making predictions?")
-    writer_description = models.TextField(null=True)
-    stripe_account_id = models.CharField(max_length=255)
-    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     friends = models.ManyToManyField(
         'self',
         symmetrical=True,

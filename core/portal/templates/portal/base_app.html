@@ -1,0 +1,44 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Portal{% endblock title %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/portal/tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'css/portal/global.css' %}">
+    <link rel="shortcut icon" href="{% static 'assets/Images/favicon.ico' %}" type="image/x-icon">
+
+    {% block css %}{% endblock css %}
+    {% block head_extra %}{% endblock head_extra %}
+</head>
+<body class="app-shell">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+{% include "portal/components/_topbar.html" %}
+
+<aside class="sidebar">
+    {% include "portal/components/_sidebar.html" %}
+</aside>
+
+<div class="content">
+    {% block subnav %}{% endblock subnav %}
+    <main id="main" class="content__inner">
+        {% block content %}{% endblock content %}
+    </main>
+</div>
+
+{% include "portal/components/_toast_host.html" %}
+{% include "portal/components/_loading_overlay.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/portal/toast.js' %}"></script>
+<script src="{% static 'js/portal/shell.js' %}"></script>
+{% block scripts %}{% endblock scripts %}
+{% block javascript %}{% endblock javascript %}
+</body>
+</html>

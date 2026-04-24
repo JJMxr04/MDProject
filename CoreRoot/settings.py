@@ -13,9 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
-from django.urls import reverse_lazy
-import django_heroku
+from datetime import timedelta
 import dj_database_url
 from celery.schedules import crontab
 
@@ -34,10 +32,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-STRIPE_API_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_PUBLISH_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
-STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
-PLATFORM_COST = os.environ.get('PLATFORM_COST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -46,10 +40,10 @@ if os.environ.get('DEBUG') == 'True':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '').split(',')
-# ALLOWED_HOSTS=['localhost']
+ALLOWED_HOSTS = [h for h in os.environ.get("ALLOWED_HOSTS", '').split(',') if h]
+if DEBUG:
+    ALLOWED_HOSTS += ['localhost', '127.0.0.1', 'testserver']
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
-# CORS_ALLOWED_ORIGINS = ["https://paradise-sports-fe-80b62c823ab3.herokuapp.com"]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
@@ -106,7 +100,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    'jazzmin',  # must come before django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,20 +123,14 @@ INSTALLED_APPS = [
     'core',
     'core.user',
     'core.auth',
-    'core.blog',
-    'core.blog.writer',       # This was in the second list only
-    'core.blog.client',       # This was in the second list only
     'core.crons',
     'core.event',
     'core.game',
     'core.match',
     'core.tournament',
     'core.mail',
-    # 'core.ollama',           # Commented out in the second list
     'core.web',
     'core.portal',
-    'core.payments',
-    'core.support',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
@@ -154,6 +142,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -356,154 +345,11 @@ LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired succe
 LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
 
 
-JAZZMIN_SETTINGS = {
-    # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Paradise Sports Admin",
-
-    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Paradise Sports",
-
-    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Paradise Sports",
-
-    # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "logo/paradise_logo_2_normal_100x100.png",
-
-    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": "logo/paradise_logo_2_normal_100x100.png",
-
-    # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": "logo/paradise_logo_2_normal_100x100.png",
-
-    # CSS classes that are applied to the logo above
-    # "site_logo_classes": "img-circle",
-
-    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon":"logo/paradise_logo_2_normal_100x100.png",
-
-    # Welcome text on the login screen
-    "welcome_sign": "Welcome to Paradise Sports",
-
-    # Copyright on the footer
-    "copyright": "Paradise Sports: Media and entertainment",
-
-    # List of model admins to search from the search bar, search bar omitted if excluded
-    # If you want to use a single search field you dont need to use a list, you can use a simple string
-    # "search_model": ["auth.User", "auth.Group"],
-
-    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": 'avatar',
-
-    ############
-    # Top Menu #
-    ############
-
-    # Links to put along the top menu
-    "topmenu_links": [
-
-        # Url that gets reversed (Permissions can be added)
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.is_staff"]},
-
-        # external url that opens in a new window (Permissions can be added)
-        # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-
-        # model admin to link to (Permissions checked against model)
-        # {"model": "auth.User"},
-
-        {"name": "Analytics Dashboard", "url": reverse_lazy("core-admin:admin_dashboard"), "permissions": ["auth.is_staff"]},
-
-        # Portal - using named URL resolved via reverse
-        {"name": "Portal", "url": reverse_lazy("core-portal:portal-dashboard"), "permissions": ["auth.is_staff"], "new_window": True},
-
-        {"name": "Helpdesk", "url": reverse_lazy("core-admin:ticket_list"), "permissions": ["auth.is_staff"], "new_window": True},
-
-        # App with dropdown menu to all its models pages (Permissions checked against models)
-        # {"app": "books"},
-    ],
-
-    #############
-    # User Menu #
-    #############
-
-    # # Additional links to include in the user menu on the top right ("app" url type is not allowed)
-    # "usermenu_links": [
-    #     {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-    #     {"model": "auth.user"}
-    # ],
-
-    #############
-    # Side Menu #
-    #############
-
-    # Whether to display the side menu
-    "show_sidebar": True,
-
-    # Whether to aut expand the menu
-    "navigation_expanded": True,
-
-    # Hide these apps when generating side menu e.g (auth)
-    "hide_apps": [],
-
-    # Hide these models when generating side menu (e.g auth.user)
-    "hide_models": [],
-
-    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ['core_auth', 'core_user', 'core_tournament','core_match', 'core_game','core_event','core_blog_writer'],
-
-    # Custom links to append to app groups, keyed on app name
-    # "custom_links": {
-    #     "books": [{
-    #         "name": "Make Messages",
-    #         "url": "make_messages",
-    #         "icon": "fas fa-comments",
-    #         "permissions": ["books.view_book"]
-    #     }]
-    # },
-
-    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
-    # for the full list of 5.13.0 free icon classes
-    "icons": {
-        "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
-    },
-    # Icons that are used when one is not manually specified
-    "default_icon_parents": "fas fa-chevron-circle-right",
-    "default_icon_children": "fas fa-circle",
-
-    #################
-    # Related Modal #
-    #################
-    # Use modals instead of popups
-    "related_modal_active": False,
-
-    #############
-    # UI Tweaks #
-    #############
-    # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": None,
-    "custom_js": None,
-    # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
-    "use_google_fonts_cdn": True,
-    # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": True,
-
-    ###############
-    # Change view #
-    ###############
-    # Render out the change view as a single form, or in tabs, current options are
-    # - single
-    # - horizontal_tabs (default)
-    # - vertical_tabs
-    # - collapsible
-    # - carousel
-    "changeform_format": "horizontal_tabs",
-    # override change forms on a per modeladmin basis
-    # "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-    # Add a language dropdown into the admin
-    # "language_chooser": True,
-}
-
+# Use the django-celery-beat DB-backed scheduler so tasks are editable from
+# /admin/django_celery_beat/periodictask/. The CELERY_BEAT_SCHEDULE dict
+# below still acts as the source-of-truth defaults — a data migration in
+# core.crons seeds them into the DB once.
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
 CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
@@ -548,22 +394,31 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'core.crons.tasks.tournament_cron_2_day_reminder',
         'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
     },
-    'sport_cron': {
-        'task': 'core.crons.tasks.sport_cron',
-        'schedule': crontab(minute=0, hour=0),  # daily at midnight
-    },
+    # SofaScore ingest. Budget: 3 active sports × 2 ticks/day × 30 = 180 calls/month.
     'event_cron': {
         'task': 'core.crons.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*/4'),  # runs every hour
+        'schedule': crontab(minute=0, hour='*/12'),
     },
-    'event_delete_outdated_cron': {
-        'task': 'core.crons.tasks.event_delete_outdated_cron',
-        'schedule': crontab(minute=0, hour='*/4'),  # runs every hour
+    # Pure-DB safety net — settles selections on finished events that the hot
+    # path missed. Zero API calls.
+    'settle_pending_cron': {
+        'task': 'core.crons.tasks.settle_pending_cron',
+        'schedule': crontab(minute=30, hour=3),  # nightly @ 03:30 UTC
     },
-    # 'print_cron_jobs': {
-    #     'task': 'core.crons.tasks.print_cron_jobs',
-    #     'schedule': crontab(minute='*'),  # every minute
-    # },
+    # Hybrid lazy/proactive odds. Lazy fetch in service.py still serves
+    # any event a user clicks; this task pre-warms odds for the next ~10
+    # events starting in the next 48h so the upcoming-events listing
+    # has live data without waiting for a user click. Per-event monthly
+    # cap (10/event) and cache TTL still apply, so this is quota-safe.
+    'warm_upcoming_odds_cron': {
+        'task': 'core.crons.tasks.warm_upcoming_odds_cron',
+        'schedule': crontab(minute=0, hour='*/6'),  # every 6 hours
+    },
+    # Heartbeat — prints a line so you can sanity-check that beat is running.
+    'print_cron_jobs': {
+        'task': 'core.crons.tasks.print_cron_jobs',
+        'schedule': crontab(minute='*/5'),  # every 5 minutes
+    },
 }
 
 
@@ -578,6 +433,182 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
-django_heroku.settings(locals())
+# WhiteNoise compressed static files. Using the non-manifest variant because
+# third-party JS (Jazzmin's Bootstrap bundle) references .map files that
+# aren't shipped — the manifest storage fails collectstatic post-processing
+# on those references even in non-strict mode.
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
+}
+
+# Disable SSL for local development
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    DATABASES['default']['OPTIONS'] = DATABASES['default'].get('OPTIONS', {})
+    DATABASES['default']['OPTIONS'].pop('sslmode', None)
+    DATABASES['default']['OPTIONS']['sslmode'] = 'disable'
+
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Paradise Sports Admin",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Paradise Sports",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Paradise Sports",
+
+    # Logo to use for your site, must be present in static files, used for brand on top left
+    "site_logo": "/logo/paradise_logo_2_normal_100x100.png",
+
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": "/logo/paradise_logo_2_normal_100x100.png",
+
+    # Logo to use for login form in dark themes (defaults to login_logo)
+    "login_logo_dark": "/logo/paradise_logo_2_normal_100x100.png",
+
+    # CSS classes that are applied to the logo above
+    "site_logo_classes": None,
+
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": "/logo/paradise_logo_2_normal_100x100.png",
+
+    # Welcome text on the login screen
+    "welcome_sign": "Paradise Sports",
+
+    # Copyright on the footer
+    "copyright": "Paradise Sports",
+
+    # List of model admins to search from the search bar, search bar omitted if excluded
+    # If you want to use a single search field you dont need to use a list, you can use a simple string
+    "search_model": ["core_user.User", "core_tournament.Tournament"],
+
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
+    "user_avatar": "avatar",
+
+    ############
+    # Top Menu #
+    ############
+
+    # Links to put along the top menu.
+    # Each item can use:
+    #   url        — a named URL (reversed) or an absolute path like "/admin/dashboard/"
+    #   model      — "app_label.ModelName" (Jazzmin builds the admin URL)
+    #   app        — "app_label" to render a dropdown of every model in that app
+    #   name       — label; optional for model/app items
+    #   permissions — list of perm codenames that must all pass
+    #   new_window — True to open in a new tab
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Dashboard", "url": "/admin/dashboard/", "permissions": ["auth.view_user"]},
+        {"name": "Waitlist", "url": "/admin/core_auth/waitlistentry/", "permissions": ["auth.view_user"]},
+        {"name": "Portal", "url": "/web/portal/dashboard/", "new_window": True, "permissions": ["auth.view_user"]},
+    ],
+
+    #############
+    # User Menu #
+    #############
+
+    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [
+        {"name": "Portal", "url": "/web/portal/dashboard/", "new_window": True},
+        {"model": "core_user.User"},
+    ],
+
+    #############
+    # Side Menu #
+    #############
+
+    # Whether to display the side menu
+    "show_sidebar": True,
+
+    # Whether to aut expand the menu
+    "navigation_expanded": True,
+
+    # Hide these apps when generating side menu e.g (auth)
+    "hide_apps": [],
+
+    # Hide these models when generating side menu (e.g auth.user)
+    "hide_models": [],
+
+    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+    "order_with_respect_to": [
+        "core_tournament", "core_match", "core_game", "core_event",
+        "core_user", "core_auth", "core_mail",
+        "auth", "django_celery_beat", "django_celery_results",
+    ],
+
+    # Custom links to append to app groups, keyed on app name.
+    "custom_links": {},
+
+    # Custom icons for side menu apps/models. See https://fontawesome.com/icons.
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "core_user.User": "fas fa-user",
+        "core_auth": "fas fa-clipboard-list",
+        "core_auth.WaitlistEntry": "fas fa-clipboard-list",
+        "core_tournament": "fas fa-trophy",
+        "core_tournament.Tournament": "fas fa-trophy",
+        "core_tournament.Player": "fas fa-user-tag",
+        "core_tournament.Round": "fas fa-layer-group",
+        "core_match": "fas fa-dice",
+        "core_match.Match": "fas fa-dice",
+        "core_match.TieBreaker": "fas fa-balance-scale",
+        "core_game": "fas fa-gamepad",
+        "core_event": "fas fa-calendar-alt",
+        "core_event.Event": "fas fa-calendar-alt",
+        "core_event.Team": "fas fa-shield-alt",
+        "core_event.Sport": "fas fa-futbol",
+        "core_event.Market": "fas fa-chart-line",
+        "core_mail": "fas fa-envelope",
+        "core_mail.Notification": "fas fa-bell",
+        "core_mail.Invite": "fas fa-paper-plane",
+    },
+    # Icons that are used when one is not manually specified
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    "related_modal_active": False,
+
+    #############
+    # UI Tweaks #
+    #############
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    "custom_css": None,
+    "custom_js": None,
+    # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
+    "use_google_fonts_cdn": True,
+    # Whether to show the UI customizer on the sidebar
+    "show_ui_builder": False,
+
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {
+        "core_user.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+}
+
+
+
 
 # End of file

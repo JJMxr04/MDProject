@@ -1,0 +1,12 @@
+{# Expects: title, subtitle (optional), actions_include (optional: path to a template rendered as right-side actions) #}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">{{ title }}</h1>
+        {% if subtitle %}<p class="page-header__subtitle">{{ subtitle }}</p>{% endif %}
+    </div>
+    {% if actions_include %}
+        <div class="page-header__actions">
+            {% include actions_include %}
+        </div>
+    {% endif %}
+</header>

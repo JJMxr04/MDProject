@@ -1,65 +1,207 @@
-{% extends "portal/base_portal.html" %}
-{% load static %}
+{% extends "portal/base_app.html" %}
+{% load static portal_state %}
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/portal/tournament/my_tournament_detail.css' %}">
-{% endblock css %}
+{% block title %}{{ tournament.name }}{% endblock title %}
 
 {% block content %}
-<div class="tournament-detail-container">
-    <div class="tournament-detail-bubble offset-2">
-        <h1>{{ tournament.name }}</h1>
-        <p><strong>Start Date:</strong> {{ tournament.start_date|date:"F j, Y" }}</p>
-        <p><strong>State:</strong>
-            {% if tournament.state == 'created' %}
-                Upcoming
-            {% elif tournament.state == 'inprogress' %}
-                In Progress
-            {% elif tournament.state == 'completed' %}
-                Completed
-            {% else %}
-                {{ tournament.state }}
-            {% endif %}
+{% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">{{ tournament.name }}</h1>
+        <p class="page-header__subtitle">
+            {% include "portal/components/_badge.html" with state=tournament.state %}
+            &nbsp;&middot;&nbsp; Starts {{ tournament.start_date|date:"M j, Y · g:i A" }}
         </p>
     </div>
+</header>
 
-    <div class="tournament-bracket-container">
-        <div class="tournament-bracket">
-            {% for level, level_rounds in grouped_rounds.items %}
-                <div class="bracket-level">
-                    <h2>Level {{ level }}</h2>
-                    <div class="bracket-rounds">
-                        {% for round in level_rounds %}
-                            <div class="bracket-match {% if not round.player_1 or not round.player_2 %}not-selectable{% endif %}"
-                                 onclick="window.location.href='{% url 'core-portal:portal-my-tournament-round-detail' round.id %}'">
-                                <p>
-                                    {% if round.player_1 %}
-                                        {{ round.player_1.player.username }}
-                                    {% else %}
-                                        TBD
-                                    {% endif %}
-                                    vs
-                                    {% if round.player_2 %}
-                                        {{ round.player_2.player.username }}
-                                    {% else %}
-                                        TBD
-                                    {% endif %}
-                                </p>
-                                {% if round.player_1 %}
-                                    <img src="{% if round.player_1.player.avatar %}{{ round.player_1.player.avatar.url }}{% else %}placeholder.jpg{% endif %}" alt="{{ round.player_1.player.username }}">
-                                {% endif %}
-                                <p>Vs.</p>
-                                {% if round.player_2 %}
-                                    <img src="{% if round.player_2.player.avatar %}{{ round.player_2.player.avatar.url }}{% else %}placeholder.jpg{% endif %}" alt="{{ round.player_2.player.username }}">
-                                {% endif %}
-                                <p>{{ round.completed|yesno:"Completed,In Progress" }}</p>
-                                <p>{{ round.winner|default:"No winner yet" }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
+<section class="grid-stats mb-6">
+    {% include "portal/components/_stat_card.html" with label="Start date" value=tournament.start_date|date:"M j" icon="calendar" %}
+    {% include "portal/components/_stat_card.html" with label="Max players" value=tournament.max_accepted_players icon="people" %}
+    {% include "portal/components/_stat_card.html" with label="Levels" value=tournament.levels|floatformat:0 icon="layers" %}
+    {% if tournament.winner %}
+        {% include "portal/components/_stat_card.html" with label="Winner" value=tournament.winner.player.username icon="trophy-fill" %}
+    {% else %}
+        {% include "portal/components/_stat_card.html" with label="Winner" value="TBD" icon="trophy" %}
+    {% endif %}
+</section>
+
+{% if my_position %}
+<section class="card-ui mb-6">
+    <div class="card-ui__body d-flex align-items-center gap-3">
+        <i class="bi bi-bullseye" style="font-size:24px;color:var(--brand-blue-dark);" aria-hidden="true"></i>
+        <div>
+            <div class="small text-muted">Your position</div>
+            <div class="fw-semibold" style="font-size: var(--text-xl);">{{ my_position }}</div>
         </div>
     </div>
-</div>
+</section>
+{% endif %}
+
+<section class="card-ui mb-6">
+    <header class="card-ui__header"><h2>Bracket</h2></header>
+    {% if rounds_by_level %}
+        <div class="card-ui__body">
+            <div class="bracket" role="region" aria-label="Tournament bracket">
+                {% for level, rounds in rounds_by_level %}
+                <ol class="bracket__level" aria-label="Level {{ level }}">
+                    <div class="bracket__level-title">
+                        {% if level == 0 %}Final
+                        {% elif level == 1 %}Semifinals
+                        {% elif level == 2 %}Quarterfinals
+                        {% else %}Level {{ level }}{% endif %}
+                    </div>
+                    {% for r in rounds %}
+                    <li class="bracket-match {% if r.completed %}is-completed{% endif %} {% if r.is_mine %}is-mine{% endif %}">
+                        <div class="bracket-slot {% if r.winner_is_player_1 %}is-winner{% endif %}">
+                            {% if r.player_1 %}
+                                {% include "portal/components/_avatar.html" with user=r.player_1.player size=24 %}
+                                <span class="bracket-slot__name">{{ r.player_1.player.username }}</span>
+                                {% if r.player_1.seed %}<span class="bracket-slot__seed">#{{ r.player_1.seed }}</span>{% endif %}
+                            {% else %}
+                                <span class="bracket-slot__tbd">TBD</span>
+                            {% endif %}
+                        </div>
+                        <div class="bracket-slot {% if r.winner_is_player_2 %}is-winner{% endif %}">
+                            {% if r.player_2 %}
+                                {% include "portal/components/_avatar.html" with user=r.player_2.player size=24 %}
+                                <span class="bracket-slot__name">{{ r.player_2.player.username }}</span>
+                                {% if r.player_2.seed %}<span class="bracket-slot__seed">#{{ r.player_2.seed }}</span>{% endif %}
+                            {% else %}
+                                <span class="bracket-slot__tbd">TBD</span>
+                            {% endif %}
+                        </div>
+                        {% if r.match_id %}
+                            <a class="bracket-match__open" href="{% url 'core-portal:portal-my-match-detail' r.match_id %}" aria-label="Open match">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ol>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="card-ui__body">
+            {% include "portal/components/_empty_state.html" with icon="layers" title="Bracket not generated yet." body="It'll appear once the tournament starts." %}
+        </div>
+    {% endif %}
+</section>
+
+<section class="grid-cols-2-1">
+    <div class="card-ui">
+        <header class="card-ui__header">
+            <h2>Accepted players</h2>
+            <span class="badge-ui badge-ui--primary">{{ accepted_players|length }}</span>
+        </header>
+        {% if accepted_players %}
+        <ul class="list-group list-group-flush" style="margin:0;">
+            {% for p in accepted_players %}
+            <li class="list-group-item d-flex align-items-center gap-3">
+                {% include "portal/components/_avatar.html" with user=p.player size=32 %}
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">{{ p.player.username }}</div>
+                    {% if p.seed or p.division %}
+                        <div class="small text-muted">
+                            {% if p.seed %}Seed {{ p.seed }}{% endif %}
+                            {% if p.division %}{% if p.seed %} · {% endif %}Div {{ p.division }}{% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <div class="card-ui__body"><p class="text-muted" style="margin:0;">No accepted players.</p></div>
+        {% endif %}
+    </div>
+
+    <div class="card-ui">
+        <header class="card-ui__header">
+            <h2>Invited</h2>
+            <span class="badge-ui badge-ui--muted">{{ invited_players|length }}</span>
+        </header>
+        {% if invited_players %}
+        <ul class="list-group list-group-flush" style="margin:0;">
+            {% for i in invited_players %}
+            <li class="list-group-item d-flex align-items-center gap-3">
+                {% include "portal/components/_avatar.html" with user=i.player size=28 %}
+                <span class="flex-grow-1">{{ i.player.username }}</span>
+                {% include "portal/components/_badge.html" with state=i.state %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <div class="card-ui__body"><p class="text-muted" style="margin:0;">No invites sent.</p></div>
+        {% endif %}
+    </div>
+</section>
 {% endblock content %}
+
+{% block css %}
+<style>
+    .bracket {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: var(--space-6);
+        overflow-x: auto;
+        padding: var(--space-4);
+        min-height: 400px;
+    }
+    .bracket__level {
+        list-style: none; margin: 0; padding: 0;
+        display: flex; flex-direction: column; justify-content: space-around;
+        min-width: 220px;
+        gap: var(--space-3);
+    }
+    .bracket__level-title {
+        font-size: var(--text-xs);
+        font-weight: var(--weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-2);
+    }
+    .bracket-match {
+        position: relative;
+        display: flex; flex-direction: column; gap: 2px;
+        padding: var(--space-3);
+        background: var(--surface-muted);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
+        transition: box-shadow var(--motion-fast);
+    }
+    .bracket-match.is-mine { outline: 2px solid var(--brand-blue-dark); }
+    .bracket-match.is-completed .bracket-slot:not(.is-winner) { opacity: .55; }
+    .bracket-match:hover { box-shadow: var(--shadow-md); }
+
+    .bracket-slot {
+        display: flex; align-items: center; gap: var(--space-2);
+        padding: var(--space-2);
+        border-radius: var(--radius-sm);
+        background: var(--surface-card);
+        font-size: var(--text-sm);
+    }
+    .bracket-slot.is-winner {
+        border-left: 4px solid var(--brand-yellow);
+        font-weight: var(--weight-semibold);
+    }
+    .bracket-slot__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bracket-slot__seed { font-size: var(--text-xs); color: var(--text-secondary); }
+    .bracket-slot__tbd { color: var(--text-secondary); font-style: italic; }
+
+    .bracket-match__open {
+        position: absolute; right: var(--space-2); top: 50%;
+        transform: translateY(-50%);
+        width: 24px; height: 24px;
+        display: grid; place-items: center;
+        color: var(--brand-blue-dark);
+        opacity: 0;
+        transition: opacity var(--motion-fast);
+        text-decoration: none;
+    }
+    .bracket-match:hover .bracket-match__open { opacity: 1; }
+</style>
+{% endblock css %}

@@ -1,3 +1,7 @@
+# BIT-ROT: Same situation as Tourney_Simulator_1.py — see header there.
+# Quarantined via core/tournament/unit_tests/__init__.py; no callers. Needs a
+# rewrite against the new Selection-based pick API or deletion.
+
 import os
 import time
 

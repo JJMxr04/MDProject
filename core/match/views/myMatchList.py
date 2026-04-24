@@ -21,17 +21,31 @@ def my_match_list_view(request):
                   matches.filter(player_2__username__icontains=search_query)
     
     if state:
-        matches = matches.filter(state=state)
-    
+        matches = matches.filter(match_state=state)
+
     if start_date:
         matches = matches.filter(start_date__gte=start_date)
-    
+
     if end_date:
         matches = matches.filter(end_date__lte=end_date)
-    
+
+    matches = matches.order_by('-start_date')
+
     # Paginate the matches
     paginator = Paginator(matches, 10)  # Show 10 matches per page
     matches_page = paginator.get_page(page)
+
+    # Annotate each match on the page with the opponent from the viewer's POV.
+    user = request.user
+    for match in matches_page.object_list:
+        match.opponent = match.player_2 if match.player_1_id == user.id else match.player_1
+
+    quick_filters = [
+        {"label": "All",         "value": "",          "is_active": state == ""},
+        {"label": "Pending",     "value": "created",   "is_active": state == "created"},
+        {"label": "In Progress", "value": "accepted",  "is_active": state == "accepted"},
+        {"label": "Completed",   "value": "completed", "is_active": state == "completed"},
+    ]
 
     context = {
         'matches': matches_page,
@@ -39,6 +53,7 @@ def my_match_list_view(request):
         'state': state,
         'start_date': start_date,
         'end_date': end_date,
+        'quick_filters': quick_filters,
         'total_pages': paginator.num_pages,
         'current_page': int(page)
     }

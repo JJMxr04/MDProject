@@ -20,16 +20,22 @@ class TieBreakerManager(AbstractManager):
         tiebreaker.owner_total=total
         tiebreaker.save()
 
-    def calculate_event_total(self,tiebreaker):
-        scores = tiebreaker.golden_game.event.scores
-        event_total = int(scores[0]['score'])+ int(scores[0]['score'])
-        tiebreaker.total = event_total
-
-        tiebreaker.save()
+    def calculate_event_total(self, tiebreaker):
+        event = tiebreaker.golden_game.event if tiebreaker.golden_game else None
+        if event is None or event.home_score is None or event.away_score is None:
+            return None
+        tiebreaker.total = event.home_score + event.away_score
+        tiebreaker.save(update_fields=["total"])
         return tiebreaker.total
     
-    def calculate_winner(self,tiebreaker):
+    def calculate_winner(self, tiebreaker):
         total = self.calculate_event_total(tiebreaker=tiebreaker)
+        if total is None:
+            return self.calculate_winner_random(
+                tiebreaker,
+                tiebreaker.golden_game.owner,
+                tiebreaker.golden_game.player_2,
+            )
         owner_dif = abs(tiebreaker.owner_total - total)
         player_2_dif = abs(tiebreaker.player_2_total - total)
 

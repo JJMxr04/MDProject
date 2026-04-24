@@ -1,2 +1,2 @@
-from .game import Game
+from .game import Game, PickError
 from .bet import Bet

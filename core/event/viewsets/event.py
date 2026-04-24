@@ -1,56 +1,70 @@
 from django.db.models import Q
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from core.event.serializers.event import EventSerializer, EventBookmakerSerializer
+
+from core.abstract.viewsets import AbstractViewSet
 from core.event.models.event import Event
 from core.event.pagination.pagination import EventPagination
-from core.abstract.viewsets import AbstractViewSet
-from rest_framework.response import Response
-from rest_framework.filters import SearchFilter, OrderingFilter
+from core.event.serializers.event import EventSerializer, EventWithMarketsSerializer
+
 
 class EventViewSet(AbstractViewSet):
-    http_method_names = ['get']
+    http_method_names = ["get"]
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     filter_backends = [OrderingFilter, SearchFilter]
     queryset = Event.objects.all()
-    ordering = ['commence_time']
-    search_fields = ['sport_title', 'away_team', 'home_team', 'commence_time', 'created', 'sport_key']
-    pagination_class = EventPagination  # Use the custom pagination class
+    ordering = ["start_time"]
+    search_fields = [
+        "tournament_name",
+        "home_team__name",
+        "away_team__name",
+        "slug",
+    ]
+    pagination_class = EventPagination
 
     def get_queryset(self):
-        queryset = Event.objects.get_active_events()
-        allowed_params = ['sport_key', 'search', 'commence_time_start', 'commence_time_end']  # Define the allowed parameters
+        queryset = Event.objects.active()
+        allowed_params = [
+            "sport_id",
+            "tournament_id",
+            "search",
+            "start_time_start",
+            "start_time_end",
+        ]
         filter_kwargs = {}
 
         for param in allowed_params:
             value = self.request.query_params.get(param, None)
-            if value:
-                if param == 'search':
-                    # Custom search logic if needed
-                    queryset = queryset.filter(
-                        Q(sport_title__icontains=value) |
-                        Q(away_team__icontains=value) |
-                        Q(home_team__icontains=value) |
-                        Q(sport_key__icontains=value)
-                    )
-                elif param == 'commence_time_start':
-                    filter_kwargs['commence_time__gte'] = value
-                elif param == 'commence_time_end':
-                    filter_kwargs['commence_time__lte'] = value
-                else:
-                    filter_kwargs[param] = value
+            if value is None:
+                continue
+            if param == "search":
+                queryset = queryset.filter(
+                    Q(tournament_name__icontains=value)
+                    | Q(home_team__name__icontains=value)
+                    | Q(away_team__name__icontains=value)
+                    | Q(slug__icontains=value)
+                )
+            elif param == "start_time_start":
+                filter_kwargs["start_time__gte"] = value
+            elif param == "start_time_end":
+                filter_kwargs["start_time__lte"] = value
+            else:
+                filter_kwargs[param] = value
 
-        queryset = queryset.filter(**filter_kwargs)
-        return queryset
+        return queryset.filter(**filter_kwargs)
 
     def get_serializer_class(self):
-        if self.action == 'retrieve':
-            return EventBookmakerSerializer
+        if self.action == "retrieve":
+            return EventWithMarketsSerializer
         return EventSerializer
 
     def get_object(self):
-        obj = Event.objects.get_object_by_id(self.kwargs['pk'])
+        obj = Event.objects.get_by_public_id(self.kwargs["pk"])
+        if obj is None:
+            obj = Event.objects.filter(pk=self.kwargs["pk"]).first()
         self.check_object_permissions(self.request, obj)
         return obj
 

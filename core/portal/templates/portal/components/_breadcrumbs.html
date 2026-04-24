@@ -1,0 +1,14 @@
+{# Expects: crumbs = list of {"label": str, "href": optional str} dicts. Last crumb has no href. #}
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+    <ol>
+        {% for c in crumbs %}
+            <li>
+                {% if c.href %}
+                    <a href="{{ c.href }}">{{ c.label }}</a>
+                {% else %}
+                    <span aria-current="page">{{ c.label }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</nav>

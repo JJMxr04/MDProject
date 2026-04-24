@@ -1,3 +1,18 @@
+# BIT-ROT: This file does not run.
+# Imports below reference APIs deleted by the api-switch refactors:
+#   - core.event.crons.eventUpdate.EventCron (rewritten — no `get_sport_events`)
+#   - core.event.crons.sportUpdate.SportCron (deleted)
+#   - core.event.crons.teamUpdate.TeamCron (deleted)
+#   - .Support depends on TeamScoreSerializer (deleted) and Sport.objects.get_by_key (deleted)
+# The body uses the old Match shape (player_1_game_N FKs) and the old pick API
+# (Game.objects.update_by_id, event_id as 32-char hex, player_choice as team
+# name). Both are gone — picks are now Game.objects.upload_pick(current_user=,
+# match=, event_id=int, selection_id=int) per game-match-audit-plan.md §5.1.
+#
+# To revive: rewrite Support.py against the SofaScore client + new Selection-
+# based picks, regenerate fixtures with BigInt event ids, then update each
+# Simulate_*_Round to call upload_pick with selection ids.
+
 import os
 import time
 

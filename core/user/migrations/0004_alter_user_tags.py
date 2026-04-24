@@ -6,14 +6,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core_blog_writer', '0002_article_outcome'),
         ('core_user', '0003_user_writer_descritption'),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='user',
-            name='tags',
-            field=models.ManyToManyField(blank=True, related_name='users', to='core_blog_writer.tag', verbose_name='What leagues do you plan on making predictions?'),
-        ),
     ]

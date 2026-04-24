@@ -1,53 +1,21 @@
-import json
-import requests
-from core.event.models.sport import Sport
-from core.event.serializers.sport import SportSerializer
-import os
+"""Sport seeding lives in the `seed_sports` management command now.
 
-class SportCron():
-    domain = 'https://odds.p.rapidapi.com/v4/sports'
+Kept as a thin shim so any straggler imports still work. Running `get_sports`
+is a no-op; run `python manage.py seed_sports` instead.
+"""
 
-    sports_data = {}
-    events = {}
-    headers = {
-        "X-RapidAPI-Key": os.getenv("RAPID_API_KEY"),
-        "X-RapidAPI-Host": 'odds.p.rapidapi.com'
-    }
+import logging
 
+logger = logging.getLogger(__name__)
+
+
+class SportCron:
     def get_sports(self):
-        # print("Running Sport Cron")
-        # Call your API here
-        api_url = self.domain
+        logger.warning(
+            "SportCron.get_sports is deprecated. Run `python manage.py seed_sports`."
+        )
+        return False
 
-        querystring = {"all": "true"}
-
-        response = requests.get(api_url, headers=self.headers, params=querystring)
-        # Replace with your actual API endpoint
-
-        # Process the API response (using Marshmallow schema)
-        if response.status_code == 200:
-            api_data = response.json()
-        else:
-            print(f"API Request failed with status code: {response.status_code}")
-            return False
-        for sport in api_data:
-            data = SportSerializer(data=sport)
-            if data.is_valid():
-                data.validated_data
-                if Sport.objects.get_sport_state(data['key'],data['active'],data['has_outrights']):
-                    #returns true if it was found and modified
-                    #returns false if there is no sport with that key
-                    continue
-                else:
-                    sport_temp = Sport(**data.validated_data)
-                    sport_temp.save()
-            else:
-                continue
-        return True
-
-    def get_active_sports(self):
-        return Sport.objects.get_active_sports()
 
 def get_sports():
-    sportCron = SportCron()
-    sportCron.get_sports()
+    SportCron().get_sports()

@@ -1,35 +1,102 @@
-<!-- templates/portal/dashboard.html -->
-{% extends "portal/base_portal.html" %}
+{% extends "portal/base_app.html" %}
+{% load static %}
 
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-    <div class="dashboard-container">
-        <h1 class="dashboard-title">Portal Dashboard</h1>
-        <p class="dashboard-message">This portal is currently under development. Stay tuned for updates!</p>
-        <!-- Dashboard content goes here -->
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Welcome{% if request.user.first_name %}, {{ request.user.first_name }}{% endif %}.</h1>
+        <p class="page-header__subtitle">Your portal home.</p>
+    </div>
+</header>
+
+<section class="grid-stats" aria-label="Your stats">
+    {% include "portal/components/_stat_card.html" with label="Active matches" value=stats.active_match_count icon="controller" href="/web/portal/match/me/" %}
+    {% include "portal/components/_stat_card.html" with label="Upcoming tournaments" value=stats.upcoming_tournament_count icon="trophy" href="/web/portal/tournament/me/" %}
+    {% include "portal/components/_stat_card.html" with label="Pending invites" value=stats.pending_invite_count icon="envelope" href="/web/portal/mail/invites/" %}
+    {% include "portal/components/_stat_card.html" with label="Friends" value=stats.friend_count icon="people" href="/web/portal/user/friends/search/" %}
+</section>
+
+<section class="grid-cols-2-1 mt-6">
+    <div class="card-ui">
+        <header class="card-ui__header"><h2>Needs your attention</h2></header>
+        {% if todo %}
+        <ul class="list-group list-group-flush" style="margin: 0;">
+            {% for item in todo %}
+            <li class="list-group-item d-flex align-items-center gap-3">
+                <i class="bi bi-{{ item.icon }}" aria-hidden="true" style="font-size: 20px; color: var(--brand-blue-dark);"></i>
+                <span class="flex-grow-1">{{ item.text }}</span>
+                <a class="btn-ui btn-ui--secondary btn-ui--sm" href="{{ item.href }}">{{ item.cta }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="card-ui__body">
+            {% include "portal/components/_empty_state.html" with icon="check2-circle" title="You're all caught up." %}
+        </div>
+        {% endif %}
     </div>
 
-    <style>
-        .dashboard-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+    <div class="card-ui">
+        <header class="card-ui__header"><h2>Your next tournament</h2></header>
+        <div class="card-ui__body">
+            {% if next_tournament %}
+                <h3 style="margin-bottom: var(--space-2);">{{ next_tournament.name }}</h3>
+                <p class="small" style="margin-bottom: var(--space-3);">
+                    {% include "portal/components/_badge.html" with state=next_tournament.state %}
+                    &nbsp;&middot;&nbsp; {{ next_tournament.start_date|date:"M j, Y" }}
+                </p>
+                <p class="small" style="color: var(--text-secondary);">
+                    {{ next_tournament.max_accepted_players }} max players &middot; {{ next_tournament.levels|floatformat:0 }} levels
+                </p>
+                <a class="btn-ui btn-ui--primary btn-ui--block mt-3" href="{% url 'core-portal:core-portal-tournament:portal-my-tournament-detail' next_tournament.id %}">
+                    Open
+                </a>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="trophy" title="Not competing yet." body="Browse tournaments to join." action_label="Browse" action_href="/web/portal/tournament/me/" %}
+            {% endif %}
+        </div>
+    </div>
+</section>
 
-        .dashboard-title {
-            font-size: 2.5em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .dashboard-message {
-            font-size: 1.2em;
-            color: #555;
-        }
-    </style>
+{% if is_first_run %}
+<section class="card-ui mt-6">
+    <header class="card-ui__header"><h2>Get started</h2></header>
+    <ul class="list-group list-group-flush" style="margin: 0;">
+        {% for item in checklist %}
+        <li class="list-group-item d-flex align-items-center gap-3">
+            {% if item.done %}
+                <i class="bi bi-check-circle-fill" style="color: var(--state-success); font-size: 20px;" aria-hidden="true"></i>
+            {% else %}
+                <i class="bi bi-circle" style="color: var(--text-secondary); font-size: 20px;" aria-hidden="true"></i>
+            {% endif %}
+            <span class="flex-grow-1 {% if item.done %}text-muted text-decoration-line-through{% endif %}">{{ item.label }}</span>
+            {% if not item.done %}
+                <a class="btn-ui btn-ui--secondary btn-ui--sm" href="{{ item.href }}">Start</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% else %}
+<section class="card-ui mt-6">
+    <header class="card-ui__header"><h2>Recent activity</h2></header>
+    {% if activity %}
+    <ul class="list-group list-group-flush" style="margin: 0;">
+        {% for event in activity %}
+        <li class="list-group-item d-flex align-items-center gap-3">
+            <i class="bi bi-{{ event.icon }}" aria-hidden="true" style="color: var(--brand-blue);"></i>
+            <span class="flex-grow-1">{{ event.text }}</span>
+            <time class="small" datetime="{{ event.at|date:'c' }}">{{ event.at|timesince }} ago</time>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="card-ui__body">
+        {% include "portal/components/_empty_state.html" with icon="clock-history" title="No recent activity." body="Actions from the past 14 days will appear here." %}
+    </div>
+    {% endif %}
+</section>
+{% endif %}
 {% endblock content %}

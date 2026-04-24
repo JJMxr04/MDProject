@@ -1,56 +1,53 @@
 from rest_framework import serializers
-from core.game.models import Game
-from core.event.models import Team
-from core.event.models import Event
+
 from core.abstract.serializers import AbstractSerializer
-from core.user.models import User
-from core.user.serializers import UserSerializer, PublicUserSerializer
-from core.event.serializers.team import TeamSerializer
+from core.event.models import Event
 from core.event.serializers.event import EventSerializer
-from rest_framework.exceptions import ValidationError
-from rest_framework import serializers
-  # Import your models here
+from core.game.models import Game
+from core.user.models import User
+from core.user.serializers import PublicUserSerializer
 
-class ChoiceSerializer(serializers.Serializer):
-    event = serializers.SlugRelatedField(queryset=Event.objects.all(), slug_field='id')
-    player_choice = serializers.SlugRelatedField(queryset=Team.objects.all(), slug_field='public_id')
 
-    # Add any additional validation methods if needed
-    def validate_event(self, value):
-        # Add custom validation for event if necessary
-        return value
-
-    def validate_player_choice(self, value):
-        # Add custom validation for player_choice if necessary
-        return value
 class GameSerializer(AbstractSerializer):
-    owner = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
-    player_2 = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
-    event = serializers.SlugRelatedField(queryset=Event.objects.all(), slug_field='id')
+    owner = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field="public_id")
+    player_2 = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field="public_id")
+    event = serializers.SlugRelatedField(
+        queryset=Event.objects.all(), slug_field="id", allow_null=True
+    )
 
-    def validate_players(self):
-        if (self.context["request"].user != self.owner) and (self.context["request"] != self.player_2):
-            raise ValidationError("You cannot Update This Game")
+    is_golden = serializers.BooleanField(read_only=True)
+    slot = serializers.IntegerField(read_only=True)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        owner = User.objects.get_object_by_public_id(rep['owner'])
-        player_2 = User.objects.get_object_by_public_id(rep['player_2'])
-        # event = Event.objects.get_object_by_id(rep['event'])
 
-        # Check if 'event' is None, and set it to None if it is
-        if rep['event'] is None:
-            rep['event'] = None
-        else:
-            event = Event.objects.get_object_by_id(rep['event'])
-            rep['event'] = EventSerializer(event).data
+        if rep.get("event") is not None:
+            event = Event.objects.filter(id=rep["event"]).first()
+            rep["event"] = EventSerializer(event).data if event else None
 
-        # Convert owner and player_2 to PublicUserSerializer representation
-        rep['owner'] = PublicUserSerializer(owner).data
-        rep['player_2'] = PublicUserSerializer(player_2).data
+        owner = User.objects.get_object_by_public_id(rep["owner"])
+        player_2 = User.objects.get_object_by_public_id(rep["player_2"])
+        rep["owner"] = PublicUserSerializer(owner).data if owner else None
+        rep["player_2"] = PublicUserSerializer(player_2).data if player_2 else None
 
+        bet = instance.bet
+        rep["bet"] = {
+            "id": str(bet.id) if bet else None,
+            "owner_outcome_id": bet.owner_outcome_id if bet else None,
+            "player_2_outcome_id": bet.player_2_outcome_id if bet else None,
+            "owner_decimal_odds_at_pick": (
+                str(bet.owner_decimal_odds_at_pick)
+                if bet and bet.owner_decimal_odds_at_pick is not None
+                else None
+            ),
+            "player_2_decimal_odds_at_pick": (
+                str(bet.player_2_decimal_odds_at_pick)
+                if bet and bet.player_2_decimal_odds_at_pick is not None
+                else None
+            ),
+        }
         return rep
 
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ["id", "owner", "player_2", "event", "is_golden", "slot", "match", "created", "updated"]
