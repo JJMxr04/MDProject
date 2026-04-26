@@ -17,7 +17,9 @@ class QuotaExceeded(Exception):
 
 
 class SofaScoreClient:
-    domain = "https://sofascore.p.rapidapi.com"
+    # domain = "https://sofascore.p.rapidapi.com"
+    domain = "http://127.0.0.1:8765"
+
 
     def __init__(self):
         self.headers = {

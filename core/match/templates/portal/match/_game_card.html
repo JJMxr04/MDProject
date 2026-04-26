@@ -19,6 +19,12 @@ Required context:
             {{ event.tournament_name }}{% if event.sport %} — {{ event.sport.name }}{% endif %}
             <script>document.write(new Date('{{ event.start_time|date:"c" }}').toLocaleString())</script>
         </strong></h4>
+        <a href="{% url 'core-portal:upcoming-events-detail' event.id %}"
+           class="game-card__event-link"
+           style="display:inline-block;margin:.25rem 0 .5rem;font-size:.85rem;font-weight:500;cursor:pointer;"
+           onclick="event.stopPropagation()">
+            View event details &rarr;
+        </a>
 
         <div class="golden-game">
             <div class="team">

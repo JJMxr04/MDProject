@@ -405,14 +405,13 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'core.crons.tasks.settle_pending_cron',
         'schedule': crontab(minute=30, hour=3),  # nightly @ 03:30 UTC
     },
-    # Hybrid lazy/proactive odds. Lazy fetch in service.py still serves
-    # any event a user clicks; this task pre-warms odds for the next ~10
-    # events starting in the next 48h so the upcoming-events listing
-    # has live data without waiting for a user click. Per-event monthly
-    # cap (10/event) and cache TTL still apply, so this is quota-safe.
+    # Aggressive odds warmer. Runs every 30 min. Safe because the task
+    # body honours: per-event cap (10/month), cache TTL (30s/30min/6h),
+    # and a global SOFT_LIMIT reserve so it never burns the last calls
+    # of the month. See core.crons.tasks.warm_upcoming_odds_cron.
     'warm_upcoming_odds_cron': {
         'task': 'core.crons.tasks.warm_upcoming_odds_cron',
-        'schedule': crontab(minute=0, hour='*/6'),  # every 6 hours
+        'schedule': crontab(minute='*/30'),  # every 30 minutes
     },
     # Heartbeat — prints a line so you can sanity-check that beat is running.
     'print_cron_jobs': {

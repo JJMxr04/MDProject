@@ -30,7 +30,6 @@
 {% endblock css %}
 
 {% block content %}
-{% include "portal/components/_breadcrumbs.html" with crumbs=crumbs|default:'[{"label":"Matches","href":"/web/portal/match/me/"},{"label":"Match detail"}]' %}
 <nav aria-label="Breadcrumb" class="breadcrumbs">
     <ol>
         <li><a href="/web/portal/match/me/">Matches</a></li>
@@ -152,73 +151,77 @@
         </div>
     </div>
 
-    <!-- Loading Overlay -->
+    {# Loading overlay (kept for the tiebreaker + legacy callers). #}
     <div id="loading-overlay" style="display: none;">
         <div class="loading-spinner"></div>
         <p>Processing...</p>
     </div>
 
-    <!-- Game Detail / Selection Popup -->
-    <div id="game-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" onclick="closeGamePopup()">&times;</span>
-            <h2>Make Your Pick</h2>
-            <hr class="divider">
-            <div id="game-popup-card"></div>
-            <hr class="divider">
-            <div id="game-popup-markets"></div>
-            <hr class="divider">
-        </div>
-    </div>
+    {# JSON island — full event catalog (with home/away/teams/start) consumed by the
+       pick modal's event-chooser step. Avoids re-rendering markup in JS. #}
+    {{ available_events|json_script:"available-events-data" }}
+    {% csrf_token %}
+</div>
 
-    <!-- Upload Popup -->
-    <div id="upload-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" onclick="closeUploadPopup()">&times;</span>
-            <h2>Upload Your Pick</h2>
-            <hr class="divider">
-            <div id="event-list">
-                {% if available_events %}
-                    {% for event in available_events %}
-                        <div class="event-container">
-                            <button class="event-card" data-event-id="{{ event.event_id }}">
-                                <div class="event-info">
-                                    <div class="team">
-                                        {% if event.home_team %}<h4>{{ event.home_team.name }}</h4>{% endif %}
-                                    </div>
-                                    <div class="vs-text"><h4>Vs</h4></div>
-                                    <div class="team">
-                                        {% if event.away_team %}<h4>{{ event.away_team.name }}</h4>{% endif %}
-                                    </div>
-                                    <div class="event-body">
-                                        <p><strong>Sport:</strong> {{ event.sport }}</p>
-                                        <p><strong>League:</strong> {{ event.league.name }}</p>
-                                        <p><strong>Start Time:</strong>
-                                            <script>document.write(new Date('{{ event.start_time }}').toLocaleString())</script>
-                                        </p>
-                                    </div>
-                                </div>
-                            </button>
-                            <div class="markets-section" id="markets-section-{{ event.event_id }}" style="display: none;">
-                                <h2>Markets</h2>
-                                <div class="markets-container"></div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p class="no-events-message">No events available for this match period.</p>
-                {% endif %}
-            </div>
-            <hr class="divider">
-            <form id="upload-form">
-                {% csrf_token %}
-                <button type="submit">Submit</button>
-            </form>
+{# ─── Pick Modal (Bootstrap) ─────────────────────────────────────────── #}
+<div class="modal fade" id="pickModal" tabindex="-1" aria-labelledby="pickModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header pickmodal-header">
+        <h2 class="modal-title h5 mb-0" id="pickModalLabel">Make a pick</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-0">
+        {# STEP 1 — event chooser (only shown when no event is locked yet). #}
+        <div id="pickStep-events" class="pickstep" hidden>
+          <div class="pickstep__toolbar">
+            <input type="search" id="pickEventSearch" class="form-control form-control-sm"
+                   placeholder="Search teams or league…" autocomplete="off">
+            <small class="text-muted ms-2"><span id="pickEventCount">0</span> events</small>
+          </div>
+          <div id="pickEventList" class="pickstep__events"></div>
+          <div id="pickEventEmpty" class="text-center text-muted p-4" hidden>
+            No events match your search.
+          </div>
         </div>
+
+        {# STEP 2 — market + selection chooser. #}
+        <div id="pickStep-selection" class="pickstep" hidden>
+          <div class="pickstep__eventbar">
+            <button type="button" class="btn btn-link btn-sm p-0 me-2" id="pickBackBtn" hidden>
+              <i class="bi bi-chevron-left"></i> Back
+            </button>
+            <div class="pickstep__teams">
+              <span id="pickHomeTeam">—</span>
+              <span class="text-muted mx-2">vs</span>
+              <span id="pickAwayTeam">—</span>
+            </div>
+            <small class="text-muted ms-auto" id="pickEventMeta"></small>
+          </div>
+
+          <div class="pickstep__tabs" id="pickMarketTabs" role="tablist"></div>
+
+          <div class="pickstep__selections" id="pickSelections">
+            <p class="text-center text-muted p-4">Loading markets…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer pickmodal-footer">
+        <div class="pickmodal-preview me-auto">
+          <span class="text-muted me-2">Selected:</span>
+          <span id="pickPreview"><em class="text-muted">none</em></span>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="pickSubmitBtn" disabled>Submit pick</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <style>
+    /* Loading overlay (still used by tiebreaker submit). */
     #loading-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-color: rgba(0,0,0,0.5);
@@ -226,242 +229,595 @@
         z-index: 10000;
     }
     .loading-spinner {
-        border: 4px solid #f3f3f3; border-top: 4px solid #3498db;
+        border: 4px solid #f3f3f3; border-top: 4px solid var(--brand-blue, #3498db);
         border-radius: 50%; width: 40px; height: 40px;
         animation: spin 1s linear infinite;
     }
     #loading-overlay p { color: white; margin-top: 10px; }
     @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
-    .popup { z-index: 9999; }
-    .selection.selected { outline: 2px solid #3498db; }
+
+    /* ─── Pick Modal ────────────────────────────────────────────────── */
+    .pickmodal-header { background: var(--surface-muted, #f5f7fa); }
+    .pickmodal-footer { background: var(--surface-muted, #f5f7fa); }
+
+    .pickstep { padding: 1rem 1.25rem; }
+
+    .pickstep__toolbar {
+        display: flex; align-items: center;
+        margin-bottom: .75rem;
+    }
+    .pickstep__toolbar .form-control { max-width: 320px; }
+
+    .pickstep__events {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: .75rem;
+    }
+    .pickevent-card {
+        text-align: left; padding: .75rem;
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: 8px; background: #fff; cursor: pointer;
+        transition: transform .08s, border-color .12s, box-shadow .12s;
+    }
+    .pickevent-card:hover {
+        border-color: var(--brand-blue-dark, #275d81);
+        box-shadow: 0 2px 8px rgba(17,24,39,.08);
+        transform: translateY(-1px);
+    }
+    .pickevent-card__teams { font-weight: 600; line-height: 1.25; margin-bottom: .35rem; }
+    .pickevent-card__teams .vs { color: var(--text-secondary, #6b7280); font-weight: 400; margin: 0 .25rem; }
+    .pickevent-card__meta { color: var(--text-secondary, #6b7280); font-size: .8rem; }
+    .pickevent-card__meta > span + span::before { content: " · "; }
+
+    /* Step 2 */
+    .pickstep__eventbar {
+        display: flex; align-items: center; flex-wrap: wrap;
+        padding: .75rem 1rem; background: var(--surface-muted, #f5f7fa);
+        border-bottom: 1px solid var(--border-default, #e5e7eb);
+        margin: -1rem -1.25rem 1rem;
+    }
+    .pickstep__teams { font-weight: 600; }
+
+    .pickstep__tabs {
+        display: flex; flex-wrap: wrap; gap: .35rem;
+        margin-bottom: 1rem; border-bottom: 1px solid var(--border-default, #e5e7eb);
+        padding-bottom: .5rem;
+    }
+    .pickmarket-tab {
+        padding: .35rem .75rem; border-radius: 999px;
+        background: transparent; border: 1px solid transparent;
+        color: var(--text-secondary, #6b7280); font-size: .85rem; font-weight: 500;
+        cursor: pointer;
+    }
+    .pickmarket-tab:hover { background: var(--surface-muted, #f5f7fa); color: var(--text-primary, #111827); }
+    .pickmarket-tab.is-active {
+        background: var(--brand-blue-dark, #275d81); color: #fff;
+    }
+
+    .pickstep__selections {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: .6rem;
+    }
+    .pickselection {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: .75rem; padding: .85rem 1rem;
+        border: 1px solid var(--border-default, #e5e7eb); border-radius: 10px;
+        background: #fff; cursor: pointer;
+        transition: border-color .12s, box-shadow .12s, background .12s;
+        font: inherit; text-align: left;
+    }
+    .pickselection:hover {
+        border-color: var(--brand-blue-dark, #275d81);
+        background: var(--surface-muted, #f5f7fa);
+    }
+    .pickselection.is-selected {
+        border-color: var(--brand-blue, #3D7EAA);
+        background: rgba(61, 126, 170, 0.08);
+        box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA);
+    }
+    .pickselection__label { font-weight: 600; color: var(--text-primary, #111827); }
+    .pickselection__odds {
+        font-variant-numeric: tabular-nums; font-weight: 700;
+        color: var(--brand-blue-dark, #275d81); font-size: 1.05rem;
+    }
+    .pickselection.is-selected .pickselection__odds { color: var(--brand-blue, #3D7EAA); }
+
+    .pickselection.is-suspended { opacity: .5; pointer-events: none; }
+
+    /* Locked: another player already picked this exact selection. */
+    .pickselection.is-taken {
+        opacity: .55; pointer-events: none;
+        background: var(--surface-muted, #f5f7fa);
+        border-style: dashed;
+    }
+    .pickselection.is-taken .pickselection__odds { color: var(--text-secondary, #6b7280); }
+    .pickselection__taken {
+        font-size: .7rem; font-weight: 600;
+        color: var(--text-secondary, #6b7280);
+        text-transform: uppercase; letter-spacing: .04em;
+    }
+    .pickselection__main { display: flex; flex-direction: column; gap: 2px; }
+
+    .pickmodal-preview { font-size: .9rem; }
+    .pickmodal-preview strong { color: var(--text-primary, #111827); }
+
+    /* Locked-market notice that replaces the tab strip when the opponent
+       has already picked a market on this game. */
+    .pickmodal-locked-notice {
+        font-size: .85rem;
+        color: var(--text-primary, #111827);
+        background: rgba(61, 126, 170, 0.08);
+        border: 1px solid var(--brand-blue, #3D7EAA);
+        border-radius: 8px;
+        padding: .5rem .75rem;
+        width: 100%;
+    }
 </style>
 
 <script>
-let selectedEventId = null;
-let selectedSelectionId = null;
-
-const URL_EVENT_MARKETS = '{% url "core-portal:portal-match-event-market" "00000000-0000-0000-0000-000000000000" %}';
+/* ── URL templates ──────────────────────────────────────────────────── */
+const URL_EVENT_MARKETS  = '{% url "core-portal:portal-match-event-market" "00000000-0000-0000-0000-000000000000" %}';
 const URL_EVENT_OUTCOMES = '{% url "core-portal:portal-match-event-outcomes" 0 %}';
-const URL_PLAYER_2_PICK = '{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}';
-const URL_UPLOAD_PICK = '{% url "core-portal:portal-upload_pick" match.id %}';
-const URL_TIEBREAKER = '{% url "core-portal:portal-upload-tiebreaker-score" match.id %}';
-const CSRF_TOKEN = '{{ csrf_token }}';
+const URL_PLAYER_2_PICK  = '{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}';
+const URL_UPLOAD_PICK    = '{% url "core-portal:portal-upload_pick" match.id %}';
+const URL_TIEBREAKER     = '{% url "core-portal:portal-upload-tiebreaker-score" match.id %}';
+const CSRF_TOKEN         = '{{ csrf_token }}';
 
+/* ── Generic loading helpers (used by tiebreaker) ───────────────────── */
 function showLoading() { document.getElementById('loading-overlay').style.display = 'flex'; }
 function hideLoading() { document.getElementById('loading-overlay').style.display = 'none'; }
 
-// --- Per-game popup: shows the locked event + markets, lets user pick a Selection.
-function openGamePopupById(gameId) {
-    const url = URL_EVENT_MARKETS.replace('00000000-0000-0000-0000-000000000000', gameId);
-    fetch(url)
-        .then(r => r.json())
-        .then(data => {
-            renderGamePopup(gameId, data);
-            document.getElementById('game-popup').style.display = 'block';
-        })
-        .catch(err => { console.error(err); window.toast('Failed to load game.', {variant: 'danger'}); });
-}
+/* ───────────────────────────────────────────────────────────────────────
+ *  PICK MODAL
+ *
+ *  Single Bootstrap modal for both flows:
+ *    • mode='upload' — clicked the page-level "Upload A Pick" button.
+ *      The slot has no event yet. Show step 1 (event chooser) → step 2.
+ *    • mode='game'   — clicked an existing game card on the page.
+ *      The slot has an event locked to it. Skip step 1; load markets
+ *      directly into step 2.
+ *
+ *  Selections are POSTed via the same endpoints as before.
+ * ─────────────────────────────────────────────────────────────────────── */
+const PickModal = (function () {
+    const state = {
+        mode: null,           // 'upload' | 'game'
+        gameId: null,         // game uuid (always set when mode='game')
+        eventId: null,        // chosen event id (set after step 1, or from server in 'game' mode)
+        markets: [],          // cached markets list for the chosen event
+        activeCategory: null, // currently shown market tab
+        selectedMarketId: null,
+        selectedSelectionId: null,
+        selectedLabel: null,
+        selectedOdds: null,
+        // Selections already taken on THIS game, keyed by selection_id →
+        // username who took it. The picker greys these out so each player
+        // must pick a different selection.
+        takenSelections: {},
+        // If the first player already picked a market on this game, lock
+        // the second player into the SAME market — they can only pick the
+        // opposite selection within it. Set on game-mode load.
+        lockedMarketId: null,
+        lockedMarketLabel: null,
+        lockedByUsername: null,
+    };
 
-function renderGamePopup(gameId, data) {
-    const card = document.getElementById('game-popup-card');
-    const event = data.event;
-    if (event) {
-        selectedEventId = event.event_id;
-        card.innerHTML = `
-            <div class="golden-game">
-                <div class="team"><h4>${event.home_team ? event.home_team.name : 'TBD'}</h4></div>
-                <div class="team"><h4>${event.away_team ? event.away_team.name : 'TBD'}</h4></div>
-            </div>
-            <p><strong>Sport:</strong> ${event.sport || ''}</p>
-            <p><strong>League:</strong> ${event.league ? event.league.name : ''}</p>
-            <p><strong>Start:</strong> ${new Date(event.start_time).toLocaleString()}</p>
-        `;
-    } else {
-        card.innerHTML = '<p>No event locked to this slot yet.</p>';
+    let modal;
+    let availableEvents = [];
+
+    function init() {
+        const el = document.getElementById('pickModal');
+        modal = new bootstrap.Modal(el);
+        el.addEventListener('hidden.bs.modal', resetState);
+
+        document.getElementById('pickBackBtn').addEventListener('click', goToStep1);
+        document.getElementById('pickSubmitBtn').addEventListener('click', submit);
+        document.getElementById('pickEventSearch').addEventListener('input', renderEventList);
+
+        // hydrate available events catalogue from JSON island
+        try {
+            const raw = document.getElementById('available-events-data');
+            availableEvents = raw ? JSON.parse(raw.textContent) : [];
+        } catch (e) { availableEvents = []; }
     }
 
-    const markets = document.getElementById('game-popup-markets');
-    markets.innerHTML = '';
-
-    // Show what's already picked, plus the option to pick a new selection.
-    const existing = [];
-    if (data.owner_market) existing.push({ side: 'Owner', market: data.owner_market, outcome: data.owner_outcome });
-    if (data.player_2_market) existing.push({ side: 'Opponent', market: data.player_2_market, outcome: data.player_2_outcome });
-
-    if (existing.length) {
-        const el = document.createElement('div');
-        el.innerHTML = '<h3>Existing picks</h3>' + existing.map(e =>
-            `<p><strong>${e.side}:</strong> ${e.outcome ? e.outcome.label : '—'} (${e.market.category})</p>`
-        ).join('');
-        markets.appendChild(el);
+    function resetState() {
+        Object.assign(state, {
+            mode: null, gameId: null, eventId: null,
+            markets: [], activeCategory: null,
+            selectedMarketId: null, selectedSelectionId: null,
+            selectedLabel: null, selectedOdds: null,
+            takenSelections: {},
+            lockedMarketId: null, lockedMarketLabel: null, lockedByUsername: null,
+        });
+        document.getElementById('pickStep-events').hidden = true;
+        document.getElementById('pickStep-selection').hidden = true;
+        document.getElementById('pickBackBtn').hidden = true;
+        document.getElementById('pickSelections').innerHTML =
+            '<p class="text-center text-muted p-4">Loading markets…</p>';
+        updatePreview();
     }
 
-    // Pull the full markets list so the user can pick a Selection.
-    if (event) {
-        fetch(URL_EVENT_OUTCOMES.replace(/\/0\//, `/${event.event_id}/`))
+    /* Public: open the modal in 'upload' mode (no event yet). */
+    function openForUpload() {
+        resetState();
+        state.mode = 'upload';
+        document.getElementById('pickModalLabel').textContent = 'Upload a pick';
+        document.getElementById('pickStep-events').hidden = false;
+        renderEventList();
+        modal.show();
+    }
+
+    /* Public: open the modal in 'game' mode. The slot already has an
+       event linked — fetch it from the server and skip straight to step 2. */
+    function openForGame(gameId) {
+        resetState();
+        state.mode = 'game';
+        state.gameId = gameId;
+        document.getElementById('pickModalLabel').textContent = 'Make a pick';
+        document.getElementById('pickStep-selection').hidden = false;
+        modal.show();
+
+        const url = URL_EVENT_MARKETS.replace('00000000-0000-0000-0000-000000000000', gameId);
+        fetch(url)
             .then(r => r.json())
-            .then(payload => renderMarketSelectors(gameId, payload.event ? payload.event.markets : []));
-    }
-}
-
-function renderMarketSelectors(gameId, marketList) {
-    const container = document.getElementById('game-popup-markets');
-    if (!marketList || !marketList.length) {
-        container.innerHTML += '<p>No markets available for this event yet.</p>';
-        return;
-    }
-    const wrap = document.createElement('div');
-    wrap.innerHTML = '<h3>Pick a Selection</h3>';
-    marketList.forEach(market => {
-        const m = document.createElement('div');
-        m.className = 'market';
-        m.innerHTML = `
-            <h4>${market.category} — ${market.scope}${market.line != null ? ' @ ' + market.line : ''}</h4>
-            <ul class="selections-list">
-                ${market.selections.map(s => `
-                    <li class="selection" data-selection-id="${s.selection_id}">
-                        ${s.label} @ ${s.odds.decimal} (${s.odds.american})
-                    </li>
-                `).join('')}
-            </ul>
-        `;
-        wrap.appendChild(m);
-    });
-    container.appendChild(wrap);
-
-    container.querySelectorAll('.selection').forEach(li => {
-        li.addEventListener('click', () => {
-            container.querySelectorAll('.selection').forEach(o => o.classList.remove('selected'));
-            li.classList.add('selected');
-            selectedSelectionId = li.dataset.selectionId;
-        });
-    });
-
-    const submit = document.createElement('button');
-    submit.textContent = 'Submit Selection';
-    submit.addEventListener('click', () => submitGameSelection(gameId));
-    container.appendChild(submit);
-}
-
-function submitGameSelection(gameId) {
-    if (!selectedEventId || !selectedSelectionId) {
-        window.toast('Pick a selection first.', {variant: 'info'});
-        return;
-    }
-    showLoading();
-    const body = JSON.stringify({ event_id: selectedEventId, player_choice: selectedSelectionId });
-    const url = URL_PLAYER_2_PICK.replace('00000000-0000-0000-0000-000000000000', gameId);
-    fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
-        body,
-    })
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(() => { hideLoading(); window.toast('Pick saved!', {variant: 'success'}); window.location.reload(); })
-    .catch(err => { hideLoading(); console.error(err); window.toast('Pick failed: ', {variant: 'danger'}); });
-}
-
-// --- Upload popup: choose an event, fetch its markets, pick a selection, post.
-document.querySelectorAll('.event-card').forEach(card => {
-    card.addEventListener('click', function() {
-        const eventId = this.dataset.eventId;
-        selectedEventId = eventId;
-        selectedSelectionId = null;
-
-        document.querySelectorAll('.event-container').forEach(c => {
-            c.style.display = c.contains(this) ? 'block' : 'none';
-        });
-        document.querySelectorAll('.markets-section').forEach(s => s.style.display = 'none');
-        const marketsSection = document.getElementById(`markets-section-${eventId}`);
-        marketsSection.style.display = 'block';
-
-        document.querySelectorAll('.event-card').forEach(c => c.classList.remove('selected'));
-        this.classList.add('selected');
-        document.getElementById('back-to-events').style.display = 'block';
-
-        loadMarketsForUploadPopup(eventId);
-    });
-});
-
-function loadMarketsForUploadPopup(eventId) {
-    const container = document.querySelector(`#markets-section-${eventId} .markets-container`);
-    container.innerHTML = '<p>Loading…</p>';
-    fetch(URL_EVENT_OUTCOMES.replace(/\/0\//, `/${eventId}/`))
-        .then(r => r.json())
-        .then(payload => {
-            const markets = (payload.event || {}).markets || [];
-            if (!markets.length) { container.innerHTML = '<p>No markets available.</p>'; return; }
-            container.innerHTML = markets.map(market => `
-                <div class="market" data-market-id="${market.market_id}">
-                    <h4>${market.category} — ${market.scope}${market.line != null ? ' @ ' + market.line : ''}</h4>
-                    <ul>
-                        ${market.selections.map(s => `
-                            <li class="selection" data-selection-id="${s.selection_id}">
-                                ${s.label} @ ${s.odds.decimal} (${s.odds.american})
-                            </li>
-                        `).join('')}
-                    </ul>
-                </div>
-            `).join('');
-
-            container.querySelectorAll('.selection').forEach(li => {
-                li.addEventListener('click', () => {
-                    container.querySelectorAll('.selection').forEach(o => o.classList.remove('selected'));
-                    li.classList.add('selected');
-                    selectedSelectionId = li.dataset.selectionId;
-                });
+            .then(data => {
+                if (!data.event) {
+                    document.getElementById('pickSelections').innerHTML =
+                        '<p class="text-center text-muted p-4">No event locked to this slot yet.</p>';
+                    return;
+                }
+                // Capture already-locked selections so the picker disables them.
+                state.takenSelections = {};
+                if (data.owner_outcome && data.owner_outcome.selection_id) {
+                    state.takenSelections[data.owner_outcome.selection_id] =
+                        data.owner_username || 'owner';
+                }
+                if (data.player_2_outcome && data.player_2_outcome.selection_id) {
+                    state.takenSelections[data.player_2_outcome.selection_id] =
+                        data.player_2_username || 'opponent';
+                }
+                // If either side already picked a market, lock the picker to
+                // the SAME market. The "first-picker" wins for the lock, but
+                // either side's market is acceptable (only one is normally set).
+                const lockedMarket = data.owner_market || data.player_2_market;
+                if (lockedMarket) {
+                    state.lockedMarketId = lockedMarket.market_id;
+                    state.lockedMarketLabel = humanMarketLabel(lockedMarket);
+                    state.lockedByUsername = data.owner_market
+                        ? (data.owner_username || 'owner')
+                        : (data.player_2_username || 'opponent');
+                }
+                applyEvent(data.event);
+                loadMarkets(data.event.event_id);
+            })
+            .catch(err => {
+                console.error(err);
+                window.toast('Failed to load event.', { variant: 'danger' });
             });
-        })
-        .catch(err => { console.error(err); container.innerHTML = '<p>Error loading markets.</p>'; });
-}
+    }
 
-// Back button for the upload popup event list.
-(function setupBackButton() {
-    const eventList = document.getElementById('event-list');
-    if (!eventList) return;
-    const backBtn = document.createElement('button');
-    backBtn.id = 'back-to-events';
-    backBtn.textContent = 'Back to All Events';
-    backBtn.style.display = 'none';
-    eventList.insertAdjacentElement('beforebegin', backBtn);
-    backBtn.addEventListener('click', () => {
-        document.querySelectorAll('.event-container').forEach(c => c.style.display = 'block');
-        document.querySelectorAll('.markets-section').forEach(s => s.style.display = 'none');
-        document.querySelectorAll('.event-card, .selection').forEach(el => el.classList.remove('selected'));
-        backBtn.style.display = 'none';
-        selectedEventId = null;
-        selectedSelectionId = null;
-    });
+    /* ── Step 1: event chooser ─────────────────────────────────────── */
+    function renderEventList() {
+        const q = (document.getElementById('pickEventSearch').value || '').trim().toLowerCase();
+        const filtered = availableEvents.filter(ev => {
+            if (!q) return true;
+            const hay = [
+                ev.home_team && ev.home_team.name,
+                ev.away_team && ev.away_team.name,
+                ev.league && ev.league.name,
+                ev.sport,
+            ].filter(Boolean).join(' ').toLowerCase();
+            return hay.includes(q);
+        });
+
+        const container = document.getElementById('pickEventList');
+        const empty = document.getElementById('pickEventEmpty');
+        document.getElementById('pickEventCount').textContent = filtered.length;
+
+        if (!filtered.length) {
+            container.innerHTML = ''; empty.hidden = false; return;
+        }
+        empty.hidden = true;
+        container.innerHTML = filtered.map(ev => `
+            <button type="button" class="pickevent-card" data-event-id="${ev.event_id}">
+                <div class="pickevent-card__teams">
+                    ${escapeHtml(ev.home_team ? ev.home_team.name : 'TBD')}
+                    <span class="vs">vs</span>
+                    ${escapeHtml(ev.away_team ? ev.away_team.name : 'TBD')}
+                </div>
+                <div class="pickevent-card__meta">
+                    ${ev.start_time ? `<span>${new Date(ev.start_time).toLocaleString()}</span>` : ''}
+                    ${ev.league && ev.league.name ? `<span>${escapeHtml(ev.league.name)}</span>` : ''}
+                </div>
+            </button>
+        `).join('');
+
+        container.querySelectorAll('.pickevent-card').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.eventId;
+                const ev = availableEvents.find(e => String(e.event_id) === String(id));
+                if (!ev) return;
+                applyEvent(ev);
+                document.getElementById('pickStep-events').hidden = true;
+                document.getElementById('pickStep-selection').hidden = false;
+                document.getElementById('pickBackBtn').hidden = false; // came from step 1
+                loadMarkets(ev.event_id);
+            });
+        });
+    }
+
+    function goToStep1() {
+        if (state.mode !== 'upload') return;
+        document.getElementById('pickStep-selection').hidden = true;
+        document.getElementById('pickStep-events').hidden = false;
+        document.getElementById('pickBackBtn').hidden = true;
+        // wipe selection state but keep eventId list
+        state.eventId = null; state.markets = []; state.activeCategory = null;
+        state.selectedMarketId = null; state.selectedSelectionId = null;
+        state.selectedLabel = null; state.selectedOdds = null;
+        updatePreview();
+    }
+
+    /* ── Step 2: market + selection ────────────────────────────────── */
+    function applyEvent(ev) {
+        state.eventId = ev.event_id;
+        document.getElementById('pickHomeTeam').textContent =
+            ev.home_team ? ev.home_team.name : 'TBD';
+        document.getElementById('pickAwayTeam').textContent =
+            ev.away_team ? ev.away_team.name : 'TBD';
+        const meta = [];
+        if (ev.start_time) meta.push(new Date(ev.start_time).toLocaleString());
+        if (ev.league && ev.league.name) meta.push(ev.league.name);
+        if (ev.sport) meta.push(prettySport(ev.sport));
+        document.getElementById('pickEventMeta').textContent = meta.join(' · ');
+    }
+
+    function loadMarkets(eventId) {
+        const sels = document.getElementById('pickSelections');
+        sels.innerHTML = '<p class="text-center text-muted p-4">Loading markets…</p>';
+        document.getElementById('pickMarketTabs').innerHTML = '';
+
+        const url = URL_EVENT_OUTCOMES.replace(/\/0\//, `/${eventId}/`);
+        fetch(url)
+            .then(r => r.json())
+            .then(payload => {
+                const markets = (payload.event || {}).markets || [];
+                state.markets = markets.filter(m => m.selections && m.selections.length);
+
+                // If the game is locked to a specific market (because one
+                // player already picked), narrow the catalogue to just that
+                // market. The picker has no other options.
+                if (state.lockedMarketId) {
+                    const locked = state.markets.filter(m => m.market_id === state.lockedMarketId);
+                    if (locked.length) {
+                        state.markets = locked;
+                    } else {
+                        // The locked market isn't in the current odds payload
+                        // (could happen if odds got refreshed and the original
+                        // market disappeared). Surface a clear message.
+                        sels.innerHTML = `<p class="text-center text-muted p-4">
+                            ${escapeHtml(state.lockedByUsername || 'Your opponent')}
+                            already picked the
+                            <strong>${escapeHtml(state.lockedMarketLabel || 'market')}</strong>,
+                            but it's no longer in the available odds.
+                            Wait for odds to refresh or contact support.
+                        </p>`;
+                        return;
+                    }
+                }
+
+                if (!state.markets.length) {
+                    sels.innerHTML = '<p class="text-center text-muted p-4">No markets available for this event yet.</p>';
+                    return;
+                }
+                renderMarketTabs();
+                renderActiveSelections();
+            })
+            .catch(err => {
+                console.error(err);
+                sels.innerHTML = '<p class="text-center text-danger p-4">Error loading markets.</p>';
+            });
+    }
+
+    function renderMarketTabs() {
+        const tabs = document.getElementById('pickMarketTabs');
+        const grouped = state.markets.reduce((acc, m) => {
+            (acc[m.category] = acc[m.category] || []).push(m);
+            return acc;
+        }, {});
+
+        // Locked-market mode: don't render tabs (no other choice). Show a
+        // small inline notice instead so the user knows why.
+        if (state.lockedMarketId) {
+            tabs.innerHTML = `
+                <div class="pickmodal-locked-notice">
+                    <i class="bi bi-lock-fill me-1"></i>
+                    Locked to the <strong>${escapeHtml(state.lockedMarketLabel || 'market')}</strong>
+                    that ${escapeHtml(state.lockedByUsername || 'your opponent')} picked.
+                </div>
+            `;
+            state.activeCategory = Object.keys(grouped)[0];
+            return;
+        }
+
+        tabs.innerHTML = Object.entries(grouped).map(([cat, ms], i) => `
+            <button type="button" class="pickmarket-tab ${i === 0 ? 'is-active' : ''}"
+                    data-category="${cat}">${humanCategoryLabel(cat, ms)}</button>
+        `).join('');
+        state.activeCategory = Object.keys(grouped)[0];
+
+        tabs.querySelectorAll('.pickmarket-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabs.querySelectorAll('.pickmarket-tab').forEach(t => t.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                state.activeCategory = btn.dataset.category;
+                renderActiveSelections();
+            });
+        });
+    }
+
+    /* Pretty label helpers used in headers / tabs / locked-notice. */
+    function humanCategoryLabel(cat, marketsInCat) {
+        if (cat === 'MONEYLINE')   return 'Moneyline';
+        if (cat === 'SPREAD')      return 'Spread' + (marketsInCat && marketsInCat.length === 1 && marketsInCat[0].line != null ? ` ${formatLine(marketsInCat[0].line)}` : '');
+        if (cat === 'TOTAL')       return 'Total'  + (marketsInCat && marketsInCat.length === 1 && marketsInCat[0].line != null ? ` ${marketsInCat[0].line}` : '');
+        if (cat === 'PROPS_GAME')  return 'Game props';
+        if (cat === 'PROPS_TEAM')  return 'Team props';
+        return cat[0] + cat.slice(1).toLowerCase();
+    }
+    function humanMarketLabel(m) {
+        if (!m) return '';
+        let s = humanCategoryLabel(m.category, [m]);
+        if (m.line != null && !/[+\-\d]/.test(s.slice(-3))) s += ` @ ${formatLine(m.line)}`;
+        return s;
+    }
+
+    function renderActiveSelections() {
+        const sels = document.getElementById('pickSelections');
+        const inCategory = state.markets.filter(m => m.category === state.activeCategory);
+
+        // Render every market in this category. For MONEYLINE there's usually
+        // just one market with 2-3 selections; for SPREAD/TOTAL there can be
+        // multiple alt lines, so add a small line label per market group.
+        sels.innerHTML = inCategory.map((m, idx) => {
+            const head = inCategory.length > 1
+                ? `<div class="text-muted small mb-2 ${idx > 0 ? 'mt-3' : ''}">
+                       ${m.line != null ? `Line ${formatLine(m.line)}` : `Variant ${idx + 1}`}
+                   </div>` : '';
+            const grid = `<div class="pickstep__selections">${m.selections.map(s => {
+                const takenBy = state.takenSelections[s.selection_id];
+                const classes = [
+                    'pickselection',
+                    s.suspended ? 'is-suspended' : '',
+                    takenBy ? 'is-taken' : '',
+                ].filter(Boolean).join(' ');
+                const takenBadge = takenBy
+                    ? `<span class="pickselection__taken">Picked by ${escapeHtml(takenBy)}</span>`
+                    : '';
+                return `
+                    <button type="button" class="${classes}"
+                            data-market-id="${m.market_id}"
+                            data-selection-id="${s.selection_id}"
+                            data-label="${escapeAttr(s.label || s.type)}"
+                            data-odds="${formatOdds(s.odds)}"
+                            ${takenBy ? 'aria-disabled="true" disabled' : ''}>
+                        <span class="pickselection__main">
+                            <span class="pickselection__label">${escapeHtml(s.label || s.type)}</span>
+                            ${takenBadge}
+                        </span>
+                        <span class="pickselection__odds">${formatOdds(s.odds)}</span>
+                    </button>
+                `;
+            }).join('')}</div>`;
+            return head + grid;
+        }).join('');
+
+        sels.querySelectorAll('.pickselection:not(.is-taken):not(.is-suspended)').forEach(btn => {
+            btn.addEventListener('click', () => {
+                sels.querySelectorAll('.pickselection').forEach(o => o.classList.remove('is-selected'));
+                btn.classList.add('is-selected');
+                state.selectedMarketId    = btn.dataset.marketId;
+                state.selectedSelectionId = btn.dataset.selectionId;
+                state.selectedLabel       = btn.dataset.label;
+                state.selectedOdds        = btn.dataset.odds;
+                updatePreview();
+            });
+        });
+    }
+
+    /* ── Submit / preview ──────────────────────────────────────────── */
+    function updatePreview() {
+        const previewEl = document.getElementById('pickPreview');
+        const submitBtn = document.getElementById('pickSubmitBtn');
+        if (!state.selectedSelectionId) {
+            previewEl.innerHTML = '<em class="text-muted">none</em>';
+            submitBtn.disabled = true;
+            return;
+        }
+        const catLabel = state.activeCategory
+            ? state.activeCategory[0] + state.activeCategory.slice(1).toLowerCase()
+            : '';
+        previewEl.innerHTML =
+            `<strong>${escapeHtml(state.selectedLabel)}</strong>` +
+            ` <span class="text-muted">· ${catLabel}</span>` +
+            ` <span class="ms-1 fw-bold text-primary">${escapeHtml(state.selectedOdds)}</span>`;
+        submitBtn.disabled = false;
+    }
+
+    function submit() {
+        if (!state.eventId || !state.selectedSelectionId) {
+            window.toast('Pick a selection first.', { variant: 'info' });
+            return;
+        }
+        const body = JSON.stringify({
+            event_id: state.eventId,
+            player_choice: state.selectedSelectionId,
+        });
+        const headers = { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN };
+
+        let url;
+        if (state.mode === 'upload') {
+            url = URL_UPLOAD_PICK;
+        } else {
+            url = URL_PLAYER_2_PICK.replace('00000000-0000-0000-0000-000000000000', state.gameId);
+        }
+
+        document.getElementById('pickSubmitBtn').disabled = true;
+        showLoading();
+        fetch(url, { method: 'POST', headers, body })
+            .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+            .then(({ ok, body }) => {
+                hideLoading();
+                if (!ok) {
+                    window.toast(body.message || 'Pick failed.', { variant: 'danger' });
+                    document.getElementById('pickSubmitBtn').disabled = false;
+                    return;
+                }
+                window.toast('Pick saved!', { variant: 'success' });
+                modal.hide();
+                setTimeout(() => window.location.reload(), 500);
+            })
+            .catch(err => {
+                hideLoading();
+                console.error(err);
+                window.toast('Pick failed — network or server error.', { variant: 'danger' });
+                document.getElementById('pickSubmitBtn').disabled = false;
+            });
+    }
+
+    /* ── Utility ───────────────────────────────────────────────────── */
+    function formatOdds(odds) {
+        if (!odds) return '—';
+        if (odds.american != null) {
+            return (odds.american > 0 ? '+' : '') + odds.american;
+        }
+        if (odds.decimal != null) return String(odds.decimal);
+        return '—';
+    }
+    function formatLine(line) {
+        const n = Number(line);
+        if (Number.isNaN(n)) return String(line);
+        return (n > 0 ? '+' : '') + n;
+    }
+    function prettySport(s) {
+        if (!s) return '';
+        return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+    function escapeHtml(str) {
+        return String(str ?? '').replace(/[&<>"']/g, c => (
+            { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+        ));
+    }
+    function escapeAttr(str) { return escapeHtml(str); }
+
+    return { init, openForUpload, openForGame };
 })();
 
-document.getElementById('upload-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (!selectedEventId || !selectedSelectionId) {
-        window.toast('Pick an event and a selection first.', {variant: 'info'});
-        return;
-    }
-    showLoading();
-    fetch(URL_UPLOAD_PICK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
-        body: JSON.stringify({ event_id: selectedEventId, player_choice: selectedSelectionId }),
-    })
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(() => { hideLoading(); window.toast('Pick uploaded!', {variant: 'success'}); window.location.reload(); })
-    .catch(err => { hideLoading(); console.error(err); window.toast('Upload failed: ', {variant: 'danger'}); });
-});
+document.addEventListener('DOMContentLoaded', PickModal.init);
 
-function openUploadPopup()  { document.getElementById('upload-popup').style.display = 'block'; }
-function closeUploadPopup() { document.getElementById('upload-popup').style.display = 'none'; selectedEventId=null; selectedSelectionId=null; }
-function closeGamePopup()   { document.getElementById('game-popup').style.display = 'none'; selectedEventId=null; selectedSelectionId=null; }
-
-// Click-outside-to-close for both popups.
-window.addEventListener('click', function(event) {
-    ['upload-popup', 'game-popup', 'tiebreaker-popup'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el && event.target === el) el.style.display = 'none';
-    });
-});
+/* Public hooks called by the existing buttons / game cards. */
+function openUploadPopup()           { PickModal.openForUpload(); }
+function openGamePopupById(gameId)   { PickModal.openForGame(gameId); }
 
 // --- Tiebreaker
 function openTiebreakerPopup()  { document.getElementById('tiebreaker-popup').style.display = 'block'; }

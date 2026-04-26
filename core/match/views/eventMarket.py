@@ -43,5 +43,11 @@ def event_markets(request, game_id):
                 if bet and bet.player_2_outcome
                 else None
             ),
+            # Lightweight player info so the picker UI can show who took
+            # each already-locked selection.
+            "owner_username": game.owner.username if game.owner else None,
+            "player_2_username": (
+                game.player_2.username if game.player_2 else None
+            ),
         }
     )
