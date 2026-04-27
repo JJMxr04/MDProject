@@ -40,6 +40,12 @@ if os.environ.get('DEBUG') == 'True':
 else:
     DEBUG = False
 
+# When True, bypasses (a) per-league refresh cadence, (b) per-event odds-cache
+# TTL, and (c) the per-event monthly refresh cap. Only flip on for local
+# development against the simulator — in prod every cron tick would otherwise
+# hammer the API. Off by default.
+EVENTS_DEBUG_FORCE_FRESH = os.environ.get("EVENTS_DEBUG_FORCE_FRESH") == "True"
+
 ALLOWED_HOSTS = [h for h in os.environ.get("ALLOWED_HOSTS", '').split(',') if h]
 if DEBUG:
     ALLOWED_HOSTS += ['localhost', '127.0.0.1', 'testserver']

@@ -46,11 +46,11 @@ def upcoming_events_list(request):
     )
 
     if search_query:
-        # Search across team names AND tournament/league name — matches user intent.
+        # Search across team names AND season label — matches user intent.
         events = events.filter(
-            Q(tournament_name__icontains=search_query)
-            | Q(home_team__name__icontains=search_query)
-            | Q(away_team__name__icontains=search_query)
+            Q(season_label__icontains=search_query)
+            | Q(home_team__name_long__icontains=search_query)
+            | Q(away_team__name_long__icontains=search_query)
         )
     if selected_sport:
         events = events.filter(sport_id=selected_sport)

@@ -7,13 +7,15 @@ from rest_framework.views import APIView
 
 from core.event.models import Event, Market
 from core.event.odds.service import get_event_odds
-from core.event.odds.taxonomy import SUBJECT_SCOPE_BY_CATEGORY
 from core.event.serializers.market import MarketSerializer
 
 
+# scope_subject sugar: ?scope_subject=game maps to game-level categories,
+# ?scope_subject=team to per-team prop categories. Kept narrow on purpose —
+# PROPS_PLAYER is intentionally not enabled in v1.
 SCOPE_SUBJECT_SHORTCUT = {
-    "game": [c for c, s in SUBJECT_SCOPE_BY_CATEGORY.items() if s == "game"],
-    "team": [c for c, s in SUBJECT_SCOPE_BY_CATEGORY.items() if s == "team"],
+    "game": ["MONEYLINE", "SPREAD", "TOTAL", "PROPS_GAME"],
+    "team": ["PROPS_TEAM"],
 }
 
 

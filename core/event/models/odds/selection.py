@@ -9,7 +9,9 @@ class SelectionType(models.TextChoices):
     UNDER = "UNDER"
     YES = "YES"
     NO = "NO"
-    # Soccer double-chance: the values are stored as "1X", "X2", "12"
+    EVEN = "EVEN"
+    ODD = "ODD"
+    # Soccer double-chance: stored as the literal labels
     DC_1X = "1X"
     DC_X2 = "X2"
     DC_12 = "12"
@@ -26,17 +28,19 @@ class SettlementStatus(models.TextChoices):
 
 
 class SettlementSource(models.TextChoices):
-    PROVIDER = "PROVIDER"   # copied from SofaScore's `winning` flag
+    PROVIDER = "PROVIDER"   # graded from SGO ``score`` per odd
     COMPUTED = "COMPUTED"   # derived from event scores via settlement.py
     MANUAL = "MANUAL"       # admin override — never auto-overwritten
 
 
 class Selection(models.Model):
-    """One betting choice inside a market. PK is SofaScore's `choices[*].sourceId`
-    (stable across refresh), so we can upsert idempotently.
+    """One betting choice inside a market.
+
+    PK is synthesized from ``f"{market_id}:{statEntityID}-{sideID}"`` so
+    upserts are idempotent across refreshes.
     """
 
-    id = models.BigIntegerField(primary_key=True)
+    id = models.CharField(max_length=160, primary_key=True)
     market = models.ForeignKey(
         "core_event.Market", on_delete=models.CASCADE, related_name="selections"
     )
@@ -44,9 +48,11 @@ class Selection(models.Model):
     label = models.CharField(max_length=128)
     suspended = models.BooleanField(default=False)
 
-    # Latest price, denormalized from OddsQuote for fast list reads
-    decimal_odds = models.DecimalField(max_digits=8, decimal_places=4)
-    opening_decimal_odds = models.DecimalField(max_digits=8, decimal_places=4)
+    # Latest price, denormalized from OddsQuote for fast list reads.
+    decimal_odds = models.DecimalField(max_digits=8, decimal_places=4, null=True, blank=True)
+    opening_decimal_odds = models.DecimalField(
+        max_digits=8, decimal_places=4, null=True, blank=True
+    )
     movement = models.SmallIntegerField(default=0)  # -1, 0, +1
 
     settlement_status = models.CharField(
@@ -64,6 +70,8 @@ class Selection(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = "core_selection"

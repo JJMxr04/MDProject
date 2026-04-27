@@ -13,6 +13,8 @@ class OddsFormatsField(serializers.Field):
 
     def to_representation(self, selection: Selection):
         d = selection.decimal_odds
+        if d is None:
+            return {"decimal": None, "american": None, "fractional": None}
         return {
             "decimal": float(d),
             "american": decimal_to_american(d),
@@ -21,7 +23,9 @@ class OddsFormatsField(serializers.Field):
 
 
 class SelectionSerializer(serializers.ModelSerializer):
-    selection_id = serializers.IntegerField(source="id", read_only=True)
+    # Selection.id is a deterministic string under SGO (e.g.
+    # ``"<event_id>-ml-ft:home-home"``); not an integer.
+    selection_id = serializers.CharField(source="id", read_only=True)
     odds = serializers.SerializerMethodField()
     movement = serializers.SerializerMethodField()
     is_winner = serializers.SerializerMethodField()

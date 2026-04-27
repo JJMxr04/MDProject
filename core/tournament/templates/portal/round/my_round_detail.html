@@ -40,23 +40,25 @@
         </div>
 
         {% if round_details.match.golden_game and round_details.match.golden_game.event %}
+            {% with gg=round_details.match.golden_game %}
             <div class="golden-game">
                 <div class="team">
-                    {% if round_details.match.golden_game.event.home_team_team.logo_url %}
-                        <img src="{{ round_details.match.golden_game.event.home_team_team.logo_url.url }}" alt="{{ round_details.match.golden_game.event.home_team }}">
+                    {% if gg.event.home_team.logo_url %}
+                        <img src="{{ gg.event.home_team.logo_url.url }}" alt="{{ gg.event.home_team.name }}">
                     {% endif %}
-                    <h4>{{ round_details.match.golden_game.event.home_team }}</h4>
-                    <p><strong>Sport:</strong> {{ round_details.match.golden_game.event.sport_title }}</p>
+                    <h4>{{ gg.event.home_team.name|default:"TBD" }}</h4>
+                    <p><strong>Sport:</strong> {{ gg.event.sport.name|default:"" }}</p>
                 </div>
 
                 <div class="team">
-                    {% if round_details.match.golden_game.event.away_team_team.logo_url %}
-                        <img src="{{ round_details.match.golden_game.event.away_team_team.logo_url.url }}" alt="{{ round_details.match.golden_game.event.away_team }}">
+                    {% if gg.event.away_team.logo_url %}
+                        <img src="{{ gg.event.away_team.logo_url.url }}" alt="{{ gg.event.away_team.name }}">
                     {% endif %}
-                    <h4>{{ round_details.match.golden_game.event.away_team }}</h4>
-                    <p><strong>Sport:</strong> {{ round_details.match.golden_game.event.sport_title }}</p>
+                    <h4>{{ gg.event.away_team.name|default:"TBD" }}</h4>
+                    <p><strong>Sport:</strong> {{ gg.event.sport.name|default:"" }}</p>
                 </div>
             </div>
+            {% endwith %}
         {% else %}
             <p>No golden game scheduled</p>
         {% endif %}

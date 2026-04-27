@@ -46,14 +46,10 @@ class GameManager(AbstractManager):
         if match.match_state != "accepted":
             raise PickError("Match not active")
 
-        try:
-            event_pk = int(event_id)
-        except (TypeError, ValueError):
-            raise PickError("Invalid event_id")
-        try:
-            selection_pk = int(selection_id)
-        except (TypeError, ValueError):
-            raise PickError("Invalid selection_id")
+        event_pk = (event_id or "").strip() if isinstance(event_id, str) else event_id
+        selection_pk = (selection_id or "").strip() if isinstance(selection_id, str) else selection_id
+        if not event_pk or not selection_pk:
+            raise PickError("Invalid event_id or selection_id")
 
         try:
             selection = Selection.objects.select_related(

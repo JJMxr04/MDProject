@@ -16,7 +16,7 @@ Required context:
          onclick="openGamePopupById('{{ game.id }}')">
         <h3>{{ slot_label }}</h3>
         <h4><strong>
-            {{ event.tournament_name }}{% if event.sport %} — {{ event.sport.name }}{% endif %}
+            {% if event.league %}{{ event.league.name }}{% endif %}{% if event.sport %} — {{ event.sport.name }}{% endif %}
             <script>document.write(new Date('{{ event.start_time|date:"c" }}').toLocaleString())</script>
         </strong></h4>
         <a href="{% url 'core-portal:upcoming-events-detail' event.id %}"

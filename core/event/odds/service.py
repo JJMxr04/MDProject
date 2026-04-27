@@ -1,12 +1,18 @@
-"""On-demand odds fetcher.
+"""On-demand event-detail refresh.
 
-Gate every call to SofaScore `/matches/get-all-odds` through this module so that
-the monthly quota is respected. Rules in short (see odds-system-plan.md §6.2):
+Replaces the SofaScore-era per-event ``get-all-odds`` fetcher. SGO returns the
+event + odds in one call (``GET /v2/events?eventID=…``), so a single fetch
+also refreshes the event's status and embedded teams.
 
-- Response JSON is cached in Redis. A client hit reads the cache first.
-- If the cache is older than the freshness threshold *and* the per-event
-  monthly counter is below the floor, we fetch, ingest, and re-cache.
-- Otherwise we serve the stale payload with `stale=True` in the metadata.
+Flow:
+- Caller asks for fresh odds on event X (typically because a user opened the
+  detail page).
+- We consult the per-event freshness tier and the per-event monthly counter.
+- If we can fetch, we go to SGO once, normalize, persist, and return.
+- If we can't (cap hit / quota exhausted), we serve stale DB rows.
+
+The cron-driven event-list ingest (``EventCron.ingest_league``) handles the
+bulk path; this module is for "user is looking at it right now" traffic.
 """
 
 from __future__ import annotations
@@ -16,32 +22,36 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
+from django.conf import settings
 from django.core.cache import cache
 from django.utils import timezone as dj_tz
 
-from core.event.models import Event
-from core.event.odds.normalize import ingest_odds
-from core.event.sofascore import QuotaExceeded, SofaScoreClient
+from core.event.crons.eventUpdate import EventCron
+from core.event.models import Event, League
+from core.event.odds.sgo_normalize import event_spec_from_payload
+from core.event.providers import (
+    QuotaExceeded,
+    SportsGameOddsError,
+    get_events_client,
+)
 
 logger = logging.getLogger(__name__)
 
 
-PER_EVENT_MONTHLY_CAP = 10
+PER_EVENT_MONTHLY_CAP = 8
 
 PRE_MATCH_FAR_TTL = timedelta(hours=6)
 PRE_MATCH_NEAR_TTL = timedelta(minutes=30)
-LIVE_TTL = timedelta(seconds=30)
+LIVE_TTL = timedelta(seconds=60)
 NEAR_WINDOW = timedelta(hours=24)
 
-RAW_CACHE_TTL = int(timedelta(hours=12).total_seconds())  # backstop
+
+def _last_refresh_key(event_id: str) -> str:
+    return f"sgo:event_refresh:{event_id}"
 
 
-def _raw_cache_key(event_id: int) -> str:
-    return f"sofascore:odds:{event_id}"
-
-
-def _counter_key(event_id: int) -> str:
-    return f"sofascore:odds:{event_id}:{datetime.utcnow():%Y-%m}"
+def _counter_key(event_id: str) -> str:
+    return f"sgo:event_calls:{event_id}:{datetime.utcnow():%Y-%m}"
 
 
 def _freshness(event: Event) -> timedelta:
@@ -57,92 +67,75 @@ def _freshness(event: Event) -> timedelta:
 
 @dataclass
 class OddsFetchResult:
-    payload: Optional[dict]
+    event: Optional[Event]
     stale: bool
     markets_ingested: int
     calls_this_month: int
 
 
 def get_event_odds(event: Event, *, force: bool = False) -> OddsFetchResult:
-    """Return odds for an event, fetching from SofaScore only if warranted.
+    """Refresh one event from SGO.
 
-    `force=True` bypasses the freshness check but still respects the
-    per-event monthly counter.
+    ``force=True`` bypasses the freshness check but still respects the
+    per-event monthly counter. ``settings.EVENTS_DEBUG_FORCE_FRESH=True``
+    bypasses both — for local dev against the simulator.
     """
-    raw_key = _raw_cache_key(event.id)
-    cached = cache.get(raw_key)
-    cached_at: Optional[datetime] = None
-    if isinstance(cached, dict):
-        ts = cached.get("__cached_at")
-        if ts:
-            cached_at = datetime.fromisoformat(ts)
-
-    ttl = _freshness(event)
-    cache_fresh = (
-        cached_at is not None
-        and (datetime.now(tz=timezone.utc) - cached_at) < ttl
-    )
-
-    if cached and cache_fresh and not force:
-        return OddsFetchResult(
-            payload=cached.get("payload"),
-            stale=False,
-            markets_ingested=0,
-            calls_this_month=cache.get(_counter_key(event.id), 0),
-        )
+    debug_force = getattr(settings, "EVENTS_DEBUG_FORCE_FRESH", False)
 
     counter_key = _counter_key(event.id)
     used = cache.get(counter_key, 0)
-    if used >= PER_EVENT_MONTHLY_CAP:
-        logger.info(
-            "Per-event odds cap reached for event=%s (%s/%s); serving stale",
-            event.id,
-            used,
-            PER_EVENT_MONTHLY_CAP,
-        )
-        return OddsFetchResult(
-            payload=(cached or {}).get("payload") if isinstance(cached, dict) else None,
-            stale=True,
-            markets_ingested=0,
-            calls_this_month=used,
-        )
 
-    client = SofaScoreClient()
-    try:
-        payload = client.get_match_odds(event.id)
-    except QuotaExceeded as exc:
-        logger.error("Global quota exceeded fetching odds for event=%s: %s", event.id, exc)
-        return OddsFetchResult(
-            payload=(cached or {}).get("payload") if isinstance(cached, dict) else None,
-            stale=True,
-            markets_ingested=0,
-            calls_this_month=used,
+    last_refresh_at = cache.get(_last_refresh_key(event.id))
+    if isinstance(last_refresh_at, str):
+        try:
+            last_refresh_at = datetime.fromisoformat(last_refresh_at)
+        except ValueError:
+            last_refresh_at = None
+
+    ttl = _freshness(event)
+    if not force and not debug_force and last_refresh_at:
+        if (datetime.now(tz=timezone.utc) - last_refresh_at) < ttl:
+            return OddsFetchResult(event=event, stale=False, markets_ingested=0, calls_this_month=used)
+
+    if used >= PER_EVENT_MONTHLY_CAP and not debug_force:
+        logger.info(
+            "Per-event SGO refresh cap reached for event=%s (%s/%s); serving stale",
+            event.id, used, PER_EVENT_MONTHLY_CAP,
         )
+        return OddsFetchResult(event=event, stale=True, markets_ingested=0, calls_this_month=used)
+
+    client = get_events_client()
+    try:
+        payload = client.get_event(event.id, include_open_close=True)
+    except QuotaExceeded as exc:
+        logger.error("Global quota exceeded for event=%s: %s", event.id, exc)
+        return OddsFetchResult(event=event, stale=True, markets_ingested=0, calls_this_month=used)
+    except SportsGameOddsError as exc:
+        logger.warning("SGO error for event=%s: %s", event.id, exc)
+        return OddsFetchResult(event=event, stale=True, markets_ingested=0, calls_this_month=used)
 
     if payload is None:
-        # Network / auth failure — serve stale if we have it
-        return OddsFetchResult(
-            payload=(cached or {}).get("payload") if isinstance(cached, dict) else None,
-            stale=True,
-            markets_ingested=0,
-            calls_this_month=used,
-        )
+        return OddsFetchResult(event=event, stale=True, markets_ingested=0, calls_this_month=used)
 
-    cache.set(
-        counter_key, used + 1, timeout=60 * 60 * 24 * 40
-    )  # 40-day TTL, same as global counter
+    spec = event_spec_from_payload(payload)
+    if spec is None:
+        return OddsFetchResult(event=event, stale=True, markets_ingested=0, calls_this_month=used)
 
-    markets_ingested = ingest_odds(event, payload)
+    league = League.objects.filter(id=spec.league_id).first()
+    if league is None:
+        return OddsFetchResult(event=event, stale=True, markets_ingested=0, calls_this_month=used)
 
-    cache.set(
-        raw_key,
-        {"__cached_at": datetime.now(tz=timezone.utc).isoformat(), "payload": payload},
-        timeout=RAW_CACHE_TTL,
-    )
+    cron = EventCron(client=client)
+    cron._persist(spec, payload, league)
 
+    cache.set(counter_key, used + 1, timeout=60 * 60 * 24 * 40)
+    cache.set(_last_refresh_key(event.id), datetime.now(tz=timezone.utc).isoformat(),
+              timeout=60 * 60 * 24)
+
+    refreshed = Event.objects.filter(pk=event.id).first() or event
     return OddsFetchResult(
-        payload=payload,
+        event=refreshed,
         stale=False,
-        markets_ingested=markets_ingested,
+        markets_ingested=sum(len(m.selections) for m in spec.markets),
         calls_this_month=used + 1,
     )

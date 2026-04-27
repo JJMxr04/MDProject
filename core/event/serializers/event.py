@@ -5,11 +5,13 @@ from core.event.models import Event
 from .market import MarketSerializer
 
 
+# SGO sportID -> public slug used by the Flutter client.
 SPORT_SLUG_MAP = {
-    1: "soccer",
-    2: "basketball",
-    4: "ice_hockey",
-    63: "american_football",
+    "BASEBALL": "baseball",
+    "BASKETBALL": "basketball",
+    "FOOTBALL": "american_football",
+    "HOCKEY": "ice_hockey",
+    "SOCCER": "soccer",
 }
 
 
@@ -19,24 +21,14 @@ class _TeamBriefField(serializers.Field):
             return None
         return {
             "id": team.id,
-            "name": team.name,
-            "short": team.short_name or team.name,
-        }
-
-
-class _LeagueField(serializers.Field):
-    def to_representation(self, event):
-        if event.unique_tournament_id is None and not event.tournament_name:
-            return None
-        return {
-            "id": event.unique_tournament_id or event.tournament_id,
-            "name": event.tournament_name,
-            "slug": event.tournament_slug,
+            "team_id": team.team_id,
+            "name": team.name_long,
+            "short": team.name_short or team.name_medium or team.name_long,
         }
 
 
 class EventSerializer(serializers.ModelSerializer):
-    event_id = serializers.IntegerField(source="id", read_only=True)
+    event_id = serializers.CharField(source="id", read_only=True)
     sport = serializers.SerializerMethodField()
     league = serializers.SerializerMethodField()
     home_team = serializers.SerializerMethodField()
@@ -61,10 +53,16 @@ class EventSerializer(serializers.ModelSerializer):
         ]
 
     def get_sport(self, obj):
-        return SPORT_SLUG_MAP.get(obj.sport_id, obj.sport.slug if obj.sport else None)
+        return SPORT_SLUG_MAP.get(obj.sport_id, (obj.sport_id or "").lower() or None)
 
     def get_league(self, obj):
-        return _LeagueField().to_representation(obj)
+        if obj.league_id is None:
+            return None
+        return {
+            "id": obj.league_id,
+            "name": obj.league.name if obj.league else obj.league_id,
+            "short_name": obj.league.short_name if obj.league else "",
+        }
 
     def get_home_team(self, obj):
         return _TeamBriefField().to_representation(obj.home_team)

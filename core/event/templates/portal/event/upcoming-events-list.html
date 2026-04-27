@@ -68,7 +68,8 @@
 
         <div class="event-card__meta">
             {% if event.sport %}<span class="badge-ui badge-ui--info">{{ event.sport.name|capfirst }}</span>{% endif %}
-            {% if event.tournament_name %}<span class="event-card__league">{{ event.tournament_name }}</span>{% endif %}
+            {% if event.league %}<span class="event-card__league">{{ event.league.name }}</span>{% endif %}
+            {% if event.season_label %}<span class="event-card__league">· {{ event.season_label }}</span>{% endif %}
         </div>
 
         <div class="event-card__time">

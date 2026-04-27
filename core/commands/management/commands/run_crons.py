@@ -27,7 +27,7 @@ class Command(BaseCommand):
         scheduler.start()
 
         def event_cron():
-            eventCron.update_all_events()
+            eventCron.update_due_leagues()
 
         def print_cron_jobs():
             scheduler.print_jobs()
@@ -35,9 +35,9 @@ class Command(BaseCommand):
 
         scheduler.add_job(
             event_cron,
-            trigger=IntervalTrigger(seconds=12*60*60),  # every 12 hours (Option A)
+            trigger=IntervalTrigger(seconds=2*60*60),  # tick every 2h; per-league cadence decides
             id='event_cron',
-            name='SofaScore event ingest',
+            name='SportsGameOdds per-league event ingest',
             replace_existing=True,
         )
 

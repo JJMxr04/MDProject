@@ -18,8 +18,8 @@
         </h1>
         <p class="page-header__subtitle">
             {% if event.sport %}<span class="badge-ui badge-ui--info">{{ event.sport.name|capfirst }}</span>&nbsp;{% endif %}
-            {% if event.tournament_name %}{{ event.tournament_name }}{% endif %}
-            {% if event.season_name %}&nbsp;&middot;&nbsp; {{ event.season_name }}{% endif %}
+            {% if event.league %}{{ event.league.name }}{% endif %}
+            {% if event.season_label %}&nbsp;&middot;&nbsp; {{ event.season_label }}{% endif %}
         </p>
     </div>
 </header>

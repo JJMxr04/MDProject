@@ -18,10 +18,9 @@ class EventViewSet(AbstractViewSet):
     queryset = Event.objects.all()
     ordering = ["start_time"]
     search_fields = [
-        "tournament_name",
-        "home_team__name",
-        "away_team__name",
-        "slug",
+        "season_label",
+        "home_team__name_long",
+        "away_team__name_long",
     ]
     pagination_class = EventPagination
 
@@ -29,7 +28,7 @@ class EventViewSet(AbstractViewSet):
         queryset = Event.objects.active()
         allowed_params = [
             "sport_id",
-            "tournament_id",
+            "league_id",
             "search",
             "start_time_start",
             "start_time_end",
@@ -42,10 +41,9 @@ class EventViewSet(AbstractViewSet):
                 continue
             if param == "search":
                 queryset = queryset.filter(
-                    Q(tournament_name__icontains=value)
-                    | Q(home_team__name__icontains=value)
-                    | Q(away_team__name__icontains=value)
-                    | Q(slug__icontains=value)
+                    Q(season_label__icontains=value)
+                    | Q(home_team__name_long__icontains=value)
+                    | Q(away_team__name_long__icontains=value)
                 )
             elif param == "start_time_start":
                 filter_kwargs["start_time__gte"] = value

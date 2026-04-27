@@ -1,9 +1,9 @@
 """Selection settlement — decides which selections won, lost, pushed, or voided.
 
 Two paths:
-  - PROVIDER: SofaScore's `winning` flag, applied during odds ingest (see
-    `apply_provider_flag` below; hot-path call from normalize.py).
-  - COMPUTED: derived from `Event.home_score` / `away_score` / `winner_code`
+  - PROVIDER: SGO's per-odd ``score`` field, applied during odds ingest via
+    ``core.event.odds.sgo_settlement.grade_event``.
+  - COMPUTED: derived from ``Event.home_score`` / ``away_score`` / ``winner_code``
     for the five categories we can reason about without extra data. Runs on
     the event-finished hook and the nightly backfill cron.
 
@@ -159,28 +159,16 @@ SETTLEMENT_FUNCS = {
 # ---------------------------------------------------------------------------
 
 
-def apply_provider_flag(sel: Selection, winning: bool | None, now=None) -> bool:
-    """Copy SofaScore's `winning` flag onto a Selection. Returns True if row
-    changed. Safe to call during `ingest_odds`; never overwrites MANUAL."""
-    if winning is None:
-        return False
-    if sel.settlement_source == "MANUAL":
-        return False
-    new_status = "WON" if winning else "LOST"
-    if sel.settlement_status == new_status and sel.settlement_source == "PROVIDER":
-        return False
-    sel.settlement_status = new_status
-    sel.settled_at = now or timezone.now()
-    sel.settlement_source = "PROVIDER"
-    return True
-
-
 @transaction.atomic
 def settle_event(event: Event) -> int:
     """Run computed settlement on every PENDING selection for an event.
 
     Only touches rows whose current source is '' (untouched) or 'COMPUTED'.
     Returns number of selections updated.
+
+    After bulk-updating, walks affected ``Match`` rows and runs
+    ``maybe_complete_match`` — ``bulk_update`` skips ``post_save`` signals so
+    the standard Selection-settled signal never fires here.
     """
     if event.status_type != "finished":
         return 0
@@ -220,7 +208,45 @@ def settle_event(event: Event) -> int:
 
     if total_updated:
         logger.info("Settled %d selections for event %s", total_updated, event.id)
+        propagate_to_matches(event)
     return total_updated
+
+
+def propagate_to_matches(event: Event) -> int:
+    """Walk every Match holding a Bet on this event's Selections and run
+    ``Match.objects.maybe_complete_match``. Used after bulk-updates that skip
+    the standard Selection post_save signal.
+
+    Returns the count of matches inspected (not necessarily completed).
+    """
+    from django.db.models import Q
+
+    from core.game.models import Bet
+
+    bets = (
+        Bet.objects.filter(
+            Q(owner_outcome__market__event=event)
+            | Q(player_2_outcome__market__event=event)
+        )
+        .select_related("game", "game__match")
+    )
+    seen = set()
+    matches = []
+    for bet in bets:
+        game = getattr(bet, "game", None)
+        if game is None or game.match_id is None or game.match_id in seen:
+            continue
+        seen.add(game.match_id)
+        matches.append(game.match)
+
+    if not matches:
+        return 0
+
+    from core.match.models import Match  # local: dodge circular
+
+    for match in matches:
+        Match.objects.maybe_complete_match(match)
+    return len(matches)
 
 
 def settle_pending_events(lookback_hours: int = 48) -> dict:
