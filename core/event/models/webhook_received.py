@@ -23,8 +23,9 @@ class WebhookReceived(models.Model):
     class Meta:
         db_table = "core_event_webhook_received"
         indexes = [
+            # Django caps index names at 30 chars (E034).
             models.Index(
                 fields=["event", "received_at"],
-                name="ix_webhook_received_event_received",
+                name="ix_wh_recv_event_received",
             ),
         ]

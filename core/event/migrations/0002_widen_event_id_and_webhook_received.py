@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 "indexes": [
                     models.Index(
                         fields=["event", "received_at"],
-                        name="ix_webhook_received_event_received",
+                        name="ix_wh_recv_event_received",
                     ),
                 ],
             },
