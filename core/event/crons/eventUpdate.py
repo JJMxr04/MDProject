@@ -80,7 +80,7 @@ class EventCron:
             starts_after=_iso(starts_after),
             starts_before=_iso(starts_before),
             include_open_close=True,
-            odds_available=True,
+            odds_available=None,
             limit=50,
         ):
             spec = event_spec_from_payload(raw)
