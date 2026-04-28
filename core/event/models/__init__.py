@@ -14,6 +14,7 @@ from .odds import (
 )
 from .sport import Sport
 from .team import Team
+from .webhook_received import WebhookReceived
 
 __all__ = [
     "Bookmaker",
@@ -30,4 +31,5 @@ __all__ = [
     "SettlementStatus",
     "Sport",
     "Team",
+    "WebhookReceived",
 ]

@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
+from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.views import robots_txt
 from django.contrib.auth import views as auth_views
 
@@ -14,6 +15,11 @@ urlpatterns = [
     path('admin/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),
     path('admin/', admin.site.urls),
     path('api/', include(('core.event.api_urls', 'core-event-api'), namespace='core-event-api')),
+    # Inbound webhook from the aggregator service (plan §4). HMAC-signed
+    # payloads update Event/Market/Selection state and run the existing
+    # match-completion / game-reopen hooks.
+    path('sportgameodds/webhook', SportsGameOddsWebhookView.as_view(),
+         name='sportgameodds-webhook'),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),

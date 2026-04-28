@@ -66,9 +66,13 @@ class EventListView(APIView):
             now = timezone.now()
             qs = qs.filter(start_time__gte=now - timedelta(hours=3), start_time__lt=now + timedelta(days=3))
 
+        # Filter on Event.league_id directly. The previous filter referenced
+        # ``unique_tournament_id``, a SofaScore-era attribute that was never
+        # defined on the SGO-shaped Event model — every ?league= request
+        # raised. Fix per plan §7.7.
         league = request.query_params.get("league")
         if league:
-            qs = qs.filter(unique_tournament_id=league)
+            qs = qs.filter(league_id=league)
 
         qs = qs.select_related("home_team", "away_team", "sport").order_by("start_time")
 

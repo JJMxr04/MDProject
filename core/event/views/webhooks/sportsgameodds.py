@@ -1,0 +1,265 @@
+"""Inbound webhook handler at ``/sportgameodds/webhook``.
+
+Receives state updates from the new aggregator service (plan §4). Verifies the
+HMAC-SHA256 signature, dedupes by ``idempotency_key``, upserts Event +
+Markets + Selections from the schema-v1 envelope, and triggers the existing
+match-completion / game-reopen hooks the aggregator's lifecycle decisions
+imply.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import hmac
+import json
+import logging
+import time
+from decimal import Decimal, InvalidOperation
+from typing import Any
+
+from dateutil import parser as date_parser
+from django.conf import settings
+from django.db import transaction
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from core.event.models import (
+    Event,
+    League,
+    Market,
+    Selection,
+    Sport,
+    Team,
+    WebhookReceived,
+)
+
+logger = logging.getLogger(__name__)
+
+
+SCHEMA_VERSION = 1
+SIGNATURE_HEADER = "HTTP_X_AGGRIGATOR_SIGNATURE"
+MAX_SKEW_SECONDS = 300
+
+
+class BadSignature(Exception):
+    """Header malformed / stale / mismatched."""
+
+
+class SportsGameOddsWebhookView(APIView):
+    """Aggregator -> MDProject. HMAC-authenticated; idempotent per body."""
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        secret = getattr(settings, "AGGRIGATOR_WEBHOOK_SECRET", "")
+        if not secret:
+            logger.error("AGGRIGATOR_WEBHOOK_SECRET not configured")
+            return Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        try:
+            _verify_signature(request, secret)
+        except BadSignature as exc:
+            logger.warning("rejecting webhook: %s", exc)
+            return Response(
+                {"detail": str(exc)}, status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        try:
+            body: dict[str, Any] = json.loads(request.body)
+        except json.JSONDecodeError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        if body.get("schema_version") != SCHEMA_VERSION:
+            return Response(
+                {"detail": "schema mismatch"},
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            )
+
+        idempotency_key = body.get("idempotency_key")
+        if not idempotency_key:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        if WebhookReceived.objects.filter(idempotency_key=idempotency_key).exists():
+            return Response(status=status.HTTP_409_CONFLICT)
+
+        event_envelope = body.get("event") or {}
+        markets_envelope = body.get("markets") or []
+        event_name = body.get("event_name", "")
+
+        try:
+            event = self._apply(event_envelope, markets_envelope)
+            WebhookReceived.objects.create(
+                event=event,
+                idempotency_key=idempotency_key,
+                event_name=event_name,
+            )
+        except Exception:  # noqa: BLE001
+            logger.exception("webhook apply failed for event_id=%s", event_envelope.get("event_id"))
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # Run the lifecycle hooks the aggregator's transition implies.
+        if event_name == "event.finalized":
+            try:
+                from core.event.odds.settlement import propagate_to_matches
+                propagate_to_matches(event)
+            except Exception:  # noqa: BLE001
+                logger.exception("propagate_to_matches failed for event=%s", event.id)
+        elif event_name == "event.voided":
+            try:
+                from core.game.events import reopen_games_for_voided_event
+                reopen_games_for_voided_event(event)
+            except Exception:  # noqa: BLE001
+                logger.exception("reopen_games_for_voided_event failed for event=%s", event.id)
+
+        return Response(status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    def _apply(self, ev: dict, markets: list[dict]) -> Event:
+        league = League.objects.filter(id=ev.get("league_id")).first()
+        sport = (
+            (league.sport if league else None)
+            or Sport.objects.filter(id=ev.get("sport_id")).first()
+        )
+        home_team = _upsert_team(ev.get("home_team"))
+        away_team = _upsert_team(ev.get("away_team"))
+
+        defaults = {
+            "league": league,
+            "sport": sport,
+            "type": (ev.get("type") or "")[:16],
+            "season_label": (ev.get("season_label") or "")[:64],
+            "start_time": _parse_iso(ev.get("start_time")),
+            "status_type": (ev.get("status_type") or "")[:32],
+            "status_display": (ev.get("status_display") or "")[:64],
+            "current_period_id": (ev.get("current_period_id") or "")[:16],
+            "is_live": bool(ev.get("is_live")),
+            "is_finalized": bool(ev.get("is_finalized")),
+            "completed": bool(ev.get("completed")),
+            "home_team": home_team,
+            "away_team": away_team,
+            "home_score": ev.get("home_score"),
+            "away_score": ev.get("away_score"),
+            "winner_code": ev.get("winner_code"),
+            "feed_locked": bool(ev.get("feed_locked")),
+        }
+        event, _ = Event.objects.update_or_create(
+            id=ev["event_id"], defaults=defaults,
+        )
+
+        for m in markets:
+            _upsert_market_with_selections(event, m)
+        return event
+
+
+# ---- helpers ---------------------------------------------------------------
+
+
+def _verify_signature(request, secret: str) -> None:
+    raw = request.META.get(SIGNATURE_HEADER) or request.headers.get(
+        "X-Aggrigator-Signature", "",
+    )
+    if not raw:
+        raise BadSignature("missing signature header")
+    parts = {}
+    for kv in raw.split(","):
+        if "=" not in kv:
+            raise BadSignature("malformed header")
+        k, _, v = kv.strip().partition("=")
+        parts[k] = v
+    if "t" not in parts or "v1" not in parts:
+        raise BadSignature("header missing t or v1")
+    try:
+        ts = int(parts["t"])
+    except ValueError as exc:
+        raise BadSignature("non-integer t") from exc
+    if abs(int(time.time()) - ts) > MAX_SKEW_SECONDS:
+        raise BadSignature("timestamp out of window")
+    expected = hmac.new(
+        secret.encode(),
+        f"{ts}.".encode() + request.body,
+        hashlib.sha256,
+    ).hexdigest()
+    if not hmac.compare_digest(expected, parts["v1"]):
+        raise BadSignature("signature mismatch")
+
+
+def _upsert_team(team_envelope: dict | None) -> Team | None:
+    if not team_envelope:
+        return None
+    team_id = team_envelope.get("team_id")
+    league_id = team_envelope.get("league_id")
+    if not team_id or not league_id:
+        return None
+    league = League.objects.filter(id=league_id).first()
+    if league is None:
+        return None
+    pk = f"{league_id}:{team_id}"
+    defaults = {
+        "league": league,
+        "team_id": team_id,
+        "sport": league.sport,
+        "name_long": (team_envelope.get("name_long") or team_id)[:128],
+        "name_medium": (team_envelope.get("name_medium") or team_id)[:64],
+        "name_short": (team_envelope.get("name_short") or team_id)[:32],
+        "primary_color": team_envelope.get("primary_color"),
+        "stat_entity_id": (team_envelope.get("stat_entity_id") or "")[:8],
+    }
+    obj, _ = Team.objects.update_or_create(id=pk, defaults=defaults)
+    return obj
+
+
+def _upsert_market_with_selections(event: Event, m: dict) -> None:
+    defaults = {
+        "event": event,
+        "sport_id": event.sport_id,
+        "category": m.get("category", ""),
+        "type": (m.get("type") or "")[:64],
+        "scope": m.get("scope", "FULL_GAME"),
+        "line": _decimal(m.get("line")),
+        "side": m.get("side", ""),
+        "provider": "sportsgameodds",
+        "provider_market_id": "",
+        "provider_choice_group": "",
+        "subject_team_id": m.get("subject_team_id"),
+        "is_live": bool(m.get("is_live")),
+        "suspended": bool(m.get("suspended")),
+        "last_updated": _parse_iso(m.get("last_updated")),
+    }
+    market, _ = Market.objects.update_or_create(id=m["market_id"], defaults=defaults)
+
+    for s in m.get("selections") or []:
+        Selection.objects.update_or_create(
+            id=s["selection_id"],
+            defaults=dict(
+                market=market,
+                type=s.get("type", ""),
+                label=(s.get("label") or "")[:128],
+                decimal_odds=_decimal(s.get("decimal_odds")),
+                opening_decimal_odds=_decimal(s.get("opening_decimal_odds")),
+                movement=int(s.get("movement") or 0),
+                settlement_status=s.get("settlement_status") or "PENDING",
+                settled_at=_parse_iso(s.get("settled_at")),
+                settlement_source=s.get("settlement_source") or "",
+            ),
+        )
+
+
+def _decimal(value):
+    if value in (None, ""):
+        return None
+    try:
+        return Decimal(str(value))
+    except (InvalidOperation, TypeError):
+        return None
+
+
+def _parse_iso(value):
+    if value in (None, ""):
+        return None
+    try:
+        return date_parser.isoparse(value)
+    except (ValueError, TypeError):
+        return None

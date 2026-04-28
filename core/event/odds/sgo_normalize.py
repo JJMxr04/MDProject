@@ -367,6 +367,7 @@ def _build_market_spec(
     market_type = market_type_for(first_parts, league_id)
     market_id = build_market_id(
         event_id=event_id, kind=bt, scope=scope, line=line, side=side_marker,
+        stat_id=first_parts.statID, stat_entity_id=first_parts.statEntityID,
     )
 
     suspended = all(bool(o.get("cancelled")) for _, o in members)
@@ -532,14 +533,25 @@ _SCOPE_TO_SLUG = {
 def build_market_id(
     *, event_id: str, kind: str, scope: str,
     line: Decimal | None = None, side: str = "",
+    stat_id: str = "", stat_entity_id: str = "",
 ) -> str:
     """Deterministic ``Market.id`` for an SGO-sourced market.
 
-    Format: ``"{event_id}-{kind}-{scope_slug}[-{line}][-{side_lower}]"``.
-    Example: ``"mXCZTRJnbX8ib64z1h3D-ou-ft-44_5"``.
+    Format: ``"{event_id}-{kind}-{scope_slug}[-{stat_id}][-{stat_entity_id}][-{line}][-{side_lower}]"``.
+    Example: ``"mXCZTRJnbX8ib64z1h3D-ou-ft-points-all-44_5"``.
+
+    Per plan §7.7 #3: ``statID`` and ``statEntityID`` are now *always* in the
+    id when present, not just when ``side_marker`` happens to be set. Two
+    distinct groups like ``(points, 1h, eo, home)`` vs ``(points, 1h, eo, away)``
+    used to collide on ``"-eo-h1"``; they now produce
+    ``"-eo-h1-points-home"`` vs ``"-eo-h1-points-away"``.
     """
     scope_slug = _SCOPE_TO_SLUG.get(scope, scope.lower())
     parts = [event_id, kind, scope_slug]
+    if stat_id:
+        parts.append(stat_id.lower())
+    if stat_entity_id:
+        parts.append(stat_entity_id.lower())
     if line is not None:
         parts.append(_line_slug(line))
     if side:

@@ -1,26 +1,47 @@
 """Provider factory.
 
-Today: SportsGameOdds direct.
+Honors the comment that's been here since the SGO client landed: when a
+separate data-aggregator service ships, the swap is a one-file change.
 
-Future: when a separate data-aggregator service ships, replace the body of
-``get_events_client`` with a settings-driven dispatch that returns an
-``AggregatorClient`` with the same surface (``get_events``, ``get_event``,
-``get_account_usage``, ``get_sports``, ``get_leagues``, ``get_teams``).
+Today the factory dispatches based on settings:
 
-Callers should always import via this factory rather than instantiating
-``SportsGameOddsClient`` directly — that's the contract that makes the future
-swap a one-file change.
+- ``USE_AGGRIGATOR=True`` → returns an ``AggrigatorClient`` (HTTP to the new
+  aggregator at ``AGGRIGATOR_BASE_URL``)
+- otherwise → legacy direct ``SportsGameOddsClient``
+
+During Phase 2 of the cutover (plan §9) both code paths exist; flipping the
+flag in env is the cutover.
 """
 
+from __future__ import annotations
+
+from django.conf import settings
+
+from core.event.providers.aggregator_client import (
+    AggrigatorClient,
+    AggrigatorError,
+)
 from core.event.sportsgameodds import (
     QuotaExceeded,
     SportsGameOddsClient,
     SportsGameOddsError,
 )
 
-__all__ = ["get_events_client", "SportsGameOddsError", "QuotaExceeded"]
+__all__ = [
+    "get_events_client",
+    "SportsGameOddsError",
+    "QuotaExceeded",
+    "AggrigatorClient",
+    "AggrigatorError",
+]
 
 
 def get_events_client():
-    """Returns the configured events provider client."""
+    """Return the configured events provider client.
+
+    Reads ``settings.USE_AGGRIGATOR`` (default ``False`` so existing deploys
+    keep working until they flip the flag explicitly).
+    """
+    if getattr(settings, "USE_AGGRIGATOR", False):
+        return AggrigatorClient()
     return SportsGameOddsClient()

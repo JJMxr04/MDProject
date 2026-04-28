@@ -616,4 +616,27 @@ JAZZMIN_SETTINGS = {
 
 
 
+
+# ---------------------------------------------------------------------------
+# Aggregator integration (plan §7.4 cutover)
+#
+# Phase 2 (dual-write): leave USE_AGGRIGATOR=False; both pipelines run.
+# Phase 3 (cutover):    flip USE_AGGRIGATOR=True; legacy crons disabled.
+# Phase 4 (cleanup):    remove the dead SGO ingestion code from this repo.
+#
+# AGGRIGATOR_WEBHOOK_SECRET is the *raw* signing secret the aggregator
+# generated when MDProject's webhook endpoint was registered there. The
+# aggregator stores its own copy encrypted at rest; this is MDProject's
+# verification copy. Rotate via the aggregator's
+# /v1/webhook-endpoints/{id}/rotate endpoint, then update this value.
+# ---------------------------------------------------------------------------
+
+import os
+
+USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "true", "yes")
+AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
+AGGRIGATOR_API_KEY = os.environ.get("AGGRIGATOR_API_KEY", "")
+AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
+
+
 # End of file
