@@ -2,7 +2,6 @@ from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 from django.conf import settings
-from celery.schedules import crontab
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CoreRoot.settings')
@@ -10,7 +9,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CoreRoot.settings')
 app = Celery('CoreRoot')
 app.conf.enable_utc = False
 
-# Configure Celery to use settings defined in Django
+# Configure Celery to use settings defined in Django.
+# CELERY_BEAT_SCHEDULE in settings.py is the single source of truth for the
+# beat schedule. (Earlier this file declared its own ``app.conf.beat_schedule``
+# that diverged and pointed at obsolete event/sport tasks; removed as part of
+# the aggregator cutover — plan §7.1.)
 app.config_from_object(settings, namespace='CELERY')
 
 # Ensure Celery uses the Django database backend for results
@@ -21,43 +24,6 @@ app.conf.update(
 
 # Automatically discover tasks in installed Django apps
 app.autodiscover_tasks()
-
-# Configure the Celery beat schedule
-app.conf.beat_schedule = {
-    'backend_cleanup': {
-        'task': 'celery.backend_cleanup',
-        'schedule': crontab(minute=0, hour=0, day_of_month=1),  # Runs at midnight on the 1st of every month
-        'options': {'expires': 3600}  # Cleanup results after 1 hour
-    },
-    'complete_matches_cron': {
-        'task': 'core.crons.tasks.complete_matches_cron',
-        'schedule': crontab(minute=0, hour=0),  # every day at midnight
-    },
-    'tournament_cron_bracketMaker': {
-        'task': 'core.crons.tasks.tournament_cron_bracketMaker',
-        'schedule': crontab(hour=0, minute=0),  # every day at midnight
-    },
-    'tournament_cron_2_day_reminder': {
-        'task': 'core.crons.tasks.tournament_cron_2_day_reminder',
-        'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
-    },
-    'sport_cron': {
-        'task': 'core.crons.tasks.sport_cron',
-        'schedule': crontab(minute=0, hour=0),  # daily at midnight
-    },
-    'event_cron': {
-        'task': 'core.crons.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*/12'),  # runs every 4 hours
-    },
-    'event_delete_outdated_cron': {
-        'task': 'core.crons.tasks.event_delete_outdated_cron',
-        'schedule': crontab(minute=0, hour='*/12'),  # runs every 4 hours
-    },
-    # 'print_cron_jobs': {
-    #     'task': 'core.crons.tasks.print_cron_jobs',
-    #     'schedule': crontab(minute='*'),  # every minute
-    # },
-}
 
 # Task to print debug information, helpful for testing if Celery is running correctly
 @app.task(bind=True)

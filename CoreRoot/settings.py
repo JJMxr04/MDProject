@@ -400,25 +400,11 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'core.crons.tasks.tournament_cron_2_day_reminder',
         'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
     },
-    # SofaScore ingest. Budget: 3 active sports × 2 ticks/day × 30 = 180 calls/month.
-    'event_cron': {
-        'task': 'core.crons.tasks.event_cron',
-        'schedule': crontab(minute=0, hour='*/12'),
-    },
-    # Pure-DB safety net — settles selections on finished events that the hot
-    # path missed. Zero API calls.
-    'settle_pending_cron': {
-        'task': 'core.crons.tasks.settle_pending_cron',
-        'schedule': crontab(minute=30, hour=3),  # nightly @ 03:30 UTC
-    },
-    # Aggressive odds warmer. Runs every 30 min. Safe because the task
-    # body honours: per-event cap (10/month), cache TTL (30s/30min/6h),
-    # and a global SOFT_LIMIT reserve so it never burns the last calls
-    # of the month. See core.crons.tasks.warm_upcoming_odds_cron.
-    'warm_upcoming_odds_cron': {
-        'task': 'core.crons.tasks.warm_upcoming_odds_cron',
-        'schedule': crontab(minute='*/30'),  # every 30 minutes
-    },
+    # event_cron / settle_pending_cron / warm_upcoming_odds_cron were removed
+    # as part of the aggregator cutover (plan §7.1). Event ingestion, odds
+    # refresh, and settlement now live in the aggregator service; MDProject
+    # receives final state via /sportgameodds/webhook.
+    #
     # Heartbeat — prints a line so you can sanity-check that beat is running.
     'print_cron_jobs': {
         'task': 'core.crons.tasks.print_cron_jobs',
