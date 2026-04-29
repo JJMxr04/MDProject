@@ -72,6 +72,11 @@ def upcoming_event_detail(request, event_id):
         "portal/event/upcoming_event_detail.html",
         {
             "event": event_view,
+            # Raw aggregator dict — used by ``{% humanize_pick_payload %}``
+            # so the template can render plain-English selection labels
+            # without us having to maintain dict-or-attribute fallbacks
+            # inside humanize.py.
+            "event_raw": body,
             "markets": markets,
             "served_stale": served_stale,
         },

@@ -18,17 +18,27 @@ def public_match_list_view(request):
     search_query = request.GET.get('search', '')
     page = request.GET.get('page', 1)
 
-    # Filter the matches based on search query, state, and date range
-    matches = Match.objects.filter(match_state='created')
+    # Don't show the user's own open public matches in the "join one" list
+    # — they can't accept their own. Same goes for matches they've already
+    # accepted (those move out of state='created' anyway).
+    matches = (
+        Match.objects.filter(match_state='created')
+        .exclude(player_1=request.user)
+        .order_by('-start_date')
+    )
 
     if search_query:
         matches = matches.filter(player_1__username__icontains=search_query) | \
                   matches.filter(player_2__username__icontains=search_query)
-    
+
     # Paginate the matches
     paginator = Paginator(matches, 10)  # Show 10 matches per page
     matches_page = paginator.get_page(page)
     form = MatchInviteForm()
+
+    # Friends list is needed so the Create-match modal can offer "challenge
+    # a specific friend" without making the user navigate to /friends first.
+    friends = list(request.user.friends.all().order_by('username'))
 
     context = {
         'matches': matches_page,
@@ -36,8 +46,9 @@ def public_match_list_view(request):
         'total_pages': paginator.num_pages,
         'current_page': int(page),
         'form': form,
+        'friends': friends,
     }
-    
+
     return render(request, 'portal/match/public_match_list.html', context)
 @require_POST
 @login_required(login_url='/auth/login/')
@@ -94,18 +105,25 @@ def public_match_detail_view(request, match_id):
 @require_POST
 @login_required(login_url='/auth/login/')
 def accept_public_match_view(request, match_id):
-    data = json.loads(request.body)  # Decode and parse JSON body
-    if data.get('action') == 'accept':  # Updated line
-        try:
-            user = request.user
-            match = Match.objects.get(id=match_id)
-            a_match = Match.objects.accept_match(match,user)
+    from core.game.models.game import GoldenGameUnavailable
 
-
-
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    else:
+    data = json.loads(request.body)
+    if data.get('action') != 'accept':
         return JsonResponse({'status': 'error', 'message': 'Not the correct action'}, status=400)
+
+    try:
+        match = Match.objects.get(id=match_id)
+    except Match.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Match not found.'}, status=404)
+
+    try:
+        Match.objects.accept_match(match, request.user)
+    except GoldenGameUnavailable as exc:
+        # Atomic rollback already happened in accept_match — pass the user-
+        # facing message straight through to the portal toast.
+        return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+    return JsonResponse({'status': 'success'})
     

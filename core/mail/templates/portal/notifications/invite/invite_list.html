@@ -7,7 +7,7 @@
 <header class="page-header">
     <div>
         <h1 class="page-header__title">Invites</h1>
-        <p class="page-header__subtitle">Match and tournament invites sent to you.</p>
+        <p class="page-header__subtitle">Match, tournament, and friend requests sent to you.</p>
     </div>
 </header>
 
@@ -18,7 +18,17 @@
         <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
             {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
             <div class="flex-grow-1">
-                <div class="fw-semibold">{{ invite.sender.username }} invited you to a {{ invite.get_type_display }}</div>
+                <div class="fw-semibold">
+                    {% if invite.type == "match" %}
+                        {{ invite.sender.username }} invited you to a match
+                    {% elif invite.type == "tournament" %}
+                        {{ invite.sender.username }} invited you to a tournament
+                    {% elif invite.type == "friend" %}
+                        {{ invite.sender.username }} sent you a friend request
+                    {% else %}
+                        {{ invite.sender.username }} invited you to a {{ invite.get_type_display }}
+                    {% endif %}
+                </div>
                 <div class="small text-muted">
                     {% include "portal/components/_badge.html" with state=invite.state %}
                     &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
@@ -54,14 +64,17 @@ function handleInviteAction(inviteId, action) {
         headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
         body: JSON.stringify({'action': action}),
     })
-    .then(r => r.json())
-    .then(data => {
+    .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+    .then(({ ok, body }) => {
         overlay.hidden = true;
-        if (data.success) {
+        if (ok && body.success) {
             window.toast(action === 'accept' ? 'Invite accepted.' : 'Invite declined.', {variant: 'success'});
             setTimeout(() => window.location.reload(), 600);
         } else {
-            window.toast('Error processing invite. Please try again.', {variant: 'danger'});
+            // Surface the server-side message so users see "No events are
+            // scheduled for your match window..." instead of a generic banner.
+            const msg = (body && body.error) || 'Error processing invite. Please try again.';
+            window.toast(msg, {variant: 'danger'});
         }
     })
     .catch((err) => {

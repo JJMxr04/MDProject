@@ -1,432 +1,392 @@
-{% extends "portal/base_portal.html" %}
+{% extends "portal/base_app.html" %}
 {% load static %}
 
+{% block title %}Friends{% endblock title %}
+
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <!-- Left Column - Friend Code and Search -->
-        <div class="col-md-7">
-            <!-- Your Friend Code Card -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4>Your Friend Code</h4>
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Friends</h1>
+        <p class="page-header__subtitle">Add friends by code, then invite them to a match.</p>
+    </div>
+    {% if pending_invites_count %}
+        <a href="{% url 'core-portal:invite-list' %}" class="btn-ui btn-ui--secondary">
+            <i class="bi bi-envelope-paper"></i>
+            {{ pending_invites_count }} pending invite{{ pending_invites_count|pluralize }}
+        </a>
+    {% endif %}
+</header>
+
+<div class="friends-grid">
+    {# ── Left column — your code + finder ──────────────────────────── #}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-key me-2"></i>Your friend code</h2>
+        </header>
+        <div class="card-ui__body">
+            <div class="friend-code-box">
+                <code id="friend-code">{{ user_friend_code }}</code>
+                <button type="button" class="btn-ui btn-ui--secondary btn-ui--sm" onclick="copyFriendCode()">
+                    <i class="bi bi-clipboard"></i> Copy
+                </button>
+                <form method="POST" action="{% url 'core-portal:regenerate_friend_code' %}" id="regenerate-form" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-ui btn-ui--ghost btn-ui--sm" title="Mint a new code (the old one stops working)">
+                        <i class="bi bi-arrow-clockwise"></i> Rotate
+                    </button>
+                </form>
+            </div>
+            <p class="text-muted small mt-2">Share this code with friends so they can find you. It stays valid until you rotate it.</p>
+        </div>
+    </section>
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-search me-2"></i>Find a friend</h2>
+        </header>
+        <div class="card-ui__body">
+            <form method="POST" class="friend-finder-form">
+                {% csrf_token %}
+                <div class="field">
+                    <label for="friend_code" class="field-label">Their 8-character friend code</label>
+                    <div class="friend-finder-input">
+                        <input type="text" class="field-input" id="friend_code" name="friend_code"
+                               placeholder="e.g. AB12CD34" maxlength="8" autocomplete="off">
+                        <button type="submit" class="btn-ui btn-ui--primary">Search</button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <code id="friend-code" class="p-2 bg-light fs-4">{{ user_friend_code }}</code>
+            </form>
+
+            {# Inline messages — kept for the existing Django messages framework integration. #}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="banner banner--{{ message.tags|default:'info' }} mt-3">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% if outgoing_friend_requests %}
+                <div class="outgoing-requests mt-3">
+                    <h6 class="text-muted small mb-2"><i class="bi bi-hourglass-split me-1"></i>Awaiting their response:</h6>
+                    {% for inv in outgoing_friend_requests %}
+                        <div class="outgoing-requests__row">
+                            {% include "portal/components/_avatar.html" with user=inv.player size=32 %}
+                            <span class="text-muted small ms-2">@{{ inv.player.username }}</span>
+                            <span class="badge-ui badge-ui--muted ms-auto">Pending</span>
                         </div>
-                        <div class="btn-group">
-                            <button onclick="copyFriendCode()" class="btn btn-outline-secondary">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                            <form method="POST" action="{% url 'core-portal:regenerate_friend_code' %}" 
-                                  class="d-inline" id="regenerate-form">
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if found_user %}
+                <div class="found-user mt-3">
+                    <div class="found-user__id">
+                        {% include "portal/components/_avatar.html" with user=found_user size=56 %}
+                        <div>
+                            <div class="found-user__name">{{ found_user.name|default:found_user.username }}</div>
+                            <div class="text-muted small">@{{ found_user.username }}</div>
+                            {% if found_user.bio %}<div class="text-muted small mt-1">{{ found_user.bio }}</div>{% endif %}
+                        </div>
+                    </div>
+                    {% if found_user != request.user %}
+                        {% if is_friend %}
+                            <span class="badge-ui badge-ui--success">Already friends</span>
+                        {% else %}
+                            <form method="POST" action="{% url 'core-portal:add_friend_action' found_user.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning">
-                                    <i class="fas fa-sync"></i> New Code
+                                <button type="submit" class="btn-ui btn-ui--primary btn-ui--sm">
+                                    <i class="bi bi-person-plus"></i> Send friend request
                                 </button>
                             </form>
-                        </div>
-                    </div>
-                    <small class="text-muted mt-2 d-block">
-                        Share this code with friends to let them find you.
-                    </small>
-                </div>
-            </div>
-
-            <!-- Search Card -->
-            <div class="card">
-                <div class="card-header">
-                    <h4>Find Friends</h4>
-                </div>
-                <div class="card-body">
-                    <!-- Friend Code Search Form -->
-                    <form method="POST" class="mb-4">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="friend_code">Enter Friend Code:</label>
-                            <input type="text" class="form-control" id="friend_code" name="friend_code" 
-                                   placeholder="Enter 8-character code" maxlength="8">
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">Search by Code</button>
-                    </form>
-
-
-                    <!-- Display Messages -->
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} mt-3">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    <!-- Display Search Results -->
-                    {% if search_results %}
-                        <div class="mt-4">
-                            <h5 class="mb-3">Search Results:</h5>
-                            <div class="list-group">
-                                {% for user in search_results %}
-                                    <div class="list-group-item">
-                                        <div class="d-flex align-items-center">
-                                            {% if user.avatar %}
-                                                <img src="{{ user.avatar.url }}" 
-                                                     class="rounded-circle me-3"
-                                                     style="width: 48px; height: 48px; object-fit: cover;">
-                                            {% endif %}
-                                            <div>
-                                                <h6 class="mb-0">{{ user.name }}</h6>
-                                                <small class="text-muted">@{{ user.username }}</small>
-                                            </div>
-                                            <div class="ms-auto">
-                                                {% if user in request.user.friends.all %}
-                                                    <button class="btn btn-sm btn-secondary" disabled>
-                                                        Already Friends
-                                                    </button>
-                                                {% else %}
-                                                    <form method="POST" 
-                                                          action="{% url 'core-portal:add_friend_action' user.id %}"
-                                                          class="d-inline">
-                                                        {% csrf_token %}
-                                                        <button type="submit" 
-                                                                class="btn btn-sm btn-success">
-                                                            <i class="fas fa-user-plus"></i> Add Friend
-                                                        </button>
-                                                    </form>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <!-- Display Found User (from friend code search) -->
-                    {% if found_user %}
-                        <div class="card mt-4">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    {% if found_user.avatar %}
-                                        <img src="{{ found_user.avatar.url }}" class="rounded-circle mr-3" 
-                                             style="width: 64px; height: 64px; object-fit: cover;">
-                                    {% endif %}
-                                    <div>
-                                        <h5 class="card-title mb-1">{{ found_user.name }}</h5>
-                                        <p class="card-text text-muted">@{{ found_user.username }}</p>
-                                        {% if found_user.bio %}
-                                            <p class="card-text">{{ found_user.bio }}</p>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                
-                                {% if found_user != request.user %}
-                                    {% if not is_friend %}
-                                        <form method="POST" action="{% url 'core-portal:add_friend_action' found_user.id %}" 
-                                              class="mt-3">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-success">Add Friend</button>
-                                        </form>
-                                    {% else %}
-                                        <button class="btn btn-secondary mt-3" disabled>Already Friends</button>
-                                    {% endif %}
-                                {% endif %}
-                            </div>
-                        </div>
+                        {% endif %}
                     {% endif %}
                 </div>
-            </div>
+            {% endif %}
         </div>
+    </section>
 
-        <!-- Right Column - Friends List -->
-        <div class="col-md-5">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Your Friends</h4>
-                    <small class="text-muted">{{ friends|length }} friends</small>
+    {# ── Right column — your friends ──────────────────────────────── #}
+    <section class="card-ui friends-list-card">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-people me-2"></i>Your friends</h2>
+            <span class="badge-ui badge-ui--muted">{{ friends|length }}</span>
+        </header>
+        <div class="card-ui__body">
+            {% if friends %}
+                <div class="field mb-3">
+                    <input type="search" id="friends-filter" class="field-input"
+                           placeholder="Filter by name or username…" autocomplete="off"
+                           onkeyup="filterFriends()">
                 </div>
-                <div class="card-body">
-                    <!-- Friends List Search -->
-                    <div class="input-group mb-3">
-                        <input type="text" 
-                               class="form-control" 
-                               id="friends-filter" 
-                               placeholder="Filter friends..."
-                               onkeyup="filterFriends()">
-                        <span class="input-group-text">
-                            <i class="fas fa-filter"></i>
-                        </span>
-                    </div>
-
-                    {% if friends %}
-                        <div class="list-group" id="friends-list">
-                            {% for friend in friends %}
-                                <div class="list-group-item friend-item">
-                                    <div class="d-flex align-items-center">
-                                        {% if friend.avatar %}
-                                            <img src="{{ friend.avatar.url }}" 
-                                                 class="rounded-circle me-3" 
-                                                 style="width: 48px; height: 48px; object-fit: cover;">
-                                        {% endif %}
-                                        <div>
-                                            <h6 class="mb-0">{{ friend.name }}</h6>
-                                            <small class="text-muted">@{{ friend.username }}</small>
-                                        </div>
-                                        <div class="ms-auto">
-                                            <form method="POST" 
-                                                  action="{% url 'core-portal:remove_friend_action' friend.id %}" 
-                                                  class="d-inline">
-                                                {% csrf_token %}
-                                                <button type="submit" 
-                                                        class="btn btn-sm btn-outline-danger"
-                                                        onclick="return confirm('Are you sure you want to remove this friend?')">
-                                                    <i class="fas fa-user-minus"></i>
-                                                </button>
-                                            </form>
-                                            <button class="btn btn-primary" onclick="showInvitePopup('{{ friend.id }}', '{{ friend.username }}')">
-                                                <i class="fas fa-gamepad"></i> Invite to Match
-                                            </button>
-                                        </div>
-                                    </div>
+                <div class="friends-list" id="friends-list">
+                    {% for friend in friends %}
+                        <div class="friend-card friend-item" data-name="{{ friend.name|default:friend.username|lower }}" data-username="{{ friend.username|lower }}">
+                            <div class="friend-card__id">
+                                {% include "portal/components/_avatar.html" with user=friend size=48 %}
+                                <div>
+                                    <div class="friend-card__name">{{ friend.name|default:friend.username }}</div>
+                                    <div class="text-muted small">@{{ friend.username }}</div>
                                 </div>
-                            {% endfor %}
+                            </div>
+                            <div class="friend-card__actions">
+                                <button type="button" class="btn-ui btn-ui--primary btn-ui--sm"
+                                        onclick="showInvitePopup('{{ friend.id }}', '{{ friend.username|escapejs }}')">
+                                    <i class="bi bi-controller"></i> Invite to match
+                                </button>
+                                <button type="button" class="btn-ui btn-ui--ghost btn-ui--sm icon-only"
+                                        title="Remove friend"
+                                        onclick="confirmRemoveFriend('{{ friend.id }}', '{{ friend.username|escapejs }}')">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                                <form id="remove-form-{{ friend.id }}" method="POST"
+                                      action="{% url 'core-portal:remove_friend_action' friend.id %}"
+                                      style="display:none">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
                         </div>
-                    {% else %}
-                        <p class="text-muted text-center my-3">You haven't added any friends yet.</p>
-                    {% endif %}
+                    {% endfor %}
                 </div>
-            </div>
+                <p id="friends-empty-filter" class="text-muted text-center my-3" style="display:none">
+                    No friends match that filter.
+                </p>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="people" title="You haven't added any friends yet." body="Ask a friend for their 8-character code, then search for them on the left." %}
+            {% endif %}
         </div>
-    </div>
+    </section>
 </div>
 
-<div id="loading-overlay" style="display: none;">
-    <div class="loading-spinner"></div>
-    <p>Sending invite...</p>
-</div>
-
-<div id="inviteMatchPopup" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close" onclick="closeInvitePopup()">&times;</span>
-        <h2>Invite to Match</h2>
-        <div id="inviteModalMessages"></div>
+{# ── Invite-to-match modal ─────────────────────────────────────────── #}
+<div id="inviteMatchModal" class="modal-shell" hidden>
+    <div class="modal-card">
+        <button type="button" class="modal-card__close" aria-label="Close" onclick="closeInvitePopup()"><i class="bi bi-x-lg"></i></button>
+        <h2 class="modal-card__title">Invite to match</h2>
+        <p id="confirmationText" class="text-muted"></p>
         <form method="POST" id="inviteMatchForm" action="{% url 'core-portal:portal-create-public-match' %}">
             {% csrf_token %}
             <input type="hidden" name="type" value="private">
             <input type="hidden" name="player" id="invitePlayerId">
-            <p id="confirmationText"></p>
-            <div>
-                <button type="button" class="btn btn-primary" onclick="submitInviteForm()">Confirm</button>
-                <button type="button" class="btn btn-secondary" onclick="closeInvitePopup()">Cancel</button>
-            </div>
         </form>
+        <div class="modal-card__actions">
+            <button type="button" class="btn-ui btn-ui--secondary" onclick="closeInvitePopup()">Cancel</button>
+            <button type="button" class="btn-ui btn-ui--primary" onclick="submitInviteForm()">Send invite</button>
+        </div>
     </div>
 </div>
 
+{# ── Remove-friend confirm modal ───────────────────────────────────── #}
+<div id="removeFriendModal" class="modal-shell" hidden>
+    <div class="modal-card">
+        <button type="button" class="modal-card__close" aria-label="Close" onclick="closeRemoveModal()"><i class="bi bi-x-lg"></i></button>
+        <h2 class="modal-card__title">Remove friend?</h2>
+        <p id="removeFriendText" class="text-muted"></p>
+        <div class="modal-card__actions">
+            <button type="button" class="btn-ui btn-ui--secondary" onclick="closeRemoveModal()">Keep</button>
+            <button type="button" class="btn-ui btn-ui--danger" id="removeFriendConfirmBtn">Remove</button>
+        </div>
+    </div>
+</div>
+
+<div id="loading-overlay" hidden>
+    <div class="loading-spinner"></div>
+    <p>Sending invite…</p>
+</div>
+{% endblock content %}
+
+{% block css %}
 <style>
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
+    .page-header { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    width: 90%;
-    max-width: 500px;
-}
+    .friends-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-4);
+        align-items: start;
+    }
+    .friends-grid > .friends-list-card { grid-row: 1 / span 2; }
 
-.close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-#loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-}
-
-.loading-spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-#loading-overlay p {
-    color: white;
-    margin-top: 10px;
-}
-
-.alert {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-</style>
-
-<script>
-function copyFriendCode() {
-    const codeElement = document.getElementById('friend-code');
-    navigator.clipboard.writeText(codeElement.textContent.trim())
-        .then(() => {
-            window.toast('Friend code copied to clipboard!', {variant: 'success'});
-        })
-        .catch(err => {
-            console.error('Failed to copy text: ', err);
-        });
-}
-
-// Optional: Use AJAX for regenerating the code
-document.getElementById('regenerate-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (!confirm('Are you sure you want to generate a new friend code? The old one will no longer work.')) {
-        return;
+    .friend-code-box {
+        display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;
+    }
+    .friend-code-box code {
+        font-size: var(--text-xl); font-weight: var(--weight-bold);
+        background: var(--surface-muted, #f5f7fa);
+        padding: .35rem .85rem; border-radius: var(--radius-md);
+        letter-spacing: .15em; color: var(--brand-blue-dark, #275d81);
     }
 
+    .friend-finder-form .friend-finder-input {
+        display: flex; gap: var(--space-2);
+    }
+    .friend-finder-form .field-input { text-transform: uppercase; letter-spacing: .12em; }
+
+    .found-user, .friend-card {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: var(--space-3);
+        padding: var(--space-3);
+        background: var(--surface-card, #fff);
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: var(--radius-md);
+    }
+    .found-user__id, .friend-card__id { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+    .outgoing-requests__row {
+        display: flex; align-items: center; gap: .35rem;
+        padding: .25rem 0;
+        font-size: .85rem;
+    }
+    .found-user__name, .friend-card__name {
+        font-weight: var(--weight-semibold);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .friend-card__actions { display: flex; align-items: center; gap: var(--space-1); flex-shrink: 0; }
+
+    .friends-list { display: flex; flex-direction: column; gap: var(--space-2); }
+
+    .btn-ui.icon-only { padding: .35rem .55rem; }
+
+    .modal-shell {
+        position: fixed; inset: 0;
+        background: rgba(17, 24, 39, .55);
+        display: flex; align-items: center; justify-content: center;
+        z-index: 9000;
+    }
+    .modal-shell[hidden] { display: none; }
+    .modal-card {
+        position: relative;
+        background: var(--surface-card, #fff);
+        border-radius: var(--radius-lg, 12px);
+        box-shadow: 0 20px 50px rgba(17, 24, 39, .25);
+        padding: var(--space-5, 1.5rem);
+        max-width: 440px; width: calc(100% - 2rem);
+    }
+    .modal-card__close {
+        position: absolute; top: .5rem; right: .5rem;
+        background: transparent; border: none; cursor: pointer;
+        padding: .35rem .5rem; color: var(--text-secondary);
+    }
+    .modal-card__title { margin: 0 0 .5rem; font-size: var(--text-lg); }
+    .modal-card__actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: var(--space-4, 1rem); }
+
+    #loading-overlay {
+        position: fixed; inset: 0;
+        background: rgba(0, 0, 0, .5);
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center;
+        z-index: 10000; color: #fff;
+    }
+    .loading-spinner {
+        width: 40px; height: 40px; border-radius: 50%;
+        border: 4px solid #f3f3f3; border-top-color: var(--brand-blue, #3D7EAA);
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .banner { padding: .55rem .75rem; border-radius: var(--radius-sm, 6px); font-size: .9rem; }
+    .banner--success { background: rgba(47, 158, 107, .12); color: #1a7a4a; }
+    .banner--error, .banner--danger { background: rgba(220, 38, 38, .1); color: #b91c1c; }
+    .banner--info { background: rgba(61, 126, 170, .12); color: var(--brand-blue-dark, #275d81); }
+
+    @media (max-width: 800px) {
+        .friends-grid { grid-template-columns: 1fr; }
+        .friends-grid > .friends-list-card { grid-row: auto; }
+    }
+</style>
+{% endblock css %}
+
+{% block scripts %}
+<script>
+function copyFriendCode() {
+    const code = document.getElementById('friend-code').textContent.trim();
+    navigator.clipboard.writeText(code)
+        .then(() => window.toast('Friend code copied!', {variant: 'success'}))
+        .catch(() => window.toast('Could not copy code.', {variant: 'danger'}));
+}
+
+document.getElementById('regenerate-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!confirm('Generate a new friend code? The old one will stop working.')) return;
     fetch(this.action, {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRFToken': this.querySelector('[name=csrfmiddlewaretoken]').value
-        }
+            'X-CSRFToken': this.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
     })
-    .then(response => response.json())
+    .then(r => r.json())
     .then(data => {
         if (data.success) {
             document.getElementById('friend-code').textContent = data.new_code;
-            window.toast('Friend code updated successfully!', {variant: 'success'});
+            window.toast('Friend code rotated.', {variant: 'success'});
         } else {
-            window.toast('Failed to update friend code: ', {variant: 'danger'});
+            window.toast('Could not rotate friend code.', {variant: 'danger'});
         }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        window.toast('An error occurred while updating your friend code.', {variant: 'danger'});
-    });
+    .catch(() => window.toast('Network error rotating code.', {variant: 'danger'}));
 });
 
-// Add friend list filter functionality
+/* ── Filter friends list (live) ────────────────────────────────── */
 function filterFriends() {
-    const input = document.getElementById('friends-filter');
-    const filter = input.value.toLowerCase();
-    const friendItems = document.getElementsByClassName('friend-item');
-
-    for (let item of friendItems) {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(filter) ? '' : 'none';
+    const q = (document.getElementById('friends-filter').value || '').toLowerCase().trim();
+    const items = document.getElementsByClassName('friend-item');
+    let shown = 0;
+    for (const item of items) {
+        const name = item.dataset.name || '';
+        const username = item.dataset.username || '';
+        const match = !q || name.includes(q) || username.includes(q);
+        item.style.display = match ? '' : 'none';
+        if (match) shown += 1;
     }
+    document.getElementById('friends-empty-filter').style.display = (shown === 0 && q) ? '' : 'none';
 }
 
-function showLoading() {
-    document.getElementById('loading-overlay').style.display = 'flex';
-}
-
-function hideLoading() {
-    document.getElementById('loading-overlay').style.display = 'none';
-}
-
-function showMessage(message, type = 'success') {
-    const messagesDiv = document.getElementById('inviteModalMessages');
-    messagesDiv.innerHTML = `
-        <div class="alert alert-${type}">
-            ${message}
-        </div>
-    `;
-}
-
+/* ── Invite-to-match modal ─────────────────────────────────────── */
 function showInvitePopup(playerId, playerName) {
-    document.getElementById('inviteMatchPopup').style.display = 'flex';
+    document.getElementById('inviteMatchModal').hidden = false;
     document.getElementById('invitePlayerId').value = playerId;
-    document.getElementById('confirmationText').textContent = `Invite ${playerName} to a match?`;
-    document.getElementById('inviteModalMessages').innerHTML = ''; // Clear any existing messages
+    document.getElementById('confirmationText').textContent = `Invite @${playerName} to a private match?`;
 }
-
 function closeInvitePopup() {
-    document.getElementById('inviteMatchPopup').style.display = 'none';
-    document.getElementById('inviteModalMessages').innerHTML = ''; // Clear messages when closing
+    document.getElementById('inviteMatchModal').hidden = true;
 }
-
 function submitInviteForm() {
     const form = document.getElementById('inviteMatchForm');
     const formData = new FormData(form);
-
-    showLoading();
+    document.getElementById('loading-overlay').hidden = false;
     closeInvitePopup();
-
     fetch(form.action, {
         method: 'POST',
-        headers: {
-            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
-        },
-        body: formData
+        headers: {'X-CSRFToken': formData.get('csrfmiddlewaretoken')},
+        body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-        hideLoading();
-        if (data.status === 'success') {
-            // Show success message
-            showInvitePopup(formData.get('player'), ''); // Reopen popup
-            showMessage('Invite sent successfully!');
-            // Optionally reload after a delay
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+    .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+    .then(({ ok, body }) => {
+        document.getElementById('loading-overlay').hidden = true;
+        if (ok && body.status === 'success') {
+            window.toast('Invite sent.', {variant: 'success'});
         } else {
-            // Show error message
-            showInvitePopup(formData.get('player'), ''); // Reopen popup
-            showMessage(data.message || 'An error occurred while sending the invite.', 'danger');
+            // Surface server message (e.g. GoldenGameUnavailable from a future
+            // accept will land in invite-list, but the create-invite endpoint
+            // can also reject for other reasons — be honest about why).
+            const msg = (body && body.message) || 'Could not send invite.';
+            window.toast(msg, {variant: 'danger'});
         }
     })
-    .catch(error => {
-        hideLoading();
-        showInvitePopup(formData.get('player'), ''); // Reopen popup
-        showMessage('An unexpected error occurred. Please try again.', 'danger');
-        console.error('Error:', error);
+    .catch(() => {
+        document.getElementById('loading-overlay').hidden = true;
+        window.toast('Network error sending invite.', {variant: 'danger'});
     });
 }
+
+/* ── Remove-friend confirm modal ───────────────────────────────── */
+function confirmRemoveFriend(friendId, friendName) {
+    document.getElementById('removeFriendText').textContent =
+        `Remove @${friendName} from your friends list? You can re-add them via their friend code later.`;
+    const btn = document.getElementById('removeFriendConfirmBtn');
+    btn.onclick = () => document.getElementById('remove-form-' + friendId).submit();
+    document.getElementById('removeFriendModal').hidden = false;
+}
+function closeRemoveModal() {
+    document.getElementById('removeFriendModal').hidden = true;
+}
 </script>
-{% endblock %}
+{% endblock scripts %}

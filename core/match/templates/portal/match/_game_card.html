@@ -1,3 +1,4 @@
+{% load humanize_pick %}
 {% comment %}
 Per-game card. Renders one Game (regular slot or golden).
 
@@ -44,32 +45,21 @@ Required context:
         <div class="bet-info">
             <h4>Bet Details:</h4>
             {% if bet.owner_outcome %}
-                <p><strong>Market:</strong>
-                    {% with cat=bet.owner_outcome.market.category %}
-                        {% if cat == "MONEYLINE" %}Moneyline
-                        {% elif cat == "SPREAD" %}Spread
-                        {% elif cat == "TOTAL" %}Total
-                        {% elif cat == "PROPS_GAME" %}Game Prop
-                        {% elif cat == "PROPS_TEAM" %}Team Prop
-                        {% else %}{{ cat }}{% endif %}
-                    {% endwith %}
-                    ({{ bet.owner_outcome.market.scope }})
-                </p>
-                <p><strong>{{ game.owner.username }}'s Selection:</strong>
-                    {{ bet.owner_outcome.label }}
-                    @ {{ bet.owner_decimal_odds_at_pick|default:bet.owner_outcome.decimal_odds }}
+                <p><strong>{{ game.owner.username }} picked:</strong>
+                    {{ bet.owner_outcome|humanize_pick }}
+                    <span class="text-muted">@ {{ bet.owner_decimal_odds_at_pick|default:bet.owner_outcome.decimal_odds }}</span>
                 </p>
             {% else %}
-                <p><strong>{{ game.owner.username }}'s Selection:</strong> <em>not picked</em></p>
+                <p><strong>{{ game.owner.username }}'s pick:</strong> <em>not picked</em></p>
             {% endif %}
 
             {% if bet.player_2_outcome %}
-                <p><strong>{{ game.player_2.username }}'s Selection:</strong>
-                    {{ bet.player_2_outcome.label }}
-                    @ {{ bet.player_2_decimal_odds_at_pick|default:bet.player_2_outcome.decimal_odds }}
+                <p><strong>{{ game.player_2.username }} picked:</strong>
+                    {{ bet.player_2_outcome|humanize_pick }}
+                    <span class="text-muted">@ {{ bet.player_2_decimal_odds_at_pick|default:bet.player_2_outcome.decimal_odds }}</span>
                 </p>
             {% else %}
-                <p><strong>{{ game.player_2.username }}'s Selection:</strong> <em>not picked</em></p>
+                <p><strong>{{ game.player_2.username }}'s pick:</strong> <em>not picked</em></p>
             {% endif %}
 
             <p><strong>Status:</strong>

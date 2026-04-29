@@ -21,6 +21,10 @@ urlpatterns = [
     path('game/<uuid:game_id>/market/', views.event_markets, name='portal-match-event-market'),
     path('<uuid:match_id>/game/<uuid:game_id>/market/', views.event_markets, name='portal-match-event-market'),
     path('game/<uuid:game_id>/player_2_select_outcome/', views.player_2_select_outcome, name='portal-match-game-player_2_select_outcome'),
+    # Unified pick endpoint for slots whose market is pre-locked (Golden Game).
+    # Either player can hit it; the manager routes owner_outcome vs
+    # player_2_outcome based on which side of the match they're on.
+    path('game/<uuid:game_id>/pick_locked/', views.pick_on_locked_slot, name='portal-match-game-pick-locked'),
     path('<uuid:match_id>/tiebreaker', views.upload_tiebreaker_score, name='portal-upload-tiebreaker-score'),
 
 ]

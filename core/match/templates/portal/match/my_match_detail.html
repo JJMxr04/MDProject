@@ -157,9 +157,6 @@
         <p>Processing...</p>
     </div>
 
-    {# JSON island — full event catalog (with home/away/teams/start) consumed by the
-       pick modal's event-chooser step. Avoids re-rendering markup in JS. #}
-    {{ available_events|json_script:"available-events-data" }}
     {% csrf_token %}
 </div>
 
@@ -422,8 +419,10 @@
         box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA), 0 4px 14px rgba(61, 126, 170, .15);
     }
     .pickselection.is-suspended { opacity: .5; pointer-events: none; }
+    /* "Already picked by the other side" — visual hint only, NOT a block.
+       Picking the same outcome as your opponent is a valid blocking tactic;
+       both players can submit the same selection on any slot. */
     .pickselection.is-taken {
-        opacity: .55; pointer-events: none;
         background: var(--pm-bg-soft);
         border-style: dashed;
     }
@@ -545,6 +544,7 @@
 const URL_EVENT_MARKETS  = '{% url "core-portal:portal-match-event-market" "00000000-0000-0000-0000-000000000000" %}';
 const URL_EVENT_OUTCOMES = '{% url "core-portal:portal-match-event-outcomes" 0 %}';
 const URL_PLAYER_2_PICK  = '{% url "core-portal:portal-match-game-player_2_select_outcome" "00000000-0000-0000-0000-000000000000" %}';
+const URL_PICK_LOCKED    = '{% url "core-portal:portal-match-game-pick-locked" "00000000-0000-0000-0000-000000000000" %}';
 const URL_UPLOAD_PICK    = '{% url "core-portal:portal-upload_pick" match.id %}';
 const URL_TIEBREAKER     = '{% url "core-portal:portal-upload-tiebreaker-score" match.id %}';
 const CSRF_TOKEN         = '{{ csrf_token }}';
@@ -570,6 +570,7 @@ const PickModal = (function () {
         mode: null,           // 'upload' | 'game'
         gameId: null,         // game uuid (always set when mode='game')
         eventId: null,        // chosen event id (set after step 1, or from server in 'game' mode)
+        eventData: null,      // full event payload (used for humanized selection labels)
         markets: [],          // cached markets list for the chosen event
         activeCategory: null, // currently shown market tab
         selectedMarketId: null,
@@ -585,7 +586,10 @@ const PickModal = (function () {
         // opposite selection within it. Set on game-mode load.
         lockedMarketId: null,
         lockedMarketLabel: null,
-        lockedByUsername: null,
+        lockedByUsername: null,        // null when system-locked (Golden Game)
+        lockedBySystem: false,         // True for Golden Game's market lock
+        isCurrentUserOwner: false,     // Are we player_1 of the match?
+        isGolden: false,               // Golden Game slot
     };
 
     let modal;
@@ -609,12 +613,13 @@ const PickModal = (function () {
 
     function resetState() {
         Object.assign(state, {
-            mode: null, gameId: null, eventId: null,
+            mode: null, gameId: null, eventId: null, eventData: null,
             markets: [], activeCategory: null,
             selectedMarketId: null, selectedSelectionId: null,
             selectedLabel: null, selectedOdds: null,
             takenSelections: {},
             lockedMarketId: null, lockedMarketLabel: null, lockedByUsername: null,
+            lockedBySystem: false, isCurrentUserOwner: false, isGolden: false,
         });
         document.getElementById('pickStep-events').hidden = true;
         document.getElementById('pickStep-selection').hidden = true;
@@ -663,18 +668,35 @@ const PickModal = (function () {
                     state.takenSelections[data.player_2_outcome.selection_id] =
                         data.player_2_username || 'opponent';
                 }
-                // If either side already picked a market, lock the picker to
-                // the SAME market. The "first-picker" wins for the lock, but
-                // either side's market is acceptable (only one is normally set).
-                // ``data.owner_market`` comes from MDProject's MarketSerializer
-                // which exposes ``market_id``; the popup uses that consistently.
-                const lockedMarket = data.owner_market || data.player_2_market;
+                // Lock priority:
+                //   1. ``data.locked_market`` (set by the system on Golden
+                //      Games — present from the moment the match is
+                //      created, even before either player picks).
+                //   2. owner/player_2's already-picked market (existing
+                //      "first-picker locks the market" rule for regular
+                //      slots).
+                // Track whether the current user is the player_1 ("owner")
+                // so submit() routes to the right endpoint.
+                state.isCurrentUserOwner = !!data.is_current_user_owner;
+                state.isGolden = !!data.is_golden;
+
+                let lockedMarket = data.locked_market || null;
+                let lockedByUsername = null;
+                if (!lockedMarket) {
+                    lockedMarket = data.owner_market || data.player_2_market;
+                    if (lockedMarket) {
+                        lockedByUsername = data.owner_market
+                            ? (data.owner_username || 'owner')
+                            : (data.player_2_username || 'opponent');
+                    }
+                }
                 if (lockedMarket) {
                     state.lockedMarketId = lockedMarket.market_id;
                     state.lockedMarketLabel = humanMarketLabel(lockedMarket);
-                    state.lockedByUsername = data.owner_market
-                        ? (data.owner_username || 'owner')
-                        : (data.player_2_username || 'opponent');
+                    // For system-locked (Golden) markets there's no
+                    // "by-user" attribution — the system locked it.
+                    state.lockedByUsername = lockedByUsername;
+                    state.lockedBySystem = !lockedByUsername && !!data.locked_market;
                 }
                 applyEvent(data.event);
                 loadMarkets(data.event.event_id);
@@ -808,6 +830,9 @@ const PickModal = (function () {
         fetch(url)
             .then(r => r.json())
             .then(payload => {
+                // Stash the event block so renderSelectionCard's
+                // humanizeSelection() can read home/away team names.
+                state.eventData = payload.event || null;
                 const markets = (payload.event || {}).markets || [];
                 state.markets = markets.filter(m => m.selections && m.selections.length);
 
@@ -856,11 +881,15 @@ const PickModal = (function () {
         // Locked-market mode: don't render tabs (no other choice). Show a
         // small inline notice instead so the user knows why.
         if (state.lockedMarketId) {
+            const reason = state.lockedBySystem
+                ? `the <strong>Golden Game</strong> auto-pick`
+                : `${escapeHtml(state.lockedByUsername || 'your opponent')}`;
+            const verb = state.lockedBySystem ? 'pre-selected' : 'picked';
             tabs.innerHTML = `
                 <div class="pickmodal-locked-notice">
                     <i class="bi bi-lock-fill"></i>
                     <span>Locked to the <strong>${escapeHtml(state.lockedMarketLabel || 'market')}</strong>
-                    that ${escapeHtml(state.lockedByUsername || 'your opponent')} picked.</span>
+                    that ${reason} ${verb}.</span>
                 </div>
             `;
             state.activeCategory = Object.keys(grouped)[0];
@@ -943,7 +972,7 @@ const PickModal = (function () {
             return `<div class="pickmarket-group">${head}${grid}</div>`;
         }).join('');
 
-        sels.querySelectorAll('.pickselection:not(.is-taken):not(.is-suspended)').forEach(btn => {
+        sels.querySelectorAll('.pickselection:not(.is-suspended)').forEach(btn => {
             btn.addEventListener('click', () => {
                 sels.querySelectorAll('.pickselection').forEach(o => o.classList.remove('is-selected'));
                 btn.classList.add('is-selected');
@@ -956,9 +985,10 @@ const PickModal = (function () {
         });
     }
 
-    /* A single selection card. Renders the label, an optional line pill (for
-       spread/total selections that bake the line into the selection rather
-       than the market), the American odds with fav/dog color coding, and a
+    /* A single selection card. Renders the humanized label (e.g. "Detroit
+       Red Wings to win"), an optional line pill (for spread/total
+       selections that bake the line into the selection rather than the
+       market), the American odds with fav/dog color coding, and a
        sub-line with decimal + fractional + implied probability. */
     function renderSelectionCard(market, s) {
         const takenBy = state.takenSelections[s.selection_id];
@@ -1008,16 +1038,20 @@ const PickModal = (function () {
                 ${s.suspended ? `<span class="pm-badge is-implied">SUSPENDED</span>` : ''}
             </div>`;
 
+        const humanLabel = humanizeSelection(state.eventData || null, market, s);
+
         return `
             <button type="button" class="${classes}"
                     data-market-id="${escapeAttr(market.market_id)}"
                     data-selection-id="${escapeAttr(s.selection_id)}"
-                    data-label="${escapeAttr(s.label || s.type)}"
+                    data-label="${escapeAttr(humanLabel)}"
                     data-odds="${escapeAttr(oddsStr)}"
-                    data-settle="${escapeAttr(settle || 'PENDING')}"
-                    ${takenBy ? 'aria-disabled="true" disabled' : ''}>
+                    data-settle="${escapeAttr(settle || 'PENDING')}">
+                    {# ``takenBy`` is shown as a "Picked by X" badge below
+                       but doesn't disable the card — picking the same
+                       outcome as the other side is allowed. #}
                 <div class="pickselection__row1">
-                    <span class="pickselection__label">${escapeHtml(s.label || s.type)}</span>
+                    <span class="pickselection__label">${escapeHtml(humanLabel)}</span>
                     ${linePill}
                 </div>
                 <div class="pickselection__odds-block">
@@ -1099,8 +1133,20 @@ const PickModal = (function () {
 
         let url;
         if (state.mode === 'upload') {
+            // Step-1-then-step-2 path (filling an empty owner-only slot).
+            url = URL_UPLOAD_PICK;
+        } else if (state.lockedBySystem) {
+            // Golden Game: market is system-locked from the start, both
+            // players use the unified locked-pick endpoint regardless of
+            // owner vs player_2 side.
+            url = URL_PICK_LOCKED.replace('00000000-0000-0000-0000-000000000000', state.gameId);
+        } else if (state.isCurrentUserOwner) {
+            // The slot's owner clicking their own card on a regular slot —
+            // route to the match-level upload_pick (it'll find this slot
+            // by event_id and fill owner_outcome).
             url = URL_UPLOAD_PICK;
         } else {
+            // Opponent of an owned slot — set player_2_outcome.
             url = URL_PLAYER_2_PICK.replace('00000000-0000-0000-0000-000000000000', state.gameId);
         }
 
@@ -1128,6 +1174,80 @@ const PickModal = (function () {
     }
 
     /* ── Utility ───────────────────────────────────────────────────── */
+    /* Plain-English rendering of a selection. Mirror of
+       core/event/odds/humanize.py — keep both sides aligned. Reads the
+       aggregator's payload shape: market.category/type/scope/line/side/
+       subject_team, selection.type, event.home_team.name/away_team.name. */
+    function humanizeSelection(event, market, selection) {
+        if (!market || !selection) return selection && (selection.label || selection.type) || '';
+        const home = (event && event.home_team && event.home_team.name) || 'Home';
+        const away = (event && event.away_team && event.away_team.name) || 'Away';
+        const cat = market.category;
+        const t = selection.type;
+        const line = market.line;
+        const scopeHint = scopeHintFor(market.scope);
+
+        if (cat === 'MONEYLINE') {
+            if (t === 'HOME') return `${home} to win${scopeHint}`;
+            if (t === 'AWAY') return `${away} to win${scopeHint}`;
+            if (t === 'DRAW') return `Draw${scopeHint}`;
+            return `${t}${scopeHint}`;
+        }
+        if (cat === 'SPREAD') {
+            const ls = line != null ? formatLine(line) : '';
+            if (t === 'HOME') return `${home} ${ls}${scopeHint}`.trim();
+            if (t === 'AWAY') return `${away} ${line != null ? formatLine(-line) : ''}${scopeHint}`.trim();
+            return `${t} ${ls}${scopeHint}`.trim();
+        }
+        if (cat === 'TOTAL') {
+            if (line == null) return `${titleCase(t)}${scopeHint}`;
+            return `${titleCase(t)} ${line}${scopeHint}`;
+        }
+        if (cat === 'PROPS_TEAM') {
+            const team = (market.subject_team && market.subject_team.name)
+                || (market.side === 'HOME' ? home : market.side === 'AWAY' ? away : 'Team');
+            const topic = topicFromMarketType(market.type);
+            const linePart = line != null ? ` ${line}` : '';
+            return `${team} ${topic} ${titleCase(t)}${linePart}`;
+        }
+        if (cat === 'PROPS_GAME') {
+            if (market.type === 'SOCCER_BTTS' || market.type === 'NHL_BTTS') {
+                return t === 'YES' ? 'Both teams to score: Yes' : 'Both teams to score: No';
+            }
+            if (market.type === 'SOCCER_DOUBLE_CHANCE') {
+                if (t === '1X') return `${home} or Draw`;
+                if (t === 'X2') return `${away} or Draw`;
+                if (t === '12') return `${home} or ${away} (no draw)`;
+            }
+            if (market.type === 'SOCCER_DRAW_NO_BET') {
+                if (t === 'HOME') return `${home} to win (draw refunds)`;
+                if (t === 'AWAY') return `${away} to win (draw refunds)`;
+            }
+            return `${topicFromMarketType(market.type)}: ${titleCase(t.replace(/_/g, ' '))}`;
+        }
+        return selection.label || t || 'Pick';
+    }
+
+    function topicFromMarketType(mt) {
+        if (!mt) return 'prop';
+        const parts = mt.toLowerCase().split('_');
+        const sportPrefixes = ['nfl','nhl','nba','ncaaf','ncaab','mlb','soccer','tennis','mma','ufc','uefa','champions'];
+        if (parts.length && sportPrefixes.includes(parts[0])) parts.shift();
+        return parts.join(' ') || 'prop';
+    }
+    function scopeHintFor(scope) {
+        if (!scope || scope === 'FULL_GAME') return '';
+        const map = {
+            '1H':'1st half','2H':'2nd half',
+            'Q1':'1st quarter','Q2':'2nd quarter','Q3':'3rd quarter','Q4':'4th quarter',
+            '1P':'1st period','2P':'2nd period','3P':'3rd period',
+        };
+        return ` (${map[scope] || scope.replace(/_/g, ' ').toLowerCase()})`;
+    }
+    function titleCase(s) {
+        return String(s || '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
+
     function formatOdds(odds) {
         if (!odds) return '—';
         if (odds.american != null) return formatAmerican(odds.american);

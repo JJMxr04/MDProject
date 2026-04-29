@@ -111,6 +111,59 @@ def upload_pick(request, match_id):
 
 @require_POST
 @login_required(login_url='/auth/login/')
+def pick_on_locked_slot(request, game_id):
+    """Pick endpoint for slots whose market is pre-locked (Golden Game).
+
+    The popup hits this when ``data.locked_market`` is present in the
+    event-markets response. Either player can call it; the manager method
+    routes to ``owner_outcome`` (player_1) or ``player_2_outcome``
+    (player_2) based on which side the requester is on.
+    """
+    from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
+
+    try:
+        game = Game.objects.select_related('event', 'bet', 'match').get(id=game_id)
+    except Game.DoesNotExist:
+        return render(request, '404.html', status=404)
+    except ValueError:
+        return JsonResponse(
+            {'status': 'error', 'message': 'Invalid game ID format'}, status=400,
+        )
+
+    data = json.loads(request.body)
+    selection_id = data.get('player_choice')
+    event_id = data.get('event_id') or (game.event_id if game.event else None)
+    if not event_id or not selection_id:
+        return JsonResponse(
+            {'status': 'error', 'message': 'event_id and player_choice required'},
+            status=400,
+        )
+
+    # Make sure the chosen Selection actually exists locally — picks for
+    # locked-market slots usually do (the chain ran at golden-game seed
+    # time), but a different selection in the same market might not.
+    try:
+        ensure_chain(event_id, selection_id)
+    except ChainBuildError as exc:
+        return JsonResponse(
+            {'status': 'error', 'message': f'Catalog unavailable: {exc}'},
+            status=400,
+        )
+
+    try:
+        Game.objects.pick_on_locked_slot(
+            current_user=request.user,
+            game_id=game_id,
+            selection_id=selection_id,
+        )
+    except PickError as exc:
+        return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
+
+    return JsonResponse({'status': 'success', 'game_id': str(game.id)})
+
+
+@require_POST
+@login_required(login_url='/auth/login/')
 def player_2_select_outcome(request, game_id):
     from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
 

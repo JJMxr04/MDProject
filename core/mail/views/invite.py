@@ -35,18 +35,23 @@ def create_invite(request):
 @require_POST
 @login_required(login_url='/auth/login/')
 def accept_invite(request, invite_id):
+    from core.game.models.game import GoldenGameUnavailable
+
     try:
         invite = Invite.objects.get(id=invite_id)
-        # Check if the user is the invited player
         if request.user != invite.player:
             return JsonResponse({'error': 'You are not authorized to perform this action.'}, status=403)
-        # Parse the request body
         data = json.loads(request.body)
-        # Handle actions
         if data.get('action') == 'accept':
-            Invite.objects.accept_invite(invite)
+            try:
+                Invite.objects.accept_invite(invite)
+            except GoldenGameUnavailable as exc:
+                # Catalog can't seed a Golden Game right now. Atomic rollback
+                # already restored the invite to its sent state — surface
+                # the message verbatim so the portal toast is meaningful.
+                return JsonResponse({'error': str(exc)}, status=400)
             return JsonResponse({'success': 'Invite accepted.'})
-        elif data.get('action') == 'reject':    
+        elif data.get('action') == 'reject':
             Invite.objects.delete_invite(invite)
             return JsonResponse({'success': 'Invite rejected.'})
         else:
@@ -56,7 +61,6 @@ def accept_invite(request, invite_id):
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid request data.'}, status=400)
     except Exception:
-        # Return a 400 error for any other unexpected error
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=400)
 
 

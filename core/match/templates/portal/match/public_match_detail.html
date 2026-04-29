@@ -128,20 +128,25 @@
                 'action': 'accept'
             })
         })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = "{% url 'core-portal:portal-my-match-detail' match.id %}"; // Redirect to match detail
+        .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+        .then(({ ok, body }) => {
+            if (ok && body.status === 'success') {
+                window.location.href = "{% url 'core-portal:portal-my-match-detail' match.id %}";
             } else {
                 hideLoading();
-                window.toast("Error accepting match.", {variant: 'danger'}); // Notify user of error
-                showPopup(); // Reopen the confirmation popup if there was an error
+                // Surface the server-side message so the user sees the
+                // GoldenGameUnavailable reason ("No events scheduled...")
+                // rather than a generic "Error accepting match."
+                const msg = (body && body.message) || 'Error accepting match.';
+                window.toast(msg, {variant: 'danger'});
+                showPopup();
             }
         })
         .catch(error => {
             hideLoading();
             console.error('Error:', error);
-            window.toast("An error occurred.", {variant: 'danger'}); // Notify user of error
-            showPopup(); // Reopen the confirmation popup if there was an error
+            window.toast("An error occurred.", {variant: 'danger'});
+            showPopup();
         });
     }
 </script>

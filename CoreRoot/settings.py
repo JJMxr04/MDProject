@@ -49,6 +49,22 @@ EVENTS_DEBUG_FORCE_FRESH = os.environ.get("EVENTS_DEBUG_FORCE_FRESH") == "True"
 ALLOWED_HOSTS = [h for h in os.environ.get("ALLOWED_HOSTS", '').split(',') if h]
 if DEBUG:
     ALLOWED_HOSTS += ['localhost', '127.0.0.1', 'testserver']
+
+# Production-deployment guardrails — fail loudly at boot if the deployer
+# forgot to set required env values. Mirrors Django's deployment checklist
+# but as a hard error instead of a runtime check (which only shows up when
+# something tries to render a CSRF cookie or sign a session).
+if not DEBUG:
+    if not SECRET_KEY:
+        raise RuntimeError(
+            "SECRET_KEY must be set in production. Generate one with: "
+            "python -c \"import secrets; print(secrets.token_urlsafe(64))\""
+        )
+    if not ALLOWED_HOSTS:
+        raise RuntimeError(
+            "ALLOWED_HOSTS must be a non-empty comma-separated list in "
+            "production (e.g. ALLOWED_HOSTS=mdproject.example.com)"
+        )
 # CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
 
 SIMPLE_JWT = {
@@ -157,9 +173,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-
-
+    # Sets ``X-Robots-Tag: noindex, nofollow, noarchive`` on every response
+    # whose path isn't on the public-marketing whitelist. Defense-in-depth
+    # against crawlers that don't respect robots.txt.
+    'core.middleware.noindex.NoIndexPrivateRoutesMiddleware',
 ]
 
 

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from core.abstract.models import AbstractManager, AbstractModel
-from core.event.models import Selection
+from core.event.models import Market, Selection
 
 
 class BetManager(AbstractManager):
@@ -73,6 +73,19 @@ class Bet(AbstractModel):
     )
     player_2_outcome = models.ForeignKey(
         Selection,
+        on_delete=models.PROTECT,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
+    # Used by the Golden Game so the system pre-picks the *market* (e.g.
+    # Moneyline FULL_GAME) without choosing either side. Both players then
+    # submit their own selection within this market — neither is auto-locked.
+    # ``None`` for regular slots: their market is determined by the first
+    # picker's choice (existing logic in Game.objects.upload_pick).
+    locked_market = models.ForeignKey(
+        Market,
         on_delete=models.PROTECT,
         related_name="+",
         null=True,

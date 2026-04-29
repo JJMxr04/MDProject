@@ -53,9 +53,13 @@ class MatchViewSet(AbstractViewSet):
         return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
+        from core.game.models.game import GoldenGameUnavailable
         player_2 = request.user
         match = Match.objects.get_object_by_id(kwargs['pk'])
-        match = Match.objects.accept_match(match, player_2)
+        try:
+            match = Match.objects.accept_match(match, player_2)
+        except GoldenGameUnavailable as exc:
+            return Response({'detail': str(exc)}, status=400)
         serializer = self.get_serializer(match)
         return Response(serializer.data)
 

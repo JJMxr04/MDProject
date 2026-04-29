@@ -60,34 +60,234 @@
 {% endif %}
 
 <div class="modal-ui" id="createMatchModal" role="dialog" aria-modal="true" aria-labelledby="createMatchModal-title" data-modal>
-    <div class="modal-ui__content">
+    <div class="modal-ui__content cm-modal">
         <header class="modal-ui__header">
-            <h2 id="createMatchModal-title">Create public match</h2>
+            <h2 id="createMatchModal-title">Create a match</h2>
             <button type="button" class="modal-ui__close" data-modal-close aria-label="Close">&times;</button>
         </header>
         <div class="modal-ui__body">
-            <p class="text-muted">A public match is open to any player. The first person to accept becomes your opponent.</p>
+            <p class="text-muted">Pick how you want to play. Both modes create 12 game slots over 7 days, including 1 Golden Game worth 2 points.</p>
+
+            {# ── Mode toggle ───────────────────────────────────── #}
+            <div class="cm-mode" role="tablist" aria-label="Match type">
+                <button type="button" class="cm-mode__option is-active" data-mode="public" role="tab" aria-selected="true">
+                    <i class="bi bi-globe2" aria-hidden="true"></i>
+                    <div>
+                        <div class="cm-mode__label">Public</div>
+                        <div class="cm-mode__hint">First person to accept becomes your opponent.</div>
+                    </div>
+                </button>
+                <button type="button" class="cm-mode__option" data-mode="private" role="tab" aria-selected="false">
+                    <i class="bi bi-person-badge" aria-hidden="true"></i>
+                    <div>
+                        <div class="cm-mode__label">Private</div>
+                        <div class="cm-mode__hint">Challenge one of your friends directly.</div>
+                    </div>
+                </button>
+            </div>
+
+            {# ── Friend picker (only shown in Private mode) ─────── #}
+            <div id="cmFriendSection" class="cm-friend-section" hidden>
+                {% if friends %}
+                    <div class="field">
+                        <label for="cmFriendFilter" class="field-label">Pick a friend</label>
+                        <input type="search" id="cmFriendFilter" class="field-input"
+                               placeholder="Filter friends…" autocomplete="off"
+                               oninput="filterCmFriends()">
+                    </div>
+                    <div class="cm-friend-list" id="cmFriendList" role="radiogroup" aria-label="Friends">
+                        {% for friend in friends %}
+                            <label class="cm-friend" data-name="{{ friend.name|default:friend.username|lower }}" data-username="{{ friend.username|lower }}">
+                                <input type="radio" name="cm_friend" value="{{ friend.id }}" data-username="{{ friend.username|escapejs }}">
+                                <span class="cm-friend__id">
+                                    {% include "portal/components/_avatar.html" with user=friend size=36 %}
+                                    <span>
+                                        <span class="cm-friend__name">{{ friend.name|default:friend.username }}</span>
+                                        <span class="text-muted small d-block">@{{ friend.username }}</span>
+                                    </span>
+                                </span>
+                                <i class="bi bi-check-lg cm-friend__check" aria-hidden="true"></i>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <p id="cmFriendEmpty" class="text-muted text-center my-3" style="display:none">
+                        No friends match that filter.
+                    </p>
+                {% else %}
+                    <div class="cm-friend-empty">
+                        <p class="text-muted mb-2">You haven't added any friends yet.</p>
+                        <a href="{% url 'core-portal:friend_search' %}" class="btn-ui btn-ui--secondary btn-ui--sm">
+                            <i class="bi bi-person-plus"></i> Add friends
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            {# ── Preview ─────────────────────────────────────── #}
+            <div class="cm-preview" id="cmPreview"></div>
+
             <form method="POST" id="createMatchForm" action="{% url 'core-portal:portal-create-public-match' %}">
                 {% csrf_token %}
-                <input type="hidden" name="type" value="public">
-                <input type="hidden" name="player" value="">
+                <input type="hidden" name="type" id="cmType" value="public">
+                <input type="hidden" name="player" id="cmPlayer" value="">
             </form>
         </div>
         <footer class="modal-ui__footer">
             <button type="button" class="btn-ui btn-ui--secondary" data-modal-close>Cancel</button>
-            <button type="button" class="btn-ui btn-ui--primary" onclick="submitCreateMatchForm()">Create</button>
+            <button type="button" class="btn-ui btn-ui--primary" id="cmSubmitBtn" onclick="submitCreateMatchForm()">Create match</button>
         </footer>
     </div>
 </div>
 {% endblock content %}
 
+{% block css %}
+<style>
+    .cm-modal { max-width: 560px; }
+    .cm-mode {
+        display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
+        margin: var(--space-3) 0;
+    }
+    .cm-mode__option {
+        display: flex; align-items: flex-start; gap: .55rem;
+        padding: .85rem; text-align: left;
+        background: var(--surface-card, #fff);
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: var(--radius-md, 8px);
+        cursor: pointer;
+        transition: border-color .12s, background .12s, box-shadow .12s;
+    }
+    .cm-mode__option > i { font-size: 1.4rem; color: var(--text-secondary); flex-shrink: 0; }
+    .cm-mode__option:hover { border-color: var(--brand-blue-dark, #275d81); background: var(--surface-muted, #f5f7fa); }
+    .cm-mode__option.is-active {
+        border-color: var(--brand-blue, #3D7EAA); background: rgba(61, 126, 170, .08);
+        box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA);
+    }
+    .cm-mode__option.is-active > i { color: var(--brand-blue-dark, #275d81); }
+    .cm-mode__label { font-weight: var(--weight-semibold); }
+    .cm-mode__hint { font-size: .78rem; color: var(--text-secondary); margin-top: .15rem; }
+
+    .cm-friend-list { display: flex; flex-direction: column; gap: .35rem; max-height: 240px; overflow-y: auto; }
+    .cm-friend {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: .65rem; padding: .55rem .75rem;
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: var(--radius-md, 8px);
+        cursor: pointer; background: var(--surface-card, #fff);
+    }
+    .cm-friend:hover { border-color: var(--brand-blue-dark, #275d81); }
+    .cm-friend input[type=radio] { display: none; }
+    .cm-friend__id { display: flex; align-items: center; gap: .55rem; min-width: 0; }
+    .cm-friend__name { font-weight: var(--weight-semibold); }
+    .cm-friend__check { display: none; color: var(--brand-blue-dark, #275d81); font-size: 1.1rem; }
+    .cm-friend.is-selected {
+        border-color: var(--brand-blue, #3D7EAA); background: rgba(61, 126, 170, .06);
+        box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA);
+    }
+    .cm-friend.is-selected .cm-friend__check { display: inline; }
+
+    .cm-friend-empty {
+        text-align: center; padding: var(--space-3);
+        background: var(--surface-muted, #f5f7fa);
+        border-radius: var(--radius-md, 8px);
+    }
+
+    .cm-preview {
+        margin-top: var(--space-3); padding: .65rem .85rem;
+        background: var(--surface-muted, #f5f7fa);
+        border-radius: var(--radius-md, 8px);
+        font-size: .85rem; color: var(--text-secondary);
+        border-left: 3px solid var(--brand-blue, #3D7EAA);
+    }
+    .cm-preview strong { color: var(--text-primary); }
+</style>
+{% endblock css %}
+
 {% block scripts %}
 <script>
+let cmMode = 'public';
+let cmFriendId = null;
+let cmFriendUsername = null;
+
+document.querySelectorAll('.cm-mode__option').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.cm-mode__option').forEach(b => {
+            b.classList.toggle('is-active', b === btn);
+            b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        cmMode = btn.dataset.mode;
+        document.getElementById('cmType').value = cmMode;
+        document.getElementById('cmFriendSection').hidden = (cmMode !== 'private');
+        if (cmMode !== 'private') {
+            cmFriendId = null; cmFriendUsername = null;
+            document.querySelectorAll('.cm-friend').forEach(f => f.classList.remove('is-selected'));
+        }
+        updateCmPreview();
+        updateCmSubmitState();
+    });
+});
+
+document.querySelectorAll('.cm-friend input[type=radio]').forEach(input => {
+    input.addEventListener('change', (e) => {
+        cmFriendId = e.target.value;
+        cmFriendUsername = e.target.dataset.username || '';
+        document.querySelectorAll('.cm-friend').forEach(f => f.classList.remove('is-selected'));
+        e.target.closest('.cm-friend').classList.add('is-selected');
+        document.getElementById('cmPlayer').value = cmFriendId;
+        updateCmPreview();
+        updateCmSubmitState();
+    });
+});
+
+function filterCmFriends() {
+    const q = (document.getElementById('cmFriendFilter').value || '').toLowerCase().trim();
+    const items = document.querySelectorAll('.cm-friend');
+    let shown = 0;
+    items.forEach(item => {
+        const match = !q || (item.dataset.name || '').includes(q) || (item.dataset.username || '').includes(q);
+        item.style.display = match ? '' : 'none';
+        if (match) shown += 1;
+    });
+    document.getElementById('cmFriendEmpty').style.display = (shown === 0 && q) ? '' : 'none';
+}
+
+function updateCmPreview() {
+    const el = document.getElementById('cmPreview');
+    if (cmMode === 'public') {
+        el.innerHTML = `Creating a <strong>public match</strong>. Anyone can accept and become your opponent. After acceptance, 12 slots are created with a Golden Game pre-seeded from the events catalog.`;
+    } else if (cmFriendId) {
+        el.innerHTML = `Inviting <strong>@${escapeHtml(cmFriendUsername || '...')}</strong> to a <strong>private match</strong>. They'll see the invite under <em>Pending invites</em> and can accept or decline.`;
+    } else {
+        el.innerHTML = `Pick a friend to challenge. The 12 slots and Golden Game get created when they accept your invite.`;
+    }
+}
+
+function updateCmSubmitState() {
+    const btn = document.getElementById('cmSubmitBtn');
+    if (cmMode === 'public') {
+        btn.disabled = false;
+        btn.textContent = 'Create public match';
+    } else {
+        btn.disabled = !cmFriendId;
+        btn.textContent = cmFriendId ? `Invite @${cmFriendUsername}` : 'Pick a friend';
+    }
+}
+
+function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => (
+        {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    ));
+}
+
 function submitCreateMatchForm() {
     const form = document.getElementById('createMatchForm');
     const formData = new FormData(form);
     const overlay = document.querySelector('[data-loading-overlay]');
     const modal = document.getElementById('createMatchModal');
+
+    if (cmMode === 'private' && !cmFriendId) {
+        window.toast('Pick a friend first.', {variant: 'info'});
+        return;
+    }
 
     overlay.hidden = false;
     modal.classList.remove('is-open');
@@ -97,14 +297,23 @@ function submitCreateMatchForm() {
         headers: {'X-CSRFToken': formData.get('csrfmiddlewaretoken')},
         body: formData,
     })
-    .then(r => r.json())
-    .then(data => {
+    .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+    .then(({ ok, body }) => {
         overlay.hidden = true;
-        if (data.status === 'success') {
-            window.toast('Match created.', {variant: 'success'});
+        if (ok && body.status === 'success') {
+            if (cmMode === 'public' && body.match_id) {
+                // Redirect straight to the new match's detail page so the
+                // creator can see their slots immediately.
+                window.location.href = `/web/portal/match/${body.match_id}/`;
+                return;
+            }
+            window.toast(cmMode === 'public' ? 'Public match created.' : 'Invite sent.', {variant: 'success'});
             setTimeout(() => window.location.reload(), 600);
         } else {
-            window.toast('Error: ' + (data.message || 'unknown'), {variant: 'danger'});
+            // Surface the server message verbatim — covers
+            // GoldenGameUnavailable et al.
+            const msg = (body && body.message) || 'Could not create match.';
+            window.toast(msg, {variant: 'danger'});
             modal.classList.add('is-open');
         }
     })
@@ -115,5 +324,9 @@ function submitCreateMatchForm() {
         modal.classList.add('is-open');
     });
 }
+
+// Initialize preview text on first open
+updateCmPreview();
+updateCmSubmitState();
 </script>
 {% endblock scripts %}

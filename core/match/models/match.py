@@ -1,11 +1,12 @@
 import uuid
 from datetime import timedelta
 
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
 
 from core.abstract.models import AbstractManager, AbstractModel
 from core.game.models import Game, PickError
+from core.game.models.game import GoldenGameUnavailable
 from core.mail.models import Emails
 from core.match.models.TieBreaker import TieBreaker
 from core.match.scoring import score_match
@@ -36,7 +37,17 @@ class MatchManager(AbstractManager):
         )
         return self.accept_match(match, player_2)
 
+    @transaction.atomic
     def accept_match(self, match, player_2):
+        """Accept a match and pre-create all Game slots + Golden Game seed.
+
+        The whole flow is atomic — if ``Game.objects.get_golden_game`` raises
+        ``GoldenGameUnavailable`` (no events, or no markets we can seed
+        against), every Match/Game/TieBreaker write here rolls back and the
+        exception propagates to the caller. Callers (invite-accept,
+        public-match-accept, viewsets) translate that into a 400 + portal
+        toast — never leaves a half-built match in the DB.
+        """
         match = self.get_object_by_id(id=match.id)
         if match is None:
             return None
@@ -54,6 +65,8 @@ class MatchManager(AbstractManager):
                 match=match, owner=match.player_2, player_2=match.player_1, slot=slot
             )
 
+        # May raise GoldenGameUnavailable — the @transaction.atomic decorator
+        # rolls back every write above on raise.
         golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
         match.tiebreaker = TieBreaker.objects.create(golden_game=golden_game)
         match.save()

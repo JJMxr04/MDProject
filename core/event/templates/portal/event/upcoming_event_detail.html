@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static %}
+{% load static humanize_pick %}
 
 {% block title %}{{ event.home_team.name|default:"TBD" }} vs {{ event.away_team.name|default:"TBD" }}{% endblock title %}
 
@@ -83,9 +83,6 @@
     </header>
     <div class="card-ui__body">
         {% if markets %}
-            {# Group markets by category (Moneyline / Spread / Total / props) so
-               alt-lines stack cleanly under one heading. Done via simple
-               regroup — order from the aggregator is already category-sorted. #}
             {% regroup markets by category as cat_groups %}
             <div class="evd-markets">
             {% for cat_group in cat_groups %}
@@ -123,7 +120,7 @@
                         {% for sel in market.selections %}
                             <div class="evd-sel {% if sel.suspended %}is-suspended{% endif %} {% if sel.settlement_status == 'WON' %}is-won{% elif sel.settlement_status == 'LOST' %}is-lost{% elif sel.settlement_status == 'PUSH' %}is-push{% elif sel.settlement_status == 'VOID' %}is-void{% endif %}">
                                 <div class="evd-sel__top">
-                                    <span class="evd-sel__label">{{ sel.label|default:sel.type|default:"—" }}</span>
+                                    <span class="evd-sel__label">{% humanize_pick_payload event_raw market sel %}</span>
                                     {% if sel.settlement_status and sel.settlement_status != "PENDING" %}
                                         <span class="evd-sel__settle evd-sel__settle--{{ sel.settlement_status|lower }}">{{ sel.settlement_status }}</span>
                                     {% endif %}
