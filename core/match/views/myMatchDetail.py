@@ -40,18 +40,11 @@ def my_match_detail_view(request, match_id):
         match.player_2.id,
     ]
 
-    # Events at least 8 hours out, before match end_date, not yet completed
-    cutoff = timezone.now() + timedelta(hours=8)
-    if match.end_date:
-        events = Event.objects.filter(
-            start_time__gte=cutoff,
-            start_time__lte=match.end_date,
-            completed=False,
-        ).select_related("sport", "home_team", "away_team").order_by("start_time")
-    else:
-        events = Event.objects.none()
-
-    events_ser = EventSerializer(events, many=True).data if events else []
+    # Catalog of pickable events for this match's window. Source-of-truth is
+    # the aggregator (when USE_AGGRIGATOR=True) — see plan §2.4.2 and
+    # core/match/views/available_events.py for the proxy + cache layer.
+    from core.match.views.available_events import build_available_events
+    events_ser = build_available_events(match)
 
     player_1_games = list(match.regular_games_for(match.player_1)) if match.player_1 else []
     player_2_games = (
@@ -73,55 +66,82 @@ def my_match_detail_view(request, match_id):
 @login_required(login_url='/auth/login/')
 @player_in_match_required
 def upload_pick(request, match_id):
+    """Pick-submit endpoint. After cutover (plan §2.4.3) the chain
+    (Sport→League→Team→Event→Market→Selection) is fetched from the aggregator
+    *first* — never trust the client's odds value — then the existing
+    ``Match.objects.upload_pick`` runs against local rows."""
+    from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
+
     match = get_object_or_404(Match, id=match_id)
     data = json.loads(request.body)
     event_id = data.get('event_id')
-    player_choice = data.get('player_choice')
+    selection_id = data.get('player_choice')
+    if not event_id or not selection_id:
+        return JsonResponse(
+            {'status': 'error', 'message': 'event_id and player_choice required'},
+            status=400,
+        )
+
+    try:
+        ensure_chain(event_id, selection_id)
+    except ChainBuildError as exc:
+        # Aggregator unreachable, or the (event, selection) pair the user
+        # submitted doesn't exist in the aggregator's catalog. Reject the
+        # pick — never persist a half-built chain.
+        return JsonResponse(
+            {'status': 'error', 'message': f'Catalog unavailable: {exc}'},
+            status=400,
+        )
 
     try:
         Match.objects.upload_pick(match=match, player=request.user, data=data)
         return JsonResponse({'status': 'success'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    
+
+
 @require_POST
 @login_required(login_url='/auth/login/')
-# @player_in_game_required
 def player_2_select_outcome(request, game_id):
-    
+    from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
+
     try:
-        # Convert game_id to UUID
-        
-        # Attempt to retrieve the game object using get()
         game = Game.objects.get(id=game_id)
     except Game.DoesNotExist:
-        # Log the error if game is not found and return 404
-        print(f"Game with id {game_id} not found.")
-        return render(request, '404.html', status=404)  # Render your 404 page
-    except ValueError as ve:
-        # Log the error if game_id is not a valid UUID
-        print(f"Invalid UUID format for game_id {game_id}: {ve}")
-        return JsonResponse({'status': 'error', 'message': 'Invalid game ID format'}, status=400)
-    except Exception as e:
-        # Log any other errors
-        print(f"Error retrieving game with id {game_id}: {e}")
-        return JsonResponse({'status': 'error', 'message': 'An error occurred'}, status=500)
-    
+        return render(request, '404.html', status=404)
+    except ValueError:
+        return JsonResponse(
+            {'status': 'error', 'message': 'Invalid game ID format'}, status=400,
+        )
+
     data = json.loads(request.body)
     user = request.user
 
+    event_id = data.get("event_id") or (game.event_id if game.event else None)
+    selection_id = data.get("player_choice")
+    if not event_id or not selection_id:
+        return JsonResponse(
+            {'status': 'error', 'message': 'event_id and player_choice required'},
+            status=400,
+        )
+
+    try:
+        ensure_chain(event_id, selection_id)
+    except ChainBuildError as exc:
+        return JsonResponse(
+            {'status': 'error', 'message': f'Catalog unavailable: {exc}'},
+            status=400,
+        )
+
     try:
         Game.objects.upload_pick(
-            current_user=user,
-            match=game.match,
-            event_id=data.get("event_id") or (game.event_id if game.event else None),
-            selection_id=data.get("player_choice"),
+            current_user=user, match=game.match,
+            event_id=event_id, selection_id=selection_id,
         )
         return JsonResponse({'status': 'success'})
     except PickError as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     except Exception as e:
-        print(f"Error updating game with id {game_id}: {e}")
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     
 

@@ -12,7 +12,12 @@ urlpatterns = [
     path('public/<uuid:match_id>/', views.public_match_detail_view, name='portal-public-match-detail'),
     path('<uuid:match_id>/', views.my_match_detail_view, name='portal-my-match-detail'),
     path('<uuid:match_id>/upload_pick/', views.upload_pick, name='portal-upload_pick'),
-    path('event/<int:event_id>/outcomes/', views.event_outcomes, name='portal-match-event-outcomes'),
+    # SGO eventIDs are alphanumeric strings; ``<str:>`` (was ``<int:>`` per
+    # plan §7.7 #1).
+    path('event/<str:event_id>/outcomes/', views.event_outcomes, name='portal-match-event-outcomes'),
+    path('<uuid:match_id>/available_events/',
+         views.available_events_for_match,
+         name='portal-available-events-for-match'),
     path('game/<uuid:game_id>/market/', views.event_markets, name='portal-match-event-market'),
     path('<uuid:match_id>/game/<uuid:game_id>/market/', views.event_markets, name='portal-match-event-market'),
     path('game/<uuid:game_id>/player_2_select_outcome/', views.player_2_select_outcome, name='portal-match-game-player_2_select_outcome'),

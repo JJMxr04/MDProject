@@ -185,8 +185,10 @@ TEMPLATES = [
     },
 ]
 
-# settings.py
-X_FRAME_OPTIONS = 'ALLOWALL'
+# Reject framing by other origins. Per plan §2.3 (A05). Was 'ALLOWALL', a
+# clickjacking risk. Switch to 'SAMEORIGIN' if any first-party iframe surface
+# turns up; otherwise leave as DENY.
+X_FRAME_OPTIONS = 'DENY'
 
 
 WSGI_APPLICATION = 'CoreRoot.wsgi.application'
@@ -262,6 +264,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
+# Argon2 is the modern Django-recommended hasher; PBKDF2 stays second so
+# existing hashes still verify. Django automatically re-hashes a user's
+# password to the first hasher on their next successful login. Per plan §2.3
+# (A02). Requires ``argon2-cffi`` (already pulled in transitively by other
+# packages; explicit pin is in requirements.txt).
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
 AUTH_USER_MODEL = 'core_user.User'
