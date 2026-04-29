@@ -24,6 +24,7 @@ _PUBLIC_PREFIXES = (
     "/auth/signup/",
     "/robots.txt",
     "/favicon.ico",
+    "/healthz",   # container health probe — never indexed but no noise either
 )
 
 

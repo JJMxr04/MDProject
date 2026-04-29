@@ -1,0 +1,44 @@
+# Keep the build context tiny so each `docker build` is fast.
+
+# Virtualenvs
+venv/
+.venv/
+
+# Python noise
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Tests + dev tooling
+.coverage
+htmlcov/
+
+# Editor / VCS
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Local env (Coolify sets env from its UI; never bake .env into the image)
+.env
+.env.local
+.env.*.local
+
+# Local SQLite + media (production uses S3 / managed Postgres)
+*.sqlite3
+db.sqlite3
+media/
+
+# Pre-built static (collectstatic regenerates inside the image)
+staticfiles/
+
+# Local logs / temp
+*.log
+logs/

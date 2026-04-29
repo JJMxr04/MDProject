@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.db import connection
+from django.http import HttpResponse, JsonResponse
 
 
 # Public marketing routes — these are the only paths search engines should
@@ -25,6 +26,24 @@ _DISALLOWED_PREFIXES = (
     "/static/",       # don't index static assets directly
     "/media/",        # user-uploaded content
 )
+
+
+def healthz(request):
+    """Container health endpoint. Coolify (and any other orchestrator)
+    polls this to decide if the instance is ready to take traffic.
+
+    Two checks:
+      - process is up (we got here, that's the answer)
+      - DB is reachable (a single ``SELECT 1`` — fails fast on bad
+        DATABASE_URL or postgres being down)
+    """
+    try:
+        with connection.cursor() as c:
+            c.execute("SELECT 1")
+            c.fetchone()
+    except Exception as exc:  # noqa: BLE001
+        return JsonResponse({"ok": False, "db": str(exc)[:200]}, status=503)
+    return JsonResponse({"ok": True})
 
 
 def robots_txt(request):

@@ -1,0 +1,66 @@
+# Local prod-like stack for MDProject. Mirrors what Coolify will deploy
+# (Django + postgres + redis) so behavior parity is testable before
+# pushing.
+#
+# Coolify itself doesn't read this file — it builds the Dockerfile per
+# Application. But you can `docker compose up` here to validate the same
+# image runs end-to-end before deploying.
+#
+# Aggregator is intentionally NOT in this compose file: in production
+# it's a separate Coolify Application. Locally point ``AGGRIGATOR_BASE_URL``
+# at the aggregator's compose stack (``http://host.docker.internal:8001``)
+# or run both with one combined compose file.
+
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: mdproject
+      POSTGRES_PASSWORD: mdproject
+      POSTGRES_DB: mdproject
+    ports:
+      - "5435:5432"   # 5435 host-side to coexist with Homebrew Postgres + aggregator
+    volumes:
+      - mdproject_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mdproject"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6381:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis:    { condition: service_healthy }
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: change-me-locally-but-real-in-prod
+      ALLOWED_HOSTS: localhost,127.0.0.1,0.0.0.0,web
+      DATABASE_URL: postgres://mdproject:mdproject@postgres:5432/mdproject
+      REDIS_URL: redis://redis:6379
+      USE_AGGRIGATOR: "True"
+      # Use host.docker.internal to reach the aggregator running in its
+      # own compose stack on the host. In Coolify, swap this for the
+      # internal service URL (e.g. http://aggrigator:8001).
+      AGGRIGATOR_BASE_URL: http://host.docker.internal:8001
+      AGGRIGATOR_API_KEY: ""           # set after creating an API key
+      AGGRIGATOR_WEBHOOK_SECRET: ""    # set from register_webhook.py output
+      EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  mdproject_pg:

@@ -454,6 +454,22 @@ SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+# Behind-proxy support — Coolify's Traefik (and most reverse proxies) put
+# the original scheme into ``X-Forwarded-Proto``. Without this, Django's
+# ``request.is_secure()`` returns False even on HTTPS requests, which
+# breaks ``SECURE_SSL_REDIRECT`` (infinite loop) and makes secure cookies
+# look insecure. Trusts ONLY this header from a single proxy hop.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+
+# CSRF requires the full origin (scheme + host) for any cross-domain POST.
+# Coolify hosts the app on a custom domain — list it here via env so the
+# admin / portal forms accept POSTs over HTTPS.
+CSRF_TRUSTED_ORIGINS = [
+    o.strip()
+    for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if o.strip()
+]
 
 # WhiteNoise compressed static files. Using the non-manifest variant because
 # third-party JS (Jazzmin's Bootstrap bundle) references .map files that
