@@ -1,26 +1,23 @@
 """Upcoming-events grid, server-rendered.
 
-After the aggregator cutover (plan §2.4.2) this view proxies to
-``GET /v1/events`` instead of reading from MDProject's local DB. Failure
-modes:
+Source-of-truth for events: aggregator's ``GET /v1/events`` (plan §2.4.2).
+The aggregator now ships ``sport``, ``league``, ``home_team``, ``away_team``
+nested in each event (plan v2 portal redesign), so the template reads the
+same `{{ event.sport.name }}` / `{{ event.home_team.name }}` it always did.
 
+Failure modes:
 - Aggregator 5xx / timeout → serve cached snapshot if present (TTL extended
   to 5 min in that case), otherwise show an error empty-state.
 - Aggregator 401 (key revoked) → log to Sentry as warning, error state.
-- ``USE_AGGRIGATOR=False`` (rollback path): fall back to legacy local-DB
-  query unchanged, so flipping the env flag back is a clean revert.
 """
 
 from __future__ import annotations
 
 import logging
 from datetime import datetime, time, timedelta
-from typing import Any
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.dateparse import parse_date
@@ -47,9 +44,6 @@ def _as_aware(d, end_of_day=False):
 
 @login_required(login_url="/auth/login/")
 def upcoming_events_list(request):
-    if not getattr(settings, "USE_AGGRIGATOR", False):
-        return _legacy_local_db_path(request)
-
     search_query = request.GET.get("search", "").strip()
     selected_sport = request.GET.get("sport", "").strip()
     start_date = parse_date(request.GET.get("start_date", "") or "")
@@ -209,67 +203,3 @@ class _AggregatorPaginator:
 
     def page_range(self):
         return range(1, self.num_pages + 1)
-
-
-# ---- legacy fallback (rollback path) --------------------------------------
-
-
-def _legacy_local_db_path(request):
-    """Pre-cutover behavior — keep working when ``USE_AGGRIGATOR=False``.
-    This is the original view logic verbatim (the working tree before
-    Part 2.4 landed)."""
-    from django.db.models import Exists, OuterRef, Q
-    from core.event.models import Event, Sport
-    from core.event.models.odds.market import Market
-
-    search_query = request.GET.get("search", "").strip()
-    selected_sport = request.GET.get("sport", "").strip()
-    start_date = parse_date(request.GET.get("start_date", "") or "")
-    user_end_date = parse_date(request.GET.get("end_date", "") or "")
-
-    max_end_date = timezone.now().date() + timedelta(days=90)
-    end_date = min(user_end_date, max_end_date) if user_end_date else max_end_date
-    default_floor = timezone.now()
-
-    has_markets = Market.objects.filter(event=OuterRef("pk"))
-    events = (
-        Event.objects.filter(completed=False)
-        .annotate(has_markets=Exists(has_markets))
-        .filter(has_markets=True)
-        .select_related("home_team", "away_team", "sport")
-        .order_by("start_time")
-    )
-    if search_query:
-        events = events.filter(
-            Q(season_label__icontains=search_query)
-            | Q(home_team__name_long__icontains=search_query)
-            | Q(away_team__name_long__icontains=search_query)
-        )
-    if selected_sport:
-        events = events.filter(sport_id=selected_sport)
-
-    floor = _as_aware(start_date) if start_date else default_floor
-    events = events.filter(
-        Q(status_type="inprogress") | Q(start_time__gte=floor),
-        start_time__lte=_as_aware(end_date, end_of_day=True),
-    )
-
-    paginator = Paginator(events, PAGE_SIZE)
-    page_obj = paginator.get_page(request.GET.get("page"))
-    sports = (
-        Sport.objects.filter(events__completed=False, events__markets__isnull=False)
-        .distinct()
-        .order_by("name")
-    )
-    return render(
-        request,
-        "portal/event/upcoming-events-list.html",
-        {
-            "page_obj": page_obj,
-            "sports": sports,
-            "search_query": search_query,
-            "selected_sport": selected_sport,
-            "start_date": request.GET.get("start_date", ""),
-            "end_date": request.GET.get("end_date", ""),
-        },
-    )

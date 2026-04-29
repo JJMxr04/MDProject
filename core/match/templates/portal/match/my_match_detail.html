@@ -189,20 +189,28 @@
         {# STEP 2 — market + selection chooser. #}
         <div id="pickStep-selection" class="pickstep" hidden>
           <div class="pickstep__eventbar">
-            <button type="button" class="btn btn-link btn-sm p-0 me-2" id="pickBackBtn" hidden>
+            <button type="button" class="pickstep__eventbar-back" id="pickBackBtn" hidden>
               <i class="bi bi-chevron-left"></i> Back
             </button>
-            <div class="pickstep__teams">
-              <span id="pickHomeTeam">—</span>
-              <span class="text-muted mx-2">vs</span>
-              <span id="pickAwayTeam">—</span>
+            <div>
+              <div class="pickstep__matchup">
+                <div class="pickstep__team">
+                  <div class="pickstep__team-logo" id="pickHomeLogo">?</div>
+                  <div class="pickstep__team-name" id="pickHomeTeam">—</div>
+                </div>
+                <div class="pickstep__matchup-vs">vs</div>
+                <div class="pickstep__team">
+                  <div class="pickstep__team-logo" id="pickAwayLogo">?</div>
+                  <div class="pickstep__team-name" id="pickAwayTeam">—</div>
+                </div>
+              </div>
+              <div class="pickstep__eventmeta" id="pickEventMeta"></div>
             </div>
-            <small class="text-muted ms-auto" id="pickEventMeta"></small>
           </div>
 
           <div class="pickstep__tabs" id="pickMarketTabs" role="tablist"></div>
 
-          <div class="pickstep__selections" id="pickSelections">
+          <div id="pickSelections">
             <p class="text-center text-muted p-4">Loading markets…</p>
           </div>
         </div>
@@ -237,8 +245,17 @@
     @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
 
     /* ─── Pick Modal ────────────────────────────────────────────────── */
-    .pickmodal-header { background: var(--surface-muted, #f5f7fa); }
-    .pickmodal-footer { background: var(--surface-muted, #f5f7fa); }
+    /* Color tokens — fall back when the design system isn't loaded. */
+    :root {
+        --pm-fav: #275d81;       /* favorite (negative American) */
+        --pm-dog: #2f9e6b;       /* underdog (positive American) */
+        --pm-line: #b9831b;      /* spread / total line accent */
+        --pm-bg-soft: #f5f7fa;
+        --pm-border: #e5e7eb;
+    }
+
+    .pickmodal-header { background: var(--pm-bg-soft); }
+    .pickmodal-footer { background: var(--pm-bg-soft); }
 
     .pickstep { padding: 1rem 1.25rem; }
 
@@ -248,94 +265,263 @@
     }
     .pickstep__toolbar .form-control { max-width: 320px; }
 
+    /* ── Step 1 — event chooser cards ─────────────────────────────── */
     .pickstep__events {
-        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: .75rem;
     }
     .pickevent-card {
-        text-align: left; padding: .75rem;
-        border: 1px solid var(--border-default, #e5e7eb);
-        border-radius: 8px; background: #fff; cursor: pointer;
+        text-align: left; padding: .9rem;
+        border: 1px solid var(--pm-border);
+        border-radius: 12px; background: #fff; cursor: pointer;
         transition: transform .08s, border-color .12s, box-shadow .12s;
+        display: flex; flex-direction: column; gap: .55rem;
     }
     .pickevent-card:hover {
         border-color: var(--brand-blue-dark, #275d81);
-        box-shadow: 0 2px 8px rgba(17,24,39,.08);
+        box-shadow: 0 4px 14px rgba(17,24,39,.08);
         transform: translateY(-1px);
     }
-    .pickevent-card__teams { font-weight: 600; line-height: 1.25; margin-bottom: .35rem; }
-    .pickevent-card__teams .vs { color: var(--text-secondary, #6b7280); font-weight: 400; margin: 0 .25rem; }
-    .pickevent-card__meta { color: var(--text-secondary, #6b7280); font-size: .8rem; }
-    .pickevent-card__meta > span + span::before { content: " · "; }
+    .pickevent-card__teams {
+        font-weight: 600; line-height: 1.25;
+        display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+        gap: .35rem; text-align: center;
+    }
+    .pickevent-card__teams .vs {
+        color: var(--text-secondary, #6b7280); font-weight: 600; font-size: .7rem;
+        letter-spacing: .08em; text-transform: uppercase;
+    }
+    .pickevent-card__chips {
+        display: flex; flex-wrap: wrap; gap: .25rem;
+    }
+    .pm-chip {
+        font-size: .7rem; font-weight: 600;
+        padding: .15rem .5rem; border-radius: 999px;
+        background: var(--pm-bg-soft); color: var(--text-secondary, #6b7280);
+        text-transform: uppercase; letter-spacing: .04em;
+    }
+    .pm-chip.is-sport { background: rgba(61, 126, 170, 0.12); color: var(--brand-blue-dark, #275d81); }
+    .pm-chip.is-league { background: rgba(47, 158, 107, 0.12); color: var(--pm-dog); }
+    .pickevent-card__time {
+        color: var(--text-secondary, #6b7280); font-size: .78rem;
+        display: flex; align-items: center; gap: .35rem;
+    }
 
-    /* Step 2 */
+    /* ── Step 2 — event header bar ────────────────────────────────── */
     .pickstep__eventbar {
-        display: flex; align-items: center; flex-wrap: wrap;
-        padding: .75rem 1rem; background: var(--surface-muted, #f5f7fa);
-        border-bottom: 1px solid var(--border-default, #e5e7eb);
+        display: grid; grid-template-columns: auto 1fr; gap: .85rem;
+        align-items: center;
+        padding: .85rem 1rem; background: var(--pm-bg-soft);
+        border-bottom: 1px solid var(--pm-border);
         margin: -1rem -1.25rem 1rem;
     }
-    .pickstep__teams { font-weight: 600; }
+    .pickstep__eventbar-back {
+        background: transparent; border: none; padding: 0;
+        color: var(--brand-blue-dark, #275d81); font-weight: 600; font-size: .85rem;
+        cursor: pointer;
+    }
+    .pickstep__matchup {
+        display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+        gap: .5rem;
+    }
+    .pickstep__team {
+        display: flex; flex-direction: column; align-items: center; gap: .25rem;
+    }
+    .pickstep__team-logo {
+        width: 36px; height: 36px;
+        background: #fff; border-radius: 8px;
+        display: grid; place-items: center;
+        font-weight: 700; color: var(--brand-blue-dark, #275d81);
+        border: 1px solid var(--pm-border);
+        overflow: hidden;
+    }
+    .pickstep__team-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+    .pickstep__team-name {
+        font-size: .8rem; font-weight: 600; line-height: 1.1; text-align: center;
+        max-width: 110px;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pickstep__matchup-vs {
+        color: var(--text-secondary, #6b7280); font-weight: 700; font-size: .7rem;
+        letter-spacing: .1em; text-transform: uppercase;
+    }
+    .pickstep__eventmeta {
+        display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .35rem;
+    }
 
+    /* Live score banner — only shown when event is live or finalized. */
+    .pickstep__score {
+        display: inline-flex; align-items: center; gap: .35rem;
+        background: rgba(220, 38, 38, .08);
+        color: #b91c1c; font-weight: 700; font-size: .85rem;
+        padding: .15rem .55rem; border-radius: 999px;
+    }
+    .pickstep__score.is-final { background: rgba(75, 85, 99, .1); color: #4b5563; }
+    .pickstep__score-num { font-variant-numeric: tabular-nums; }
+
+    /* ── Step 2 — market category tabs ────────────────────────────── */
     .pickstep__tabs {
         display: flex; flex-wrap: wrap; gap: .35rem;
-        margin-bottom: 1rem; border-bottom: 1px solid var(--border-default, #e5e7eb);
+        margin-bottom: 1rem; border-bottom: 1px solid var(--pm-border);
         padding-bottom: .5rem;
     }
     .pickmarket-tab {
-        padding: .35rem .75rem; border-radius: 999px;
+        padding: .4rem .85rem; border-radius: 999px;
         background: transparent; border: 1px solid transparent;
-        color: var(--text-secondary, #6b7280); font-size: .85rem; font-weight: 500;
-        cursor: pointer;
+        color: var(--text-secondary, #6b7280); font-size: .85rem; font-weight: 600;
+        cursor: pointer; display: inline-flex; align-items: center; gap: .35rem;
     }
-    .pickmarket-tab:hover { background: var(--surface-muted, #f5f7fa); color: var(--text-primary, #111827); }
+    .pickmarket-tab:hover { background: var(--pm-bg-soft); color: var(--text-primary, #111827); }
     .pickmarket-tab.is-active {
         background: var(--brand-blue-dark, #275d81); color: #fff;
     }
+    .pickmarket-tab__count {
+        font-size: .7rem; opacity: .75; font-weight: 500;
+    }
+
+    /* ── Step 2 — market group + selection grid ─────────────────── */
+    .pickmarket-group { margin-bottom: 1.1rem; }
+    .pickmarket-group:last-child { margin-bottom: 0; }
+    .pickmarket-group__head {
+        display: flex; align-items: center; flex-wrap: wrap; gap: .4rem;
+        margin-bottom: .45rem;
+    }
+    .pickmarket-group__title {
+        font-size: .85rem; font-weight: 700; color: var(--text-primary, #111827);
+    }
+    .pickmarket-group__line-pill {
+        font-variant-numeric: tabular-nums;
+        background: rgba(185, 131, 27, .12);
+        color: var(--pm-line);
+        font-size: .8rem; font-weight: 700;
+        padding: .1rem .55rem; border-radius: 6px;
+    }
 
     .pickstep__selections {
-        display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: .6rem;
     }
+
     .pickselection {
-        display: flex; align-items: center; justify-content: space-between;
-        gap: .75rem; padding: .85rem 1rem;
-        border: 1px solid var(--border-default, #e5e7eb); border-radius: 10px;
+        position: relative;
+        display: grid; grid-template-rows: auto auto auto; gap: .35rem;
+        padding: .85rem .9rem;
+        border: 1px solid var(--pm-border); border-radius: 12px;
         background: #fff; cursor: pointer;
-        transition: border-color .12s, box-shadow .12s, background .12s;
-        font: inherit; text-align: left;
+        transition: border-color .12s, box-shadow .12s, background .12s, transform .08s;
+        font: inherit; text-align: left; min-height: 92px;
     }
     .pickselection:hover {
         border-color: var(--brand-blue-dark, #275d81);
-        background: var(--surface-muted, #f5f7fa);
+        background: var(--pm-bg-soft);
+        transform: translateY(-1px);
     }
     .pickselection.is-selected {
         border-color: var(--brand-blue, #3D7EAA);
         background: rgba(61, 126, 170, 0.08);
-        box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA);
+        box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA), 0 4px 14px rgba(61, 126, 170, .15);
     }
-    .pickselection__label { font-weight: 600; color: var(--text-primary, #111827); }
-    .pickselection__odds {
-        font-variant-numeric: tabular-nums; font-weight: 700;
-        color: var(--brand-blue-dark, #275d81); font-size: 1.05rem;
-    }
-    .pickselection.is-selected .pickselection__odds { color: var(--brand-blue, #3D7EAA); }
-
     .pickselection.is-suspended { opacity: .5; pointer-events: none; }
-
-    /* Locked: another player already picked this exact selection. */
     .pickselection.is-taken {
         opacity: .55; pointer-events: none;
-        background: var(--surface-muted, #f5f7fa);
+        background: var(--pm-bg-soft);
         border-style: dashed;
     }
+
+    .pickselection__row1 {
+        display: flex; align-items: center; justify-content: space-between; gap: .4rem;
+    }
+    .pickselection__label {
+        font-weight: 700; color: var(--text-primary, #111827);
+        font-size: .9rem; line-height: 1.15;
+        overflow: hidden; text-overflow: ellipsis;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    }
+    .pickselection__line {
+        font-variant-numeric: tabular-nums;
+        font-size: .75rem; font-weight: 700; color: var(--pm-line);
+        background: rgba(185, 131, 27, .12);
+        padding: .1rem .45rem; border-radius: 5px;
+        flex-shrink: 0;
+    }
+
+    .pickselection__odds-block {
+        display: flex; align-items: baseline; justify-content: space-between;
+        gap: .35rem; margin-top: auto;
+    }
+    .pickselection__odds {
+        font-variant-numeric: tabular-nums; font-weight: 800;
+        font-size: 1.35rem; line-height: 1;
+        letter-spacing: -.01em;
+    }
+    .pickselection__odds.is-fav { color: var(--pm-fav); }
+    .pickselection__odds.is-dog { color: var(--pm-dog); }
+    .pickselection__odds-sub {
+        font-variant-numeric: tabular-nums; font-size: .68rem;
+        color: var(--text-secondary, #6b7280); font-weight: 500;
+    }
     .pickselection.is-taken .pickselection__odds { color: var(--text-secondary, #6b7280); }
+
+    .pickselection__badge-row {
+        display: flex; align-items: center; gap: .3rem; flex-wrap: wrap;
+        min-height: 1rem;
+    }
+    .pm-badge {
+        font-size: .62rem; font-weight: 700;
+        padding: .1rem .4rem; border-radius: 4px;
+        text-transform: uppercase; letter-spacing: .04em;
+    }
+    .pm-badge.is-fav { background: rgba(39, 93, 129, .1); color: var(--pm-fav); }
+    .pm-badge.is-dog { background: rgba(47, 158, 107, .1); color: var(--pm-dog); }
+    .pm-badge.is-implied {
+        background: var(--pm-bg-soft); color: var(--text-secondary, #6b7280);
+        font-weight: 600;
+    }
+    /* Settlement state — surfaced post-finalization via the webhook. */
+    .pm-badge.is-won { background: rgba(47, 158, 107, .14); color: var(--pm-dog); }
+    .pm-badge.is-lost { background: rgba(220, 38, 38, .12); color: #b91c1c; }
+    .pm-badge.is-push { background: rgba(185, 131, 27, .14); color: var(--pm-line); }
+    .pm-badge.is-void { background: var(--pm-bg-soft); color: var(--text-secondary, #6b7280); }
+    /* When the user's chosen selection is a winner, give the whole card a
+       green outline so the result is unmissable. */
+    .pickselection.is-selected[data-settle="WON"] {
+        border-color: var(--pm-dog);
+        box-shadow: inset 0 0 0 1px var(--pm-dog), 0 4px 14px rgba(47, 158, 107, .15);
+    }
     .pickselection__taken {
-        font-size: .7rem; font-weight: 600;
+        font-size: .68rem; font-weight: 700;
         color: var(--text-secondary, #6b7280);
         text-transform: uppercase; letter-spacing: .04em;
     }
-    .pickselection__main { display: flex; flex-direction: column; gap: 2px; }
+
+    /* Per-bookmaker price strip — small grid of {book name → American odds}
+       so users can compare across DraftKings / FanDuel / etc. without
+       leaving the popup. Hidden when there are no quotes (rare). */
+    .pickselection__books {
+        display: grid; grid-template-columns: 1fr 1fr; gap: .15rem .4rem;
+        margin-top: .35rem; padding-top: .35rem;
+        border-top: 1px dashed var(--pm-border);
+        font-size: .68rem; line-height: 1.2;
+        font-variant-numeric: tabular-nums;
+    }
+    .pickselection__book {
+        display: flex; align-items: baseline; justify-content: space-between;
+        gap: .25rem;
+    }
+    .pickselection__book-name {
+        color: var(--text-secondary, #6b7280); font-weight: 500;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pickselection__book-odds { font-weight: 700; }
+    .pickselection__book-odds.is-fav { color: var(--pm-fav); }
+    .pickselection__book-odds.is-dog { color: var(--pm-dog); }
+    .pickselection__book.is-best .pickselection__book-name {
+        color: var(--text-primary, #111827); font-weight: 700;
+    }
+    .pickselection__books-more {
+        grid-column: 1 / -1; text-align: center;
+        color: var(--text-secondary, #6b7280); font-weight: 500;
+    }
 
     .pickmodal-preview { font-size: .9rem; }
     .pickmodal-preview strong { color: var(--text-primary, #111827); }
@@ -348,8 +534,9 @@
         background: rgba(61, 126, 170, 0.08);
         border: 1px solid var(--brand-blue, #3D7EAA);
         border-radius: 8px;
-        padding: .5rem .75rem;
+        padding: .55rem .75rem;
         width: 100%;
+        display: flex; align-items: center; gap: .5rem;
     }
 </style>
 
@@ -479,6 +666,8 @@ const PickModal = (function () {
                 // If either side already picked a market, lock the picker to
                 // the SAME market. The "first-picker" wins for the lock, but
                 // either side's market is acceptable (only one is normally set).
+                // ``data.owner_market`` comes from MDProject's MarketSerializer
+                // which exposes ``market_id``; the popup uses that consistently.
                 const lockedMarket = data.owner_market || data.player_2_market;
                 if (lockedMarket) {
                     state.lockedMarketId = lockedMarket.market_id;
@@ -505,7 +694,7 @@ const PickModal = (function () {
                 ev.home_team && ev.home_team.name,
                 ev.away_team && ev.away_team.name,
                 ev.league && ev.league.name,
-                ev.sport,
+                ev.sport && ev.sport.name,
             ].filter(Boolean).join(' ').toLowerCase();
             return hay.includes(q);
         });
@@ -521,14 +710,19 @@ const PickModal = (function () {
         container.innerHTML = filtered.map(ev => `
             <button type="button" class="pickevent-card" data-event-id="${ev.event_id}">
                 <div class="pickevent-card__teams">
-                    ${escapeHtml(ev.home_team ? ev.home_team.name : 'TBD')}
+                    <span>${escapeHtml(ev.home_team ? ev.home_team.name : 'TBD')}</span>
                     <span class="vs">vs</span>
-                    ${escapeHtml(ev.away_team ? ev.away_team.name : 'TBD')}
+                    <span>${escapeHtml(ev.away_team ? ev.away_team.name : 'TBD')}</span>
                 </div>
-                <div class="pickevent-card__meta">
-                    ${ev.start_time ? `<span>${new Date(ev.start_time).toLocaleString()}</span>` : ''}
-                    ${ev.league && ev.league.name ? `<span>${escapeHtml(ev.league.name)}</span>` : ''}
+                <div class="pickevent-card__chips">
+                    ${ev.sport && ev.sport.name ? `<span class="pm-chip is-sport">${escapeHtml(ev.sport.name)}</span>` : ''}
+                    ${ev.league && ev.league.name ? `<span class="pm-chip is-league">${escapeHtml(ev.league.name)}</span>` : ''}
                 </div>
+                ${ev.start_time ? `
+                <div class="pickevent-card__time">
+                    <i class="bi bi-clock" aria-hidden="true"></i>
+                    ${escapeHtml(formatEventTime(ev.start_time))}
+                </div>` : ''}
             </button>
         `).join('');
 
@@ -561,15 +755,48 @@ const PickModal = (function () {
     /* ── Step 2: market + selection ────────────────────────────────── */
     function applyEvent(ev) {
         state.eventId = ev.event_id;
-        document.getElementById('pickHomeTeam').textContent =
-            ev.home_team ? ev.home_team.name : 'TBD';
-        document.getElementById('pickAwayTeam').textContent =
-            ev.away_team ? ev.away_team.name : 'TBD';
-        const meta = [];
-        if (ev.start_time) meta.push(new Date(ev.start_time).toLocaleString());
-        if (ev.league && ev.league.name) meta.push(ev.league.name);
-        if (ev.sport) meta.push(prettySport(ev.sport));
-        document.getElementById('pickEventMeta').textContent = meta.join(' · ');
+        const home = ev.home_team || {};
+        const away = ev.away_team || {};
+
+        document.getElementById('pickHomeTeam').textContent = home.name || 'TBD';
+        document.getElementById('pickAwayTeam').textContent = away.name || 'TBD';
+        document.getElementById('pickHomeLogo').innerHTML = renderTeamLogo(home);
+        document.getElementById('pickAwayLogo').innerHTML = renderTeamLogo(away);
+
+        const metaEl = document.getElementById('pickEventMeta');
+        const chips = [];
+        if (ev.sport && ev.sport.name) {
+            chips.push(`<span class="pm-chip is-sport">${escapeHtml(ev.sport.name)}</span>`);
+        }
+        if (ev.league && ev.league.name) {
+            chips.push(`<span class="pm-chip is-league">${escapeHtml(ev.league.name)}</span>`);
+        }
+        if (ev.start_time) {
+            chips.push(`<span class="pm-chip"><i class="bi bi-clock me-1"></i>${escapeHtml(formatEventTime(ev.start_time))}</span>`);
+        }
+        // Live or finalized score badge.
+        if (ev.is_live && ev.home_score != null && ev.away_score != null) {
+            chips.push(`<span class="pickstep__score">
+                <i class="bi bi-broadcast"></i>
+                <span class="pickstep__score-num">${ev.home_score}–${ev.away_score}</span>
+                LIVE
+            </span>`);
+        } else if (ev.is_finalized && ev.home_score != null && ev.away_score != null) {
+            chips.push(`<span class="pickstep__score is-final">
+                <span class="pickstep__score-num">${ev.home_score}–${ev.away_score}</span>
+                FINAL
+            </span>`);
+        }
+        metaEl.innerHTML = chips.join('');
+    }
+
+    function renderTeamLogo(team) {
+        if (team && team.logo_url) {
+            return `<img src="${escapeAttr(team.logo_url)}" alt="">`;
+        }
+        const initials = ((team && team.name_short) || (team && team.name) || '?')
+            .toString().slice(0, 2).toUpperCase();
+        return escapeHtml(initials);
     }
 
     function loadMarkets(eventId) {
@@ -631,9 +858,9 @@ const PickModal = (function () {
         if (state.lockedMarketId) {
             tabs.innerHTML = `
                 <div class="pickmodal-locked-notice">
-                    <i class="bi bi-lock-fill me-1"></i>
-                    Locked to the <strong>${escapeHtml(state.lockedMarketLabel || 'market')}</strong>
-                    that ${escapeHtml(state.lockedByUsername || 'your opponent')} picked.
+                    <i class="bi bi-lock-fill"></i>
+                    <span>Locked to the <strong>${escapeHtml(state.lockedMarketLabel || 'market')}</strong>
+                    that ${escapeHtml(state.lockedByUsername || 'your opponent')} picked.</span>
                 </div>
             `;
             state.activeCategory = Object.keys(grouped)[0];
@@ -642,7 +869,10 @@ const PickModal = (function () {
 
         tabs.innerHTML = Object.entries(grouped).map(([cat, ms], i) => `
             <button type="button" class="pickmarket-tab ${i === 0 ? 'is-active' : ''}"
-                    data-category="${cat}">${humanCategoryLabel(cat, ms)}</button>
+                    data-category="${cat}">
+                <span>${humanCategoryLabel(cat, ms)}</span>
+                <span class="pickmarket-tab__count">${countSelections(ms)}</span>
+            </button>
         `).join('');
         state.activeCategory = Object.keys(grouped)[0];
 
@@ -656,20 +886,37 @@ const PickModal = (function () {
         });
     }
 
+    function countSelections(markets) {
+        return markets.reduce((n, m) => n + (m.selections || []).length, 0);
+    }
+
     /* Pretty label helpers used in headers / tabs / locked-notice. */
     function humanCategoryLabel(cat, marketsInCat) {
         if (cat === 'MONEYLINE')   return 'Moneyline';
-        if (cat === 'SPREAD')      return 'Spread' + (marketsInCat && marketsInCat.length === 1 && marketsInCat[0].line != null ? ` ${formatLine(marketsInCat[0].line)}` : '');
-        if (cat === 'TOTAL')       return 'Total'  + (marketsInCat && marketsInCat.length === 1 && marketsInCat[0].line != null ? ` ${marketsInCat[0].line}` : '');
+        if (cat === 'SPREAD')      return 'Spread';
+        if (cat === 'TOTAL')       return 'Total';
         if (cat === 'PROPS_GAME')  return 'Game props';
         if (cat === 'PROPS_TEAM')  return 'Team props';
-        return cat[0] + cat.slice(1).toLowerCase();
+        return cat[0] + cat.slice(1).toLowerCase().replace(/_/g, ' ');
     }
     function humanMarketLabel(m) {
         if (!m) return '';
         let s = humanCategoryLabel(m.category, [m]);
-        if (m.line != null && !/[+\-\d]/.test(s.slice(-3))) s += ` @ ${formatLine(m.line)}`;
+        if (m.line != null) s += ` @ ${formatLine(m.line)}`;
         return s;
+    }
+
+    /* Header label for one market within a category group (e.g. when the
+       category has multiple alt lines). */
+    function marketGroupTitle(m, idx, total) {
+        if (m.category === 'PROPS_GAME' || m.category === 'PROPS_TEAM') {
+            const subj = m.subject_team && m.subject_team.name;
+            const base = m.type ? m.type.replace(/_/g, ' ').toLowerCase() : 'Prop';
+            return subj ? `${subj} — ${base}` : base.charAt(0).toUpperCase() + base.slice(1);
+        }
+        if (m.category === 'TOTAL')  return 'Over / Under';
+        if (m.category === 'SPREAD') return 'Point spread';
+        return m.type ? m.type.replace(/_/g, ' ') : `Variant ${idx + 1}`;
     }
 
     function renderActiveSelections() {
@@ -678,38 +925,22 @@ const PickModal = (function () {
 
         // Render every market in this category. For MONEYLINE there's usually
         // just one market with 2-3 selections; for SPREAD/TOTAL there can be
-        // multiple alt lines, so add a small line label per market group.
+        // multiple alt lines, so add a line pill per market group.
         sels.innerHTML = inCategory.map((m, idx) => {
-            const head = inCategory.length > 1
-                ? `<div class="text-muted small mb-2 ${idx > 0 ? 'mt-3' : ''}">
-                       ${m.line != null ? `Line ${formatLine(m.line)}` : `Variant ${idx + 1}`}
-                   </div>` : '';
+            const titleParts = [
+                `<span class="pickmarket-group__title">${escapeHtml(marketGroupTitle(m, idx, inCategory.length))}</span>`,
+            ];
+            if (m.line != null) {
+                titleParts.push(`<span class="pickmarket-group__line-pill">${escapeHtml(formatLine(m.line))}</span>`);
+            }
+            if (m.is_live) {
+                titleParts.push('<span class="pm-badge is-dog">LIVE</span>');
+            }
+            const head = `<div class="pickmarket-group__head">${titleParts.join('')}</div>`;
             const grid = `<div class="pickstep__selections">${m.selections.map(s => {
-                const takenBy = state.takenSelections[s.selection_id];
-                const classes = [
-                    'pickselection',
-                    s.suspended ? 'is-suspended' : '',
-                    takenBy ? 'is-taken' : '',
-                ].filter(Boolean).join(' ');
-                const takenBadge = takenBy
-                    ? `<span class="pickselection__taken">Picked by ${escapeHtml(takenBy)}</span>`
-                    : '';
-                return `
-                    <button type="button" class="${classes}"
-                            data-market-id="${m.market_id}"
-                            data-selection-id="${s.selection_id}"
-                            data-label="${escapeAttr(s.label || s.type)}"
-                            data-odds="${formatOdds(s.odds)}"
-                            ${takenBy ? 'aria-disabled="true" disabled' : ''}>
-                        <span class="pickselection__main">
-                            <span class="pickselection__label">${escapeHtml(s.label || s.type)}</span>
-                            ${takenBadge}
-                        </span>
-                        <span class="pickselection__odds">${formatOdds(s.odds)}</span>
-                    </button>
-                `;
+                return renderSelectionCard(m, s);
             }).join('')}</div>`;
-            return head + grid;
+            return `<div class="pickmarket-group">${head}${grid}</div>`;
         }).join('');
 
         sels.querySelectorAll('.pickselection:not(.is-taken):not(.is-suspended)').forEach(btn => {
@@ -725,6 +956,114 @@ const PickModal = (function () {
         });
     }
 
+    /* A single selection card. Renders the label, an optional line pill (for
+       spread/total selections that bake the line into the selection rather
+       than the market), the American odds with fav/dog color coding, and a
+       sub-line with decimal + fractional + implied probability. */
+    function renderSelectionCard(market, s) {
+        const takenBy = state.takenSelections[s.selection_id];
+        const classes = [
+            'pickselection',
+            s.suspended ? 'is-suspended' : '',
+            takenBy ? 'is-taken' : '',
+        ].filter(Boolean).join(' ');
+
+        const odds = s.odds || null;
+        const american = odds && odds.american != null ? odds.american : null;
+        const decimal = odds && odds.decimal != null ? odds.decimal : null;
+        const fractional = odds && odds.fractional ? odds.fractional : null;
+        const oddsStr = formatAmerican(american) || (decimal != null ? String(decimal) : '—');
+        const oddsClass = american == null ? '' : (american < 0 ? 'is-fav' : 'is-dog');
+        const favClass = american == null ? '' : (american < 0 ? 'is-fav' : 'is-dog');
+        const favLabel = american == null ? '' : (american < 0 ? 'FAV' : 'DOG');
+
+        // Some selections embed their own line ("Over 220.5") — surface a
+        // pill if the parent market has a line OR if the label looks like
+        // it carries a number (e.g. "+3.5"). Keep it lightweight: only add
+        // the pill if there's a meaningful number and it's not redundant
+        // with the group's pill.
+        const inlineLine = (s.line != null) ? formatLine(s.line) : '';
+        const linePill = inlineLine
+            ? `<span class="pickselection__line">${escapeHtml(inlineLine)}</span>` : '';
+
+        const subBits = [];
+        if (decimal != null) subBits.push(`Dec ${decimal}`);
+        if (fractional)      subBits.push(fractional);
+        const implied = (decimal != null) ? Math.round(100 / Number(decimal)) : null;
+
+        // Settlement badge — visible after the event finalizes and the
+        // aggregator's settlement webhook arrives. Hidden while PENDING so
+        // pre-game cards stay clean.
+        const settle = s.settlement_status;
+        const settleBadge = (settle && settle !== 'PENDING')
+            ? `<span class="pm-badge is-${settle.toLowerCase()}">${settle}</span>`
+            : '';
+
+        const badgeRow = takenBy
+            ? `<span class="pickselection__taken">Picked by ${escapeHtml(takenBy)}</span>`
+            : `<div class="pickselection__badge-row">
+                ${settleBadge}
+                ${favLabel ? `<span class="pm-badge ${favClass}">${favLabel}</span>` : ''}
+                ${implied != null ? `<span class="pm-badge is-implied">${implied}%</span>` : ''}
+                ${s.suspended ? `<span class="pm-badge is-implied">SUSPENDED</span>` : ''}
+            </div>`;
+
+        return `
+            <button type="button" class="${classes}"
+                    data-market-id="${escapeAttr(market.market_id)}"
+                    data-selection-id="${escapeAttr(s.selection_id)}"
+                    data-label="${escapeAttr(s.label || s.type)}"
+                    data-odds="${escapeAttr(oddsStr)}"
+                    data-settle="${escapeAttr(settle || 'PENDING')}"
+                    ${takenBy ? 'aria-disabled="true" disabled' : ''}>
+                <div class="pickselection__row1">
+                    <span class="pickselection__label">${escapeHtml(s.label || s.type)}</span>
+                    ${linePill}
+                </div>
+                <div class="pickselection__odds-block">
+                    <span class="pickselection__odds ${oddsClass}">${escapeHtml(oddsStr)}</span>
+                    <span class="pickselection__odds-sub">${escapeHtml(subBits.join(' · '))}</span>
+                </div>
+                ${badgeRow}
+                ${renderBooksStrip(s.by_bookmaker || [])}
+            </button>
+        `;
+    }
+
+    /* Render the per-book price strip inside a selection card.
+       - Sorts books by best price for the bettor (highest decimal odds first).
+       - Caps at 4 visible rows ("+N more" link if there are more).
+       - Highlights the best price in primary text color.
+       - Color-codes American by sign so favorites/underdogs read at a glance. */
+    function renderBooksStrip(books) {
+        const live = books.filter(b => b && b.available !== false && b.odds);
+        if (!live.length) return '';
+        const sorted = live.slice().sort((a, b) => {
+            const da = Number((a.odds || {}).decimal || 0);
+            const db = Number((b.odds || {}).decimal || 0);
+            return db - da;
+        });
+        const VISIBLE = 4;
+        const head = sorted.slice(0, VISIBLE);
+        const overflow = sorted.length - head.length;
+        const rows = head.map((b, i) => {
+            const american = (b.odds && b.odds.american != null) ? b.odds.american : null;
+            const oddsClass = american == null ? '' : (american < 0 ? 'is-fav' : 'is-dog');
+            const oddsStr = formatAmerican(american) ||
+                (b.odds && b.odds.decimal != null ? String(b.odds.decimal) : '—');
+            const bestCls = i === 0 ? 'is-best' : '';
+            const name = b.bookmaker_name || b.bookmaker_id;
+            return `<div class="pickselection__book ${bestCls}">
+                <span class="pickselection__book-name" title="${escapeAttr(name)}">${escapeHtml(name)}</span>
+                <span class="pickselection__book-odds ${oddsClass}">${escapeHtml(oddsStr)}</span>
+            </div>`;
+        });
+        if (overflow > 0) {
+            rows.push(`<div class="pickselection__books-more">+${overflow} more</div>`);
+        }
+        return `<div class="pickselection__books">${rows.join('')}</div>`;
+    }
+
     /* ── Submit / preview ──────────────────────────────────────────── */
     function updatePreview() {
         const previewEl = document.getElementById('pickPreview');
@@ -735,12 +1074,15 @@ const PickModal = (function () {
             return;
         }
         const catLabel = state.activeCategory
-            ? state.activeCategory[0] + state.activeCategory.slice(1).toLowerCase()
+            ? humanCategoryLabel(state.activeCategory, [])
             : '';
+        const oddsRaw = state.selectedOdds || '';
+        const isFav = oddsRaw.startsWith('-');
+        const oddsClass = isFav ? 'is-fav' : 'is-dog';
         previewEl.innerHTML =
             `<strong>${escapeHtml(state.selectedLabel)}</strong>` +
-            ` <span class="text-muted">· ${catLabel}</span>` +
-            ` <span class="ms-1 fw-bold text-primary">${escapeHtml(state.selectedOdds)}</span>`;
+            ` <span class="text-muted">· ${escapeHtml(catLabel)}</span>` +
+            ` <span class="pickselection__odds ${oddsClass}" style="font-size:1rem;margin-left:.4rem">${escapeHtml(oddsRaw)}</span>`;
         submitBtn.disabled = false;
     }
 
@@ -788,20 +1130,27 @@ const PickModal = (function () {
     /* ── Utility ───────────────────────────────────────────────────── */
     function formatOdds(odds) {
         if (!odds) return '—';
-        if (odds.american != null) {
-            return (odds.american > 0 ? '+' : '') + odds.american;
-        }
+        if (odds.american != null) return formatAmerican(odds.american);
         if (odds.decimal != null) return String(odds.decimal);
         return '—';
+    }
+    function formatAmerican(american) {
+        if (american == null) return '';
+        return (american > 0 ? '+' : '') + american;
     }
     function formatLine(line) {
         const n = Number(line);
         if (Number.isNaN(n)) return String(line);
         return (n > 0 ? '+' : '') + n;
     }
-    function prettySport(s) {
-        if (!s) return '';
-        return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    function formatEventTime(iso) {
+        try {
+            const d = new Date(iso);
+            return d.toLocaleString(undefined, {
+                month: 'short', day: 'numeric',
+                hour: 'numeric', minute: '2-digit',
+            });
+        } catch (e) { return String(iso); }
     }
     function escapeHtml(str) {
         return String(str ?? '').replace(/[&<>"']/g, c => (

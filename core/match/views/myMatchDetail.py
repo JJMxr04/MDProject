@@ -67,9 +67,11 @@ def my_match_detail_view(request, match_id):
 @player_in_match_required
 def upload_pick(request, match_id):
     """Pick-submit endpoint. After cutover (plan §2.4.3) the chain
-    (Sport→League→Team→Event→Market→Selection) is fetched from the aggregator
-    *first* — never trust the client's odds value — then the existing
-    ``Match.objects.upload_pick`` runs against local rows."""
+    (Sport→League→Team→Event→Market→Selection + per-book quotes) is fetched
+    from the aggregator *first* — never trust the client's odds value — then
+    ``Match.objects.upload_pick`` links the Selection to the user's empty
+    Game slot via Bet.owner_outcome (or Bet.player_2_outcome for opponent
+    picks)."""
     from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
 
     match = get_object_or_404(Match, id=match_id)
@@ -94,10 +96,17 @@ def upload_pick(request, match_id):
         )
 
     try:
-        Match.objects.upload_pick(match=match, player=request.user, data=data)
-        return JsonResponse({'status': 'success'})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+        game = Match.objects.upload_pick(match=match, player=request.user, data=data)
+    except PickError as exc:
+        # Validation failure from Game.upload_pick (no empty slot, deadline
+        # missed, duplicate market on this match, etc.). Surface the message
+        # to the popup so the user knows why it didn't take.
+        return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
+
+    return JsonResponse({
+        'status': 'success',
+        'game_id': str(game.id),
+    })
 
 
 @require_POST

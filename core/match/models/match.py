@@ -3,7 +3,6 @@ from datetime import timedelta
 
 from django.db import models
 from django.utils import timezone
-from rest_framework.response import Response
 
 from core.abstract.models import AbstractManager, AbstractModel
 from core.game.models import Game, PickError
@@ -61,16 +60,19 @@ class MatchManager(AbstractManager):
         return match
 
     def upload_pick(self, player, match, data):
-        try:
-            Game.objects.upload_pick(
-                current_user=player,
-                match=match,
-                event_id=data.get("event_id"),
-                selection_id=data.get("player_choice"),
-            )
-            return Response({"message": "Request was successful"}, status=200)
-        except PickError as exc:
-            return Response({"error": str(exc)}, status=400)
+        """Thin pass-through to ``Game.objects.upload_pick`` — returns the
+        linked ``Game`` and lets ``PickError`` propagate to the view.
+
+        (Previously wrapped the call in try/except PickError → DRF Response,
+        which silently turned every validation failure into a 200 success
+        when the caller — a plain Django view — discarded the Response.)
+        """
+        return Game.objects.upload_pick(
+            current_user=player,
+            match=match,
+            event_id=data.get("event_id"),
+            selection_id=data.get("player_choice"),
+        )
 
     def maybe_complete_match(self, match):
         """If the match is decided (every slot scored or window closed),

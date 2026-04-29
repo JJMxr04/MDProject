@@ -222,12 +222,22 @@ class Game(AbstractModel):
 
     @property
     def is_settled(self) -> bool:
-        owner_done = (
-            self.bet.owner_outcome is not None
-            and self.bet.owner_outcome.settlement_status != "PENDING"
-        )
-        player_2_done = (
-            self.bet.player_2_outcome is not None
-            and self.bet.player_2_outcome.settlement_status != "PENDING"
-        )
-        return owner_done and player_2_done
+        """A Game is settled when the event reaches a terminal state and
+        every pick that exists has resolved.
+
+        Unpicked sides are NOT a blocker: once the event finishes (or is
+        postponed/canceled), no one can go back and add a pick to that slot
+        — Game.upload_pick rejects late picks via DEADLINE_BUFFER. So a
+        missing pick at terminal-state time is a permanent forfeit, and
+        the game's display status flips to "Completed".
+        """
+        if self.event is None:
+            return False
+        if self.event.status_type not in ("finished", "postponed", "canceled"):
+            return False
+        bet = self.bet
+        owner_pick = bet.owner_outcome if bet else None
+        p2_pick = bet.player_2_outcome if bet else None
+        owner_ok = owner_pick is None or owner_pick.settlement_status != "PENDING"
+        p2_ok = p2_pick is None or p2_pick.settlement_status != "PENDING"
+        return owner_ok and p2_ok

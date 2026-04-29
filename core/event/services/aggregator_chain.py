@@ -9,6 +9,11 @@ Per plan §2.4.3. Called by ``upload_pick`` / ``player_2_select_outcome`` *befor
 The aggregator is the source of truth for odds — the client's submitted
 ``selection_id`` is the lookup key, but every column we write comes from the
 aggregator response. Never trust the client's payload for odds values.
+
+Field-naming note (post plan v2 portal redesign): the aggregator's Pydantic
+schemas expose ``id`` as the primary key on every entity (Market.id,
+Selection.id, Team.id) — *not* ``market_id`` / ``selection_id`` like the legacy
+DRF serializers did. This module reads the canonical ``id`` field.
 """
 
 from __future__ import annotations
@@ -16,7 +21,6 @@ from __future__ import annotations
 import logging
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
-from typing import Any
 
 from dateutil import parser as date_parser
 from django.conf import settings
@@ -30,6 +34,7 @@ from core.event.models import (
     Sport,
     Team,
 )
+from core.event.models.odds.bookmaker import Bookmaker, BookmakerSelection
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
@@ -61,31 +66,35 @@ def ensure_chain(event_id: str, selection_id: str) -> Selection:
             raise ChainBuildError(f"Selection {selection_id} not in local DB")
 
     try:
-        body = AggrigatorClient().get_event_markets(event_id)
+        # ``get_event(include_markets=True)`` returns a flat ``EventDetailOut``
+        # (event fields at top level + ``markets`` array). Single round-trip
+        # gives us everything the chain needs.
+        body = AggrigatorClient().get_event(event_id, include_markets=True)
     except AggrigatorError as exc:
         raise ChainBuildError(f"Aggregator unavailable: {exc}") from exc
     if not body:
         raise ChainBuildError(f"Event {event_id} not found in aggregator")
 
-    chosen, parent_market, event_envelope = _find_selection(
-        body, selection_id=selection_id, event_id=event_id,
-    )
+    chosen, parent_market = _find_selection(body, selection_id=selection_id)
     if chosen is None or parent_market is None:
         raise ChainBuildError(
             f"Selection {selection_id} not found for event {event_id}"
         )
 
     with transaction.atomic():
-        sport = _upsert_sport(event_envelope)
-        league = _upsert_league(event_envelope, sport)
-        home_team = _upsert_team(event_envelope.get("home_team"), league)
-        away_team = _upsert_team(event_envelope.get("away_team"), league)
+        sport = _upsert_sport(body)
+        league = _upsert_league(body, sport)
+        home_team = _upsert_team(body.get("home_team"), league)
+        away_team = _upsert_team(body.get("away_team"), league)
         event = _upsert_event(
-            event_envelope, sport=sport, league=league,
+            body, sport=sport, league=league,
             home=home_team, away=away_team,
         )
         market = _upsert_market(parent_market, event=event, sport=sport)
         selection = _upsert_selection(chosen, market=market)
+        # Per-book quotes — display-only data the popup uses to show
+        # "DraftKings -150 / FanDuel -145" and the deeplinks.
+        _upsert_book_quotes(selection, chosen.get("by_bookmaker") or [])
     return selection
 
 
@@ -93,22 +102,16 @@ def ensure_chain(event_id: str, selection_id: str) -> Selection:
 
 
 def _find_selection(
-    body: dict, *, selection_id: str, event_id: str,
-) -> tuple[dict | None, dict | None, dict]:
-    """Search the aggregator's ``GET /v1/events/{id}/markets`` response for
-    the chosen selection. Returns ``(selection_dict, parent_market_dict,
-    event_envelope)``.
-
-    ``event_envelope`` falls back to a minimal dict synthesized from
-    ``event_id`` + the markets' shared ``sport_id`` if the aggregator didn't
-    embed an event block in the markets response (defensive — current
-    aggregator responses always include it).
+    body: dict, *, selection_id: str,
+) -> tuple[dict | None, dict | None]:
+    """Search the aggregator's ``EventDetailOut`` response for the chosen
+    selection. Returns ``(selection_dict, parent_market_dict)``.
     """
     for market in body.get("markets") or []:
         for sel in market.get("selections") or []:
-            if sel.get("selection_id") == selection_id:
-                return sel, market, body.get("event") or {"event_id": event_id}
-    return None, None, body.get("event") or {"event_id": event_id}
+            if sel.get("id") == selection_id:
+                return sel, market
+    return None, None
 
 
 # ---- upserts (per plan §2.4.3 chain order) -------------------------------
@@ -118,8 +121,10 @@ def _upsert_sport(event_env: dict) -> Sport | None:
     sport_id = event_env.get("sport_id")
     if not sport_id:
         return None
+    nested = event_env.get("sport") or {}
     obj, _ = Sport.objects.get_or_create(
-        id=sport_id, defaults={"name": sport_id.title()},
+        id=sport_id,
+        defaults={"name": nested.get("name") or sport_id.title()},
     )
     return obj
 
@@ -128,9 +133,10 @@ def _upsert_league(event_env: dict, sport: Sport | None) -> League | None:
     league_id = event_env.get("league_id")
     if not league_id or sport is None:
         return None
+    nested = event_env.get("league") or {}
     obj, _ = League.objects.get_or_create(
         id=league_id,
-        defaults={"sport": sport, "name": league_id},
+        defaults={"sport": sport, "name": nested.get("name") or league_id},
     )
     return obj
 
@@ -138,19 +144,19 @@ def _upsert_league(event_env: dict, sport: Sport | None) -> League | None:
 def _upsert_team(team_env: dict | None, league: League | None) -> Team | None:
     if not team_env or league is None:
         return None
-    team_id = team_env.get("team_id")
-    if not team_id:
+    raw_team_id = team_env.get("team_id")
+    if not raw_team_id:
         return None
-    pk = f"{league.id}:{team_id}"
+    pk = team_env.get("id") or f"{league.id}:{raw_team_id}"
     obj, _ = Team.objects.get_or_create(
         id=pk,
         defaults={
             "league": league,
-            "team_id": team_id,
+            "team_id": raw_team_id,
             "sport": league.sport,
-            "name_long": (team_env.get("name_long") or team_id)[:128],
-            "name_medium": (team_env.get("name_medium") or team_id)[:64],
-            "name_short": (team_env.get("name_short") or team_id)[:32],
+            "name_long": (team_env.get("name_long") or raw_team_id)[:128],
+            "name_medium": (team_env.get("name_medium") or raw_team_id)[:64],
+            "name_short": (team_env.get("name_short") or raw_team_id)[:32],
             "primary_color": team_env.get("primary_color"),
             "stat_entity_id": (team_env.get("stat_entity_id") or "")[:8],
         },
@@ -164,7 +170,7 @@ def _upsert_event(
     home: Team | None, away: Team | None,
 ) -> Event:
     obj, _ = Event.objects.get_or_create(
-        id=event_env["event_id"],
+        id=event_env["id"],
         defaults={
             "sport": sport,
             "league": league,
@@ -190,7 +196,7 @@ def _upsert_event(
 
 def _upsert_market(market_env: dict, *, event: Event, sport: Sport | None) -> Market:
     obj, _ = Market.objects.get_or_create(
-        id=market_env["market_id"],
+        id=market_env["id"],
         defaults={
             "event": event,
             "sport_id": sport.id if sport else event.sport_id,
@@ -200,7 +206,7 @@ def _upsert_market(market_env: dict, *, event: Event, sport: Sport | None) -> Ma
             "line": _decimal(market_env.get("line")),
             "side": market_env.get("side", ""),
             "provider": "sportsgameodds",
-            "provider_market_id": "",
+            "provider_market_id": market_env.get("provider_market_id") or "",
             "provider_choice_group": "",
             "subject_team_id": market_env.get("subject_team_id"),
             "is_live": bool(market_env.get("is_live")),
@@ -213,7 +219,7 @@ def _upsert_market(market_env: dict, *, event: Event, sport: Sport | None) -> Ma
 
 def _upsert_selection(sel_env: dict, *, market: Market) -> Selection:
     obj, _ = Selection.objects.get_or_create(
-        id=sel_env["selection_id"],
+        id=sel_env["id"],
         defaults={
             "market": market,
             "type": sel_env.get("type", ""),
@@ -227,6 +233,33 @@ def _upsert_selection(sel_env: dict, *, market: Market) -> Selection:
         },
     )
     return obj
+
+
+def _upsert_book_quotes(selection: Selection, books: list[dict]) -> None:
+    """Mirror the aggregator's ``by_bookmaker`` payload into local
+    ``Bookmaker`` + ``BookmakerSelection`` rows.
+
+    Idempotent: ``update_or_create`` on ``(selection, bookmaker)`` so re-picking
+    the same selection refreshes the quotes instead of duplicating rows."""
+    for b in books:
+        book_id = b.get("bookmaker_id")
+        if not book_id:
+            continue
+        bookmaker, _ = Bookmaker.objects.get_or_create(
+            id=book_id,
+            defaults={"name": (b.get("bookmaker_name") or book_id)[:64]},
+        )
+        BookmakerSelection.objects.update_or_create(
+            selection=selection, bookmaker=bookmaker,
+            defaults={
+                "decimal_odds": _decimal(b.get("decimal_odds")),
+                "spread": _decimal(b.get("spread")),
+                "over_under": _decimal(b.get("over_under")),
+                "available": bool(b.get("available", True)),
+                "deeplink": (b.get("deeplink") or "")[:500],
+                "last_updated_at": _iso(b.get("last_updated_at")),
+            },
+        )
 
 
 # ---- type helpers ---------------------------------------------------------

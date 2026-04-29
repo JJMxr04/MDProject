@@ -36,18 +36,23 @@ def points_for_selection(
     selection: Optional["Selection"],
     *,
     is_golden: bool,
-    match_window_closed: bool,
+    slot_locked: bool,
 ) -> Optional[int]:
     """Score one side of one game.
 
     Returns:
       int   — final, scoreable result (0 included).
       None  — still pending; caller treats this as "not yet decided".
+
+    ``slot_locked`` is True when the player can no longer change/add a pick
+    on this slot — either because the match end-date has passed OR because
+    the event has reached a terminal state. An unpicked side on a locked
+    slot is treated as a permanent zero (forfeit).
     """
     base = GOLDEN_POINTS if is_golden else REGULAR_POINTS
 
     if selection is None:
-        return UNPICKED_SLOT_PENALTY if match_window_closed else None
+        return UNPICKED_SLOT_PENALTY if slot_locked else None
 
     status = selection.settlement_status
     if status == "WON":
@@ -61,13 +66,21 @@ def points_for_selection(
     return None
 
 
+# Event statuses that lock a slot — picks can no longer change after this.
+_TERMINAL_EVENT_STATUSES = ("finished", "postponed", "canceled")
+
+
 def score_match(match: "Match") -> Tuple[int, int, bool]:
     """Compute (player_1_score, player_2_score, fully_decided) for a Match.
 
-    `fully_decided` is True when every (game, side) tuple resolved to an int —
-    either via a settled Selection or via the match-window-closed unpicked
-    penalty. False means at least one slot is still PENDING with the window
-    open.
+    A slot is "locked" when the match end-date has passed OR the slot's
+    event has reached a terminal state — at that point no further picks
+    are accepted on that slot, and unpicked sides count as forfeit-zero.
+
+    `fully_decided` is True when every (game, side) tuple resolved to an int.
+    Returning True triggers ``maybe_complete_match`` to finalize the match,
+    so a match auto-completes once every slot's event has finished, even if
+    some players never filled their slots.
     """
     closed = bool(match.end_date and match.end_date <= timezone.now())
     p1_total = 0
@@ -80,8 +93,14 @@ def score_match(match: "Match") -> Tuple[int, int, bool]:
         "bet__player_2_outcome",
         "owner",
         "player_2",
+        "event",
     )
     for game in games:
+        # Per-slot lock: terminal event OR overall match-window close.
+        event_terminal = bool(
+            game.event and game.event.status_type in _TERMINAL_EVENT_STATUSES
+        )
+        slot_locked = closed or event_terminal
         for side, selection in (
             ("owner", game.bet.owner_outcome),
             ("player_2", game.bet.player_2_outcome),
@@ -89,7 +108,7 @@ def score_match(match: "Match") -> Tuple[int, int, bool]:
             pts = points_for_selection(
                 selection,
                 is_golden=game.is_golden,
-                match_window_closed=closed,
+                slot_locked=slot_locked,
             )
             if pts is None:
                 decided = False

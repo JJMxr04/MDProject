@@ -20,6 +20,7 @@ from typing import Any
 from dateutil import parser as date_parser
 from django.conf import settings
 from django.db import transaction
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -89,22 +90,47 @@ class SportsGameOddsWebhookView(APIView):
         markets_envelope = body.get("markets") or []
         event_name = body.get("event_name", "")
 
+        # ---- 1) Persist Event + Markets + Selections (atomic) -------------
+        # If this fails, return 500 so the sender retries. No audit row is
+        # written — re-delivery will hit this branch again and either succeed
+        # or hit the idempotency-dedupe gate above on a later attempt.
         try:
             event = self._apply(event_envelope, markets_envelope)
+        except Exception:  # noqa: BLE001
+            logger.exception(
+                "webhook apply failed for event_id=%s",
+                event_envelope.get("event_id"),
+            )
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # ---- 2) Audit row — record we accepted this delivery -------------
+        # Done in its own try/except so a transient FK / unique race here
+        # doesn't lose the receipt audit; logged loudly if it does fail.
+        try:
             WebhookReceived.objects.create(
                 event=event,
                 idempotency_key=idempotency_key,
                 event_name=event_name,
             )
         except Exception:  # noqa: BLE001
-            logger.exception("webhook apply failed for event_id=%s", event_envelope.get("event_id"))
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logger.exception(
+                "WebhookReceived insert failed for event_id=%s key=%s",
+                event.id, idempotency_key,
+            )
 
-        # Run the lifecycle hooks the aggregator's transition implies.
+        # ---- 3) Lifecycle propagation -------------------------------------
+        # Each hook gets its own try/except — settlement propagation MUST NOT
+        # fail the whole receipt (sender would retry and re-apply identical
+        # data, which is wasted work). Failures here are visible in logs +
+        # ``settle_pending_events`` nightly cron picks up anything missed.
         if event_name == "event.finalized":
             try:
                 from core.event.odds.settlement import propagate_to_matches
-                propagate_to_matches(event)
+                affected = propagate_to_matches(event)
+                logger.info(
+                    "webhook %s event=%s propagated to %d match(es)",
+                    event_name, event.id, affected,
+                )
             except Exception:  # noqa: BLE001
                 logger.exception("propagate_to_matches failed for event=%s", event.id)
         elif event_name == "event.voided":
@@ -212,6 +238,10 @@ def _upsert_team(team_envelope: dict | None) -> Team | None:
 
 
 def _upsert_market_with_selections(event: Event, m: dict) -> None:
+    # ``Market.last_updated`` is NOT NULL — older aggregator payloads omitted
+    # it. Fall back to ``now()`` so a missing field never blocks the webhook
+    # apply (defense-in-depth; the aggregator should ship it).
+    last_updated = _parse_iso(m.get("last_updated")) or timezone.now()
     defaults = {
         "event": event,
         "sport_id": event.sport_id,
@@ -226,7 +256,7 @@ def _upsert_market_with_selections(event: Event, m: dict) -> None:
         "subject_team_id": m.get("subject_team_id"),
         "is_live": bool(m.get("is_live")),
         "suspended": bool(m.get("suspended")),
-        "last_updated": _parse_iso(m.get("last_updated")),
+        "last_updated": last_updated,
     }
     market, _ = Market.objects.update_or_create(id=m["market_id"], defaults=defaults)
 
