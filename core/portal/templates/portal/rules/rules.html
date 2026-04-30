@@ -1,0 +1,137 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Game rules{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Game rules</h1>
+        <p class="page-header__subtitle">How matches, golden games, and scoring work.</p>
+    </div>
+</header>
+
+<div class="rules-grid">
+    <aside class="rules-toc card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-list-ul me-2"></i>Contents</h2>
+        </header>
+        <nav class="card-ui__body">
+            <ul class="rules-toc__list">
+                <li><a href="#tournament-structure">Tournament structure</a></li>
+                <li><a href="#match-structure">Match structure</a></li>
+                <li><a href="#scoring-system">Scoring system</a></li>
+                <li><a href="#offensive-defensive-picks">Offensive &amp; defensive picks</a></li>
+                <li><a href="#gameplay-details">Gameplay details</a></li>
+                <li><a href="#golden-game-rules">Golden Game rules</a></li>
+                <li><a href="#tiebreakers">Tiebreakers</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <section class="rules-content card-ui">
+        <div class="card-ui__body">
+            <article id="tournament-structure" class="rules-section">
+                <h2>Tournament structure</h2>
+                <p>Each tournament round consists of a single match. Matches are played between two teams and comprise <strong>11 games</strong>.</p>
+                <p>One of these 11 games is designated as the <strong>Golden Game</strong> — it carries extra weight and is worth 2 points. The Golden Game is auto-selected by the system when the match is created.</p>
+            </article>
+
+            <article id="match-structure" class="rules-section">
+                <h2>Match structure</h2>
+                <p>Each match includes 11 individual game slots, each based on a sports event with predetermined market outcomes.</p>
+                <p><strong>Golden Game:</strong> the system pre-selects the market for this slot. Both players pick within that locked market — picking the same outcome is allowed (it's a defensive blocking tactic).</p>
+            </article>
+
+            <article id="scoring-system" class="rules-section">
+                <h2>Scoring system</h2>
+                <ul>
+                    <li>1 point for a correct prediction on a regular slot.</li>
+                    <li>2 points for a correct prediction on the <strong>Golden Game</strong>.</li>
+                    <li>0 points if you don't pick a slot before its event starts (forfeit).</li>
+                </ul>
+                <p>The team with the most points after all 11 events finalize wins the match. If tied, tiebreakers decide the winner.</p>
+            </article>
+
+            <article id="offensive-defensive-picks" class="rules-section">
+                <h2>Offensive &amp; defensive picks</h2>
+                <p>Teams alternate between offensive and defensive roles per slot:</p>
+                <ul>
+                    <li><strong>Offensive role:</strong> the slot owner picks first — they choose an event + market + outcome.</li>
+                    <li><strong>Defensive role:</strong> the opponent then picks within the same market the owner chose.</li>
+                </ul>
+                <p>Each team owns 5 regular slots; you're the opponent on the other 5. Plus 1 Golden Game where the system locks the market and both pick simultaneously.</p>
+            </article>
+
+            <article id="gameplay-details" class="rules-section">
+                <h2>Gameplay details</h2>
+                <p><strong>Owner pick deadline:</strong> at least 8 hours before event start.</p>
+                <p><strong>Opponent pick deadline:</strong> any time before event start.</p>
+                <p><strong>Settlement:</strong> once the event finishes, the system grades every selection (won, lost, push, or void) and updates your match score automatically.</p>
+            </article>
+
+            <article id="golden-game-rules" class="rules-section">
+                <h2>Golden Game rules</h2>
+                <p>The Golden Game's event + market are auto-selected from the events catalog when your match is created. Both teams must submit their picks before the event starts. The Golden Game is worth 2 points.</p>
+                <p>Each team also submits a predicted total score — the first tiebreaker if the match ends tied.</p>
+            </article>
+
+            <article id="tiebreakers" class="rules-section">
+                <h2>Tiebreakers</h2>
+                <p><strong>First tiebreaker:</strong> total score predicted for the Golden Game — closest to the actual final score wins.</p>
+                <p><strong>Second tiebreaker:</strong> each team submits one extra game that the opponent can't choose.</p>
+            </article>
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .rules-grid {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: var(--space-4);
+        align-items: start;
+    }
+    .rules-toc { position: sticky; top: var(--space-4); }
+    .rules-toc__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .35rem; }
+    .rules-toc__list a {
+        display: block;
+        padding: .35rem .55rem;
+        border-radius: var(--radius-sm, 6px);
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: .9rem;
+    }
+    .rules-toc__list a:hover {
+        background: var(--surface-muted, #f5f7fa);
+        color: var(--brand-blue-dark, #275d81);
+    }
+    .rules-section + .rules-section {
+        margin-top: var(--space-5);
+        padding-top: var(--space-4);
+        border-top: 1px solid var(--border-default, #e5e7eb);
+    }
+    .rules-section h2 { margin-top: 0; font-size: var(--text-xl); }
+    .rules-section p, .rules-section ul { line-height: 1.6; }
+    .rules-section ul { padding-left: var(--space-5); }
+
+    @media (max-width: 800px) {
+        .rules-grid { grid-template-columns: 1fr; }
+        .rules-toc { position: static; }
+    }
+</style>
+{% endblock css %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.rules-toc__list a').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+</script>
+{% endblock scripts %}

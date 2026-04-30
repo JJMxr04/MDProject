@@ -1,0 +1,223 @@
+{% extends "portal/base_app.html" %}
+{% load static portal_lookup %}
+
+{% block title %}What's available{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">What's available</h1>
+        <p class="page-header__subtitle">Sports, leagues, bookmakers, and markets you can pick from right now.</p>
+    </div>
+</header>
+
+{% if aggregator_unreachable %}
+    <div class="banner banner--warn mb-3">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        Couldn't reach the events catalog right now — showing the last cached snapshot if available.
+    </div>
+{% endif %}
+
+<div class="avail-grid">
+    {# ── Sports + leagues ─────────────────────────────────────────── #}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-grid me-2"></i>Sports &amp; leagues</h2>
+            <span class="badge-ui badge-ui--muted">{{ sports|length }} sports</span>
+        </header>
+        <div class="card-ui__body">
+            {% if sports %}
+                <div class="sports-list">
+                    {% for sport in sports %}
+                        <div class="sport-row">
+                            <div class="sport-row__name">{{ sport.name }}</div>
+                            {% with sport_leagues=leagues_by_sport|default_if_none:""|dictsortreversed:"sport_id" %}{% endwith %}
+                            <div class="sport-row__leagues">
+                                {% for lg in leagues_by_sport|get_item:sport.id %}
+                                    <span class="avail-pill">{{ lg.name }}</span>
+                                {% empty %}
+                                    <span class="avail-pill avail-pill--wip">No active leagues yet</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="grid" title="No sports available." body="The aggregator hasn't ingested any sports yet." %}
+            {% endif %}
+        </div>
+    </section>
+
+    {# ── Bookmakers ───────────────────────────────────────────────── #}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-shop me-2"></i>Bookmakers</h2>
+            <span class="badge-ui badge-ui--muted">{{ bookmakers|length }}</span>
+        </header>
+        <div class="card-ui__body">
+            {% if bookmakers %}
+                <div class="bookmakers-grid">
+                    {% for bm in bookmakers %}
+                        <div class="bookmaker-tile {% if not bm.active %}is-inactive{% endif %}">
+                            <span class="bookmaker-tile__name">{{ bm.name }}</span>
+                            {% if not bm.active %}
+                                <span class="avail-pill avail-pill--wip">Inactive</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <p class="text-muted small mt-3 mb-0">
+                    Per-book quotes ship with every selection — when picking, expand the
+                    "Compare books" section on a card to see each book's price and
+                    deeplink.
+                </p>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="shop" title="No bookmakers available." body="None loaded yet." %}
+            {% endif %}
+        </div>
+    </section>
+
+    {# ── Universal markets (sport-agnostic) ───────────────────────── #}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-bar-chart-line me-2"></i>Markets — universal</h2>
+        </header>
+        <div class="card-ui__body">
+            <p class="text-muted small">
+                Markets that settle from event scores alone. Work for every sport.
+            </p>
+            <table class="avail-table">
+                <thead>
+                    <tr><th>Market</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    {% for m in universal_markets %}
+                        <tr>
+                            <td>{{ m.label }}</td>
+                            <td>
+                                {% if m.status == "ok" %}
+                                    <span class="avail-pill avail-pill--ok"><i class="bi bi-check-lg"></i> Ready</span>
+                                {% elif m.status == "wip" %}
+                                    <span class="avail-pill avail-pill--wip"><i class="bi bi-tools"></i> WIP</span>
+                                {% else %}
+                                    <span class="avail-pill">{{ m.status|upper }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    {# ── Per-sport special-prop matrix ────────────────────────────── #}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-puzzle me-2"></i>Markets — special props by sport</h2>
+        </header>
+        <div class="card-ui__body">
+            <p class="text-muted small">
+                Sport-specific markets that need extra logic to settle automatically. ✓ = settled by us; <em>provider</em> = settled only when the data feed grades each odd; n/a = doesn't apply to this sport.
+            </p>
+            <div class="avail-table-wrap">
+                <table class="avail-table avail-table--matrix">
+                    <thead>
+                        <tr>
+                            <th>Sport</th>
+                            <th>Both teams to score</th>
+                            <th>Double chance</th>
+                            <th>Draw no bet</th>
+                            <th>Team total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in prop_coverage %}
+                            <tr>
+                                <td><strong>{{ row.sport }}</strong></td>
+                                {% for cell in row.btts|make_list|slice:":0" %}{% endfor %}
+                                <td>{% include "portal/availability/_cell.html" with status=row.btts %}</td>
+                                <td>{% include "portal/availability/_cell.html" with status=row.dc %}</td>
+                                <td>{% include "portal/availability/_cell.html" with status=row.dnb %}</td>
+                                <td>{% include "portal/availability/_cell.html" with status=row.ttg %}</td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="5" class="text-muted text-center">No sports loaded.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .avail-grid { display: flex; flex-direction: column; gap: var(--space-4); }
+
+    .sports-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .sport-row {
+        display: grid; grid-template-columns: 200px minmax(0, 1fr);
+        gap: var(--space-3); align-items: start;
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--border-default, #e5e7eb);
+    }
+    .sport-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .sport-row__name { font-weight: var(--weight-semibold); color: var(--text-primary); }
+    .sport-row__leagues { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+    .bookmakers-grid {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: var(--space-2);
+    }
+    .bookmaker-tile {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: var(--space-2); padding: var(--space-2) var(--space-3);
+        background: var(--surface-card, #fff);
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: var(--radius-md, 8px);
+    }
+    .bookmaker-tile.is-inactive { opacity: .55; }
+    .bookmaker-tile__name { font-weight: var(--weight-semibold); }
+
+    .avail-pill {
+        display: inline-flex; align-items: center; gap: .25rem;
+        font-size: .72rem; font-weight: 700;
+        padding: .15rem .55rem; border-radius: 999px;
+        background: var(--surface-muted, #f5f7fa);
+        color: var(--text-secondary, #6b7280);
+        text-transform: uppercase; letter-spacing: .04em;
+        white-space: nowrap;
+    }
+    .avail-pill--ok       { background: rgba(47, 158, 107, .14); color: #1a7a4a; }
+    .avail-pill--wip      { background: rgba(185, 131, 27, .14); color: #b9831b; }
+    .avail-pill--provider { background: rgba(61, 126, 170, .12); color: #275d81; }
+    .avail-pill--na       { background: rgba(107, 114, 128, .1);  color: #6b7280; }
+
+    .avail-table-wrap { overflow-x: auto; }
+    .avail-table {
+        width: 100%; border-collapse: collapse; font-size: .9rem;
+    }
+    .avail-table th, .avail-table td {
+        padding: .55rem .75rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-default, #e5e7eb);
+    }
+    .avail-table th {
+        background: var(--surface-muted, #f5f7fa);
+        font-size: .78rem;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        color: var(--text-secondary);
+    }
+    .avail-table--matrix td:not(:first-child),
+    .avail-table--matrix th:not(:first-child) { text-align: center; }
+
+    .banner { padding: .55rem .85rem; border-radius: var(--radius-sm, 6px); font-size: .9rem; }
+    .banner--warn { background: rgba(185, 131, 27, .12); color: #92660d; }
+
+    @media (max-width: 700px) {
+        .sport-row { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock css %}

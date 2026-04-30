@@ -18,7 +18,7 @@ _PUBLIC_PREFIXES = (
     "/about/",
     "/privacy-policy/",
     "/services/",
-    "/game-rules/",
+    # /game-rules/ moved to /web/portal/rules/ (auth-gated).
     "/auth/waitlist/",
     "/auth/login/",
     "/auth/signup/",

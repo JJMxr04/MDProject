@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 
 def home(request):
@@ -16,4 +16,7 @@ def services(request):
     return render(request, 'public/service.html')
 
 def gameRules(request):
-    return render(request, 'public/theGameRules.html')
+    """Old public URL — rules now live in the auth-gated portal so only
+    real users see them. ``login_required`` on ``portal-rules`` will bounce
+    anonymous traffic to the login page; signed-in users land directly."""
+    return redirect('core-portal:portal-rules')

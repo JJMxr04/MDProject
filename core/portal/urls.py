@@ -14,6 +14,8 @@ app_name = 'core-portal'
 
 urlpatterns = [
     path('dashboard/', views.portal_dashboard, name='portal-dashboard'),
+    path('rules/', views.rules_view, name='portal-rules'),
+    path('availability/', views.availability_view, name='portal-availability'),
     path('event/', include(eventUrls)), # Ensure this line is correct
     path('match/', include(matchUrls)),
     path('tournament/', include('core.tournament.urls')),

@@ -1,0 +1,12 @@
+{% comment %}Availability matrix cell. Expects ``status`` ∈ {ok, wip, provider, na}.{% endcomment %}
+{% if status == "ok" %}
+    <span class="avail-pill avail-pill--ok"><i class="bi bi-check-lg"></i> Ready</span>
+{% elif status == "wip" %}
+    <span class="avail-pill avail-pill--wip"><i class="bi bi-tools"></i> WIP</span>
+{% elif status == "provider" %}
+    <span class="avail-pill avail-pill--provider"><i class="bi bi-broadcast"></i> Provider</span>
+{% elif status == "na" %}
+    <span class="avail-pill avail-pill--na">—</span>
+{% else %}
+    <span class="avail-pill">{{ status|upper }}</span>
+{% endif %}
