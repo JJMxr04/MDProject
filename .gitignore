@@ -36,3 +36,10 @@ Thumbs.db
 # Editor
 *.swp
 *.swo
+
+# Celery beat shelf (runtime state, not source)
+celerybeat-schedule
+celerybeat-schedule.*
+
+# Local media uploads (S3 is the source of truth)
+media/

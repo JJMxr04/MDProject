@@ -813,12 +813,8 @@ const PickModal = (function () {
     }
 
     function renderTeamLogo(team) {
-        if (team && team.logo_url) {
-            return `<img src="${escapeAttr(team.logo_url)}" alt="">`;
-        }
-        const initials = ((team && team.name_short) || (team && team.name) || '?')
-            .toString().slice(0, 2).toUpperCase();
-        return escapeHtml(initials);
+        const name = (team && (team.name_short || team.name)) || '?';
+        return escapeHtml(name.toString());
     }
 
     function loadMarkets(eventId) {

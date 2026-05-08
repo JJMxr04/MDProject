@@ -1,15 +1,18 @@
-import uuid
+import logging
 import math
+import uuid
 from datetime import timedelta
-from django.db import models
+
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils import timezone
+from django.db import models
 from django.http import Http404
-from core.user.models import User
-from core.match.models.match import Match
+from django.utils import timezone
+
 from core.abstract.models import AbstractModel, AbstractManager
+from core.match.models.match import Match
 from core.user.models import User
-# from core.mail.models import Emails
+
+logger = logging.getLogger(__name__)
 
 
 class TournamentManager(AbstractManager):
@@ -233,8 +236,11 @@ class RoundManager(AbstractManager):
             round_obj.player_2 = player_2
 
         if (not round_obj.player_1) and (not round_obj.player_2):
-            print("both players assigned are None")
-            exit()
+            logger.warning(
+                "assign_players: round %s has no players assigned; skipping",
+                getattr(round_obj, "id", None),
+            )
+            return
         if not round_obj.player_1 or not round_obj.player_2:
             round_obj.completed = True
             if not round_obj.player_1:

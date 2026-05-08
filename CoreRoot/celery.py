@@ -24,8 +24,3 @@ app.conf.update(
 
 # Automatically discover tasks in installed Django apps
 app.autodiscover_tasks()
-
-# Task to print debug information, helpful for testing if Celery is running correctly
-@app.task(bind=True)
-def debug_task(self):
-    print(f"Request: {self.request!r}")

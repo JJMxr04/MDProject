@@ -212,7 +212,6 @@ def player_2_select_outcome(request, game_id):
 @player_in_match_required
 def upload_tiebreaker_score(request, match_id):
     match = get_object_or_404(Match, id=match_id)
-    print('hitting')
 
     if match.match_state == 'completed':
         return JsonResponse({'status': 'error', 'message': 'Match Completed'}, status=403)

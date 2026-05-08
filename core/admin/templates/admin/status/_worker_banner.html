@@ -1,0 +1,27 @@
+{#-
+  Worker-status banner partial. Re-rendered every 10s by the JS poll
+  in index.html. ``worker.state.value`` is one of: ok | warn | down | unknown.
+
+  Inline styles keep this self-contained so the polling JS can swap
+  the markup wholesale without worrying about external CSS load order.
+-#}
+{% with state=worker.state.value %}
+<div class="status-banner status-banner--{{ state }}" id="worker-banner-inner">
+  <span class="status-banner__dot" aria-hidden="true"></span>
+  <div class="status-banner__body">
+    <strong class="status-banner__label">
+      Celery worker —
+      {% if state == "ok" %}{{ worker.label }}
+      {% elif state == "warn" %}{{ worker.label }}
+      {% elif state == "down" %}OFFLINE — {{ worker.label }}
+      {% else %}{{ worker.label }}{% endif %}
+    </strong>
+    {% if worker.detail %}
+      <div class="status-banner__detail">{{ worker.detail }}</div>
+    {% endif %}
+  </div>
+  <span class="status-banner__last">
+    checked {% now "H:i:s" %} UTC
+  </span>
+</div>
+{% endwith %}

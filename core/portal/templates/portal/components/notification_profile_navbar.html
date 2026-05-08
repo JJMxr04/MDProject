@@ -14,11 +14,7 @@
 <!-- User Profile -->
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        {% if user.avatar %}
-            <img src="{{ user.avatar.url }}" class="rounded-circle" width="36" height="36" alt="User Avatar">
-        {% else %}
-            <img src="https://robohash.org/1" class="rounded-circle" width="36" height="36" alt="User Avatar">
-        {% endif %}
+        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
     </a>
     <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}">Profile</a></li>

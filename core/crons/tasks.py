@@ -46,8 +46,3 @@ def tournament_cron_bracketMaker():
 @shared_task
 def tournament_cron_2_day_reminder():
     tournament2DayReminder.get_tournments_send_player_email()
-
-
-@shared_task
-def print_cron_jobs():
-    print("Scheduled and print cron job completed")

@@ -53,7 +53,6 @@ def public_match_list_view(request):
 @require_POST
 @login_required(login_url='/auth/login/')
 def create_public_match_view(request):
-    print(request.POST)
     if request.method == 'POST':
         form = MatchInviteForm(request.POST)
         

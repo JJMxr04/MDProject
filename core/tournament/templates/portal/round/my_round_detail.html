@@ -11,16 +11,10 @@
     {% if round_details %}
         <div class="player-cards">
             <div class="player-card">
-                <img src="{{ round_details.player_1.player.avatar.url|default:'placeholder.jpg' }}" alt="{{ round_details.player_1.player.username }}">
                 <h3>{{ round_details.player_1.player.username }}</h3>
             </div>
 
          <div class="player-card">
-            {% if round_details.player_2.player.avatar %}
-                <img src="{{ round_details.player_2.player.avatar.url }}" alt="{{ round_details.player_2.player.username }}">
-            {% else %}
-                <img src="{% static 'placeholder.jpg' %}" alt="Placeholder">
-            {% endif %}
             <h3>{{ round_details.player_2.player.username }}</h3>
         </div>
 
@@ -43,17 +37,11 @@
             {% with gg=round_details.match.golden_game %}
             <div class="golden-game">
                 <div class="team">
-                    {% if gg.event.home_team.logo_url %}
-                        <img src="{{ gg.event.home_team.logo_url.url }}" alt="{{ gg.event.home_team.name }}">
-                    {% endif %}
                     <h4>{{ gg.event.home_team.name|default:"TBD" }}</h4>
                     <p><strong>Sport:</strong> {{ gg.event.sport.name|default:"" }}</p>
                 </div>
 
                 <div class="team">
-                    {% if gg.event.away_team.logo_url %}
-                        <img src="{{ gg.event.away_team.logo_url.url }}" alt="{{ gg.event.away_team.name }}">
-                    {% endif %}
                     <h4>{{ gg.event.away_team.name|default:"TBD" }}</h4>
                     <p><strong>Sport:</strong> {{ gg.event.sport.name|default:"" }}</p>
                 </div>

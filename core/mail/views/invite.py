@@ -17,7 +17,6 @@ import json
 
 @login_required(login_url='/auth/login/')
 def create_invite(request):
-    print(request.body)
     if request.method == 'POST':
         form = InviteForm(request.POST)
         if form.is_valid():

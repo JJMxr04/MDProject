@@ -16,13 +16,6 @@
     <div class="card-ui__body">
         <div class="evd-teams">
             <div class="evd-team">
-                {% if event.home_team.logo_url %}
-                    <img src="{{ event.home_team.logo_url.url }}" alt="">
-                {% else %}
-                    <span class="evd-team__initials" aria-hidden="true">
-                        {{ event.home_team.name|default:"?"|slice:":1"|upper }}
-                    </span>
-                {% endif %}
                 <h2 class="evd-team__name">{{ event.home_team.name|default:"TBD" }}</h2>
                 {% if event.home_score is not None %}
                     <div class="evd-team__score {% if event.winner_code == 1 %}is-winner{% endif %}">{{ event.home_score }}</div>
@@ -59,13 +52,6 @@
             </div>
 
             <div class="evd-team">
-                {% if event.away_team.logo_url %}
-                    <img src="{{ event.away_team.logo_url.url }}" alt="">
-                {% else %}
-                    <span class="evd-team__initials" aria-hidden="true">
-                        {{ event.away_team.name|default:"?"|slice:":1"|upper }}
-                    </span>
-                {% endif %}
                 <h2 class="evd-team__name">{{ event.away_team.name|default:"TBD" }}</h2>
                 {% if event.away_score is not None %}
                     <div class="evd-team__score {% if event.winner_code == 2 %}is-winner{% endif %}">{{ event.away_score }}</div>

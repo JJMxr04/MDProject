@@ -413,7 +413,8 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = ["id", "name_long", "name_short", "league", "sport"]
     list_filter = ["league", "sport"]
     search_fields = ["id", "team_id", "name_long", "name_short", "name_medium"]
-    readonly_fields = ["id", "public_id", "created", "updated", "league_link"]
+    # logo_url is rendered read-only — uploads disabled until S3 is wired.
+    readonly_fields = ["id", "public_id", "created", "updated", "league_link", "logo_url"]
     fieldsets = (
         ("Identity", {"fields": ("id", "public_id", "team_id")}),
         ("Hierarchy", {"fields": ("league_link", "league", "sport")}),

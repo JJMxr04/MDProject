@@ -1,0 +1,48 @@
+## Railway service config for `mdproject-worker` (the Celery worker +
+## embedded beat scheduler).
+##
+## Used INSTEAD of the default `railway.toml` — point the worker
+## service's **Config Path** at `railway.worker.toml` in its Settings
+## tab. (Railway reads `railway.toml` from repo root by default;
+## per-service overrides live under Service → Settings → Config Path.)
+##
+## Why a separate file:
+## - Same Dockerfile, same image — only the start command differs.
+## - The web service must NOT set startCommand (the Dockerfile's
+##   CMD ["web"] handles it). The worker service MUST set startCommand
+##   to the full entrypoint path because Railway's startCommand
+##   REPLACES ENTRYPOINT for Dockerfile-based services (it does not
+##   append to CMD).
+## - Healthcheck must be disabled — the worker has no HTTP server to
+##   probe. Leaving the default healthcheckPath would mark every
+##   deployment unhealthy and Railway would crashloop the container
+##   forever.
+## - Restart policy is ALWAYS, not ON_FAILURE — if the worker exits
+##   cleanly (e.g. graceful shutdown on a deploy), we still want it
+##   back up. Without ALWAYS, a clean shutdown would leave the beat
+##   schedule dead until the next manual redeploy.
+##
+## ⚠️ Single-replica only. The entrypoint runs `celery worker -B`
+## (embedded beat). Two replicas would mean two beat schedulers,
+## which would double-fire every cron in CELERY_BEAT_SCHEDULE.
+## If you ever need to scale workers, split beat into its own
+## service first (see docker-entrypoint.sh comments).
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+## Full path required: Railway replaces ENTRYPOINT for Dockerfile services
+## rather than appending to CMD, so just "worker" would try to exec a
+## binary called "worker" that doesn't exist and the container would
+## crashloop. The entrypoint script's `case` block dispatches on $1.
+startCommand = "/app/docker-entrypoint.sh worker"
+
+## No healthcheckPath — worker has no HTTP listener. Liveness is
+## visible via the `core_crons.CronTask`+`django_celery_results.TaskResult`
+## tables in admin, and (once the status page lands) the worker banner
+## on /admin/status/.
+
+restartPolicyType = "ALWAYS"
+restartPolicyMaxRetries = 10

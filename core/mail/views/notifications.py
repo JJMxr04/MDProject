@@ -22,7 +22,6 @@ def get_notifications(request):
 @require_POST
 @login_required(login_url='/auth/login/')
 def read_notifications(request, not_id):
-    print(1)
     try:
 
         Notification.objects.mark_read(not_id)

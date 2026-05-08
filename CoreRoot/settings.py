@@ -65,46 +65,10 @@ if not DEBUG:
             "ALLOWED_HOSTS must be a non-empty comma-separated list in "
             "production (e.g. ALLOWED_HOSTS=mdproject.example.com)"
         )
-# CORS_ALLOWED_ORIGINS = os.environ.get("CORS_HOSTS", '').split(',')
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
-    # "ROTATE_REFRESH_TOKENS": False,
-    # "BLACKLIST_AFTER_ROTATION": False,
-    # "UPDATE_LAST_LOGIN": False,
-    #
-    # "ALGORITHM": "HS256",
-    # "SIGNING_KEY": os.environ.get('SECRET_KEY'),
-    # "VERIFYING_KEY": "",
-    # "AUDIENCE": None,
-    # "ISSUER": None,
-    # "JSON_ENCODER": None,
-    # "JWK_URL": None,
-    # "LEEWAY": 0,
-    #
-    # "AUTH_HEADER_TYPES": ("Bearer",),
-    # "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    # "USER_ID_FIELD": "id",
-    # "USER_ID_CLAIM": "user_id",
-    # "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-    #
-    # "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    # "TOKEN_TYPE_CLAIM": "token_type",
-    # "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-    #
-    # "JTI_CLAIM": "jti",
-    #
-    # "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    # "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    # "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=5),
-    #
-    # "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-    # "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-    # "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
-    # "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
-    # "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
-    # "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
 CORS_ALLOW_HEADERS = [
@@ -132,7 +96,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'apscheduler',  # This was in the second list only
     "django_celery_results",  # This was in the first list only
     "django_celery_beat",     # This was in the first list only
     "storages",
@@ -214,53 +177,18 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get('DBENGINE'),
-#         'NAME': os.environ.get('DBNAME'),
-#         'USER': os.environ.get('BDUSER'),
-#         'PASSWORD': os.environ.get('DBPASSWORD'),
-#         'HOST': os.environ.get('DBHOST'),  # Set to the host where your PostgreSQL server is running
-#         'PORT': os.environ.get('DBPORT'),       # Set to the port your PostgreSQL server is listening on
-#     }
-# }
-
-
+# conn_max_age keeps Postgres connections alive for 60s instead of opening a
+# fresh socket on every request — basic connection pooling.
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"{os.environ.get('DATABASE_URL')}"
+        default=f"{os.environ.get('DATABASE_URL')}",
+        conn_max_age=60,
     )
 }
 
-# Optional: Add test settings if needed
 DATABASES['default']['TEST'] = {
     'SERIALIZE': True,
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-#         'NAME': 'postgres',  # Main database name
-#         'USER': 'postgres',
-#         'PASSWORD': 'password',
-#         'HOST': os.environ.get('DBHOST', 'localhost'),
-#         'PORT': os.environ.get('DBPORT', '5432'),
-#         'TEST': {
-#             'SERIALIZE': True,
-#         },
-#     },
-#     'test_mirror': {
-#         'ENGINE': os.environ.get('DBENGINE', 'django.db.backends.postgresql'),
-#         'NAME': 'postgres',  # Mirroring the same main database
-#         'USER': 'joe',
-#         'PASSWORD': 'password',
-#         'HOST': os.environ.get('DBHOST', 'localhost'),
-#         'PORT': os.environ.get('DBPORT', '5432'),
-#         'TEST': {
-#             'MIRROR': 'default',  # Mirror the default database
-#         },
-#     },
-# }
 
 
 
@@ -325,17 +253,18 @@ AWS_ACCESS_KEY_ID = os.getenv('BUCKETEER_AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKETEER_BUCKET_NAME')
 AWS_S3_REGION_NAME = os.getenv('BUCKETEER_AWS_REGION')
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = (
+    f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    if AWS_STORAGE_BUCKET_NAME
+    else None
+)
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_QUERYSTRING_AUTH = False
-# Additional optional settings
-AWS_S3_FILE_OVERWRITE = True
-# AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_S3_SIGNATURE_VERSION = 's3v4'
-CELERY_RESULT_EXTENDED = True
 
 # Configure Django REST Framework settings
 REST_FRAMEWORK = {
@@ -354,9 +283,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    # Use a function to import the token serializer
     'DEFAULT_TOKEN_CLASSES': (
-        'settings.get_token_serializer',
+        'CoreRoot.settings.get_token_serializer',
     ),
 }
 
@@ -366,20 +294,12 @@ AUTHENTICATION_BACKENDS = [
 
 
 
-# Media files (user-uploaded files)
+# Media files (user-uploaded files) — served from S3
 MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# CORS_ALLOWED_ORIGINS = [
-
-# "http://localhost:8000",
-# "http://localhost:3000"
-# ]
-
-LOGIN_REDIRECT_URL = '/web/portal/dashboard/'  # Replace with your desired success page
-LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
+LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # Use the django-celery-beat DB-backed scheduler so tasks are editable from
@@ -389,14 +309,13 @@ LOGOUT_REDIRECT_URL = '/'  # Replace with your desired logout page
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
-CELERY_RESULT_BACKEND = f"{os.environ.get('REDIS_URL')}/1"
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'America/New_York'
 CELERY_RESULT_EXTENDED = True
-broker_connection_retry_on_startup= True
+broker_connection_retry_on_startup = True
 
 CACHES = {
     "default": {
@@ -436,11 +355,10 @@ CELERY_BEAT_SCHEDULE = {
     # refresh, and settlement now live in the aggregator service; MDProject
     # receives final state via /sportgameodds/webhook.
     #
-    # Heartbeat — prints a line so you can sanity-check that beat is running.
-    'print_cron_jobs': {
-        'task': 'core.crons.tasks.print_cron_jobs',
-        'schedule': crontab(minute='*/5'),  # every 5 minutes
-    },
+    # print_cron_jobs (a 5-min "is beat alive" log line) was removed in
+    # favor of the live worker banner on /admin/status/, which uses
+    # ``celery.app.control.Inspect.ping()`` — same signal, no extra
+    # task firing every 5 min and no rows in django_celery_results.
 }
 
 
@@ -471,12 +389,12 @@ CSRF_TRUSTED_ORIGINS = [
     if o.strip()
 ]
 
-# WhiteNoise compressed static files. Using the non-manifest variant because
-# third-party JS (Jazzmin's Bootstrap bundle) references .map files that
-# aren't shipped — the manifest storage fails collectstatic post-processing
-# on those references even in non-strict mode.
+# Default storage routes user uploads to S3 (Bucketeer). WhiteNoise serves
+# collected static files; using the non-manifest variant because Jazzmin's
+# Bootstrap bundle references .map files that aren't shipped — the manifest
+# storage fails collectstatic post-processing on those references.
 STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
 
@@ -543,6 +461,11 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Dashboard", "url": "/admin/dashboard/", "permissions": ["auth.view_user"]},
+        # Project status — worker liveness + DB / Redis / aggregator health
+        # + live beat schedule + recent task results. Gated to staff via
+        # @staff_member_required on the view itself; the permission check
+        # below just hides the link from non-staff so it doesn't even appear.
+        {"name": "Status", "url": "/admin/status/", "permissions": ["auth.view_user"]},
         {"name": "Waitlist", "url": "/admin/core_auth/waitlistentry/", "permissions": ["auth.view_user"]},
         {"name": "Portal", "url": "/web/portal/dashboard/", "new_window": True, "permissions": ["auth.view_user"]},
     ],
@@ -664,12 +587,60 @@ JAZZMIN_SETTINGS = {
 # /v1/webhook-endpoints/{id}/rotate endpoint, then update this value.
 # ---------------------------------------------------------------------------
 
-import os
-
 USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "true", "yes")
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
 AGGRIGATOR_API_KEY = os.environ.get("AGGRIGATOR_API_KEY", "")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 
+# Fail fast in production if aggregator is enabled but credentials are missing.
+if not DEBUG and USE_AGGRIGATOR:
+    if not AGGRIGATOR_API_KEY:
+        raise RuntimeError("AGGRIGATOR_API_KEY must be set when USE_AGGRIGATOR=True")
+    if not AGGRIGATOR_WEBHOOK_SECRET:
+        raise RuntimeError("AGGRIGATOR_WEBHOOK_SECRET must be set when USE_AGGRIGATOR=True")
 
-# End of file
+
+# ---------------------------------------------------------------------------
+# Logging — structured stdout for container log aggregation.
+# ---------------------------------------------------------------------------
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "celery": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "core": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}

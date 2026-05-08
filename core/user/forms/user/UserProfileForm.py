@@ -4,7 +4,7 @@ from core.user.models import User  # Import your custom User model
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User  # Use the custom User model
-        fields = ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']
+        fields = ['username', 'email', 'first_name', 'last_name', 'bio']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

@@ -39,10 +39,6 @@ class UserMeViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def partial_update(self, request):
-        # Print data for debugging
-        print(request.data)
-
-        # Ensure the user is editing their own data
         serializer = UserSerializer(request.user, data=request.data, partial=True)
 
         if serializer.is_valid():

@@ -42,26 +42,11 @@
             <h2>Profile</h2>
         </header>
         <div class="card-ui__body">
-            <form method="post" enctype="multipart/form-data" class="profile-form">
+            <form method="post" class="profile-form">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                     <div class="field-error" role="alert">{{ form.non_field_errors }}</div>
                 {% endif %}
-
-                <div class="profile-form__avatar">
-                    <span class="avatar" id="avatar-preview" style="--avatar-size: 96px;">
-                        {% if form.avatar.value %}
-                            <img src="{{ form.avatar.value.url }}" alt="">
-                        {% else %}
-                            <span class="avatar__initials">{{ request.user.first_name|default:request.user.username|slice:":1"|upper }}</span>
-                        {% endif %}
-                    </span>
-                    <div>
-                        <label for="{{ form.avatar.id_for_label }}" class="field-label">Avatar</label>
-                        {{ form.avatar|add_class:"field-input" }}
-                        <p class="field-hint">PNG or JPG, up to 2 MB.</p>
-                    </div>
-                </div>
 
                 <div class="grid-profile-two">
                     {% include "portal/components/_field.html" with field=form.first_name %}
@@ -117,28 +102,4 @@
 </style>
 {% endblock css %}
 
-{% block scripts %}
-<script>
-(function () {
-    const input = document.getElementById('{{ form.avatar.id_for_label }}');
-    const preview = document.querySelector('#avatar-preview img');
-    const initials = document.querySelector('#avatar-preview .avatar__initials');
-    if (!input) return;
-    input.addEventListener('change', (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
-        const src = URL.createObjectURL(file);
-        if (preview) {
-            preview.src = src;
-        } else {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = '';
-            const host = document.getElementById('avatar-preview');
-            host.innerHTML = '';
-            host.appendChild(img);
-        }
-    });
-})();
-</script>
-{% endblock scripts %}
+{% block scripts %}{% endblock scripts %}
