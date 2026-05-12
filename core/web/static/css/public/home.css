@@ -157,3 +157,15 @@
   font-size: 1rem; /* Standard description size */
   margin-top: 10px; /* Space above descriptions */
 }
+
+/* Icon-based feature card (no image). Sized to roughly match the
+ * .feature-image footprint so the three-card row stays aligned. */
+.feature-icon-wrap {
+  display: flex; align-items: center; justify-content: center;
+  width: 20%; aspect-ratio: 1 / 1;
+  margin: 0 auto 15px auto;
+}
+.feature-icon {
+  font-size: 3.5rem;
+  color: #3D7EAA;
+}

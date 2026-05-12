@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from datetime import timedelta
 import dj_database_url
 from celery.schedules import crontab
+from django.core.exceptions import ImproperlyConfigured
 
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
@@ -140,6 +141,11 @@ MIDDLEWARE = [
     # whose path isn't on the public-marketing whitelist. Defense-in-depth
     # against crawlers that don't respect robots.txt.
     'core.middleware.noindex.NoIndexPrivateRoutesMiddleware',
+    # Redirects anonymous visitors away from /web/portal/* and /admin/*
+    # back to the public landing page (instead of showing /auth/login/
+    # or a Django 404). Must run AFTER AuthenticationMiddleware so
+    # ``request.user`` is populated.
+    'core.middleware.portal_auth_redirect.AnonymousPortalRedirectMiddleware',
 ]
 
 
@@ -308,7 +314,40 @@ LOGOUT_REDIRECT_URL = '/'
 # core.crons seeds them into the DB once.
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
-CELERY_BROKER_URL = f"{os.environ.get('REDIS_URL')}/0"
+# Build Redis DB-specific URLs from REDIS_URL.
+#
+# Previous version used f"{os.environ.get('REDIS_URL')}/0" — if REDIS_URL
+# was unset that produced the literal string "None/0", which Celery
+# treats as malformed and silently falls back to ``redis://localhost:6379/0``.
+# That's what the worker log was showing ("broker=redis://localhost:6379/0")
+# despite REDIS_URL being set on the web service: the env var was missing
+# on the *worker* service. New code below loudly errors when REDIS_URL is
+# absent in production AND tolerates a trailing slash on the provider URL.
+def _redis_db_url(db: int) -> str:
+    raw = os.environ.get("REDIS_URL")
+    if not raw:
+        if DEBUG:
+            return f"redis://localhost:6379/{db}"
+        raise ImproperlyConfigured(
+            "REDIS_URL is required in production. Set it on every service "
+            "that uses Celery or django-redis (web AND worker). Format: "
+            "redis://host:6379 or rediss://host:6379 — the /<db> suffix "
+            "is appended automatically."
+        )
+    # Strip an existing /<db> if the provider's URL already includes one
+    # (Railway/Upstash usually don't, but a hand-written value might) and
+    # strip a trailing slash so we don't end up with "host:6379//0".
+    base = raw.rstrip("/")
+    # If the URL ends in "/<digit>" treat that as their chosen DB and
+    # replace it. Otherwise just append.
+    last_slash = base.rfind("/")
+    last_seg = base[last_slash + 1:] if last_slash > base.find("//") + 1 else ""
+    if last_seg.isdigit():
+        base = base[:last_slash]
+    return f"{base}/{db}"
+
+
+CELERY_BROKER_URL = _redis_db_url(0)
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
@@ -320,7 +359,7 @@ broker_connection_retry_on_startup = True
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{os.environ.get('REDIS_URL')}/1",
+        "LOCATION": _redis_db_url(1),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             'SOCKET_CONNECT_TIMEOUT': 5,  # Optional, connection timeout
@@ -458,8 +497,10 @@ JAZZMIN_SETTINGS = {
     # If you want to use a single search field you dont need to use a list, you can use a simple string
     "search_model": ["core_user.User", "core_tournament.Tournament"],
 
-    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": "avatar",
+    # No user_avatar: dropping this key flips Jazzmin to render a generic
+    # font-awesome user icon in the admin sidebar instead of falling back
+    # to AdminLTE's stock user2-160x160.jpg whenever an admin user lacks
+    # an avatar (most of them — avatars are a portal-side concept).
 
     ############
     # Top Menu #
@@ -560,7 +601,7 @@ JAZZMIN_SETTINGS = {
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": None,
+    "custom_css": "admin/css/jazzmin_overrides.css",
     "custom_js": None,
     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
     "use_google_fonts_cdn": True,

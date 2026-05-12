@@ -17,12 +17,11 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-# Healthcheck intentionally disabled. The /healthz endpoint exists (see
-# core/views.py) and works; we just don't have Railway probe it because
-# the cold-start sequence (migrate → gunicorn bind) takes long enough
-# that probes during boot were timing out. If you ever want zero-downtime
-# deploys back, re-add:
-#   healthcheckPath = "/healthz"
-#   healthcheckTimeout = 300
+healthcheckPath = "/healthz"
+# 30s wasn't enough on a cold deploy: the entrypoint runs migrate (apps
+# load + system checks + DB connect — easily 10-20s on a fresh container)
+# BEFORE gunicorn binds port 8000. 300s gives migrations room even if
+# Postgres is briefly slow to accept the first connection.
+healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10

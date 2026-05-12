@@ -1,5 +1,6 @@
 from django.db import connection
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
+from django.shortcuts import redirect
 
 
 # Public marketing routes — these are the only paths search engines should
@@ -45,6 +46,27 @@ def healthz(request):
     except Exception as exc:  # noqa: BLE001
         return JsonResponse({"ok": False, "db": str(exc)[:200]}, status=503)
     return JsonResponse({"ok": True})
+
+
+_PORTAL_404_REDIRECT_PREFIXES = ("/web/portal/", "/admin/")
+
+
+def portal_or_404(request, exception=None):
+    """Custom ``handler404``.
+
+    Anonymous-area URLs (``/web/portal/...``, ``/admin/...``) that don't
+    resolve redirect to the public landing instead of showing a 404 —
+    matches the AnonymousPortalRedirectMiddleware behaviour for paths
+    that *do* exist but aren't accessible. Everything else gets a normal
+    404 so missing API routes still surface as 404 to clients.
+    """
+    path = request.path
+    if path.startswith(_PORTAL_404_REDIRECT_PREFIXES):
+        return redirect("/")
+    return HttpResponseNotFound(
+        "<h1>404</h1><p>The page you requested could not be found.</p>",
+        content_type="text/html",
+    )
 
 
 def robots_txt(request):

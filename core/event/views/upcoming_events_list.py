@@ -48,7 +48,12 @@ def upcoming_events_list(request):
     selected_sport = request.GET.get("sport", "").strip()
     start_date = parse_date(request.GET.get("start_date", "") or "")
     user_end_date = parse_date(request.GET.get("end_date", "") or "")
-    page = int(request.GET.get("page", "1") or "1")
+    # ``int(...)`` blows up the whole view if someone hands us
+    # ``?page=foo``. Treat any unparseable value as page 1 instead.
+    try:
+        page = max(1, int(request.GET.get("page", "1") or "1"))
+    except (TypeError, ValueError):
+        page = 1
 
     max_end_date = timezone.now().date() + timedelta(days=90)
     end_date = min(user_end_date, max_end_date) if user_end_date else max_end_date
@@ -123,38 +128,66 @@ def upcoming_events_list(request):
 # ---- helpers ---------------------------------------------------------------
 
 
+def _safe_cache_get(key):
+    """``cache.get`` that swallows Redis-side blowups.
+
+    We hit this on every render. Without the swallow, a misconfigured
+    REDIS_URL turns every portal request into a 500 — the page is
+    perfectly renderable from a fresh aggregator call, but the cache
+    layer crashes the view before we get there.
+    """
+    try:
+        return cache.get(key)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("cache.get(%s) failed (non-fatal): %s", key, exc)
+        return None
+
+
+def _safe_cache_set(key, value, timeout) -> None:
+    try:
+        cache.set(key, value, timeout=timeout)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("cache.set(%s) failed (non-fatal): %s", key, exc)
+
+
 def _fetch_or_cached(
     cache_key: str, **params,
 ) -> tuple[dict | None, bool]:
     """Fetch from aggregator + cache; on failure, serve cached if any.
 
     Returns ``(body, served_stale)``. ``body`` is None only when both fresh
-    fetch and cache miss.
+    fetch and cache miss. Catches a broad Exception around the aggregator
+    call — we'd rather show an empty grid with the "aggregator unreachable"
+    banner than 500 the whole portal on an unexpected upstream response
+    shape.
     """
-    cached = cache.get(cache_key)
+    cached = _safe_cache_get(cache_key)
     client = AggrigatorClient()
     try:
         body = client.list_events(page_size=PAGE_SIZE, **params)
-        cache.set(cache_key, body, timeout=CACHE_TTL_OK)
+        _safe_cache_set(cache_key, body, CACHE_TTL_OK)
         return body, False
     except AggrigatorError as exc:
         logger.warning("aggregator unreachable for upcoming-events: %s", exc)
-        if cached is not None:
-            cache.set(cache_key, cached, timeout=CACHE_TTL_STALE)
-            return cached, True
-        return None, False
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("unexpected aggregator failure for upcoming-events: %s", exc)
+    if cached is not None:
+        _safe_cache_set(cache_key, cached, CACHE_TTL_STALE)
+        return cached, True
+    return None, False
 
 
 def _sports_dropdown() -> list[dict]:
     """Aggregator's /v1/sports list, cached aggressively. Cheap; rarely changes."""
-    cached = cache.get("portal:sports:dropdown")
+    cached = _safe_cache_get("portal:sports:dropdown")
     if cached is not None:
         return cached
     try:
-        sports = AggrigatorClient().get_sports()
-    except AggrigatorError:
+        sports = AggrigatorClient().get_sports() or []
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("sports dropdown fetch failed (non-fatal): %s", exc)
         sports = []
-    cache.set("portal:sports:dropdown", sports, timeout=300)
+    _safe_cache_set("portal:sports:dropdown", sports, 300)
     return sports
 
 

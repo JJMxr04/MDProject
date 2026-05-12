@@ -77,75 +77,25 @@
         </div>
     </section>
 
-    {# ── Universal markets (sport-agnostic) ───────────────────────── #}
+    {# ── Markets (live from aggregator) ───────────────────────────── #}
     <section class="card-ui">
         <header class="card-ui__header">
-            <h2><i class="bi bi-bar-chart-line me-2"></i>Markets — universal</h2>
+            <h2><i class="bi bi-bar-chart-line me-2"></i>Markets</h2>
+            <span class="badge-ui badge-ui--muted">{{ market_types|length }}</span>
         </header>
         <div class="card-ui__body">
-            <p class="text-muted small">
-                Markets that settle from event scores alone. Work for every sport.
-            </p>
-            <table class="avail-table">
-                <thead>
-                    <tr><th>Market</th><th>Status</th></tr>
-                </thead>
-                <tbody>
-                    {% for m in universal_markets %}
-                        <tr>
-                            <td>{{ m.label }}</td>
-                            <td>
-                                {% if m.status == "ok" %}
-                                    <span class="avail-pill avail-pill--ok"><i class="bi bi-check-lg"></i> Ready</span>
-                                {% elif m.status == "wip" %}
-                                    <span class="avail-pill avail-pill--wip"><i class="bi bi-tools"></i> WIP</span>
-                                {% else %}
-                                    <span class="avail-pill">{{ m.status|upper }}</span>
-                                {% endif %}
-                            </td>
-                        </tr>
+            {% if market_types %}
+                <p class="text-muted small">
+                    Distinct market types currently available across all events.
+                </p>
+                <div class="markets-grid">
+                    {% for m in market_types %}
+                        <span class="avail-pill avail-pill--ok">{{ m }}</span>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    {# ── Per-sport special-prop matrix ────────────────────────────── #}
-    <section class="card-ui">
-        <header class="card-ui__header">
-            <h2><i class="bi bi-puzzle me-2"></i>Markets — special props by sport</h2>
-        </header>
-        <div class="card-ui__body">
-            <p class="text-muted small">
-                Sport-specific markets that need extra logic to settle automatically. ✓ = settled by us; <em>provider</em> = settled only when the data feed grades each odd; n/a = doesn't apply to this sport.
-            </p>
-            <div class="avail-table-wrap">
-                <table class="avail-table avail-table--matrix">
-                    <thead>
-                        <tr>
-                            <th>Sport</th>
-                            <th>Both teams to score</th>
-                            <th>Double chance</th>
-                            <th>Draw no bet</th>
-                            <th>Team total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in prop_coverage %}
-                            <tr>
-                                <td><strong>{{ row.sport }}</strong></td>
-                                {% for cell in row.btts|make_list|slice:":0" %}{% endfor %}
-                                <td>{% include "portal/availability/_cell.html" with status=row.btts %}</td>
-                                <td>{% include "portal/availability/_cell.html" with status=row.dc %}</td>
-                                <td>{% include "portal/availability/_cell.html" with status=row.dnb %}</td>
-                                <td>{% include "portal/availability/_cell.html" with status=row.ttg %}</td>
-                            </tr>
-                        {% empty %}
-                            <tr><td colspan="5" class="text-muted text-center">No sports loaded.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                </div>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="bar-chart-line" title="No markets available." body="The aggregator hasn't ingested any markets yet." %}
+            {% endif %}
         </div>
     </section>
 </div>
@@ -179,6 +129,11 @@
     }
     .bookmaker-tile.is-inactive { opacity: .55; }
     .bookmaker-tile__name { font-weight: var(--weight-semibold); }
+
+    .markets-grid {
+        display: flex; flex-wrap: wrap; gap: .35rem;
+        margin-top: var(--space-2);
+    }
 
     .avail-pill {
         display: inline-flex; align-items: center; gap: .25rem;

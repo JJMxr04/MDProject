@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
 from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
-from core.views import healthz, robots_txt
+from core.views import healthz, portal_or_404, robots_txt
 from django.contrib.auth import views as auth_views
 
 
@@ -42,3 +42,9 @@ urlpatterns = [
 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# Custom 404 — paths under /web/portal/ and /admin/ redirect to the
+# public landing instead of showing a Django 404 page. Everything else
+# gets a plain 404.
+handler404 = "core.views.portal_or_404"

@@ -61,6 +61,17 @@ class AggrigatorClient:
     def get_bookmakers(self) -> list[dict]:
         return self._get("/v1/bookmakers") or []
 
+    def get_market_types(self, sport_id: str | None = None) -> list[str]:
+        """Distinct ``Market.type`` strings the aggregator currently has on
+        record. Used by the portal's "What's available" page to render
+        the live list of market names instead of a hand-maintained one.
+        Returns ``[]`` on an unexpected payload shape — the caller
+        tolerates an empty list."""
+        body = self._get("/v1/market-types", params={"sport_id": sport_id})
+        if not isinstance(body, list):
+            return []
+        return [t for t in body if isinstance(t, str) and t]
+
     def list_events(self, **params) -> dict:
         return self._get("/v1/events", params=params) or {}
 
