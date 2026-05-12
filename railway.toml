@@ -18,6 +18,10 @@ dockerfilePath = "Dockerfile"
 
 [deploy]
 healthcheckPath = "/healthz"
-healthcheckTimeout = 30
+# 30s isn't enough on a cold deploy: the entrypoint runs migrate (apps
+# load + system checks + DB connect — easily 10-20s on a fresh container)
+# BEFORE gunicorn binds port 8000. 300s gives migrations room even if
+# Postgres is briefly slow to accept the first connection.
+healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
