@@ -117,7 +117,6 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
         'self',
         symmetrical=True,
         blank=True,
-        related_name='user_friends'
     )
     friend_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
 

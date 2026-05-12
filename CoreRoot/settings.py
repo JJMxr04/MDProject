@@ -383,11 +383,26 @@ USE_X_FORWARDED_HOST = True
 # CSRF requires the full origin (scheme + host) for any cross-domain POST.
 # Coolify hosts the app on a custom domain — list it here via env so the
 # admin / portal forms accept POSTs over HTTPS.
-CSRF_TRUSTED_ORIGINS = [
-    o.strip()
-    for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
-    if o.strip()
-]
+#
+# Django 4.0+ rejects entries without a scheme at startup, so we filter
+# empties AND auto-prefix ``https://`` when the operator pasted a bare
+# hostname (a common copy-paste mistake from the ALLOWED_HOSTS format,
+# which DOES accept bare hosts).
+def _parse_csrf_origins(raw: str) -> list[str]:
+    out: list[str] = []
+    for o in raw.split(","):
+        o = o.strip()
+        if not o:
+            continue
+        if not o.startswith(("http://", "https://")):
+            o = f"https://{o}"
+        out.append(o)
+    return out
+
+
+CSRF_TRUSTED_ORIGINS = _parse_csrf_origins(
+    os.environ.get("CSRF_TRUSTED_ORIGINS", "")
+)
 
 # Default storage routes user uploads to S3 (Bucketeer). WhiteNoise serves
 # collected static files; using the non-manifest variant because Jazzmin's
