@@ -1,0 +1,86 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Contact us · Paradise Sports{% endblock title %}
+
+{% block css %}
+<style>
+    .contact-page {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 3rem 1rem 4rem;
+        text-align: center;
+    }
+    .contact-page h1 {
+        font-size: 2.25rem; font-weight: 800; margin-bottom: .5rem;
+    }
+    .contact-page .lead {
+        color: #6b7280; font-size: 1.1rem; margin-bottom: 2.5rem;
+    }
+    .contact-card {
+        background: #fff; border: 1px solid #e5e7eb;
+        border-radius: 12px; padding: 2rem 1.75rem; margin-bottom: 1rem;
+        text-align: left;
+    }
+    .contact-card h2 {
+        font-size: 1.25rem; font-weight: 700; margin-bottom: .5rem;
+        color: #1f2937;
+        display: flex; align-items: center; gap: .5rem;
+    }
+    .contact-card h2 i { color: #3D7EAA; }
+    .contact-card p { color: #4b5563; line-height: 1.6; margin-bottom: .5rem; }
+    .contact-card a { color: #3D7EAA; font-weight: 600; word-break: break-all; }
+    .contact-card .muted { color: #6b7280; font-size: .9rem; }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="contact-page">
+    <h1>Get in touch</h1>
+    <p class="lead">
+        We read every message. Pick the address that matches what you're
+        writing about and we'll get back within two business days.
+    </p>
+
+    <div class="contact-card">
+        <h2><i class="bi bi-envelope-fill"></i> General &amp; support</h2>
+        <p>Questions, account help, feature requests, feedback.</p>
+        <p><a href="mailto:hello@paradisesports.example">hello@paradisesports.example</a></p>
+    </div>
+
+    <div class="contact-card">
+        <h2><i class="bi bi-shield-lock-fill"></i> Privacy &amp; data</h2>
+        <p>
+            Data access requests, deletion, GDPR / CCPA inquiries,
+            anything about how we handle your information.
+        </p>
+        <p><a href="mailto:privacy@paradisesports.example">privacy@paradisesports.example</a></p>
+        <p class="muted">
+            See our <a href="{% url 'core-web:private-policy' %}">Privacy Policy</a>
+            for the full picture.
+        </p>
+    </div>
+
+    <div class="contact-card">
+        <h2><i class="bi bi-briefcase-fill"></i> Legal</h2>
+        <p>
+            Terms questions, copyright/DMCA notices, abuse reports,
+            legal process.
+        </p>
+        <p><a href="mailto:legal@paradisesports.example">legal@paradisesports.example</a></p>
+        <p class="muted">
+            See our <a href="{% url 'core-web:terms' %}">Terms of Service</a>.
+        </p>
+    </div>
+
+    <div class="contact-card">
+        <h2><i class="bi bi-bug-fill"></i> Security</h2>
+        <p>
+            Found a vulnerability? Please disclose responsibly. We
+            don't currently run a bounty program but we'll credit
+            you publicly if you'd like.
+        </p>
+        <p><a href="mailto:security@paradisesports.example">security@paradisesports.example</a></p>
+    </div>
+</div>
+{% endblock content %}

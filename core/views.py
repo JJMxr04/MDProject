@@ -10,6 +10,8 @@ _ALLOWED_PATHS = (
     "/$",
     "/about/",
     "/privacy-policy/",
+    "/terms/",
+    "/contact/",
     "/services/",
     # /game-rules/ moved to auth-gated /web/portal/rules/ — no longer
     # crawlable.

@@ -12,6 +12,12 @@ def about(request):
 def privacy_policy(request):
     return render(request, 'public/privacyPolicy.html')
 
+def terms(request):
+    return render(request, 'public/terms.html')
+
+def contact(request):
+    return render(request, 'public/contact.html')
+
 def services(request):
     return render(request, 'public/service.html')
 

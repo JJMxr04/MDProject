@@ -1,42 +1,245 @@
 {% extends "public/base.html" %}
 {% load static %}
 
+{% block title %}Privacy Policy · Paradise Sports{% endblock title %}
+
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/public/home.css' %}">
+<style>
+    .legal-page {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 2.5rem 1rem 4rem;
+    }
+    .legal-page h1 {
+        font-weight: 700;
+        margin-bottom: .25rem;
+    }
+    .legal-page .legal-meta {
+        color: #6b7280;
+        font-size: .9rem;
+        margin-bottom: 2rem;
+    }
+    .legal-page h2 {
+        margin-top: 2.25rem;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+    .legal-page h3 {
+        margin-top: 1.5rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #374151;
+    }
+    .legal-page p, .legal-page li {
+        line-height: 1.7;
+        color: #374151;
+    }
+    .legal-page ul {
+        padding-left: 1.25rem;
+    }
+    .legal-page .toc {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: .5rem;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2rem;
+    }
+    .legal-page .toc ol {
+        margin: 0;
+        padding-left: 1.25rem;
+        columns: 2;
+    }
+    .legal-page .callout {
+        background: #fef3c7;
+        border-left: 4px solid #d97706;
+        padding: .85rem 1rem;
+        border-radius: .25rem;
+        margin: 1rem 0;
+        color: #78350f;
+        font-size: .95rem;
+    }
+    @media (max-width: 600px) {
+        .legal-page .toc ol { columns: 1; }
+    }
+</style>
 {% endblock css %}
 
 {% block content %}
-<div class="container comp-container">
-    <h2>Privacy Policy</h2>
+<div class="legal-page">
+    <h1>Privacy Policy</h1>
+    <p class="legal-meta">
+        Last updated: May 12, 2026 · Effective: May 12, 2026
+    </p>
 
+    <p>
+        Paradise Sports (&ldquo;PBL,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) operates
+        <a href="/">mdproject-production.up.railway.app</a> and related services
+        (the &ldquo;Site&rdquo;). This policy explains what we collect, why, how
+        long we keep it, and what choices you have. We&rsquo;ve tried to keep it
+        in plain English &mdash; if anything is unclear,
+        <a href="{% url 'core-web:contact' %}">email us</a>.
+    </p>
 
+    <div class="toc" aria-label="Sections">
+        <ol>
+            <li><a href="#info-we-collect">Information we collect</a></li>
+            <li><a href="#how-we-use">How we use information</a></li>
+            <li><a href="#cookies">Cookies &amp; similar technologies</a></li>
+            <li><a href="#third-parties">Third-party services</a></li>
+            <li><a href="#sharing">Who we share data with</a></li>
+            <li><a href="#retention">How long we keep data</a></li>
+            <li><a href="#rights">Your rights (GDPR / CCPA)</a></li>
+            <li><a href="#consent">Cookie controls</a></li>
+            <li><a href="#children">Children&rsquo;s privacy</a></li>
+            <li><a href="#changes">Changes to this policy</a></li>
+            <li><a href="#contact">Contacting us</a></li>
+        </ol>
+    </div>
 
-    <section class="form-group">
-        <p>
-            We respect your privacy and are committed to protecting any personal information you share with us. This privacy policy outlines our practices regarding data collection and usage on our website.
-        </p>
+    <h2 id="info-we-collect">1. Information we collect</h2>
+    <p>We collect three categories:</p>
+    <h3>Information you give us</h3>
+    <ul>
+        <li><strong>Account data:</strong> username, email, password (hashed),
+            first/last name, optional avatar, optional friend code.</li>
+        <li><strong>Waitlist signup:</strong> email address.</li>
+        <li><strong>Communications:</strong> if you email us, the contents of
+            that email and your address.</li>
+    </ul>
+    <h3>Information collected automatically</h3>
+    <ul>
+        <li><strong>Log data:</strong> IP address, browser type/version, OS,
+            referring/exit pages, timestamps. Used for debugging, abuse
+            prevention, and aggregate analytics.</li>
+        <li><strong>Device &amp; usage data:</strong> session identifiers,
+            pages viewed, clicks, time on page.</li>
+        <li><strong>Cookies:</strong> see &sect;3.</li>
+    </ul>
+    <h2 id="how-we-use">2. How we use information</h2>
+    <ul>
+        <li>To create and maintain your account.</li>
+        <li>To run the betting-game features you opt into (matches,
+            tournaments, brackets, leaderboards).</li>
+        <li>To send transactional email (verification, password reset,
+            tournament reminders, match results).</li>
+        <li>To operate, secure, and improve the Site.</li>
+        <li>To comply with legal obligations and enforce our
+            <a href="{% url 'core-web:terms' %}">Terms of Service</a>.</li>
+    </ul>
 
-        <h4>Data Collection</h4>
-        <p>We collect and process only essential data as part of website functionality and for analytics purposes. For details on the type of data processed, refer to our <a href="https://help.consentmanager.net/books/cmp/page/8-update-your-privacy-policy?utm_medium=email&utm_content=welcomemail" target="_blank">Data Processing and Privacy Policy Guide</a>.</p>
+    <h2 id="cookies">3. Cookies &amp; similar technologies</h2>
+    <p>
+        We use only strictly-necessary cookies and local storage &mdash;
+        session, CSRF protection, and login state. These cannot be turned
+        off because the Site cannot function without them.
+    </p>
+    <p>
+        We do <strong>not</strong> use analytics cookies, advertising
+        cookies, or any third-party tracking. We do not run Google
+        Analytics, Google AdSense, Facebook Pixel, or any similar
+        third-party tracker on this Site. If that ever changes, this
+        policy will be updated and a consent banner added before any
+        tracking cookies are introduced.
+    </p>
+    <p>
+        You can clear cookies in your browser settings at any time.
+    </p>
 
-        <h4>Consent Management</h4>
-        <p>We have integrated the consent management tool <a href="https://www.consentmanager.net" target="_blank">ConsentManager</a> by ConsentManager AB (Håltgelvågen 1b, 72348 Västerås, Sweden, mail@consentmanager.net) to facilitate the collection of user consent for data processing and the use of cookies or similar technologies. This tool allows you to consent to or reject certain functionalities on our website, including external elements, streaming content, statistical analysis, measurement, and personalized advertising. You can adjust your consent settings at any time.</p>
+    <h2 id="third-parties">4. Third-party services we use</h2>
+    <ul>
+        <li><strong>Postmark (or equivalent SMTP provider)</strong> &mdash;
+            transactional email delivery.</li>
+        <li><strong>Railway / Coolify</strong> &mdash; hosting infrastructure.</li>
+        <li><strong>Stripe</strong> &mdash; payment processing (only if
+            you make a purchase). Stripe&rsquo;s privacy policy applies to
+            payment data:
+            <a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>.</li>
+    </ul>
 
-        <p>The purpose of integrating ConsentManager is to enable you to control your privacy settings on our website, while allowing us to meet legal obligations for documentation and compliance. ConsentManager processes personal data and information from your device, such as your IP address, and stores your settings as long as they remain active. Every two years, ConsentManager will prompt you to update your consent preferences, which will then be stored again for another two-year period.</p>
+    <h2 id="sharing">5. Who we share data with</h2>
+    <p>
+        We do <strong>not</strong> sell your personal data. We share data
+        only with:
+    </p>
+    <ul>
+        <li>Service providers listed in &sect;4, under written contract,
+            for the purposes described in this policy.</li>
+        <li>Law enforcement or regulators, when legally compelled.</li>
+        <li>A successor in interest (acquirer, merger partner), with
+            notice to you.</li>
+    </ul>
 
-        <p>The legal basis for this processing is Art. 6 Para. 1 S. 1 lit. c) and Art. 6 Para. 3 S. 1 lit. a) in conjunction with Art. 7 Para. 1 GDPR, and additionally lit. f) for our legitimate interest in managing consent records for compliance. You can object to this processing by sending an email to mail@consentmanager.net, especially if you have specific reasons based on your particular situation.</p>
+    <h2 id="retention">6. How long we keep data</h2>
+    <ul>
+        <li><strong>Account data:</strong> until you delete your account;
+            then 30 days for backups, then permanent deletion.</li>
+        <li><strong>Email logs:</strong> 90 days, then deleted.</li>
+        <li><strong>Server access logs:</strong> 30 days, then aggregated
+            or deleted.</li>
+        <li><strong>Backups:</strong> rolling 35-day window.</li>
+    </ul>
 
-        <h4>Cookies</h4>
-        <p>Our website may use cookies to enhance user experience, analyze site usage, and enable Google services like Analytics and Ads. Any data collected through cookies is anonymized to protect your privacy. You can control cookie preferences to determine what data you choose to share.</p>
+    <h2 id="rights">7. Your rights</h2>
+    <h3>If you&rsquo;re in the EU, UK, or Switzerland (GDPR / UK GDPR)</h3>
+    <ul>
+        <li><strong>Access:</strong> request a copy of your data.</li>
+        <li><strong>Rectification:</strong> correct inaccuracies.</li>
+        <li><strong>Erasure:</strong> request deletion.</li>
+        <li><strong>Restriction:</strong> limit how we process your data.</li>
+        <li><strong>Portability:</strong> receive your data in a portable
+            format.</li>
+        <li><strong>Objection:</strong> object to processing based on
+            legitimate interests.</li>
+        <li><strong>Lodge a complaint</strong> with your supervisory
+            authority.</li>
+    </ul>
+    <h3>If you&rsquo;re in California (CCPA / CPRA)</h3>
+    <ul>
+        <li>Right to know what we collect, use, share.</li>
+        <li>Right to delete personal information.</li>
+        <li>Right to correct inaccurate information.</li>
+        <li>Right to opt out of &ldquo;sale&rdquo; or &ldquo;sharing&rdquo;
+            of personal information (we do not sell or share your
+            personal information).</li>
+        <li>Right to non-discrimination for exercising your rights.</li>
+    </ul>
+    <p>
+        To exercise any right,
+        <a href="{% url 'core-web:contact' %}">contact us</a>. We will
+        respond within 30 days (45 in some jurisdictions).
+    </p>
 
-        <h4>Google Analytics & Ads</h4>
-        <p>To improve our services, we use Google Analytics to gather insights about site traffic and Google Ads to support our business. This data helps us understand user preferences while upholding privacy standards. For more on Google’s data policies, please visit <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google's Privacy Policy</a>.</p>
+    <h2 id="consent">8. Cookie controls</h2>
+    <p>
+        We don&rsquo;t use tracking or analytics cookies, so there&rsquo;s
+        no consent banner to manage. The strictly-necessary cookies
+        (session, CSRF, login) cannot be disabled because the Site cannot
+        function without them &mdash; clearing them will log you out.
+    </p>
 
-        <h4>Third-Party Disclosure</h4>
-        <p>We do not sell or share your personal information with third-party advertisers. All analytics and advertising data is anonymized and used solely to enhance site experience and service offerings.</p>
+    <h2 id="children">9. Children&rsquo;s privacy</h2>
+    <p>
+        The Site is intended for users 18 years and older. We do not
+        knowingly collect data from anyone under 18. If you believe a
+        child has provided us with personal information, please
+        <a href="{% url 'core-web:contact' %}">contact us</a> and we will
+        delete it.
+    </p>
 
-        <h4>Your Rights</h4>
-        <p>You have the right to manage your cookie settings directly through your browser and through ConsentManager.</p>
-    </section>
+    <h2 id="changes">10. Changes to this policy</h2>
+    <p>
+        We&rsquo;ll update this page when our practices change. The
+        &ldquo;Last updated&rdquo; date at the top of the page reflects
+        the most recent revision. Material changes will also be
+        announced on the homepage or via email.
+    </p>
+
+    <h2 id="contact">11. Contacting us</h2>
+    <p>
+        Questions or requests? Email
+        <a href="mailto:privacy@paradisesports.example">privacy@paradisesports.example</a>
+        or use the <a href="{% url 'core-web:contact' %}">contact page</a>.
+    </p>
 </div>
 {% endblock content %}
