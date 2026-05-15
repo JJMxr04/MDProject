@@ -636,24 +636,21 @@ JAZZMIN_SETTINGS = {
 # Phase 3 (cutover):    flip USE_AGGRIGATOR=True; legacy crons disabled.
 # Phase 4 (cleanup):    remove the dead SGO ingestion code from this repo.
 #
-# AGGRIGATOR_WEBHOOK_SECRET is the *raw* signing secret the aggregator
-# generated when MDProject's webhook endpoint was registered there. The
-# aggregator stores its own copy encrypted at rest; this is MDProject's
-# verification copy. Rotate via the aggregator's
-# /v1/webhook-endpoints/{id}/rotate endpoint, then update this value.
+# Read endpoints on the aggregator are public — no auth needed on the
+# outbound HTTP client. AGGRIGATOR_WEBHOOK_SECRET is the HMAC signing secret
+# shared with the aggregator (its AGG_WEBHOOK_SECRET); used only on the
+# inbound webhook receiver at /sportgameodds/webhook.
 # ---------------------------------------------------------------------------
 
 USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "true", "yes")
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
-AGGRIGATOR_API_KEY = os.environ.get("AGGRIGATOR_API_KEY", "")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 
-# Fail fast in production if aggregator is enabled but credentials are missing.
-if not DEBUG and USE_AGGRIGATOR:
-    if not AGGRIGATOR_API_KEY:
-        raise RuntimeError("AGGRIGATOR_API_KEY must be set when USE_AGGRIGATOR=True")
-    if not AGGRIGATOR_WEBHOOK_SECRET:
-        raise RuntimeError("AGGRIGATOR_WEBHOOK_SECRET must be set when USE_AGGRIGATOR=True")
+# Fail fast in production if aggregator is enabled but the webhook secret
+# is missing — without it, inbound deliveries get rejected for signature
+# mismatch (or 503'd if the receiver guards explicitly).
+if not DEBUG and USE_AGGRIGATOR and not AGGRIGATOR_WEBHOOK_SECRET:
+    raise RuntimeError("AGGRIGATOR_WEBHOOK_SECRET must be set when USE_AGGRIGATOR=True")
 
 
 # ---------------------------------------------------------------------------

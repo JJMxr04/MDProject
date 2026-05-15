@@ -89,13 +89,9 @@ USE_AGGRIGATOR=True
 # Internal Railway DNS reaches the aggregator service by its name.
 # If you used a custom domain on agg-web, use that instead.
 AGGRIGATOR_BASE_URL=https://agg-web-production.up.railway.app
-# Long-lived service-tier API key minted in the aggregator's /admin UI
-# (Aggregator → Api Keys → Create).
-AGGRIGATOR_API_KEY=agg_live_<32 chars>
-# Inbound webhook signing secret — paste the one printed by
-# `aggrigator/scripts/register_webhook.py` after running it for this
-# app's /sportgameodds/webhook URL.
-AGGRIGATOR_WEBHOOK_SECRET=<from register_webhook.py>
+# HMAC signing secret shared with the aggregator's AGG_WEBHOOK_SECRET.
+# Used by MDProject to verify inbound webhooks at /sportgameodds/webhook.
+AGGRIGATOR_WEBHOOK_SECRET=<same value as AGG_WEBHOOK_SECRET on the aggregator>
 
 # Email — production SMTP (Postmark / SES / Mailgun all work)
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend

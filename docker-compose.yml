@@ -54,8 +54,7 @@ services:
       # own compose stack on the host. In Coolify, swap this for the
       # internal service URL (e.g. http://aggrigator:8001).
       AGGRIGATOR_BASE_URL: http://host.docker.internal:8001
-      AGGRIGATOR_API_KEY: ""           # set after creating an API key
-      AGGRIGATOR_WEBHOOK_SECRET: ""    # set from register_webhook.py output
+      AGGRIGATOR_WEBHOOK_SECRET: ""    # same value as the aggregator's AGG_WEBHOOK_SECRET
       EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
     ports:
       - "8000:8000"

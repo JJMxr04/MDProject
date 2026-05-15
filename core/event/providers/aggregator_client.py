@@ -6,8 +6,9 @@ local DB. After the cutover (plan §7.4), it calls the aggregator instead for
 implements the same surface as the legacy ``SportsGameOddsClient`` so the
 ``providers/__init__.py`` factory can swap to it in a single line.
 
-Auth: a long-lived service-tier API key. Set ``AGGRIGATOR_BASE_URL`` and
-``AGGRIGATOR_API_KEY`` in MDProject settings.
+The aggregator's read endpoints are public — set ``AGGRIGATOR_BASE_URL`` in
+MDProject settings and that's all the client needs. HMAC-signed webhook
+delivery uses ``AGGRIGATOR_WEBHOOK_SECRET`` separately on the receive path.
 """
 
 from __future__ import annotations
@@ -30,21 +31,14 @@ class AggrigatorClient:
         self,
         *,
         base_url: str | None = None,
-        api_key: str | None = None,
-        client_app: str = "mdproject-django",
         timeout: float = 15.0,
     ) -> None:
         self.base_url = (
             base_url
             or os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
         ).rstrip("/")
-        self.api_key = api_key or os.environ.get("AGGRIGATOR_API_KEY", "")
-        self.client_app = client_app
         self.timeout = timeout
         self.session = requests.Session()
-        if self.api_key:
-            self.session.headers["X-Api-Key"] = self.api_key
-        self.session.headers["X-Client-App"] = self.client_app
 
     # ---- public surface (matches the legacy SportsGameOdds client) --------
 
