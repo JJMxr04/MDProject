@@ -1,0 +1,85 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  <header class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h3 mb-0">Tonight</h1>
+      <p class="text-muted mb-0">Events in the next 24 hours. Click a row for detail.</p>
+    </div>
+    <form method="get" class="d-flex gap-2">
+      <input type="text" name="sport" value="{{ filter_sport }}" class="form-control form-control-sm"
+             placeholder="sport (FOOTBALL)" style="max-width: 180px;">
+      <input type="text" name="league" value="{{ filter_league }}" class="form-control form-control-sm"
+             placeholder="league (NFL)" style="max-width: 180px;">
+      <button class="btn btn-sm btn-primary" type="submit">Filter</button>
+    </form>
+  </header>
+
+  {% if events %}
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Kickoff (UTC)</th>
+          <th>League</th>
+          <th>Matchup</th>
+          <th>Moneyline</th>
+          <th>Spread</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for ev in events %}
+        <tr>
+          <td><small class="text-muted">{{ ev.start_time|default:"—" }}</small></td>
+          <td><span class="badge bg-light text-dark">{{ ev.league_id|default:"—" }}</span></td>
+          <td>
+            {% if ev.away_team %}{{ ev.away_team.name|default:ev.away_team.team_id }}{% else %}—{% endif %}
+            <span class="text-muted">@</span>
+            {% if ev.home_team %}{{ ev.home_team.name|default:ev.home_team.team_id }}{% else %}—{% endif %}
+          </td>
+          <td>
+            {% if ev.ml %}
+              {% for s in ev.ml.selections %}
+                <div><small>{{ s.type }}</small> <strong>{{ s.decimal_odds|floatformat:2 }}</strong>
+                  {% if s.implied_prob %}<small class="text-muted">({{ s.implied_prob|floatformat:2 }})</small>{% endif %}
+                </div>
+              {% endfor %}
+            {% else %}<span class="text-muted">—</span>{% endif %}
+          </td>
+          <td>
+            {% if ev.spread %}
+              {% for s in ev.spread.selections %}
+                <div><small>{{ s.type }}</small> {{ ev.spread.line|default:"" }} @ <strong>{{ s.decimal_odds|floatformat:2 }}</strong></div>
+              {% endfor %}
+            {% else %}<span class="text-muted">—</span>{% endif %}
+          </td>
+          <td>
+            {% if ev.total %}
+              {% for s in ev.total.selections %}
+                <div><small>{{ s.type }}</small> {{ ev.total.line|default:"" }} @ <strong>{{ s.decimal_odds|floatformat:2 }}</strong></div>
+              {% endfor %}
+            {% else %}<span class="text-muted">—</span>{% endif %}
+          </td>
+          <td>
+            <a class="btn btn-sm btn-outline-primary"
+               href="{% url 'core-portal:analytics-tonight-detail' event_id=ev.event_id %}">
+              Detail
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-light border" role="status">
+    <strong>No events.</strong>
+    Either no games in the next 24h matching your filter, or the aggrigator is unreachable.
+    Check <code>AGGRIGATOR_BASE_URL</code> in Django settings.
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

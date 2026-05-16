@@ -1,0 +1,79 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  <header class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h3 mb-0">Edge</h1>
+      <p class="text-muted mb-0">
+        Biggest current cross-book disagreements on the same selection.
+        Higher % = bigger payoff differential between books on the same outcome.
+      </p>
+    </div>
+    <form method="get" class="d-flex gap-2 align-items-center">
+      <label class="small text-muted mb-0">Min %</label>
+      <input type="number" step="0.1" min="0" name="threshold_pct"
+             value="{{ threshold_pct }}"
+             class="form-control form-control-sm" style="max-width: 110px;">
+      <button class="btn btn-sm btn-primary" type="submit">Refresh</button>
+    </form>
+  </header>
+
+  <div class="row g-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <strong>Disagreements</strong>
+          <small class="text-muted">threshold ≥ {{ threshold_pct }}%</small>
+        </div>
+        <div class="card-body p-0">
+        {% if rows %}
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Market</th>
+                <th>Selection</th>
+                <th>Min book</th>
+                <th>Max book</th>
+                <th class="text-end">Spread</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for r in rows %}
+              <tr>
+                <td><span class="badge bg-light text-dark">{{ r.market_category }}</span></td>
+                <td><small>{{ r.label }}</small></td>
+                <td>{{ r.min_book }} <strong>{{ r.min_decimal_odds|floatformat:2 }}</strong></td>
+                <td>{{ r.max_book }} <strong>{{ r.max_decimal_odds|floatformat:2 }}</strong></td>
+                <td class="text-end"><strong>{{ r.spread_pct|floatformat:1 }}%</strong></td>
+                <td>
+                  <a class="btn btn-sm btn-outline-primary"
+                     href="{% url 'core-portal:analytics-tonight-detail' event_id=r.event_id %}">
+                    Event
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="p-3 text-muted">
+            No selections above the threshold. Lower it or wait for new lines.
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card border-secondary">
+        <div class="card-body small text-muted">
+          <strong>Note:</strong> very large spreads (&gt;20%) sometimes indicate stale or alt-line data
+          rather than a true arbitrage signal — verify on the source book before acting.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

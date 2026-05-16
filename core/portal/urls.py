@@ -16,6 +16,9 @@ urlpatterns = [
     path('dashboard/', views.portal_dashboard, name='portal-dashboard'),
     path('rules/', views.rules_view, name='portal-rules'),
     path('availability/', views.availability_view, name='portal-availability'),
+    path('analytics/', views.analytics_tonight, name='analytics-tonight'),
+    path('analytics/event/<str:event_id>/', views.analytics_tonight_detail, name='analytics-tonight-detail'),
+    path('analytics/edge/', views.analytics_edge, name='analytics-edge'),
     path('event/', include(eventUrls)), # Ensure this line is correct
     path('match/', include(matchUrls)),
     path('tournament/', include('core.tournament.urls')),

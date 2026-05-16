@@ -1,0 +1,31 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Analytics — {{ block.super }}{% endblock title %}
+
+{% block subnav %}
+<nav class="subnav" aria-label="Analytics sections">
+  <ul class="subnav__list nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link {% if active_tab == 'tonight' %}active{% endif %}"
+         href="{% url 'core-portal:analytics-tonight' %}">Tonight</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if active_tab == 'teams' %}active{% endif %}"
+         href="#" tabindex="-1" aria-disabled="true"
+         title="Activates once finalized games accrue in the DB">
+        Teams <span class="badge bg-secondary ms-1">soon</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if active_tab == 'edge' %}active{% endif %}"
+         href="{% url 'core-portal:analytics-edge' %}">Edge</a>
+    </li>
+  </ul>
+</nav>
+{% endblock subnav %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% block analytics_scripts %}{% endblock analytics_scripts %}
+{% endblock scripts %}

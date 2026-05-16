@@ -1,0 +1,146 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  <a href="{% url 'core-portal:analytics-tonight' %}" class="text-decoration-none small">
+    ← Back to Tonight
+  </a>
+
+  {# ---- Event header ---- #}
+  <header class="mb-4 mt-2">
+    {% if event %}
+      <h1 class="h3 mb-1">
+        {% if event.away_team %}{{ event.away_team.name|default:event.away_team.team_id }}{% else %}—{% endif %}
+        <span class="text-muted">@</span>
+        {% if event.home_team %}{{ event.home_team.name|default:event.home_team.team_id }}{% else %}—{% endif %}
+      </h1>
+      <p class="text-muted mb-0">
+        <span class="badge bg-light text-dark">{{ event.league_id|default:"—" }}</span>
+        <span class="ms-2">{{ event.start_time|default:"" }}</span>
+        <span class="ms-2 text-uppercase">{{ event.status_display|default:event.status_type|default:"—" }}</span>
+        {% if event.home_score is not None %}
+          <span class="ms-3">Score: {{ event.away_score }} – {{ event.home_score }}</span>
+        {% endif %}
+      </p>
+    {% else %}
+      <h1 class="h3">Event {{ event_id }}</h1>
+      <div class="alert alert-warning">Event data unavailable.</div>
+    {% endif %}
+  </header>
+
+  <div class="row g-3">
+    {# ---- Probabilities panel ---- #}
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header"><strong>Implied probabilities</strong></div>
+        <div class="card-body">
+          {% if probabilities.markets %}
+            {{ probabilities|json_script:"probabilities-data" }}
+            {% for m in probabilities.markets %}
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-baseline">
+                  <h6 class="mb-1">{{ m.category }}{% if m.line %} <small class="text-muted">line {{ m.line }}</small>{% endif %}</h6>
+                  {% if m.vig %}
+                    <small class="text-muted">vig {{ m.vig|floatformat:4 }}</small>
+                  {% endif %}
+                </div>
+                <canvas id="probchart-{{ forloop.counter0 }}" height="160"></canvas>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted mb-0">No markets available.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {# ---- Best price panel ---- #}
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header"><strong>Best price per book</strong></div>
+        <div class="card-body p-0">
+          {% if best_prices.selections %}
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Selection</th>
+                <th>Consensus</th>
+                <th>Books</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in best_prices.selections %}
+              <tr>
+                <td>
+                  <div class="fw-semibold">{{ s.type }}</div>
+                  <small class="text-muted">{{ s.label }}</small>
+                </td>
+                <td>{{ s.consensus_decimal_odds|floatformat:2|default:"—" }}</td>
+                <td>
+                  {% for b in s.books %}
+                    <div>
+                      {{ b.bookmaker_name|default:b.bookmaker_id }}
+                      <strong>{{ b.decimal_odds|floatformat:2|default:"—" }}</strong>
+                      {% if b.is_best %}<span class="badge bg-success ms-1">best</span>{% endif %}
+                    </div>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="p-3 text-muted">No per-book quotes available.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ---- Deferred panels (data-dependent) ---- #}
+  <div class="row g-3 mt-2">
+    <div class="col-12">
+      <div class="card border-secondary">
+        <div class="card-body">
+          <h6 class="card-title text-muted">Deferred panels — light up once data accrues</h6>
+          <ul class="mb-0 small text-muted">
+            <li><strong>Line movement chart</strong> — needs ~3–7 days of hourly ingest history.</li>
+            <li><strong>Team form / ATS / O/U</strong> — needs finalized events. Currently zero in the DB.</li>
+            <li><strong>Head-to-head</strong> — same dependency as team form.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block analytics_scripts %}
+<script>
+(function () {
+  const dataNode = document.getElementById('probabilities-data');
+  if (!dataNode) return;
+  const payload = JSON.parse(dataNode.textContent);
+  (payload.markets || []).forEach((m, idx) => {
+    const canvas = document.getElementById(`probchart-${idx}`);
+    if (!canvas) return;
+    const priced = (m.selections || []).filter(r => r.normalized != null);
+    if (priced.length === 0) return;
+    new Chart(canvas, {
+      type: 'doughnut',
+      data: {
+        labels: priced.map(r => `${r.type} (${(r.normalized * 100).toFixed(1)}%)`),
+        datasets: [{
+          data: priced.map(r => r.normalized),
+          backgroundColor: ['#4e79a7', '#f28e2b', '#59a14f', '#e15759'],
+        }],
+      },
+      options: {
+        plugins: { legend: { position: 'bottom' } },
+        cutout: '60%',
+      },
+    });
+  });
+})();
+</script>
+{% endblock analytics_scripts %}
