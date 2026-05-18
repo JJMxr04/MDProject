@@ -6,9 +6,11 @@ register = template.Library()
 
 
 @register.inclusion_tag("portal/components/_sidenav_item.html", takes_context=True)
-def sidenav_item(context, url, icon, label, prefix=None):
+def sidenav_item(context, url, icon, label, prefix=None, badge=None):
     """Render a single sidebar nav item. Active when the current request
     path starts with `prefix` (or the resolved `url` if no prefix given).
+    Optional ``badge`` renders a small label after the item text — used
+    by the analytics row to flag PRO-gated features for FREE users.
     """
     try:
         href = reverse(url)
@@ -25,4 +27,5 @@ def sidenav_item(context, url, icon, label, prefix=None):
         "icon": icon,
         "label": label,
         "is_active": is_active,
+        "badge": badge,
     }

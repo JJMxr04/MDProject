@@ -25,3 +25,4 @@ django-crispy-forms==2.6
 crispy-bootstrap5==2024.2
 cryptography==43.0.1
 argon2-cffi==25.1.0
+stripe==12.4.0

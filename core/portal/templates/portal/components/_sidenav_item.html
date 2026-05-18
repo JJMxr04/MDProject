@@ -3,5 +3,6 @@
     <a href="{{ href }}" {% if is_active %}aria-current="page"{% endif %}>
         <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
         <span>{{ label }}</span>
+        {% if badge %}<span class="badge bg-warning text-dark ms-1" style="font-size: 0.65em;">{{ badge }}</span>{% endif %}
     </a>
 </li>

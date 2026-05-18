@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
+from core.billing.views.webhook import stripe_webhook
 from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.views import healthz, portal_or_404, robots_txt
 from django.contrib.auth import views as auth_views
@@ -20,6 +21,9 @@ urlpatterns = [
     # match-completion / game-reopen hooks.
     path('sportgameodds/webhook', SportsGameOddsWebhookView.as_view(),
          name='sportgameodds-webhook'),
+    # Stripe → MDProject. Signature-verified, idempotent (StripeWebhookEvent).
+    # See core/billing/views/webhook.py.
+    path('billing/stripe/webhook', stripe_webhook, name='billing-stripe-webhook'),
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),

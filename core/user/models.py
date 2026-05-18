@@ -120,6 +120,23 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     )
     friend_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
+    # --- Billing / Aggrigator integration (see subscription-plan/02-data-model.md §"core_user.User additions"). ---
+    # Stripe Customer object id (``cus_...``). Captured from the
+    # checkout.session.completed webhook on first paid checkout; empty
+    # for users who never upgraded.
+    stripe_customer_id = models.CharField(max_length=64, blank=True, default='')
+    # The aggrigator's TenantUser.id mirror — populated by the signup
+    # signal's POST to /v1/internal/users. UUID so it joins cleanly with
+    # the aggrigator's ``tenant_user.external_user_id`` column (which is
+    # this User's ``public_id``).
+    aggrigator_external_id = models.UUIDField(null=True, blank=True, unique=True)
+    # Plaintext API key returned ONCE by aggrigator at provisioning.
+    # MDProject sends this in ``X-Aggrigator-Tenant-Key`` on every
+    # analytics call to authenticate as this user. Lost keys are not
+    # recoverable — rotate via /v1/internal/.../api-keys/rotate to mint
+    # a fresh one.
+    aggrigator_api_key = models.CharField(max_length=80, blank=True, default='')
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

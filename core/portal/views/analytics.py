@@ -13,18 +13,19 @@ client returns empty shapes and the templates show empty-state cards.
 
 from __future__ import annotations
 
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from core.billing.decorators import require_paid
 from core.portal.services import aggrigator_client
 
 
-@login_required(login_url="/auth/login/")
+@require_paid
 def analytics_tonight(request):
     sport = request.GET.get("sport") or None
     league = request.GET.get("league") or None
     events = aggrigator_client.events_today(
         sport=sport, league=league, hours_ahead=24,
+        tenant_key=request.user.aggrigator_api_key or None,
     )
     ctx = {
         "events": events,
@@ -35,11 +36,12 @@ def analytics_tonight(request):
     return render(request, "portal/analytics/tonight.html", ctx)
 
 
-@login_required(login_url="/auth/login/")
+@require_paid
 def analytics_tonight_detail(request, event_id: str):
-    event = aggrigator_client.event_detail(event_id)
-    probabilities = aggrigator_client.event_probabilities(event_id)
-    best_prices = aggrigator_client.event_best_prices(event_id)
+    key = request.user.aggrigator_api_key or None
+    event = aggrigator_client.event_detail(event_id)  # public — no key
+    probabilities = aggrigator_client.event_probabilities(event_id, tenant_key=key)
+    best_prices = aggrigator_client.event_best_prices(event_id, tenant_key=key)
     ctx = {
         "event": event,
         "event_id": event_id,
@@ -50,7 +52,7 @@ def analytics_tonight_detail(request, event_id: str):
     return render(request, "portal/analytics/tonight_detail.html", ctx)
 
 
-@login_required(login_url="/auth/login/")
+@require_paid
 def analytics_edge(request):
     try:
         threshold_pct = float(request.GET.get("threshold_pct") or 2.0)
@@ -58,6 +60,7 @@ def analytics_edge(request):
         threshold_pct = 2.0
     payload = aggrigator_client.disagreements(
         threshold_pct=threshold_pct, hours_ahead=24, limit=25,
+        tenant_key=request.user.aggrigator_api_key or None,
     )
     ctx = {
         "rows": payload.get("rows", []),

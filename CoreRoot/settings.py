@@ -117,6 +117,7 @@ INSTALLED_APPS = [
     'core.mail',
     'core.web',
     'core.portal',
+    'core.billing',
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
@@ -646,11 +647,37 @@ USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "tru
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 
+# HMAC secret for the OUTBOUND Paradise channel (MDProject → aggrigator
+# /v1/internal/*). Same value as the aggrigator's AGG_PARADISE_SECRET.
+# Separate from AGGRIGATOR_WEBHOOK_SECRET on purpose — opposite
+# directions, separate trust scopes. See subscription-plan/07-security.md.
+PARADISE_SECRET = os.environ.get("PARADISE_SECRET", "")
+
+# ---------------------------------------------------------------------------
+# Stripe — subscription billing.
+# ---------------------------------------------------------------------------
+# STRIPE_SECRET_KEY: sk_test_... in dev, sk_live_... in prod. Prefer a
+#   RESTRICTED key (Stripe Dashboard → API keys → Restricted keys) with
+#   only the scopes we need (Customer/Subscription/Product/Price/
+#   Checkout.Session/BillingPortal write, Events read).
+# STRIPE_WEBHOOK_SECRET: whsec_... from `stripe listen` (dev) or from
+#   Dashboard → Developers → Webhooks → your endpoint (prod). Used to
+#   verify Stripe-signed webhooks at /billing/stripe/webhook.
+# STRIPE_API_VERSION: pin so a Stripe-side surface change can't break us.
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+STRIPE_API_VERSION = os.environ.get("STRIPE_API_VERSION", "2025-07-30.basil")
+
 # Fail fast in production if aggregator is enabled but the webhook secret
 # is missing — without it, inbound deliveries get rejected for signature
 # mismatch (or 503'd if the receiver guards explicitly).
 if not DEBUG and USE_AGGRIGATOR and not AGGRIGATOR_WEBHOOK_SECRET:
     raise RuntimeError("AGGRIGATOR_WEBHOOK_SECRET must be set when USE_AGGRIGATOR=True")
+# Same fail-fast for Paradise — without it, signup signal + Stripe
+# webhook handler raise ImproperlyConfigured on every fire.
+if not DEBUG and USE_AGGRIGATOR and not PARADISE_SECRET:
+    raise RuntimeError("PARADISE_SECRET must be set when USE_AGGRIGATOR=True")
 
 
 # ---------------------------------------------------------------------------

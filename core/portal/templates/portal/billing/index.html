@@ -1,0 +1,89 @@
+{% extends "portal/base_app.html" %}
+
+{% block title %}Billing — {{ block.super }}{% endblock title %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 720px;">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <h1 class="h3 mb-4">Billing</h1>
+
+  {% if is_past_due %}
+    <div class="alert alert-warning">
+      <strong><i class="bi bi-exclamation-triangle me-1"></i> Your last payment failed.</strong>
+      Update your card to keep access to the analytics dashboard.
+      Stripe will retry over the next few days; after that, the subscription is canceled.
+      <div class="mt-2">
+        <form method="post" action="{% url 'core-portal:billing-portal' %}" class="d-inline">
+          {% csrf_token %}
+          <button class="btn btn-warning btn-sm">Update payment method</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="h5 mb-3">Current plan</h2>
+
+      {% if subscription %}
+        <dl class="row mb-0">
+          <dt class="col-sm-4 text-muted">Plan</dt>
+          <dd class="col-sm-8"><strong>{{ subscription.plan.code }}</strong> — {{ subscription.plan.name }}</dd>
+
+          <dt class="col-sm-4 text-muted">Status</dt>
+          <dd class="col-sm-8">
+            <span class="badge bg-{% if is_pro_active %}success{% elif is_past_due %}warning text-dark{% elif is_canceled %}secondary{% else %}light text-dark{% endif %}">
+              {{ subscription.status }}
+            </span>
+          </dd>
+
+          {% if subscription.trial_end %}
+            <dt class="col-sm-4 text-muted">Trial ends</dt>
+            <dd class="col-sm-8">{{ subscription.trial_end|date:"M j, Y g:i A" }}</dd>
+          {% endif %}
+
+          {% if subscription.current_period_end %}
+            <dt class="col-sm-4 text-muted">{% if subscription.cancel_at_period_end %}Ends{% else %}Renews{% endif %}</dt>
+            <dd class="col-sm-8">{{ subscription.current_period_end|date:"M j, Y" }}</dd>
+          {% endif %}
+
+          {% if subscription.cancel_at_period_end %}
+            <dt class="col-sm-4 text-muted">Auto-renew</dt>
+            <dd class="col-sm-8"><span class="text-warning">Off — will not renew</span></dd>
+          {% endif %}
+        </dl>
+      {% else %}
+        <p class="text-muted mb-0">No subscription on file.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-3 d-flex gap-2">
+    {% if is_pro_active or is_past_due %}
+      <form method="post" action="{% url 'core-portal:billing-portal' %}" class="d-inline">
+        {% csrf_token %}
+        <button class="btn btn-outline-primary">Manage subscription</button>
+      </form>
+      <a href="{% url 'core-portal:analytics-tonight' %}" class="btn btn-outline-secondary">
+        Open Analytics →
+      </a>
+    {% else %}
+      <a href="{% url 'core-portal:billing-upgrade' %}" class="btn btn-primary">
+        {% if is_canceled %}Resubscribe to PRO{% else %}Upgrade to PRO{% endif %}
+      </a>
+    {% endif %}
+  </div>
+
+  <p class="text-muted small mt-4 mb-0">
+    Invoices and receipts are available in the Stripe-hosted billing portal.
+  </p>
+</div>
+{% endblock content %}
