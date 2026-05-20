@@ -1,7 +1,11 @@
 from .analytics import (
-    analytics_edge,
-    analytics_tonight,
-    analytics_tonight_detail,
+    analytics_bets,
+    analytics_event,
+    analytics_landing,
+    analytics_league,
+    analytics_picks,
+    analytics_team,
+    analytics_upcoming,
 )
 from .availability import availability_view
 from .dashboard import portal_dashboard

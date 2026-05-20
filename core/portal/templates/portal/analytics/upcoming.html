@@ -1,0 +1,21 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+  <header class="mb-3 mt-2">
+    <h1 class="h3 mb-0">Upcoming</h1>
+    <p class="text-muted mb-0">Events in the next 24-72 hours with model probabilities and live odds.</p>
+  </header>
+
+  <div class="card analytics-empty-state">
+    <div class="card-body">
+      <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Coming in Phase C</h2>
+      <p class="mb-0 text-muted">
+        This page waits on the soccer probability model (Phase B) and the live-odds
+        proxy. See <code>plans/analytics/dashboard_and_data/06-upcoming-and-picks.md</code>.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

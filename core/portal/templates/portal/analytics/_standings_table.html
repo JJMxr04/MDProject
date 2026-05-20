@@ -1,0 +1,61 @@
+{# Expects: standings, league_id, season_label, computed_from_events, expected_events #}
+{% if standings %}
+  <div class="table-responsive">
+    <table class="table table-sm table-hover align-middle">
+      <thead>
+        <tr>
+          <th class="text-end">Pos</th>
+          <th>Team</th>
+          <th class="text-end">P</th>
+          <th class="text-end">W</th>
+          <th class="text-end">D</th>
+          <th class="text-end">L</th>
+          <th class="text-end">GF</th>
+          <th class="text-end">GA</th>
+          <th class="text-end">GD</th>
+          <th class="text-end">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for row in standings %}
+        <tr>
+          <td class="text-end text-muted">{{ forloop.counter }}</td>
+          <td>
+            <a href="{% url 'core-portal:analytics-team' team_id=row.team_id %}"
+               class="text-decoration-none">{{ row.team_name }}</a>
+          </td>
+          <td class="text-end">{{ row.played }}</td>
+          <td class="text-end">{{ row.wins }}</td>
+          <td class="text-end">{{ row.draws }}</td>
+          <td class="text-end">{{ row.losses }}</td>
+          <td class="text-end">{{ row.goals_for }}</td>
+          <td class="text-end">{{ row.goals_against }}</td>
+          <td class="text-end">{% if row.goal_difference > 0 %}+{% endif %}{{ row.goal_difference }}</td>
+          <td class="text-end"><strong>{{ row.points }}</strong></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if expected_events %}
+    {% if computed_from_events < expected_events %}
+      <p class="transparency-tell transparency-tell--warn">
+        Computed from {{ computed_from_events }} of an expected {{ expected_events }} events.
+        Some matches haven't been ingested yet — standings may be incomplete.
+      </p>
+    {% else %}
+      <p class="transparency-tell">
+        Computed from {{ computed_from_events }} of an expected {{ expected_events }} events.
+      </p>
+    {% endif %}
+  {% endif %}
+{% else %}
+  <div class="card analytics-empty-state">
+    <div class="card-body">
+      <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> No standings yet.</h2>
+      <p class="mb-0 text-muted">
+        Standings appear once at least one fixture has finalized in this season.
+      </p>
+    </div>
+  </div>
+{% endif %}

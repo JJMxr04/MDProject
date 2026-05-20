@@ -122,6 +122,69 @@ def disagreements(
     return {"rows": [], "threshold_pct": threshold_pct}
 
 
+def list_leagues(*, tenant_key: str | None = None) -> dict:
+    """League catalog with summary counts. Empty dict on failure."""
+    body = _get("/v1/analytics/leagues", tenant_key=tenant_key)
+    return body if isinstance(body, dict) else {}
+
+
+def league_fixtures(
+    league_id: str,
+    *,
+    season: str | None = None,
+    team_id: str | None = None,
+    tenant_key: str | None = None,
+) -> dict:
+    """Fixtures for one league + season. Empty dict on failure."""
+    params: dict[str, Any] = {}
+    if season:
+        params["season"] = season
+    if team_id:
+        params["team_id"] = team_id
+    body = _get(
+        f"/v1/analytics/leagues/{league_id}/fixtures",
+        params or None,
+        tenant_key=tenant_key,
+    )
+    return body if isinstance(body, dict) else {}
+
+
+def league_standings(
+    league_id: str,
+    *,
+    season: str | None = None,
+    tenant_key: str | None = None,
+) -> dict:
+    """Season standings computed from settled events. Empty dict on failure."""
+    params: dict[str, Any] = {}
+    if season:
+        params["season"] = season
+    body = _get(
+        f"/v1/analytics/leagues/{league_id}/standings",
+        params or None,
+        tenant_key=tenant_key,
+    )
+    return body if isinstance(body, dict) else {}
+
+
+def team_summary(
+    team_id: str,
+    *,
+    season: str | None = None,
+    tenant_key: str | None = None,
+) -> dict:
+    """Per-team summary — form, season stats, H2H. Empty dict on failure."""
+    params: dict[str, Any] = {}
+    if season:
+        params["season"] = season
+    body = _get(
+        f"/v1/analytics/teams/{team_id}/summary",
+        params or None,
+        tenant_key=tenant_key,
+    )
+    return body if isinstance(body, dict) else {}
+
+
 def event_detail(event_id: str) -> dict:
     """Plain event detail from the legacy ``/v1/events/{id}`` endpoint —
     teams / scores / status. Pairs with probabilities + best-prices for

@@ -1,0 +1,60 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+
+  <header class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3 mt-2">
+    <div>
+      <h1 class="h3 mb-1">{{ league_name }}</h1>
+      <p class="text-muted mb-0">
+        <span class="badge bg-light text-dark">{{ league_id }}</span>
+        {% if season_label %}<span class="ms-2">Season {{ season_label }}</span>{% endif %}
+      </p>
+    </div>
+    {% if seasons_available %}
+      <form method="get" class="d-flex gap-2 align-items-center">
+        <input type="hidden" name="tab" value="{{ tab }}">
+        <label class="small text-muted mb-0" for="season-select">Season</label>
+        <select id="season-select" name="season" class="form-select form-select-sm"
+                onchange="this.form.submit()" style="max-width: 180px;">
+          {% for s in seasons_available %}
+            <option value="{{ s }}" {% if s == season_label %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    {% endif %}
+  </header>
+
+  {% if seasons_available %}
+    <ul class="nav nav-tabs mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link {% if tab == 'fixtures' %}active{% endif %}"
+           href="?{% if season_label %}season={{ season_label }}&{% endif %}tab=fixtures"
+           role="tab">Fixtures</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link {% if tab == 'standings' %}active{% endif %}"
+           href="?{% if season_label %}season={{ season_label }}&{% endif %}tab=standings"
+           role="tab">Standings</a>
+      </li>
+    </ul>
+
+    {% if tab == 'fixtures' %}
+      {% include "portal/analytics/_fixtures_table.html" %}
+    {% else %}
+      {% include "portal/analytics/_standings_table.html" %}
+    {% endif %}
+  {% else %}
+    <div class="card analytics-empty-state">
+      <div class="card-body">
+        <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> No scored events for this league yet.</h2>
+        <p class="mb-0 text-muted">
+          The TheSportsDB historical backfill hasn't run for this league. An
+          admin can trigger it via <code>/ops/historical-ingest</code>.
+        </p>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}

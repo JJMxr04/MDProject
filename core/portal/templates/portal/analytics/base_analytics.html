@@ -7,19 +7,20 @@
 <nav class="subnav" aria-label="Analytics sections">
   <ul class="subnav__list nav nav-pills">
     <li class="nav-item">
-      <a class="nav-link {% if active_tab == 'tonight' %}active{% endif %}"
-         href="{% url 'core-portal:analytics-tonight' %}">Tonight</a>
+      <a class="nav-link {% if active_tab == 'explore' %}active{% endif %}"
+         href="{% url 'core-portal:analytics-landing' %}">Explore</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% if active_tab == 'teams' %}active{% endif %}"
-         href="#" tabindex="-1" aria-disabled="true"
-         title="Activates once finalized games accrue in the DB">
-        Teams <span class="badge bg-secondary ms-1">soon</span>
-      </a>
+      <a class="nav-link {% if active_tab == 'upcoming' %}active{% endif %}"
+         href="{% url 'core-portal:analytics-upcoming' %}">Upcoming</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% if active_tab == 'edge' %}active{% endif %}"
-         href="{% url 'core-portal:analytics-edge' %}">Edge</a>
+      <a class="nav-link {% if active_tab == 'picks' %}active{% endif %}"
+         href="{% url 'core-portal:analytics-picks' %}">Picks</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if active_tab == 'bets' %}active{% endif %}"
+         href="{% url 'core-portal:analytics-bets' %}">My bets</a>
     </li>
   </ul>
 </nav>

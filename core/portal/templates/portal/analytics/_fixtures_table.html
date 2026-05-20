@@ -1,0 +1,68 @@
+{% load portal_lookup %}
+{# Expects: fixtures = list, league_id, season_label #}
+{% if fixtures %}
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Home</th>
+          <th class="text-center">Score</th>
+          <th>Away</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for f in fixtures %}
+        <tr>
+          <td><small class="text-muted">{{ f.start_time|to_dt|date:"j M Y"|default:"—" }}</small></td>
+          <td>
+            {% if f.home_team %}
+              <a href="{% url 'core-portal:analytics-team' team_id=f.home_team.id %}"
+                 class="text-decoration-none">
+                {{ f.home_team.name|default:f.home_team.team_id }}
+              </a>
+            {% else %}<span class="text-muted">—</span>{% endif %}
+          </td>
+          <td class="text-center">
+            {% if f.is_finalized and f.home_score is not None %}
+              {% if f.winner_code == 3 %}
+                <em class="text-muted">{{ f.home_score }}-{{ f.away_score }}</em>
+              {% else %}
+                <strong>{{ f.home_score }}-{{ f.away_score }}</strong>
+              {% endif %}
+            {% else %}
+              <small class="text-muted">vs</small>
+            {% endif %}
+          </td>
+          <td>
+            {% if f.away_team %}
+              <a href="{% url 'core-portal:analytics-team' team_id=f.away_team.id %}"
+                 class="text-decoration-none">
+                {{ f.away_team.name|default:f.away_team.team_id }}
+              </a>
+            {% else %}<span class="text-muted">—</span>{% endif %}
+          </td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary"
+               href="{% url 'core-portal:analytics-event' event_id=f.event_id %}">Detail</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="transparency-tell">
+    {{ fixtures|length }} {% if fixtures|length == 1 %}fixture{% else %}fixtures{% endif %}
+    {% if season_label %} for season {{ season_label }}{% endif %}.
+  </p>
+{% else %}
+  <div class="card analytics-empty-state">
+    <div class="card-body">
+      <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> No fixtures in this season.</h2>
+      <p class="mb-0 text-muted">
+        Pick a different season above, or wait for the next ingest run.
+      </p>
+    </div>
+  </div>
+{% endif %}

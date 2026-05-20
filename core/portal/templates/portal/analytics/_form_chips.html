@@ -1,0 +1,17 @@
+{# Expects: form (list of {"result": "W"|"D"|"L"|"—", "opponent", "score"}) #}
+<div class="form-chips" role="list" aria-label="Last results">
+  {% for r in form %}
+    {% if r.result == 'W' %}
+      <span class="form-chip form-chip--W" role="listitem"
+            title="W vs {{ r.opponent }} ({{ r.score }})">W</span>
+    {% elif r.result == 'D' %}
+      <span class="form-chip form-chip--D" role="listitem"
+            title="D vs {{ r.opponent }} ({{ r.score }})">D</span>
+    {% elif r.result == 'L' %}
+      <span class="form-chip form-chip--L" role="listitem"
+            title="L vs {{ r.opponent }} ({{ r.score }})">L</span>
+    {% else %}
+      <span class="form-chip form-chip--unknown" role="listitem">?</span>
+    {% endif %}
+  {% endfor %}
+</div>

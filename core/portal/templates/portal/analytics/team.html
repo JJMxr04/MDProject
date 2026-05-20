@@ -1,0 +1,204 @@
+{% extends "portal/analytics/base_analytics.html" %}
+{% load portal_lookup %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+
+  <header class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3 mt-2">
+    <div class="d-flex align-items-center gap-3">
+      {% if team.logo_url %}
+        <img src="{{ team.logo_url }}" alt="" width="48" height="48" class="rounded">
+      {% endif %}
+      <div>
+        <h1 class="h3 mb-1">{{ team.name_long|default:team.canonical_name|default:team_id }}</h1>
+        <p class="text-muted mb-0">
+          {% if team.league_id %}
+            <a class="badge bg-light text-dark text-decoration-none"
+               href="{% url 'core-portal:analytics-league' league_id=team.league_id %}">{{ team.league_id }}</a>
+          {% endif %}
+          {% if season_label %}<span class="ms-2">Season {{ season_label }}</span>{% endif %}
+        </p>
+      </div>
+    </div>
+  </header>
+
+  {% if not has_data %}
+    <div class="card analytics-empty-state">
+      <div class="card-body">
+        <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> No settled events for this team yet.</h2>
+        <p class="mb-0 text-muted">
+          {% if team.league_id %}
+            The TheSportsDB historical backfill hasn't produced events for
+            {{ team.league_id }} yet. An admin can trigger it via
+            <code>/ops/historical-ingest</code>.
+          {% else %}
+            This team isn't mapped to a league with historical data.
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  {% else %}
+    <div class="row g-3">
+      {# ---- Column A: season + home/away ---- #}
+      <div class="col-lg-6">
+        <div class="card mb-3">
+          <div class="card-header"><strong>Season {{ season_label }}</strong></div>
+          <div class="card-body">
+            <div class="d-flex gap-3 align-items-baseline mb-2">
+              <div class="display-6 mb-0">
+                <span class="text-success">{{ season_stats.wins|default:0 }}</span>
+                <span class="text-muted">-</span>
+                <span class="text-secondary">{{ season_stats.draws|default:0 }}</span>
+                <span class="text-muted">-</span>
+                <span class="text-danger">{{ season_stats.losses|default:0 }}</span>
+              </div>
+            </div>
+            <p class="mb-1">
+              <strong>{{ season_stats.points|default:0 }}</strong> pts
+              {% if season_stats.rank %}
+                · rank <strong>{{ season_stats.rank }}</strong>{% if team.league_id %} in {{ team.league_id }}{% endif %}
+              {% endif %}
+            </p>
+            <p class="mb-0 small text-muted">
+              Goals for: <strong>{{ season_stats.goals_for|default:0 }}</strong> ·
+              Goals against: <strong>{{ season_stats.goals_against|default:0 }}</strong> ·
+              GD: <strong>{% if season_stats.goal_difference > 0 %}+{% endif %}{{ season_stats.goal_difference|default:0 }}</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><strong>Home vs Away</strong></div>
+          <div class="card-body">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-end">P</th>
+                  <th class="text-end">W</th>
+                  <th class="text-end">D</th>
+                  <th class="text-end">L</th>
+                  <th class="text-end">GF</th>
+                  <th class="text-end">GA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Home</strong></td>
+                  <td class="text-end">{{ home_away_split.home.played|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.home.wins|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.home.draws|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.home.losses|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.home.goals_for|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.home.goals_against|default:0 }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Away</strong></td>
+                  <td class="text-end">{{ home_away_split.away.played|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.away.wins|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.away.draws|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.away.losses|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.away.goals_for|default:0 }}</td>
+                  <td class="text-end">{{ home_away_split.away.goals_against|default:0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {# ---- Column B: form + (elo when live) ---- #}
+      <div class="col-lg-6">
+        <div class="card mb-3">
+          <div class="card-header"><strong>Form — last {{ form_last_10|length }}</strong></div>
+          <div class="card-body">
+            {% if form_last_10 %}
+              {% include "portal/analytics/_form_chips.html" with form=form_last_10 %}
+            {% else %}
+              <p class="text-muted mb-0">No recent results.</p>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if elo %}
+          <div class="card">
+            <div class="card-header"><strong>Elo rating</strong></div>
+            <div class="card-body">
+              <p class="mb-2">
+                Current <strong>{{ elo.current }}</strong>
+                {% if elo.league_rank_by_elo %}· rank {{ elo.league_rank_by_elo }}{% endif %}
+              </p>
+              <p class="small text-muted mb-0">
+                Season high {{ elo.season_high }} · season low {{ elo.season_low }}
+              </p>
+            </div>
+          </div>
+        {% else %}
+          <div class="card analytics-empty-state">
+            <div class="card-body">
+              <h6 class="mb-1"><i class="bi bi-clock me-1" aria-hidden="true"></i> Elo coming in Phase B</h6>
+              <p class="small mb-0 text-muted">
+                Soccer Elo + Poisson model lands once Phase B ships. Other
+                sports get their own model when those pipelines come online.
+              </p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {# ---- Recent results table ---- #}
+    <div class="card mt-3">
+      <div class="card-header"><strong>Recent results</strong></div>
+      <div class="card-body p-0">
+        <table class="table table-sm table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Venue</th>
+              <th>Opponent</th>
+              <th class="text-center">Score</th>
+              <th class="text-center">Result</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for r in form_last_10 %}
+            <tr>
+              <td><small class="text-muted">{{ r.start_time|to_dt|date:"j M Y"|default:"—" }}</small></td>
+              <td class="small">{{ r.venue }}</td>
+              <td>
+                {% if r.opponent_id %}
+                  <a href="{% url 'core-portal:analytics-team' team_id=r.opponent_id %}"
+                     class="text-decoration-none">{{ r.opponent }}</a>
+                {% else %}{{ r.opponent }}{% endif %}
+              </td>
+              <td class="text-center"><strong>{{ r.score }}</strong></td>
+              <td class="text-center">
+                {% if r.result == 'W' %}<span class="badge bg-success">W</span>
+                {% elif r.result == 'D' %}<span class="badge bg-secondary">D</span>
+                {% elif r.result == 'L' %}<span class="badge bg-danger">L</span>
+                {% else %}<span class="text-muted">—</span>{% endif %}
+              </td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary"
+                   href="{% url 'core-portal:analytics-event' event_id=r.event_id %}">Detail</a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {# ---- H2H section ---- #}
+    {% if h2h_recent %}
+      <h2 class="h5 mt-4 mb-2">Head-to-head — last 5 opponents</h2>
+      {% for block in h2h_recent %}
+        {% include "portal/analytics/_h2h_block.html" with block=block %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock content %}

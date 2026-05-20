@@ -1,0 +1,39 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+
+  <header class="mb-4 mt-2">
+    {% if event and event.home_team %}
+      <h1 class="h3 mb-1">
+        {{ event.away_team.name|default:event.away_team.team_id }}
+        <span class="text-muted">@</span>
+        {{ event.home_team.name|default:event.home_team.team_id }}
+      </h1>
+      <p class="text-muted mb-0">
+        <span class="badge bg-light text-dark">{{ event.league_id|default:"—" }}</span>
+        <span class="ms-2">{{ event.start_time|default:"" }}</span>
+        <span class="ms-2 text-uppercase">{{ event.status_display|default:event.status_type|default:"—" }}</span>
+        {% if event.home_score is not None %}
+          <span class="ms-3">Score: {{ event.away_score }} – {{ event.home_score }}</span>
+        {% endif %}
+      </p>
+    {% else %}
+      <h1 class="h3">Event {{ event_id }}</h1>
+    {% endif %}
+  </header>
+
+  <div class="card analytics-empty-state">
+    <div class="card-body">
+      <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Detail view lands in Phase B</h2>
+      <p class="mb-0 text-muted">
+        Past events will show the final score and post-hoc model probabilities;
+        future events will show the soccer Elo + Poisson model output next to
+        live odds from odds-api.io. See
+        <code>plans/analytics/dashboard_and_data/05-event-detail.md</code>.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

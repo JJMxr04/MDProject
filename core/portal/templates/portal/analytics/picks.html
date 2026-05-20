@@ -1,0 +1,25 @@
+{% extends "portal/analytics/base_analytics.html" %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+  <header class="mb-3 mt-2">
+    <h1 class="h3 mb-0">Picks (+EV)</h1>
+    <p class="text-muted mb-0">
+      Upcoming events where the model's probability beats the market by at least
+      {{ threshold_pp|floatformat:0 }} percentage points.
+    </p>
+  </header>
+
+  <div class="card analytics-empty-state">
+    <div class="card-body">
+      <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Coming in Phase C</h2>
+      <p class="mb-0 text-muted">
+        Lands once the model + live-odds pipeline is in place. No model
+        recommendations or auto-bet — just a filterable list with model
+        prob vs market implied prob.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

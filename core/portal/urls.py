@@ -16,9 +16,17 @@ urlpatterns = [
     path('dashboard/', views.portal_dashboard, name='portal-dashboard'),
     path('rules/', views.rules_view, name='portal-rules'),
     path('availability/', views.availability_view, name='portal-availability'),
-    path('analytics/', views.analytics_tonight, name='analytics-tonight'),
-    path('analytics/event/<str:event_id>/', views.analytics_tonight_detail, name='analytics-tonight-detail'),
-    path('analytics/edge/', views.analytics_edge, name='analytics-edge'),
+    # Analytics — score-driven explore + decision dashboard. Default
+    # landing is the league browser (Explore); Tonight / Edge were
+    # removed in the 2026-05-19 redesign (see
+    # plans/analytics/dashboard_and_data/01-information-architecture.md).
+    path('analytics/', views.analytics_landing, name='analytics-landing'),
+    path('analytics/upcoming/', views.analytics_upcoming, name='analytics-upcoming'),
+    path('analytics/picks/', views.analytics_picks, name='analytics-picks'),
+    path('analytics/bets/', views.analytics_bets, name='analytics-bets'),
+    path('analytics/league/<str:league_id>/', views.analytics_league, name='analytics-league'),
+    path('analytics/team/<path:team_id>/', views.analytics_team, name='analytics-team'),
+    path('analytics/event/<str:event_id>/', views.analytics_event, name='analytics-event'),
     path('billing/', include('core.billing.urls')),
     path('event/', include(eventUrls)), # Ensure this line is correct
     path('match/', include(matchUrls)),

@@ -1,0 +1,77 @@
+{% extends "portal/analytics/base_analytics.html" %}
+{% load portal_lookup %}
+
+{% block content %}
+<div class="container-fluid py-3">
+  {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
+
+  <header class="mb-3 mt-2">
+    <h1 class="h3 mb-0">Explore</h1>
+    <p class="text-muted mb-0">
+      Pick a league to browse fixtures, season tables, and team form.
+      Leagues with no data yet appear muted — they light up once the
+      historical backfill runs.
+    </p>
+  </header>
+
+  {% if leagues %}
+    <div class="row g-3">
+      {% for lg in leagues %}
+        <div class="col-md-6 col-xl-4">
+          {% if lg.event_count > 0 %}
+            <a class="league-card text-decoration-none"
+               href="{% url 'core-portal:analytics-league' league_id=lg.id %}"
+               aria-label="Browse {{ lg.name }}">
+              <span class="league-card__id">{{ lg.id }}</span>
+              <h2 class="league-card__name">{{ lg.name }}</h2>
+              <div class="league-card__meta">
+                <span><strong>{{ lg.event_count }}</strong> events</span>
+                <span><strong>{{ lg.team_count }}</strong> teams</span>
+                {% if lg.last_event_at %}
+                  <span>Last: {{ lg.last_event_at|to_dt|date:"j M Y" }}</span>
+                {% endif %}
+              </div>
+              {% if lg.seasons_available %}
+                <div class="league-card__meta">
+                  Seasons: {{ lg.seasons_available|join:", " }}
+                </div>
+              {% endif %}
+              <span class="league-card__cta text-primary small fw-semibold">
+                Browse fixtures →
+              </span>
+            </a>
+          {% else %}
+            <div class="league-card league-card--empty"
+                 title="The TheSportsDB backfill hasn't run for this league yet.">
+              <span class="league-card__id">{{ lg.id }}</span>
+              <h2 class="league-card__name">{{ lg.name }}</h2>
+              <div class="league-card__meta">
+                <span><strong>0</strong> events</span>
+                <span><strong>{{ lg.team_count }}</strong> teams</span>
+              </div>
+              <div class="league-card__meta">
+                {% if lg.can_pull_historical_scores %}
+                  Backfill not yet run.
+                {% else %}
+                  No historical source mapped yet.
+                {% endif %}
+              </div>
+              <span class="league-card__cta small">Coming soon</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="card analytics-empty-state">
+      <div class="card-body">
+        <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> No leagues found</h2>
+        <p class="mb-0 text-muted">
+          The aggrigator returned no league rows. Either the registry hasn't
+          been seeded, or <code>AGGRIGATOR_BASE_URL</code> is misconfigured.
+        </p>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}
