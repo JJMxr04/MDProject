@@ -1,0 +1,59 @@
+{% load portal_lookup %}
+{# Expects: ev = upcoming row dict, show_pick_columns = bool (Picks view) #}
+<tr>
+  <td>
+    <div class="small text-muted">{{ ev.start_time|to_dt|date:"D, j M" }}</div>
+    <div>{{ ev.start_time|to_dt|date:"H:i" }} UTC</div>
+  </td>
+  <td>
+    {% if ev.league_id %}
+      <a class="badge bg-light text-dark text-decoration-none"
+         href="{% url 'core-portal:analytics-league' league_id=ev.league_id %}">{{ ev.league_id }}</a>
+    {% else %}<span class="text-muted">—</span>{% endif %}
+  </td>
+  <td>
+    <a href="{% url 'core-portal:analytics-event' event_id=ev.event_id %}"
+       class="text-decoration-none fw-semibold">
+      {{ ev.home_team.name|default:"?" }}
+      <span class="text-muted fw-normal mx-1">vs</span>
+      {{ ev.away_team.name|default:"?" }}
+    </a>
+  </td>
+  <td class="text-end">
+    {% if ev.model_prob %}
+      <span class="font-monospace small">
+        {% widthratio ev.model_prob.p_home 1 100 %} /
+        {% widthratio ev.model_prob.p_draw 1 100 %} /
+        {% widthratio ev.model_prob.p_away 1 100 %}
+      </span>
+    {% else %}
+      <span class="text-muted" title="Model output not yet computed">—</span>
+    {% endif %}
+  </td>
+  <td class="text-center">
+    {% if ev.has_live_odds %}
+      <i class="bi bi-check-circle-fill text-success" aria-label="Live odds available"></i>
+    {% else %}
+      <span class="text-muted" aria-label="No live odds">—</span>
+    {% endif %}
+  </td>
+  <td>
+    {% if ev.best_edge %}
+      <span class="badge {% if ev.best_edge.edge_pp >= 3 %}bg-success{% else %}bg-light text-dark{% endif %}">
+        {% if ev.best_edge.edge_pp > 0 %}+{% endif %}{{ ev.best_edge.edge_pp|floatformat:1 }} pp
+      </span>
+      <span class="text-uppercase small ms-1">{{ ev.best_edge.side }}</span>
+      {% if show_pick_columns %}
+        <div class="small text-muted">
+          {{ ev.best_edge.best_decimal|floatformat:2 }} @ {{ ev.best_edge.best_bookmaker|default:"?" }}
+        </div>
+      {% endif %}
+    {% else %}
+      <span class="text-muted">—</span>
+    {% endif %}
+  </td>
+  <td class="text-end">
+    <a class="btn btn-sm btn-outline-primary"
+       href="{% url 'core-portal:analytics-event' event_id=ev.event_id %}">Detail</a>
+  </td>
+</tr>

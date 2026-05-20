@@ -128,14 +128,19 @@ def analytics_team(request, team_id: str):
 @require_paid
 def analytics_event(request, event_id: str):
     """Event detail. Past events render score + post-hoc model + form + H2H;
-    future events render model + form (live odds slot is a Phase C
-    placeholder until the odds-api.io proxy ships)."""
+    future events also render the live-odds card + per-side edge."""
     key = _tenant_key(request)
     event = aggrigator_client.event_detail(event_id)
     model_prob = aggrigator_client.event_probabilities(event_id, tenant_key=key)
     context = aggrigator_client.event_context(event_id, tenant_key=key)
 
     is_finalized = bool(event.get("is_finalized")) if event else False
+    live_odds = None
+    edge_rows: list[dict] = []
+    if not is_finalized and event:
+        live_odds = aggrigator_client.event_live_odds(event_id, tenant_key=key)
+        edge_rows = _build_edge_rows(model_prob, live_odds)
+
     league_id = event.get("league_id") if event else None
     crumbs = [{"label": "Analytics", "href": "/web/portal/analytics/"}]
     if league_id:
@@ -152,16 +157,94 @@ def analytics_event(request, event_id: str):
         "model_prob": model_prob,
         "form_into_match": context.get("form_into_match") or {},
         "h2h_last_5": context.get("h2h_last_5") or [],
+        "live_odds": live_odds,
+        "edge_rows": edge_rows,
         "active_tab": "explore",
         "crumbs": crumbs,
     }
     return render(request, "portal/analytics/event.html", ctx)
 
 
+def _build_edge_rows(model_prob: dict, live_odds: dict) -> list[dict]:
+    """Build per-side edge rows for the model-vs-market table.
+
+    Each row carries the model prob, the vig-adjusted market prob,
+    the signed edge in percentage points, and the best price for that
+    side. Returns ``[]`` when either input is missing the data we need
+    so the template can render the live-odds-empty path instead."""
+    if not model_prob or model_prob.get("p_home") is None:
+        return []
+    if not live_odds:
+        return []
+    ml_markets = [m for m in (live_odds.get("markets") or []) if m.get("market_type") == "moneyline"]
+    if not ml_markets:
+        return []
+    ml = ml_markets[0]
+    vig_adj = ml.get("vig_adjusted_implied") or {}
+    best_by_side = {bp.get("side"): bp for bp in (ml.get("best_prices") or [])}
+    model_by_side = {
+        "home": model_prob.get("p_home"),
+        "draw": model_prob.get("p_draw"),
+        "away": model_prob.get("p_away"),
+    }
+    rows: list[dict] = []
+    for side in ("home", "draw", "away"):
+        market_p = vig_adj.get(side)
+        model_p = model_by_side.get(side)
+        if market_p is None or model_p is None:
+            continue
+        bp = best_by_side.get(side)
+        rows.append({
+            "side": side,
+            "model_prob": model_p,
+            "market_prob": market_p,
+            "edge_pp": (model_p - market_p) * 100.0,
+            "best_decimal": bp.get("decimal_odds") if bp else None,
+            "best_bookmaker": bp.get("bookmaker_name") if bp else None,
+            "best_deeplink": bp.get("deeplink") if bp else None,
+        })
+    return rows
+
+
+_WINDOW_OPTIONS = (
+    (24, "Next 24h"),
+    (72, "Next 72h"),
+    (168, "Next 7 days"),
+)
+
+
+def _parse_window(raw: str | None, default: int = 72) -> int:
+    try:
+        h = int(raw) if raw else default
+    except ValueError:
+        return default
+    return h if 1 <= h <= 168 else default
+
+
+def _league_options(tenant_key: str | None) -> list[dict]:
+    """Pull the league catalog for the filter dropdown. Empty list if
+    the aggrigator is unreachable."""
+    payload = aggrigator_client.list_leagues(tenant_key=tenant_key)
+    return payload.get("leagues") or []
+
+
 @require_paid
 def analytics_upcoming(request):
-    """Phase C — placeholder. Next-24h fixtures with model prob + live odds."""
+    """Upcoming events list — model probability + live-odds badge per row."""
+    key = _tenant_key(request)
+    league = request.GET.get("league") or None
+    hours_ahead = _parse_window(request.GET.get("hours_ahead"))
+    payload = aggrigator_client.events_today(
+        league=league, hours_ahead=hours_ahead, tenant_key=key,
+    )
     ctx = {
+        "events": payload.get("events", []),
+        "window_from": payload.get("from"),
+        "window_to": payload.get("to"),
+        "selected_league": league or "",
+        "selected_hours": hours_ahead,
+        "league_options": _league_options(key),
+        "window_options": _WINDOW_OPTIONS,
         "active_tab": "upcoming",
         "crumbs": [
             {"label": "Analytics", "href": "/web/portal/analytics/"},
@@ -173,13 +256,27 @@ def analytics_upcoming(request):
 
 @require_paid
 def analytics_picks(request):
-    """Phase C — placeholder. +EV pick filter on top of /upcoming/."""
+    """+EV picks — same data as Upcoming, filtered by best_edge ≥ threshold."""
+    key = _tenant_key(request)
+    league = request.GET.get("league") or None
+    hours_ahead = _parse_window(request.GET.get("hours_ahead"))
     try:
         threshold_pp = float(request.GET.get("threshold_pp") or 3.0)
     except ValueError:
         threshold_pp = 3.0
+    payload = aggrigator_client.picks(
+        threshold_pp=threshold_pp, league=league,
+        hours_ahead=hours_ahead, tenant_key=key,
+    )
     ctx = {
-        "threshold_pp": threshold_pp,
+        "events": payload.get("events", []),
+        "window_from": payload.get("from"),
+        "window_to": payload.get("to"),
+        "threshold_pp": payload.get("threshold_pp", threshold_pp),
+        "selected_league": league or "",
+        "selected_hours": hours_ahead,
+        "league_options": _league_options(key),
+        "window_options": _WINDOW_OPTIONS,
         "active_tab": "picks",
         "crumbs": [
             {"label": "Analytics", "href": "/web/portal/analytics/"},

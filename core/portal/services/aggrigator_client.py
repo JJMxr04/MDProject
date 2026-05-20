@@ -67,19 +67,55 @@ def _get(
 
 def events_today(
     *,
-    sport: str | None = None,
     league: str | None = None,
-    hours_ahead: int = 24,
+    hours_ahead: int = 72,
     tenant_key: str | None = None,
-) -> list[dict]:
-    """Return the Tonight list. Empty list on failure or no events."""
+) -> dict:
+    """Upcoming events with model_prob + has_live_odds + best_edge per row.
+
+    Returns ``{from, to, events: [...]}`` or empty dict on transport
+    failure. Per the 2026-05-19 redesign — see
+    plans/analytics/dashboard_and_data/06-upcoming-and-picks.md."""
     params: dict[str, Any] = {"hours_ahead": hours_ahead}
-    if sport:
-        params["sport"] = sport
     if league:
         params["league"] = league
     body = _get("/v1/analytics/events/today", params, tenant_key=tenant_key)
-    return body if isinstance(body, list) else []
+    if isinstance(body, dict):
+        return body
+    return {"from": None, "to": None, "events": []}
+
+
+def picks(
+    *,
+    threshold_pp: float = 3.0,
+    league: str | None = None,
+    hours_ahead: int = 72,
+    tenant_key: str | None = None,
+) -> dict:
+    """Threshold-filtered subset of /events/today, sorted by edge DESC."""
+    params: dict[str, Any] = {
+        "threshold_pp": threshold_pp,
+        "hours_ahead": hours_ahead,
+    }
+    if league:
+        params["league"] = league
+    body = _get("/v1/analytics/picks", params, tenant_key=tenant_key)
+    if isinstance(body, dict):
+        return body
+    return {"from": None, "to": None, "threshold_pp": threshold_pp, "events": []}
+
+
+def event_live_odds(event_id: str, *, tenant_key: str | None = None) -> dict:
+    """Best price per side + vig-adjusted implied probs for one event.
+
+    Returns ``{event_id, fetched_at, markets, reason}`` or empty dict on
+    transport failure. ``markets=[]`` plus a populated ``reason`` is the
+    standard no-coverage path."""
+    body = _get(
+        f"/v1/analytics/events/{event_id}/live-odds",
+        tenant_key=tenant_key,
+    )
+    return body if isinstance(body, dict) else {}
 
 
 def event_probabilities(event_id: str, *, tenant_key: str | None = None) -> dict:

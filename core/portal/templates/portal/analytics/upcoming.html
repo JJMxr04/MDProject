@@ -1,21 +1,72 @@
 {% extends "portal/analytics/base_analytics.html" %}
+{% load portal_lookup %}
 
 {% block content %}
 <div class="container-fluid py-3">
   {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
-  <header class="mb-3 mt-2">
-    <h1 class="h3 mb-0">Upcoming</h1>
-    <p class="text-muted mb-0">Events in the next 24-72 hours with model probabilities and live odds.</p>
-  </header>
 
-  <div class="card analytics-empty-state">
-    <div class="card-body">
-      <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Coming in Phase C</h2>
-      <p class="mb-0 text-muted">
-        This page waits on the soccer probability model (Phase B) and the live-odds
-        proxy. See <code>plans/analytics/dashboard_and_data/06-upcoming-and-picks.md</code>.
+  <header class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3 mt-2">
+    <div>
+      <h1 class="h3 mb-0">Upcoming</h1>
+      <p class="text-muted mb-0">
+        {% if window_from %}
+          {{ window_from|to_dt|date:"j M H:i" }} — {{ window_to|to_dt|date:"j M H:i" }} UTC
+        {% endif %}
       </p>
     </div>
-  </div>
+    <form method="get" class="d-flex flex-wrap gap-2 align-items-center">
+      <label class="small text-muted mb-0" for="upcoming-league">League</label>
+      <select id="upcoming-league" name="league" class="form-select form-select-sm" onchange="this.form.submit()" style="max-width: 160px;">
+        <option value="">All leagues</option>
+        {% for lg in league_options %}
+          <option value="{{ lg.id }}" {% if lg.id == selected_league %}selected{% endif %}>{{ lg.id }}</option>
+        {% endfor %}
+      </select>
+      <label class="small text-muted mb-0" for="upcoming-window">Window</label>
+      <select id="upcoming-window" name="hours_ahead" class="form-select form-select-sm" onchange="this.form.submit()" style="max-width: 160px;">
+        {% for h, label in window_options %}
+          <option value="{{ h }}" {% if h == selected_hours %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </header>
+
+  {% if events %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Kickoff</th>
+            <th>League</th>
+            <th>Match</th>
+            <th class="text-end">Model H/D/A</th>
+            <th class="text-center">Live odds</th>
+            <th>Best edge</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for ev in events %}
+          {% include "portal/analytics/_upcoming_row.html" with ev=ev show_pick_columns=False %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="transparency-tell mb-0">
+      {{ events|length }} event{{ events|length|pluralize }}.
+      Model output is computed on demand from settled events; live-odds ✓
+      means the ingest cron has populated bookmaker prices for that match.
+    </p>
+  {% else %}
+    <div class="card analytics-empty-state">
+      <div class="card-body">
+        <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> No upcoming events.</h2>
+        <p class="mb-0 text-muted">
+          Either no fixtures in this window/league, or the live ingest hasn't
+          populated upcoming events yet. Try a wider window or "All leagues."
+        </p>
+      </div>
+    </div>
+  {% endif %}
 </div>
 {% endblock content %}

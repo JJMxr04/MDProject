@@ -129,19 +129,75 @@
         </div>
       </div>
 
-      {# ---- Future events: live odds slot (Phase C) ---- #}
+      {# ---- Future events: live odds + model-vs-market edge ---- #}
       {% if not is_past %}
         <div class="col-lg-6">
-          <div class="card analytics-empty-state h-100">
-            <div class="card-body">
-              <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Live odds — Phase C</h2>
-              <p class="mb-0 text-muted">
-                The odds-api.io proxy ships with /upcoming/ and /picks/ in Phase C.
-                Once it's live, the best price per book + a model-vs-market
-                edge column will appear here.
-              </p>
+          {% if edge_rows %}
+            <div class="card h-100">
+              <div class="card-header"><strong>Model vs market</strong></div>
+              <div class="card-body p-0">
+                <table class="table table-sm align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Side</th>
+                      <th class="text-end">Model</th>
+                      <th class="text-end">Market</th>
+                      <th class="text-end">Edge</th>
+                      <th>Best price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for r in edge_rows %}
+                    <tr>
+                      <td class="text-uppercase small">{{ r.side }}</td>
+                      <td class="text-end">{% widthratio r.model_prob 1 100 %}%</td>
+                      <td class="text-end">{% widthratio r.market_prob 1 100 %}%</td>
+                      <td class="text-end">
+                        <span class="badge {% if r.edge_pp >= 3 %}bg-success{% elif r.edge_pp >= 0 %}bg-light text-dark{% else %}bg-light text-muted{% endif %}">
+                          {% if r.edge_pp > 0 %}+{% endif %}{{ r.edge_pp|floatformat:1 }} pp
+                        </span>
+                      </td>
+                      <td>
+                        {% if r.best_decimal %}
+                          <strong>{{ r.best_decimal|floatformat:2 }}</strong>
+                          <span class="small text-muted">@ {{ r.best_bookmaker|default:"?" }}</span>
+                          {% if r.best_deeplink %}
+                            <a href="{{ r.best_deeplink }}" target="_blank" rel="noopener"
+                               class="small ms-1" aria-label="Open at {{ r.best_bookmaker }}">↗</a>
+                          {% endif %}
+                        {% else %}<span class="text-muted">—</span>{% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% if live_odds.fetched_at %}
+                <div class="card-footer transparency-tell mb-0">
+                  Live odds last refreshed by the ingest cron — data freshness depends on the league's cadence.
+                  Fetched at {{ live_odds.fetched_at|to_dt|date:"j M H:i" }} UTC.
+                </div>
+              {% endif %}
             </div>
-          </div>
+          {% else %}
+            <div class="card analytics-empty-state h-100">
+              <div class="card-body">
+                <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> Live odds not available</h2>
+                <p class="mb-0 text-muted">
+                  {% if live_odds.reason == 'no_markets_for_event' %}
+                    The ingest cron hasn't populated bookmaker prices for this event yet.
+                    Check back closer to kickoff — most books open lines ~5 days out.
+                  {% elif live_odds.reason == 'no_books_cover_event' %}
+                    No tracked bookmakers carry this event right now.
+                  {% elif model_prob.p_home is None %}
+                    Model probabilities aren't available yet, so the edge table can't render.
+                  {% else %}
+                    No live odds for this event.
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          {% endif %}
         </div>
       {% endif %}
 
