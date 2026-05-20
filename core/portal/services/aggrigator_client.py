@@ -83,9 +83,23 @@ def events_today(
 
 
 def event_probabilities(event_id: str, *, tenant_key: str | None = None) -> dict:
-    """Return ``{event_id, markets: [...]}`` or empty dict on failure."""
+    """Model-derived match probabilities for one event.
+
+    Returns ``{event_id, p_home, p_draw, p_away, model_version,
+    computed_at, model_inputs, is_pre_match_snapshot, reason}`` or
+    empty dict on transport failure. ``model_version`` is null when the
+    sport has no model yet (Phase B is soccer-only)."""
     body = _get(
         f"/v1/analytics/events/{event_id}/probabilities",
+        tenant_key=tenant_key,
+    )
+    return body if isinstance(body, dict) else {}
+
+
+def event_context(event_id: str, *, tenant_key: str | None = None) -> dict:
+    """Form-into-match + H2H for the event detail page. Empty dict on failure."""
+    body = _get(
+        f"/v1/analytics/events/{event_id}/context",
         tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}

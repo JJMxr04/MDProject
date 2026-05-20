@@ -1,39 +1,225 @@
 {% extends "portal/analytics/base_analytics.html" %}
+{% load portal_lookup %}
 
 {% block content %}
 <div class="container-fluid py-3">
   {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
 
-  <header class="mb-4 mt-2">
-    {% if event and event.home_team %}
+  {# ---- Event header ---- #}
+  <header class="mb-3 mt-2">
+    {% if event.home_team and event.away_team %}
       <h1 class="h3 mb-1">
-        {{ event.away_team.name|default:event.away_team.team_id }}
-        <span class="text-muted">@</span>
         {{ event.home_team.name|default:event.home_team.team_id }}
+        {% if is_past and event.home_score is not None %}
+          <span class="mx-2 fw-bold">{{ event.home_score }}–{{ event.away_score }}</span>
+        {% else %}
+          <span class="mx-2 text-muted">vs</span>
+        {% endif %}
+        {{ event.away_team.name|default:event.away_team.team_id }}
       </h1>
       <p class="text-muted mb-0">
-        <span class="badge bg-light text-dark">{{ event.league_id|default:"—" }}</span>
-        <span class="ms-2">{{ event.start_time|default:"" }}</span>
-        <span class="ms-2 text-uppercase">{{ event.status_display|default:event.status_type|default:"—" }}</span>
-        {% if event.home_score is not None %}
-          <span class="ms-3">Score: {{ event.away_score }} – {{ event.home_score }}</span>
+        {% if event.start_time %}{{ event.start_time|to_dt|date:"j M Y · H:i" }} UTC{% endif %}
+        {% if event.league_id %}
+          · <a href="{% url 'core-portal:analytics-league' league_id=event.league_id %}"
+                class="text-decoration-none">{{ event.league_id }}</a>
+        {% endif %}
+        {% if event.season_label %} · Season {{ event.season_label }}{% endif %}
+        {% if event.status_display %}
+          · <span class="text-uppercase small">{{ event.status_display }}</span>
         {% endif %}
       </p>
     {% else %}
       <h1 class="h3">Event {{ event_id }}</h1>
+      <div class="card analytics-empty-state mt-3">
+        <div class="card-body">
+          <h2 class="h5 mb-0"><i class="bi bi-database me-1" aria-hidden="true"></i> Event not found.</h2>
+        </div>
+      </div>
     {% endif %}
   </header>
 
-  <div class="card analytics-empty-state">
-    <div class="card-body">
-      <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Detail view lands in Phase B</h2>
-      <p class="mb-0 text-muted">
-        Past events will show the final score and post-hoc model probabilities;
-        future events will show the soccer Elo + Poisson model output next to
-        live odds from odds-api.io. See
-        <code>plans/analytics/dashboard_and_data/05-event-detail.md</code>.
-      </p>
+  {% if event.home_team %}
+    <div class="row g-3">
+      {# ---- Model probabilities ---- #}
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-header">
+            <strong>
+              {% if is_past %}Model said (post-hoc){% else %}Model says{% endif %}
+            </strong>
+          </div>
+          <div class="card-body">
+            {% if model_prob.p_home is not None %}
+              <table class="table table-sm align-middle mb-2">
+                <tbody>
+                  <tr>
+                    <td>Home win</td>
+                    <td class="text-end"><strong>{{ model_prob.p_home|floatformat:"-3" }}</strong></td>
+                    <td class="text-end small text-muted">
+                      {% widthratio model_prob.p_home 1 100 %}%
+                    </td>
+                    {% if is_past %}
+                      <td class="text-center">
+                        {% if event.winner_code == 1 %}<i class="bi bi-check-circle-fill text-success" aria-label="actual"></i>{% endif %}
+                      </td>
+                    {% endif %}
+                  </tr>
+                  <tr>
+                    <td>Draw</td>
+                    <td class="text-end"><strong>{{ model_prob.p_draw|floatformat:"-3" }}</strong></td>
+                    <td class="text-end small text-muted">{% widthratio model_prob.p_draw 1 100 %}%</td>
+                    {% if is_past %}
+                      <td class="text-center">
+                        {% if event.winner_code == 3 %}<i class="bi bi-check-circle-fill text-success" aria-label="actual"></i>{% endif %}
+                      </td>
+                    {% endif %}
+                  </tr>
+                  <tr>
+                    <td>Away win</td>
+                    <td class="text-end"><strong>{{ model_prob.p_away|floatformat:"-3" }}</strong></td>
+                    <td class="text-end small text-muted">{% widthratio model_prob.p_away 1 100 %}%</td>
+                    {% if is_past %}
+                      <td class="text-center">
+                        {% if event.winner_code == 2 %}<i class="bi bi-check-circle-fill text-success" aria-label="actual"></i>{% endif %}
+                      </td>
+                    {% endif %}
+                  </tr>
+                </tbody>
+              </table>
+              <p class="transparency-tell mb-0">
+                Model: {{ model_prob.model_version }}{% if model_prob.is_pre_match_snapshot %} ·
+                  pre-match snapshot{% endif %}{% if model_prob.computed_at %} ·
+                  computed {{ model_prob.computed_at|to_dt|date:"j M Y H:i" }} UTC{% endif %}.
+              </p>
+              {% if model_prob.model_inputs %}
+                <details class="small text-muted mt-2">
+                  <summary>Model inputs</summary>
+                  <ul class="mb-0 ps-3">
+                    <li>Home Elo: {{ model_prob.model_inputs.home_elo|floatformat:0 }}</li>
+                    <li>Away Elo: {{ model_prob.model_inputs.away_elo|floatformat:0 }}</li>
+                    <li>μ home: {{ model_prob.model_inputs.mu_home|floatformat:2 }}</li>
+                    <li>μ away: {{ model_prob.model_inputs.mu_away|floatformat:2 }}</li>
+                    <li>n events used: {{ model_prob.model_inputs.n_events_in_league }}</li>
+                  </ul>
+                </details>
+              {% endif %}
+            {% else %}
+              <div class="analytics-empty-state p-3 rounded">
+                {% if model_prob.reason == 'no_model_for_sport' %}
+                  <strong>Model coming soon.</strong>
+                  <p class="small mb-0 text-muted">
+                    Only soccer events have a model in v1. Other sports light up
+                    once their pipelines land.
+                  </p>
+                {% elif model_prob.reason == 'no_settled_events_in_league' %}
+                  <strong>Not enough history yet.</strong>
+                  <p class="small mb-0 text-muted">
+                    The model needs settled events in this league to compute
+                    team ratings.
+                  </p>
+                {% else %}
+                  <strong>Model output unavailable.</strong>
+                  <p class="small mb-0 text-muted">
+                    Missing event context — league or teams aren't fully wired.
+                  </p>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {# ---- Future events: live odds slot (Phase C) ---- #}
+      {% if not is_past %}
+        <div class="col-lg-6">
+          <div class="card analytics-empty-state h-100">
+            <div class="card-body">
+              <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Live odds — Phase C</h2>
+              <p class="mb-0 text-muted">
+                The odds-api.io proxy ships with /upcoming/ and /picks/ in Phase C.
+                Once it's live, the best price per book + a model-vs-market
+                edge column will appear here.
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {# ---- Form into match ---- #}
+      {% if form_into_match.home_last_5 or form_into_match.away_last_5 %}
+        <div class="{% if is_past %}col-lg-6{% else %}col-12{% endif %}">
+          <div class="card h-100">
+            <div class="card-header"><strong>Form going in</strong></div>
+            <div class="card-body">
+              <div class="d-flex flex-column gap-2">
+                <div class="d-flex align-items-center gap-3">
+                  <span class="fw-semibold" style="min-width: 12rem;">
+                    {{ event.home_team.name|default:event.home_team.team_id }}
+                    <small class="text-muted">(home)</small>
+                  </span>
+                  {% include "portal/analytics/_form_chips.html" with form_letters=form_into_match.home_last_5 %}
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <span class="fw-semibold" style="min-width: 12rem;">
+                    {{ event.away_team.name|default:event.away_team.team_id }}
+                    <small class="text-muted">(away)</small>
+                  </span>
+                  {% include "portal/analytics/_form_chips.html" with form_letters=form_into_match.away_last_5 %}
+                </div>
+              </div>
+              <p class="transparency-tell mb-0 mt-2">
+                Form is each team's last 5 settled results strictly before
+                this kickoff.
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {# ---- H2H (past only — also makes sense for future, but plan scopes to past) ---- #}
+      {% if h2h_last_5 %}
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <strong>Head-to-head — last {{ h2h_last_5|length }}</strong>
+            </div>
+            <div class="card-body p-0">
+              <table class="table table-sm table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th class="text-center">Score</th>
+                    <th>Away</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for h in h2h_last_5 %}
+                  <tr>
+                    <td><small class="text-muted">{{ h.start_time|to_dt|date:"j M Y" }}</small></td>
+                    <td>{{ h.home_team.name|default:"—" }}</td>
+                    <td class="text-center">
+                      {% if h.winner_code == 3 %}
+                        <em class="text-muted">{{ h.home_score }}-{{ h.away_score }}</em>
+                      {% else %}
+                        <strong>{{ h.home_score }}-{{ h.away_score }}</strong>
+                      {% endif %}
+                    </td>
+                    <td>{{ h.away_team.name|default:"—" }}</td>
+                    <td class="text-end">
+                      <a class="btn btn-sm btn-link p-0"
+                         href="{% url 'core-portal:analytics-event' event_id=h.event_id %}">Detail</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
-  </div>
+  {% endif %}
 </div>
 {% endblock content %}

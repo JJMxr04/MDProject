@@ -127,16 +127,33 @@ def analytics_team(request, team_id: str):
 
 @require_paid
 def analytics_event(request, event_id: str):
-    """Phase B — placeholder. Past = score; future = model + live odds."""
+    """Event detail. Past events render score + post-hoc model + form + H2H;
+    future events render model + form (live odds slot is a Phase C
+    placeholder until the odds-api.io proxy ships)."""
+    key = _tenant_key(request)
     event = aggrigator_client.event_detail(event_id)
+    model_prob = aggrigator_client.event_probabilities(event_id, tenant_key=key)
+    context = aggrigator_client.event_context(event_id, tenant_key=key)
+
+    is_finalized = bool(event.get("is_finalized")) if event else False
+    league_id = event.get("league_id") if event else None
+    crumbs = [{"label": "Analytics", "href": "/web/portal/analytics/"}]
+    if league_id:
+        crumbs.append({
+            "label": league_id,
+            "href": f"/web/portal/analytics/league/{league_id}/",
+        })
+    crumbs.append({"label": f"Event {event_id}"})
+
     ctx = {
         "event_id": event_id,
         "event": event,
+        "is_past": is_finalized,
+        "model_prob": model_prob,
+        "form_into_match": context.get("form_into_match") or {},
+        "h2h_last_5": context.get("h2h_last_5") or [],
         "active_tab": "explore",
-        "crumbs": [
-            {"label": "Analytics", "href": "/web/portal/analytics/"},
-            {"label": f"Event {event_id}"},
-        ],
+        "crumbs": crumbs,
     }
     return render(request, "portal/analytics/event.html", ctx)
 
