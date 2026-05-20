@@ -1,5 +1,6 @@
 from .analytics import (
     analytics_bets,
+    analytics_bets_action,
     analytics_event,
     analytics_landing,
     analytics_league,

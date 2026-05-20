@@ -1,0 +1,68 @@
+{# Expects: selection_types, form_errors, form_values, csrf_token via context #}
+<div class="card">
+  <div class="card-header"><strong>Log a bet</strong></div>
+  <div class="card-body">
+    {% if form_errors %}
+      <div class="alert alert-warning">
+        <ul class="mb-0">
+          {% for err in form_errors %}<li>{{ err }}</li>{% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <form method="post" action="{% url 'core-portal:analytics-bets' %}" class="row g-2">
+      {% csrf_token %}
+      <div class="col-md-6">
+        <label class="form-label small text-muted mb-0">Label</label>
+        <input class="form-control form-control-sm" name="label" required
+               value="{{ form_values.label|default:'' }}"
+               placeholder="e.g. Man Utd vs Fulham — ML home">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small text-muted mb-0">Selection type</label>
+        <select class="form-select form-select-sm" name="selection_type" required>
+          <option value="">— pick —</option>
+          {% for value, label in selection_types %}
+            <option value="{{ value }}" {% if form_values.selection_type == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small text-muted mb-0">Bookmaker</label>
+        <input class="form-control form-control-sm" name="bookmaker"
+               value="{{ form_values.bookmaker|default:'' }}"
+               placeholder="DraftKings">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small text-muted mb-0">Stake</label>
+        <input class="form-control form-control-sm" name="stake" required
+               value="{{ form_values.stake|default:'' }}"
+               inputmode="decimal" placeholder="100">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small text-muted mb-0">Decimal odds</label>
+        <input class="form-control form-control-sm" name="decimal_odds" required
+               value="{{ form_values.decimal_odds|default:'' }}"
+               inputmode="decimal" placeholder="2.10">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small text-muted mb-0">Event ID (optional)</label>
+        <input class="form-control form-control-sm" name="event_id"
+               value="{{ form_values.event_id|default:'' }}"
+               placeholder="odds_api_io:71173724 — enables auto-settle">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small text-muted mb-0">Placed at (optional, UTC)</label>
+        <input class="form-control form-control-sm" name="placed_at" type="datetime-local"
+               value="{{ form_values.placed_at|default:'' }}">
+      </div>
+      <div class="col-12">
+        <label class="form-label small text-muted mb-0">Note</label>
+        <textarea class="form-control form-control-sm" name="note" rows="2"
+                  placeholder="Anything to remember about this bet">{{ form_values.note|default:'' }}</textarea>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-sm btn-primary">Save bet</button>
+      </div>
+    </form>
+  </div>
+</div>

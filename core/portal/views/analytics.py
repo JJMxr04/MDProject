@@ -286,10 +286,121 @@ def analytics_picks(request):
     return render(request, "portal/analytics/picks.html", ctx)
 
 
+_BET_SELECTION_TYPES = (
+    ("moneyline_home", "Moneyline — Home"),
+    ("moneyline_away", "Moneyline — Away"),
+    ("moneyline_draw", "Moneyline — Draw"),
+    ("total_over", "Total — Over"),
+    ("total_under", "Total — Under"),
+    ("spread_home", "Spread — Home"),
+    ("spread_away", "Spread — Away"),
+    ("other", "Other / prop / parlay"),
+)
+
+_BET_STATUS_FILTERS = (
+    ("all", "All"),
+    ("open", "Open"),
+    ("settled", "Settled"),
+)
+
+
+def _coerce_decimal(raw: str) -> str | None:
+    """Strip and validate a free-form decimal input. Returns the trimmed
+    string when it parses as a positive Decimal, None otherwise."""
+    if raw is None:
+        return None
+    raw = raw.strip()
+    if not raw:
+        return None
+    try:
+        from decimal import Decimal as _D
+        v = _D(raw)
+    except Exception:
+        return None
+    if v <= 0:
+        return None
+    return str(v)
+
+
 @require_paid
 def analytics_bets(request):
-    """Phase D — placeholder. Bet log + equity curve."""
+    """Bet log + summary + equity curve. POST creates a new bet."""
+    key = _tenant_key(request)
+    form_errors: list[str] = []
+    form_values: dict = {}
+
+    if request.method == "POST":
+        form_values = {k: request.POST.get(k, "") for k in (
+            "label", "selection_type", "bookmaker", "stake",
+            "decimal_odds", "event_id", "placed_at", "note",
+        )}
+        stake = _coerce_decimal(form_values["stake"])
+        odds = _coerce_decimal(form_values["decimal_odds"])
+        if not form_values["label"].strip():
+            form_errors.append("Label is required.")
+        if form_values["selection_type"] not in dict(_BET_SELECTION_TYPES):
+            form_errors.append("Pick a selection type.")
+        if stake is None:
+            form_errors.append("Stake must be a positive decimal.")
+        if odds is None:
+            form_errors.append("Decimal odds must be a positive decimal.")
+        if odds is not None and float(odds) < 1.01:
+            form_errors.append("Decimal odds must be ≥ 1.01.")
+
+        if not form_errors:
+            payload = {
+                "label": form_values["label"].strip(),
+                "selection_type": form_values["selection_type"],
+                "stake": stake,
+                "decimal_odds": odds,
+            }
+            if form_values["bookmaker"].strip():
+                payload["bookmaker"] = form_values["bookmaker"].strip()
+            if form_values["event_id"].strip():
+                payload["event_id"] = form_values["event_id"].strip()
+            if form_values["placed_at"].strip():
+                payload["placed_at"] = form_values["placed_at"].strip()
+            if form_values["note"].strip():
+                payload["note"] = form_values["note"].strip()
+            resp = aggrigator_client.create_bet(payload, tenant_key=key)
+            if resp.get("_error"):
+                form_errors.append(f"Could not save bet: {resp['_error']}")
+            else:
+                # Redirect post-redirect-get so refresh doesn't resubmit.
+                from django.http import HttpResponseRedirect
+                return HttpResponseRedirect(request.path)
+
+    status_filter = request.GET.get("status") or "all"
+    bets = aggrigator_client.list_bets(status_filter=status_filter, tenant_key=key)
+    summary = aggrigator_client.bet_summary(tenant_key=key)
+
+    # Decorate rows with profit_loss for table rendering — Django templates
+    # can't do arithmetic on Decimal/float and the API doesn't carry the
+    # field (it'd just be derivable junk in the payload).
+    for b in bets:
+        if b.get("payout") is None or b.get("stake") is None:
+            b["profit_loss"] = None
+        else:
+            try:
+                b["profit_loss"] = float(b["payout"]) - float(b["stake"])
+            except (TypeError, ValueError):
+                b["profit_loss"] = None
+
     ctx = {
+        "bets": bets,
+        "bucket_labels": (
+            ("By selection type", "selection_type"),
+            ("By bookmaker", "bookmaker"),
+            ("By odds band", "odds_band"),
+        ),
+        "summary": summary.get("totals", {}),
+        "equity_curve": summary.get("equity_curve", []),
+        "roi_by_bucket": summary.get("roi_by_bucket", {}),
+        "status_filter": status_filter,
+        "selection_types": _BET_SELECTION_TYPES,
+        "status_filters": _BET_STATUS_FILTERS,
+        "form_errors": form_errors,
+        "form_values": form_values,
         "active_tab": "bets",
         "crumbs": [
             {"label": "Analytics", "href": "/web/portal/analytics/"},
@@ -297,3 +408,27 @@ def analytics_bets(request):
         ],
     }
     return render(request, "portal/analytics/bets.html", ctx)
+
+
+@require_paid
+def analytics_bets_action(request, bet_id: str):
+    """Inline settle / delete / note edit. Always POST; redirects back to
+    the bet list. ``_action`` form field picks the path."""
+    from django.http import HttpResponseRedirect
+    if request.method != "POST":
+        return HttpResponseRedirect("/web/portal/analytics/bets/")
+    action = request.POST.get("_action", "")
+    key = _tenant_key(request)
+    if action == "delete":
+        aggrigator_client.delete_bet(bet_id, tenant_key=key)
+    elif action == "settle":
+        new_status = request.POST.get("settlement_status") or ""
+        if new_status:
+            aggrigator_client.update_bet(
+                bet_id, {"settlement_status": new_status}, tenant_key=key,
+            )
+    elif action == "note":
+        aggrigator_client.update_bet(
+            bet_id, {"note": request.POST.get("note") or ""}, tenant_key=key,
+        )
+    return HttpResponseRedirect("/web/portal/analytics/bets/")

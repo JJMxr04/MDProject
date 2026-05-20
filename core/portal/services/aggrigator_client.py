@@ -65,6 +65,56 @@ def _get(
         return None
 
 
+def _write(
+    method: str,
+    path: str,
+    json_body: Any | None = None,
+    *,
+    tenant_key: str | None = None,
+) -> dict:
+    """POST / PATCH / DELETE helper. Returns the parsed response dict on
+    2xx, or ``{"_error": str, "_status": int}`` on failure — bet write
+    endpoints lean on this shape so the view layer can show validation
+    errors without raising. 204 No Content collapses to ``{"_deleted": True}``."""
+    base = _base_url()
+    if not base:
+        return {"_error": "AGGRIGATOR_BASE_URL not configured", "_status": 0}
+    url = f"{base}{path}"
+    headers: dict[str, str] = {}
+    if tenant_key:
+        headers["X-Aggrigator-Tenant-Key"] = tenant_key
+    try:
+        with httpx.Client(timeout=_DEFAULT_TIMEOUT) as client:
+            resp = client.request(
+                method, url, json=json_body, headers=headers,
+            )
+    except httpx.HTTPError as exc:
+        logger.warning("aggrigator %s %s failed: %s", method, path, exc)
+        return {"_error": str(exc), "_status": 0}
+    if resp.status_code == 204:
+        return {"_deleted": True}
+    if not (200 <= resp.status_code < 300):
+        text = resp.text[:500]
+        logger.warning("aggrigator %s %s returned %d: %s", method, path, resp.status_code, text)
+        return {"_error": text, "_status": resp.status_code}
+    try:
+        return resp.json()
+    except ValueError as exc:
+        return {"_error": f"non-JSON body: {exc}", "_status": resp.status_code}
+
+
+def _post(path: str, body: Any, *, tenant_key: str | None = None) -> dict:
+    return _write("POST", path, body, tenant_key=tenant_key)
+
+
+def _patch(path: str, body: Any, *, tenant_key: str | None = None) -> dict:
+    return _write("PATCH", path, body, tenant_key=tenant_key)
+
+
+def _delete(path: str, *, tenant_key: str | None = None) -> dict:
+    return _write("DELETE", path, None, tenant_key=tenant_key)
+
+
 def events_today(
     *,
     league: str | None = None,
@@ -233,6 +283,48 @@ def team_summary(
         tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
+
+
+def list_bets(
+    *,
+    status_filter: str | None = None,
+    tenant_key: str | None = None,
+) -> list[dict]:
+    """List the caller's bets, newest first. Empty list on transport failure."""
+    params: dict[str, Any] = {"limit": 500}
+    if status_filter and status_filter != "all":
+        params["status"] = status_filter
+    body = _get("/v1/analytics/bets", params, tenant_key=tenant_key)
+    return body if isinstance(body, list) else []
+
+
+def bet_summary(*, tenant_key: str | None = None) -> dict:
+    """Aggregates + equity curve + ROI-by-bucket. Empty dict on failure."""
+    body = _get("/v1/analytics/bets/summary", tenant_key=tenant_key)
+    return body if isinstance(body, dict) else {}
+
+
+def create_bet(payload: dict, *, tenant_key: str | None = None) -> dict:
+    """POST /v1/analytics/bets. Returns the created bet dict, or
+    ``{"_error": ..., "_status": ...}`` on failure so the view can
+    surface a meaningful message."""
+    return _post("/v1/analytics/bets", payload, tenant_key=tenant_key)
+
+
+def update_bet(
+    bet_id: str,
+    payload: dict,
+    *,
+    tenant_key: str | None = None,
+) -> dict:
+    """PATCH /v1/analytics/bets/{id}. Returns the updated bet or error dict."""
+    return _patch(f"/v1/analytics/bets/{bet_id}", payload, tenant_key=tenant_key)
+
+
+def delete_bet(bet_id: str, *, tenant_key: str | None = None) -> dict:
+    """DELETE /v1/analytics/bets/{id}. Returns ``{"_deleted": True}`` on
+    success, error dict otherwise."""
+    return _delete(f"/v1/analytics/bets/{bet_id}", tenant_key=tenant_key)
 
 
 def event_detail(event_id: str) -> dict:

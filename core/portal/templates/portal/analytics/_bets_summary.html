@@ -1,0 +1,79 @@
+{% load portal_lookup %}
+{# Expects: summary (totals dict), roi_by_bucket (per-group lists), bucket_labels = [(label, key), ...] #}
+<div class="card">
+  <div class="card-header"><strong>Summary</strong></div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-sm-6 col-md-4">
+        <div class="text-muted small">Total bets</div>
+        <div class="h4 mb-0">{{ summary.total_bets|default:0 }}</div>
+        <div class="small text-muted">
+          Settled {{ summary.settled|default:0 }} ·
+          Open {{ summary.open|default:0 }}
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="text-muted small">W / L / Push</div>
+        <div class="h4 mb-0">
+          <span class="text-success">{{ summary.wins|default:0 }}</span>
+          <span class="text-muted">/</span>
+          <span class="text-danger">{{ summary.losses|default:0 }}</span>
+          <span class="text-muted">/</span>
+          <span class="text-secondary">{{ summary.pushes|default:0 }}</span>
+        </div>
+        <div class="small text-muted">
+          Hit rate
+          {% if summary.hit_rate is not None %}
+            {% widthratio summary.hit_rate 1 100 %}%
+          {% else %}—{% endif %}
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="text-muted small">P/L</div>
+        <div class="h4 mb-0 {% if summary.total_profit > 0 %}text-success{% elif summary.total_profit < 0 %}text-danger{% endif %}">
+          {% if summary.total_profit > 0 %}+{% endif %}{{ summary.total_profit|floatformat:2 }}
+        </div>
+        <div class="small text-muted">
+          Staked {{ summary.total_staked|default:0|floatformat:2 }} ·
+          ROI
+          {% if summary.roi is not None %}
+            {% widthratio summary.roi 1 100 %}%
+          {% else %}—{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if roi_by_bucket.selection_type or roi_by_bucket.bookmaker or roi_by_bucket.odds_band %}
+<div class="card mt-3">
+  <div class="card-header"><strong>ROI by bucket</strong></div>
+  <div class="card-body">
+    <div class="row g-3">
+      {% for group_label, group_key in bucket_labels %}
+        <div class="col-md-4">
+          <div class="small text-muted mb-1">{{ group_label }}</div>
+          {% with rows=roi_by_bucket|get_item:group_key %}
+            {% if rows %}
+              <ul class="list-unstyled small mb-0">
+                {% for r in rows %}
+                  <li class="d-flex justify-content-between">
+                    <span>{{ r.key }}</span>
+                    <span class="font-monospace {% if r.profit > 0 %}text-success{% elif r.profit < 0 %}text-danger{% endif %}">
+                      {% if r.roi is not None %}
+                        {% if r.roi > 0 %}+{% endif %}{% widthratio r.roi 1 100 %}%
+                      {% else %}—{% endif %}
+                    </span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <div class="text-muted small">No settled bets yet.</div>
+            {% endif %}
+          {% endwith %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}

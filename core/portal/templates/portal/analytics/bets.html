@@ -1,22 +1,143 @@
 {% extends "portal/analytics/base_analytics.html" %}
+{% load portal_lookup %}
 
 {% block content %}
 <div class="container-fluid py-3">
   {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
-  <header class="mb-3 mt-2">
-    <h1 class="h3 mb-0">My bets</h1>
-    <p class="text-muted mb-0">Bet log with equity curve, hit rate, and ROI by league / selection type.</p>
-  </header>
 
-  <div class="card analytics-empty-state">
-    <div class="card-body">
-      <h2 class="h5 mb-2"><i class="bi bi-clock me-1" aria-hidden="true"></i> Coming in Phase D</h2>
-      <p class="mb-0 text-muted">
-        Schema and entry form are specified in
-        <code>plans/analytics/dashboard_and_data/07-bet-tracking.md</code>.
-        No CLV column in v1 — closing-line data isn't stored.
+  <header class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3 mt-2">
+    <div>
+      <h1 class="h3 mb-0">My bets</h1>
+      <p class="text-muted mb-0">
+        Bet log + equity curve + ROI by bucket. Auto-settles moneyline
+        bets when their event finalizes; other types settle manually.
       </p>
     </div>
+    <form method="get" class="d-flex gap-2 align-items-center">
+      <label class="small text-muted mb-0" for="bets-status">Status</label>
+      <select id="bets-status" name="status" class="form-select form-select-sm"
+              onchange="this.form.submit()" style="max-width: 140px;">
+        {% for value, label in status_filters %}
+          <option value="{{ value }}" {% if value == status_filter %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </header>
+
+  {% include "portal/analytics/_bets_summary.html" with summary=summary roi_by_bucket=roi_by_bucket bucket_labels=bucket_labels %}
+
+  <div class="mt-3">
+    {% include "portal/analytics/_equity_curve.html" with equity_curve=equity_curve %}
+  </div>
+
+  <div class="mt-3">
+    {% include "portal/analytics/_bets_form.html" with selection_types=selection_types form_errors=form_errors form_values=form_values %}
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-header"><strong>Bets</strong></div>
+    {% if bets %}
+      <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Placed</th>
+              <th>Label</th>
+              <th>Selection</th>
+              <th>Book</th>
+              <th class="text-end">Stake</th>
+              <th class="text-end">Odds</th>
+              <th class="text-end">Payout</th>
+              <th class="text-end">P/L</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for b in bets %}
+            <tr>
+              <td><small class="text-muted">{{ b.placed_at|to_dt|date:"j M Y H:i" }}</small></td>
+              <td>
+                {% if b.event_id %}
+                  <a href="{% url 'core-portal:analytics-event' event_id=b.event_id %}"
+                     class="text-decoration-none">{{ b.label }}</a>
+                {% else %}{{ b.label }}{% endif %}
+                {% if b.note %}<div class="small text-muted">{{ b.note }}</div>{% endif %}
+              </td>
+              <td><small>{{ b.selection_type }}</small></td>
+              <td>{{ b.bookmaker|default:"—" }}</td>
+              <td class="text-end">{{ b.stake|floatformat:2 }}</td>
+              <td class="text-end">{{ b.decimal_odds|floatformat:2 }}</td>
+              <td class="text-end">
+                {% if b.payout is not None %}{{ b.payout|floatformat:2 }}{% else %}—{% endif %}
+              </td>
+              <td class="text-end">
+                {% if b.profit_loss is not None %}
+                  <span class="{% if b.profit_loss > 0 %}text-success{% elif b.profit_loss < 0 %}text-danger{% endif %}">
+                    {% if b.profit_loss > 0 %}+{% endif %}{{ b.profit_loss|floatformat:2 }}
+                  </span>
+                {% else %}<span class="text-muted">—</span>{% endif %}
+              </td>
+              <td>
+                {% if b.settlement_status == 'open' %}
+                  <span class="badge bg-secondary">Open</span>
+                {% elif b.settlement_status == 'won' %}
+                  <span class="badge bg-success">Won</span>
+                {% elif b.settlement_status == 'lost' %}
+                  <span class="badge bg-danger">Lost</span>
+                {% elif b.settlement_status == 'push' %}
+                  <span class="badge bg-light text-dark">Push</span>
+                {% elif b.settlement_status == 'void' %}
+                  <span class="badge bg-light text-dark">Void</span>
+                {% endif %}
+              </td>
+              <td class="text-end">
+                <div class="d-flex gap-1 justify-content-end">
+                  {% if b.settlement_status == 'open' %}
+                    <form method="post" action="{% url 'core-portal:analytics-bets-action' bet_id=b.id %}" class="d-inline">
+                      {% csrf_token %}
+                      <input type="hidden" name="_action" value="settle">
+                      <select name="settlement_status" class="form-select form-select-sm d-inline-block" style="width: auto;" onchange="this.form.submit()" aria-label="Settle">
+                        <option value="">Settle…</option>
+                        <option value="won">Won</option>
+                        <option value="lost">Lost</option>
+                        <option value="push">Push</option>
+                        <option value="void">Void</option>
+                      </select>
+                    </form>
+                  {% else %}
+                    <form method="post" action="{% url 'core-portal:analytics-bets-action' bet_id=b.id %}" class="d-inline">
+                      {% csrf_token %}
+                      <input type="hidden" name="_action" value="settle">
+                      <input type="hidden" name="settlement_status" value="open">
+                      <button class="btn btn-sm btn-link p-0" type="submit" title="Re-open">↺</button>
+                    </form>
+                  {% endif %}
+                  <form method="post" action="{% url 'core-portal:analytics-bets-action' bet_id=b.id %}" class="d-inline"
+                        onsubmit="return confirm('Delete this bet?')">
+                    {% csrf_token %}
+                    <input type="hidden" name="_action" value="delete">
+                    <button class="btn btn-sm btn-link text-danger p-0" type="submit" title="Delete">✕</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="card-body">
+        <div class="analytics-empty-state p-3 rounded">
+          <strong>No bets logged yet.</strong>
+          <p class="small mb-0 text-muted">
+            Use the form above to log a bet you placed. Including the
+            event ID lets the moneyline auto-settle hook fire when the
+            event finalizes.
+          </p>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}

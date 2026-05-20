@@ -24,6 +24,7 @@ urlpatterns = [
     path('analytics/upcoming/', views.analytics_upcoming, name='analytics-upcoming'),
     path('analytics/picks/', views.analytics_picks, name='analytics-picks'),
     path('analytics/bets/', views.analytics_bets, name='analytics-bets'),
+    path('analytics/bets/<str:bet_id>/action/', views.analytics_bets_action, name='analytics-bets-action'),
     path('analytics/league/<str:league_id>/', views.analytics_league, name='analytics-league'),
     path('analytics/team/<path:team_id>/', views.analytics_team, name='analytics-team'),
     path('analytics/event/<str:event_id>/', views.analytics_event, name='analytics-event'),
