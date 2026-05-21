@@ -1,0 +1,103 @@
+{% load portal_lookup %}
+{# Expects: h2h_aggregate {played, home_team_id, away_team_id,
+                            home_team_wins, away_team_wins, draws},
+              h2h_last_5 (list of meeting dicts),
+              event (target event so we can pull team display names) #}
+<div class="col-12">
+  <div class="card">
+    <div class="card-header"><strong>Head-to-head</strong></div>
+    <div class="card-body">
+
+      {% if h2h_aggregate.played %}
+        <p class="mb-3">
+          Out of the last <strong>{{ h2h_aggregate.played }}</strong>
+          meeting{{ h2h_aggregate.played|pluralize }} in this league:
+          <strong>{{ event.home_team.name|default:event.home_team.team_id }}</strong>
+          won <strong>{{ h2h_aggregate.home_team_wins }}</strong>,
+          <strong>{{ event.away_team.name|default:event.away_team.team_id }}</strong>
+          won <strong>{{ h2h_aggregate.away_team_wins }}</strong>,
+          drew <strong>{{ h2h_aggregate.draws }}</strong>.
+        </p>
+
+        {# Stacked horizontal share bar — quick visual of who tends to win. #}
+        <div class="progress mb-3" role="progressbar" aria-label="head-to-head share"
+             style="height: 0.75rem;">
+          {% if h2h_aggregate.home_team_wins %}
+            <div class="progress-bar bg-success"
+                 style="width: {% widthratio h2h_aggregate.home_team_wins h2h_aggregate.played 100 %}%"
+                 title="{{ event.home_team.name }} wins">
+              {{ h2h_aggregate.home_team_wins }}
+            </div>
+          {% endif %}
+          {% if h2h_aggregate.draws %}
+            <div class="progress-bar bg-secondary"
+                 style="width: {% widthratio h2h_aggregate.draws h2h_aggregate.played 100 %}%"
+                 title="draws">
+              {{ h2h_aggregate.draws }}
+            </div>
+          {% endif %}
+          {% if h2h_aggregate.away_team_wins %}
+            <div class="progress-bar bg-danger"
+                 style="width: {% widthratio h2h_aggregate.away_team_wins h2h_aggregate.played 100 %}%"
+                 title="{{ event.away_team.name }} wins">
+              {{ h2h_aggregate.away_team_wins }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if h2h_last_5 %}
+          <h3 class="h6 mb-2">
+            Combined goals
+            <span class="small text-muted fw-normal">— last {{ h2h_last_5|length }} meetings</span>
+          </h3>
+          <canvas id="h2h-combined-chart" height="120"></canvas>
+          {{ h2h_last_5|json_script:"h2h-combined-chart-data" }}
+        {% endif %}
+      {% else %}
+        <p class="text-muted mb-3">
+          No prior meetings between
+          {{ event.home_team.name|default:event.home_team.team_id }} and
+          {{ event.away_team.name|default:event.away_team.team_id }} in this league.
+        </p>
+      {% endif %}
+
+      {% if h2h_last_5 %}
+        <h3 class="h6 mb-2 mt-3">Last {{ h2h_last_5|length }} meeting{{ h2h_last_5|length|pluralize }}</h3>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Home</th>
+                <th class="text-center">Score</th>
+                <th>Away</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for h in h2h_last_5 %}
+              <tr>
+                <td><small class="text-muted">{{ h.start_time|to_dt|date:"j M Y" }}</small></td>
+                <td>{{ h.home_team.name|default:"—" }}</td>
+                <td class="text-center">
+                  {% if h.winner_code == 3 %}
+                    <em class="text-muted">{{ h.home_score }}-{{ h.away_score }}</em>
+                  {% else %}
+                    <strong>{{ h.home_score }}-{{ h.away_score }}</strong>
+                  {% endif %}
+                </td>
+                <td>{{ h.away_team.name|default:"—" }}</td>
+                <td class="text-end">
+                  <a class="btn btn-sm btn-link p-0"
+                     href="{% url 'core-portal:analytics-event' event_id=h.event_id %}">Detail</a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>

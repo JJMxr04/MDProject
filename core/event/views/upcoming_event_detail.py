@@ -28,6 +28,7 @@ from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
 )
+from core.portal.services import aggrigator_client as analytics_client
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,17 @@ def upcoming_event_detail(request, event_id):
     event_view = _EventAdapter(body, sport_names, league_names)
     markets = body.get("markets") or []
 
+    # Past-analytics surface: H2H + per-team form charts + per-team
+    # season-to-date stats. Fetched best-effort — if the analytics
+    # endpoints are unreachable (no tenant key, network blip, sport
+    # without a model) the empty dicts collapse to empty-state markup
+    # in the template rather than blocking the markets render.
+    tenant_key = getattr(request.user, "aggrigator_api_key", None) or None
+    context = analytics_client.event_context(event_id, tenant_key=tenant_key)
+    historical_stats = analytics_client.event_historical_stats(
+        event_id, tenant_key=tenant_key,
+    )
+
     return render(
         request,
         "portal/event/upcoming_event_detail.html",
@@ -79,6 +91,11 @@ def upcoming_event_detail(request, event_id):
             "event_raw": body,
             "markets": markets,
             "served_stale": served_stale,
+            "form_into_match": context.get("form_into_match") or {},
+            "form_detail": context.get("form_detail") or {},
+            "h2h_last_5": context.get("h2h_last_5") or [],
+            "h2h_aggregate": context.get("h2h_aggregate") or {},
+            "historical_stats": historical_stats or {},
         },
     )
 

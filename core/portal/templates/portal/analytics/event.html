@@ -40,94 +40,30 @@
 
   {% if event.home_team %}
     <div class="row g-3">
-      {# ---- Model probabilities ---- #}
-      <div class="col-lg-6">
-        <div class="card h-100">
-          <div class="card-header">
-            <strong>
-              {% if is_past %}Model said (post-hoc){% else %}Model says{% endif %}
-            </strong>
-          </div>
-          <div class="card-body">
-            {% if model_prob.p_home is not None %}
-              <table class="table table-sm align-middle mb-2">
-                <tbody>
-                  <tr>
-                    <td>Home win</td>
-                    <td class="text-end"><strong>{{ model_prob.p_home|floatformat:"-3" }}</strong></td>
-                    <td class="text-end small text-muted">
-                      {% widthratio model_prob.p_home 1 100 %}%
-                    </td>
-                    {% if is_past %}
-                      <td class="text-center">
-                        {% if event.winner_code == 1 %}<i class="bi bi-check-circle-fill text-success" aria-label="actual"></i>{% endif %}
-                      </td>
-                    {% endif %}
-                  </tr>
-                  <tr>
-                    <td>Draw</td>
-                    <td class="text-end"><strong>{{ model_prob.p_draw|floatformat:"-3" }}</strong></td>
-                    <td class="text-end small text-muted">{% widthratio model_prob.p_draw 1 100 %}%</td>
-                    {% if is_past %}
-                      <td class="text-center">
-                        {% if event.winner_code == 3 %}<i class="bi bi-check-circle-fill text-success" aria-label="actual"></i>{% endif %}
-                      </td>
-                    {% endif %}
-                  </tr>
-                  <tr>
-                    <td>Away win</td>
-                    <td class="text-end"><strong>{{ model_prob.p_away|floatformat:"-3" }}</strong></td>
-                    <td class="text-end small text-muted">{% widthratio model_prob.p_away 1 100 %}%</td>
-                    {% if is_past %}
-                      <td class="text-center">
-                        {% if event.winner_code == 2 %}<i class="bi bi-check-circle-fill text-success" aria-label="actual"></i>{% endif %}
-                      </td>
-                    {% endif %}
-                  </tr>
-                </tbody>
-              </table>
-              <p class="transparency-tell mb-0">
-                Model: {{ model_prob.model_version }}{% if model_prob.is_pre_match_snapshot %} ·
-                  pre-match snapshot{% endif %}{% if model_prob.computed_at %} ·
-                  computed {{ model_prob.computed_at|to_dt|date:"j M Y H:i" }} UTC{% endif %}.
-              </p>
-              {% if model_prob.model_inputs %}
-                <details class="small text-muted mt-2">
-                  <summary>Model inputs</summary>
-                  <ul class="mb-0 ps-3">
-                    <li>Home Elo: {{ model_prob.model_inputs.home_elo|floatformat:0 }}</li>
-                    <li>Away Elo: {{ model_prob.model_inputs.away_elo|floatformat:0 }}</li>
-                    <li>μ home: {{ model_prob.model_inputs.mu_home|floatformat:2 }}</li>
-                    <li>μ away: {{ model_prob.model_inputs.mu_away|floatformat:2 }}</li>
-                    <li>n events used: {{ model_prob.model_inputs.n_events_in_league }}</li>
-                  </ul>
-                </details>
-              {% endif %}
-            {% else %}
-              <div class="analytics-empty-state p-3 rounded">
-                {% if model_prob.reason == 'no_model_for_sport' %}
-                  <strong>Model coming soon.</strong>
-                  <p class="small mb-0 text-muted">
-                    Only soccer events have a model in v1. Other sports light up
-                    once their pipelines land.
-                  </p>
-                {% elif model_prob.reason == 'no_settled_events_in_league' %}
-                  <strong>Not enough history yet.</strong>
-                  <p class="small mb-0 text-muted">
-                    The model needs settled events in this league to compute
-                    team ratings.
-                  </p>
-                {% else %}
-                  <strong>Model output unavailable.</strong>
-                  <p class="small mb-0 text-muted">
+      {# ---- Past events: per-team season context (going in + after + scoring profile) ---- #}
+      {% if is_past %}
+        {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.home venue="home" event=event %}
+        {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.away venue="away" event=event %}
+        {% if historical_stats.reason and not historical_stats.home and not historical_stats.away %}
+          <div class="col-12">
+            <div class="card analytics-empty-state">
+              <div class="card-body">
+                <h2 class="h5 mb-2"><i class="bi bi-database me-1" aria-hidden="true"></i> Season context unavailable</h2>
+                <p class="mb-0 text-muted">
+                  {% if historical_stats.reason == 'no_season_label' %}
+                    This event isn't tagged with a season label, so we can't
+                    pull season-to-date numbers for the teams.
+                  {% elif historical_stats.reason == 'insufficient_event_context' %}
                     Missing event context — league or teams aren't fully wired.
-                  </p>
-                {% endif %}
+                  {% else %}
+                    No season-context data for this event.
+                  {% endif %}
+                </p>
               </div>
-            {% endif %}
+            </div>
           </div>
-        </div>
-      </div>
+        {% endif %}
+      {% endif %}
 
       {# ---- Future events: live odds + model-vs-market edge ---- #}
       {% if not is_past %}
@@ -201,81 +137,195 @@
         </div>
       {% endif %}
 
-      {# ---- Form into match ---- #}
-      {% if form_into_match.home_last_5 or form_into_match.away_last_5 %}
-        <div class="{% if is_past %}col-lg-6{% else %}col-12{% endif %}">
-          <div class="card h-100">
-            <div class="card-header"><strong>Form going in</strong></div>
-            <div class="card-body">
-              <div class="d-flex flex-column gap-2">
-                <div class="d-flex align-items-center gap-3">
-                  <span class="fw-semibold" style="min-width: 12rem;">
-                    {{ event.home_team.name|default:event.home_team.team_id }}
-                    <small class="text-muted">(home)</small>
-                  </span>
-                  {% include "portal/analytics/_form_chips.html" with form_letters=form_into_match.home_last_5 %}
+      {# ---- Recent form — bar chart on upcoming, simple chips on past ---- #}
+      {% if is_past %}
+        {% if form_into_match.home_last_5 or form_into_match.away_last_5 %}
+          <div class="col-12">
+            <div class="card h-100">
+              <div class="card-header"><strong>Form going in</strong></div>
+              <div class="card-body">
+                <div class="d-flex flex-column gap-2">
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="fw-semibold" style="min-width: 12rem;">
+                      {{ event.home_team.name|default:event.home_team.team_id }}
+                      <small class="text-muted">(home)</small>
+                    </span>
+                    {% include "portal/analytics/_form_chips.html" with form_letters=form_into_match.home_last_5 %}
+                  </div>
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="fw-semibold" style="min-width: 12rem;">
+                      {{ event.away_team.name|default:event.away_team.team_id }}
+                      <small class="text-muted">(away)</small>
+                    </span>
+                    {% include "portal/analytics/_form_chips.html" with form_letters=form_into_match.away_last_5 %}
+                  </div>
                 </div>
-                <div class="d-flex align-items-center gap-3">
-                  <span class="fw-semibold" style="min-width: 12rem;">
-                    {{ event.away_team.name|default:event.away_team.team_id }}
-                    <small class="text-muted">(away)</small>
-                  </span>
-                  {% include "portal/analytics/_form_chips.html" with form_letters=form_into_match.away_last_5 %}
-                </div>
+                <p class="transparency-tell mb-0 mt-2">
+                  Form is each team's last 5 settled results strictly before
+                  this kickoff.
+                </p>
               </div>
-              <p class="transparency-tell mb-0 mt-2">
-                Form is each team's last 5 settled results strictly before
-                this kickoff.
-              </p>
             </div>
           </div>
-        </div>
+        {% endif %}
+      {% else %}
+        {% if form_detail.home or form_detail.away %}
+          {% include "portal/analytics/_form_chart.html" with team_name=event.home_team.name|default:event.home_team.team_id venue="home" form_letters=form_into_match.home_last_5 form_rows=form_detail.home chart_id="form-chart-home" %}
+          {% include "portal/analytics/_form_chart.html" with team_name=event.away_team.name|default:event.away_team.team_id venue="away" form_letters=form_into_match.away_last_5 form_rows=form_detail.away chart_id="form-chart-away" %}
+        {% endif %}
       {% endif %}
 
-      {# ---- H2H (past only — also makes sense for future, but plan scopes to past) ---- #}
-      {% if h2h_last_5 %}
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <strong>Head-to-head — last {{ h2h_last_5|length }}</strong>
-            </div>
-            <div class="card-body p-0">
-              <table class="table table-sm table-hover align-middle mb-0">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Home</th>
-                    <th class="text-center">Score</th>
-                    <th>Away</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for h in h2h_last_5 %}
-                  <tr>
-                    <td><small class="text-muted">{{ h.start_time|to_dt|date:"j M Y" }}</small></td>
-                    <td>{{ h.home_team.name|default:"—" }}</td>
-                    <td class="text-center">
-                      {% if h.winner_code == 3 %}
-                        <em class="text-muted">{{ h.home_score }}-{{ h.away_score }}</em>
-                      {% else %}
-                        <strong>{{ h.home_score }}-{{ h.away_score }}</strong>
-                      {% endif %}
-                    </td>
-                    <td>{{ h.away_team.name|default:"—" }}</td>
-                    <td class="text-end">
-                      <a class="btn btn-sm btn-link p-0"
-                         href="{% url 'core-portal:analytics-event' event_id=h.event_id %}">Detail</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+      {# ---- Head-to-head — rich panel on upcoming, simple table on past ---- #}
+      {% if is_past %}
+        {% if h2h_last_5 %}
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <strong>Head-to-head — last {{ h2h_last_5|length }}</strong>
+              </div>
+              <div class="card-body p-0">
+                <table class="table table-sm table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Home</th>
+                      <th class="text-center">Score</th>
+                      <th>Away</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for h in h2h_last_5 %}
+                    <tr>
+                      <td><small class="text-muted">{{ h.start_time|to_dt|date:"j M Y" }}</small></td>
+                      <td>{{ h.home_team.name|default:"—" }}</td>
+                      <td class="text-center">
+                        {% if h.winner_code == 3 %}
+                          <em class="text-muted">{{ h.home_score }}-{{ h.away_score }}</em>
+                        {% else %}
+                          <strong>{{ h.home_score }}-{{ h.away_score }}</strong>
+                        {% endif %}
+                      </td>
+                      <td>{{ h.away_team.name|default:"—" }}</td>
+                      <td class="text-end">
+                        <a class="btn btn-sm btn-link p-0"
+                           href="{% url 'core-portal:analytics-event' event_id=h.event_id %}">Detail</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+        {% endif %}
+      {% else %}
+        {% if h2h_aggregate or h2h_last_5 %}
+          {% include "portal/analytics/_h2h_summary.html" with h2h_aggregate=h2h_aggregate h2h_last_5=h2h_last_5 event=event %}
+        {% endif %}
       {% endif %}
     </div>
   {% endif %}
 </div>
 {% endblock content %}
+
+{% block analytics_scripts %}
+{% if not is_past %}
+<script>
+(function () {
+  if (typeof Chart === 'undefined') return;
+
+  // Per-team points-per-game bar chart. Each canvas carries a sibling
+  // <script type="application/json" id="{canvas-id}-data"> with the
+  // form_rows payload from the API.
+  document.querySelectorAll('canvas.form-points-chart').forEach(function (canvas) {
+    var node = document.getElementById(canvas.id + '-data');
+    if (!node) return;
+    var rows;
+    try { rows = JSON.parse(node.textContent); } catch (_) { return; }
+    if (!rows || !rows.length) return;
+    // Oldest → most-recent on the x-axis (API returns most-recent-first).
+    rows = rows.slice().reverse();
+    var labels = rows.map(function (r) {
+      var d = new Date(r.start_time);
+      return isNaN(d) ? '?' : (d.toLocaleString('en-GB', {day:'numeric', month:'short'}));
+    });
+    var data = rows.map(function (r) { return r.points; });
+    var colors = rows.map(function (r) {
+      if (r.result === 'W') return 'rgba(25, 135, 84, 0.85)';
+      if (r.result === 'D') return 'rgba(108, 117, 125, 0.85)';
+      if (r.result === 'L') return 'rgba(220, 53, 69, 0.85)';
+      return 'rgba(173, 181, 189, 0.6)';
+    });
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: colors,
+          borderWidth: 0,
+        }],
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                var r = rows[ctx.dataIndex];
+                return (r.result || '?') + ' ' + r.team_score + '-' + r.opponent_score +
+                  ' (' + r.venue + ' vs ' + (r.opponent_name || '?') + ')';
+              },
+            },
+          },
+        },
+        scales: {
+          y: { beginAtZero: true, max: 3, ticks: { stepSize: 1 } },
+          x: { ticks: { autoSkip: true, maxRotation: 0 } },
+        },
+      },
+    });
+  });
+
+  // Combined-goals chart over H2H meetings.
+  var h2hCanvas = document.getElementById('h2h-combined-chart');
+  var h2hData = document.getElementById('h2h-combined-chart-data');
+  if (h2hCanvas && h2hData && typeof Chart !== 'undefined') {
+    var meetings;
+    try { meetings = JSON.parse(h2hData.textContent); } catch (_) { meetings = []; }
+    if (meetings.length) {
+      // API returns most-recent-first; oldest → newest reads more naturally.
+      meetings = meetings.slice().reverse();
+      var combined = meetings.map(function (m) {
+        return (m.home_score || 0) + (m.away_score || 0);
+      });
+      var labels = meetings.map(function (m) {
+        var d = new Date(m.start_time);
+        return isNaN(d) ? '?' : d.toLocaleString('en-GB', {day:'numeric', month:'short', year:'2-digit'});
+      });
+      new Chart(h2hCanvas, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Combined goals',
+            data: combined,
+            fill: true,
+            tension: 0.2,
+            borderColor: '#3D7EAA',
+            backgroundColor: 'rgba(61, 126, 170, 0.18)',
+            pointRadius: 3,
+          }],
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+        },
+      });
+    }
+  }
+})();
+</script>
+{% endif %}
+{% endblock analytics_scripts %}

@@ -1,0 +1,42 @@
+{% load portal_lookup %}
+{# Expects: team_name, venue ("home"|"away"), form_letters (list of W/D/L),
+              form_rows (list of {start_time, opponent_name, venue,
+                                  team_score, opponent_score, result, points}),
+              chart_id (unique DOM id for this team's canvas) #}
+<div class="col-lg-6">
+  <div class="card h-100">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <strong>{{ team_name }}</strong>
+      <span class="badge bg-light text-dark text-uppercase">{{ venue }}</span>
+    </div>
+    <div class="card-body">
+      {% if form_letters %}
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="small text-muted">Last {{ form_letters|length }}:</span>
+          {% include "portal/analytics/_form_chips.html" with form_letters=form_letters %}
+        </div>
+      {% endif %}
+
+      {% if form_rows %}
+        <h3 class="h6 mb-2">
+          Points per game
+          <span class="small text-muted fw-normal">— last {{ form_rows|length }}</span>
+        </h3>
+        <canvas id="{{ chart_id }}" height="120" class="form-points-chart"></canvas>
+        {% with data_id=chart_id|add:"-data" %}
+          {{ form_rows|json_script:data_id }}
+        {% endwith %}
+        <p class="transparency-tell mb-0 mt-2">
+          3 = win · 1 = draw · 0 = loss. Most recent on the right.
+        </p>
+      {% else %}
+        <div class="analytics-empty-state p-3 rounded">
+          <strong>No prior matches.</strong>
+          <p class="small mb-0 text-muted">
+            No settled games for {{ team_name }} strictly before this kickoff.
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

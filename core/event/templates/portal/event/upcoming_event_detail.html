@@ -170,6 +170,68 @@
         {% endif %}
     </div>
 </section>
+
+{# ── Past analytics — H2H + form + season-to-date ────────────────────── #}
+{% if h2h_aggregate.played or h2h_last_5 or form_detail.home or form_detail.away or historical_stats.home or historical_stats.away %}
+
+  {# Head-to-head: aggregate banner + combined-goals chart + last meetings #}
+  {% if h2h_aggregate.played or h2h_last_5 %}
+    <section class="card-ui evd-analytics">
+      <header class="card-ui__header">
+        <h2><i class="bi bi-arrow-left-right me-2"></i>Head-to-head</h2>
+      </header>
+      <div class="card-ui__body">
+        <div class="row g-3">
+          {% include "portal/analytics/_h2h_summary.html" with h2h_aggregate=h2h_aggregate h2h_last_5=h2h_last_5 event=event %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {# Recent form: per-team chips + points-per-game bar chart #}
+  {% if form_detail.home or form_detail.away %}
+    <section class="card-ui evd-analytics">
+      <header class="card-ui__header">
+        <h2><i class="bi bi-bar-chart-steps me-2"></i>Recent form</h2>
+      </header>
+      <div class="card-ui__body">
+        <div class="row g-3">
+          {% if form_detail.home %}
+            {% include "portal/analytics/_form_chart.html" with team_name=event.home_team.name|default:"Home" venue="home" form_letters=form_into_match.home_last_5 form_rows=form_detail.home chart_id="form-chart-home" %}
+          {% endif %}
+          {% if form_detail.away %}
+            {% include "portal/analytics/_form_chart.html" with team_name=event.away_team.name|default:"Away" venue="away" form_letters=form_into_match.away_last_5 form_rows=form_detail.away chart_id="form-chart-away" %}
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {# Season-to-date: per-team standings + scoring profile #}
+  {% if historical_stats.home or historical_stats.away %}
+    <section class="card-ui evd-analytics">
+      <header class="card-ui__header">
+        <h2>
+          <i class="bi bi-table me-2"></i>Season to date
+          {% if historical_stats.season_label %}
+            <span class="evd-chip ms-2">{{ historical_stats.season_label }}</span>
+          {% endif %}
+        </h2>
+      </header>
+      <div class="card-ui__body">
+        <div class="row g-3">
+          {% if historical_stats.home %}
+            {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.home venue="home" event=event %}
+          {% endif %}
+          {% if historical_stats.away %}
+            {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.away venue="away" event=event %}
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+{% endif %}
 {% endblock content %}
 
 {% block css %}
@@ -183,6 +245,38 @@
         --evd-line: #b9831b;
         --evd-bg-soft: #f5f7fa;
         --evd-border: #e5e7eb;
+    }
+
+    /* ── Past analytics sections (H2H, form, season) ─────────────── */
+    .evd-analytics { margin-top: var(--space-5, 1.25rem); }
+    .evd-analytics .card-ui__header h2 {
+        margin: 0; font-size: 1rem; font-weight: var(--weight-semibold, 600);
+        color: var(--text-primary, #111827);
+        display: inline-flex; align-items: center;
+    }
+    /* Soften the Bootstrap card surfaces so they read as panels inside
+       the evd card-ui wrapper rather than competing with it. */
+    .evd-analytics .card {
+        border-color: var(--evd-border);
+        box-shadow: none;
+    }
+    .evd-analytics .card-header {
+        background: var(--evd-bg-soft);
+        border-bottom-color: var(--evd-border);
+        font-size: .92rem;
+    }
+    .evd-analytics .table {
+        font-variant-numeric: tabular-nums;
+        margin-bottom: 0;
+    }
+    .evd-analytics canvas { max-height: 200px; }
+    .evd-analytics .progress { background: var(--evd-bg-soft); }
+    .evd-analytics .transparency-tell {
+        font-size: .72rem; color: var(--text-secondary, #6b7280);
+    }
+    .analytics-empty-state {
+        background: var(--evd-bg-soft);
+        border: 1px dashed var(--evd-border);
     }
 
     /* ── Header card ─────────────────────────────────────────────── */
@@ -411,3 +505,96 @@
     }
 </style>
 {% endblock css %}
+
+{% block scripts %}
+{{ block.super }}
+{% if form_detail.home or form_detail.away or h2h_last_5 %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+  if (typeof Chart === 'undefined') return;
+
+  document.querySelectorAll('canvas.form-points-chart').forEach(function (canvas) {
+    var node = document.getElementById(canvas.id + '-data');
+    if (!node) return;
+    var rows;
+    try { rows = JSON.parse(node.textContent); } catch (_) { return; }
+    if (!rows || !rows.length) return;
+    rows = rows.slice().reverse();
+    var labels = rows.map(function (r) {
+      var d = new Date(r.start_time);
+      return isNaN(d) ? '?' : d.toLocaleString('en-GB', {day:'numeric', month:'short'});
+    });
+    var data = rows.map(function (r) { return r.points; });
+    var colors = rows.map(function (r) {
+      if (r.result === 'W') return 'rgba(47, 158, 107, 0.85)';
+      if (r.result === 'D') return 'rgba(108, 117, 125, 0.85)';
+      if (r.result === 'L') return 'rgba(220, 53, 69, 0.85)';
+      return 'rgba(173, 181, 189, 0.6)';
+    });
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{ data: data, backgroundColor: colors, borderWidth: 0 }],
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                var r = rows[ctx.dataIndex];
+                return (r.result || '?') + ' ' + r.team_score + '-' + r.opponent_score +
+                  ' (' + r.venue + ' vs ' + (r.opponent_name || '?') + ')';
+              },
+            },
+          },
+        },
+        scales: {
+          y: { beginAtZero: true, max: 3, ticks: { stepSize: 1 } },
+          x: { ticks: { autoSkip: true, maxRotation: 0 } },
+        },
+      },
+    });
+  });
+
+  var h2hCanvas = document.getElementById('h2h-combined-chart');
+  var h2hData = document.getElementById('h2h-combined-chart-data');
+  if (h2hCanvas && h2hData) {
+    var meetings;
+    try { meetings = JSON.parse(h2hData.textContent); } catch (_) { meetings = []; }
+    if (meetings.length) {
+      meetings = meetings.slice().reverse();
+      var combined = meetings.map(function (m) {
+        return (m.home_score || 0) + (m.away_score || 0);
+      });
+      var labels = meetings.map(function (m) {
+        var d = new Date(m.start_time);
+        return isNaN(d) ? '?' : d.toLocaleString('en-GB', {day:'numeric', month:'short', year:'2-digit'});
+      });
+      new Chart(h2hCanvas, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Combined goals',
+            data: combined,
+            fill: true,
+            tension: 0.2,
+            borderColor: '#275d81',
+            backgroundColor: 'rgba(39, 93, 129, 0.18)',
+            pointRadius: 3,
+          }],
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+        },
+      });
+    }
+  }
+})();
+</script>
+{% endif %}
+{% endblock scripts %}

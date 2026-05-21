@@ -1,0 +1,130 @@
+{% load portal_lookup %}
+{# Expects: team_block (with team_name, going_in, after, scoring_profile),
+              venue ("home" or "away"),
+              event (so we can pull the team display name as a fallback) #}
+<div class="col-lg-6">
+  <div class="card h-100">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <strong>
+        {% if team_block %}{{ team_block.team_name }}{% else %}—{% endif %}
+      </strong>
+      <span class="badge bg-light text-dark text-uppercase">{{ venue }}</span>
+    </div>
+    <div class="card-body">
+      {% if team_block.going_in %}
+        <table class="table table-sm align-middle mb-3">
+          <thead class="small text-muted">
+            <tr>
+              <th></th>
+              <th class="text-center">P</th>
+              <th class="text-center">W</th>
+              <th class="text-center">D</th>
+              <th class="text-center">L</th>
+              <th class="text-center">GF</th>
+              <th class="text-center">GA</th>
+              <th class="text-center">Pts</th>
+              <th class="text-center">Pos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="small">Going in</th>
+              <td class="text-center">{{ team_block.going_in.played }}</td>
+              <td class="text-center">{{ team_block.going_in.wins }}</td>
+              <td class="text-center">{{ team_block.going_in.draws }}</td>
+              <td class="text-center">{{ team_block.going_in.losses }}</td>
+              <td class="text-center">{{ team_block.going_in.goals_for }}</td>
+              <td class="text-center">{{ team_block.going_in.goals_against }}</td>
+              <td class="text-center"><strong>{{ team_block.going_in.points }}</strong></td>
+              <td class="text-center">
+                {% if team_block.going_in.rank %}{{ team_block.going_in.rank }}{% else %}—{% endif %}
+              </td>
+            </tr>
+            {% if team_block.after %}
+              <tr>
+                <th class="small">After</th>
+                <td class="text-center">{{ team_block.after.played }}</td>
+                <td class="text-center">{{ team_block.after.wins }}</td>
+                <td class="text-center">{{ team_block.after.draws }}</td>
+                <td class="text-center">{{ team_block.after.losses }}</td>
+                <td class="text-center">{{ team_block.after.goals_for }}</td>
+                <td class="text-center">{{ team_block.after.goals_against }}</td>
+                <td class="text-center">
+                  <strong>{{ team_block.after.points }}</strong>
+                  {% if team_block.after.points_delta is not None %}
+                    <span class="small {% if team_block.after.points_delta > 0 %}text-success{% else %}text-muted{% endif %}">
+                      ({% if team_block.after.points_delta > 0 %}+{% endif %}{{ team_block.after.points_delta }})
+                    </span>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  {% if team_block.after.rank %}{{ team_block.after.rank }}{% else %}—{% endif %}
+                  {% if team_block.after.rank_delta is not None and team_block.after.rank_delta != 0 %}
+                    <span class="small {% if team_block.after.rank_delta > 0 %}text-success{% else %}text-danger{% endif %}">
+                      ({% if team_block.after.rank_delta > 0 %}+{% endif %}{{ team_block.after.rank_delta }})
+                    </span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+
+        {% if team_block.scoring_profile %}
+          <h3 class="h6 mb-2">Scoring profile <span class="small text-muted fw-normal">(going in)</span></h3>
+          <div class="row g-2 small">
+            <div class="col-6">
+              <div class="text-muted">Goals/game</div>
+              <div>
+                <strong>{{ team_block.scoring_profile.gpg_for|floatformat:2 }}</strong>
+                for ·
+                <strong>{{ team_block.scoring_profile.gpg_against|floatformat:2 }}</strong>
+                against
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-muted">Scoring / clean sheets</div>
+              <div>
+                {% widthratio team_block.scoring_profile.scoring_rate 1 100 %}%
+                ·
+                {% widthratio team_block.scoring_profile.clean_sheet_rate 1 100 %}%
+              </div>
+            </div>
+            {% if team_block.scoring_profile.home.played %}
+              <div class="col-6">
+                <div class="text-muted">At home ({{ team_block.scoring_profile.home.played }})</div>
+                <div>
+                  <strong>{{ team_block.scoring_profile.home.gpg_for|floatformat:2 }}</strong>
+                  /
+                  <strong>{{ team_block.scoring_profile.home.gpg_against|floatformat:2 }}</strong>
+                </div>
+              </div>
+            {% endif %}
+            {% if team_block.scoring_profile.away.played %}
+              <div class="col-6">
+                <div class="text-muted">Away ({{ team_block.scoring_profile.away.played }})</div>
+                <div>
+                  <strong>{{ team_block.scoring_profile.away.gpg_for|floatformat:2 }}</strong>
+                  /
+                  <strong>{{ team_block.scoring_profile.away.gpg_against|floatformat:2 }}</strong>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <p class="transparency-tell mb-0 mt-3">
+          "Going in" = settled events in the same season strictly before this kickoff.
+        </p>
+      {% else %}
+        <div class="analytics-empty-state p-3 rounded">
+          <strong>First match of the season.</strong>
+          <p class="small mb-0 text-muted">
+            No prior settled events for this team in
+            {% if team_block.season_label %}{{ team_block.season_label }}{% else %}this season{% endif %}.
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

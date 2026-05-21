@@ -669,6 +669,23 @@ STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_API_VERSION = os.environ.get("STRIPE_API_VERSION", "2025-07-30.basil")
 
+# PLATFORM_COST: monthly PRO-plan price in dollars (e.g. 2.99). The
+# ``manage.py sync_platform_cost`` command reads this and reconciles
+# the PRO Plan row's ``amount_cents`` — saving the Plan triggers the
+# post_save signal that pushes the new Price to Stripe.
+# Empty / unset = leave the Plan row alone (the previous value stands).
+_raw_platform_cost = (os.environ.get("PLATFORM_COST") or "").strip()
+if _raw_platform_cost:
+    from decimal import Decimal as _D, InvalidOperation as _InvalidOp
+    try:
+        PLATFORM_COST_CENTS = int(round(_D(_raw_platform_cost) * 100))
+    except (_InvalidOp, ValueError):
+        # Bad value (typo, non-numeric) — surface as None so the sync
+        # command can warn rather than silently rounding to zero.
+        PLATFORM_COST_CENTS = None
+else:
+    PLATFORM_COST_CENTS = None
+
 # Fail fast in production if aggregator is enabled but the webhook secret
 # is missing — without it, inbound deliveries get rejected for signature
 # mismatch (or 503'd if the receiver guards explicitly).

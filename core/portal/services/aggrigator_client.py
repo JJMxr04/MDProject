@@ -191,6 +191,17 @@ def event_context(event_id: str, *, tenant_key: str | None = None) -> dict:
     return body if isinstance(body, dict) else {}
 
 
+def event_historical_stats(event_id: str, *, tenant_key: str | None = None) -> dict:
+    """Season-context stats for a settled event's two teams. Empty dict on
+    transport failure. Past-event-only — future events return
+    ``reason="not_finalized"`` with null team blocks."""
+    body = _get(
+        f"/v1/analytics/events/{event_id}/historical-stats",
+        tenant_key=tenant_key,
+    )
+    return body if isinstance(body, dict) else {}
+
+
 def event_best_prices(event_id: str, *, tenant_key: str | None = None) -> dict:
     """Return ``{event_id, selections: [...]}`` or empty dict on failure."""
     body = _get(

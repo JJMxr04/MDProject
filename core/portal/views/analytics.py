@@ -127,19 +127,27 @@ def analytics_team(request, team_id: str):
 
 @require_paid
 def analytics_event(request, event_id: str):
-    """Event detail. Past events render score + post-hoc model + form + H2H;
-    future events also render the live-odds card + per-side edge."""
+    """Event detail. Past events render score + season context + form + H2H;
+    future events render the model + live-odds card + per-side edge."""
     key = _tenant_key(request)
     event = aggrigator_client.event_detail(event_id)
-    model_prob = aggrigator_client.event_probabilities(event_id, tenant_key=key)
     context = aggrigator_client.event_context(event_id, tenant_key=key)
 
     is_finalized = bool(event.get("is_finalized")) if event else False
+
+    model_prob: dict = {}
     live_odds = None
     edge_rows: list[dict] = []
-    if not is_finalized and event:
-        live_odds = aggrigator_client.event_live_odds(event_id, tenant_key=key)
-        edge_rows = _build_edge_rows(model_prob, live_odds)
+    historical_stats: dict = {}
+    if event:
+        if is_finalized:
+            historical_stats = aggrigator_client.event_historical_stats(
+                event_id, tenant_key=key,
+            )
+        else:
+            model_prob = aggrigator_client.event_probabilities(event_id, tenant_key=key)
+            live_odds = aggrigator_client.event_live_odds(event_id, tenant_key=key)
+            edge_rows = _build_edge_rows(model_prob, live_odds)
 
     league_id = event.get("league_id") if event else None
     crumbs = [{"label": "Analytics", "href": "/web/portal/analytics/"}]
@@ -155,8 +163,11 @@ def analytics_event(request, event_id: str):
         "event": event,
         "is_past": is_finalized,
         "model_prob": model_prob,
+        "historical_stats": historical_stats,
         "form_into_match": context.get("form_into_match") or {},
+        "form_detail": context.get("form_detail") or {},
         "h2h_last_5": context.get("h2h_last_5") or [],
+        "h2h_aggregate": context.get("h2h_aggregate") or {},
         "live_odds": live_odds,
         "edge_rows": edge_rows,
         "active_tab": "explore",
