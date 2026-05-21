@@ -6,8 +6,9 @@ which creates a Stripe Checkout Session and 303s out to Stripe.
 
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from core.billing.models import Plan
 
@@ -16,7 +17,14 @@ from core.billing.models import Plan
 def upgrade_page(request):
     """Show the PRO offer + CTA. Renders an empty-state message if the
     PRO plan isn't seeded yet (admin hasn't created it, or it's marked
-    inactive) so the FREE user sees a useful page instead of a 500."""
+    inactive) so the FREE user sees a useful page instead of a 500.
+
+    When ``ANALYTICS_FREE_FOR_ALL`` is on there's nothing to upgrade to,
+    so we bounce to the billing landing page (which shows the free-mode
+    banner instead).
+    """
+    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False):
+        return redirect("core-portal:billing-index")
     pro = Plan.objects.filter(code="PRO", is_active=True).first()
     sub = getattr(request.user, "subscription", None)
     ctx = {

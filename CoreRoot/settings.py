@@ -686,6 +686,13 @@ if _raw_platform_cost:
 else:
     PLATFORM_COST_CENTS = None
 
+# ANALYTICS_FREE_FOR_ALL: platform-wide kill-switch. When "1", every
+# logged-in user is treated as entitled to analytics regardless of their
+# Subscription plan/status. The billing/upgrade pages swap copy and hide
+# the checkout CTA. Stripe catalog, existing PRO subs, and webhooks are
+# untouched — flipping back to "0" restores the normal gate.
+ANALYTICS_FREE_FOR_ALL = os.environ.get("ANALYTICS_FREE_FOR_ALL", "0") == "1"
+
 # Fail fast in production if aggregator is enabled but the webhook secret
 # is missing — without it, inbound deliveries get rejected for signature
 # mismatch (or 503'd if the receiver guards explicitly).

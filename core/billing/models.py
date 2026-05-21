@@ -17,6 +17,7 @@ a 200 no-op.
 
 from __future__ import annotations
 
+from django.conf import settings
 from django.db import models
 
 from core.abstract.models import AbstractModel
@@ -106,7 +107,12 @@ class Subscription(AbstractModel):
         past_due grace exists so Stripe's retry-schedule for a declined
         card doesn't blank the dashboard overnight. ``unpaid`` + ``canceled``
         revoke immediately.
+
+        ``ANALYTICS_FREE_FOR_ALL`` short-circuits to True for every user —
+        platform-wide kill-switch flipped via env. See settings.py.
         """
+        if getattr(settings, 'ANALYTICS_FREE_FOR_ALL', False):
+            return True
         if self.plan.features.get('analytics') is not True:
             return False
         return self.status in ('trialing', 'active', 'past_due')

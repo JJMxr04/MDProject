@@ -12,30 +12,7 @@
 </header>
 
 <div class="settings-layout">
-    <aside class="settings-rail" aria-label="Settings sections">
-        <ul>
-            <li>
-                <a href="{% url 'core-portal:profile' %}" class="is-active" aria-current="page">
-                    <i class="bi bi-person" aria-hidden="true"></i> Profile
-                </a>
-            </li>
-            <li>
-                <span class="is-disabled" aria-disabled="true" title="Coming soon">
-                    <i class="bi bi-shield-lock" aria-hidden="true"></i> Security
-                </span>
-            </li>
-            <li>
-                <span class="is-disabled" aria-disabled="true" title="Coming soon">
-                    <i class="bi bi-bell" aria-hidden="true"></i> Notifications
-                </span>
-            </li>
-            <li>
-                <span class="is-disabled" aria-disabled="true" title="Coming soon">
-                    <i class="bi bi-gear" aria-hidden="true"></i> Account
-                </span>
-            </li>
-        </ul>
-    </aside>
+    {% include "portal/components/_settings_rail.html" with active="profile" %}
 
     <section class="card-ui">
         <header class="card-ui__header">

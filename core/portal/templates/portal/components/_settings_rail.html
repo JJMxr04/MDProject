@@ -1,0 +1,35 @@
+{% comment %}
+Shared rail for the Settings section. Renders the same nav on both
+the profile page and the billing page so users see the same shape and
+can jump between the two.
+
+Pass ``active`` as one of: ``profile``, ``billing``.
+{% endcomment %}
+<aside class="settings-rail" aria-label="Settings sections">
+    <ul>
+        <li>
+            <a href="{% url 'core-portal:profile' %}"
+               class="{% if active == 'profile' %}is-active{% endif %}"
+               {% if active == 'profile' %}aria-current="page"{% endif %}>
+                <i class="bi bi-person" aria-hidden="true"></i> Profile
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'core-portal:billing-index' %}"
+               class="{% if active == 'billing' %}is-active{% endif %}"
+               {% if active == 'billing' %}aria-current="page"{% endif %}>
+                <i class="bi bi-credit-card" aria-hidden="true"></i> Billing
+            </a>
+        </li>
+        <li>
+            <span class="is-disabled" aria-disabled="true" title="Coming soon">
+                <i class="bi bi-shield-lock" aria-hidden="true"></i> Security
+            </span>
+        </li>
+        <li>
+            <span class="is-disabled" aria-disabled="true" title="Coming soon">
+                <i class="bi bi-bell" aria-hidden="true"></i> Notifications
+            </span>
+        </li>
+    </ul>
+</aside>

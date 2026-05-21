@@ -3,7 +3,17 @@
 {% block title %}Billing — {{ block.super }}{% endblock title %}
 
 {% block content %}
-<div class="container py-4" style="max-width: 720px;">
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Settings</h1>
+        <p class="page-header__subtitle">Manage your profile and account.</p>
+    </div>
+</header>
+
+<div class="settings-layout">
+  {% include "portal/components/_settings_rail.html" with active="billing" %}
+
+  <section class="settings-content">
   {% if messages %}
     {% for message in messages %}
       <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
@@ -13,7 +23,15 @@
     {% endfor %}
   {% endif %}
 
-  <h1 class="h3 mb-4">Billing</h1>
+  <h2 class="h4 mb-4">Billing</h2>
+
+  {% if free_for_all %}
+    <div class="alert alert-success">
+      <i class="bi bi-stars me-1"></i>
+      <strong>Analytics is free for everyone right now.</strong>
+      No subscription required — open the dashboard from the sidebar or below.
+    </div>
+  {% endif %}
 
   {% if is_past_due %}
     <div class="alert alert-warning">
@@ -23,6 +41,7 @@
       <div class="mt-2">
         <form method="post" action="{% url 'core-portal:billing-portal' %}" class="d-inline">
           {% csrf_token %}
+          <input type="hidden" name="flow" value="update_payment">
           <button class="btn btn-warning btn-sm">Update payment method</button>
         </form>
       </div>
@@ -37,6 +56,14 @@
         <dl class="row mb-0">
           <dt class="col-sm-4 text-muted">Plan</dt>
           <dd class="col-sm-8"><strong>{{ subscription.plan.code }}</strong> — {{ subscription.plan.name }}</dd>
+
+          {% if subscription.plan.amount_cents %}
+            <dt class="col-sm-4 text-muted">Price</dt>
+            <dd class="col-sm-8">
+              ${{ subscription.plan.amount_cents|floatformat:0|slice:":-2" }}.{{ subscription.plan.amount_cents|stringformat:"02d"|slice:"-2:" }}
+              <span class="text-muted">/ {{ subscription.plan.interval }}</span>
+            </dd>
+          {% endif %}
 
           <dt class="col-sm-4 text-muted">Status</dt>
           <dd class="col-sm-8">
@@ -66,24 +93,159 @@
     </div>
   </div>
 
-  <div class="mt-3 d-flex gap-2">
-    {% if is_pro_active or is_past_due %}
+  <div class="mt-3 d-flex gap-2 flex-wrap">
+    {% if has_paid_sub or is_past_due %}
       <form method="post" action="{% url 'core-portal:billing-portal' %}" class="d-inline">
         {% csrf_token %}
+        <input type="hidden" name="flow" value="manage">
         <button class="btn btn-outline-primary">Manage subscription</button>
       </form>
+      <form method="post" action="{% url 'core-portal:billing-portal' %}" class="d-inline">
+        {% csrf_token %}
+        <input type="hidden" name="flow" value="update_payment">
+        <button class="btn btn-outline-secondary">Update payment method</button>
+      </form>
+      {% if has_paid_sub and not subscription.cancel_at_period_end %}
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelSubModal">
+          Cancel subscription
+        </button>
+      {% endif %}
+    {% endif %}
+    {% if is_pro_active %}
       <a href="{% url 'core-portal:analytics-landing' %}" class="btn btn-outline-secondary">
         Open Analytics →
       </a>
-    {% else %}
+    {% endif %}
+    {% if not has_paid_sub and not is_past_due and not free_for_all %}
       <a href="{% url 'core-portal:billing-upgrade' %}" class="btn btn-primary">
         {% if is_canceled %}Resubscribe to PRO{% else %}Upgrade to PRO{% endif %}
       </a>
     {% endif %}
   </div>
 
-  <p class="text-muted small mt-4 mb-0">
-    Invoices and receipts are available in the Stripe-hosted billing portal.
-  </p>
+  {% if has_paid_sub and not subscription.cancel_at_period_end %}
+    <div class="modal fade" id="cancelSubModal" tabindex="-1" aria-labelledby="cancelSubModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cancelSubModalLabel">Cancel subscription?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-2">
+              You'll keep access to the analytics dashboard until
+              {% if subscription.current_period_end %}
+                <strong>{{ subscription.current_period_end|date:"M j, Y" }}</strong>.
+              {% else %}
+                the end of your current billing period.
+              {% endif %}
+            </p>
+            <p class="text-muted small mb-0">
+              You'll confirm the cancellation on the next screen (hosted by Stripe).
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Keep subscription</button>
+            <form method="post" action="{% url 'core-portal:billing-portal' %}" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="flow" value="cancel">
+              <button type="submit" class="btn btn-danger">Continue to cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if invoices %}
+    <div class="card shadow-sm mt-4">
+      <div class="card-body">
+        <h2 class="h5 mb-3">Invoice history</h2>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead class="text-muted small">
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Invoice</th>
+                <th scope="col" class="text-end">Amount</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-end">Links</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for inv in invoices %}
+                <tr>
+                  <td>{{ inv.created|date:"M j, Y" }}</td>
+                  <td class="font-monospace small">{{ inv.number }}</td>
+                  <td class="text-end">
+                    {% if inv.status == "paid" %}
+                      ${{ inv.amount_paid_cents|floatformat:0|slice:":-2" }}.{{ inv.amount_paid_cents|stringformat:"02d"|slice:"-2:" }}
+                    {% else %}
+                      ${{ inv.amount_due_cents|floatformat:0|slice:":-2" }}.{{ inv.amount_due_cents|stringformat:"02d"|slice:"-2:" }}
+                    {% endif %}
+                    <span class="text-muted small">{{ inv.currency }}</span>
+                  </td>
+                  <td>
+                    {% if inv.status == "paid" %}
+                      <span class="badge bg-success">paid</span>
+                    {% elif inv.status == "open" %}
+                      <span class="badge bg-warning text-dark">open</span>
+                    {% elif inv.status == "void" or inv.status == "uncollectible" %}
+                      <span class="badge bg-secondary">{{ inv.status }}</span>
+                    {% else %}
+                      <span class="badge bg-light text-dark">{{ inv.status }}</span>
+                    {% endif %}
+                  </td>
+                  <td class="text-end">
+                    {% if inv.status == "open" and inv.hosted_invoice_url %}
+                      <a href="{{ inv.hosted_invoice_url }}" class="btn btn-warning btn-sm" target="_blank" rel="noopener">Pay now</a>
+                    {% endif %}
+                    {% if inv.hosted_invoice_url %}
+                      <a href="{{ inv.hosted_invoice_url }}" class="small text-decoration-none" target="_blank" rel="noopener">View</a>
+                    {% endif %}
+                    {% if inv.invoice_pdf %}
+                      <a href="{{ inv.invoice_pdf }}" class="small text-decoration-none ms-2" target="_blank" rel="noopener">PDF</a>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted small mt-3 mb-0">
+          Showing the most recent {{ invoices|length }} invoice{{ invoices|length|pluralize }}.
+          Older invoices are in the Stripe-hosted billing portal.
+        </p>
+      </div>
+    </div>
+  {% endif %}
+  </section>
 </div>
 {% endblock content %}
+
+{% block css %}
+<style>
+    .settings-layout { display: grid; grid-template-columns: 220px 1fr; gap: var(--space-6); align-items: flex-start; }
+    .settings-rail ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+    .settings-rail a,
+    .settings-rail .is-disabled {
+        display: flex; align-items: center; gap: var(--space-2);
+        padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
+        color: var(--text-primary); text-decoration: none;
+        font-size: var(--text-sm); font-weight: var(--weight-medium);
+    }
+    .settings-rail a:hover { background: var(--surface-muted); }
+    .settings-rail a.is-active {
+        background: var(--brand-yellow); color: var(--text-on-accent);
+        font-weight: var(--weight-semibold);
+    }
+    .settings-rail .is-disabled { color: var(--text-secondary); opacity: .6; cursor: not-allowed; }
+    .settings-rail i.bi { font-size: 16px; }
+
+    .settings-content { max-width: 720px; }
+
+    @media (max-width: 768px) {
+        .settings-layout { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock css %}
