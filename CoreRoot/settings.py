@@ -525,6 +525,10 @@ JAZZMIN_SETTINGS = {
         {"name": "Status", "url": "/admin/status/", "permissions": ["auth.view_user"]},
         {"name": "Waitlist", "url": "/admin/core_auth/waitlistentry/", "permissions": ["auth.view_user"]},
         {"name": "Portal", "url": "/web/portal/dashboard/", "new_window": True, "permissions": ["auth.view_user"]},
+        # Stripe config introspection + one-click webhook endpoint
+        # creation. Staff-gated at the view level via
+        # @staff_member_required; the perm here just hides the link.
+        {"name": "Stripe Setup", "url": "/admin/stripe-setup/", "permissions": ["auth.view_user"]},
     ],
 
     #############

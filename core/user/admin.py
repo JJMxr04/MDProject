@@ -1,7 +1,20 @@
-from django.contrib import admin
+import uuid
+
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.urls import path, reverse
+from django.utils.decorators import method_decorator
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.views.decorators.http import require_POST
+
+from core.billing.services.customer import (
+    StripeCustomerError,
+    create_customer as stripe_create_customer,
+    reconnect_customer as stripe_reconnect_customer,
+)
 
 from .models import User
 
@@ -72,6 +85,10 @@ def _mask_uuid(value) -> str:
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     model = User
+    # Adds the Reconnect / Create-new Stripe buttons to the
+    # object-tools row at the top of the change form. The template
+    # extends jazzmin/admin's default — block override only.
+    change_form_template = "admin/core_user/user/change_form.html"
 
     list_display = [
         'email', 'username',
@@ -117,6 +134,102 @@ class UserAdmin(BaseUserAdmin):
         'aggrigator_api_key_display',
     ]
 
+    # ---- Stripe customer actions (Reconnect / Create new) ----
+
+    def get_urls(self):
+        """Mount two POST-only routes alongside the standard admin URLs.
+
+        Named ``admin:core_user_user_stripe_reconnect`` /
+        ``admin:core_user_user_stripe_create`` (matches the
+        ``<app>_<model>_<action>`` convention so ``reverse()`` works
+        cleanly from ``stripe_customer_display``)."""
+        urls = super().get_urls()
+        custom = [
+            path(
+                "<uuid:user_id>/stripe-reconnect/",
+                self.admin_site.admin_view(self.stripe_reconnect_view),
+                name="core_user_user_stripe_reconnect",
+            ),
+            path(
+                "<uuid:user_id>/stripe-create/",
+                self.admin_site.admin_view(self.stripe_create_view),
+                name="core_user_user_stripe_create",
+            ),
+        ]
+        # Custom URLs first so the int-converter doesn't fight the
+        # default ``<path:object_id>`` change-view pattern.
+        return custom + urls
+
+    @method_decorator(require_POST)
+    def stripe_reconnect_view(self, request, user_id: uuid.UUID):
+        """Search Stripe for a Customer matching the user's email and
+        link it. No-ops with an info message when nothing matches —
+        operators can fall back to Create-new manually."""
+        if not request.user.is_staff:
+            messages.error(request, "Staff only.")
+            return HttpResponseRedirect(reverse("admin:index"))
+        user = get_object_or_404(User, pk=user_id)
+        try:
+            cust_id = stripe_reconnect_customer(user)
+        except StripeCustomerError as exc:
+            messages.error(
+                request,
+                f"Stripe reconnect failed for {user.email}: {exc.user_message}",
+            )
+            return self._redirect_to_user(user_id)
+        if cust_id is None:
+            messages.warning(
+                request,
+                (
+                    f"No Stripe Customer with email {user.email} found in the "
+                    "current Stripe account. Use Create-new to mint a fresh one."
+                ),
+            )
+        else:
+            messages.success(
+                request,
+                f"Linked existing Stripe Customer {cust_id} to {user.email}.",
+            )
+        return self._redirect_to_user(user_id)
+
+    @method_decorator(require_POST)
+    def stripe_create_view(self, request, user_id: uuid.UUID):
+        """Create a fresh ``cus_...`` and overwrite the user's stored id.
+
+        Destructive in the sense that the previous id is dropped from
+        MDProject (the Stripe-side Customer is left in place). Use the
+        ``reset_stripe_customers`` management command if you need
+        bulk delete-and-recreate."""
+        if not request.user.is_staff:
+            messages.error(request, "Staff only.")
+            return HttpResponseRedirect(reverse("admin:index"))
+        user = get_object_or_404(User, pk=user_id)
+        old_id = user.stripe_customer_id
+        try:
+            cust_id = stripe_create_customer(user)
+        except StripeCustomerError as exc:
+            messages.error(
+                request,
+                f"Stripe Customer create failed for {user.email}: {exc.user_message}",
+            )
+            return self._redirect_to_user(user_id)
+        if old_id:
+            messages.success(
+                request,
+                f"Replaced Stripe Customer {old_id} → {cust_id} for {user.email}.",
+            )
+        else:
+            messages.success(
+                request,
+                f"Created Stripe Customer {cust_id} for {user.email}.",
+            )
+        return self._redirect_to_user(user_id)
+
+    def _redirect_to_user(self, user_id: uuid.UUID) -> HttpResponseRedirect:
+        return HttpResponseRedirect(
+            reverse("admin:core_user_user_change", args=[user_id]),
+        )
+
     # ---- subscription column helpers ----
 
     @admin.display(description='Tier', ordering='subscription__plan__code')
@@ -149,7 +262,12 @@ class UserAdmin(BaseUserAdmin):
 
     @admin.display(description='Stripe customer')
     def stripe_customer_display(self, obj):
-        """Detail-page version of stripe_customer_link — same renderer."""
+        """Detail-page version of stripe_customer_link — same renderer.
+
+        The Reconnect / Create-new buttons live in the ``object-tools``
+        row at the top of the change form (see
+        ``change_form_template``) — putting them here would nest <form>
+        elements, which HTML doesn't allow and breaks CSRF."""
         return self.stripe_customer_link(obj)
 
     @admin.display(description='Aggrigator external ID', ordering='aggrigator_external_id')

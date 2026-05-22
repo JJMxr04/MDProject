@@ -1,0 +1,43 @@
+{% extends "admin/change_form.html" %}
+{% comment %}
+  Adds Reconnect / Create-new Stripe buttons to the object-tools row
+  on the User change page. These are standalone POST forms (not nested
+  in the main change form), so {% csrf_token %} works cleanly.
+
+  Wired up in UserAdmin.change_form_template + UserAdmin.get_urls().
+{% endcomment %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  <li>
+    <a href="{% url 'core-admin:admin_stripe_setup' %}" class="historylink"
+       title="Inspect Stripe config + create the webhook endpoint">
+      Stripe Setup
+    </a>
+  </li>
+  {% if original and original.pk %}
+    <li>
+      <form method="post"
+            action="{% url 'admin:core_user_user_stripe_reconnect' original.pk %}"
+            style="display:inline"
+            onsubmit="return confirm('Search Stripe for a Customer with email {{ original.email }} and link it to this user?');">
+        {% csrf_token %}
+        <button type="submit" class="historylink">
+          Reconnect Stripe
+        </button>
+      </form>
+    </li>
+    <li>
+      <form method="post"
+            action="{% url 'admin:core_user_user_stripe_create' original.pk %}"
+            style="display:inline"
+            onsubmit="return confirm('Create a fresh Stripe Customer for {{ original.email }}? This OVERWRITES the existing stripe_customer_id ({{ original.stripe_customer_id|default:'none' }}).');">
+        {% csrf_token %}
+        <button type="submit" class="historylink"
+                style="background:#fff4f4;border-color:#c33;color:#900">
+          Create new Stripe customer
+        </button>
+      </form>
+    </li>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,286 @@
+{% extends "admin/base_admin.html" %}
+{% load i18n %}
+
+{% block title %}Stripe Setup{% endblock %}
+
+{% block css %}
+<style>
+  .ssetup { max-width: 1080px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .ssetup h1 { font-size: 1.4rem; font-weight: 700; margin: 0 0 .25rem; }
+  .ssetup .lede { color: #6b7280; margin-bottom: 1.5rem; }
+  .ssetup h2 {
+    font-size: .9rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: #6b7280;
+    margin: 1.75rem 0 .65rem;
+  }
+
+  .scard {
+    background: #fff; border: 1px solid #e3e8ef; border-radius: 8px;
+    padding: 1rem 1.25rem; box-shadow: 0 1px 2px rgba(15,23,42,.05);
+  }
+  .scard + .scard { margin-top: 1rem; }
+
+  .kv { display: grid; grid-template-columns: 200px 1fr; gap: .35rem 1rem; font-size: .9rem; }
+  .kv dt { color: #6b7280; font-weight: 600; }
+  .kv dd { margin: 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .kv dd .muted { color: #9aa6b2; font-family: inherit; }
+
+  .pill {
+    display: inline-block; padding: .15rem .55rem; border-radius: 99px;
+    font-size: .72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em;
+  }
+  .pill--test    { background: #fef3c7; color: #92400e; }
+  .pill--live    { background: #d1fae5; color: #065f46; }
+  .pill--unset   { background: #fee2e2; color: #991b1b; }
+  .pill--ok      { background: #d1fae5; color: #065f46; }
+  .pill--warn    { background: #fef3c7; color: #92400e; }
+  .pill--err     { background: #fee2e2; color: #991b1b; }
+
+  .secret-box {
+    background: #fff7e6; border: 1px solid #f59e0b;
+    border-radius: 8px; padding: .9rem 1.1rem; margin: 1rem 0;
+  }
+  .secret-box pre {
+    background: #1f2937; color: #d1fae5; padding: .65rem .85rem;
+    border-radius: 6px; font-size: .82rem; overflow-x: auto;
+    margin: .5rem 0 .25rem;
+  }
+  .secret-box button.copy {
+    font-size: .75rem; padding: .2rem .6rem; cursor: pointer;
+    border: 1px solid #ccc; background: #fff; border-radius: 4px;
+  }
+
+  .warn-box {
+    background: #fef3c7; border: 1px solid #f59e0b;
+    border-radius: 8px; padding: .85rem 1.1rem; margin-bottom: 1rem;
+  }
+  .err-box {
+    background: #fee2e2; border: 1px solid #ef4444;
+    border-radius: 8px; padding: .85rem 1.1rem; margin-bottom: 1rem;
+    color: #7f1d1d;
+  }
+
+  table.ep-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  table.ep-table th, table.ep-table td {
+    text-align: left; padding: .45rem .6rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  table.ep-table th { color: #6b7280; font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; }
+  table.ep-table code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .8rem; }
+
+  form.setup-form input[type=url] {
+    width: 100%; padding: .55rem .75rem;
+    border: 1px solid #cbd2dc; border-radius: 6px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .88rem; margin: .35rem 0 .75rem;
+  }
+  form.setup-form button.submit {
+    background: #635bff; color: #fff;
+    padding: .55rem 1.25rem; border: 0; border-radius: 6px;
+    font-weight: 600; cursor: pointer; font-size: .9rem;
+  }
+  form.setup-form button.submit:hover { background: #4f46e5; }
+  form.setup-form .help { font-size: .8rem; color: #6b7280; }
+
+  ul.events, ul.caps { padding-left: 1.1rem; margin: .35rem 0; font-size: .85rem; }
+  ul.events li { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  ul.caps li { margin-bottom: .2rem; }
+  ul.caps li code { font-family: inherit; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ssetup">
+
+<h1>Stripe Setup</h1>
+<p class="lede">
+  One-click view of the current Stripe config + a button to create the
+  webhook endpoint pointing at this installation.
+</p>
+
+{# ---- Account / key status -------------------------------------------- #}
+<h2>Account status</h2>
+<div class="scard">
+  {% if state.error %}
+    <div class="err-box">
+      <strong>Stripe error:</strong> {{ state.error }}
+    </div>
+  {% endif %}
+
+  <dl class="kv">
+    <dt>Secret key</dt>
+    <dd>
+      {% if state.key_mode == 'unset' %}
+        <span class="pill pill--unset">not set</span>
+      {% elif state.key_mode == 'test' %}
+        <span class="pill pill--test">test mode</span> <span class="muted">(sk_test_…)</span>
+      {% elif state.key_mode == 'live' %}
+        <span class="pill pill--live">live mode</span> <span class="muted">(sk_live_…)</span>
+      {% elif state.key_mode == 'publishable' %}
+        <span class="pill pill--err">publishable key</span> <span class="muted">— replace with sk_*</span>
+      {% else %}
+        <span class="pill pill--warn">{{ state.key_mode }}</span>
+      {% endif %}
+    </dd>
+    {% if state.account_id %}
+      <dt>Account</dt>
+      <dd>{{ state.account_id }}{% if state.account_email %} <span class="muted">· {{ state.account_email }}</span>{% endif %}</dd>
+      <dt>Charges enabled</dt>
+      <dd>{% if state.charges_enabled %}<span class="pill pill--ok">yes</span>{% else %}<span class="pill pill--warn">no</span>{% endif %}</dd>
+      <dt>Payouts enabled</dt>
+      <dd>{% if state.payouts_enabled %}<span class="pill pill--ok">yes</span>{% else %}<span class="pill pill--warn">no</span>{% endif %}</dd>
+    {% endif %}
+    <dt>SDK pinned version</dt>
+    <dd>{{ state.pinned_api_version }}</dd>
+    {% if state.account_default_api_version %}
+      <dt>Account default version</dt>
+      <dd>
+        {{ state.account_default_api_version }}
+        {% if state.account_default_api_version != state.pinned_api_version %}
+          <span class="pill pill--warn">mismatch</span>
+        {% else %}
+          <span class="pill pill--ok">aligned</span>
+        {% endif %}
+      </dd>
+    {% endif %}
+  </dl>
+</div>
+
+{# ---- Existing endpoints ---------------------------------------------- #}
+{% if endpoints %}
+<h2>Current webhook endpoints in this Stripe account</h2>
+<div class="scard">
+  <table class="ep-table">
+    <thead>
+      <tr><th>ID</th><th>URL</th><th>Status</th><th>API version</th><th>Events</th></tr>
+    </thead>
+    <tbody>
+      {% for ep in endpoints %}
+      <tr>
+        <td><code>{{ ep.id }}</code></td>
+        <td><code>{{ ep.url }}</code></td>
+        <td>
+          {% if ep.status == 'enabled' %}
+            <span class="pill pill--ok">{{ ep.status }}</span>
+          {% else %}
+            <span class="pill pill--warn">{{ ep.status }}</span>
+          {% endif %}
+        </td>
+        <td>{{ ep.api_version|default:'—' }}</td>
+        <td>{{ ep.enabled_events|length }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{# ---- Local dev guidance (replaces the create form on localhost) ----- #}
+{% if is_local %}
+<h2>Local development</h2>
+<div class="warn-box">
+  <strong>Stripe won't accept a localhost webhook URL.</strong>
+  Stripe pings the URL during creation; localhost / 127.0.0.1 fail
+  reachability. For local testing, use the
+  <a href="https://github.com/stripe/stripe-cli" target="_blank" rel="noopener">Stripe CLI</a>
+  instead — it tunnels real Stripe events to your machine without ever
+  registering a server-side endpoint:
+  <pre style="background:#1f2937;color:#d1fae5;padding:.65rem .85rem;border-radius:6px;margin-top:.65rem;overflow-x:auto;">stripe listen --forward-to http://localhost:8000{{ stripe_listen_path }}</pre>
+  Copy the <code>whsec_…</code> the CLI prints into <code>.env</code> as
+  <code>STRIPE_WEBHOOK_SECRET</code> and restart — done.
+  <br><br>
+  When you deploy to a public host, come back to this page from there
+  and the Create button will work.
+</div>
+{% endif %}
+
+{# ---- Webhook create form --------------------------------------------- #}
+<h2>Create webhook endpoint</h2>
+
+{% if created %}
+  <div class="secret-box">
+    <strong>Endpoint created — copy the signing secret below.</strong><br>
+    Stripe only returns it once. Paste into <code>.env</code> as
+    <code>STRIPE_WEBHOOK_SECRET</code>, then restart the app.
+    <pre id="secret">{{ created.secret }}</pre>
+    <button class="copy" type="button"
+            onclick="navigator.clipboard.writeText(document.getElementById('secret').textContent);
+                     this.textContent='copied';
+                     setTimeout(()=>this.textContent='copy secret',1500);">
+      copy secret
+    </button>
+    <p style="margin:.65rem 0 0">
+      Endpoint id: <code>{{ created.id }}</code><br>
+      URL: <code>{{ created.url }}</code><br>
+      Or view it in
+      <a href="{{ created.dashboard_url }}" target="_blank" rel="noopener">
+        Stripe Dashboard ↗</a> — the secret can also be revealed from there.
+    </p>
+  </div>
+{% elif flash %}
+  <div class="warn-box">
+    <strong>Refused.</strong> {{ flash }}
+    {% if existing_endpoint %}
+      <br>Existing id: <code>{{ existing_endpoint.id }}</code>
+      ({{ existing_endpoint.enabled_events|length }} events,
+       status <code>{{ existing_endpoint.status }}</code>).
+    {% endif %}
+  </div>
+{% endif %}
+
+<div class="scard">
+  <form method="post" class="setup-form">
+    {% csrf_token %}
+    <label for="webhook_url"><strong>Webhook URL</strong></label>
+    <input id="webhook_url" name="webhook_url" type="url"
+           value="{{ submitted_webhook_url }}" required>
+    <p class="help">
+      Auto-detected from this request's host. For Stripe to deliver,
+      this must be publicly reachable — localhost won't work in prod
+      Stripe. Use <code>stripe listen --forward-to …</code> for local
+      testing instead.
+    </p>
+    <button type="submit" class="submit"
+            {% if state.key_mode == 'unset' or state.key_mode == 'publishable' or is_local %}disabled{% endif %}
+            {% if is_local %}title="Disabled on localhost — use ``stripe listen`` for local testing"{% endif %}>
+      Create webhook endpoint
+    </button>
+  </form>
+</div>
+
+{# ---- Subscribed events ----------------------------------------------- #}
+<h2>Events the new endpoint will subscribe to</h2>
+<div class="scard">
+  <ul class="events">
+    {% for ev in events %}<li>{{ ev }}</li>{% endfor %}
+  </ul>
+  <p class="help">
+    Source of truth: <code>core/billing/services/stripe_setup.py</code>
+    (constant <code>WEBHOOK_EVENTS</code>). Add new events there when
+    wiring a new handler in
+    <code>core/billing/views/webhook.py:_HANDLERS</code>, then click
+    Create again on a fresh endpoint.
+  </p>
+</div>
+
+{# ---- Required capabilities ------------------------------------------ #}
+<h2>Capabilities Stripe must grant the key</h2>
+<div class="scard">
+  <p class="help" style="margin-top:0">
+    Standard secret keys (<code>sk_test_…</code>, <code>sk_live_…</code>)
+    grant all of these by default — this list only matters when you use
+    a <strong>restricted key</strong>.
+  </p>
+  <ul class="caps">
+    {% for c in capabilities %}
+      <li>
+        <code>{{ c.resource }}</code> · {{ c.access }} —
+        <span class="muted">{{ c.used_for }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+</div>
+{% endblock %}
