@@ -15,7 +15,14 @@ def _stderr(msg):
     print(msg, file=sys.stderr, flush=True)
 
 
-@shared_task(bind=True, max_retries=3, default_retry_delay=30, acks_late=True)
+@shared_task(
+    bind=True,
+    max_retries=3,
+    default_retry_delay=30,
+    acks_late=True,
+    soft_time_limit=45,
+    time_limit=60,
+)
 def send_email(self, subject, recipient, template_path, context):
     attempt = self.request.retries + 1
     logger.info(
