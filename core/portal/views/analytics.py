@@ -9,10 +9,13 @@ Pages in this module:
 - ``analytics_landing``      → league card grid (default landing)
 - ``analytics_league``       → fixtures + standings for one league
 - ``analytics_team``         → team form, H2H, season stats
-- ``analytics_event``        → single-event detail (Phase B placeholder)
-- ``analytics_upcoming``     → next-24h list (Phase C placeholder)
 - ``analytics_picks``        → +EV pick filter (Phase C placeholder)
 - ``analytics_bets``         → bet log (Phase D placeholder)
+
+Single-event detail and the upcoming list moved out of /analytics/ on
+2026-05-21 — they now live on the events surface and render analytics
+inline (gated by entitlement). The 301 shims for the old URLs are
+defined at the top of this module.
 
 Views degrade gracefully when the aggrigator is unreachable — the
 client returns empty shapes and the templates render empty-state cards.
@@ -20,10 +23,34 @@ client returns empty shapes and the templates render empty-state cards.
 
 from __future__ import annotations
 
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from core.billing.decorators import require_paid
 from core.portal.services import aggrigator_client
+
+
+# ---- Permanent redirects --------------------------------------------------
+# Event detail + upcoming list moved out of /analytics/ on 2026-05-21 —
+# the events page is now the canonical surface and analytics renders
+# inline there, gated by entitlement. These shims keep old links alive.
+
+
+@login_required(login_url="/auth/login/")
+def analytics_event_redirect(request, event_id: str):
+    return redirect(
+        reverse("core-portal:upcoming-events-detail", args=[event_id]),
+        permanent=True,
+    )
+
+
+@login_required(login_url="/auth/login/")
+def analytics_upcoming_redirect(request):
+    return redirect(
+        reverse("core-portal:upcoming-events"),
+        permanent=True,
+    )
 
 
 def _tenant_key(request) -> str | None:
@@ -125,98 +152,6 @@ def analytics_team(request, team_id: str):
     return render(request, "portal/analytics/team.html", ctx)
 
 
-@require_paid
-def analytics_event(request, event_id: str):
-    """Event detail. Past events render score + season context + form + H2H;
-    future events render the model + live-odds card + per-side edge."""
-    key = _tenant_key(request)
-    event = aggrigator_client.event_detail(event_id)
-    context = aggrigator_client.event_context(event_id, tenant_key=key)
-
-    is_finalized = bool(event.get("is_finalized")) if event else False
-
-    model_prob: dict = {}
-    live_odds = None
-    edge_rows: list[dict] = []
-    historical_stats: dict = {}
-    if event:
-        if is_finalized:
-            historical_stats = aggrigator_client.event_historical_stats(
-                event_id, tenant_key=key,
-            )
-        else:
-            model_prob = aggrigator_client.event_probabilities(event_id, tenant_key=key)
-            live_odds = aggrigator_client.event_live_odds(event_id, tenant_key=key)
-            edge_rows = _build_edge_rows(model_prob, live_odds)
-
-    league_id = event.get("league_id") if event else None
-    crumbs = [{"label": "Analytics", "href": "/web/portal/analytics/"}]
-    if league_id:
-        crumbs.append({
-            "label": league_id,
-            "href": f"/web/portal/analytics/league/{league_id}/",
-        })
-    crumbs.append({"label": f"Event {event_id}"})
-
-    ctx = {
-        "event_id": event_id,
-        "event": event,
-        "is_past": is_finalized,
-        "model_prob": model_prob,
-        "historical_stats": historical_stats,
-        "form_into_match": context.get("form_into_match") or {},
-        "form_detail": context.get("form_detail") or {},
-        "h2h_last_5": context.get("h2h_last_5") or [],
-        "h2h_aggregate": context.get("h2h_aggregate") or {},
-        "live_odds": live_odds,
-        "edge_rows": edge_rows,
-        "active_tab": "explore",
-        "crumbs": crumbs,
-    }
-    return render(request, "portal/analytics/event.html", ctx)
-
-
-def _build_edge_rows(model_prob: dict, live_odds: dict) -> list[dict]:
-    """Build per-side edge rows for the model-vs-market table.
-
-    Each row carries the model prob, the vig-adjusted market prob,
-    the signed edge in percentage points, and the best price for that
-    side. Returns ``[]`` when either input is missing the data we need
-    so the template can render the live-odds-empty path instead."""
-    if not model_prob or model_prob.get("p_home") is None:
-        return []
-    if not live_odds:
-        return []
-    ml_markets = [m for m in (live_odds.get("markets") or []) if m.get("market_type") == "moneyline"]
-    if not ml_markets:
-        return []
-    ml = ml_markets[0]
-    vig_adj = ml.get("vig_adjusted_implied") or {}
-    best_by_side = {bp.get("side"): bp for bp in (ml.get("best_prices") or [])}
-    model_by_side = {
-        "home": model_prob.get("p_home"),
-        "draw": model_prob.get("p_draw"),
-        "away": model_prob.get("p_away"),
-    }
-    rows: list[dict] = []
-    for side in ("home", "draw", "away"):
-        market_p = vig_adj.get(side)
-        model_p = model_by_side.get(side)
-        if market_p is None or model_p is None:
-            continue
-        bp = best_by_side.get(side)
-        rows.append({
-            "side": side,
-            "model_prob": model_p,
-            "market_prob": market_p,
-            "edge_pp": (model_p - market_p) * 100.0,
-            "best_decimal": bp.get("decimal_odds") if bp else None,
-            "best_bookmaker": bp.get("bookmaker_name") if bp else None,
-            "best_deeplink": bp.get("deeplink") if bp else None,
-        })
-    return rows
-
-
 _WINDOW_OPTIONS = (
     (24, "Next 24h"),
     (72, "Next 72h"),
@@ -237,32 +172,6 @@ def _league_options(tenant_key: str | None) -> list[dict]:
     the aggrigator is unreachable."""
     payload = aggrigator_client.list_leagues(tenant_key=tenant_key)
     return payload.get("leagues") or []
-
-
-@require_paid
-def analytics_upcoming(request):
-    """Upcoming events list — model probability + live-odds badge per row."""
-    key = _tenant_key(request)
-    league = request.GET.get("league") or None
-    hours_ahead = _parse_window(request.GET.get("hours_ahead"))
-    payload = aggrigator_client.events_today(
-        league=league, hours_ahead=hours_ahead, tenant_key=key,
-    )
-    ctx = {
-        "events": payload.get("events", []),
-        "window_from": payload.get("from"),
-        "window_to": payload.get("to"),
-        "selected_league": league or "",
-        "selected_hours": hours_ahead,
-        "league_options": _league_options(key),
-        "window_options": _WINDOW_OPTIONS,
-        "active_tab": "upcoming",
-        "crumbs": [
-            {"label": "Analytics", "href": "/web/portal/analytics/"},
-            {"label": "Upcoming"},
-        ],
-    }
-    return render(request, "portal/analytics/upcoming.html", ctx)
 
 
 @require_paid

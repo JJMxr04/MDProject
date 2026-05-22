@@ -1,4 +1,3 @@
-{# Expects: user (a User instance), size (px, optional, default 40) #}
 <span class="avatar" style="--avatar-size: {{ size|default:40 }}px;" aria-hidden="true">
     <span class="avatar__initials">{{ user.first_name|default:user.username|slice:":1"|upper }}</span>
 </span>

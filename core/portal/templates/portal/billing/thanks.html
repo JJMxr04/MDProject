@@ -15,8 +15,16 @@
   </p>
 
   <div class="mt-4 d-flex gap-2 justify-content-center">
+    {% comment %}
+    Analytics landing disabled 2026-05-22 — restore in lockstep with
+    core/portal/urls_analytics.py. While disabled, point users at the
+    events surface, which now hosts the analytics inline.
     <a href="{% url 'core-portal:analytics-landing' %}" class="btn btn-primary">
       Open Analytics →
+    </a>
+    {% endcomment %}
+    <a href="{% url 'core-portal:upcoming-events' %}" class="btn btn-primary">
+      Open Events →
     </a>
     <a href="{% url 'core-portal:billing-index' %}" class="btn btn-outline-secondary">
       Manage billing

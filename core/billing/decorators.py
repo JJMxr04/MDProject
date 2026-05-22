@@ -3,10 +3,18 @@
 Three things this does, in order:
 
 1. ``@login_required`` chain — anonymous users go to the login page.
-2. Subscription gate — FREE / canceled / unpaid users go to /billing/upgrade/.
-3. Defensive aggrigator provisioning — if somehow this PRO user has no
+2. Entitlement gate — FREE / canceled / unpaid users go to
+   /billing/upgrade/. The check goes through
+   ``core.billing.entitlement.user_can_access_analytics`` so the
+   platform-wide kill-switch (``ANALYTICS_FREE_FOR_ALL``) and missing-
+   Subscription edge cases route the same as the normal path.
+3. Defensive aggrigator provisioning — if a *paid* PRO user has no
    ``aggrigator_api_key`` (DB restore, signup signal crashed, etc.),
    provision them inline so the downstream analytics call has a key.
+   This step is SKIPPED for kill-switch FREE users — their FREE-tier
+   key from the signup signal is what analytics endpoints see, and
+   upgrading them to PRO at the aggrigator side would misrepresent
+   what they're actually paying for.
 
 The decorator is intentionally permissive about the third step: a
 transient aggrigator failure renders the page in an empty-state instead
@@ -20,10 +28,12 @@ from __future__ import annotations
 import logging
 from functools import wraps
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
+from core.billing.entitlement import user_can_access_analytics
 from core.billing.services import aggrigator_internal
 from core.user.models import User
 
@@ -36,16 +46,17 @@ def require_paid(view_func):
     @login_required(login_url="/auth/login/")
     def wrapper(request, *args, **kwargs):
         user = request.user
-        sub = getattr(user, "subscription", None)
 
-        if sub is None or not sub.is_entitled_to_analytics:
+        if not user_can_access_analytics(user):
             return redirect("core-portal:billing-upgrade")
 
-        # Defensive backfill — should rarely trigger. The signup signal
-        # provisions every new user; the one-shot backfill script covers
-        # existing users at cutover. This catches edge cases (DB restore
-        # without re-running backfill, signup signal raised, etc.).
-        if not user.aggrigator_api_key:
+        # Inline aggrigator-key backfill — only runs for paid PRO users.
+        # Kill-switch FREE users skip this: they were provisioned at
+        # FREE tier by the signup signal, that's what their key is, and
+        # bumping them to PRO at the aggrigator just to satisfy an
+        # "everyone is free for now" toggle would lie about tier.
+        free_for_all = getattr(settings, "ANALYTICS_FREE_FOR_ALL", False)
+        if not free_for_all and not user.aggrigator_api_key:
             logger.warning(
                 "PRO user %s missing aggrigator_api_key — provisioning inline",
                 user.pk,

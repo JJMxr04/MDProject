@@ -184,12 +184,42 @@ a:hover { color: var(--brand-blue-bright); }
 .analytics-empty-state--pending { border-left-color: var(--state-warning); }
 .analytics-empty-state .bi { color: var(--text-secondary); }
 
+/* Methodology / data-provenance notes ("3 = win · 1 = draw…", "Form is
+   each team's last 5 settled results…"). Rendered as a soft info pill
+   so it reads as a real note instead of inline gray copy that users
+   skim past or mistake for a stack-trace footer. */
 .transparency-tell {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
   font-size: var(--text-xs);
+  line-height: 1.45;
   color: var(--text-secondary);
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(61, 126, 170, 0.06);
+  border: 1px solid rgba(61, 126, 170, 0.18);
+  border-left: 3px solid #275d81;
+  border-radius: var(--radius-sm, 6px);
 }
-.transparency-tell--warn { color: var(--state-warning); }
+.transparency-tell::before {
+  content: "\F431"; /* bi-info-circle */
+  font-family: "bootstrap-icons";
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: #275d81;
+  flex-shrink: 0;
+}
+.transparency-tell--warn {
+  color: var(--state-warning, #b9831b);
+  background: rgba(185, 131, 27, 0.08);
+  border-color: rgba(185, 131, 27, 0.25);
+  border-left-color: #b9831b;
+}
+.transparency-tell--warn::before {
+  content: "\F33A"; /* bi-exclamation-triangle */
+  color: #b9831b;
+}
 
 .form-chips { display: inline-flex; gap: var(--space-1); }
 .form-chip {

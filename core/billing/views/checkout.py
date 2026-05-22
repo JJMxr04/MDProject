@@ -32,6 +32,17 @@ logger = logging.getLogger(__name__)
 @require_POST
 def start_checkout(request):
     """Mint a Stripe Checkout Session for PRO and redirect the browser."""
+    # Defensive — the upgrade page already hides the Subscribe button
+    # when free-for-all is on, but a direct POST to /billing/checkout/
+    # would otherwise still mint a Stripe Checkout Session. Don't let
+    # users pay during a free-for-all window.
+    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False):
+        messages.info(
+            request,
+            "Analytics is free for everyone right now — no subscription needed.",
+        )
+        return redirect("core-portal:billing-index")
+
     if not settings.STRIPE_SECRET_KEY:
         messages.error(request, "Billing is not configured. Contact support.")
         return redirect("core-portal:billing-upgrade")

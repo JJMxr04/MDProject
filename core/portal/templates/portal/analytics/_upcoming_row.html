@@ -1,5 +1,4 @@
 {% load portal_lookup %}
-{# Expects: ev = upcoming row dict, show_pick_columns = bool (Picks view) #}
 <tr>
   <td>
     <div class="small text-muted">{{ ev.start_time|to_dt|date:"D, j M" }}</div>
@@ -12,7 +11,7 @@
     {% else %}<span class="text-muted">—</span>{% endif %}
   </td>
   <td>
-    <a href="{% url 'core-portal:analytics-event' event_id=ev.event_id %}"
+    <a href="{% url 'core-portal:upcoming-events-detail' event_id=ev.event_id %}"
        class="text-decoration-none fw-semibold">
       {{ ev.home_team.name|default:"?" }}
       <span class="text-muted fw-normal mx-1">vs</span>
@@ -54,6 +53,6 @@
   </td>
   <td class="text-end">
     <a class="btn btn-sm btn-outline-primary"
-       href="{% url 'core-portal:analytics-event' event_id=ev.event_id %}">Detail</a>
+       href="{% url 'core-portal:upcoming-events-detail' event_id=ev.event_id %}">Detail</a>
   </td>
 </tr>

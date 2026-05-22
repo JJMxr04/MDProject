@@ -209,7 +209,7 @@
                       <td>{{ h.away_team.name|default:"—" }}</td>
                       <td class="text-end">
                         <a class="btn btn-sm btn-link p-0"
-                           href="{% url 'core-portal:analytics-event' event_id=h.event_id %}">Detail</a>
+                           href="{% url 'core-portal:upcoming-events-detail' event_id=h.event_id %}">Detail</a>
                       </td>
                     </tr>
                   {% endfor %}

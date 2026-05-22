@@ -2,19 +2,21 @@
 <nav class="sidenav" aria-label="Primary">
     <ul class="sidenav__list">
         {% sidenav_item url="core-portal:portal-dashboard" icon="house" label="Dashboard" %}
-        {% if user.subscription.is_entitled_to_analytics %}
-            {% sidenav_item url="core-portal:analytics-landing" icon="graph-up" label="Analytics" prefix="/web/portal/analytics/" %}
-            <li class="sidenav__section">
-                <ul class="sidenav__sublist">
-                    {% sidenav_item url="core-portal:analytics-landing" icon="compass" label="Explore" exact=1 %}
-                    {% sidenav_item url="core-portal:analytics-upcoming" icon="clock" label="Upcoming" prefix="/web/portal/analytics/upcoming/" %}
-                    {% sidenav_item url="core-portal:analytics-picks" icon="lightning" label="Picks" prefix="/web/portal/analytics/picks/" %}
-                    {% sidenav_item url="core-portal:analytics-bets" icon="journal-text" label="My bets" prefix="/web/portal/analytics/bets/" %}
-                </ul>
-            </li>
-        {% else %}
-            {% sidenav_item url="core-portal:billing-upgrade" icon="graph-up" label="Analytics" prefix="/web/portal/analytics/" badge="PRO" %}
-        {% endif %}
+        {% comment %}
+        Analytics tree disabled 2026-05-22 while the IA is in flux —
+        URL patterns for landing / picks / bets are commented out in
+        core/portal/urls_analytics.py to match. Uncomment to restore.
+        {% sidenav_item url="core-portal:analytics-landing" icon="graph-up" label="Analytics" prefix="/web/portal/analytics/" %}
+        <li class="sidenav__section">
+            <ul class="sidenav__sublist">
+                {% sidenav_item url="core-portal:analytics-landing" icon="compass" label="Explore" exact=1 %}
+                {% sidenav_item url="core-portal:analytics-picks" icon="lightning" label="Picks" prefix="/web/portal/analytics/picks/" %}
+                {% sidenav_item url="core-portal:analytics-bets" icon="journal-text" label="My bets" prefix="/web/portal/analytics/bets/" %}
+            </ul>
+        </li>
+        Locked variant for FREE users (when entitlement is off):
+        {% sidenav_item url="core-portal:billing-upgrade" icon="graph-up" label="Analytics" prefix="/web/portal/analytics/" badge="PRO" %}
+        {% endcomment %}
         {% sidenav_item url="core-portal:upcoming-events" icon="calendar-event" label="Events" prefix="/web/portal/event/" %}
         {% sidenav_item url="core-portal:portal-my-match-list" icon="controller" label="Matches" prefix="/web/portal/match/" %}
         {% sidenav_item url="core-portal:core-portal-tournament:portal-my-tournaments" icon="trophy" label="Tournaments" prefix="/web/portal/tournament/" %}
@@ -22,6 +24,6 @@
         {% sidenav_item url="core-portal:invite-list" icon="envelope" label="Invites" prefix="/web/portal/mail/" %}
         {% sidenav_item url="core-portal:portal-availability" icon="grid" label="What's available" prefix="/web/portal/availability/" %}
         {% sidenav_item url="core-portal:portal-rules" icon="book" label="Rules" prefix="/web/portal/rules/" %}
-        {% sidenav_item url="core-portal:profile" icon="gear" label="Settings" prefix="/web/portal/user/profile/" %}
+        {% sidenav_item url="core-portal:profile" icon="gear" label="Settings" prefix="/web/portal/user/profile/,/web/portal/billing/" %}
     </ul>
 </nav>

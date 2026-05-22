@@ -171,8 +171,75 @@
     </div>
 </section>
 
-{# ── Past analytics — H2H + form + season-to-date ────────────────────── #}
-{% if h2h_aggregate.played or h2h_last_5 or form_detail.home or form_detail.away or historical_stats.home or historical_stats.away %}
+{# ── Analytics surface (PAYWALLED) ──────────────────────────────────── #}
+{% if is_entitled_to_analytics %}
+
+  {# Model vs market — upcoming events only. Past events skip straight
+     to season-to-date below. #}
+  {% if not is_past %}
+    <section class="card-ui evd-analytics">
+      <header class="card-ui__header">
+        <h2><i class="bi bi-graph-up-arrow me-2"></i>Model vs market</h2>
+        <span class="evd-chip evd-chip--pro">PRO</span>
+      </header>
+      <div class="card-ui__body">
+        {% if edge_rows %}
+          <div class="evd-edge-table">
+            <div class="evd-edge-table__head">
+              <div>Side</div>
+              <div class="text-end">Model</div>
+              <div class="text-end">Market</div>
+              <div class="text-end">Edge</div>
+              <div>Best price</div>
+            </div>
+            {% for r in edge_rows %}
+              <div class="evd-edge-row">
+                <div class="evd-edge-row__side">{{ r.side }}</div>
+                <div class="text-end">{% widthratio r.model_prob 1 100 %}%</div>
+                <div class="text-end">{% widthratio r.market_prob 1 100 %}%</div>
+                <div class="text-end">
+                  <span class="evd-edge-pill {% if r.edge_pp >= 3 %}is-good{% elif r.edge_pp >= 0 %}is-flat{% else %}is-bad{% endif %}">
+                    {% if r.edge_pp > 0 %}+{% endif %}{{ r.edge_pp|floatformat:1 }} pp
+                  </span>
+                </div>
+                <div>
+                  {% if r.best_decimal %}
+                    <strong class="evd-edge-row__price">{{ r.best_decimal|floatformat:2 }}</strong>
+                    <span class="evd-edge-row__book">@ {{ r.best_bookmaker|default:"?" }}</span>
+                    {% if r.best_deeplink %}
+                      <a href="{{ r.best_deeplink }}" target="_blank" rel="noopener" class="evd-edge-row__open" aria-label="Open at {{ r.best_bookmaker }}"><i class="bi bi-box-arrow-up-right"></i></a>
+                    {% endif %}
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% if live_odds.fetched_at %}
+            <p class="transparency-tell mb-0">
+              Live odds last refreshed at {{ live_odds.fetched_at }} — freshness depends on the league's ingest cadence.
+            </p>
+          {% endif %}
+        {% else %}
+          <div class="analytics-empty-state">
+            <p class="mb-0 text-muted small">
+              {% if live_odds.reason == 'no_markets_for_event' %}
+                The ingest cron hasn't populated bookmaker prices for this event yet.
+                Check back closer to kickoff — most books open lines ~5 days out.
+              {% elif live_odds.reason == 'no_books_cover_event' %}
+                No tracked bookmakers carry this event right now.
+              {% elif model_prob.p_home is None %}
+                Model probabilities aren't available yet, so the edge table can't render.
+              {% else %}
+                No model-vs-market data available for this event yet.
+              {% endif %}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
 
   {# Head-to-head: aggregate banner + combined-goals chart + last meetings #}
   {% if h2h_aggregate.played or h2h_last_5 %}
@@ -231,6 +298,29 @@
     </section>
   {% endif %}
 
+{% else %}
+  {# Free-tier upsell — one card covering everything the paywall hides. #}
+  <section class="card-ui evd-analytics evd-upsell">
+    <div class="card-ui__body">
+      <div class="evd-upsell__inner">
+        <div>
+          <span class="evd-chip evd-chip--pro mb-2 d-inline-block">PRO</span>
+          <h2 class="evd-upsell__title">Unlock advanced analytics for this event</h2>
+          <ul class="evd-upsell__list">
+            <li>Model probability vs vig-adjusted market — per side</li>
+            <li>Edge (in pp) and best price across tracked bookmakers</li>
+            <li>Head-to-head: aggregate record + last meetings + combined-goal trend</li>
+            <li>Recent form: last-5 chips + points-per-game chart per team</li>
+            <li>Season-to-date stats + scoring profile per team</li>
+          </ul>
+        </div>
+        <div class="evd-upsell__cta">
+          <a href="{% url 'core-portal:billing-upgrade' %}" class="btn btn-primary btn-lg">Upgrade to PRO</a>
+          <a href="{% url 'core-portal:billing-index' %}" class="evd-upsell__secondary">See plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endif %}
 {% endblock content %}
 
@@ -245,6 +335,94 @@
         --evd-line: #b9831b;
         --evd-bg-soft: #f5f7fa;
         --evd-border: #e5e7eb;
+    }
+
+    /* ── PRO chip + upsell card ──────────────────────────────────── */
+    .evd-chip--pro {
+        background: linear-gradient(135deg, #f5c34d 0%, #b9831b 100%);
+        color: #1f2937; letter-spacing: .08em;
+    }
+    .evd-upsell { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); }
+    .evd-upsell__inner {
+        display: grid; grid-template-columns: 1fr auto; gap: var(--space-5, 1.25rem);
+        align-items: center;
+    }
+    .evd-upsell__title {
+        margin: 0 0 .5rem 0; font-size: 1.15rem; font-weight: 700;
+        color: var(--text-primary, #111827);
+    }
+    .evd-upsell__list {
+        list-style: none; padding: 0; margin: 0;
+        display: grid; gap: .3rem;
+        font-size: .88rem; color: var(--text-secondary, #4b5563);
+    }
+    .evd-upsell__list li::before {
+        content: "✓"; color: var(--evd-dog, #2f9e6b); font-weight: 700;
+        margin-right: .5rem;
+    }
+    .evd-upsell__cta {
+        display: flex; flex-direction: column; gap: .5rem;
+        align-items: center; min-width: 180px;
+    }
+    .evd-upsell__secondary {
+        font-size: .8rem; color: var(--text-secondary, #6b7280); text-decoration: none;
+    }
+    .evd-upsell__secondary:hover { color: var(--evd-fav, #275d81); }
+    @media (max-width: 640px) {
+        .evd-upsell__inner { grid-template-columns: 1fr; }
+        .evd-upsell__cta { align-items: stretch; }
+    }
+
+    /* ── Model vs market edge table ───────────────────────────────── */
+    .evd-edge-table {
+        display: grid;
+        font-size: .88rem;
+        font-variant-numeric: tabular-nums;
+    }
+    .evd-edge-table__head,
+    .evd-edge-row {
+        display: grid;
+        grid-template-columns: 80px 1fr 1fr 1fr 1.8fr;
+        gap: .75rem;
+        align-items: center;
+        padding: .55rem .25rem;
+    }
+    .evd-edge-table__head {
+        font-size: .7rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: .05em;
+        color: var(--text-secondary, #6b7280);
+        border-bottom: 1px solid var(--evd-border);
+    }
+    .evd-edge-row + .evd-edge-row { border-top: 1px dashed var(--evd-border); }
+    .evd-edge-row__side {
+        text-transform: uppercase; font-size: .72rem; font-weight: 700;
+        letter-spacing: .05em; color: var(--text-primary, #111827);
+    }
+    .evd-edge-pill {
+        display: inline-block;
+        padding: .15rem .5rem; border-radius: 6px;
+        font-size: .78rem; font-weight: 700;
+    }
+    .evd-edge-pill.is-good { background: rgba(47, 158, 107, .14); color: var(--evd-dog); }
+    .evd-edge-pill.is-flat { background: var(--evd-bg-soft); color: var(--text-secondary, #6b7280); }
+    .evd-edge-pill.is-bad  { background: var(--evd-bg-soft); color: var(--text-secondary, #9ca3af); }
+    .evd-edge-row__price { font-weight: 800; }
+    .evd-edge-row__book {
+        font-size: .72rem; color: var(--text-secondary, #6b7280);
+        margin-left: .35rem;
+    }
+    .evd-edge-row__open {
+        color: var(--text-secondary, #6b7280); text-decoration: none;
+        margin-left: .35rem;
+    }
+    .evd-edge-row__open:hover { color: var(--evd-fav); }
+    @media (max-width: 640px) {
+        .evd-edge-table__head,
+        .evd-edge-row {
+            grid-template-columns: 60px 1fr 1fr 1.2fr;
+        }
+        .evd-edge-table__head > div:nth-child(3),
+        .evd-edge-row > div:nth-child(3) { display: none; }
     }
 
     /* ── Past analytics sections (H2H, form, season) ─────────────── */
@@ -271,9 +449,6 @@
     }
     .evd-analytics canvas { max-height: 200px; }
     .evd-analytics .progress { background: var(--evd-bg-soft); }
-    .evd-analytics .transparency-tell {
-        font-size: .72rem; color: var(--text-secondary, #6b7280);
-    }
     .analytics-empty-state {
         background: var(--evd-bg-soft);
         border: 1px dashed var(--evd-border);

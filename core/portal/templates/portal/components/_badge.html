@@ -1,4 +1,3 @@
-{# Expects: state (raw string from a model state field) #}
 {% load portal_state %}
 {% with mapping=state|state_badge %}
     <span class="badge-ui badge-ui--{{ mapping.variant }}">{{ mapping.label }}</span>

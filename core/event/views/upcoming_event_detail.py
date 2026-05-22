@@ -24,6 +24,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.utils.dateparse import parse_datetime
 
+from core.billing.entitlement import _safe_subscription, user_can_access_analytics
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
@@ -67,37 +68,112 @@ def upcoming_event_detail(request, event_id):
 
     event_view = _EventAdapter(body, sport_names, league_names)
     markets = body.get("markets") or []
+    is_finalized = bool(body.get("is_finalized"))
 
-    # Past-analytics surface: H2H + per-team form charts + per-team
-    # season-to-date stats. Fetched best-effort — if the analytics
-    # endpoints are unreachable (no tenant key, network blip, sport
-    # without a model) the empty dicts collapse to empty-state markup
-    # in the template rather than blocking the markets render.
-    tenant_key = getattr(request.user, "aggrigator_api_key", None) or None
-    context = analytics_client.event_context(event_id, tenant_key=tenant_key)
-    historical_stats = analytics_client.event_historical_stats(
-        event_id, tenant_key=tenant_key,
-    )
-
-    return render(
-        request,
-        "portal/event/upcoming_event_detail.html",
-        {
-            "event": event_view,
-            # Raw aggregator dict — used by ``{% humanize_pick_payload %}``
-            # so the template can render plain-English selection labels
-            # without us having to maintain dict-or-attribute fallbacks
-            # inside humanize.py.
-            "event_raw": body,
-            "markets": markets,
-            "served_stale": served_stale,
+    # Analytics block — H2H, form, season-to-date PLUS the model-vs-market
+    # edge table (formerly on /web/portal/analytics/event/{id}/). The entire
+    # block is paywalled: free users get an upsell card in this slot
+    # instead. We skip the aggrigator-analytics API calls entirely when
+    # the user isn't entitled — no point spending the budget on data we
+    # won't render. Entitlement goes through the helper so the
+    # ANALYTICS_FREE_FOR_ALL kill-switch + missing-Subscription cases
+    # route through the same code path as the normal one.
+    is_entitled = user_can_access_analytics(request.user)
+    analytics_ctx: dict = {}
+    if is_entitled:
+        # Defensive inline provisioning. Mirrors what @require_paid does
+        # on /analytics/ views: an entitled user with no aggrigator key
+        # (signup signal lost, DB restore, admin user predates billing,
+        # etc.) gets one minted now so the analytics calls below carry
+        # an X-Aggrigator-Tenant-Key header. Without this, kill-switch
+        # users with no key see the analytics block render with empty
+        # data and the aggrigator logs spam 401s.
+        tenant_key = _ensure_aggrigator_key(request.user)
+        context = analytics_client.event_context(event_id, tenant_key=tenant_key)
+        historical_stats = analytics_client.event_historical_stats(
+            event_id, tenant_key=tenant_key,
+        )
+        analytics_ctx = {
             "form_into_match": context.get("form_into_match") or {},
             "form_detail": context.get("form_detail") or {},
             "h2h_last_5": context.get("h2h_last_5") or [],
             "h2h_aggregate": context.get("h2h_aggregate") or {},
             "historical_stats": historical_stats or {},
-        },
-    )
+        }
+        # Model-vs-market is upcoming-only — past events render historical
+        # stats instead, which is already in analytics_ctx above.
+        if not is_finalized:
+            model_prob = analytics_client.event_probabilities(
+                event_id, tenant_key=tenant_key,
+            )
+            live_odds = analytics_client.event_live_odds(
+                event_id, tenant_key=tenant_key,
+            )
+            analytics_ctx.update({
+                "model_prob": model_prob or {},
+                "live_odds": live_odds,
+                "edge_rows": _build_edge_rows(model_prob, live_odds),
+            })
+
+    ctx = {
+        "event": event_view,
+        # Raw aggregator dict — used by ``{% humanize_pick_payload %}``
+        # so the template can render plain-English selection labels
+        # without us having to maintain dict-or-attribute fallbacks
+        # inside humanize.py.
+        "event_raw": body,
+        "markets": markets,
+        "served_stale": served_stale,
+        "is_entitled_to_analytics": is_entitled,
+        "is_past": is_finalized,
+    }
+    ctx.update(analytics_ctx)
+    return render(request, "portal/event/upcoming_event_detail.html", ctx)
+
+
+def _build_edge_rows(model_prob: dict | None, live_odds: dict | None) -> list[dict]:
+    """Model-vs-market edge rows for the inline analytics card.
+
+    Mirrors the helper that used to live in
+    ``core/portal/views/analytics.py``. Returns an empty list whenever
+    we don't have both model and live-odds moneyline data — the
+    template treats that as the empty-state path.
+    """
+    if not model_prob or model_prob.get("p_home") is None:
+        return []
+    if not live_odds:
+        return []
+    ml_markets = [
+        m for m in (live_odds.get("markets") or [])
+        if m.get("market_type") == "moneyline"
+    ]
+    if not ml_markets:
+        return []
+    ml = ml_markets[0]
+    vig_adj = ml.get("vig_adjusted_implied") or {}
+    best_by_side = {bp.get("side"): bp for bp in (ml.get("best_prices") or [])}
+    model_by_side = {
+        "home": model_prob.get("p_home"),
+        "draw": model_prob.get("p_draw"),
+        "away": model_prob.get("p_away"),
+    }
+    rows: list[dict] = []
+    for side in ("home", "draw", "away"):
+        market_p = vig_adj.get(side)
+        model_p = model_by_side.get(side)
+        if market_p is None or model_p is None:
+            continue
+        bp = best_by_side.get(side)
+        rows.append({
+            "side": side,
+            "model_prob": model_p,
+            "market_prob": market_p,
+            "edge_pp": (model_p - market_p) * 100.0,
+            "best_decimal": bp.get("decimal_odds") if bp else None,
+            "best_bookmaker": bp.get("bookmaker_name") if bp else None,
+            "best_deeplink": bp.get("deeplink") if bp else None,
+        })
+    return rows
 
 
 # ---- aggregator fetch / cache -------------------------------------------
@@ -199,6 +275,7 @@ class _TeamAdapter:
         if team is None:
             self.name = None
             self.logo_url = None
+            self.team_id = None
             return
         # Template uses ``team.name`` and ``team.logo_url.url`` — wire those
         # to the aggregator's wider ``name_long`` and bare URL string.
@@ -207,6 +284,11 @@ class _TeamAdapter:
         )
         url = team.get("logo_url")
         self.logo_url = _LogoUrlBox(url) if url else None
+        # ``team_id`` is the fallback display when ``name`` is blank —
+        # several analytics partials do ``team.name|default:team.team_id``.
+        # Aggregator payload may carry it as ``id`` or ``team_id`` depending
+        # on shape; check both.
+        self.team_id = team.get("team_id") or team.get("id") or ""
 
 
 class _EventAdapter:
@@ -250,6 +332,61 @@ def _to_datetime(value: Any) -> datetime | None:
     if isinstance(value, str):
         return parse_datetime(value)
     return None
+
+
+# ---- aggrigator key backfill ---------------------------------------------
+
+
+def _ensure_aggrigator_key(user) -> str | None:
+    """Return ``user.aggrigator_api_key``, provisioning one inline if
+    empty. Returns ``None`` if provisioning fails or the user doesn't
+    yet have a key — the analytics calls handle empty-state gracefully.
+
+    Tier picks: if the user is on a Subscription whose plan grants
+    analytics (paid PRO), provision PRO; otherwise FREE. The aggrigator
+    side reads the kill-switch separately, so a FREE-tier key is fine
+    when ``ANALYTICS_FREE_FOR_ALL`` is on.
+    """
+    key = getattr(user, "aggrigator_api_key", None) or ""
+    if key:
+        return key
+    from core.billing.services import aggrigator_internal
+    from core.user.models import User
+
+    sub = _safe_subscription(user)
+    tier = (
+        "PRO"
+        if sub and sub.plan.features.get("analytics") is True
+        else "FREE"
+    )
+    try:
+        new_key = aggrigator_internal.provision_user(user, tier=tier)
+    except Exception:
+        logger.exception(
+            "inline aggrigator provisioning failed for %s (tier=%s)",
+            user.pk, tier,
+        )
+        return None
+    if not new_key:
+        # User already existed on the aggrigator side but we don't have
+        # their key locally — rotate to get a fresh plaintext. Avoids
+        # the "stuck without a usable key" edge case after a DB restore.
+        try:
+            new_key = aggrigator_internal.rotate_api_key(user)
+        except Exception:
+            logger.exception(
+                "inline aggrigator key rotation failed for %s", user.pk,
+            )
+            return None
+    if new_key:
+        User.objects.filter(pk=user.pk).update(
+            aggrigator_api_key=new_key,
+            aggrigator_external_id=user.public_id,
+        )
+        user.aggrigator_api_key = new_key
+        user.aggrigator_external_id = user.public_id
+        logger.info("inline-provisioned aggrigator key for %s (tier=%s)", user.pk, tier)
+    return new_key or None
 
 
 # ---- legacy fallback (rollback path) -------------------------------------

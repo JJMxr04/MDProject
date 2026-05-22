@@ -1,5 +1,4 @@
 {% load portal_lookup %}
-{# Expects: fixtures = list, league_id, season_label #}
 {% if fixtures %}
   <div class="table-responsive">
     <table class="table table-hover align-middle">
@@ -45,7 +44,7 @@
           </td>
           <td class="text-end">
             <a class="btn btn-sm btn-outline-primary"
-               href="{% url 'core-portal:analytics-event' event_id=f.event_id %}">Detail</a>
+               href="{% url 'core-portal:upcoming-events-detail' event_id=f.event_id %}">Detail</a>
           </td>
         </tr>
       {% endfor %}

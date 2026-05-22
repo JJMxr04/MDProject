@@ -1,5 +1,4 @@
 {% load portal_lookup %}
-{# Expects: block = {"opponent_id", "opponent_name", "last_5", "events"} #}
 <details class="border rounded mb-2">
   <summary class="px-3 py-2 d-flex justify-content-between align-items-center">
     <span class="fw-semibold">vs {{ block.opponent_name }}</span>
@@ -38,7 +37,7 @@
           </td>
           <td class="text-end">
             <a class="btn btn-sm btn-link p-0"
-               href="{% url 'core-portal:analytics-event' event_id=e.event_id %}">Detail</a>
+               href="{% url 'core-portal:upcoming-events-detail' event_id=e.event_id %}">Detail</a>
           </td>
         </tr>
       {% endfor %}

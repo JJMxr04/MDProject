@@ -59,7 +59,7 @@
               <td><small class="text-muted">{{ b.placed_at|to_dt|date:"j M Y H:i" }}</small></td>
               <td>
                 {% if b.event_id %}
-                  <a href="{% url 'core-portal:analytics-event' event_id=b.event_id %}"
+                  <a href="{% url 'core-portal:upcoming-events-detail' event_id=b.event_id %}"
                      class="text-decoration-none">{{ b.label }}</a>
                 {% else %}{{ b.label }}{% endif %}
                 {% if b.note %}<div class="small text-muted">{{ b.note }}</div>{% endif %}

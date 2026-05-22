@@ -1,8 +1,4 @@
 {% load portal_lookup %}
-{# Expects: h2h_aggregate {played, home_team_id, away_team_id,
-                            home_team_wins, away_team_wins, draws},
-              h2h_last_5 (list of meeting dicts),
-              event (target event so we can pull team display names) #}
 <div class="col-12">
   <div class="card">
     <div class="card-header"><strong>Head-to-head</strong></div>
@@ -89,7 +85,7 @@
                 <td>{{ h.away_team.name|default:"—" }}</td>
                 <td class="text-end">
                   <a class="btn btn-sm btn-link p-0"
-                     href="{% url 'core-portal:analytics-event' event_id=h.event_id %}">Detail</a>
+                     href="{% url 'core-portal:upcoming-events-detail' event_id=h.event_id %}">Detail</a>
                 </td>
               </tr>
             {% endfor %}

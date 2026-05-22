@@ -2,7 +2,18 @@
 from django import template
 from django.urls import NoReverseMatch, reverse
 
+from core.billing.entitlement import user_can_access_analytics
+
 register = template.Library()
+
+
+@register.filter(name="can_access_analytics")
+def can_access_analytics(user) -> bool:
+    """Template-side hook into the entitlement helper. Use in the sidebar
+    so the analytics row honors the kill-switch + missing-Subscription
+    cases without poking at ``user.subscription`` directly (that path
+    raises ``Subscription.DoesNotExist`` when no row exists)."""
+    return user_can_access_analytics(user)
 
 
 @register.inclusion_tag("portal/components/_sidenav_item.html", takes_context=True)
@@ -14,6 +25,10 @@ def sidenav_item(context, url, icon, label, prefix=None, badge=None, exact=False
     (e.g. the Explore child under Analytics, where the parent sits on
     ``/web/portal/analytics/`` and would otherwise mark Explore active
     on every deeper analytics page).
+    ``prefix`` may be a single string or a list/tuple of strings — the
+    item highlights when the current path starts with any of them. Used
+    by the Settings row, which is the parent of both /web/portal/user/
+    profile/ and /web/portal/billing/.
     Optional ``badge`` renders a small label after the item text — used
     by the analytics row to flag PRO-gated features for FREE users.
     """
@@ -27,8 +42,17 @@ def sidenav_item(context, url, icon, label, prefix=None, badge=None, exact=False
     if exact:
         is_active = bool(href) and current_path == href
     else:
-        match_prefix = prefix or href
-        is_active = bool(match_prefix) and current_path.startswith(match_prefix)
+        if isinstance(prefix, (list, tuple)):
+            match_prefixes = list(prefix)
+        elif isinstance(prefix, str) and "," in prefix:
+            # Convenience for templates that can't pass a list literal —
+            # comma-separated string is split and trimmed.
+            match_prefixes = [p.strip() for p in prefix.split(",") if p.strip()]
+        else:
+            match_prefixes = [prefix or href]
+        is_active = any(
+            bool(p) and current_path.startswith(p) for p in match_prefixes
+        )
 
     return {
         "href": href,
