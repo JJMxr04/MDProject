@@ -239,6 +239,16 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 # Cap socket time so a misbehaving HTTPS round-trip can't pin a worker.
 EMAIL_TIMEOUT = 30
 
+# Public-facing site URL — used in email templates to build absolute URLs
+# for the logo and any in-email links. Email clients can't resolve
+# relative paths, so we baseline this once and pass it into every
+# template via the send_email task. Override via env in non-prod.
+SITE_URL = (os.environ.get('SITE_URL', 'https://warforaterra.com') or '').rstrip('/')
+EMAIL_LOGO_URL = os.environ.get(
+    'EMAIL_LOGO_URL',
+    f"{SITE_URL}/static/assets/Logo/paradise_logo_2_normal.png",
+)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

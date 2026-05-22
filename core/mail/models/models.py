@@ -121,7 +121,7 @@ class Emails:
     def send_tournament_starting_notification(cls, user, tournament):
 
         subject = f"The {tournament.name} Tournament Starts in 2 Days!"
-        template_path = "tournamentInvite/tournamentStartingNotification.html"
+        template_path = "tournament/tournamentStartsIn2Days.html"
         context = {
             'tournament_name': tournament.name,
             'username': user.username,

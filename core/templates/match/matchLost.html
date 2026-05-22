@@ -1,90 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Match Result: You Lost</title>
-  <style>
-    /* General body styles */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #3D7EAA; /* Fallback solid color */
-      background-image: linear-gradient(to right, #3D7EAA, #FFE47A); /* Gradient */
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+{% extends "email/_base.html" %}
 
-    /* Email container styles */
-    .email-container {
-      max-width: 600px;
-      width: 100%;
-      padding: 20px;
-      border-radius: 5px;
-      text-align: center;
-      box-sizing: border-box;
-      background-color: transparent; /* Removed background color */
-    }
+{% block preview %}Match result — tough one against {{ opponent_name }}.{% endblock %}
 
-    /* Headings */
-    h1 {
-      font-size: 28px;
-      color: #333333;
-      margin: 0 0 15px;
-    }
-
-    /* Paragraph styles */
-    p {
-      font-size: 14px;
-      color: #333333;
-      line-height: 1.5;
-      margin: 0 0 15px;
-    }
-
-    /* Button styles */
-    .button {
-      display: inline-block;
-      padding: 15px 20px;
-      background-color: #2CB543;
-      color: #FFFFFF;
-      text-decoration: none;
-      border-radius: 50px;
-      font-size: 16px;
-      margin-top: 20px;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #239B3B;
-    }
-
-    /* Responsive styles */
-    @media (max-width: 600px) {
-      .email-container {
-        padding: 15px;
-      }
-
-      .button {
-        padding: 12px 15px;
-        font-size: 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="email-container">
-    <h1>Match Result: You Lost</h1>
-    <p>Dear {{ username }},</p>
-    <p>Unfortunately, you have lost your recent match against {{ opponent_name }}.</p>
-    <p>Don't be discouraged! Every loss is a learning opportunity, and we believe in your potential to come back stronger in the next match.</p>
-    <p>Keep practicing and stay focused for the upcoming challenges.</p>
-    <p>For any questions or additional information, feel free to reach out to our support team. We are here to help!</p>
-    <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
-    <!-- Uncomment the line below if a support contact button is needed -->
-    <!-- <a href="{{ support_url }}" class="button">Contact Support</a> -->
-  </div>
-</body>
-</html>
+{% block content %}
+  <h1 style="margin:0 0 16px; font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:bold; color:#3D7EAA; line-height:1.3;">
+    Tough match
+  </h1>
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">Hi {{ username }},</p>
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    Your recent match against <strong>{{ opponent_name }}</strong> didn't
+    go your way this time. Every loss is a chance to come back stronger.
+  </p>
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    Stay sharp — your next match is coming.
+  </p>
+  <p style="margin:24px 0 0; font-size:14px; line-height:1.6; color:#666666;">
+    Best regards,<br>
+    <strong>Paradise Sports Media &amp; Entertainment</strong>
+  </p>
+{% endblock content %}

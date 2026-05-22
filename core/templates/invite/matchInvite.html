@@ -1,99 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% load static %}
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Match Invitation</title>
-  <style>
-    /* General body styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+{% extends "email/_base.html" %}
 
-    /* Email container styles */
-    .email-container {
-      max-width: 600px;
-      width: 100%;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      box-sizing: border-box;
-    }
+{% block preview %}{{ opponent_name }} has invited you to a match.{% endblock %}
 
-    /* Logo container */
-    .logo {
-      margin-bottom: 20px;
-    }
+{% block content %}
+  <h1 style="margin:0 0 16px; font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:bold; color:#3D7EAA; line-height:1.3;">
+    You've got a match invite
+  </h1>
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">Hi {{ username }},</p>
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    <strong>{{ opponent_name }}</strong> just invited you to a match.
+    Time to show off your picks.
+  </p>
 
-    /* Headings */
-    h1 {
-      font-size: 28px;
-      color: #333333;
-      margin: 0 0 15px;
-    }
-
-    /* Paragraph styles */
-    p {
-      font-size: 14px;
-      color: #333333;
-      line-height: 1.5;
-      margin: 0 0 15px;
-    }
-
-    /* Button styles */
-    .button {
-      display: inline-block;
-      padding: 15px 20px;
-      background-color: #3D7EAA;
-      color: #FFFFFF;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-
-    /* Image styles */
-    .img-fluid {
-      max-width: 100%;
-      height: auto;
-    }
-
-    /* Responsive styles */
-    @media (max-width: 600px) {
-      .email-container {
-        padding: 15px;
-      }
-
-      .button {
-        padding: 12px 15px;
-        font-size: 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#3D7EAA"> <!-- Background color applied here -->
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 8px;">
     <tr>
-      <td align="center" style="background-image: linear-gradient(to right, #3D7EAA, #FFE47A);">
-        <div class="email-container">
-          <!-- Logo -->
-          <div class="logo">
-            <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Paradise Sports Logo">
-          </div>
-          <!-- Email content -->
-          <h1>You Have Been Invited to Play in a Match</h1>
-          <p>Dear {{ username }},</p>
-          <p>We are excited to invite you to an upcoming match against {{ opponent_name }}. Get ready to showcase your skills and compete in this exciting event. We are looking forward to seeing your performance on the field!</p>
-          <p>If you have any questions or need further details, feel free to contact our support team. We're here to assist you!</p>
-          <p>Best regards,<br>Paradise Sports Media and Entertainment</p>
-          <!-- Button for match details -->
-        </div>
+      <td align="center" bgcolor="#5CACEE" style="border-radius:50px;">
+        <a href="{{ site_url }}" style="display:inline-block; padding:14px 28px; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:50px;">
+          View Invite
+        </a>
       </td>
     </tr>
   </table>
-</body>
-</html>
+
+  <p style="margin:24px 0 0; font-size:14px; line-height:1.6; color:#666666;">
+    Best regards,<br>
+    <strong>Paradise Sports Media &amp; Entertainment</strong>
+  </p>
+{% endblock content %}

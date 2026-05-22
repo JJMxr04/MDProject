@@ -33,7 +33,15 @@ def send_email(self, subject, recipient, template_path, context):
     _stderr(f"[send_email] start attempt={attempt} to={recipient} subject={subject!r}")
 
     try:
-        html_content = render_to_string(template_path, context)
+        # Inject brand chrome into every email so templates can build
+        # absolute URLs (logo, links). Caller-provided context wins.
+        ctx = {
+            "site_url": settings.SITE_URL,
+            "logo_url": settings.EMAIL_LOGO_URL,
+            "subject": subject,
+            **(context or {}),
+        }
+        html_content = render_to_string(template_path, ctx)
         text_content = strip_tags(html_content)
 
         email = EmailMultiAlternatives(
