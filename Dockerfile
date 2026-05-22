@@ -51,12 +51,29 @@ COPY --chown=app:app . /app
 # We pass dummy env vars that satisfy the production-mode startup guards
 # (settings.py raises if SECRET_KEY/ALLOWED_HOSTS are missing while
 # DEBUG=False — collectstatic doesn't need the real values).
+#
+# REDIS_URL is a real one though: settings.py evaluates CELERY_BROKER_URL
+# at module import via _redis_db_url(), which raises ImproperlyConfigured
+# when REDIS_URL is unset AND DEBUG=False. Without it the import dies
+# before collectstatic can write a single file. We pull the value from
+# the build environment via ARG so Railway / Coolify can pass the
+# already-configured service variable through — nothing is hardcoded
+# here. If REDIS_URL isn't set at build time the import will fail and
+# the build will fail loudly (which is what we want — a silent empty
+# staticfiles/ ships a broken image).
+#
+# Run collectstatic in its own RUN with NO `|| true` so any failure
+# bubbles up. The rm cleanup is split off into its own RUN where the
+# `|| true` is appropriate (tolerates absent dev-only paths).
+ARG REDIS_URL
 RUN DEBUG=False \
     SECRET_KEY=collectstatic-build-time-only \
     ALLOWED_HOSTS=localhost \
     DATABASE_URL=sqlite:///tmp/build.sqlite3 \
-    python manage.py collectstatic --noinput \
-    && rm -rf .git/ .vscode/ .pytest_cache/ tests/ /tmp/build.sqlite3 2>/dev/null || true \
+    REDIS_URL="$REDIS_URL" \
+    python manage.py collectstatic --noinput
+
+RUN rm -rf .git/ .vscode/ .pytest_cache/ tests/ /tmp/build.sqlite3 2>/dev/null || true \
     && chmod +x /app/docker-entrypoint.sh
 
 USER app
