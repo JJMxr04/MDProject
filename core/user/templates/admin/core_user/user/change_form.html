@@ -39,5 +39,39 @@
         </button>
       </form>
     </li>
+    <li>
+      <form method="post"
+            action="{% url 'admin:core_user_user_aggrigator_provision' original.pk %}"
+            style="display:inline"
+            onsubmit="return confirm('Get-or-create the aggrigator tenant_user for {{ original.email }}? Safe to re-run — idempotent. If the aggrigator already has the row but we lost the key, this rotates to recover one.');">
+        {% csrf_token %}
+        <button type="submit" class="historylink">
+          Provision aggrigator user
+        </button>
+      </form>
+    </li>
+    <li>
+      <form method="post"
+            action="{% url 'admin:core_user_user_aggrigator_rotate' original.pk %}"
+            style="display:inline"
+            onsubmit="return confirm('Rotate the aggrigator API key for {{ original.email }}? This REVOKES the existing key — any service still holding it will start getting 401s.');">
+        {% csrf_token %}
+        <button type="submit" class="historylink"
+                style="background:#fff4f4;border-color:#c33;color:#900">
+          Rotate aggrigator key
+        </button>
+      </form>
+    </li>
+    <li>
+      <form method="post"
+            action="{% url 'admin:core_user_user_subscription_refresh' original.pk %}"
+            style="display:inline"
+            onsubmit="return confirm('Pull live Stripe subscription state for {{ original.email }} and re-apply locally + on the aggrigator? Same operation the webhook performs — safe to re-run.');">
+        {% csrf_token %}
+        <button type="submit" class="historylink">
+          Refresh subscription
+        </button>
+      </form>
+    </li>
   {% endif %}
 {% endblock %}

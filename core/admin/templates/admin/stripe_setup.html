@@ -147,6 +147,77 @@
   </dl>
 </div>
 
+{# ---- Webhook connection re-check ------------------------------------ #}
+{% if connection %}
+<h2>Webhook connection</h2>
+<div class="scard">
+  <dl class="kv">
+    <dt>Canonical URL</dt>
+    <dd><code>{{ connection.url }}</code></dd>
+    <dt>Endpoint registered</dt>
+    <dd>
+      {% if connection.endpoint_exists %}
+        <span class="pill pill--ok">yes</span>
+        {% if connection.endpoint_id %} <span class="muted">{{ connection.endpoint_id }}</span>{% endif %}
+      {% else %}
+        <span class="pill pill--warn">no</span>
+      {% endif %}
+    </dd>
+    <dt>Endpoint enabled</dt>
+    <dd>
+      {% if connection.endpoint_enabled %}
+        <span class="pill pill--ok">enabled</span>
+      {% elif connection.endpoint_status %}
+        <span class="pill pill--warn">{{ connection.endpoint_status }}</span>
+      {% else %}
+        <span class="pill pill--warn">—</span>
+      {% endif %}
+    </dd>
+    <dt>Local STRIPE_WEBHOOK_SECRET</dt>
+    <dd>
+      {% if connection.secret_present %}
+        <span class="pill pill--ok">set</span>
+      {% else %}
+        <span class="pill pill--err">missing</span>
+      {% endif %}
+    </dd>
+    <dt>Overall</dt>
+    <dd>
+      {% if connection.error %}
+        <span class="pill pill--err">error</span> <span class="muted">{{ connection.error }}</span>
+      {% elif connection.connected %}
+        <span class="pill pill--ok">connected</span>
+      {% else %}
+        <span class="pill pill--warn">not connected</span>
+      {% endif %}
+    </dd>
+  </dl>
+  <p style="margin:.85rem 0 0">
+    <a href="?refresh=1" class="submit"
+       style="background:#635bff;color:#fff;text-decoration:none;
+              padding:.45rem 1rem;border-radius:6px;font-weight:600;
+              font-size:.85rem;display:inline-block;">
+      Refresh status
+    </a>
+    <span class="help" style="margin-left:.6rem">
+      Re-fetches the endpoint from Stripe and re-checks the local
+      secret. Use after changing <code>STRIPE_WEBHOOK_SECRET</code>
+      and restarting, or after enabling the endpoint in the Dashboard.
+    </span>
+  </p>
+  {% if connection.endpoint_exists and not connection.secret_present %}
+    <p class="help" style="margin:.6rem 0 0">
+      The endpoint is live on Stripe but the local
+      <code>STRIPE_WEBHOOK_SECRET</code> isn't set. Either grab the
+      signing secret from the Stripe Dashboard for endpoint
+      <code>{{ connection.endpoint_id }}</code> and paste it into
+      <code>.env</code>, or delete that endpoint and create a fresh one
+      below (which returns the secret once).
+    </p>
+  {% endif %}
+</div>
+{% endif %}
+
 {# ---- Existing endpoints ---------------------------------------------- #}
 {% if endpoints %}
 <h2>Current webhook endpoints in this Stripe account</h2>

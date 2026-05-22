@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import json
 import logging
+from dataclasses import dataclass
 from typing import Any
 
 import requests
@@ -139,3 +140,83 @@ def rotate_api_key(user) -> str:
             f"rotate_api_key({user.pk}) -> {resp.status_code}: {resp.text[:200]}"
         )
     return resp.json().get("api_key", "")
+
+
+@dataclass(frozen=True)
+class TenantUserResult:
+    """Outcome of ``get_or_create_tenant_user`` — fed to the admin
+    Messages framework so the operator sees what actually happened."""
+    api_key: str          # the key now stored on User (always non-empty on success)
+    external_id: Any      # the public_id we mirrored across (UUID)
+    created: bool         # True when the aggrigator row was newly minted (201)
+    rotated: bool         # True when we had to rotate because aggrigator already had the user
+
+
+def get_or_create_tenant_user(
+    user, *, tier: str | None = None, features: dict | None = None,
+) -> TenantUserResult:
+    """Provision the user on the aggrigator and persist the result on the
+    User row. Mirrors the per-user logic in the ``backfill_aggrigator_users``
+    management command so the admin "Provision aggrigator user" button
+    and the bulk backfill stay in lock-step.
+
+    Flow:
+    1. Call ``provision_user``. If the aggrigator was empty for this
+       ``external_user_id`` (201) we get the plaintext key back — save it.
+    2. If the aggrigator already had the row (200, empty ``api_key``),
+       we have no key on this side either — call ``rotate_api_key`` to
+       force-mint a fresh one. The old aggrigator-side keys are
+       revoked, which is the right call: any key we don't have stored
+       can't be served by MDProject anyway.
+
+    Tier defaults to the user's current Subscription plan code (PRO /
+    FREE) when not passed. Falls back to FREE if there's no
+    Subscription row yet — the admin never has to think about which
+    tier value is "right"."""
+    from core.user.models import User as UserModel  # avoid circular import at module load
+
+    resolved_tier = (tier or _current_tier(user)).upper()
+    resolved_features = features or {"analytics": resolved_tier == "PRO"}
+
+    key = provision_user(user, tier=resolved_tier, features=resolved_features)
+    rotated = False
+    created = bool(key)
+    if not key:
+        # 200 path — aggrigator already had the row but MDProject has no
+        # stored key. Rotate to recover a usable key.
+        key = rotate_api_key(user)
+        rotated = True
+
+    if not key:
+        raise ParadiseError(
+            f"get_or_create_tenant_user({user.pk}): aggrigator returned "
+            "no api_key after provision+rotate — manual intervention needed."
+        )
+
+    UserModel.objects.filter(pk=user.pk).update(
+        aggrigator_api_key=key,
+        aggrigator_external_id=user.public_id,
+    )
+    user.aggrigator_api_key = key
+    user.aggrigator_external_id = user.public_id
+    logger.info(
+        "aggrigator tenant_user %s for user_id=%s email=%s",
+        "created" if created else ("rotated" if rotated else "noop"),
+        user.pk, user.email,
+    )
+    return TenantUserResult(
+        api_key=key,
+        external_id=user.public_id,
+        created=created,
+        rotated=rotated,
+    )
+
+
+def _current_tier(user) -> str:
+    """Read the user's current Subscription tier (PRO / FREE) for
+    aggrigator entitlement payloads. Defaults to FREE if the user has
+    no subscription row, which matches the signup default."""
+    sub = getattr(user, "subscription", None)
+    plan = getattr(sub, "plan", None) if sub else None
+    code = getattr(plan, "code", None) if plan else None
+    return code or "FREE"

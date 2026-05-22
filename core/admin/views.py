@@ -103,17 +103,26 @@ def stripe_setup_page(request):
 
     state = stripe_setup.status()
     endpoints = []
+    connection = None
     if state.key_present and state.error is None:
         try:
             endpoints = stripe_setup.list_endpoints()
         except Exception as exc:
             messages.error(request, f"Could not list webhook endpoints: {exc}")
+        # Live re-check of the canonical webhook wiring (endpoint
+        # exists + enabled + local secret present). Cheap enough to
+        # run on every GET — that's exactly what makes the Refresh
+        # button work: it's just a GET round-trip to this view.
+        connection = stripe_setup.webhook_connection(default_url)
+        if request.GET.get("refresh") == "1" and connection.connected:
+            messages.success(request, "Webhook connection looks healthy.")
 
     context = dict(
         admin.site.each_context(request),
         title="Stripe Setup",
         state=state,
         endpoints=endpoints,
+        connection=connection,
         events=stripe_setup.WEBHOOK_EVENTS,
         capabilities=stripe_setup.REQUIRED_CAPABILITIES,
         default_webhook_url=default_url,

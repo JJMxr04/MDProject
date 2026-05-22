@@ -232,6 +232,81 @@ def find_endpoint_by_url(url: str) -> Optional[EndpointSummary]:
 
 
 @dataclass(frozen=True)
+class WebhookConnection:
+    """Live-check of the canonical webhook plumbing.
+
+    Used by the "Refresh" button on the Stripe Setup page: after the
+    operator creates an endpoint in the Stripe Dashboard (or the local
+    create call refused because the URL already existed), we want a
+    one-click "re-check the wiring" affordance that goes back to
+    Stripe and reports the current state.
+
+    Stripe never exposes a webhook signing secret a second time, so we
+    can't directly prove the local ``STRIPE_WEBHOOK_SECRET`` matches
+    the endpoint's secret. The best signal we can give without sending
+    a live delivery is the three booleans below — if all three are
+    true, the integration is wired correctly and the operator can
+    verify end-to-end by firing a Stripe Dashboard test event."""
+    url: str
+    endpoint_exists: bool
+    endpoint_enabled: bool
+    endpoint_id: str | None
+    endpoint_status: str | None
+    secret_present: bool
+    error: str | None = None
+
+    @property
+    def connected(self) -> bool:
+        return (
+            self.endpoint_exists
+            and self.endpoint_enabled
+            and self.secret_present
+            and self.error is None
+        )
+
+
+def webhook_connection(url: str) -> WebhookConnection:
+    """Re-check the webhook wiring for ``url`` against Stripe + env.
+
+    Cheap to call (one ``WebhookEndpoint.list`` API hit, paged) so it's
+    safe to wire to a user-facing Refresh button. Never raises —
+    transport / auth errors land in ``error`` so the template can
+    render a friendly banner instead of bubbling a 500."""
+    secret_present = bool(getattr(settings, "STRIPE_WEBHOOK_SECRET", "") or "")
+    try:
+        existing = find_endpoint_by_url(url)
+    except stripe.error.StripeError as exc:
+        return WebhookConnection(
+            url=url,
+            endpoint_exists=False,
+            endpoint_enabled=False,
+            endpoint_id=None,
+            endpoint_status=None,
+            secret_present=secret_present,
+            error=f"Stripe error: {exc.user_message or exc}",
+        )
+
+    if existing is None:
+        return WebhookConnection(
+            url=url,
+            endpoint_exists=False,
+            endpoint_enabled=False,
+            endpoint_id=None,
+            endpoint_status=None,
+            secret_present=secret_present,
+        )
+
+    return WebhookConnection(
+        url=url,
+        endpoint_exists=True,
+        endpoint_enabled=(existing.status == "enabled"),
+        endpoint_id=existing.id,
+        endpoint_status=existing.status or None,
+        secret_present=secret_present,
+    )
+
+
+@dataclass(frozen=True)
 class CreatedEndpoint:
     """Result of ``create_webhook_endpoint``. ``secret`` is the
     plaintext ``whsec_...`` Stripe returns exactly once — the operator

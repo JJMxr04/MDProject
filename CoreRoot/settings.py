@@ -355,6 +355,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/New_York'
 CELERY_RESULT_EXTENDED = True
+CELERY_BROKER_USE_SSL = {"ssl_cert_reqs": "required"}
 broker_connection_retry_on_startup = True
 
 CACHES = {
@@ -365,7 +366,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             'SOCKET_CONNECT_TIMEOUT': 5,  # Optional, connection timeout
             'SOCKET_TIMEOUT': 5,           # Optional, request timeout
-          # Disables SSL verification
+            "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": "required"},
         },
     }
 } 

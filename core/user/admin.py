@@ -15,6 +15,11 @@ from core.billing.services.customer import (
     create_customer as stripe_create_customer,
     reconnect_customer as stripe_reconnect_customer,
 )
+from core.billing.services import aggrigator_internal
+from core.billing.services.subscription_sync import (
+    SubscriptionSyncError,
+    refresh_from_stripe as subscription_refresh_from_stripe,
+)
 
 from .models import User
 
@@ -155,6 +160,21 @@ class UserAdmin(BaseUserAdmin):
                 self.admin_site.admin_view(self.stripe_create_view),
                 name="core_user_user_stripe_create",
             ),
+            path(
+                "<uuid:user_id>/aggrigator-provision/",
+                self.admin_site.admin_view(self.aggrigator_provision_view),
+                name="core_user_user_aggrigator_provision",
+            ),
+            path(
+                "<uuid:user_id>/aggrigator-rotate/",
+                self.admin_site.admin_view(self.aggrigator_rotate_view),
+                name="core_user_user_aggrigator_rotate",
+            ),
+            path(
+                "<uuid:user_id>/subscription-refresh/",
+                self.admin_site.admin_view(self.subscription_refresh_view),
+                name="core_user_user_subscription_refresh",
+            ),
         ]
         # Custom URLs first so the int-converter doesn't fight the
         # default ``<path:object_id>`` change-view pattern.
@@ -222,6 +242,133 @@ class UserAdmin(BaseUserAdmin):
             messages.success(
                 request,
                 f"Created Stripe Customer {cust_id} for {user.email}.",
+            )
+        return self._redirect_to_user(user_id)
+
+    # ---- Aggrigator tenant_user actions ----
+
+    @method_decorator(require_POST)
+    def aggrigator_provision_view(self, request, user_id: uuid.UUID):
+        """Get-or-create the aggrigator tenant_user for this MDProject
+        User. Mirrors the per-user logic in the
+        ``backfill_aggrigator_users`` management command — provision,
+        and rotate if the aggrigator already had the row but we lost
+        the key on this side. Old users that pre-date the aggrigator
+        integration use this to catch up without a full backfill run."""
+        if not request.user.is_staff:
+            messages.error(request, "Staff only.")
+            return HttpResponseRedirect(reverse("admin:index"))
+        user = get_object_or_404(User, pk=user_id)
+        try:
+            result = aggrigator_internal.get_or_create_tenant_user(user)
+        except aggrigator_internal.ParadiseError as exc:
+            messages.error(
+                request,
+                f"Aggrigator provisioning failed for {user.email}: {exc}",
+            )
+            return self._redirect_to_user(user_id)
+        except Exception as exc:
+            messages.error(
+                request,
+                f"Aggrigator provisioning failed for {user.email}: {exc}",
+            )
+            return self._redirect_to_user(user_id)
+
+        if result.created:
+            verb = "Provisioned new"
+        elif result.rotated:
+            verb = "Recovered (rotated key for existing)"
+        else:
+            verb = "Synced"
+        messages.success(
+            request,
+            f"{verb} aggrigator tenant_user for {user.email} "
+            f"(external_id {result.external_id}).",
+        )
+        return self._redirect_to_user(user_id)
+
+    @method_decorator(require_POST)
+    def aggrigator_rotate_view(self, request, user_id: uuid.UUID):
+        """Force-rotate the aggrigator API key. Revokes every existing
+        key on the aggrigator side and stores the new plaintext on the
+        User row. Use when the stored key is suspected leaked or when
+        recovering from a key loss without re-provisioning."""
+        if not request.user.is_staff:
+            messages.error(request, "Staff only.")
+            return HttpResponseRedirect(reverse("admin:index"))
+        user = get_object_or_404(User, pk=user_id)
+        try:
+            new_key = aggrigator_internal.rotate_api_key(user)
+        except aggrigator_internal.ParadiseError as exc:
+            messages.error(
+                request,
+                f"Aggrigator key rotation failed for {user.email}: {exc}",
+            )
+            return self._redirect_to_user(user_id)
+        if not new_key:
+            messages.error(
+                request,
+                f"Aggrigator returned no api_key on rotate for {user.email}.",
+            )
+            return self._redirect_to_user(user_id)
+        User.objects.filter(pk=user.pk).update(
+            aggrigator_api_key=new_key,
+            aggrigator_external_id=user.public_id,
+        )
+        messages.success(
+            request,
+            f"Rotated aggrigator API key for {user.email}. The old key "
+            "is now revoked.",
+        )
+        return self._redirect_to_user(user_id)
+
+    # ---- Subscription refresh ----
+
+    @method_decorator(require_POST)
+    def subscription_refresh_view(self, request, user_id: uuid.UUID):
+        """Pull the user's live Stripe Subscription state and re-apply
+        it to the local row + the aggrigator's entitlement mirror.
+        Same field mapping the webhook handler uses — for when an
+        operator suspects the local Subscription drifted from Stripe
+        (missed webhook delivery, manual Dashboard edit, DB restore)."""
+        if not request.user.is_staff:
+            messages.error(request, "Staff only.")
+            return HttpResponseRedirect(reverse("admin:index"))
+        user = get_object_or_404(User, pk=user_id)
+        try:
+            report = subscription_refresh_from_stripe(user)
+        except SubscriptionSyncError as exc:
+            messages.error(
+                request,
+                f"Subscription refresh failed for {user.email}: {exc.user_message}",
+            )
+            return self._redirect_to_user(user_id)
+        except Exception as exc:
+            messages.error(
+                request,
+                f"Subscription refresh failed for {user.email}: {exc}",
+            )
+            return self._redirect_to_user(user_id)
+
+        if not report.found_on_stripe:
+            messages.warning(
+                request,
+                f"No Stripe Subscription on file for {user.email} — "
+                "reset local row to FREE.",
+            )
+        else:
+            messages.success(
+                request,
+                f"Refreshed {user.email}: plan={report.plan_code} "
+                f"status={report.status} (Stripe id "
+                f"{report.stripe_subscription_id}).",
+            )
+        if report.found_on_stripe and not report.aggrigator_synced:
+            messages.warning(
+                request,
+                "Local row updated, but the aggrigator entitlement "
+                "push failed — re-run after the aggrigator recovers, "
+                "or check PARADISE_SECRET / AGGRIGATOR_BASE_URL.",
             )
         return self._redirect_to_user(user_id)
 
