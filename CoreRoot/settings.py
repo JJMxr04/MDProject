@@ -24,6 +24,24 @@ def get_token_serializer():
 
 load_dotenv()
 
+# Force IPv4 for all outbound DNS resolution. Railway (and some other
+# cloud platforms) only route IPv4 from containers — but DNS still
+# returns AAAA records for hosts like smtp.gmail.com, so Python tries
+# the IPv6 address first and the connect() fails with
+# "Network is unreachable" before falling back to the IPv4.
+#
+# Set FORCE_IPV4_OUTBOUND=True on services that need this (the worker
+# for sure; the web service if it makes any outbound calls). Leave
+# unset locally where IPv6 works fine.
+if os.environ.get('FORCE_IPV4_OUTBOUND', '').strip().lower() in ('1', 'true', 'yes', 'on'):
+    import socket as _socket
+    _real_getaddrinfo = _socket.getaddrinfo
+
+    def _ipv4_only_getaddrinfo(host, port, family=0, *args, **kwargs):
+        return _real_getaddrinfo(host, port, _socket.AF_INET, *args, **kwargs)
+
+    _socket.getaddrinfo = _ipv4_only_getaddrinfo
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
