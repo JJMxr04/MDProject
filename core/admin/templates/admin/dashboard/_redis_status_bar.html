@@ -1,0 +1,17 @@
+{% load tz %}
+{% with s=redis_status %}
+<div class="redis-status-bar redis-state-{{ s.state.value }}">
+    <div class="redis-status-bar__left">
+        <span class="redis-status-bar__dot" aria-hidden="true"></span>
+        <div class="redis-status-bar__text">
+            <strong>Redis:</strong>
+            <span class="redis-status-bar__label">{{ s.label }}</span>
+            {% if s.detail %}<span class="redis-status-bar__detail">— {{ s.detail }}</span>{% endif %}
+        </div>
+    </div>
+    <div class="redis-status-bar__right">
+        <span class="redis-status-bar__checked">checked {{ checked_at|date:"H:i:s" }}</span>
+        <button type="button" id="redis-ping-btn" class="redis-status-bar__btn">Ping Now</button>
+    </div>
+</div>
+{% endwith %}

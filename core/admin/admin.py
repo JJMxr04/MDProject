@@ -9,6 +9,7 @@ from core.user.models import User
 from core.tournament.models.tournament import Tournament
 import calendar
 from core.auth.models.waitlist import WaitlistEntry
+from core.admin.status import check_redis, get_worker_status
 
 @staff_member_required
 def custom_admin_view(request):
@@ -30,6 +31,9 @@ def custom_admin_view(request):
         'registration_data': get_registration_data(user_registrations, date_range),
         'total_users': total_users,
         'total_tournaments': total_tournaments,
+        'redis_status': check_redis(),
+        'worker_status': get_worker_status(),
+        'checked_at': timezone.localtime(),
     }
     return TemplateResponse(request, "admin/dashboard/dashboard.html", context)
 

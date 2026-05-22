@@ -1,9 +1,98 @@
 {% extends "admin/base_admin.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
+<style>
+    .redis-status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        margin: 0 0 16px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 14px;
+        background: #fafafa;
+    }
+    .redis-status-bar__left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+    .redis-status-bar__right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        white-space: nowrap;
+    }
+    .redis-status-bar__dot {
+        width: 10px; height: 10px; border-radius: 50%;
+        background: #999;
+        flex: none;
+    }
+    .redis-status-bar__text { min-width: 0; }
+    .redis-status-bar__label { font-weight: 600; }
+    .redis-status-bar__detail { color: #666; margin-left: 4px; }
+    .redis-status-bar__checked { color: #888; font-size: 12px; }
+    .redis-status-bar__btn {
+        background: #fff; border: 1px solid #888; border-radius: 4px;
+        padding: 4px 10px; cursor: pointer; font-size: 13px;
+    }
+    .redis-status-bar__btn:hover { background: #f0f0f0; }
+    .redis-status-bar__btn[disabled] { opacity: 0.6; cursor: progress; }
+    .redis-state-ok      { background: #e6f4ea; border-color: #34a853; }
+    .redis-state-ok      .redis-status-bar__dot { background: #34a853; }
+    .redis-state-warn    { background: #fef7e0; border-color: #f9ab00; }
+    .redis-state-warn    .redis-status-bar__dot { background: #f9ab00; }
+    .redis-state-down    { background: #fce8e6; border-color: #d93025; }
+    .redis-state-down    .redis-status-bar__dot { background: #d93025; }
+    .redis-state-unknown { background: #f1f3f4; border-color: #9aa0a6; }
+    .redis-state-unknown .redis-status-bar__dot { background: #9aa0a6; }
+</style>
+
+<div id="redis-status-container">
+    {% include "admin/dashboard/_redis_status_bar.html" %}
+</div>
+
+<div id="worker-status-container">
+    {% include "admin/dashboard/_worker_status_bar.html" %}
+</div>
+
+<script>
+(function() {
+    function wireBar(containerId, btnId, url) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.addEventListener('click', async (e) => {
+            const btn = e.target.closest('#' + btnId);
+            if (!btn) return;
+            btn.disabled = true;
+            btn.textContent = 'Pinging…';
+            try {
+                const resp = await fetch(url, {
+                    headers: {'X-Requested-With': 'fetch'},
+                    credentials: 'same-origin',
+                });
+                container.innerHTML = await resp.text();
+            } catch (err) {
+                btn.textContent = 'Error — try again';
+                btn.disabled = false;
+                console.error(containerId + ' ping failed', err);
+            }
+        });
+    }
+    wireBar('redis-status-container', 'redis-ping-btn',
+            "{% url 'core-admin:admin_redis_ping' %}");
+    wireBar('worker-status-container', 'worker-ping-btn',
+            "{% url 'core-admin:admin_worker_ping' %}");
+})();
+</script>
+
 <style>
     .kanban-card {
         background-color: #fff;

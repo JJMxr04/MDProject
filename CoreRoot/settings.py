@@ -363,15 +363,19 @@ broker_connection_retry_on_startup = True
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": _redis_db_url(1),
+        # Managed Redis (Upstash / Railway / Redis Cloud free tiers) only
+        # supports DB 0, so we share it with the Celery broker and namespace
+        # cache keys with KEY_PREFIX to avoid collision.
+        "LOCATION": _redis_db_url(0),
+        "KEY_PREFIX": "mdproject_cache",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            'SOCKET_CONNECT_TIMEOUT': 5,  # Optional, connection timeout
-            'SOCKET_TIMEOUT': 5,           # Optional, request timeout
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'SOCKET_TIMEOUT': 5,
             "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": "required"},
         },
     }
-} 
+}
 
 
 

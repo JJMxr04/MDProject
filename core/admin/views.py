@@ -148,3 +148,34 @@ def status_worker_partial(request):
     """
     context = {"worker": get_worker_status()}
     return TemplateResponse(request, "admin/status/_worker_banner.html", context)
+
+
+@staff_member_required
+def redis_ping_partial(request):
+    """HTML partial — fresh Redis probe. Bound to the Dashboard's
+    'Ping Now' button. Does not auto-refresh; the button is the only
+    trigger.
+    """
+    from django.utils import timezone
+    context = {
+        "redis_status": check_redis(),
+        "checked_at": timezone.localtime(),
+    }
+    return TemplateResponse(
+        request, "admin/dashboard/_redis_status_bar.html", context,
+    )
+
+
+@staff_member_required
+def worker_ping_partial(request):
+    """HTML partial — fresh Celery worker ping. Bound to the Dashboard's
+    worker 'Ping Now' button.
+    """
+    from django.utils import timezone
+    context = {
+        "worker_status": get_worker_status(),
+        "checked_at": timezone.localtime(),
+    }
+    return TemplateResponse(
+        request, "admin/dashboard/_worker_status_bar.html", context,
+    )
