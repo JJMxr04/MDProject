@@ -2,6 +2,7 @@ from django.urls import path
 
 from core.admin.admin import custom_admin_view
 from core.admin.views import (
+    check_ping_partial,
     redis_ping_partial,
     status_page,
     status_worker_partial,
@@ -20,6 +21,10 @@ urlpatterns = [
     path('status/worker/', status_worker_partial, name='admin_status_worker'),
     path('redis-ping/', redis_ping_partial, name='admin_redis_ping'),
     path('worker-ping/', worker_ping_partial, name='admin_worker_ping'),
+    # /admin/check-ping/<name>/ — per-card manual ping on /admin/status/.
+    # `name` ∈ {postgres, redis, aggregator, worker} (see CHECK_REGISTRY
+    # in core/admin/views.py).
+    path('check-ping/<str:name>/', check_ping_partial, name='admin_check_ping'),
     # One-click Stripe setup — account status, API version detection,
     # webhook endpoint create. Admin-only via the view's decorator.
     path('stripe-setup/', stripe_setup_page, name='admin_stripe_setup'),

@@ -1,8 +1,9 @@
 {#-
-  Worker-status banner partial. Re-rendered every 10s by the JS poll
-  in index.html. ``worker.state.value`` is one of: ok | warn | down | unknown.
+  Worker-status banner partial. Re-rendered when the user clicks
+  the "Ping" button (no auto-polling). ``worker.state.value`` is
+  one of: ok | warn | down | unknown.
 
-  Inline styles keep this self-contained so the polling JS can swap
+  Inline styles keep this self-contained so the JS handler can swap
   the markup wholesale without worrying about external CSS load order.
 -#}
 {% with state=worker.state.value %}
@@ -20,8 +21,11 @@
       <div class="status-banner__detail">{{ worker.detail }}</div>
     {% endif %}
   </div>
-  <span class="status-banner__last">
-    checked {% now "H:i:s" %} UTC
-  </span>
+  <div class="status-banner__right">
+    <span class="status-banner__last">
+      checked {% now "H:i:s" %} UTC
+    </span>
+    <button type="button" class="check-card__ping-btn" data-check="worker">Ping</button>
+  </div>
 </div>
 {% endwith %}

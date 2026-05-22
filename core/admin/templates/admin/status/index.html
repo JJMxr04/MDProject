@@ -86,6 +86,21 @@
   .check-card--down    .check-card__dot { background: #dc2626; }
   .check-card--unknown { border-left-color: #8a93a3; }
   .check-card--unknown .check-card__dot { background: #8a93a3; }
+  .check-card__footer {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .5rem; margin-top: .55rem;
+  }
+  .check-card__checked { font-size: .72rem; color: #8a93a3; }
+  .check-card__ping-btn {
+    background: #fff; border: 1px solid #cbd5e1; border-radius: 4px;
+    padding: .15rem .55rem; font-size: .75rem; cursor: pointer;
+    color: #1a1d24; font-weight: 600;
+  }
+  .check-card__ping-btn:hover { background: #f1f5f9; }
+  .check-card__ping-btn[disabled] { opacity: .6; cursor: progress; }
+  .status-banner__right {
+    display: flex; align-items: center; gap: .65rem; white-space: nowrap;
+  }
 
   /* ---- Tables ---- */
   .status-table {
@@ -139,17 +154,8 @@
 
   <h2>Service health</h2>
   <div class="status-grid">
-    {% for title, item in health_checks %}
-    <div class="check-card check-card--{{ item.state.value }}">
-      <span class="check-card__dot" aria-hidden="true"></span>
-      <div class="check-card__body">
-        <div class="check-card__title">{{ title }}</div>
-        <div class="check-card__label">{{ item.label }}</div>
-        {% if item.detail %}
-          <div class="check-card__detail">{{ item.detail }}</div>
-        {% endif %}
-      </div>
-    </div>
+    {% for name, title, item in health_checks %}
+      {% include "admin/status/_check_card.html" with name=name title=title item=item %}
     {% endfor %}
   </div>
 
@@ -239,26 +245,55 @@
 </div>
 
 <script>
-// Live banner refresh — re-fetches the worker banner partial every 10s
-// and swaps its inner HTML. Jazzmin ships jQuery already, so this is
-// a fetch-then-replace with no new dependencies. The endpoint is gated
-// by @staff_member_required just like this page; if the admin's
-// session expires the swap silently no-ops (status code != 200) and
-// the banner will visibly stop updating, which itself is a useful
-// "your session is gone" signal.
+// Manual-only ping. No auto-polling — each card has its own button.
+// Clicking a Ping button calls /admin/check-ping/<name>/ and swaps
+// just that card's container with the returned fragment. Endpoints
+// are gated by @staff_member_required; expired-session responses are
+// no-oped so the page degrades gracefully.
 (function () {
-  var url = "{% url 'core-admin:admin_status_worker' %}";
-  function poll() {
-    fetch(url, {credentials: "same-origin", headers: {"X-Requested-With": "fetch"}})
+  var baseUrl = "{% url 'core-admin:admin_check_ping' 'CHECK_NAME' %}";
+
+  // Each fragment returned by the server includes its own outer
+  // wrapper with a stable id. We swap that element via outerHTML so
+  // the replacement carries fresh classes (state colors) without
+  // having to manage a separate wrapper div.
+  var hostIds = {
+    "postgres":   "check-card-postgres",
+    "redis":      "check-card-redis",
+    "aggregator": "check-card-aggregator",
+    "worker":     "worker-banner-inner",
+  };
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".check-card__ping-btn");
+    if (!btn) return;
+    var name = btn.dataset.check;
+    var host = document.getElementById(hostIds[name]);
+    if (!host) return;
+
+    btn.disabled = true;
+    var originalText = btn.textContent;
+    btn.textContent = "Pinging…";
+
+    fetch(baseUrl.replace("CHECK_NAME", encodeURIComponent(name)), {
+      credentials: "same-origin",
+      headers: {"X-Requested-With": "fetch"},
+    })
       .then(function (r) { return r.ok ? r.text() : null; })
       .then(function (html) {
-        if (!html) return;
-        var host = document.getElementById("worker-banner");
-        if (host) host.innerHTML = html;
+        if (!html) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          return;
+        }
+        host.outerHTML = html;
       })
-      .catch(function () { /* network blip — try again next tick */ });
-  }
-  setInterval(poll, 10000);
+      .catch(function (err) {
+        btn.textContent = "Error";
+        btn.disabled = false;
+        console.error("check ping failed", name, err);
+      });
+  });
 })();
 </script>
 

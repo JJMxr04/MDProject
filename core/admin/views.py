@@ -5,6 +5,8 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
+from django.http import Http404
+
 from core.admin.status import (
     check_aggregator,
     check_db,
@@ -13,6 +15,18 @@ from core.admin.status import (
     get_recent_results,
     get_worker_status,
 )
+
+# name → (probe func, human title, partial template, context key)
+CHECK_REGISTRY = {
+    "postgres":   (check_db,           "Postgres",
+                   "admin/status/_check_card.html", "item"),
+    "redis":      (check_redis,        "Redis (cache + broker)",
+                   "admin/status/_check_card.html", "item"),
+    "aggregator": (check_aggregator,   "Aggregator",
+                   "admin/status/_check_card.html", "item"),
+    "worker":     (get_worker_status,  "Worker",
+                   "admin/status/_worker_banner.html", "worker"),
+}
 from core.billing.services import stripe_setup
 
 
@@ -35,9 +49,9 @@ def status_page(request):
     without a full reload).
     """
     health_checks = [
-        ("Postgres", check_db()),
-        ("Redis (cache + broker)", check_redis()),
-        ("Aggregator", check_aggregator()),
+        ("postgres",   "Postgres",                check_db()),
+        ("redis",      "Redis (cache + broker)",  check_redis()),
+        ("aggregator", "Aggregator",              check_aggregator()),
     ]
     context = dict(
         admin.site.each_context(request),
@@ -179,3 +193,22 @@ def worker_ping_partial(request):
     return TemplateResponse(
         request, "admin/dashboard/_worker_status_bar.html", context,
     )
+
+
+@staff_member_required
+def check_ping_partial(request, name):
+    """HTML partial — fresh probe for a single status check on
+    /admin/status/. Bound to per-card 'Ping' buttons. Dispatches via
+    ``CHECK_REGISTRY`` so adding a new check is a one-line registry
+    update, not a new URL/view pair.
+    """
+    entry = CHECK_REGISTRY.get(name)
+    if entry is None:
+        raise Http404(f"unknown check: {name}")
+    probe, title, template, ctx_key = entry
+    context = {
+        "name": name,
+        "title": title,
+        ctx_key: probe(),
+    }
+    return TemplateResponse(request, template, context)
