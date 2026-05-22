@@ -242,8 +242,33 @@ EMAIL_TIMEOUT = 30
 # Public-facing site URL — used in email templates to build absolute URLs
 # for the logo and any in-email links. Email clients can't resolve
 # relative paths, so we baseline this once and pass it into every
-# template via the send_email task. Override via env in non-prod.
-SITE_URL = (os.environ.get('SITE_URL', 'https://warforaterra.com') or '').rstrip('/')
+# template via the send_email task.
+#
+# Resolution order (first match wins):
+#   1. SITE_URL env var (explicit override, e.g. for staging)
+#   2. RAILWAY_PUBLIC_DOMAIN — auto-populated by Railway. Reflects the
+#      Railway-generated *.up.railway.app domain by default, and the
+#      attached custom domain (e.g. warforaterra.com) once one is set
+#      in the service's Networking tab. No app-level config needed.
+#   3. ALLOWED_HOSTS[0] — fallback for non-Railway hosts.
+#   4. http://localhost:8000 — last-resort for local shells / mgmt cmds.
+def _derive_site_url() -> str:
+    explicit = (os.environ.get('SITE_URL') or '').strip().rstrip('/')
+    if explicit:
+        return explicit
+    railway = (os.environ.get('RAILWAY_PUBLIC_DOMAIN') or '').strip().rstrip('/')
+    if railway:
+        # Railway gives us a bare hostname; emails need a scheme.
+        return f"https://{railway}"
+    for host in ALLOWED_HOSTS:
+        host = host.strip()
+        if host and host != '*':
+            scheme = 'http' if (DEBUG or host in ('localhost', '127.0.0.1')) else 'https'
+            return f"{scheme}://{host}"
+    return 'http://localhost:8000'
+
+
+SITE_URL = _derive_site_url()
 EMAIL_LOGO_URL = os.environ.get(
     'EMAIL_LOGO_URL',
     f"{SITE_URL}/static/assets/Logo/paradise_logo_2_normal.png",
