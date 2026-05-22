@@ -118,6 +118,7 @@ INSTALLED_APPS = [
     "django_celery_results",  # This was in the first list only
     "django_celery_beat",     # This was in the first list only
     "storages",
+    "anymail",
     'crispy_forms',
     'crispy_bootstrap5',
                # This was in the first list only
@@ -217,33 +218,25 @@ DATABASES['default']['TEST'] = {
 
 
 
-def _env_bool(name: str, default: bool) -> bool:
-    raw = os.environ.get(name)
-    if raw is None:
-        return default
-    return raw.strip().lower() in ("1", "true", "yes", "on")
-
-
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 465))
-# SSL on 465 (implicit TLS) and TLS on 587 (STARTTLS) are mutually
-# exclusive — Django raises if both are True. Default to whichever
-# matches the configured port unless the env overrides explicitly.
-_default_use_ssl = EMAIL_PORT == 465
-_default_use_tls = EMAIL_PORT == 587
-EMAIL_USE_SSL = _env_bool('EMAIL_USE_SSL', _default_use_ssl)
-EMAIL_USE_TLS = _env_bool('EMAIL_USE_TLS', _default_use_tls)
-if EMAIL_USE_SSL and EMAIL_USE_TLS:
-    # Belt-and-suspenders — if both env vars get set to true the
-    # SMTP backend will refuse to instantiate. Pick SSL since it's
-    # the historical default for this project.
-    EMAIL_USE_TLS = False
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# Hard cap on the SMTP socket so a blocked-outbound or stalled TLS
-# handshake errors out instead of pinning a Celery worker forever.
+# ---------------------------------------------------------------------------
+# Email — Resend over HTTPS via django-anymail.
+#
+# We send transactional mail through Resend's REST API (port 443) instead of
+# SMTP because Railway (and most cloud platforms) block outbound SMTP from
+# containers. The previous SMTP config is retired; if a future deployment
+# needs SMTP, override EMAIL_BACKEND via env and re-add the SMTP settings.
+# ---------------------------------------------------------------------------
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND', 'anymail.backends.resend.EmailBackend',
+)
+ANYMAIL = {
+    "RESEND_API_KEY": os.environ.get('RESEND_API_KEY', ''),
+}
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DEFAULT_FROM_EMAIL', 'noreply@warforaterra.com',
+)
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+# Cap socket time so a misbehaving HTTPS round-trip can't pin a worker.
 EMAIL_TIMEOUT = 30
 
 

@@ -26,9 +26,9 @@ def _stderr(msg):
 def send_email(self, subject, recipient, template_path, context):
     attempt = self.request.retries + 1
     logger.info(
-        "send_email start: attempt=%s to=%s subject=%r template=%s backend=%s host=%s:%s",
+        "send_email start: attempt=%s to=%s subject=%r template=%s backend=%s from=%s",
         attempt, recipient, subject, template_path,
-        settings.EMAIL_BACKEND, settings.EMAIL_HOST, settings.EMAIL_PORT,
+        settings.EMAIL_BACKEND, settings.DEFAULT_FROM_EMAIL,
     )
     _stderr(f"[send_email] start attempt={attempt} to={recipient} subject={subject!r}")
 
