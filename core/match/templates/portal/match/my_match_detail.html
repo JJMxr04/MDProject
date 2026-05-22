@@ -151,7 +151,7 @@
         </div>
     </div>
 
-    {# Loading overlay (kept for the tiebreaker + legacy callers). #}
+    
     <div id="loading-overlay" style="display: none;">
         <div class="loading-spinner"></div>
         <p>Processing...</p>
@@ -160,7 +160,7 @@
     {% csrf_token %}
 </div>
 
-{# ─── Pick Modal (Bootstrap) ─────────────────────────────────────────── #}
+
 <div class="modal fade" id="pickModal" tabindex="-1" aria-labelledby="pickModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
@@ -170,7 +170,7 @@
       </div>
 
       <div class="modal-body p-0">
-        {# STEP 1 — event chooser (only shown when no event is locked yet). #}
+        
         <div id="pickStep-events" class="pickstep" hidden>
           <div class="pickstep__toolbar">
             <input type="search" id="pickEventSearch" class="form-control form-control-sm"
@@ -183,7 +183,7 @@
           </div>
         </div>
 
-        {# STEP 2 — market + selection chooser. #}
+        
         <div id="pickStep-selection" class="pickstep" hidden>
           <div class="pickstep__eventbar">
             <button type="button" class="pickstep__eventbar-back" id="pickBackBtn" hidden>
@@ -1043,9 +1043,7 @@ const PickModal = (function () {
                     data-label="${escapeAttr(humanLabel)}"
                     data-odds="${escapeAttr(oddsStr)}"
                     data-settle="${escapeAttr(settle || 'PENDING')}">
-                    {# ``takenBy`` is shown as a "Picked by X" badge below
-                       but doesn't disable the card — picking the same
-                       outcome as the other side is allowed. #}
+                    
                 <div class="pickselection__row1">
                     <span class="pickselection__label">${escapeHtml(humanLabel)}</span>
                     ${linePill}

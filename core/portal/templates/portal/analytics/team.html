@@ -40,7 +40,7 @@
     </div>
   {% else %}
     <div class="row g-3">
-      {# ---- Column A: season + home/away ---- #}
+      
       <div class="col-lg-6">
         <div class="card mb-3">
           <div class="card-header"><strong>Season {{ season_label }}</strong></div>
@@ -108,7 +108,7 @@
         </div>
       </div>
 
-      {# ---- Column B: form + (elo when live) ---- #}
+      
       <div class="col-lg-6">
         <div class="card mb-3">
           <div class="card-header"><strong>Form — last {{ form_last_10|length }}</strong></div>
@@ -148,7 +148,7 @@
       </div>
     </div>
 
-    {# ---- Recent results table ---- #}
+    
     <div class="card mt-3">
       <div class="card-header"><strong>Recent results</strong></div>
       <div class="card-body p-0">
@@ -192,7 +192,7 @@
       </div>
     </div>
 
-    {# ---- H2H section ---- #}
+    
     {% if h2h_recent %}
       <h2 class="h5 mt-4 mb-2">Head-to-head — last 5 opponents</h2>
       {% for block in h2h_recent %}

@@ -1,11 +1,4 @@
-{#-
-  Worker-status banner partial. Re-rendered when the user clicks
-  the "Ping" button (no auto-polling). ``worker.state.value`` is
-  one of: ok | warn | down | unknown.
 
-  Inline styles keep this self-contained so the JS handler can swap
-  the markup wholesale without worrying about external CSS load order.
--#}
 {% with state=worker.state.value %}
 <div class="status-banner status-banner--{{ state }}" id="worker-banner-inner">
   <span class="status-banner__dot" aria-hidden="true"></span>

@@ -1,6 +1,7 @@
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
+from core.auth.views.password_reset import BrandedPasswordResetView
 from core.event.urls import urlpatterns as eventUrls
 from core.mail.urls.notifications import urlpatterns as notificationUrls
 from core.match.urls import urlpatterns as matchUrls
@@ -25,7 +26,7 @@ urlpatterns = [
     path('tournament/', include('core.tournament.urls')),
     path('user/', include(userUrls)),
     path('mail/', include(notificationUrls)),
-    path('reset_password/', auth_views.PasswordResetView.as_view(template_name='authorization/password-reset.html'), name='reset_password'),
+    path('reset_password/', BrandedPasswordResetView.as_view(), name='reset_password'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='authorization/password-sent.html'), name='password_reset_sent'),
     path('reset/<uid64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name='authorization/password-reset-form.html'), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'), name='password_reset_complete'),

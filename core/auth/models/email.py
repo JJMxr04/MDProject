@@ -1,41 +1,37 @@
-from core.mail import views
+from django.conf import settings
+from django.core.signing import TimestampSigner
 from django.urls import reverse
-from django.core.signing import Signer
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-import os
-from django.utils.crypto import salted_hmac
-from django.core.signing import TimestampSigner, SignatureExpired, BadSignature
+
+from core.mail.tasks import send_email
 
 
-def send_activation_email(user, request):
-    # Generate a signed token using Django's signing mechanism
+def send_activation_email(user, request=None):
+    """Enqueue the email-confirmation message via Celery.
+
+    Was previously a synchronous EmailMultiAlternatives().send() that
+    hardcoded from_email=os.environ.get('EMAIL_HOST_USER'). That env var
+    was retired when the project moved to Resend over HTTPS, so the
+    sync send started failing silently. Now it routes through the same
+    Celery task every other email uses — picks up the Anymail backend,
+    DEFAULT_FROM_EMAIL, retries, logging, and the email/_base.html
+    chrome injection.
+    """
     signer = TimestampSigner()
     token = signer.sign(user.email)
+    url = reverse('core-auth:activate', kwargs={'token': token})
 
-    url_pattern_name = 'core-auth:activate'
-    url = reverse(url_pattern_name, kwargs={'token': token}).lstrip('/')
+    if request is not None:
+        activation_link = request.build_absolute_uri(url)
+    else:
+        # Fallback for any caller without a request (e.g. mgmt commands).
+        activation_link = f"{settings.SITE_URL.rstrip('/')}{url}"
 
-    link = request.build_absolute_uri('/') + url  # or your specific domain
-
-    subject = 'Please confirm your registration.'
-    rec = [user.email]
-    template_path = "activation_email/activation.html"
-
-    html_content = render_to_string(template_path, {'activation_link': link})
-
-    text_content = strip_tags(html_content)
-
-    email_message = EmailMultiAlternatives(
-        subject=subject,
-        body=text_content,
-        from_email=os.environ.get('EMAIL_HOST_USER'),
-        to=rec,
+    send_email.delay(
+        'Please confirm your registration.',
+        user.email,
+        'activation_email/activation.html',
+        {
+            'activation_link': activation_link,
+            'username': getattr(user, 'username', '') or '',
+        },
     )
-
-    email_message.attach_alternative(html_content, "text/html")
-
-    # Send the email using Django's email sending functions
-    email_message.send()
-

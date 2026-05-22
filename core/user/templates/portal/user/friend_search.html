@@ -18,7 +18,7 @@
 </header>
 
 <div class="friends-grid">
-    {# ── Left column — your code + finder ──────────────────────────── #}
+    
     <section class="card-ui">
         <header class="card-ui__header">
             <h2><i class="bi bi-key me-2"></i>Your friend code</h2>
@@ -57,7 +57,7 @@
                 </div>
             </form>
 
-            {# Inline messages — kept for the existing Django messages framework integration. #}
+            
             {% if messages %}
                 {% for message in messages %}
                     <div class="banner banner--{{ message.tags|default:'info' }} mt-3">{{ message }}</div>
@@ -104,7 +104,7 @@
         </div>
     </section>
 
-    {# ── Right column — your friends ──────────────────────────────── #}
+    
     <section class="card-ui friends-list-card">
         <header class="card-ui__header">
             <h2><i class="bi bi-people me-2"></i>Your friends</h2>
@@ -156,7 +156,7 @@
     </section>
 </div>
 
-{# ── Invite-to-match modal ─────────────────────────────────────────── #}
+
 <div id="inviteMatchModal" class="modal-shell" hidden>
     <div class="modal-card">
         <button type="button" class="modal-card__close" aria-label="Close" onclick="closeInvitePopup()"><i class="bi bi-x-lg"></i></button>
@@ -174,7 +174,7 @@
     </div>
 </div>
 
-{# ── Remove-friend confirm modal ───────────────────────────────────── #}
+
 <div id="removeFriendModal" class="modal-shell" hidden>
     <div class="modal-card">
         <button type="button" class="modal-card__close" aria-label="Close" onclick="closeRemoveModal()"><i class="bi bi-x-lg"></i></button>

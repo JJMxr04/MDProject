@@ -5,7 +5,7 @@
 <div class="container-fluid py-3">
   {% include "portal/components/_breadcrumbs.html" with crumbs=crumbs %}
 
-  {# ---- Event header ---- #}
+  
   <header class="mb-3 mt-2">
     {% if event.home_team and event.away_team %}
       <h1 class="h3 mb-1">
@@ -40,7 +40,7 @@
 
   {% if event.home_team %}
     <div class="row g-3">
-      {# ---- Past events: per-team season context (going in + after + scoring profile) ---- #}
+      
       {% if is_past %}
         {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.home venue="home" event=event %}
         {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.away venue="away" event=event %}
@@ -65,7 +65,7 @@
         {% endif %}
       {% endif %}
 
-      {# ---- Future events: live odds + model-vs-market edge ---- #}
+      
       {% if not is_past %}
         <div class="col-lg-6">
           {% if edge_rows %}
@@ -137,7 +137,7 @@
         </div>
       {% endif %}
 
-      {# ---- Recent form — bar chart on upcoming, simple chips on past ---- #}
+      
       {% if is_past %}
         {% if form_into_match.home_last_5 or form_into_match.away_last_5 %}
           <div class="col-12">
@@ -175,7 +175,7 @@
         {% endif %}
       {% endif %}
 
-      {# ---- Head-to-head — rich panel on upcoming, simple table on past ---- #}
+      
       {% if is_past %}
         {% if h2h_last_5 %}
           <div class="col-12">

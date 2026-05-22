@@ -20,11 +20,20 @@ def create_invite(request):
     if request.method == 'POST':
         form = InviteForm(request.POST)
         if form.is_valid():
-            invite = form.save(commit=False)
-            invite.sender = request.user  # Automatically set the sender to the current user
-            invite.invited_date = timezone.now()  # Set the invited date to now
-            invite.save()
-            return redirect('core-portal:invite-success')  # Redirect to a success page or wherever you want
+            cleaned = form.cleaned_data
+            # Route through the manager so the matching Emails.send_*
+            # call fires. The ModelForm path (form.save() + invite.save())
+            # bypasses InviteManager.create_invite() and the email never
+            # goes out — same trap that hit the waitlist signup form.
+            Invite.objects.create_invite(
+                obj_id=cleaned.get('obj_id'),
+                player=cleaned.get('player'),
+                invite_type=cleaned.get('type'),
+                sender=request.user,
+                accepted=cleaned.get('accepted', False),
+                invited_date=timezone.now(),
+            )
+            return redirect('core-portal:invite-success')
     else:
         form = InviteForm()
 

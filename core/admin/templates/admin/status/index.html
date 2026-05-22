@@ -143,10 +143,7 @@
     </button>
   </div>
 
-  {# Worker banner — re-rendered every 10s by the poll below. The
-     wrapping #worker-banner is the swap target; the partial returns
-     just #worker-banner-inner. We keep both so we can replace
-     contents without losing the outer container. #}
+  
   <h2>Background worker</h2>
   <div id="worker-banner">
     {% include "admin/status/_worker_banner.html" %}

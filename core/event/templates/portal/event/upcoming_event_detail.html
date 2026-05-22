@@ -11,7 +11,7 @@
     </ol>
 </nav>
 
-{# ── Event header card ──────────────────────────────────────────────── #}
+
 <section class="card-ui evd-header">
     <div class="card-ui__body">
         <div class="evd-teams">
@@ -61,7 +61,7 @@
     </div>
 </section>
 
-{# ── Markets + odds ─────────────────────────────────────────────────── #}
+
 <section class="card-ui">
     <header class="card-ui__header evd-markets-header">
         <h2><i class="bi bi-bar-chart-line me-2"></i>Markets &amp; odds</h2>
@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
 
-                                {# Per-bookmaker prices — comparison table. #}
+                                
                                 {% if sel.by_bookmaker %}
                                 <details class="evd-books">
                                     <summary class="evd-books__summary">
@@ -171,11 +171,10 @@
     </div>
 </section>
 
-{# ── Analytics surface (PAYWALLED) ──────────────────────────────────── #}
+
 {% if is_entitled_to_analytics %}
 
-  {# Model vs market — upcoming events only. Past events skip straight
-     to season-to-date below. #}
+  
   {% if not is_past %}
     <section class="card-ui evd-analytics">
       <header class="card-ui__header">
@@ -241,7 +240,7 @@
     </section>
   {% endif %}
 
-  {# Head-to-head: aggregate banner + combined-goals chart + last meetings #}
+  
   {% if h2h_aggregate.played or h2h_last_5 %}
     <section class="card-ui evd-analytics">
       <header class="card-ui__header">
@@ -255,7 +254,7 @@
     </section>
   {% endif %}
 
-  {# Recent form: per-team chips + points-per-game bar chart #}
+  
   {% if form_detail.home or form_detail.away %}
     <section class="card-ui evd-analytics">
       <header class="card-ui__header">
@@ -274,7 +273,7 @@
     </section>
   {% endif %}
 
-  {# Season-to-date: per-team standings + scoring profile #}
+  
   {% if historical_stats.home or historical_stats.away %}
     <section class="card-ui evd-analytics">
       <header class="card-ui__header">
@@ -299,7 +298,7 @@
   {% endif %}
 
 {% else %}
-  {# Free-tier upsell — one card covering everything the paywall hides. #}
+  
   <section class="card-ui evd-analytics evd-upsell">
     <div class="card-ui__body">
       <div class="evd-upsell__inner">

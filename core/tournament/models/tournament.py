@@ -9,6 +9,7 @@ from django.http import Http404
 from django.utils import timezone
 
 from core.abstract.models import AbstractModel, AbstractManager
+from core.mail.models import Emails
 from core.match.models.match import Match
 from core.user.models import User
 
@@ -85,8 +86,9 @@ class TournamentManager(AbstractManager):
             if InvitedPlayer.objects.check_invited_player(tournament, user):
                 return False
 
+            # create_invited_player fires Emails.send_tournament_invite
+            # internally; don't double-send by calling Emails here too.
             InvitedPlayer.objects.create_invited_player(tournament, user)
-            # Emails.send_tournament_invite(user, tournament)
             return True
 
         except ObjectDoesNotExist:
@@ -260,8 +262,12 @@ class RoundManager(AbstractManager):
 
 class InvitedPlayerManager(AbstractManager):
     def create_invited_player(self, tournament, player, accepted=False, accepted_date=None, invited_date=None):
-        return self.create(tournament=tournament, player=player, accepted=accepted, accepted_date=accepted_date,
-                           invited_date=invited_date)
+        invited = self.create(
+            tournament=tournament, player=player, accepted=accepted,
+            accepted_date=accepted_date, invited_date=invited_date,
+        )
+        Emails.send_tournament_invite(player, tournament)
+        return invited
 
     def update_invited_player(self, invited_player, **kwargs):
         for key, value in kwargs.items():
@@ -289,17 +295,19 @@ class InvitedPlayerManager(AbstractManager):
             player.accepted_date = timezone.now()
             player.state = "accepted"
             player.save()
+            Emails.send_tournament_acceptance_confirmation(
+                player.player, player.tournament,
+            )
             return True
         except ObjectDoesNotExist:
             return False
 
     def invite_player(self, tournament_id, player_id):
-
         try:
             tournament = Tournament.objects.get(id=tournament_id)
             player = User.objects.get(id=player_id)
             invited_player = self.create(tournament=tournament, player=player)
-            # Emails.send_tournament_invite(player, tournament)
+            Emails.send_tournament_invite(player, tournament)
             return invited_player
         except (Tournament.DoesNotExist, Player.DoesNotExist):
             return None

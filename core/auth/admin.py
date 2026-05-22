@@ -8,7 +8,23 @@ class WaitlistEntryAdmin(admin.ModelAdmin):
     list_filter = ('registered', 'activated', 'admin_granted_access')
     search_fields = ('email', 'full_name', 'phone_number', 'description')
 
-    actions = ['approve_entries', 'revoke_entries']  # Register both actions
+    actions = ['approve_entries', 'revoke_entries']
+
+    def save_model(self, request, obj, form, change):
+        # Detect the False → True flip on admin_granted_access from the
+        # change form so toggling the checkbox + Save fires the email,
+        # not just the bulk "Approve selected entries" action.
+        send_grant_email = False
+        if change and obj.pk:
+            try:
+                previous = WaitlistEntry.objects.get(pk=obj.pk)
+            except WaitlistEntry.DoesNotExist:
+                previous = None
+            if previous is not None and not previous.admin_granted_access and obj.admin_granted_access:
+                send_grant_email = True
+        super().save_model(request, obj, form, change)
+        if send_grant_email:
+            Emails.send_waitlist_granted(email=obj.email)
 
     def approve_entries(self, request, queryset):
         updated_count = 0
@@ -17,7 +33,7 @@ class WaitlistEntryAdmin(admin.ModelAdmin):
                 entry.admin_granted_access = True
                 entry.save()
                 updated_count += 1
-                Emails.send_waitlist_granted(email=entry.email) # Sending an email
+                Emails.send_waitlist_granted(email=entry.email)
         self.message_user(request, f'{updated_count} entry(s) approved successfully.')
 
 

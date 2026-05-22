@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from core.admin.admin import custom_admin_view
+from core.auth.views.password_reset import BrandedPasswordResetView
 from core.billing.views.webhook import stripe_webhook
 from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.views import healthz, portal_or_404, robots_txt
@@ -35,7 +36,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     # Ensure namespace is 'core-web'  # Correct namespace
     # path('event/', include(('core.event.urls', 'core-event'), namespace='core-event')),
-    path('reset_password/',auth_views.PasswordResetView.as_view(template_name='authorization/password-reset.html'),name='reset_password'),
+    path('reset_password/', BrandedPasswordResetView.as_view(), name='reset_password'),
     path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name='authorization/password-reset-sent.html'),name='password_reset_done'),
     path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(template_name='authorization/password-reset-form.html'),name='password_reset_confirm'),
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'),name='password_reset_complete'),

@@ -1,9 +1,4 @@
-{#-
-  Single health-check card. Rendered by the index page loop and also
-  returned standalone by the per-card "Ping" button via
-  ``core-admin:admin_check_ping``. The wrapping #check-card-{name} is
-  the swap target for the JS handler.
--#}
+
 <div class="check-card check-card--{{ item.state.value }}" id="check-card-{{ name }}">
   <span class="check-card__dot" aria-hidden="true"></span>
   <div class="check-card__body">

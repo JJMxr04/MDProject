@@ -56,19 +56,12 @@ class TournamentSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        invited_players_data = validated_data.pop('invited_players', [])
-        players_data = validated_data.pop('players', [])
-        final_round_data = validated_data.pop('final_round', None)
-
-        tournament = Tournament.objects.create(**validated_data)
-
-        for invited_player_data in invited_players_data:
-            Invite.objects.create(tournament=tournament, **invited_player_data)
-
-        for player_data in players_data:
-            Player.objects.create(tournament=tournament, **player_data)
-
-        if final_round_data:
-            Round.objects.create(tournament=tournament, **final_round_data)
-
-        return tournament
+        # invited_players / players / final_round are read_only on this
+        # serializer (see ``invited_players = InviteSerializer(..., read_only=True)``
+        # above), so they're never present in validated_data. The previous
+        # loops popped them anyway and called ``Invite.objects.create(...)``
+        # with an undefined ``Invite`` symbol and a ``tournament`` kwarg
+        # the model doesn't accept — pure dead-and-broken code. If those
+        # fields ever become writable, use ``InvitedPlayer.objects.create_invited_player``
+        # so the tournament-invite email fires.
+        return Tournament.objects.create(**validated_data)

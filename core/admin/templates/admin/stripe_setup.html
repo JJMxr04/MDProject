@@ -99,7 +99,7 @@
   webhook endpoint pointing at this installation.
 </p>
 
-{# ---- Account / key status -------------------------------------------- #}
+
 <h2>Account status</h2>
 <div class="scard">
   {% if state.error %}
@@ -147,7 +147,7 @@
   </dl>
 </div>
 
-{# ---- Webhook connection re-check ------------------------------------ #}
+
 {% if connection %}
 <h2>Webhook connection</h2>
 <div class="scard">
@@ -218,7 +218,7 @@
 </div>
 {% endif %}
 
-{# ---- Existing endpoints ---------------------------------------------- #}
+
 {% if endpoints %}
 <h2>Current webhook endpoints in this Stripe account</h2>
 <div class="scard">
@@ -247,7 +247,7 @@
 </div>
 {% endif %}
 
-{# ---- Local dev guidance (replaces the create form on localhost) ----- #}
+
 {% if is_local %}
 <h2>Local development</h2>
 <div class="warn-box">
@@ -266,7 +266,7 @@
 </div>
 {% endif %}
 
-{# ---- Webhook create form --------------------------------------------- #}
+
 <h2>Create webhook endpoint</h2>
 
 {% if created %}
@@ -320,7 +320,7 @@
   </form>
 </div>
 
-{# ---- Subscribed events ----------------------------------------------- #}
+
 <h2>Events the new endpoint will subscribe to</h2>
 <div class="scard">
   <ul class="events">
@@ -335,7 +335,7 @@
   </p>
 </div>
 
-{# ---- Required capabilities ------------------------------------------ #}
+
 <h2>Capabilities Stripe must grant the key</h2>
 <div class="scard">
   <p class="help" style="margin-top:0">

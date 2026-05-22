@@ -68,7 +68,7 @@
         <div class="modal-ui__body">
             <p class="text-muted">Pick how you want to play. Both modes create 12 game slots over 7 days, including 1 Golden Game worth 2 points.</p>
 
-            {# ── Mode toggle ───────────────────────────────────── #}
+            
             <div class="cm-mode" role="tablist" aria-label="Match type">
                 <button type="button" class="cm-mode__option is-active" data-mode="public" role="tab" aria-selected="true">
                     <i class="bi bi-globe2" aria-hidden="true"></i>
@@ -86,7 +86,7 @@
                 </button>
             </div>
 
-            {# ── Friend picker (only shown in Private mode) ─────── #}
+            
             <div id="cmFriendSection" class="cm-friend-section" hidden>
                 {% if friends %}
                     <div class="field">
@@ -123,7 +123,7 @@
                 {% endif %}
             </div>
 
-            {# ── Preview ─────────────────────────────────────── #}
+            
             <div class="cm-preview" id="cmPreview"></div>
 
             <form method="POST" id="createMatchForm" action="{% url 'core-portal:portal-create-public-match' %}">
