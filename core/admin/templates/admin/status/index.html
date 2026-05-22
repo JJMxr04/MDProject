@@ -10,6 +10,19 @@
     font-size: 1rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: .04em; margin: 1.75rem 0 .65rem; color: #6b7280;
   }
+  .status-header {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem; margin-bottom: 0.5rem;
+  }
+  .status-header__meta { color: #6b7280; font-size: .82rem; }
+  .status-refresh-btn {
+    display: inline-flex; align-items: center; gap: .35rem;
+    padding: .4rem .85rem; border: 1px solid #cbd5e1; border-radius: 6px;
+    background: #fff; color: #1a1d24; font-size: .85rem; font-weight: 600;
+    cursor: pointer;
+  }
+  .status-refresh-btn:hover { background: #f1f5f9; }
+  .status-refresh-btn[disabled] { opacity: .6; cursor: progress; }
   .status-grid {
     display: grid; gap: .75rem;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -106,6 +119,14 @@
 
 {% block content %}
 <div class="status-shell">
+
+  <div class="status-header">
+    <span class="status-header__meta">All checks run fresh on each page load. Click refresh to re-check now.</span>
+    <button type="button" id="status-refresh-btn" class="status-refresh-btn"
+            onclick="this.disabled=true; this.textContent='Refreshing…'; window.location.reload();">
+      Refresh
+    </button>
+  </div>
 
   {# Worker banner — re-rendered every 10s by the poll below. The
      wrapping #worker-banner is the swap target; the partial returns
