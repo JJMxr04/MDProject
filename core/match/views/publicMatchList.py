@@ -92,13 +92,19 @@ def create_public_match_view(request):
 def public_match_detail_view(request, match_id):
     match = get_object_or_404(Match, id=match_id)
 
+    # If the viewer is already in the match, the actual pick UI lives on
+    # /portal/match/<id>/ (my_match_detail). We expose a link to it here
+    # instead of duplicating the 1000+ line pick modal.
+    is_player_in_match = (
+        request.user.is_authenticated
+        and (request.user == match.player_1 or request.user == match.player_2)
+    )
 
     context = {
         'match': match,
-
-
+        'is_player_in_match': is_player_in_match,
     }
-    
+
     return render(request, 'portal/match/public_match_detail.html', context)
 
 @require_POST

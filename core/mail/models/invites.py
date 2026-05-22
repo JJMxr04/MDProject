@@ -90,7 +90,10 @@ class InviteManager(AbstractManager):
             # May raise GoldenGameUnavailable — @transaction.atomic rolls
             # back the invite state above so the user can retry.
             Match.objects.create_match(player_1=invite.sender, player_2=invite.player)
+            # Notify both sides — the sender (their invite was accepted)
+            # and the accepter (they just joined a match).
             Emails.send_match_acceptance_confirmation(invite.sender, invite.player.username)
+            Emails.send_match_started_to_accepter(invite.player, invite.sender.username)
         if invite.type == 'tournament':
             from core.tournament.models import Tournament
             tournament = Tournament.objects.get(id=invite.obj_id)

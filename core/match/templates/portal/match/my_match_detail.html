@@ -160,6 +160,7 @@
     {% csrf_token %}
 </div>
 
+{{ available_events|json_script:"available-events-data" }}
 
 <div class="modal fade" id="pickModal" tabindex="-1" aria-labelledby="pickModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">

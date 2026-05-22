@@ -17,9 +17,12 @@
 
     </div>
 
-    <!-- Upload Button -->
     {% if is_player_in_match %}
-    <button class="upload-button" onclick="openUploadPopup()">Upload A Pick</button>
+    <a href="{% url 'core-portal:portal-my-match-detail' match.id %}"
+       class="upload-button"
+       style="display:inline-block; text-decoration:none;">
+        Go to My Match (Upload Picks)
+    </a>
     {% endif %}
 
     <!-- Match Information -->
