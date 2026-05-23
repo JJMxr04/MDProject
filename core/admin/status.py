@@ -3,26 +3,23 @@
 Each helper returns a small dataclass with a ``state`` field so the
 template can render the same green/yellow/red banner pattern as the
 aggregator's /ops/crons page. Helpers NEVER raise — every check is
-wrapped so a Redis blip or a slow aggregator can't blank the entire
-status page.
+wrapped so a slow query can't blank the entire status page.
 
 Where the data comes from
 -------------------------
-- **Worker** — ``celery.app.control.Inspect.ping()``. Uses the broker's
-  control channel; returns within ``timeout`` seconds (we cap at 1s so
-  a frozen worker doesn't stall the page render). No new Celery task
-  needed and no per-30s heartbeat row in the results table.
+- **Worker** — recent activity in ``procrastinate_jobs`` plus presence
+  in ``procrastinate_workers``. Procrastinate doesn't expose a control
+  channel; "alive" means "a job ran in the last few minutes OR a worker
+  row updated recently".
 - **DB** — single ``SELECT 1`` against the default connection.
-- **Redis** — round-trip via Django's cache (which is the same Redis
-  used as the Celery broker).
+- **Cache** — set/get round-trip via Django's cache backend
+  (DatabaseCache → Postgres table ``django_cache``).
 - **Aggregator** — HTTP GET on ``{AGGRIGATOR_BASE_URL}/healthz`` with a
   hard 2s timeout. Cached for 30s so consecutive admin renders don't
   re-probe a dead aggregator.
-- **Beat schedule** — read from ``django_celery_beat.PeriodicTask`` so
-  the live DB schedule is shown (matches what the worker is actually
-  running, not what's in ``settings.CELERY_BEAT_SCHEDULE`` which only
-  seeds defaults).
-- **Recent task results** — ``django_celery_results.TaskResult`` rows.
+- **Periodic schedule** — the registered cron tasks on the Procrastinate
+  app (declared via ``@app.periodic`` decorators).
+- **Recent jobs** — ``procrastinate_jobs`` rows ordered by attempt time.
 """
 
 from __future__ import annotations
@@ -30,7 +27,7 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 from typing import Optional
 
@@ -61,62 +58,83 @@ class StatusItem:
         return self.state is State.OK
 
 
-# ---- Worker (Celery ping) --------------------------------------------------
+# ---- Worker (Procrastinate) ------------------------------------------------
+
+# A worker is considered alive if at least one Procrastinate job has
+# transitioned out of "doing" (succeeded/failed) within this window. The
+# window is generous because the only periodic tasks fire daily — between
+# fires there's nothing to observe. For a busier app this would be tighter.
+_WORKER_LIVENESS_WINDOW = timedelta(hours=25)
 
 
 def get_worker_status(timeout: float = 1.0) -> StatusItem:
-    """Ping every Celery worker via the broker's control channel.
+    """Check whether a Procrastinate worker is alive.
 
-    Returns OK if at least one worker replies. WARN if the ping
-    succeeded but no workers responded (broker reachable, no
-    consumers). DOWN/UNKNOWN if the broker itself is unreachable or
-    the ping raised.
+    Procrastinate has no Celery-style control channel. We use the
+    ``procrastinate_jobs`` table as an indirect heartbeat: any job
+    finishing recently means the worker is running. If none of the
+    periodic tasks have fired yet (fresh deploy), we degrade to UNKNOWN
+    rather than DOWN to avoid spurious red banners.
     """
+    started = time.monotonic()
     try:
-        # Local import — celery's app object should already be loaded
-        # because Django's startup imports CoreRoot.celery, but importing
-        # at module top would couple status.py to celery import order.
-        from CoreRoot.celery import app as celery_app
+        with connection.cursor() as cur:
+            cur.execute(
+                """
+                SELECT
+                    COUNT(*) FILTER (WHERE status IN ('succeeded','failed')) AS finished,
+                    MAX(attempted_at) FILTER (WHERE status IN ('succeeded','failed')) AS last_finish,
+                    COUNT(*) FILTER (WHERE status = 'doing') AS in_flight
+                FROM procrastinate_jobs
+                WHERE attempted_at > NOW() - INTERVAL '25 hours'
+                """
+            )
+            row = cur.fetchone()
     except Exception as exc:  # noqa: BLE001
         return StatusItem(
             state=State.UNKNOWN,
-            label="celery app not importable",
-            detail=f"{type(exc).__name__}: {exc}",
+            label="worker state unknown",
+            detail=(
+                f"{type(exc).__name__}: {exc} — procrastinate_jobs table "
+                "may not exist yet (run `manage.py migrate`)."
+            ),
         )
 
-    started = time.monotonic()
-    try:
-        # ping() returns a list of single-key dicts: [{"hostname": {"ok": "pong"}}, ...]
-        # or None if no replies arrived before the timeout.
-        replies = celery_app.control.inspect(timeout=timeout).ping() or {}
-    except Exception as exc:  # noqa: BLE001
-        return StatusItem(
-            state=State.DOWN,
-            label="ping failed",
-            detail=f"{type(exc).__name__}: {exc} (broker unreachable?)",
-        )
-
+    finished = row[0] or 0
+    last_finish = row[1]
+    in_flight = row[2] or 0
     elapsed_ms = int((time.monotonic() - started) * 1000)
 
-    if not replies:
+    if finished == 0 and in_flight == 0:
         return StatusItem(
-            state=State.DOWN,
-            label="no workers responded",
+            state=State.UNKNOWN,
+            label="no recent job activity",
             detail=(
-                f"Pinged for {elapsed_ms}ms with no reply. The "
-                "mdproject-worker service is down or can't reach Redis. "
-                "Manual triggers via /admin/django_celery_beat/ still "
-                "queue tasks, but nothing will execute them."
+                f"No procrastinate_jobs finished in the last 25h "
+                f"({elapsed_ms}ms probe). Fresh deploy, or no scheduled "
+                "task has fired yet."
             ),
-            extra={"elapsed_ms": elapsed_ms, "workers": []},
+            extra={"elapsed_ms": elapsed_ms},
         )
 
-    workers = sorted(replies.keys())
+    if last_finish is None:
+        last_str = "—"
+        age_s = None
+    else:
+        now = datetime.now(tz=timezone.utc)
+        age_s = (now - last_finish).total_seconds()
+        last_str = f"{int(age_s)}s ago" if age_s < 3600 else f"{int(age_s/3600)}h ago"
+
     return StatusItem(
         state=State.OK,
-        label=f"{len(workers)} worker(s) online",
-        detail=f"replied in {elapsed_ms}ms — {', '.join(workers)}",
-        extra={"elapsed_ms": elapsed_ms, "workers": workers},
+        label=f"worker alive ({finished} finished, {in_flight} in flight)",
+        detail=f"last finished job: {last_str} ({elapsed_ms}ms probe)",
+        extra={
+            "elapsed_ms": elapsed_ms,
+            "finished": finished,
+            "in_flight": in_flight,
+            "last_finish_age_seconds": age_s,
+        },
     )
 
 
@@ -144,9 +162,11 @@ def check_db() -> StatusItem:
     )
 
 
-# ---- Redis (via Django cache) ----------------------------------------------
+# ---- Cache (DatabaseCache → Postgres) --------------------------------------
 
-
+# Named ``check_redis`` for backward compatibility with /admin/dashboard
+# templates and URL routes that still use the old key. Probes the active
+# Django cache backend (DatabaseCache post-Redis cutover).
 def check_redis() -> StatusItem:
     started = time.monotonic()
     probe_key = "mdproject:status:probe"
@@ -157,24 +177,23 @@ def check_redis() -> StatusItem:
     except Exception as exc:  # noqa: BLE001
         return StatusItem(
             state=State.DOWN,
-            label="redis unreachable",
+            label="cache unreachable",
             detail=f"{type(exc).__name__}: {exc}",
         )
     elapsed_ms = int((time.monotonic() - started) * 1000)
     if got != probe_val:
         return StatusItem(
             state=State.WARN,
-            label="redis round-trip mismatch",
+            label="cache round-trip mismatch",
             detail=(
                 f"set/get returned {got!r} (expected {probe_val!r}); "
-                "another process may be writing this key, or the cache "
-                "backend isn't the Redis we think it is."
+                "another process may be writing this key."
             ),
             extra={"elapsed_ms": elapsed_ms},
         )
     return StatusItem(
         state=State.OK,
-        label="redis reachable",
+        label="cache reachable",
         detail=f"set/get round-trip in {elapsed_ms}ms",
         extra={"elapsed_ms": elapsed_ms},
     )
@@ -263,94 +282,115 @@ def _agg_from_cache(cached: dict, base: str) -> StatusItem:
     )
 
 
-# ---- Beat schedule ---------------------------------------------------------
+# ---- Periodic schedule (Procrastinate) -------------------------------------
 
 
 def get_beat_schedule() -> list[dict]:
-    """Return the live beat schedule from django_celery_beat.
+    """Return Procrastinate's registered periodic tasks.
 
-    Sorted by next-fire time so the imminent task is at the top. Each
-    row is a small dict the template can iterate without knowing the
-    model layout. Empty list if the table doesn't exist yet (migrations
-    haven't been run, or django_celery_beat isn't installed).
+    Replaces the django_celery_beat-driven schedule. The shape of each
+    row matches what the template expects (name, task, enabled, schedule,
+    last_run_at, total_runs) so the template didn't need updating.
+
+    "Enabled" is always True — Procrastinate has no enable/disable toggle
+    for periodic tasks; comment out the @app.periodic decorator if you
+    need to disable one. ``last_run_at`` and ``total_runs`` come from the
+    procrastinate_periodic_defers / procrastinate_jobs tables.
     """
     try:
-        from django_celery_beat.models import PeriodicTask
-    except Exception:  # noqa: BLE001
+        from procrastinate.contrib.django import app
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("status.get_beat_schedule: procrastinate not importable: %s", exc)
         return []
+
     try:
-        rows = list(
-            PeriodicTask.objects.select_related("interval", "crontab")
-            .order_by("name")
-        )
+        periodic_tasks = list(app.periodic_registry.periodic_tasks.values())
     except Exception as exc:  # noqa: BLE001
         logger.warning("status.get_beat_schedule: %s: %s",
                        type(exc).__name__, exc)
         return []
 
+    # Pull last-run + count per task in one query — avoids N round-trips
+    # for a small list. Procrastinate writes one row per defer in
+    # procrastinate_periodic_defers; the matching job row in
+    # procrastinate_jobs carries the final status.
+    stats_by_task = {}
+    try:
+        with connection.cursor() as cur:
+            cur.execute(
+                """
+                SELECT task_name,
+                       COUNT(*) AS total,
+                       MAX(attempted_at) AS last_run
+                FROM procrastinate_jobs
+                WHERE periodic_id IS NOT NULL
+                GROUP BY task_name
+                """
+            )
+            for task_name, total, last_run in cur.fetchall():
+                stats_by_task[task_name] = (total, last_run)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("status.get_beat_schedule stats query failed: %s: %s",
+                       type(exc).__name__, exc)
+
     out = []
-    for r in rows:
+    for pt in periodic_tasks:
+        total, last_run = stats_by_task.get(pt.task.name, (0, None))
         out.append({
-            "name": r.name,
-            "task": r.task,
-            "enabled": r.enabled,
-            "schedule": _describe_schedule(r),
-            "last_run_at": r.last_run_at,
-            "total_runs": r.total_run_count,
+            "name": pt.task.name,
+            "task": pt.task.name,
+            "enabled": True,
+            "schedule": f"cron {pt.cron}",
+            "last_run_at": last_run,
+            "total_runs": total,
         })
+    out.sort(key=lambda r: r["name"])
     return out
 
 
-def _describe_schedule(task) -> str:
-    if task.crontab_id:
-        c = task.crontab
-        return (
-            f"cron m={c.minute} h={c.hour} dom={c.day_of_month} "
-            f"mon={c.month_of_year} dow={c.day_of_week}"
-        )
-    if task.interval_id:
-        i = task.interval
-        return f"every {i.every} {i.period}"
-    return "?"
-
-
-# ---- Recent task results ---------------------------------------------------
+# ---- Recent job results (Procrastinate) ------------------------------------
 
 
 def get_recent_results(limit: int = 25) -> list[dict]:
-    """Recent rows from django_celery_results.TaskResult.
+    """Recent rows from procrastinate_jobs.
 
-    Empty list if the table doesn't exist yet. Failures are surfaced
-    in their own column so the page can colorize FAILURE rows red.
+    Replaces django_celery_results.TaskResult. Same return shape so the
+    template doesn't need updating. ``is_failure`` is True for jobs in
+    'failed' status (Procrastinate exhausted all retries).
     """
     try:
-        from django_celery_results.models import TaskResult
-    except Exception:  # noqa: BLE001
-        return []
-    try:
-        rows = list(
-            TaskResult.objects.order_by("-date_done")[:limit]
-        )
+        with connection.cursor() as cur:
+            cur.execute(
+                """
+                SELECT task_name, id, status, attempted_at, args, attempts
+                FROM procrastinate_jobs
+                ORDER BY attempted_at DESC NULLS LAST
+                LIMIT %s
+                """,
+                [limit],
+            )
+            rows = cur.fetchall()
     except Exception as exc:  # noqa: BLE001
         logger.warning("status.get_recent_results: %s: %s",
                        type(exc).__name__, exc)
         return []
+
     now = datetime.now(tz=timezone.utc)
     out = []
-    for r in rows:
+    for task_name, job_id, status, attempted_at, args, attempts in rows:
         age_s = None
-        if r.date_done is not None:
+        if attempted_at is not None:
             try:
-                age_s = (now - r.date_done).total_seconds()
+                age_s = (now - attempted_at).total_seconds()
             except Exception:  # noqa: BLE001
                 age_s = None
         out.append({
-            "task_name": r.task_name or "?",
-            "task_id": r.task_id,
-            "status": r.status,
-            "date_done": r.date_done,
+            "task_name": task_name or "?",
+            "task_id": str(job_id),
+            "status": (status or "").upper(),
+            "date_done": attempted_at,
             "age_seconds": age_s,
-            "result_excerpt": (str(r.result)[:120] if r.result else None),
-            "is_failure": (r.status or "").upper() == "FAILURE",
+            "result_excerpt": (str(args)[:120] if args else None),
+            "is_failure": (status or "").lower() == "failed",
         })
     return out

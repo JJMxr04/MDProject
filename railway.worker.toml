@@ -1,5 +1,5 @@
-## Railway service config for `mdproject-worker` (the Celery worker +
-## embedded beat scheduler).
+## Railway service config for `mdproject-worker` (the Procrastinate
+## worker — task execution + in-process periodic scheduler).
 ##
 ## Used INSTEAD of the default `railway.toml` — point the worker
 ## service's **Config Path** at `railway.worker.toml` in its Settings
@@ -19,14 +19,15 @@
 ##   forever.
 ## - Restart policy is ALWAYS, not ON_FAILURE — if the worker exits
 ##   cleanly (e.g. graceful shutdown on a deploy), we still want it
-##   back up. Without ALWAYS, a clean shutdown would leave the beat
-##   schedule dead until the next manual redeploy.
+##   back up. Without ALWAYS, a clean shutdown would leave the schedule
+##   dead until the next manual redeploy.
 ##
-## ⚠️ Single-replica only. The entrypoint runs `celery worker -B`
-## (embedded beat). Two replicas would mean two beat schedulers,
-## which would double-fire every cron in CELERY_BEAT_SCHEDULE.
-## If you ever need to scale workers, split beat into its own
-## service first (see docker-entrypoint.sh comments).
+## Procrastinate uses Postgres LISTEN/NOTIFY for job delivery, so the
+## worker holds one persistent Postgres connection while idle (no
+## polling, no Redis). The periodic schedule lives in-process; scaling
+## to multiple replicas is safe (they cooperate via row-level locks on
+## the procrastinate_periodic_defers table) but unnecessary at this
+## app's volume.
 
 [build]
 builder = "DOCKERFILE"
@@ -40,9 +41,8 @@ dockerfilePath = "Dockerfile"
 startCommand = "/app/docker-entrypoint.sh worker"
 
 ## No healthcheckPath — worker has no HTTP listener. Liveness is
-## visible via the `core_crons.CronTask`+`django_celery_results.TaskResult`
-## tables in admin, and (once the status page lands) the worker banner
-## on /admin/status/.
+## visible via the /admin/status/ dashboard, which reads recent rows
+## from the procrastinate_jobs table.
 
 restartPolicyType = "ALWAYS"
 restartPolicyMaxRetries = 10

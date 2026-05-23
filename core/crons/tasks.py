@@ -1,13 +1,18 @@
-"""Celery tasks (post-aggregator cutover).
+"""Procrastinate tasks (post-Celery cutover).
 
 Event ingestion, odds refresh, and settlement moved to the aggregator service
 (see ``aggrigator-plan/plan/plan.md`` §7.1). This module now only carries the
 match/tournament tasks MDProject still owns.
 
-Removed in the cutover:
+Removed in the aggregator cutover:
 - ``event_cron`` / ``live_events_cron``  → aggregator's ``ingest_due_leagues``
 - ``warm_upcoming_odds_cron``            → aggregator on-demand refresh
 - ``settle_pending_cron``                → aggregator nightly backfill
+
+Removed in the Procrastinate cutover:
+- Celery imports + ``@shared_task`` decorators.
+- ``CELERY_BEAT_SCHEDULE`` in settings — schedules now live next to each
+  task via ``@app.periodic(cron=...)``.
 
 The legacy SGO ingestion modules (``core.event.sportsgameodds``,
 ``core.event.crons.eventUpdate``, ``core.event.odds.sgo_*``,
@@ -19,7 +24,7 @@ from __future__ import annotations
 
 import logging
 
-from celery import shared_task
+from procrastinate.contrib.django import app
 
 from core.match.crons.matchUpdate import MatchCron
 from core.tournament.crons.BracketMaker import BracketMaker
@@ -33,16 +38,23 @@ tournament2DayReminder = Tournament2DayReminder()
 bracketMaker = BracketMaker()
 
 
-@shared_task
-def complete_matches_cron():
+# All three crons fire at midnight America/New_York. Procrastinate's @periodic
+# is in UTC by default; PROCRASTINATE_TIMEZONE in settings shifts that. The
+# cron expression "0 0 * * *" matches the previous Celery schedule (daily @
+# 00:00 NY time). `pass_context=False` because none of these need job metadata.
+@app.periodic(cron="0 0 * * *")
+@app.task(name="core.crons.complete_matches_cron", queue="default")
+def complete_matches_cron(timestamp: int):
     matchCron.completeMatches()
 
 
-@shared_task
-def tournament_cron_bracketMaker():
+@app.periodic(cron="0 0 * * *")
+@app.task(name="core.crons.tournament_cron_bracketMaker", queue="default")
+def tournament_cron_bracketMaker(timestamp: int):
     bracketMaker.create_brackets()
 
 
-@shared_task
-def tournament_cron_2_day_reminder():
+@app.periodic(cron="0 0 * * *")
+@app.task(name="core.crons.tournament_cron_2_day_reminder", queue="default")
+def tournament_cron_2_day_reminder(timestamp: int):
     tournament2DayReminder.get_tournments_send_player_email()

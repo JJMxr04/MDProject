@@ -15,7 +15,6 @@ import os
 from dotenv import load_dotenv
 from datetime import timedelta
 import dj_database_url
-from celery.schedules import crontab
 from django.core.exceptions import ImproperlyConfigured
 
 def get_token_serializer():
@@ -115,8 +114,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    "django_celery_results",  # This was in the first list only
-    "django_celery_beat",     # This was in the first list only
+    "django_celery_results",  # Dead post-Procrastinate cutover; kept so old core_crons migrations replay on fresh DBs.
+    "django_celery_beat",     # Dead post-Procrastinate cutover; kept for the same reason.
+    "procrastinate.contrib.django",
     "storages",
     "anymail",
     'crispy_forms',
@@ -398,69 +398,22 @@ LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-# Use the django-celery-beat DB-backed scheduler so tasks are editable from
-# /admin/django_celery_beat/periodictask/. The CELERY_BEAT_SCHEDULE dict
-# below still acts as the source-of-truth defaults — a data migration in
-# core.crons seeds them into the DB once.
-CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-
-# Build Redis DB-specific URLs from REDIS_URL.
-#
-# Previous version used f"{os.environ.get('REDIS_URL')}/0" — if REDIS_URL
-# was unset that produced the literal string "None/0", which Celery
-# treats as malformed and silently falls back to ``redis://localhost:6379/0``.
-# That's what the worker log was showing ("broker=redis://localhost:6379/0")
-# despite REDIS_URL being set on the web service: the env var was missing
-# on the *worker* service. New code below loudly errors when REDIS_URL is
-# absent in production AND tolerates a trailing slash on the provider URL.
-def _redis_db_url(db: int) -> str:
-    raw = os.environ.get("REDIS_URL")
-    if not raw:
-        if DEBUG:
-            return f"redis://localhost:6379/{db}"
-        raise ImproperlyConfigured(
-            "REDIS_URL is required in production. Set it on every service "
-            "that uses Celery or django-redis (web AND worker). Format: "
-            "redis://host:6379 or rediss://host:6379 — the /<db> suffix "
-            "is appended automatically."
-        )
-    # Strip an existing /<db> if the provider's URL already includes one
-    # (Railway/Upstash usually don't, but a hand-written value might) and
-    # strip a trailing slash so we don't end up with "host:6379//0".
-    base = raw.rstrip("/")
-    # If the URL ends in "/<digit>" treat that as their chosen DB and
-    # replace it. Otherwise just append.
-    last_slash = base.rfind("/")
-    last_seg = base[last_slash + 1:] if last_slash > base.find("//") + 1 else ""
-    if last_seg.isdigit():
-        base = base[:last_slash]
-    return f"{base}/{db}"
-
-
-CELERY_BROKER_URL = _redis_db_url(0)
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'America/New_York'
-CELERY_RESULT_EXTENDED = True
-CELERY_BROKER_USE_SSL = {"ssl_cert_reqs": "required"}
-broker_connection_retry_on_startup = True
+# Procrastinate config. The worker process is started by
+# `python manage.py procrastinate worker`. It uses the same Postgres
+# connection as Django (DATABASES['default']) via procrastinate.contrib.django.
+# Periodic tasks are declared with @app.periodic(cron=...) decorators on
+# the task functions themselves; there's no central schedule dict.
+PROCRASTINATE_TIMEZONE = "America/New_York"
 
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        # Managed Redis (Upstash / Railway / Redis Cloud free tiers) only
-        # supports DB 0, so we share it with the Celery broker and namespace
-        # cache keys with KEY_PREFIX to avoid collision.
-        "LOCATION": _redis_db_url(0),
+        # DatabaseCache: stores cache entries in Postgres (django_cache table).
+        # Created by `python manage.py createcachetable` (runs in the
+        # entrypoint). Throughput is ~100 ops/day on this app, so this is
+        # invisible on the DB.
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache",
         "KEY_PREFIX": "mdproject_cache",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            'SOCKET_CONNECT_TIMEOUT': 5,
-            'SOCKET_TIMEOUT': 5,
-            "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": "required"},
-        },
     },
     # Per-worker in-process cache. Zero network — for hot reference data
     # that's read on nearly every request and changes rarely (sports,
@@ -478,37 +431,6 @@ CACHES = {
             "CULL_FREQUENCY": 3,
         },
     },
-}
-
-
-
-
-CELERY_BEAT_SCHEDULE = {
-    'backend_cleanup': {
-        'task': 'celery.backend_cleanup',
-        'schedule': crontab(minute=0, hour=0, day_of_month=1),  # Runs at midnight on the 1st of every month
-    },
-    'complete_matches_cron': {
-        'task': 'core.crons.tasks.complete_matches_cron',
-        'schedule': crontab(minute=0, hour=0),  # every day at midnight
-    },
-    'tournament_cron_bracketMaker': {
-        'task': 'core.crons.tasks.tournament_cron_bracketMaker',
-        'schedule': crontab(hour=0, minute=0),  # every day at midnight
-    },
-    'tournament_cron_2_day_reminder': {
-        'task': 'core.crons.tasks.tournament_cron_2_day_reminder',
-        'schedule': crontab(minute=0, hour=0),  # every Monday at 9 AM
-    },
-    # event_cron / settle_pending_cron / warm_upcoming_odds_cron were removed
-    # as part of the aggregator cutover (plan §7.1). Event ingestion, odds
-    # refresh, and settlement now live in the aggregator service; MDProject
-    # receives final state via /sportgameodds/webhook.
-    #
-    # print_cron_jobs (a 5-min "is beat alive" log line) was removed in
-    # favor of the live worker banner on /admin/status/, which uses
-    # ``celery.app.control.Inspect.ping()`` — same signal, no extra
-    # task firing every 5 min and no rows in django_celery_results.
 }
 
 

@@ -1,10 +1,12 @@
 # Local prod-like stack for MDProject. Mirrors what Coolify will deploy
-# (Django + postgres + redis) so behavior parity is testable before
-# pushing.
+# (Django + postgres) so behavior parity is testable before pushing.
 #
 # Coolify itself doesn't read this file — it builds the Dockerfile per
 # Application. But you can `docker compose up` here to validate the same
 # image runs end-to-end before deploying.
+#
+# Redis was removed in the Procrastinate cutover — task queue, periodic
+# schedule, and cache all live in Postgres now.
 #
 # Aggregator is intentionally NOT in this compose file: in production
 # it's a separate Coolify Application. Locally point ``AGGRIGATOR_BASE_URL``
@@ -28,27 +30,15 @@ services:
       timeout: 3s
       retries: 10
 
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6381:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-
   web:
     build: .
     depends_on:
       postgres: { condition: service_healthy }
-      redis:    { condition: service_healthy }
     environment:
       DEBUG: "False"
       SECRET_KEY: change-me-locally-but-real-in-prod
       ALLOWED_HOSTS: localhost,127.0.0.1,0.0.0.0,web
       DATABASE_URL: postgres://mdproject:mdproject@postgres:5432/mdproject
-      REDIS_URL: redis://redis:6379
       USE_AGGRIGATOR: "True"
       # Use host.docker.internal to reach the aggregator running in its
       # own compose stack on the host. In Coolify, swap this for the

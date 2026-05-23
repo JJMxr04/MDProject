@@ -50,8 +50,9 @@ def availability_view(request):
 
 
 def _safe_cache_get(key, default=None):
-    """``cache.get`` that swallows Redis-side blowups. Without it, a
-    misconfigured REDIS_URL turns this page into a 500 instead of just
+    """``cache.get`` that swallows backend blowups. Without it, a
+    cache outage (e.g. transient Postgres connection error against the
+    django_cache table) turns this page into a 500 instead of just
     silently missing the cache."""
     try:
         return cache.get(key, default)

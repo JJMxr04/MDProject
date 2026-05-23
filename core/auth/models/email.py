@@ -6,13 +6,13 @@ from core.mail.tasks import send_email
 
 
 def send_activation_email(user, request=None):
-    """Enqueue the email-confirmation message via Celery.
+    """Enqueue the email-confirmation message via Procrastinate.
 
     Was previously a synchronous EmailMultiAlternatives().send() that
     hardcoded from_email=os.environ.get('EMAIL_HOST_USER'). That env var
     was retired when the project moved to Resend over HTTPS, so the
     sync send started failing silently. Now it routes through the same
-    Celery task every other email uses — picks up the Anymail backend,
+    task every other email uses — picks up the Anymail backend,
     DEFAULT_FROM_EMAIL, retries, logging, and the email/_base.html
     chrome injection.
     """
@@ -26,11 +26,11 @@ def send_activation_email(user, request=None):
         # Fallback for any caller without a request (e.g. mgmt commands).
         activation_link = f"{settings.SITE_URL.rstrip('/')}{url}"
 
-    send_email.delay(
-        'Please confirm your registration.',
-        user.email,
-        'activation_email/activation.html',
-        {
+    send_email.defer(
+        subject='Please confirm your registration.',
+        recipient=user.email,
+        template_path='activation_email/activation.html',
+        context={
             'activation_link': activation_link,
             'username': getattr(user, 'username', '') or '',
         },

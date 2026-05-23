@@ -20,7 +20,7 @@ from core.admin.status import (
 CHECK_REGISTRY = {
     "postgres":   (check_db,           "Postgres",
                    "admin/status/_check_card.html", "item"),
-    "redis":      (check_redis,        "Redis (cache + broker)",
+    "redis":      (check_redis,        "Cache (Postgres)",
                    "admin/status/_check_card.html", "item"),
     "aggregator": (check_aggregator,   "Aggregator",
                    "admin/status/_check_card.html", "item"),
@@ -50,7 +50,7 @@ def status_page(request):
     """
     health_checks = [
         ("postgres",   "Postgres",                check_db()),
-        ("redis",      "Redis (cache + broker)",  check_redis()),
+        ("redis",      "Cache (Postgres)",  check_redis()),
         ("aggregator", "Aggregator",              check_aggregator()),
     ]
     context = dict(
@@ -182,8 +182,8 @@ def redis_ping_partial(request):
 
 @staff_member_required
 def worker_ping_partial(request):
-    """HTML partial — fresh Celery worker ping. Bound to the Dashboard's
-    worker 'Ping Now' button.
+    """HTML partial — fresh Procrastinate worker liveness probe. Bound
+    to the Dashboard's worker 'Ping Now' button.
     """
     from django.utils import timezone
     context = {

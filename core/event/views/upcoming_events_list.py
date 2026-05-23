@@ -129,12 +129,13 @@ def upcoming_events_list(request):
 
 
 def _safe_cache_get(key):
-    """``cache.get`` that swallows Redis-side blowups.
+    """``cache.get`` that swallows cache-backend blowups.
 
-    We hit this on every render. Without the swallow, a misconfigured
-    REDIS_URL turns every portal request into a 500 — the page is
-    perfectly renderable from a fresh aggregator call, but the cache
-    layer crashes the view before we get there.
+    We hit this on every render. Without the swallow, a transient
+    Postgres outage against the django_cache table turns every portal
+    request into a 500 — the page is perfectly renderable from a fresh
+    aggregator call, but the cache layer crashes the view before we get
+    there.
     """
     try:
         return cache.get(key)
