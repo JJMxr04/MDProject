@@ -17,7 +17,7 @@ import logging
 from datetime import datetime, time, timedelta
 
 from django.contrib.auth.decorators import login_required
-from django.core.cache import cache
+from django.core.cache import cache, caches
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.dateparse import parse_date
@@ -177,10 +177,25 @@ def _fetch_or_cached(
     return None, False
 
 
+_LOCAL_CACHE = caches["local"]
+
+
 def _sports_dropdown() -> list[dict]:
-    """Aggregator's /v1/sports list, cached aggressively. Cheap; rarely changes."""
+    """Aggregator's /v1/sports list, tiered cache.
+
+    L1: per-worker in-process LocMem (60s) — zero network, ~no cost
+        on cache hit. Worker-local, so writes propagate via natural
+        expiry, not invalidation.
+    L2: Upstash Redis (300s) — shared across workers, cross-region
+        round-trip cost.
+    L3: aggregator HTTP — fetch on cold miss.
+    """
+    cached = _LOCAL_CACHE.get("sports:dropdown")
+    if cached is not None:
+        return cached
     cached = _safe_cache_get("portal:sports:dropdown")
     if cached is not None:
+        _LOCAL_CACHE.set("sports:dropdown", cached, 60)
         return cached
     try:
         sports = AggrigatorClient().get_sports() or []
@@ -188,6 +203,7 @@ def _sports_dropdown() -> list[dict]:
         logger.warning("sports dropdown fetch failed (non-fatal): %s", exc)
         sports = []
     _safe_cache_set("portal:sports:dropdown", sports, 300)
+    _LOCAL_CACHE.set("sports:dropdown", sports, 60)
     return sports
 
 

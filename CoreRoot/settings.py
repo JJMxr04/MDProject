@@ -203,14 +203,35 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# conn_max_age keeps Postgres connections alive for 60s instead of opening a
-# fresh socket on every request — basic connection pooling.
+# Postgres lives on Neon (off-Railway), so every fresh connection pays a
+# ~30ms transcontinental TLS handshake. Two layers of pooling mitigate
+# that:
+#   1. dj_database_url(conn_max_age=600) — each gunicorn / celery worker
+#      keeps its PG connection warm for 10min between requests instead of
+#      reconnecting every 60s.
+#   2. CONN_HEALTH_CHECKS=True (Django 4.1+) — pings the connection
+#      before each request and reconnects on dead-conn errors. Without
+#      it, Neon idle-timing a pooled connection causes the next request
+#      to 500 instead of transparently retrying.
+#
+# DISABLE_SERVER_SIDE_CURSORS is required when the DATABASE_URL points at
+# Neon's PgBouncer-pooled endpoint (transaction mode) — named server-side
+# cursors break under transaction pooling because the named cursor lives
+# in a different physical connection than the next FETCH.
+#
+# IMPORTANT: DATABASE_URL on Railway should point at Neon's *pooled*
+# hostname (the one with "-pooler" in it, e.g.
+# ep-cool-name-12345-pooler.us-east-2.aws.neon.tech), NOT the direct
+# endpoint. Pooled = up to 10k connections multiplexed; direct = 1
+# physical connection per client, which exhausts under any real traffic.
 DATABASES = {
     'default': dj_database_url.config(
         default=f"{os.environ.get('DATABASE_URL')}",
-        conn_max_age=60,
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
+DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 
 DATABASES['default']['TEST'] = {
     'SERIALIZE': True,
@@ -440,7 +461,23 @@ CACHES = {
             'SOCKET_TIMEOUT': 5,
             "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": "required"},
         },
-    }
+    },
+    # Per-worker in-process cache. Zero network — for hot reference data
+    # that's read on nearly every request and changes rarely (sports,
+    # leagues, sports-dropdown contents, market type lists, etc.).
+    # Trade-off: each gunicorn worker has its own copy, so a write isn't
+    # visible to other workers until their TTL expires. Use ONLY for
+    # data where eventual consistency on the order of minutes is fine.
+    # Read with: cache.cache["local"].get(...) / set(...).
+    "local": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "mdproject-local",
+        "TIMEOUT": 300,
+        "OPTIONS": {
+            "MAX_ENTRIES": 5000,
+            "CULL_FREQUENCY": 3,
+        },
+    },
 }
 
 

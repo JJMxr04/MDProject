@@ -34,7 +34,20 @@ from core.match.decorators import player_in_match_required, player_in_game_requi
 @login_required(login_url='/auth/login/')
 @player_in_match_required
 def my_match_detail_view(request, match_id):
-    match = get_object_or_404(Match, id=match_id)
+    # select_related on the Match's FKs — template + decorator both touch
+    # player_1/player_2/winner/tiebreaker.golden_game.{owner,player_2}.
+    # Without this, each {{ match.player_2.username }} access in the
+    # template is one round-trip to Neon.
+    match = get_object_or_404(
+        Match.objects
+            .select_related(
+                "player_1", "player_2", "winner",
+                "tiebreaker", "tiebreaker__golden_game",
+                "tiebreaker__golden_game__owner",
+                "tiebreaker__golden_game__player_2",
+            ),
+        id=match_id,
+    )
     is_player_in_match = match.player_2 is not None and request.user.id in [
         match.player_1.id,
         match.player_2.id,
@@ -46,9 +59,23 @@ def my_match_detail_view(request, match_id):
     from core.match.views.available_events import build_available_events
     events_ser = build_available_events(match)
 
-    player_1_games = list(match.regular_games_for(match.player_1)) if match.player_1 else []
+    # Each game card in _game_card.html dereferences game.event.{league,
+    # sport, home_team, away_team}, game.bet.{owner_outcome,
+    # player_2_outcome}, plus game.owner / game.player_2. Without
+    # select_related this is ~7 queries per card × 10 cards = ~70 queries.
+    games_qs = match.games.select_related(
+        "event", "event__league", "event__sport",
+        "event__home_team", "event__away_team",
+        "bet", "bet__owner_outcome", "bet__player_2_outcome",
+        "owner", "player_2",
+    )
+    player_1_games = (
+        list(games_qs.filter(owner=match.player_1, is_golden=False).order_by("slot"))
+        if match.player_1 else []
+    )
     player_2_games = (
-        list(match.regular_games_for(match.player_2)) if match.player_2 else []
+        list(games_qs.filter(owner=match.player_2, is_golden=False).order_by("slot"))
+        if match.player_2 else []
     )
 
     context = {

@@ -9,17 +9,61 @@ implements the same surface as the legacy ``SportsGameOddsClient`` so the
 The aggregator's read endpoints are public — set ``AGGRIGATOR_BASE_URL`` in
 MDProject settings and that's all the client needs. HMAC-signed webhook
 delivery uses ``AGGRIGATOR_WEBHOOK_SECRET`` separately on the receive path.
+
+Conditional GETs (ETag / If-None-Match) — see ``_get`` for the flow. The
+aggregator emits ``Cache-Control`` + ``ETag`` on read endpoints; we cache
+the (etag, body) pair in Django's cache and replay the etag on the next
+request. A 304 returns the cached body without re-parsing JSON.
 """
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import os
+import re
 from typing import Iterator
+from urllib.parse import urlencode
 
 import requests
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
+
+
+# Default cache TTL when the upstream response omits Cache-Control or we
+# can't parse a max-age. Long enough to amortize the round-trip, short
+# enough that staleness windows never exceed the existing per-endpoint
+# 30-600s settings on the aggregator side.
+_DEFAULT_CACHE_TTL = 60
+
+# Cap stored cache TTL even when the server says "max-age=86400" or
+# similar — defensive against misconfiguration on the aggregator side.
+_MAX_CACHE_TTL = 60 * 60
+
+_CACHE_VERSION = "v1"
+_MAX_AGE_RE = re.compile(r"max-age\s*=\s*(\d+)", re.IGNORECASE)
+
+
+def _parse_max_age(cache_control_header: str | None) -> int | None:
+    if not cache_control_header:
+        return None
+    match = _MAX_AGE_RE.search(cache_control_header)
+    if not match:
+        return None
+    try:
+        return int(match.group(1))
+    except (TypeError, ValueError):
+        return None
+
+
+def _cache_key(method: str, url: str, params: dict) -> str:
+    # Stable, length-bounded key — Django's Redis backend doesn't like
+    # giant keys, and Memcached caps at 250 bytes. Hash the URL+params
+    # so the key is constant-length regardless of payload.
+    canonical = f"{method} {url}?{urlencode(sorted(params.items()))}"
+    digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:32]
+    return f"aggrigator:{_CACHE_VERSION}:cond:{digest}"
 
 
 class AggrigatorError(Exception):
@@ -100,16 +144,97 @@ class AggrigatorClient:
     # ---- transport --------------------------------------------------------
 
     def _get(self, path: str, params: dict | None = None):
+        """GET with ETag conditional-request handling.
+
+        Flow:
+          1. Build a stable cache key from URL+params.
+          2. Look up any cached (etag, body) pair from a prior 200.
+          3. If present, send ``If-None-Match: <etag>``.
+          4. If the server responds 304, return the cached body —
+             no JSON parse, no payload transfer.
+          5. On 200, parse JSON, cache (etag, body) with TTL from
+             ``Cache-Control: max-age=N`` (fallback: _DEFAULT_CACHE_TTL).
+
+        The cache lookup is best-effort: a Redis blip just bypasses
+        the optimization without erroring the request.
+        """
         url = f"{self.base_url}{path}"
         clean = {k: v for k, v in (params or {}).items() if v is not None}
+
+        cache_key = _cache_key("GET", url, clean)
+        cached = _safe_cache_get(cache_key)
+        headers: dict[str, str] = {}
+        if cached and isinstance(cached, dict) and "etag" in cached:
+            headers["If-None-Match"] = cached["etag"]
+
         try:
-            resp = self.session.get(url, params=clean, timeout=self.timeout)
+            resp = self.session.get(
+                url, params=clean, headers=headers, timeout=self.timeout,
+            )
         except requests.RequestException as exc:
             raise AggrigatorError(f"GET {path} failed: {exc}") from exc
+
+        if resp.status_code == 304:
+            if cached and "body" in cached:
+                return cached["body"]
+            # Server said "not modified" but we have no cached body to
+            # serve — refetch unconditionally as a safety valve.
+            logger.info(
+                "aggrigator 304 without cached body — refetching %s", path,
+            )
+            return self._get_unconditional(url, clean)
+
         if resp.status_code == 404:
+            _safe_cache_delete(cache_key)
             return None
         if resp.status_code >= 400:
             raise AggrigatorError(
                 f"GET {path} returned {resp.status_code}: {resp.text[:200]}"
             )
+
+        body = resp.json()
+        etag = resp.headers.get("ETag")
+        if etag:
+            ttl = _parse_max_age(resp.headers.get("Cache-Control"))
+            if ttl is None:
+                ttl = _DEFAULT_CACHE_TTL
+            ttl = max(1, min(ttl, _MAX_CACHE_TTL))
+            _safe_cache_set(cache_key, {"etag": etag, "body": body}, ttl)
+        return body
+
+    def _get_unconditional(self, url: str, params: dict):
+        """Safety-valve path: refetch when server returned 304 but we
+        lost the cached body (eviction, restart, etc.)."""
+        try:
+            resp = self.session.get(url, params=params, timeout=self.timeout)
+        except requests.RequestException as exc:
+            raise AggrigatorError(f"GET {url} (refetch) failed: {exc}") from exc
+        if resp.status_code == 404:
+            return None
+        if resp.status_code >= 400:
+            raise AggrigatorError(
+                f"GET {url} (refetch) returned {resp.status_code}: {resp.text[:200]}"
+            )
         return resp.json()
+
+
+def _safe_cache_get(key):
+    try:
+        return cache.get(key)
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("aggrigator cache.get(%s) failed: %s", key, exc)
+        return None
+
+
+def _safe_cache_set(key, value, ttl):
+    try:
+        cache.set(key, value, timeout=ttl)
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("aggrigator cache.set(%s) failed: %s", key, exc)
+
+
+def _safe_cache_delete(key):
+    try:
+        cache.delete(key)
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("aggrigator cache.delete(%s) failed: %s", key, exc)

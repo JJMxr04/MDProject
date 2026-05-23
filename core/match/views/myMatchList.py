@@ -13,7 +13,15 @@ def my_match_list_view(request):
     # Filter the matches based on search query, state, and date range
 
 
-    matches = Match.objects.filter(Q(player_1=request.user) | Q(player_2=request.user))
+    # select_related on the FKs the list template touches (player_1,
+    # player_2, winner). Without this, every row in the table drives 3
+    # extra round-trips per match × 10 matches per page = 30+ queries
+    # on top of the count query.
+    matches = (
+        Match.objects
+        .filter(Q(player_1=request.user) | Q(player_2=request.user))
+        .select_related("player_1", "player_2", "winner")
+    )
 
 
     if search_query:

@@ -24,6 +24,7 @@ def public_match_list_view(request):
     matches = (
         Match.objects.filter(match_state='created')
         .exclude(player_1=request.user)
+        .select_related("player_1", "player_2")
         .order_by('-start_date')
     )
 
