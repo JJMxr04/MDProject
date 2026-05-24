@@ -8,7 +8,7 @@ same `{{ event.sport.name }}` / `{{ event.home_team.name }}` it always did.
 Failure modes:
 - Aggregator 5xx / timeout → serve cached snapshot if present (TTL extended
   to 5 min in that case), otherwise show an error empty-state.
-- Aggregator 401 (key revoked) → log to Sentry as warning, error state.
+- Aggregator 401 (key revoked) → log warning, render error state.
 """
 
 from __future__ import annotations

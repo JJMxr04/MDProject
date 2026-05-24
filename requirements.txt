@@ -27,3 +27,4 @@ cryptography==43.0.1
 argon2-cffi==25.1.0
 stripe==12.4.0
 django-anymail[resend]==13.0
+django-silk==5.4.0

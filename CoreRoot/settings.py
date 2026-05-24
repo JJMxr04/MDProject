@@ -784,3 +784,62 @@ LOGGING = {
         },
     },
 }
+
+
+# ---------------------------------------------------------------------------
+# django-silk — in-process request/SQL profiler.
+#
+# Off by default. Flip on per-environment with SILK_ENABLED=True. Stores
+# captured requests in Postgres (same DB unless you give silk its own),
+# so leave it OFF in prod long-term — turn it on for a debug session,
+# investigate, turn it off.
+#
+# Auth: SILKY_AUTHENTICATION + SILKY_AUTHORISATION gate /silk/ behind a
+# logged-in is_staff user (same access as Django admin). Without these,
+# the dashboard exposes every captured request body, header, and SQL
+# query to anyone who guesses the URL — including cookies, auth tokens,
+# and webhook payloads. Do not relax.
+#
+# Sampling: SILK_INTERCEPT_PERCENT env (default 5) keeps overhead and
+# storage bounded. Bump to 100 only on local / staging while reproducing
+# a specific slow page.
+# ---------------------------------------------------------------------------
+SILK_ENABLED = os.environ.get("SILK_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+
+if SILK_ENABLED:
+    INSTALLED_APPS += ["silk"]
+    # Insert silk middleware right after AuthenticationMiddleware so
+    # request.user is populated when silk evaluates SILKY_AUTHORISATION,
+    # but still above the project's custom middleware so their timings
+    # are captured in the silk waterfall.
+    _auth_mw = "django.contrib.auth.middleware.AuthenticationMiddleware"
+    _silk_mw = "silk.middleware.SilkyMiddleware"
+    if _auth_mw in MIDDLEWARE:
+        MIDDLEWARE.insert(MIDDLEWARE.index(_auth_mw) + 1, _silk_mw)
+    else:
+        MIDDLEWARE.append(_silk_mw)
+
+    SILKY_AUTHENTICATION = True
+    SILKY_AUTHORISATION = True
+    # Belt-and-braces: even staff users only see /silk/ if they're also
+    # superuser. Loosen to `u.is_staff` if a non-superuser admin needs in.
+    SILKY_PERMISSIONS = lambda u: u.is_authenticated and u.is_superuser
+
+    SILKY_HIDE_COOKIES = True
+    SILKY_MAX_REQUEST_BODY_SIZE = 4096   # bytes; truncate huge POSTs
+    SILKY_MAX_RESPONSE_BODY_SIZE = 4096
+    SILKY_META = True  # show silk's own overhead per request
+
+    # cProfile-level Python timings on each captured request. The
+    # "Profile" tab in /silk/<request>/ is empty without this. Combined
+    # with SILK_INTERCEPT_PERCENT this only fires on the sampled
+    # requests, so the cProfile overhead is bounded. BINARY=True writes
+    # a .prof file you can download and open in snakeviz for a flame
+    # graph view.
+    SILKY_PYTHON_PROFILER = True
+    SILKY_PYTHON_PROFILER_BINARY = True
+
+    try:
+        SILKY_INTERCEPT_PERCENT = int(os.environ.get("SILK_INTERCEPT_PERCENT", "5"))
+    except ValueError:
+        SILKY_INTERCEPT_PERCENT = 5

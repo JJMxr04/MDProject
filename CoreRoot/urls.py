@@ -49,6 +49,14 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
+# django-silk dashboard — only mounted when SILK_ENABLED. The view layer
+# is still gated by SILKY_PERMISSIONS (superuser-only), but omitting the
+# route entirely when off means the URL 404s instead of returning a
+# login redirect, which is the safer signal to an unauth'd probe.
+if getattr(settings, "SILK_ENABLED", False):
+    urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
+
+
 # Custom 404 — paths under /web/portal/ and /admin/ redirect to the
 # public landing instead of showing a Django 404 page. Everything else
 # gets a plain 404.
