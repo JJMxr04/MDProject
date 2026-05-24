@@ -832,6 +832,16 @@ if SILK_ENABLED:
     SILKY_MAX_RESPONSE_BODY_SIZE = 4096
     SILKY_META = True  # show silk's own overhead per request
 
+    # Skip noise: silk's own UI assets, Django static, healthz probes,
+    # and the silk dashboard itself. Without this, /silk/ ends up
+    # mostly displaying captures of /silk/ — recursive and useless.
+    SILKY_IGNORE_PATHS = [
+        "/static/",
+        "/silk/",
+        "/healthz",
+        "/robots.txt",
+    ]
+
     # cProfile-level Python timings on each captured request. The
     # "Profile" tab in /silk/<request>/ is empty without this. Combined
     # with SILK_INTERCEPT_PERCENT this only fires on the sampled
