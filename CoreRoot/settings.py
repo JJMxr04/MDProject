@@ -485,14 +485,16 @@ STORAGES = {
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
 
-# Disable SSL for local development
+# Debug-mode overrides — relax cookie / redirect hardening so HTTP-only
+# local dev keeps working. Database SSL is NOT touched: the driver honors
+# whatever sslmode (or absence) is in DATABASE_URL, so local Postgres
+# without SSL needs sslmode=disable in the URL, and prod / hosted Postgres
+# keeps its require/verify-full unchanged when DEBUG is flipped on for
+# an investigation.
 if DEBUG:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
-    DATABASES['default']['OPTIONS'] = DATABASES['default'].get('OPTIONS', {})
-    DATABASES['default']['OPTIONS'].pop('sslmode', None)
-    DATABASES['default']['OPTIONS']['sslmode'] = 'disable'
 
 
 JAZZMIN_SETTINGS = {
