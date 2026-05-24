@@ -66,11 +66,18 @@ COPY --chown=app:app . /app
 # bubbles up. The rm cleanup is split off into its own RUN where the
 # `|| true` is appropriate (tolerates absent dev-only paths).
 ARG REDIS_URL
+# SILK_ENABLED=true at build time so django-silk's static files (its
+# JS/CSS/images at silk/static/silk/...) get collected into STATIC_ROOT.
+# The runtime decides separately whether to install silk's middleware +
+# URL routes via its own SILK_ENABLED env. If runtime silk is off, the
+# extra static files are inert; if it's on (the prod debug case), they
+# need to already exist in staticfiles/ or every asset 404s.
 RUN DEBUG=False \
     SECRET_KEY=collectstatic-build-time-only \
     ALLOWED_HOSTS=localhost \
     DATABASE_URL=sqlite:///tmp/build.sqlite3 \
     REDIS_URL="$REDIS_URL" \
+    SILK_ENABLED=true \
     python manage.py collectstatic --noinput
 
 RUN rm -rf .git/ .vscode/ .pytest_cache/ tests/ /tmp/build.sqlite3 2>/dev/null || true \
