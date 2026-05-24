@@ -839,7 +839,13 @@ if SILK_ENABLED:
     # a .prof file you can download and open in snakeviz for a flame
     # graph view.
     SILKY_PYTHON_PROFILER = True
-    SILKY_PYTHON_PROFILER_BINARY = True
+    # Binary .prof export is OFF — Silk hardcodes the write to
+    # FileSystemStorage(MEDIA_ROOT), ignoring STORAGES["default"]=S3. On
+    # Railway/Coolify the container has no writable /app/media (media/ is
+    # in .dockerignore + the FS is ephemeral anyway), so enabling this
+    # makes every silk-sampled request 500 with FileNotFoundError. The
+    # in-UI profile waterfall still renders without it.
+    SILKY_PYTHON_PROFILER_BINARY = False
 
     try:
         SILKY_INTERCEPT_PERCENT = int(os.environ.get("SILK_INTERCEPT_PERCENT", "5"))
