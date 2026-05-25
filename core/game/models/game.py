@@ -107,6 +107,23 @@ class GameManager(AbstractManager):
         if (event_pk, selection.market_id) in existing_market_pairs:
             raise PickError("This event/market combination has already been picked")
 
+        # Match-window gate. The upcoming-events listing intentionally returns
+        # every scheduled event regardless of any active match, but only events
+        # that start within [match.start_date, match.end_date] are eligible for
+        # *this* match — anything outside that window would settle after the
+        # match itself ended. ``match.end_date`` is set on creation/accept so
+        # we expect it populated; ``start_date`` is auto_now_add.
+        if match.end_date is not None and event.start_time > match.end_date:
+            raise PickError(
+                "This event is not within the timeframe of this match — "
+                "please pick another."
+            )
+        if event.start_time < match.start_date:
+            raise PickError(
+                "This event is not within the timeframe of this match — "
+                "please pick another."
+            )
+
         # Owner deadline.
         if event.start_time - now < DEADLINE_BUFFER:
             raise PickError("Owner picks must be made at least 8 hours before event start")
