@@ -47,9 +47,26 @@ def _get(
         # TenantApiKey row + verify subscription tier. Without it,
         # every /v1/analytics/* call gets 401.
         headers["X-Aggrigator-Tenant-Key"] = tenant_key
+
+    # Profile passthrough: when the inbound MDProject request set the
+    # X-Profile-Aggrigator header and AGGRIGATOR_PROFILE_PASSTHROUGH is
+    # on, append ?profile=1 so the aggrigator returns a pyinstrument
+    # flame graph instead of JSON. The HTML is captured into the
+    # middleware's per-request bucket; we return {} so the view doesn't
+    # crash trying to read normal fields. See
+    # core/middleware/profile_passthrough.py for the response swap.
+    from core.middleware.profile_passthrough import (
+        add_capture,
+        is_active as _profile_active,
+    )
+    effective_params: dict[str, Any] = dict(params or {})
+    profile_mode = _profile_active()
+    if profile_mode:
+        effective_params["profile"] = "1"
+
     try:
         with httpx.Client(timeout=_DEFAULT_TIMEOUT) as client:
-            resp = client.get(url, params=params or {}, headers=headers)
+            resp = client.get(url, params=effective_params, headers=headers)
     except httpx.HTTPError as exc:
         logger.warning("aggrigator %s failed: %s", path, exc)
         return None
@@ -58,6 +75,9 @@ def _get(
             "aggrigator %s returned %d: %s", path, resp.status_code, resp.text[:200],
         )
         return None
+    if profile_mode:
+        add_capture(resp.text)
+        return {}
     try:
         return resp.json()
     except ValueError as exc:

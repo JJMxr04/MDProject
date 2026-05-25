@@ -166,7 +166,24 @@ MIDDLEWARE = [
     # or a Django 404). Must run AFTER AuthenticationMiddleware so
     # ``request.user`` is populated.
     'core.middleware.portal_auth_redirect.AnonymousPortalRedirectMiddleware',
+    # Aggrigator-profile passthrough. No-op unless
+    # AGGRIGATOR_PROFILE_PASSTHROUGH=True AND the inbound request carries
+    # the X-Profile-Aggrigator: 1 header. When triggered, replaces the
+    # portal HTML response with the captured aggrigator flame graph(s).
+    # See core/middleware/profile_passthrough.py.
+    'core.middleware.profile_passthrough.ProfilePassthroughMiddleware',
 ]
+
+# Aggrigator profile-passthrough feature flag. When True, the
+# ProfilePassthroughMiddleware enables the X-Profile-Aggrigator header
+# handoff. Default off — costs nothing when disabled, but a stray header
+# in prod with this flag on would replace real portal pages with
+# pyinstrument HTML. Pair with AGG_PROFILER_ENABLED=True on the
+# aggrigator side.
+AGGRIGATOR_PROFILE_PASSTHROUGH = (
+    os.environ.get("AGGRIGATOR_PROFILE_PASSTHROUGH", "").strip().lower()
+    in ("1", "true", "yes", "on")
+)
 
 
 
