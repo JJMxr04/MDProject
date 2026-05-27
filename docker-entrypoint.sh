@@ -33,11 +33,20 @@ case "$ROLE" in
     echo "[entrypoint] starting gunicorn..."
     # Sync workers — Django doesn't need ASGI here. ``access-logfile -``
     # routes access logs to stdout for journald / Coolify / Railway logs.
+    # ``--forwarded-allow-ips=*`` makes gunicorn trust X-Forwarded-* headers
+    # from Coolify's Traefik. Without it gunicorn strips ``X-Forwarded-Proto:
+    # https`` (defaulting to trust only 127.0.0.1), Django's
+    # ``SECURE_PROXY_SSL_HEADER`` never sees ``https``, ``request.is_secure()``
+    # returns False, ``SECURE_SSL_REDIRECT`` fires a 301 to https://... and
+    # the browser ends up in an infinite loop. Trusting "*" is safe because
+    # Coolify's edge proxy is the only thing that can reach the container;
+    # external clients never bypass it.
     exec gunicorn CoreRoot.wsgi:application \
         --workers "${MDPROJECT_WEB_WORKERS:-3}" \
         --bind "0.0.0.0:${PORT:-8000}" \
         --timeout "${MDPROJECT_WEB_TIMEOUT:-30}" \
         --graceful-timeout 30 \
+        --forwarded-allow-ips="*" \
         --access-logfile - \
         --error-logfile -
     ;;

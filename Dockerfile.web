@@ -1,9 +1,10 @@
 # syntax=docker/dockerfile:1.6
 #
-# MDProject (Django) container — used by Coolify (Application type: Dockerfile).
-# Single role: gunicorn serving the WSGI app. Whitenoise serves the static
-# files baked at image-build time. Postgres + Redis are external (Coolify
-# resources or the managed DB pointed at via DATABASE_URL).
+# MDProject web container — gunicorn serving the Django WSGI app. Paired
+# with Dockerfile.worker (procrastinate background worker). Both share the
+# same builder stage and runtime base; only the final HEALTHCHECK + CMD
+# differ. If you change shared steps (deps, collectstatic, system pkgs),
+# update both files in lockstep.
 
 # ---------- builder ----------
 FROM python:3.12-slim AS builder

@@ -1,0 +1,78 @@
+# syntax=docker/dockerfile:1.6
+#
+# MDProject worker container — runs `python manage.py procrastinate worker`
+# (task execution + in-process periodic scheduler). Paired with
+# Dockerfile.web (gunicorn). Both share the same builder stage and runtime
+# base; only the final HEALTHCHECK + CMD differ. If you change shared
+# steps (deps, system pkgs, collectstatic), update both files in lockstep.
+#
+# The worker has no HTTP listener — no EXPOSE, no HEALTHCHECK. Liveness
+# is observable via the /admin/status/ dashboard, which reads recent rows
+# from the procrastinate_jobs table.
+
+# ---------- builder ----------
+FROM python:3.12-slim AS builder
+
+ENV PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# psycopg2 wheel needs libpq-dev + build-essential at install time.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Cache the deps layer.
+COPY requirements.txt ./
+RUN pip install --upgrade pip \
+    && pip install --prefix=/install -r requirements.txt
+
+# ---------- runtime ----------
+FROM python:3.12-slim AS runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    DJANGO_SETTINGS_MODULE=CoreRoot.settings
+
+# `curl` is intentionally NOT installed in the worker image — there's no
+# healthcheck and no HTTP traffic, so we save a few MB and one CVE-prone
+# package. ca-certificates stays (outbound HTTPS to Stripe / S3 etc.).
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpq5 \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --system --gid 1000 app \
+    && useradd --system --uid 1000 --gid app --no-create-home --shell /bin/false app
+
+COPY --from=builder /install /usr/local
+
+WORKDIR /app
+
+# Copy code last so source edits don't bust the deps layer.
+COPY --chown=app:app . /app
+
+# collectstatic runs here too even though the worker doesn't serve static
+# files — keeping the build step identical to Dockerfile.web means the
+# resulting image layers are deterministic across both services and the
+# build cache stays warm. The staticfiles/ dir adds <10MB; not worth a
+# divergence in build logic.
+RUN DEBUG=False \
+    SECRET_KEY=collectstatic-build-time-only \
+    ALLOWED_HOSTS=localhost \
+    DATABASE_URL=sqlite:///tmp/build.sqlite3 \
+    SILK_ENABLED=true \
+    python manage.py collectstatic --noinput
+
+RUN rm -rf .git/ .vscode/ .pytest_cache/ tests/ /tmp/build.sqlite3 2>/dev/null || true \
+    && chmod +x /app/docker-entrypoint.sh
+
+USER app
+
+# No EXPOSE / HEALTHCHECK — see file header.
+
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+
+CMD ["worker"]
