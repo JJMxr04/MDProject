@@ -48,35 +48,24 @@ WORKDIR /app
 COPY --chown=app:app . /app
 
 # Run collectstatic at build time so the running container is read-only.
-# We pass dummy env vars that satisfy the production-mode startup guards
-# (settings.py raises if SECRET_KEY/ALLOWED_HOSTS are missing while
-# DEBUG=False — collectstatic doesn't need the real values).
+# Dummy env vars satisfy settings.py's production-mode startup guards
+# (it raises if SECRET_KEY/ALLOWED_HOSTS are missing while DEBUG=False).
+# A throwaway sqlite DATABASE_URL keeps dj_database_url happy.
 #
-# REDIS_URL is a real one though: settings.py evaluates CELERY_BROKER_URL
-# at module import via _redis_db_url(), which raises ImproperlyConfigured
-# when REDIS_URL is unset AND DEBUG=False. Without it the import dies
-# before collectstatic can write a single file. We pull the value from
-# the build environment via ARG so Railway / Coolify can pass the
-# already-configured service variable through — nothing is hardcoded
-# here. If REDIS_URL isn't set at build time the import will fail and
-# the build will fail loudly (which is what we want — a silent empty
-# staticfiles/ ships a broken image).
-#
-# Run collectstatic in its own RUN with NO `|| true` so any failure
-# bubbles up. The rm cleanup is split off into its own RUN where the
-# `|| true` is appropriate (tolerates absent dev-only paths).
-ARG REDIS_URL
 # SILK_ENABLED=true at build time so django-silk's static files (its
 # JS/CSS/images at silk/static/silk/...) get collected into STATIC_ROOT.
 # The runtime decides separately whether to install silk's middleware +
 # URL routes via its own SILK_ENABLED env. If runtime silk is off, the
 # extra static files are inert; if it's on (the prod debug case), they
 # need to already exist in staticfiles/ or every asset 404s.
+#
+# No `|| true` here — any failure must bubble up; a silent empty
+# staticfiles/ ships a broken image. The rm cleanup below tolerates
+# absent dev-only paths.
 RUN DEBUG=False \
     SECRET_KEY=collectstatic-build-time-only \
     ALLOWED_HOSTS=localhost \
     DATABASE_URL=sqlite:///tmp/build.sqlite3 \
-    REDIS_URL="$REDIS_URL" \
     SILK_ENABLED=true \
     python manage.py collectstatic --noinput
 
