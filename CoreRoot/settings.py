@@ -452,7 +452,12 @@ CACHES = {
 
 
 # SSL/TLS settings
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT defaults to True (correct behind a TLS-terminating
+# proxy that forwards X-Forwarded-Proto: https). Override via env to
+# False if the upstream proxy strips/skips the header — otherwise Django
+# returns 301 to https://... on every request and the browser ends up in
+# a redirect loop (since the inbound was already HTTPS upstream).
+SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "True") == "True"
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
