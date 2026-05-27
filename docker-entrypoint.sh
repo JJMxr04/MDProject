@@ -35,7 +35,7 @@ case "$ROLE" in
     # routes access logs to stdout for journald / Coolify / Railway logs.
     exec gunicorn CoreRoot.wsgi:application \
         --workers "${MDPROJECT_WEB_WORKERS:-3}" \
-        --bind 0.0.0.0:8000 \
+        --bind "0.0.0.0:${PORT:-8000}" \
         --timeout "${MDPROJECT_WEB_TIMEOUT:-30}" \
         --graceful-timeout 30 \
         --access-logfile - \

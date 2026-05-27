@@ -74,12 +74,16 @@ RUN rm -rf .git/ .vscode/ .pytest_cache/ tests/ /tmp/build.sqlite3 2>/dev/null |
 
 USER app
 
+# Port is parameterized via $PORT (12-factor) so Coolify / Railway / etc.
+# can inject whatever they want. EXPOSE 8000 is the default for local
+# `docker run` and as the fallback when $PORT isn't set.
 EXPOSE 8000
 
 # Coolify reads HEALTHCHECK to gate rolling deploys. /healthz is added by
-# core/views.py and routed in CoreRoot/urls.py.
+# core/views.py and routed in CoreRoot/urls.py. Shell form so ${PORT:-8000}
+# is interpolated at runtime, not build time.
 HEALTHCHECK --interval=10s --timeout=3s --start-period=30s --retries=3 \
-    CMD curl -fsS http://127.0.0.1:8000/healthz || exit 1
+    CMD curl -fsS http://127.0.0.1:${PORT:-8000}/healthz || exit 1
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
