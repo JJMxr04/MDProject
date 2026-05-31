@@ -1,0 +1,130 @@
+/* ==========================================================================
+   auth.css — shared styling for all auth pages (login, register, waitlist,
+   thank-you, activation). Built on the public design system (tokens/components).
+   Replaces the old per-page login.css / register.css / waitlist_thank_you.css.
+   ========================================================================== */
+
+.auth {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-block: clamp(var(--ps-space-5), 6vw, var(--ps-space-7));
+}
+
+.auth__card {
+  width: 100%;
+  max-width: 30rem;
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius-lg);
+  box-shadow: var(--ps-shadow-md);
+  padding: clamp(var(--ps-space-4), 4vw, var(--ps-space-6));
+}
+.auth__card--wide { max-width: 36rem; }
+
+.auth__head { text-align: center; margin-bottom: var(--ps-space-4); }
+.auth__head h1 { font-size: var(--ps-step-3); margin-bottom: var(--ps-space-2); }
+.auth__head p { color: var(--ps-text-muted); margin: 0; }
+
+.auth__logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  margin: 0 auto var(--ps-space-3);
+}
+
+/* Fields */
+.auth .form-field { margin-bottom: var(--ps-space-3); }
+.auth label {
+  display: block;
+  margin-bottom: var(--ps-space-1);
+  font-size: var(--ps-step--1);
+  font-weight: 600;
+  color: var(--ps-text);
+}
+.auth .form-control,
+.auth input:not([type="checkbox"]):not([type="radio"]),
+.auth select,
+.auth textarea {
+  width: 100%;
+  padding: .7rem .9rem;
+  font-size: var(--ps-step-0);
+  color: var(--ps-text);
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-border-strong);
+  border-radius: var(--ps-radius-sm);
+  transition: border-color var(--ps-dur-fast) var(--ps-ease),
+              box-shadow var(--ps-dur-fast) var(--ps-ease);
+}
+.auth .form-control:focus,
+.auth input:focus,
+.auth select:focus,
+.auth textarea:focus {
+  outline: none;
+  border-color: var(--ps-ocean);
+  box-shadow: var(--ps-ring);
+}
+
+.auth .helptext,
+.auth .form-text {
+  display: block;
+  margin-top: var(--ps-space-1);
+  font-size: var(--ps-step--1);
+  color: var(--ps-text-muted);
+}
+
+/* Checkbox field (e.g. 18+ confirmation) — box inline beside its label */
+.auth .form-field--check .check-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ps-space-2);
+  margin-bottom: 0;
+  font-weight: 500;
+  cursor: pointer;
+}
+.auth .form-field--check input[type="checkbox"] {
+  width: auto;
+  margin-top: .2rem;
+  flex: 0 0 auto;
+}
+
+/* Errors (Django form + non-field) */
+.auth .errorlist {
+  list-style: none;
+  margin: var(--ps-space-1) 0 0;
+  padding: 0;
+  color: var(--ps-danger);
+  font-size: var(--ps-step--1);
+}
+.auth__alert {
+  border-radius: var(--ps-radius-sm);
+  padding: .7rem .9rem;
+  margin-bottom: var(--ps-space-3);
+  font-size: var(--ps-step--1);
+}
+.auth__alert--error { background: #fdecee; color: var(--ps-danger); border: 1px solid #f4c4cb; }
+.auth__alert--success { background: #e8f6ef; color: var(--ps-success); border: 1px solid #bfe6d2; }
+.auth__alert--info { background: var(--ps-surface-alt); color: var(--ps-ocean-700); border: 1px solid var(--ps-border); }
+
+.auth__submit { margin-top: var(--ps-space-2); }
+
+.auth__meta {
+  margin-top: var(--ps-space-4);
+  text-align: center;
+  font-size: var(--ps-step--1);
+  color: var(--ps-text-muted);
+}
+.auth__meta a { font-weight: 600; }
+.auth__divider {
+  display: flex; align-items: center; gap: var(--ps-space-2);
+  margin: var(--ps-space-4) 0;
+  color: var(--ps-text-muted); font-size: var(--ps-step--1);
+}
+.auth__divider::before, .auth__divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--ps-border);
+}
+
+/* Centered confirmation / activation pages */
+.auth__art { display: block; max-width: 220px; margin: 0 auto var(--ps-space-4); }
+.auth__card--center { text-align: center; }
+.auth__card--center .auth__actions { margin-top: var(--ps-space-4); display: flex; gap: var(--ps-space-2); justify-content: center; flex-wrap: wrap; }

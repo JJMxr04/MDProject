@@ -6,9 +6,8 @@ app_name = 'core-web'
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
-    path('privacy-policy/', views.privacy_policy, name='private-policy'),
+    path('privacy-policy/', views.privacy_policy, name='privacy-policy'),
     path('terms/', views.terms, name='terms'),
     path('contact/', views.contact, name='contact'),
-    path('services/', views.services, name='services'),
     path('game-rules/', views.gameRules, name='game-rules'),
 ]

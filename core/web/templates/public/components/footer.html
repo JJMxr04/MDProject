@@ -1,113 +1,31 @@
 {% load static %}
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/public/footer.css' %}">
-{% endblock css %}
-
-
-<footer class="footer">
-    <div class="container footer-container">
-        <div class="footer-brand">
-            <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" alt="Paradise Sports logo" class="logo">
-            <span class="text-muted">Paradise Sports: Media and Entertainment</span>
+<footer class="site-footer">
+    <div class="container site-footer__inner">
+        <div class="site-footer__brand">
+            <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" alt="Paradise Sports" class="site-footer__logo" width="120" height="120">
+            <p class="site-footer__tagline">Paradise Sports: Media and Entertainment</p>
         </div>
 
-        <nav class="footer-nav" aria-label="Footer">
-            <div class="footer-col">
+        <nav class="site-footer__nav" aria-label="Footer">
+            <div class="site-footer__col">
                 <h4>Product</h4>
                 <a href="{% url 'core-web:home' %}">Home</a>
-                <a href="{% url 'core-web:services' %}">Services</a>
                 <a href="{% url 'core-web:about' %}">About</a>
             </div>
-            <div class="footer-col">
+            <div class="site-footer__col">
                 <h4>Legal</h4>
-                <a href="{% url 'core-web:private-policy' %}">Privacy Policy</a>
+                <a href="{% url 'core-web:privacy-policy' %}">Privacy Policy</a>
                 <a href="{% url 'core-web:terms' %}">Terms of Service</a>
             </div>
-            <div class="footer-col">
+            <div class="site-footer__col">
                 <h4>Support</h4>
                 <a href="{% url 'core-web:contact' %}">Contact</a>
-                <a href="mailto:hello@paradisesports.example">Email us</a>
             </div>
         </nav>
     </div>
 
-    <div class="footer-bottom">
+    <div class="container site-footer__bottom">
         <span>&copy; 2026 Paradise Sports. All rights reserved.</span>
-        <span class="footer-disclaimer">
-            For entertainment only. No real-money wagering. 18+.
-        </span>
+        <span class="site-footer__disclaimer">For entertainment only. No real-money wagering. 18+.</span>
     </div>
 </footer>
-
-<style>
-    .footer {
-        background: #1f2937;
-        color: #d1d5db;
-        padding: 3rem 0 1rem;
-        margin-top: 4rem;
-    }
-    .footer-container {
-        display: grid;
-        grid-template-columns: minmax(220px, 1fr) 2fr;
-        gap: 2rem;
-        padding: 0 1.5rem;
-    }
-    .footer-brand {
-        display: flex; flex-direction: column; gap: .75rem;
-        align-items: flex-start;
-    }
-    .footer-brand .logo {
-        width: 80px; height: auto;
-    }
-    .footer-brand .text-muted {
-        color: #9ca3af !important;
-        font-size: .9rem;
-        line-height: 1.4;
-    }
-    .footer-nav {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-    }
-    .footer-col h4 {
-        color: #f9fafb;
-        font-size: .85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: .04em;
-        margin-bottom: .85rem;
-    }
-    .footer-col a {
-        display: block;
-        color: #d1d5db;
-        text-decoration: none;
-        font-size: .95rem;
-        padding: .25rem 0;
-        transition: color .15s ease;
-    }
-    .footer-col a:hover {
-        color: #fff;
-        text-decoration: underline;
-    }
-    .footer-bottom {
-        max-width: 100%;
-        margin: 2rem auto 0;
-        padding: 1.25rem 1.5rem 0;
-        border-top: 1px solid #374151;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: .5rem;
-        font-size: .85rem;
-        color: #9ca3af;
-    }
-    .footer-disclaimer {
-        font-style: italic;
-    }
-    @media (max-width: 720px) {
-        .footer-container { grid-template-columns: 1fr; }
-        .footer-nav { grid-template-columns: repeat(2, 1fr); }
-        .footer-bottom { flex-direction: column; text-align: center; }
-    }
-</style>

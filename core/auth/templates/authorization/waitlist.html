@@ -1,30 +1,39 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Waitlist{% endblock title %}
+{% block title %}Join the waitlist · Paradise Sports{% endblock title %}
+{% block meta_description %}Join the Paradise Sports waitlist and be first in line.{% endblock meta_description %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="container">
-  <div class="row justify-content-center align-items-center">
-    <div class="col-md-6">
-      <div class="card bg-light text-black border-0 rounded-3 register-form-1">
-        <div class="card-body p-5 text-center">
-          <h2 class="fw-bold mb-2 text-uppercase">Join the Waitlist</h2>
-          <p class="text-black-50 mb-5">Enter your details to join the waitlist!</p>
-
-          <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btnSubmit btn-lg px-5" type="submit">Join</button>
-          </form>
-
-        </div>
+  <section class="auth">
+    <div class="auth__card">
+      <div class="auth__head">
+        <h1>Join the waitlist</h1>
+        <p>Be first in line when the next season opens.</p>
       </div>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="form-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<span class="helptext">{{ field.help_text|safe }}</span>{% endif %}
+            {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+          </div>
+        {% endfor %}
+        <button class="ps-btn ps-btn--primary ps-btn--block auth__submit" type="submit">Join the waitlist</button>
+      </form>
+
+      <p class="auth__meta">
+        Already have an account? <a href="{% url 'core-auth:login' %}">Log in</a>
+      </p>
     </div>
-  </div>
+  </section>
 </div>
 {% endblock content %}

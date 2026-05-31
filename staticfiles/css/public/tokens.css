@@ -1,0 +1,72 @@
+/* ==========================================================================
+   tokens.css — Paradise Sports design tokens (single source of truth)
+   Brand: ocean blue -> sand yellow. Everything downstream references these
+   custom properties instead of hardcoding hex/spacing values.
+   ========================================================================== */
+
+:root {
+  /* --- Brand --- */
+  --ps-ocean:      #3D7EAA;
+  --ps-ocean-600:  #336c93;
+  --ps-ocean-700:  #2a5a7c;
+  --ps-ocean-900:  #14202b;
+  --ps-sand:       #FFE47A;
+  --ps-sand-600:   #f4cf3f;
+  --ps-gradient:   linear-gradient(135deg, var(--ps-ocean) 0%, var(--ps-sand) 100%);
+  --ps-gradient-soft: linear-gradient(135deg, #e9f1f7 0%, #fef7df 100%);
+
+  /* --- Surfaces & text (content lives on calm surfaces, not full-bleed gradient) --- */
+  --ps-bg:          #f4f8fb;
+  --ps-surface:     #ffffff;
+  --ps-surface-alt: #eef4f9;
+  --ps-text:        #14202b;
+  --ps-text-muted:  #51616f;
+  --ps-text-invert: #f7fbff;
+  --ps-border:      #e1e9f0;
+  --ps-border-strong:#cdd9e3;
+
+  /* --- Feedback --- */
+  --ps-success: #1f8a5b;
+  --ps-danger:  #c5384a;
+  --ps-info:    var(--ps-ocean);
+
+  /* --- Spacing scale --- */
+  --ps-space-1: .25rem;
+  --ps-space-2: .5rem;
+  --ps-space-3: 1rem;
+  --ps-space-4: 1.5rem;
+  --ps-space-5: 2.5rem;
+  --ps-space-6: 4rem;
+  --ps-space-7: 6rem;
+
+  /* --- Radius --- */
+  --ps-radius-sm: 8px;
+  --ps-radius:    14px;
+  --ps-radius-lg: 22px;
+  --ps-radius-pill: 999px;
+
+  /* --- Shadows (soft, layered depth) --- */
+  --ps-shadow-sm: 0 1px 2px rgba(20, 32, 43, .06);
+  --ps-shadow-md: 0 8px 24px rgba(20, 32, 43, .10);
+  --ps-shadow-lg: 0 20px 48px rgba(20, 32, 43, .16);
+  --ps-ring: 0 0 0 3px rgba(61, 126, 170, .35);
+
+  /* --- Fluid typography --- */
+  --ps-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ps-step--1: clamp(.85rem, .82rem + .15vw, .95rem);
+  --ps-step-0:  clamp(1rem, .96rem + .2vw, 1.125rem);
+  --ps-step-1:  clamp(1.15rem, 1.05rem + .5vw, 1.4rem);
+  --ps-step-2:  clamp(1.4rem, 1.2rem + 1vw, 1.9rem);
+  --ps-step-3:  clamp(1.8rem, 1.4rem + 2vw, 2.6rem);
+  --ps-step-4:  clamp(2.2rem, 1.6rem + 3vw, 3.6rem);
+
+  /* --- Layout --- */
+  --ps-container: 1200px;
+  --ps-measure: 68ch;
+
+  /* --- Motion --- */
+  --ps-ease: cubic-bezier(.22, 1, .36, 1);
+  --ps-dur-fast: .15s;
+  --ps-dur: .25s;
+  --ps-dur-slow: .4s;
+}

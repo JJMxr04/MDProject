@@ -1,47 +1,54 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}Log in · Paradise Sports{% endblock title %}
+{% block meta_description %}Log in to your Paradise Sports account.{% endblock meta_description %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="container">
-  <div class="row justify-content-center align-items-center">
-    <div class="col-md-6">
-      <div class="card bg-light text-black der-0 rounded-3">
-        <div class="card-body p-5 text-center">
-          <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-          <p class="text-black-50 mb-5">Please enter your login and password!</p>
-
-          <form method="post" action="{% url 'core-auth:login' %}" class="mb-4">
-            {% csrf_token %}
-            <div class="form-outline form-black mb-4">
-              <input type="email" id="typeEmailX" name="username" class="form-control form-control-lg" placeholder="Email" />
-            </div>
-            <div class="form-outline form-black mb-4">
-              <input type="password" id="typePasswordX" name="password" class="form-control form-control-lg" placeholder="Password" />
-            </div>
-            <button class="btnSubmit btn-lg px-5" type="submit">Login</button>
-          </form>
-
-
-<!--          <div class="d-flex justify-content-center text-center mt-4 pt-1">-->
-<!--            <a href="#!" class="text-black"><i class="fab fa-facebook-f fa-lg"></i></a>-->
-<!--            <a href="#!" class="text-black"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>-->
-<!--            <a href="#!" class="text-black"><i class="fab fa-google fa-lg"></i></a>-->
-<!--          </div>-->
-
-          <div>
-            <p class="mb-0 mt-4">Forgot Your Password? <a href="{% url 'reset_password' %}" class="text-black fw-bold">Reset Password</a></p>
-            <p class="mb-0 mt-4">Don't have an account? <a href="{% url 'core-auth:register' %}" class="text-black fw-bold">Sign Up</a></p>
-            <p class="mb-0 mt-4">Havent signed up for the <a href="{%url 'core-auth:waitlist-list' %}" class="link-login fw-bold text-black">Waitlist?</a></p>
-          </div>
-        </div>
+  <section class="auth">
+    <div class="auth__card">
+      <div class="auth__head">
+        <h1>Welcome back</h1>
+        <p>Log in to make your picks.</p>
       </div>
+
+      {% if form.non_field_errors %}
+        <div class="auth__alert auth__alert--error" role="alert">
+          {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'core-auth:login' %}" novalidate>
+        {% csrf_token %}
+        <div class="form-field">
+          <label for="id_username">Email or username</label>
+          <input type="text" id="id_username" name="username" autocomplete="username"
+                 value="{{ form.username.value|default:'' }}" required autofocus>
+          {% if form.username.errors %}<ul class="errorlist">{% for e in form.username.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+        <div class="form-field">
+          <label for="id_password">Password</label>
+          <input type="password" id="id_password" name="password" autocomplete="current-password" required>
+          {% if form.password.errors %}<ul class="errorlist">{% for e in form.password.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        <button class="ps-btn ps-btn--primary ps-btn--block auth__submit" type="submit">Log in</button>
+      </form>
+
+      <p class="auth__meta"><a href="{% url 'reset_password' %}">Forgot your password?</a></p>
+
+      <div class="auth__divider">new here?</div>
+
+      <p class="auth__meta">
+        Don&rsquo;t have an account? <a href="{% url 'core-auth:register' %}">Sign up</a><br>
+        Or <a href="{% url 'core-auth:waitlist-list' %}">join the waitlist</a>.
+      </p>
     </div>
-  </div>
+  </section>
 </div>
 {% endblock content %}

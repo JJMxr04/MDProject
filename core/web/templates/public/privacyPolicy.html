@@ -2,244 +2,153 @@
 {% load static %}
 
 {% block title %}Privacy Policy · Paradise Sports{% endblock title %}
-
-{% block css %}
-<style>
-    .legal-page {
-        max-width: 880px;
-        margin: 0 auto;
-        padding: 2.5rem 1rem 4rem;
-    }
-    .legal-page h1 {
-        font-weight: 700;
-        margin-bottom: .25rem;
-    }
-    .legal-page .legal-meta {
-        color: #6b7280;
-        font-size: .9rem;
-        margin-bottom: 2rem;
-    }
-    .legal-page h2 {
-        margin-top: 2.25rem;
-        font-size: 1.35rem;
-        font-weight: 700;
-        color: #1f2937;
-    }
-    .legal-page h3 {
-        margin-top: 1.5rem;
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: #374151;
-    }
-    .legal-page p, .legal-page li {
-        line-height: 1.7;
-        color: #374151;
-    }
-    .legal-page ul {
-        padding-left: 1.25rem;
-    }
-    .legal-page .toc {
-        background: #f9fafb;
-        border: 1px solid #e5e7eb;
-        border-radius: .5rem;
-        padding: 1rem 1.25rem;
-        margin-bottom: 2rem;
-    }
-    .legal-page .toc ol {
-        margin: 0;
-        padding-left: 1.25rem;
-        columns: 2;
-    }
-    .legal-page .callout {
-        background: #fef3c7;
-        border-left: 4px solid #d97706;
-        padding: .85rem 1rem;
-        border-radius: .25rem;
-        margin: 1rem 0;
-        color: #78350f;
-        font-size: .95rem;
-    }
-    @media (max-width: 600px) {
-        .legal-page .toc ol { columns: 1; }
-    }
-</style>
-{% endblock css %}
+{% block meta_description %}How Paradise Sports collects, uses, and protects your information.{% endblock meta_description %}
 
 {% block content %}
-<div class="legal-page">
-    <h1>Privacy Policy</h1>
-    <p class="legal-meta">
-        Last updated: May 12, 2026 · Effective: May 12, 2026
-    </p>
+<div class="container">
+    <article class="legal-page reveal">
+        <h1>Privacy Policy</h1>
+        <p class="legal-meta">Last updated: May 31, 2026</p>
 
-    <p>
-        Paradise Sports (&ldquo;PBL,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) operates
-        <a href="/">mdproject-production.up.railway.app</a> and related services
-        (the &ldquo;Site&rdquo;). This policy explains what we collect, why, how
-        long we keep it, and what choices you have. We&rsquo;ve tried to keep it
-        in plain English &mdash; if anything is unclear,
-        <a href="{% url 'core-web:contact' %}">email us</a>.
-    </p>
+        <p>
+            Paradise Sports: Media and Entertainment (&ldquo;Paradise Sports,&rdquo;
+            &ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) operates a free,
+            friendly sports-prediction game (the &ldquo;Service&rdquo;). The Service is
+            intended for adults <strong>18 years of age or older</strong> and does not
+            involve real-money wagering. This Privacy Policy explains what information we
+            collect, how we use it, and the choices you have. By using the Service, you
+            agree to this Policy.
+        </p>
 
-    <div class="toc" aria-label="Sections">
-        <ol>
-            <li><a href="#info-we-collect">Information we collect</a></li>
-            <li><a href="#how-we-use">How we use information</a></li>
-            <li><a href="#cookies">Cookies &amp; similar technologies</a></li>
-            <li><a href="#third-parties">Third-party services</a></li>
-            <li><a href="#sharing">Who we share data with</a></li>
-            <li><a href="#retention">How long we keep data</a></li>
-            <li><a href="#rights">Your rights (GDPR / CCPA)</a></li>
-            <li><a href="#consent">Cookie controls</a></li>
-            <li><a href="#children">Children&rsquo;s privacy</a></li>
-            <li><a href="#changes">Changes to this policy</a></li>
-            <li><a href="#contact">Contacting us</a></li>
-        </ol>
-    </div>
+        <h2>1. Information we collect</h2>
+        <p>We collect only what we need to run the Service.</p>
+        <p>
+            <strong>Information you provide:</strong> username, email address, first and
+            last name, <strong>date of birth</strong> (used to verify you meet our 18+ age
+            requirement), password (stored hashed), and optional profile details such as a
+            short bio and avatar image. We also collect content you submit, such as game
+            picks, friend connections, and support requests.
+        </p>
+        <p>
+            <strong>Information collected automatically:</strong> IP address, browser type
+            and version, device and operating-system information, referring website, and
+            the pages or features you interact with &mdash; collected through server logs
+            and cookies.
+        </p>
 
-    <h2 id="info-we-collect">1. Information we collect</h2>
-    <p>We collect three categories:</p>
-    <h3>Information you give us</h3>
-    <ul>
-        <li><strong>Account data:</strong> username, email, password (hashed),
-            first/last name, optional avatar, optional friend code.</li>
-        <li><strong>Waitlist signup:</strong> email address.</li>
-        <li><strong>Communications:</strong> if you email us, the contents of
-            that email and your address.</li>
-    </ul>
-    <h3>Information collected automatically</h3>
-    <ul>
-        <li><strong>Log data:</strong> IP address, browser type/version, OS,
-            referring/exit pages, timestamps. Used for debugging, abuse
-            prevention, and aggregate analytics.</li>
-        <li><strong>Device &amp; usage data:</strong> session identifiers,
-            pages viewed, clicks, time on page.</li>
-        <li><strong>Cookies:</strong> see &sect;3.</li>
-    </ul>
-    <h2 id="how-we-use">2. How we use information</h2>
-    <ul>
-        <li>To create and maintain your account.</li>
-        <li>To run the betting-game features you opt into (matches,
-            tournaments, brackets, leaderboards).</li>
-        <li>To send transactional email (verification, password reset,
-            tournament reminders, match results).</li>
-        <li>To operate, secure, and improve the Site.</li>
-        <li>To comply with legal obligations and enforce our
-            <a href="{% url 'core-web:terms' %}">Terms of Service</a>.</li>
-    </ul>
+        <h2>2. Cookies and similar technologies</h2>
+        <p>
+            We currently use only <strong>functional</strong> cookies needed to keep you
+            logged in and to secure forms (session and CSRF cookies). We do
+            <strong>not</strong> currently use third-party analytics or advertising
+            cookies. If this changes, we will update this Policy and provide any consent
+            controls required in your region.
+        </p>
 
-    <h2 id="cookies">3. Cookies &amp; similar technologies</h2>
-    <p>
-        We use only strictly-necessary cookies and local storage &mdash;
-        session, CSRF protection, and login state. These cannot be turned
-        off because the Site cannot function without them.
-    </p>
-    <p>
-        We do <strong>not</strong> use analytics cookies, advertising
-        cookies, or any third-party tracking. We do not run Google
-        Analytics, Google AdSense, Facebook Pixel, or any similar
-        third-party tracker on this Site. If that ever changes, this
-        policy will be updated and a consent banner added before any
-        tracking cookies are introduced.
-    </p>
-    <p>
-        You can clear cookies in your browser settings at any time.
-    </p>
+        <h2>3. How we use information</h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+            <li>operate and maintain the Service;</li>
+            <li>create and authenticate your account;</li>
+            <li>run game features such as matches, tournaments, and friends;</li>
+            <li>respond to your support requests;</li>
+            <li>detect and prevent fraud, abuse, and security issues;</li>
+            <li>improve the Service; and</li>
+            <li>comply with our legal obligations.</li>
+        </ul>
 
-    <h2 id="third-parties">4. Third-party services we use</h2>
-    <ul>
-        <li><strong>Postmark (or equivalent SMTP provider)</strong> &mdash;
-            transactional email delivery.</li>
-        <li><strong>Railway / Coolify</strong> &mdash; hosting infrastructure.</li>
-        <li><strong>Stripe</strong> &mdash; payment processing (only if
-            you make a purchase). Stripe&rsquo;s privacy policy applies to
-            payment data:
-            <a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>.</li>
-    </ul>
+        {% comment %}
+        ADVERTISING SECTION — disabled until ads (e.g. Ezoic) are actually live.
+        When you integrate an ad provider: (1) uncomment this block, (2) renumber
+        the sections below it, (3) add a cookie-consent banner for required
+        regions, and (4) update the Cookies section to mention ad cookies.
 
-    <h2 id="sharing">5. Who we share data with</h2>
-    <p>
-        We do <strong>not</strong> sell your personal data. We share data
-        only with:
-    </p>
-    <ul>
-        <li>Service providers listed in &sect;4, under written contract,
-            for the purposes described in this policy.</li>
-        <li>Law enforcement or regulators, when legally compelled.</li>
-        <li>A successor in interest (acquirer, merger partner), with
-            notice to you.</li>
-    </ul>
+        <h2>4. Advertising</h2>
+        <p>
+            We use third-party advertising services, including Ezoic, to display
+            advertisements on the Service. Ezoic and its partners may collect and process
+            data including IP address, device identifiers, browser information, cookies,
+            and usage and interaction data. This data may be used to personalize
+            advertisements, measure ad performance, and improve services. For more
+            information about Ezoic's data practices, see
+            <a href="https://g.ezoic.net/privacy/[DOMAIN]">Ezoic's privacy disclosures</a>.
+        </p>
+        {% endcomment %}
 
-    <h2 id="retention">6. How long we keep data</h2>
-    <ul>
-        <li><strong>Account data:</strong> until you delete your account;
-            then 30 days for backups, then permanent deletion.</li>
-        <li><strong>Email logs:</strong> 90 days, then deleted.</li>
-        <li><strong>Server access logs:</strong> 30 days, then aggregated
-            or deleted.</li>
-        <li><strong>Backups:</strong> rolling 35-day window.</li>
-    </ul>
+        <h2>4. Analytics</h2>
+        <p>
+            We use service providers, including our own analytics tooling, to understand
+            how the Service is used and to improve performance and features.
+        </p>
 
-    <h2 id="rights">7. Your rights</h2>
-    <h3>If you&rsquo;re in the EU, UK, or Switzerland (GDPR / UK GDPR)</h3>
-    <ul>
-        <li><strong>Access:</strong> request a copy of your data.</li>
-        <li><strong>Rectification:</strong> correct inaccuracies.</li>
-        <li><strong>Erasure:</strong> request deletion.</li>
-        <li><strong>Restriction:</strong> limit how we process your data.</li>
-        <li><strong>Portability:</strong> receive your data in a portable
-            format.</li>
-        <li><strong>Objection:</strong> object to processing based on
-            legitimate interests.</li>
-        <li><strong>Lodge a complaint</strong> with your supervisory
-            authority.</li>
-    </ul>
-    <h3>If you&rsquo;re in California (CCPA / CPRA)</h3>
-    <ul>
-        <li>Right to know what we collect, use, share.</li>
-        <li>Right to delete personal information.</li>
-        <li>Right to correct inaccurate information.</li>
-        <li>Right to opt out of &ldquo;sale&rdquo; or &ldquo;sharing&rdquo;
-            of personal information (we do not sell or share your
-            personal information).</li>
-        <li>Right to non-discrimination for exercising your rights.</li>
-    </ul>
-    <p>
-        To exercise any right,
-        <a href="{% url 'core-web:contact' %}">contact us</a>. We will
-        respond within 30 days (45 in some jurisdictions).
-    </p>
+        <h2>5. Age requirement and children&rsquo;s privacy</h2>
+        <p>
+            The Service is for adults <strong>18 and older</strong>. We ask for your date
+            of birth at registration to verify this. We do not knowingly collect personal
+            information from anyone under 18. If we learn that we have collected
+            information from someone under 18, we will take reasonable steps to delete it.
+        </p>
 
-    <h2 id="consent">8. Cookie controls</h2>
-    <p>
-        We don&rsquo;t use tracking or analytics cookies, so there&rsquo;s
-        no consent banner to manage. The strictly-necessary cookies
-        (session, CSRF, login) cannot be disabled because the Site cannot
-        function without them &mdash; clearing them will log you out.
-    </p>
+        <h2>6. How we share information</h2>
+        <p>
+            We do <strong>not</strong> sell your personal information. We share information
+            with:
+        </p>
+        <ul>
+            <li>
+                service providers who help us run the Service &mdash; including Resend
+                (email delivery), Stripe (payment processing), our cloud storage and
+                hosting providers, and our analytics tooling &mdash; strictly to perform
+                services for us;
+            </li>
+            <li>legal authorities when required by law; and</li>
+            <li>
+                a successor entity in connection with a merger, acquisition, or sale of
+                assets.
+            </li>
+        </ul>
+        <p>
+            Payment card details are handled by Stripe; we do not store full card numbers.
+        </p>
 
-    <h2 id="children">9. Children&rsquo;s privacy</h2>
-    <p>
-        The Site is intended for users 18 years and older. We do not
-        knowingly collect data from anyone under 18. If you believe a
-        child has provided us with personal information, please
-        <a href="{% url 'core-web:contact' %}">contact us</a> and we will
-        delete it.
-    </p>
+        <h2>7. Data retention</h2>
+        <p>
+            We keep personal information only as long as necessary to provide the Service,
+            comply with legal obligations, resolve disputes, and enforce our agreements.
+        </p>
 
-    <h2 id="changes">10. Changes to this policy</h2>
-    <p>
-        We&rsquo;ll update this page when our practices change. The
-        &ldquo;Last updated&rdquo; date at the top of the page reflects
-        the most recent revision. Material changes will also be
-        announced on the homepage or via email.
-    </p>
+        <h2>8. Security</h2>
+        <p>
+            We use reasonable administrative, technical, and organizational measures to
+            protect your information. No method of transmission or storage is completely
+            secure, and we cannot guarantee absolute security.
+        </p>
 
-    <h2 id="contact">11. Contacting us</h2>
-    <p>
-        Questions or requests? Email
-        <a href="mailto:privacy@paradisesports.example">privacy@paradisesports.example</a>
-        or use the <a href="{% url 'core-web:contact' %}">contact page</a>.
-    </p>
+        <h2>9. Your rights</h2>
+        <p>
+            Depending on where you live, you may have rights to access, correct, or delete
+            your personal information, or to opt out of certain processing. To make a
+            request, <a href="{% url 'core-web:contact' %}">contact us</a> and we will
+            respond as required by applicable law.
+        </p>
+
+        <h2>10. Third-party links</h2>
+        <p>
+            The Service may link to third-party websites or services. We are not
+            responsible for their privacy practices or content.
+        </p>
+
+        <h2>11. Changes to this Policy</h2>
+        <p>
+            We may update this Policy from time to time. Updated versions will be posted on
+            this page with a revised &ldquo;Last updated&rdquo; date.
+        </p>
+
+        <h2>12. Contact us</h2>
+        <p>
+            Questions about this Policy? Email
+            <a href="mailto:paradisesportsmande@gmail.com">paradisesportsmande@gmail.com</a>.
+        </p>
+    </article>
 </div>
-{% endblock content %}
+{% endblock %}

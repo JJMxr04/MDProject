@@ -1,60 +1,76 @@
-/* Navbar styles */
-.navbar {
-    background-color: #3D7EAA; /* Ocean blue */
-    overflow: visible; /* Ensure dropdowns are visible */
-    border-bottom: 3px solid #FFE47A; /* Sand yellow */
-    border-radius: 15px; /* Rounded corners */
-    border: 2px solid #005A9C; /* Darker ocean blue border */
-    margin-bottom: 10px; /* Space below navbar */
-    max-width: 1200px; /* Maximum width for the navbar */
-    width: 100%;
-    margin: 0 auto; /* Center the navbar horizontally */
-    box-sizing: border-box;
-  }
-  
-  .navbar-nav .nav-item .nav-link {
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    transition: color 0.3s, font-size 0.3s, text-decoration 0.3s; /* Smooth transition for hover effects */
-  }
-  
-  .navbar-nav .nav-item .nav-link:hover {
-    background-color: #1E90FF; /* Darker ocean blue */
-    color: #FFE47A; /* Sand yellow text */
-    font-size: 18px; /* Slightly larger text */
-    text-decoration: underline; /* Underline text */
-  }
-  
-  /* Adjusting the image inside the navbar */
-  .navbar-brand img {
-    max-height: 60px; /* Limit the height for smaller screens */
-    max-width: 100%; /* Ensure the image scales within its container */
-    height: auto; /* Maintain aspect ratio */
-    width: auto; /* Maintain aspect ratio */
-    object-fit: contain; /* Make sure the image fits within the container */
-  }
-  
-  /* Ensure the navbar container stays responsive */
-  .navbar .container-fluid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  
-  /* Style for the login button to match other buttons */
-  .btn-outline-success {
-    color: white;
-    background-color: transparent;
-    border: 1px solid white;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .btn-outline-success:hover {
-    background-color: #1E90FF; /* Darker ocean blue */
-    color: #FFE47A; /* Sand yellow text */
-    border-color: #1E90FF;
-  }
-  
+/* ==========================================================================
+   navbar.css — sticky, glassy primary navigation. Brand ocean accents.
+   ========================================================================== */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: rgba(255, 255, 255, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--ps-border);
+  transition: box-shadow var(--ps-dur) var(--ps-ease),
+              background-color var(--ps-dur) var(--ps-ease);
+  padding-block: var(--ps-space-2);
+}
+.site-nav.is-scrolled {
+  box-shadow: var(--ps-shadow-md);
+  background: rgba(255, 255, 255, .95);
+}
+
+.site-nav__inner {
+  max-width: var(--ps-container);
+  margin-inline: auto;
+  padding-inline: var(--ps-space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--ps-space-3);
+}
+
+.site-nav__brand { display: inline-flex; align-items: center; }
+.site-nav__logo {
+  max-height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.site-nav__links { gap: var(--ps-space-1); }
+.site-nav .nav-link {
+  position: relative;
+  color: var(--ps-text);
+  font-weight: 600;
+  padding: .5rem .9rem;
+  border-radius: var(--ps-radius-sm);
+  transition: color var(--ps-dur-fast) var(--ps-ease);
+}
+.site-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: .9rem; right: .9rem; bottom: .35rem;
+  height: 2px;
+  background: var(--ps-ocean);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--ps-dur) var(--ps-ease);
+}
+.site-nav .nav-link:hover,
+.site-nav .nav-link.active { color: var(--ps-ocean-700); text-decoration: none; }
+.site-nav .nav-link:hover::after,
+.site-nav .nav-link.active::after { transform: scaleX(1); }
+
+.site-nav__actions { display: flex; align-items: center; gap: var(--ps-space-2); }
+
+.site-nav__toggler { border: 0; padding: .4rem .55rem; }
+.site-nav__toggler:focus { box-shadow: var(--ps-ring); }
+/* Dark hamburger icon on the light navbar */
+.site-nav__toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2314202b' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991.98px) {
+  .site-nav__links { margin-top: var(--ps-space-2); }
+  .site-nav__actions { padding-block: var(--ps-space-2) var(--ps-space-1); }
+  .site-nav .nav-link::after { display: none; }
+}

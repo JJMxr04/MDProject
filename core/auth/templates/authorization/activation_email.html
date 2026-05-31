@@ -1,17 +1,33 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Register{% endblock title %}
+{% block title %}Activate your account · Paradise Sports{% endblock title %}
+{% block meta_description %}Check your email to activate your Paradise Sports account.{% endblock meta_description %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock css %}
 
 {% block content %}
-
-<h1> Activate Your Account</h1>
-<p> Thank you for registering!</p>
-<p> You have been sent an email with a link to activate your account </p>
-<p>Please click on the link in the email and then navigater back to the site to login</p>
-<p>If you are having trouble finding your email, please contact support at Contact Us</p>
-{% endblock content %}
+<div class="container">
+    <section class="auth">
+        <div class="auth__card auth__card--center">
+            <div class="auth__head">
+                <h1>Activate your account</h1>
+            </div>
+            <p class="ps-lead">Thanks for registering!</p>
+            <p>
+                We&rsquo;ve sent you an email with a link to activate your account. Click
+                the link, then navigate back to the site to log in.
+            </p>
+            <p class="auth__alert auth__alert--info">
+                Can&rsquo;t find the email? Check your spam folder, or
+                <a href="{% url 'core-web:contact' %}">contact us</a> for help.
+            </p>
+            <div class="auth__actions">
+                <a href="{% url 'core-auth:login' %}" class="ps-btn ps-btn--primary">Go to log in</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

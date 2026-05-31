@@ -1,23 +1,28 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Waitlist{% endblock title %}
+{% block title %}Thank you · Paradise Sports{% endblock title %}
+{% block meta_description %}You're on the Paradise Sports waitlist.{% endblock meta_description %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/waitlist_thank_you.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="container">
-  <div class="row justify-content-center align-items-center">
-<!--    <div class="col-md-6">-->
-      <div class="card bg-light text-black border-0 rounded-3 register-form-1">
-        <div class="card-body p-5 text-center">
-<!--          <h2 class="fw-bold mb-2 text-uppercase">Thank you for Signing up to Join PBL</h2>-->
-          <img src="{% static 'assets/auth/thank_you_waitlist.png' %}" alt="Thank You Image" class="img-fluid mt-4">
+    <section class="auth">
+        <div class="auth__card auth__card--center">
+            <img src="{% static 'assets/auth/thank_you_waitlist.png' %}" alt="" class="auth__art">
+            <h1>You&rsquo;re on the list! 🎉</h1>
+            <p class="ps-lead">
+                Thanks for joining the Paradise Sports waitlist. We&rsquo;ll email you the
+                moment your spot opens up.
+            </p>
+            <div class="auth__actions">
+                <a href="{% url 'core-web:home' %}" class="ps-btn ps-btn--primary">Back to home</a>
+                <a href="{% url 'core-web:about' %}" class="ps-btn ps-btn--ghost">Learn more</a>
+            </div>
         </div>
-      </div>
-<!--    </div>-->
-  </div>
+    </section>
 </div>
-{% endblock content %}
+{% endblock %}

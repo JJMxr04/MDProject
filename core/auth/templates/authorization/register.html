@@ -1,86 +1,59 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Register{% endblock title %}
+{% block title %}Sign up · Paradise Sports{% endblock title %}
+{% block meta_description %}Create your free Paradise Sports account.{% endblock meta_description %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock css %}
 
 {% block content %}
-<div class="row justify-content-center align-items-center">
-  <div class="col-md-6">
-    <div class="card bg-light text-black border-0 rounded-3 register-form-1">
-      <div class="card-body p-5 text-center">
-        <h2 class="fw-bold mb-2 text-uppercase text-black">Register</h2>
-        <p class="text-black-50 mb-5">Please enter your details to sign up!</p>
-
-        <!-- Alert Messages -->
-        {% if messages %}
-          <div class="mb-4">
-            {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        <form method="post" action="{% url 'core-auth:register' %}" class="mb-4">
-          {% csrf_token %}
-          
-          <div class="form-outline text-black form-black mb-4">
-            <h6>Username</h6>
-            {{ form.username }}
-            {% if form.username.errors %}
-              <div class="text-danger small">{{ form.username.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <div class="form-outline text-black form-black mb-4">
-            <h6>Email</h6>
-            {{ form.email }}
-            {% if form.email.errors %}
-              <div class="text-danger small">{{ form.email.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <div class="form-outline text-black form-black mb-4">
-            <h6>First Name</h6>
-            {{ form.first_name }}
-            {% if form.first_name.errors %}
-              <div class="text-danger small">{{ form.first_name.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <div class="form-outline text-black form-black mb-4">
-            <h6>Last Name</h6>
-            {{ form.last_name }}
-            {% if form.last_name.errors %}
-              <div class="text-danger small">{{ form.last_name.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <div class="form-outline text-black form-black mb-4">
-            <h6>Password</h6>
-            {{ form.password1 }}
-            {% if form.password1.errors %}
-              <div class="text-danger small">{{ form.password1.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <div class="form-outline text-black form-black mb-4">
-            <h6>Password Confirmation</h6>
-            {{ form.password2 }}
-            {% if form.password2.errors %}
-              <div class="text-danger small">{{ form.password2.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <button class="btnSubmit btn-lg px-5" type="submit">Sign Up</button>
-        </form>
-
-        <div>
-          <p class="mb-0 mt-4">Already have an account? <a href="/auth/login" class="link-login fw-bold text-black">Login</a></p>
-          <p class="mb-0 mt-4">Haven't signed up for the <a href="{% url 'core-auth:waitlist-list' %}" class="link-login fw-bold text-black">Waitlist?</a></p>
-        </div>
+<div class="container">
+  <section class="auth">
+    <div class="auth__card auth__card--wide">
+      <div class="auth__head">
+        <h1>Create your account</h1>
+        <p>Free to play — no real-money wagering.</p>
       </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="auth__alert auth__alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% else %}info{% endif %}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" action="{% url 'core-auth:register' %}" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+          {% if field.field.widget.input_type == 'checkbox' %}
+            <div class="form-field form-field--check">
+              <label class="check-label">
+                {{ field }}
+                <span>{{ field.label }}</span>
+              </label>
+              {% if field.help_text %}<span class="helptext">{{ field.help_text|safe }}</span>{% endif %}
+              {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+          {% else %}
+            <div class="form-field">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.help_text %}<span class="helptext">{{ field.help_text|safe }}</span>{% endif %}
+              {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        <button class="ps-btn ps-btn--primary ps-btn--block auth__submit" type="submit">Sign up</button>
+      </form>
+
+      <p class="auth__meta">
+        Already have an account? <a href="{% url 'core-auth:login' %}">Log in</a><br>
+        Or <a href="{% url 'core-auth:waitlist-list' %}">join the waitlist</a>.
+      </p>
     </div>
-  </div>
+  </section>
 </div>
 {% endblock content %}

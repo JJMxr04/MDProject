@@ -103,6 +103,10 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(db_index=True, unique=True)
+    # Date of birth — collected at registration to enforce the 18+ age
+    # requirement (Paradise Sports is 18+ only). Nullable so existing rows
+    # and admin/superuser creation that predate the field stay valid.
+    date_of_birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

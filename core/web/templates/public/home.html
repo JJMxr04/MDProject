@@ -1,119 +1,90 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/public/home.css' %}">
-{% endblock css %}
-{% block content %}
-<div class="container comp-container">
+{% block title %}Paradise Sports — the friendly sports prediction game{% endblock title %}
+{% block meta_description %}Paradise Sports turns the strategy of sports betting into a free, friendly game. Make your picks, earn points, and compete with friends — no real-money wagering.{% endblock meta_description %}
 
-    <!-- Hero Section with Animation -->
-    <section class="hero-cta-section text-center position-relative">
-        <div class="hero-background">
-            <img src="{% static 'assets/Images/Home/treasure2.png' %}" class="img-fluid" alt="Treasure Image">
-        </div>
-        <div class="overlay">
-            <h1 class="hero-title animate-fade-in">Welcome to PBL</h1>
-            <p class="hero-subtitle animate-fade-in">"The house always wins, but it doesn't have to!"</p>
-            <p class="cta-description animate-fade-in">Join PBL and start betting smarter. Your winnings await!</p>
-            <div class="text-center animate-fade-in">
-                <a href="{%url 'core-auth:waitlist-list' %}" class="btn btn-lg btn-primary">Join the Waitlist</a>
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/public/home.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Hero -->
+    <section class="ps-hero home-hero reveal">
+        <div class="ps-hero__inner">
+            <span class="ps-eyebrow">Paradise Sports</span>
+            <h1 class="home-hero__title">Outpick your friends — no money on the line.</h1>
+            <p class="ps-lead home-hero__lead">
+                The strategy and thrill of sports betting, reimagined as a free, friendly
+                game. Make your picks, earn points, and climb the leaderboard. No wagers,
+                no cash — just bragging rights.
+            </p>
+            <div class="home-hero__actions">
+                <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--primary ps-btn--lg">Join the waitlist</a>
+                <a href="{% url 'core-auth:login' %}" class="ps-btn ps-btn--ghost ps-btn--lg">Log in</a>
             </div>
+            <p class="home-hero__note">For entertainment only · No real-money wagering · 18+</p>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <div class="features-background">
-        <section class="features-section py-5">
-            <div class="row">
-                <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/Home/game.png' %}" class="feature-image rounded" alt="Community Image">
-                    <a href="https://www.flaticon.com/free-icons/joystick" class="small-link">Joystick icons created by Good Ware - Flaticon</a>
-                    <h3 class="feature-title">The Game</h3>
-                    <p class="feature-description">Connect with fellow bettors to play The game and win untold riches.</p>
-                </div>
-                <div class="col-md-4 text-center animate-slide-up">
-                    <img src="{% static 'assets/Images/Home/graph.png' %}" class="feature-image rounded" alt="Bet Image">
-                    <a href="https://www.flaticon.com/free-icons/growth" class="small-link">Growth icons created by Freepik - Flaticon</a>
-                    <h3 class="feature-title">Smart Betting</h3>
-                    <p class="feature-description">Analyze and place bets with the confidence of professional bettors.</p>
-                </div>
-                <div class="col-md-4 text-center animate-slide-up">
-                    <div class="feature-icon-wrap" aria-hidden="true">
-                        <i class="bi bi-trophy-fill feature-icon"></i>
-                    </div>
-                    <h3 class="feature-title">Tournaments &amp; Brackets</h3>
-                    <p class="feature-description">Climb the leaderboard in live tournaments and head-to-head brackets — winners take the pot.</p>
-                </div>
-            </div>
-        </section>
-    </div>
+    <!-- Features -->
+    <section class="ps-section" aria-labelledby="features-heading">
+        <div class="ps-section__head reveal">
+            <span class="ps-eyebrow">Why Paradise Sports</span>
+            <h2 id="features-heading">All the competition, none of the risk</h2>
+        </div>
+        <div class="ps-grid">
+            <article class="ps-card ps-card--hover reveal">
+                <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-controller"></i></div>
+                <h3>Head-to-head play</h3>
+                <p>Go head-to-head with friends in match-ups built around real sporting events. Sharp predictions win the round.</p>
+            </article>
+            <article class="ps-card ps-card--hover reveal">
+                <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-trophy"></i></div>
+                <h3>Tournaments &amp; brackets</h3>
+                <p>Climb the leaderboard in live tournaments and head-to-head brackets. Prove you are the sharpest in your group.</p>
+            </article>
+            <article class="ps-card ps-card--hover reveal">
+                <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-graph-up-arrow"></i></div>
+                <h3>Analytics <span class="ps-badge ps-badge--wip">WIP</span></h3>
+                <p>Explore past results — event wins and final scores — to inform your next pick. More analytics are on the way.</p>
+            </article>
+        </div>
+    </section>
 
     <hr>
 
-<!-- The Game Section -->
-<section class="the-game-section py-5 text-center bg-light">
-    <div class="container">
-        <h2 class="section-title">Experience "The Game"</h2>
-        <p class="section-description">Participate in individual matches or join exciting tournaments. Prove your skills, rise through the ranks, and win big!</p>
-        <div class="row text-center">
-            <div class="col-md-6 animate-slide-left">
-                <div class="game-mode-card">
-                    <h3>Individual Matches</h3>
-                    <p>Challenge your peers in one-on-one matchups and show who's the best bettor. Strategic decisions and sharp predictions are key to victory.</p>
-                    <a href="{%url 'core-auth:waitlist-list' %}" class="btn btn-outline-primary">Join a Match</a>
-                </div>
-            </div>
-            <div class="col-md-6 animate-slide-right">
-                <div class="game-mode-card">
-                    <h3>Tournaments</h3>
-                    <p>Enter high-stakes tournaments where the best bettors compete for supremacy. Bet smart, climb the leaderboard, and claim your prize!</p>
-                    <a href="{%url 'core-auth:waitlist-list' %}" class="btn btn-primary">Join a Tournament</a>
-                </div>
-            </div>
+    <!-- Game modes -->
+    <section class="ps-section" aria-labelledby="thegame-heading">
+        <div class="ps-section__head reveal">
+            <span class="ps-eyebrow">How you play</span>
+            <h2 id="thegame-heading">Experience Paradise Sports</h2>
+            <p class="ps-lead">Play one-on-one matches or join a tournament. Make your picks, rise through the ranks, and win the bragging rights.</p>
         </div>
-    </div>
-</section>
-
-<hr>
-
-<!-- Live Upcoming Events Section -->
-<!-- <section class="live-events-section py-5 bg-dark text-light">
-    <div class="container">
-        <h2 class="section-title text-center">Live Upcoming Events</h2>
-        <p class="section-description text-center">Get the best odds and stay updated with live scores on our latest events.</p>
-        <div class="row text-center">
-            <div class="col-md-4 animate-fade-in">
-                <div class="event-card bg-light text-dark">
-                    <h3>High Stakes Derby</h3>
-                    <p class="event-time">Starting in: 2 hours</p>
-                    <p class="odds">Odds: 2.5x</p>
-                    <a href="#" class="btn btn-outline-primary">View Odds</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-fade-in">
-                <div class="event-card bg-light text-dark">
-                    <h3>Team Bet-Off Finals</h3>
-                    <p class="event-time">Starting in: 3 hours</p>
-                    <p class="odds">Odds: 3.0x</p>
-                    <a href="#" class="btn btn-outline-primary">View Odds</a>
-                </div>
-            </div>
-            <div class="col-md-4 animate-fade-in">
-                <div class="event-card bg-light text-dark">
-                    <h3>1v1 Showdown</h3>
-                    <p class="event-time">Starting in: 5 hours</p>
-                    <p class="odds">Odds: 1.8x</p>
-                    <a href="#" class="btn btn-outline-primary">View Odds</a>
-                </div>
-            </div>
+        <div class="ps-grid home-modes">
+            <article class="ps-card reveal">
+                <h3>Individual matches</h3>
+                <p>Challenge a friend in a one-on-one match-up and see who reads the game better. Strategy and sharp predictions decide the winner.</p>
+                <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--ghost">Join a match</a>
+            </article>
+            <article class="ps-card reveal">
+                <h3>Tournaments</h3>
+                <p>Enter tournaments where the best predictors compete for the top of the leaderboard. Pick smart and climb the bracket.</p>
+                <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--primary">Join a tournament</a>
+            </article>
         </div>
-        <div class="text-center py-3">
-            <a href="#" class="btn btn-primary">See All Live Events</a>
-        </div>
-    </div>
-</section> -->
+    </section>
 
+    <!-- CTA -->
+    <section class="ps-section ps-section--tight">
+        <div class="ps-cta reveal">
+            <h2>Ready to make your picks?</h2>
+            <p class="ps-lead">Join the waitlist and be first in line when the next season opens.</p>
+            <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--accent ps-btn--lg">Join the waitlist</a>
+        </div>
+    </section>
 
 </div>
 {% endblock %}

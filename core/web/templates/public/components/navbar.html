@@ -1,46 +1,28 @@
-
 {% load static %}
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/public/navbar.css' %}">
-{% endblock css %}
-
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="img-fluid rounded" alt="Image">
+<nav class="navbar navbar-expand-lg site-nav" data-ps-nav aria-label="Primary">
+  <div class="container-fluid site-nav__inner">
+    <a class="navbar-brand site-nav__brand" href="{% url 'core-web:home' %}">
+      <img src="{% static 'assets/Logo/paradise_logo_2_normal.png' %}" class="site-nav__logo" alt="Paradise Sports home" width="160" height="60">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler site-nav__toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+    <div class="collapse navbar-collapse" id="siteNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 site-nav__links">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'core-web:home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'core-web:game-rules' %}">The Game Rules</a>
+          <a class="nav-link" aria-current="page" href="{% url 'core-web:home' %}">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core-web:about' %}">About</a>
         </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            News
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Sports Events</a></li>
-            <li><a class="dropdown-item" href="#">Tournament Updates</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Blog</a></li>
-          </ul>
-        </li> -->
       </ul>
-      <form class="d-flex" role="login">
-        <button class="btn btn-outline-success" type="button">
-          <a class="nav-link active" aria-current="page" href="/auth/login">Login</a>
-        </button>
-
-      </form>
+      <div class="site-nav__actions">
+        <a class="ps-btn ps-btn--accent" href="{% url 'core-auth:login' %}">Log in</a>
+      </div>
     </div>
   </div>
 </nav>

@@ -1,82 +1,75 @@
-.footer {
-  background-color: transparent;
-  padding: 20px;
-  margin: auto; /* Push footer to the bottom */
-  font-family: Arial, sans-serif;
-  color: #333; /* Text color */
-  max-width: 1200px; /* Maximum width for the navbar */
-  width: 100%;
+/* ==========================================================================
+   footer.css — site footer. Cohesive single surface (no dark frame around a
+   card — that was the old "black spacing"). Sits flush at the bottom via the
+   sticky-footer layout in base.css.
+   ========================================================================== */
 
+.site-footer {
+  background: var(--ps-surface);
+  border-top: 1px solid var(--ps-border);
+  color: var(--ps-text-muted);
+  padding-block: var(--ps-space-6) var(--ps-space-4);
+  margin-top: var(--ps-space-6);
 }
 
-.footer-container {
-  background: #FFE47A; /* Sand yellow background */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15); /* Slightly larger shadow */
-  box-sizing: border-box;
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 2fr;
+  gap: var(--ps-space-5);
+  align-items: start;
+}
+
+.site-footer__brand {
   display: flex;
-  justify-content: space-between; /* Space out elements */
+  flex-direction: column;
+  gap: var(--ps-space-2);
+  align-items: flex-start;
+}
+.site-footer__logo { width: 64px; height: auto; }
+.site-footer__tagline {
+  margin: 0;
+  font-size: var(--ps-step--1);
+  color: var(--ps-text-muted);
+  max-width: 18rem;
+}
+
+.site-footer__nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ps-space-4);
+}
+.site-footer__col h4 {
+  margin: 0 0 var(--ps-space-2);
+  font-size: var(--ps-step--1);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ps-text);
+}
+.site-footer__col a {
+  display: block;
+  padding: .3rem 0;
+  color: var(--ps-text-muted);
+  font-size: var(--ps-step-0);
+  transition: color var(--ps-dur-fast) var(--ps-ease);
+}
+.site-footer__col a:hover { color: var(--ps-ocean-700); text-decoration: none; }
+
+.site-footer__bottom {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+  flex-wrap: wrap;
+  gap: var(--ps-space-2);
+  margin-top: var(--ps-space-5);
+  padding-top: var(--ps-space-4);
+  border-top: 1px solid var(--ps-border);
+  font-size: var(--ps-step--1);
 }
+.site-footer__disclaimer { font-style: italic; }
 
-.footer .logo-container {
-  display: flex;
-  align-items: center;
-}
-
-.footer .logo {
-  height: 50px;
-  margin-right: 15px;
-}
-
-.footer .nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer .nav-links a {
-  color: #5CACEE; /* Blue link color */
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.footer .nav-links a:hover {
-  text-decoration: underline;
-}
-
-.footer .social-icons {
-  display: flex;
-  gap: 15px;
-}
-
-.footer .social-icons a {
-  color: #5CACEE;
-  font-size: 18px;
-}
-
-.footer .social-icons a:hover {
-  color: #333;
-}
-
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column; /* Stack items on smaller screens */
-    text-align: center;
-  }
-
-  .footer .logo-container {
-    margin-bottom: 20px;
-  }
-
-  .footer .nav-links {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .footer .social-icons {
-    justify-content: center;
-    margin-top: 15px;
-  }
+@media (max-width: 720px) {
+  .site-footer__inner { grid-template-columns: 1fr; gap: var(--ps-space-4); }
+  .site-footer__nav { grid-template-columns: repeat(2, 1fr); }
+  .site-footer__bottom { flex-direction: column; text-align: center; }
 }
