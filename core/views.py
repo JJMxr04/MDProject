@@ -1,6 +1,13 @@
+import json
+import logging
+
 from django.db import connection
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+logger = logging.getLogger("core")
 
 
 # Public marketing routes — these are the only paths search engines should
@@ -69,6 +76,32 @@ def portal_or_404(request, exception=None):
         "<h1>404</h1><p>The page you requested could not be found.</p>",
         content_type="text/html",
     )
+
+
+@csrf_exempt
+@require_POST
+def csp_report(request):
+    """CSP violation report sink (S-7).
+
+    The Content-Security-Policy-Report-Only header points its ``report-uri``
+    here so we can watch what a strict ``script-src 'self'`` policy *would*
+    block (CDN scripts, inline handlers) before we flip it to enforce. The
+    browser POSTs an ``application/csp-report`` JSON body; we log it and return
+    204. csrf-exempt because the browser sends it without our token; it carries
+    no privileged action (write-only-to-logs).
+    """
+    try:
+        payload = json.loads(request.body.decode("utf-8") or "{}")
+    except (ValueError, UnicodeDecodeError):
+        payload = {"_raw": request.body[:500].decode("latin-1", "replace")}
+    report = payload.get("csp-report", payload)
+    logger.warning(
+        "CSP-violation blocked=%s directive=%s uri=%s",
+        report.get("blocked-uri"),
+        report.get("violated-directive") or report.get("effective-directive"),
+        report.get("document-uri"),
+    )
+    return HttpResponse(status=204)
 
 
 def robots_txt(request):

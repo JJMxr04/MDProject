@@ -114,6 +114,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'axes',  # brute-force lockout on auth views (S-9)
     "django_celery_results",  # Dead post-Procrastinate cutover; kept so old core_crons migrations replay on fresh DBs.
     "django_celery_beat",     # Dead post-Procrastinate cutover; kept for the same reason.
     "procrastinate.contrib.django",
@@ -149,6 +150,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # CSP header (S-7) — report-only for now (see CONTENT_SECURITY_POLICY_REPORT_ONLY
+    # below). Sits high so the header is attached to every response.
+    'csp.middleware.CSPMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -173,6 +177,9 @@ MIDDLEWARE = [
     # portal HTML response with the captured aggrigator flame graph(s).
     # See core/middleware/profile_passthrough.py.
     'core.middleware.profile_passthrough.ProfilePassthroughMiddleware',
+    # django-axes (S-9) — MUST be last: it wraps the auth flow and returns the
+    # lockout response. Needs request.user, so it sits after AuthenticationMiddleware.
+    'axes.middleware.AxesMiddleware',
 ]
 
 # Aggrigator profile-passthrough feature flag. When True, the
@@ -414,8 +421,42 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend MUST be first: it short-circuits with PermissionDenied
+    # when the (IP, username) pair is locked, then falls through (returns None) to
+    # the real backend when it isn't. It does NOT authenticate by itself.
+    'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',  # Keep the default model backend
 ]
+
+# ---------------------------------------------------------------------------
+# django-axes (S-9) — brute-force / credential-stuffing brake on the
+# server-rendered auth views (login + admin login). Locks the (IP, username)
+# pair after AXES_FAILURE_LIMIT failures for AXES_COOLOFF_TIME, then auto-clears.
+# The v1 JSON API is throttled separately (core/api/throttling.py).
+# ---------------------------------------------------------------------------
+AXES_FAILURE_LIMIT = 10
+AXES_COOLOFF_TIME = timedelta(minutes=15)
+# Lock by SOURCE IP only. Rationale: (a) it's consistent — axes can't reliably
+# capture the username from this login flow (it stores NULL), so an (ip, username)
+# key would record under NULL but check under the real username, letting an
+# attacker bypass the lock with valid-format input; (b) IP-only locks the
+# *attacker's* source, never a username globally, so it can't be used to lock a
+# specific victim out (the targeted-DoS the combo key was meant to avoid). The
+# only cost is shared-NAT collateral, acceptable for this app and bounded by the
+# 15-min cooloff. Real client IP comes from the proxy settings below.
+AXES_LOCKOUT_PARAMETERS = ["ip_address"]
+AXES_RESET_ON_SUCCESS = True   # a good login clears the failure counter
+AXES_HTTP_RESPONSE_CODE = 429  # "rate limited", not 403
+AXES_ENABLE_ADMIN = True       # review/reset lockouts from Django admin
+AXES_VERBOSE = True
+# Behind Coolify/Traefik the real client IP is in X-Forwarded-For (one proxy
+# hop). Without this, axes would see the proxy's IP for everyone, collapsing the
+# per-IP dimension. Mirrors the single-trusted-proxy assumption in
+# SECURE_PROXY_SSL_HEADER / S-18. Only in prod — local/tests hit REMOTE_ADDR
+# directly (no XFF), where proxy_count would mis-resolve.
+if not DEBUG:
+    AXES_IPWARE_PROXY_COUNT = 1
+    AXES_IPWARE_META_PRECEDENCE_ORDER = ["HTTP_X_FORWARDED_FOR", "REMOTE_ADDR"]
 
 
 
@@ -485,6 +526,42 @@ SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 # look insecure. Trusts ONLY this header from a single proxy hop.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
+
+# ---------------------------------------------------------------------------
+# Content-Security-Policy (S-7) — django-csp, REPORT-ONLY first.
+#
+# Report-only does NOT block anything; the browser POSTs a violation report to
+# /csp-report/ (logged) so we can see what a strict policy *would* break before
+# enforcing. The target end-state is `script-src 'self'` (no unsafe-eval, no
+# unsafe-inline scripts) — achievable because the islands use the Alpine CSP
+# build (no eval) and we'll self-host the libs (plan 08, Q9). The strict
+# script-src here will REPORT the current CDN scripts (Bootstrap on the public
+# site, Jazzmin/Google-fonts in admin) — that's the signal for what to vendor.
+#
+# To enforce later: copy this dict to CONTENT_SECURITY_POLICY (drop _REPORT_ONLY)
+# once the report log is clean. style-src keeps 'unsafe-inline' for now (styles
+# are far lower XSS risk than scripts; tighten in a later pass).
+# ---------------------------------------------------------------------------
+CONTENT_SECURITY_POLICY_REPORT_ONLY = {
+    # The Django admin (Jazzmin/AdminLTE) and the silk profiler are inline-script
+    # and CDN heavy and are NOT targets for `script-src 'self'` — excluding them
+    # keeps the /csp-report/ log focused on the portal + public surfaces we
+    # actually intend to harden. (django-csp matches these as path prefixes.)
+    "EXCLUDE_URL_PREFIXES": ["/admin/", "/silk/"],
+    "DIRECTIVES": {
+        "default-src": ["'self'"],
+        "script-src": ["'self'"],
+        "style-src": ["'self'", "'unsafe-inline'"],
+        "img-src": ["'self'", "data:", "https://*.s3.amazonaws.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com", "data:"],
+        "connect-src": ["'self'"],
+        "frame-ancestors": ["'none'"],
+        "base-uri": ["'self'"],
+        "form-action": ["'self'"],
+        "object-src": ["'none'"],
+        "report-uri": "/csp-report/",
+    },
+}
 
 # CSRF requires the full origin (scheme + host) for any cross-domain POST.
 # Coolify hosts the app on a custom domain — list it here via env so the

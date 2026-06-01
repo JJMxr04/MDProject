@@ -3,16 +3,21 @@ from datetime import timedelta
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
+from core.api.auth import V1_AUTHENTICATION_CLASSES
 from core.event.models import Selection
 from core.event.models.odds.quote import OddsQuote
 
 
 class SelectionMovementView(APIView):
-    permission_classes = [AllowAny]
+    # S-3/D4: locked to authenticated callers + `user` throttle (was AllowAny).
+    authentication_classes = V1_AUTHENTICATION_CLASSES
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
 
     def get(self, request, selection_id):
         selection = Selection.objects.filter(pk=selection_id).first()

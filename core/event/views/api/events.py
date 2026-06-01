@@ -3,10 +3,12 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
+from core.api.auth import V1_AUTHENTICATION_CLASSES
 from core.event.models import Event
 from core.event.odds.service import get_event_odds
 from core.event.serializers.event import EventSerializer, EventWithMarketsSerializer
@@ -33,7 +35,12 @@ def _parse_bool(value):
 
 
 class EventListView(APIView):
-    permission_classes = [AllowAny]
+    # S-3/D4: was AllowAny (anonymous). Locked to authenticated callers (portal
+    # session cookie or future JWT) + the `user` throttle scope. No anonymous
+    # caller exists in the codebase (audited).
+    authentication_classes = V1_AUTHENTICATION_CLASSES
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
     pagination_class = EventPageNumberPagination
 
     def get(self, request):
@@ -88,7 +95,10 @@ class EventListView(APIView):
 
 
 class EventDetailView(APIView):
-    permission_classes = [AllowAny]
+    # S-3/D4: locked down (see EventListView).
+    authentication_classes = V1_AUTHENTICATION_CLASSES
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
 
     def get(self, request, event_id):
         event = Event.objects.select_related("home_team", "away_team", "sport").filter(pk=event_id).first()

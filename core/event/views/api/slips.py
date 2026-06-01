@@ -2,10 +2,12 @@ import uuid
 from decimal import Decimal
 
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
+from core.api.auth import V1_AUTHENTICATION_CLASSES
 from core.event.models import Selection
 
 
@@ -14,7 +16,12 @@ class SlipsView(APIView):
     snapshot with current odds and the combined decimal. We don't persist the
     slip here; that's a future feature."""
 
-    permission_classes = [AllowAny]
+    # S-3/D4: POST /api/slips was anonymous; now authenticated (session+JWT) +
+    # `user` throttle. SessionAuthentication enforces CSRF on the POST for
+    # cookie-authed callers; JWT callers are exempt as usual.
+    authentication_classes = V1_AUTHENTICATION_CLASSES
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
 
     def post(self, request):
         legs_in = request.data.get("legs") or []

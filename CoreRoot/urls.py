@@ -8,7 +8,7 @@ from core.admin.admin import custom_admin_view
 from core.auth.views.password_reset import BrandedPasswordResetView
 from core.billing.views.webhook import stripe_webhook
 from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
-from core.views import healthz, portal_or_404, robots_txt
+from core.views import csp_report, healthz, portal_or_404, robots_txt
 from django.contrib.auth import views as auth_views
 
 
@@ -32,6 +32,8 @@ urlpatterns = [
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),
+    # CSP violation report sink (report-only phase of S-7).
+    path("csp-report/", csp_report, name="csp-report"),
     # Container health probe — Coolify / docker / k8s readiness check.
     path("healthz", healthz, name="healthz"),
     path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),

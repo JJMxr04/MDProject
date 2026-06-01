@@ -5,11 +5,17 @@ migration. The reverse namespace is ``api-v1`` (e.g. ``api-v1:ping``).
 """
 
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 
+from core.api.v1.notifications import NotificationViewSet
 from core.api.v1.ping import PingView
 
 app_name = "api-v1"
 
+router = SimpleRouter()
+router.register("notifications", NotificationViewSet, basename="notifications")
+
 urlpatterns = [
     path("_ping/", PingView.as_view(), name="ping"),
+    *router.urls,
 ]
