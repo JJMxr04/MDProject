@@ -24,7 +24,7 @@ def get_notifications(request):
 def read_notifications(request, not_id):
     try:
 
-        Notification.objects.mark_read(not_id)
+        Notification.objects.mark_read(not_id, request.user)
 
 
         return JsonResponse({'status': 'success'}, status=200)

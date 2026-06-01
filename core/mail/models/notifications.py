@@ -8,9 +8,14 @@ class NotificationManager(models.Manager):
 
         return self.filter(user=user).all()
 
-    def mark_read(self,id):
-
-        notification = self.filter(id=id).first()
+    def mark_read(self, id, user):
+        # Ownership-scoped: only the recipient may mark their own notification
+        # read. Filtering by (id, user) means another user's id matches no row
+        # -> DoesNotExist -> the view returns 404 (existence not leaked).
+        # See findings.md S-13 (IDOR).
+        notification = self.filter(id=id, user=user).first()
+        if notification is None:
+            raise self.model.DoesNotExist
         notification.delete()  # Delete the notification
 
     def create_notification(self, user, message):

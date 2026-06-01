@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from core.match.models import Match  # Assuming you have a Match model
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
+@login_required(login_url='/auth/login/')
 def my_match_list_view(request):
     search_query = request.GET.get('search', '')
     state = request.GET.get('state', '')

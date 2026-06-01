@@ -7,10 +7,12 @@ from core.event.serializers.event import EventSerializer
 from core.event.serializers.market import MarketSerializer
 from core.event.serializers.selection import SelectionSerializer
 from core.game.models import Game
+from core.match.decorators import player_in_game_required
 
 
 @require_GET
 @login_required(login_url="/auth/login/")
+@player_in_game_required
 def event_markets(request, game_id):
     """Return the event the slot is locked to plus any picks already placed.
 

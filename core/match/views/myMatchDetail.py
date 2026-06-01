@@ -138,6 +138,7 @@ def upload_pick(request, match_id):
 
 @require_POST
 @login_required(login_url='/auth/login/')
+@player_in_game_required
 def pick_on_locked_slot(request, game_id):
     """Pick endpoint for slots whose market is pre-locked (Golden Game).
 
@@ -191,6 +192,7 @@ def pick_on_locked_slot(request, game_id):
 
 @require_POST
 @login_required(login_url='/auth/login/')
+@player_in_game_required
 def player_2_select_outcome(request, game_id):
     from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
 

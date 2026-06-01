@@ -91,7 +91,9 @@ def create_public_match_view(request):
 
 @login_required(login_url='/auth/login/')
 def public_match_detail_view(request, match_id):
-    match = get_object_or_404(Match, id=match_id)
+    match = get_object_or_404(
+        Match.objects.select_related("player_1", "player_2"), id=match_id
+    )
 
     # If the viewer is already in the match, the actual pick UI lives on
     # /portal/match/<id>/ (my_match_detail). We expose a link to it here
@@ -100,6 +102,15 @@ def public_match_detail_view(request, match_id):
         request.user.is_authenticated
         and (request.user == match.player_1 or request.user == match.player_2)
     )
+
+    # Access control (findings.md S-4b): this is the *public join* page. A
+    # match is only viewable here if it's still open to join (state='created')
+    # OR the viewer is one of its players. Otherwise a logged-in user could
+    # read any match by id (opponent, result, picks) -> IDOR. 404 (not 403)
+    # so we don't leak that the match exists.
+    if match.match_state != 'created' and not is_player_in_match:
+        from django.http import Http404
+        raise Http404("No Match matches the given query.")
 
     context = {
         'match': match,

@@ -15,7 +15,12 @@ class UserSerializer(AbstractSerializer):
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email', 'is_active',
                   'created', 'updated', 'is_admin', 'is_staff', 'activated_link']
-        read_only_field = ['is_active', 'is_admin', 'id', 'is_staff', 'activated_link']
+        # NOTE: `read_only_fields` (plural). The previous `read_only_field`
+        # (singular) was silently ignored by DRF, leaving is_staff/is_admin/
+        # is_active WRITABLE — a privilege-escalation primer. See findings.md
+        # S-14. Privilege + identity fields are now genuinely read-only.
+        read_only_fields = ['id', 'is_active', 'is_admin', 'is_staff', 'activated_link',
+                            'created', 'updated']
         # Avatar is exposed read-only — uploads are disabled until S3 is wired.
         extra_kwargs = {'avatar': {'read_only': True}}
 
@@ -66,7 +71,10 @@ class UserMeSerializer(AbstractSerializer):
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'bio', 'avatar', 'email',
                   'created', 'updated']
-        read_only_field = ['id', 'created', 'updated', 'is_active', 'is_admin', 'is_staff', 'activated_link']
+        # `read_only_fields` (plural) — see UserSerializer note / findings.md
+        # S-14. Privilege fields aren't in this serializer's `fields`; keep the
+        # identity fields read-only with the correct attribute name.
+        read_only_fields = ['id', 'created', 'updated']
         # Avatar is exposed read-only — uploads are disabled until S3 is wired.
         extra_kwargs = {'avatar': {'read_only': True}}
 
