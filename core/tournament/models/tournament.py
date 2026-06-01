@@ -351,6 +351,10 @@ class Tournament(models.Model):
 
     objects = TournamentManager()
 
+    @property
+    def players(self):
+        return self.player_set
+
     class Meta:
         db_table = 'core_tournament'
 

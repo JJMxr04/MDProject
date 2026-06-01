@@ -11,6 +11,21 @@ These mirror the intent of the existing function-view decorators in
 
 from rest_framework.permissions import BasePermission
 
+from core.billing.entitlement import user_can_access_analytics
+
+
+class IsPaid(BasePermission):
+    """Requester is entitled to analytics.
+
+    Mirrors the portal ``@require_paid`` gate: defers to
+    ``user_can_access_analytics``, which honors ``ANALYTICS_FREE_FOR_ALL``
+    (everyone entitled when set) and the user's Subscription otherwise.
+    Groundwork for v1 analytics endpoints.
+    """
+
+    def has_permission(self, request, view):
+        return user_can_access_analytics(request.user)
+
 
 class IsOwner(BasePermission):
     """``obj.<owner_field> == request.user`` (default field ``user``).

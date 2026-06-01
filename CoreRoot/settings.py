@@ -150,8 +150,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # CSP header (S-7) — report-only for now (see CONTENT_SECURITY_POLICY_REPORT_ONLY
-    # below). Sits high so the header is attached to every response.
+    # CSP header (S-7) — enforced (see CONTENT_SECURITY_POLICY below). Sits high
+    # so the header is attached to every response.
     'csp.middleware.CSPMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
@@ -528,32 +528,34 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
 # ---------------------------------------------------------------------------
-# Content-Security-Policy (S-7) — django-csp, REPORT-ONLY first.
+# Content-Security-Policy (S-7) — django-csp, ENFORCED.
 #
-# Report-only does NOT block anything; the browser POSTs a violation report to
-# /csp-report/ (logged) so we can see what a strict policy *would* break before
-# enforcing. The target end-state is `script-src 'self'` (no unsafe-eval, no
-# unsafe-inline scripts) — achievable because the islands use the Alpine CSP
-# build (no eval) and we'll self-host the libs (plan 08, Q9). The strict
-# script-src here will REPORT the current CDN scripts (Bootstrap on the public
-# site, Jazzmin/Google-fonts in admin) — that's the signal for what to vendor.
+# All scripts/styles/fonts/images are self-hosted (Bootstrap, bootstrap-icons,
+# Alpine CSP build, Chart.js, Inter all vendored), and the portal/public surface
+# is fully inline-script-free (no inline <script>, no on* handlers, no
+# javascript: URIs — all externalized; the Alpine CSP build needs no eval). So
+# `script-src 'self'` is STRICT: no 'unsafe-inline', no 'unsafe-eval'. This blocks
+# inline-script XSS, external-origin scripts, and eval entirely — plus plugins
+# (object-src none), framing (frame-ancestors none), base-tag hijack, off-origin
+# form posts, and any off-origin style/img/font/fetch.
 #
-# To enforce later: copy this dict to CONTENT_SECURITY_POLICY (drop _REPORT_ONLY)
-# once the report log is clean. style-src keeps 'unsafe-inline' for now (styles
-# are far lower XSS risk than scripts; tighten in a later pass).
+# style-src keeps 'unsafe-inline' — inline `style=""` attributes are pervasive and
+# far lower XSS risk than scripts; tightening that is a separate, optional pass.
+# `<script type="application/json">` data blocks (json_script) are non-executable
+# and unaffected by script-src.
+#
+# report-uri stays so any enforced block (e.g. someone re-adds a CDN link or an
+# inline handler) surfaces at /csp-report/. Admin/silk are excluded (Jazzmin/
+# AdminLTE are inline+CDN heavy and out of scope).
 # ---------------------------------------------------------------------------
-CONTENT_SECURITY_POLICY_REPORT_ONLY = {
-    # The Django admin (Jazzmin/AdminLTE) and the silk profiler are inline-script
-    # and CDN heavy and are NOT targets for `script-src 'self'` — excluding them
-    # keeps the /csp-report/ log focused on the portal + public surfaces we
-    # actually intend to harden. (django-csp matches these as path prefixes.)
+CONTENT_SECURITY_POLICY = {
     "EXCLUDE_URL_PREFIXES": ["/admin/", "/silk/"],
     "DIRECTIVES": {
         "default-src": ["'self'"],
         "script-src": ["'self'"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "data:", "https://*.s3.amazonaws.com"],
-        "font-src": ["'self'", "https://fonts.gstatic.com", "data:"],
+        "font-src": ["'self'", "data:"],
         "connect-src": ["'self'"],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],

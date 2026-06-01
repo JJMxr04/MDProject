@@ -16,7 +16,7 @@
     <form method="get" class="d-flex gap-2 align-items-center">
       <label class="small text-muted mb-0" for="bets-status">Status</label>
       <select id="bets-status" name="status" class="form-select form-select-sm"
-              onchange="this.form.submit()" style="max-width: 140px;">
+              data-autosubmit style="max-width: 140px;">
         {% for value, label in status_filters %}
           <option value="{{ value }}" {% if value == status_filter %}selected{% endif %}>{{ label }}</option>
         {% endfor %}
@@ -97,7 +97,7 @@
                     <form method="post" action="{% url 'core-portal:analytics-bets-action' bet_id=b.id %}" class="d-inline">
                       {% csrf_token %}
                       <input type="hidden" name="_action" value="settle">
-                      <select name="settlement_status" class="form-select form-select-sm d-inline-block" style="width: auto;" onchange="this.form.submit()" aria-label="Settle">
+                      <select name="settlement_status" class="form-select form-select-sm d-inline-block" style="width: auto;" data-autosubmit aria-label="Settle">
                         <option value="">Settle…</option>
                         <option value="won">Won</option>
                         <option value="lost">Lost</option>
@@ -114,7 +114,7 @@
                     </form>
                   {% endif %}
                   <form method="post" action="{% url 'core-portal:analytics-bets-action' bet_id=b.id %}" class="d-inline"
-                        onsubmit="return confirm('Delete this bet?')">
+                        data-confirm="Delete this bet?">
                     {% csrf_token %}
                     <input type="hidden" name="_action" value="delete">
                     <button class="btn btn-sm btn-link text-danger p-0" type="submit" title="Delete">✕</button>

@@ -12,9 +12,30 @@
 
     {% if request.user.is_authenticated %}
     <a class="topbar__bell btn-ui btn-ui--ghost btn-ui--icon-only" href="{% url 'core-portal:invite-list' %}" aria-label="Invites">
-        <i class="bi bi-bell" aria-hidden="true"></i>
+        <i class="bi bi-envelope" aria-hidden="true"></i>
         {% if request.user.received_invites.exists %}<span class="topbar__bell-dot" aria-hidden="true"></span>{% endif %}
     </a>
+
+    <div class="dropdown" data-island="notifications"
+         data-src="{% url 'api-v1:notifications-list' %}"
+         data-refresh-interval="60000"
+         x-data="notifications">
+        <button class="topbar__bell btn-ui btn-ui--ghost btn-ui--icon-only" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications"
+                :aria-busy="isLoading">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+            <span class="topbar__bell-dot" x-show="hasItems" x-text="count"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+            <template x-if="isLoading"><li class="dropdown-item">Loading…</li></template>
+            <template x-if="isError"><li class="dropdown-item" x-text="errorMessage"></li></template>
+            <template x-if="isEmpty"><li class="dropdown-item">No new notifications</li></template>
+            <template x-for="n in items" :key="n.id">
+                <li class="dropdown-item" role="button" tabindex="0" @click="markRead(n.id)" x-text="n.message"></li>
+            </template>
+        </ul>
+    </div>
+
     {% include "portal/components/_avatar_menu.html" %}
     {% endif %}
 </header>

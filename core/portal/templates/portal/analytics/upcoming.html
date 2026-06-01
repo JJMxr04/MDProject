@@ -16,14 +16,14 @@
     </div>
     <form method="get" class="d-flex flex-wrap gap-2 align-items-center">
       <label class="small text-muted mb-0" for="upcoming-league">League</label>
-      <select id="upcoming-league" name="league" class="form-select form-select-sm" onchange="this.form.submit()" style="max-width: 160px;">
+      <select id="upcoming-league" name="league" class="form-select form-select-sm" data-autosubmit style="max-width: 160px;">
         <option value="">All leagues</option>
         {% for lg in league_options %}
           <option value="{{ lg.id }}" {% if lg.id == selected_league %}selected{% endif %}>{{ lg.id }}</option>
         {% endfor %}
       </select>
       <label class="small text-muted mb-0" for="upcoming-window">Window</label>
-      <select id="upcoming-window" name="hours_ahead" class="form-select form-select-sm" onchange="this.form.submit()" style="max-width: 160px;">
+      <select id="upcoming-window" name="hours_ahead" class="form-select form-select-sm" data-autosubmit style="max-width: 160px;">
         {% for h, label in window_options %}
           <option value="{{ h }}" {% if h == selected_hours %}selected{% endif %}>{{ label }}</option>
         {% endfor %}

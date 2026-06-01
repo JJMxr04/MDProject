@@ -83,4 +83,56 @@
 {% else %}
     {% include "portal/components/_empty_state.html" with icon="trophy" title="No tournaments match these filters." body="Try clearing filters or wait for the next round of signups." %}
 {% endif %}
+
+<section data-island="tournaments-list" x-data="tournaments-list"
+         data-src="{% url 'api-v1:tournaments-list' %}" data-refresh-interval="60000"
+         class="card-ui" style="margin-top:var(--space-6);">
+    <header class="page-header">
+        <div>
+            <h2 class="page-header__title">Live tournaments</h2>
+            <p class="page-header__subtitle">Auto-refreshing list from the API.</p>
+        </div>
+    </header>
+
+    <template x-if="isLoading">
+        <p class="text-muted">Loading tournaments…</p>
+    </template>
+
+    <template x-if="isError">
+        <p class="text-muted" x-text="errorMessage"></p>
+    </template>
+
+    <template x-if="isEmpty">
+        <p class="text-muted">You have no tournaments yet.</p>
+    </template>
+
+    <template x-if="hasItems">
+        <table class="table-ui">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Players</th>
+                    <th scope="col">Levels</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="t in items" :key="t.id">
+                    <tr>
+                        <td class="fw-semibold" x-text="t.name"></td>
+                        <td>
+                            <span x-text="t.player_count"></span>
+                            <span> / </span>
+                            <span x-text="t.max_accepted_players"></span>
+                        </td>
+                        <td x-text="t.levels"></td>
+                        <td x-text="t.start_date"></td>
+                        <td x-text="t.state"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+</section>
 {% endblock content %}

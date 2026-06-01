@@ -80,4 +80,41 @@
 {% else %}
     {% include "portal/components/_empty_state.html" with icon="controller" title="No matches yet" body="Create a public match or accept an invite from a friend." action_label="Browse public matches" action_href="/web/portal/match/public/" %}
 {% endif %}
+
+<section class="card-ui mt-6" data-island="matches-list" x-data="matches-list"
+         data-src="{% url 'api-v1:matches-list' %}" data-refresh-interval="60000">
+    <header class="card-ui__header">
+        <h2><i class="bi bi-broadcast me-2"></i>Live matches</h2>
+        <span class="badge-ui badge-ui--muted" x-text="count"></span>
+    </header>
+    <div class="card-ui__body">
+        <template x-if="isLoading"><p class="text-muted">Loading…</p></template>
+        <template x-if="isError"><p class="banner banner--error" x-text="errorMessage"></p></template>
+        <template x-if="isEmpty"><p class="text-muted">No matches yet.</p></template>
+    </div>
+    <template x-if="hasItems">
+        <table class="table-ui">
+            <thead>
+                <tr>
+                    <th scope="col">Player 1</th>
+                    <th scope="col">Player 2</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">Ends</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="m in items" :key="m.id">
+                    <tr>
+                        <td x-text="m.player_1_name"></td>
+                        <td x-text="m.player_2_name"></td>
+                        <td x-text="m.match_state"></td>
+                        <td x-text="m.start_date"></td>
+                        <td x-text="m.end_date"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+</section>
 {% endblock content %}

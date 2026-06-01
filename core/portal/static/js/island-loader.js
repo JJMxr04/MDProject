@@ -3,14 +3,22 @@
 // Islands are Alpine.data() components in /static/js/islands/<name>.js. The host
 // markup carries data-island="<name>" (which component), data-src (endpoint), and
 // optional data-refresh-interval (ms). This loader:
-//   1. imports each island module (each calls Alpine.data(...) at load),
-//   2. starts Alpine once,
-//   3. polls any [data-refresh-interval] host by calling its component load():
+//   1. imports the vendored Alpine CSP build and exposes it as window.Alpine,
+//   2. imports each island module (each calls Alpine.data(...) at load),
+//   3. starts Alpine once (the CSP module build does NOT auto-start),
+//   4. polls any [data-refresh-interval] host by calling its component load():
 //      visibility-gated, jittered +/-20%, exponential backoff on error,
 //      stop on `pbl:auth-expired`.
 //
-// Polling lives here (DRY) so individual islands don't each re-implement it.
-// Requires the Alpine CSP build (vendored, no eval) to be present as window.Alpine.
+// Loaded as a native ES module (<script type="module">). Polling lives here (DRY)
+// so individual islands don't each re-implement it.
+
+import Alpine from './vendor/alpine.csp.esm.js';
+
+// Expose globally BEFORE importing islands so each island module's top-level
+// `Alpine.data(...)` registration resolves (module identifiers fall through to
+// the global object). The CSP build has no eval, so this stays script-src 'self'.
+window.Alpine = Alpine;
 
 const BASE = '/static/js/islands/';
 const MAX_BACKOFF = 5; // multiplier cap on the configured interval
@@ -56,7 +64,7 @@ function startPolling(host) {
     // Only poll a visible tab/element — saves the server and the battery.
     const visible = document.visibilityState === 'visible' && host.offsetParent !== null;
     if (visible) {
-      const component = window.Alpine && window.Alpine.$data ? window.Alpine.$data(host) : null;
+      const component = Alpine.$data(host);
       if (component && typeof component.load === 'function') {
         try {
           await component.load();
@@ -81,14 +89,9 @@ async function boot() {
   const names = uniqueIslandNames();
   if (!names.size) return;
 
+  // Register all island components first, THEN start Alpine once.
   await importIslands(names);
-
-  if (window.Alpine && typeof window.Alpine.start === 'function') {
-    window.Alpine.start();
-  } else {
-    console.error('[island-loader] window.Alpine missing — vendor the Alpine CSP build');
-    return;
-  }
+  Alpine.start();
 
   document.querySelectorAll('[data-refresh-interval]').forEach(startPolling);
 }

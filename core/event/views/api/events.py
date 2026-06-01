@@ -41,6 +41,7 @@ class EventListView(APIView):
     authentication_classes = V1_AUTHENTICATION_CLASSES
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
+
     pagination_class = EventPageNumberPagination
 
     def get(self, request):

@@ -18,6 +18,36 @@
     {% include "portal/components/_stat_card.html" with label="Friends" value=stats.friend_count icon="people" href="/web/portal/user/friends/search/" %}
 </section>
 
+<section class="grid-stats mt-6" aria-label="Live stats"
+         data-island="dashboard-stats" x-data="dashboard-stats"
+         data-src="{% url 'api-v1:dashboard-stats' %}"
+         data-refresh-interval="60000">
+    <template x-if="isError">
+        <div class="card-ui"><div class="card-ui__body" x-text="errorMessage"></div></div>
+    </template>
+    <template x-if="isLoading">
+        <div class="card-ui"><div class="card-ui__body">Loading…</div></div>
+    </template>
+    <template x-if="isReady">
+        <div class="card-ui"><div class="card-ui__body">
+            <div class="stat-card__value" x-text="activeMatches"></div>
+            <div class="stat-card__label">Active matches</div>
+        </div></div>
+    </template>
+    <template x-if="isReady">
+        <div class="card-ui"><div class="card-ui__body">
+            <div class="stat-card__value" x-text="pendingInvites"></div>
+            <div class="stat-card__label">Pending invites</div>
+        </div></div>
+    </template>
+    <template x-if="isReady">
+        <div class="card-ui"><div class="card-ui__body">
+            <div class="stat-card__value" x-text="notifications"></div>
+            <div class="stat-card__label">Notifications</div>
+        </div></div>
+    </template>
+</section>
+
 <section class="grid-cols-2-1 mt-6">
     <div class="card-ui">
         <header class="card-ui__header"><h2>Needs your attention</h2></header>

@@ -11,6 +11,37 @@
     </div>
 </header>
 
+<section data-island="events-board" x-data="events-board"
+         data-src="/api/events?sport=soccer" data-refresh-interval="60000"
+         class="events-board">
+    <h2 class="events-board__title">Live soccer board</h2>
+    <p x-show="isLoading" class="events-board__msg">Loading events…</p>
+    <p x-show="isError" class="events-board__msg" x-text="errorMessage"></p>
+    <p x-show="isEmpty" class="events-board__msg">No upcoming soccer events.</p>
+    <table x-show="hasItems" class="events-board__table">
+        <thead>
+            <tr>
+                <th>Home</th>
+                <th>Away</th>
+                <th>League</th>
+                <th>Start</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template x-for="ev in items" :key="ev.event_id">
+                <tr>
+                    <td x-text="ev.home_team_name"></td>
+                    <td x-text="ev.away_team_name"></td>
+                    <td x-text="ev.league_name"></td>
+                    <td x-text="ev.start_time"></td>
+                    <td x-text="ev.status"></td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</section>
+
 <form method="get" class="filter-bar">
     <div class="filter-bar__controls">
         <div class="field">
@@ -76,6 +107,20 @@
 
 {% block css %}
 <style>
+    .events-board {
+        margin-bottom: var(--space-5);
+        padding: var(--space-4);
+        background: var(--surface-card);
+        border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+    }
+    .events-board__title { font-size: var(--text-lg); margin-bottom: var(--space-3); }
+    .events-board__msg { color: var(--text-secondary); font-size: var(--text-sm); }
+    .events-board__table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+    .events-board__table th, .events-board__table td {
+        text-align: left; padding: var(--space-2) var(--space-3);
+        border-bottom: 1px solid var(--border-default);
+    }
+    .events-board__table th { color: var(--text-secondary); font-weight: var(--weight-semibold); }
     .events-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

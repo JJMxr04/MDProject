@@ -4,6 +4,8 @@
  * No file outside this one should use raw hex values.
  */
 
+@import url('../../vendor/fonts/inter/inter.css');
+
 :root {
   /* ── Brand (existing palette) ────────────────────────────── */
   --brand-blue:        #3D7EAA;
