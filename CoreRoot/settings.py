@@ -137,6 +137,7 @@ INSTALLED_APPS = [
     'core.web',
     'core.portal',
     'core.billing',
+    'core.api',  # Portal JSON API (v1) — secure islands surface (plan js-portal-security)
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
@@ -399,6 +400,17 @@ REST_FRAMEWORK = {
     'DEFAULT_TOKEN_CLASSES': (
         'CoreRoot.settings.get_token_serializer',
     ),
+    # Throttle RATES only (fixes S-9, API side). The throttle CLASSES are applied
+    # per-view via core.api.base.V1ViewMixin (user/anon) and opt-in classes
+    # (LiveOddsRateThrottle, AuthSensitiveRateThrottle) — NOT globally, so the
+    # legacy /api/ endpoints' behavior is unchanged until they migrate. Counters
+    # use the default DatabaseCache; see core/api/throttling.py.
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '60/min',
+        'user': '600/min',
+        'live_odds': '60/min',
+        'auth_sensitive': '10/min',
+    },
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -497,6 +509,15 @@ def _parse_csrf_origins(raw: str) -> list[str]:
 CSRF_TRUSTED_ORIGINS = _parse_csrf_origins(
     os.environ.get("CSRF_TRUSTED_ORIGINS", "")
 )
+
+# The Alpine islands read the CSRF token from the cookie and echo it back as the
+# X-CSRFToken header so SessionAuthentication's CSRF check passes on unsafe v1
+# methods (plan 03/06). The token is NOT a session secret, so a JS-readable
+# cookie is acceptable; CSRF defense rests on the cookie+header match plus
+# SameSite=Lax. (Django's default for HTTPONLY is already False — set
+# explicitly so a future default change can't silently break the islands.)
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 # Default storage routes user uploads to S3 (Bucketeer). WhiteNoise serves
 # collected static files; using the non-manifest variant because Jazzmin's

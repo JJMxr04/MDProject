@@ -17,6 +17,10 @@ urlpatterns = [
     path('admin/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),
     path('admin/', admin.site.urls),
     path('api/', include(('core.event.api_urls', 'core-event-api'), namespace='core-event-api')),
+    # Secure portal JSON surface for the Alpine islands (plan js-portal-security).
+    # Session-first auth, IsAuthenticated default, envelope + request_id, scoped
+    # throttles — all bound via core.api.base.V1ViewMixin.
+    path('api/v1/', include('core.api.urls')),
     # Inbound webhook from the aggregator service (plan §4). HMAC-signed
     # payloads update Event/Market/Selection state and run the existing
     # match-completion / game-reopen hooks.
