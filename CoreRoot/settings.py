@@ -552,11 +552,15 @@ CONTENT_SECURITY_POLICY = {
     "EXCLUDE_URL_PREFIXES": ["/admin/", "/silk/"],
     "DIRECTIVES": {
         "default-src": ["'self'"],
-        "script-src": ["'self'"],
+        # Cloudflare Browser Insights / Web Analytics auto-injects beacon.min.js
+        # from static.cloudflareinsights.com and POSTs RUM data to
+        # cloudflareinsights.com — both origins must be allowed or the beacon
+        # is blocked (script-src for the load, connect-src for the report).
+        "script-src": ["'self'", "https://static.cloudflareinsights.com"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "data:", "https://*.s3.amazonaws.com"],
         "font-src": ["'self'", "data:"],
-        "connect-src": ["'self'"],
+        "connect-src": ["'self'", "https://cloudflareinsights.com"],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
         "form-action": ["'self'"],
