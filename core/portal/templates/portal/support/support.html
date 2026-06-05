@@ -1,0 +1,95 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Support{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Support</h1>
+        <p class="page-header__subtitle">Found a bug, stuck on something, or have an idea? Email us.</p>
+    </div>
+</header>
+
+<div class="support-grid">
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-life-preserver me-2"></i>Support &amp; bug reports</h2>
+        </header>
+        <div class="card-ui__body">
+            <p>For account issues, questions, or anything broken, email:</p>
+            <p class="support-email">
+                <a href="mailto:{{ support_email }}?subject=Short%20title%20of%20the%20issue&body=Describe%20the%20issue%20here.%0A%0ASteps%20to%20reproduce%3A%0A1.%20%0A2.%20%0A3.%20%0A%0AWhat%20you%20expected%3A%0A%0AWhat%20happened%20instead%3A%0A%0A(Please%20attach%20screenshots%20or%20a%20screen%20recording%20if%20you%20can.)">{{ support_email }}</a>
+            </p>
+            <ul class="support-howto">
+                <li><strong>Subject:</strong> a short title for the issue.</li>
+                <li><strong>Email body:</strong> the full description.</li>
+            </ul>
+            <div class="support-callout">
+                <i class="bi bi-bug me-2"></i>
+                <div>
+                    <strong>Reporting a bug?</strong> Please include:
+                    <ul>
+                        <li>Screenshots or images of what you're seeing.</li>
+                        <li>Clear steps to replicate the issue (what you clicked, in what order).</li>
+                        <li>What you expected vs. what happened instead.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-lightbulb me-2"></i>Feature requests</h2>
+        </header>
+        <div class="card-ui__body">
+            <p>Have an idea for something new? We'd love to hear it:</p>
+            <p class="support-email">
+                <a href="mailto:{{ features_email }}?subject=Short%20title%20of%20the%20feature&body=Describe%20your%20idea%20here%20%E2%80%94%20what%20it%20does%20and%20why%20it%20would%20help.">{{ features_email }}</a>
+            </p>
+            <ul class="support-howto">
+                <li><strong>Subject:</strong> a short title for the feature.</li>
+                <li><strong>Email body:</strong> describe the idea — what it does and why it would help.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .support-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--space-4);
+        align-items: start;
+    }
+    .support-email {
+        font-size: var(--text-lg, 1.1rem);
+        word-break: break-all;
+    }
+    .support-email a {
+        font-weight: 600;
+        color: var(--brand-blue-dark, #275d81);
+    }
+    .support-howto {
+        padding-left: var(--space-5);
+        line-height: 1.6;
+    }
+    .support-callout {
+        display: flex;
+        gap: .5rem;
+        margin-top: var(--space-4);
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-sm, 6px);
+        background: var(--surface-muted, #f5f7fa);
+        border: 1px solid var(--border-default, #e5e7eb);
+        line-height: 1.6;
+    }
+    .support-callout ul {
+        margin: .25rem 0 0;
+        padding-left: var(--space-5);
+    }
+</style>
+{% endblock css %}

@@ -16,6 +16,7 @@ app_name = 'core-portal'
 urlpatterns = [
     path('dashboard/', views.portal_dashboard, name='portal-dashboard'),
     path('rules/', views.rules_view, name='portal-rules'),
+    path('support/', views.support_view, name='portal-support'),
     path('availability/', views.availability_view, name='portal-availability'),
     # Analytics surface — own file (urls_analytics.py). Mounted without
     # a sub-prefix so /web/portal/analytics/... paths stay unchanged.
