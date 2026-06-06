@@ -1,10 +1,7 @@
 <footer class="content-footer footer bg-footer-theme">
   <div class="{{container_class}} d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
     <div class="mb-2 mb-md-0">
-      © <script>
-      document.write(new Date().getFullYear())
-
-      </script>
+      © {% now "Y" %}
       , made with ❤️ by <a href="{% get_theme_variables 'creator_url' %}" target="_blank" class="footer-link fw-medium">{% get_theme_variables 'creator_name' %}</a>
     </div>
     <div class="d-none d-lg-inline-block">

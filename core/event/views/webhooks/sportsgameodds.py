@@ -233,6 +233,17 @@ def _upsert_team(team_envelope: dict | None) -> Team | None:
         "primary_color": team_envelope.get("primary_color"),
         "stat_entity_id": (team_envelope.get("stat_entity_id") or "")[:8],
     }
+    # (league, team_id) is unique. A row can already hold that pair under a
+    # DIFFERENT pk when the provider re-keys teams (SGO string IDs → real
+    # odds-api.io IDs → simulator IDs all coexist in dev DBs). Match on the
+    # natural key first and update in place — otherwise update_or_create
+    # INSERTs a second row and the constraint 500s the whole webhook.
+    existing = Team.objects.filter(league=league, team_id=team_id).first()
+    if existing is not None and existing.id != pk:
+        for field, value in defaults.items():
+            setattr(existing, field, value)
+        existing.save()
+        return existing
     obj, _ = Team.objects.update_or_create(id=pk, defaults=defaults)
     return obj
 

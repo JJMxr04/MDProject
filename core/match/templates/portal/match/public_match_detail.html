@@ -33,7 +33,7 @@
     </div>
 
 
-    <button class="btn btn-primary expand-button" onclick="showPopup()">
+    <button class="btn btn-primary expand-button" data-action="pm-accept-open">
         Accept Match
     </button>
 </div>
@@ -46,11 +46,11 @@
 
 <div id="acceptMatchPopup" class="modal" style="display:none;">
     <div class="modal-content">
-        <span class="close" onclick="closePopup()">&times;</span>
+        <span class="close" data-action="pm-close">&times;</span>
         <h2>Are you sure you want to create a match?</h2>
         <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="submitMatch()">Submit</button>
-            <button class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+            <button class="btn btn-primary" data-action="pm-submit">Submit</button>
+            <button class="btn btn-secondary" data-action="pm-close">Cancel</button>
         </div>
     </div>
 </div>
@@ -95,58 +95,10 @@
     }
 </style>
 
-<script>
-    function showPopup() {
-        document.getElementById('acceptMatchPopup').style.display = 'flex';
-    }
-    
-    function closePopup() {
-        document.getElementById('acceptMatchPopup').style.display = 'none';
-    }
-    
-    function showLoading() {
-        document.getElementById('loading-overlay').style.display = 'flex';
-    }
-
-    function hideLoading() {
-        document.getElementById('loading-overlay').style.display = 'none';
-    }
-    
-    function submitMatch() {
-        showLoading(); // Show loading overlay
-        closePopup(); // Close the confirmation popup
-
-        fetch("{% url 'core-portal:portal-accept-public-match' match.id%}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify({
-                'action': 'accept'
-            })
-        })
-        .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
-        .then(({ ok, body }) => {
-            if (ok && body.status === 'success') {
-                window.location.href = "{% url 'core-portal:portal-my-match-detail' match.id %}";
-            } else {
-                hideLoading();
-                // Surface the server-side message so the user sees the
-                // GoldenGameUnavailable reason ("No events scheduled...")
-                // rather than a generic "Error accepting match."
-                const msg = (body && body.message) || 'Error accepting match.';
-                window.toast(msg, {variant: 'danger'});
-                showPopup();
-            }
-        })
-        .catch(error => {
-            hideLoading();
-            console.error('Error:', error);
-            window.toast("An error occurred.", {variant: 'danger'});
-            showPopup();
-        });
-    }
-</script>
+<div id="accept-match-config" hidden
+     data-accept-url="{% url 'core-portal:portal-accept-public-match' match.id %}"
+     data-redirect-url="{% url 'core-portal:portal-my-match-detail' match.id %}"
+     data-csrf="{{ csrf_token }}"></div>
+<script src="{% static 'js/pages/public_match_detail.js' %}"></script>
 
 {% endblock %}

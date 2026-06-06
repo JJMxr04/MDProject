@@ -14,16 +14,15 @@ Required context:
     {% with bet=game.bet event=game.event %}
     <div class="{% if is_golden %}golden-game-card{% else %}small-game-event{% endif %}"
          id="{{ dom_id }}" data-game-id="{{ game.id }}"
-         onclick="openGamePopupById('{{ game.id }}')">
+         data-action="open-game">
         <h3>{{ slot_label }}</h3>
         <h4><strong>
             {% if event.league %}{{ event.league.name }}{% endif %}{% if event.sport %} — {{ event.sport.name }}{% endif %}
-            <script>document.write(new Date('{{ event.start_time|date:"c" }}').toLocaleString())</script>
+            <time data-localize datetime="{{ event.start_time|date:'c' }}">{{ event.start_time|date:"M j, Y · g:i A" }}</time>
         </strong></h4>
         <a href="{% url 'core-portal:upcoming-events-detail' event.id %}"
            class="game-card__event-link"
-           style="display:inline-block;margin:.25rem 0 .5rem;font-size:.85rem;font-weight:500;cursor:pointer;"
-           onclick="event.stopPropagation()">
+           style="display:inline-block;margin:.25rem 0 .5rem;font-size:.85rem;font-weight:500;cursor:pointer;">
             View event details &rarr;
         </a>
 

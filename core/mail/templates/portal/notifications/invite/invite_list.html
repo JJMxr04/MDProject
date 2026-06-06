@@ -12,7 +12,9 @@
 </header>
 
 {% if invites %}
-<div class="card-ui">
+<div class="card-ui" id="invite-list"
+     data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
+     data-csrf="{{ csrf_token }}">
     <ul class="list-group list-group-flush" style="margin:0;">
         {% for invite in invites %}
         <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
@@ -36,10 +38,12 @@
             </div>
             {% if invite.state == 'sent' %}
             <div class="d-flex gap-2">
-                <button class="btn-ui btn-ui--primary btn-ui--sm" onclick="handleInviteAction('{{ invite.id }}', 'accept')">
+                <button class="btn-ui btn-ui--primary btn-ui--sm"
+                        data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">
                     Accept
                 </button>
-                <button class="btn-ui btn-ui--secondary btn-ui--sm" onclick="handleInviteAction('{{ invite.id }}', 'reject')">
+                <button class="btn-ui btn-ui--secondary btn-ui--sm"
+                        data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="reject">
                     Decline
                 </button>
             </div>
@@ -54,34 +58,5 @@
 {% endblock content %}
 
 {% block scripts %}
-<script>
-function handleInviteAction(inviteId, action) {
-    const overlay = document.querySelector('[data-loading-overlay]');
-    overlay.hidden = false;
-    const url = "{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}".replace('PLACEHOLDER', inviteId);
-    fetch(url, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
-        body: JSON.stringify({'action': action}),
-    })
-    .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
-    .then(({ ok, body }) => {
-        overlay.hidden = true;
-        if (ok && body.success) {
-            window.toast(action === 'accept' ? 'Invite accepted.' : 'Invite declined.', {variant: 'success'});
-            setTimeout(() => window.location.reload(), 600);
-        } else {
-            // Surface the server-side message so users see "No events are
-            // scheduled for your match window..." instead of a generic banner.
-            const msg = (body && body.error) || 'Error processing invite. Please try again.';
-            window.toast(msg, {variant: 'danger'});
-        }
-    })
-    .catch((err) => {
-        overlay.hidden = true;
-        console.error(err);
-        window.toast('Error processing invite. Please try again.', {variant: 'danger'});
-    });
-}
-</script>
+<script src="{% static 'js/pages/invite_list.js' %}"></script>
 {% endblock scripts %}
