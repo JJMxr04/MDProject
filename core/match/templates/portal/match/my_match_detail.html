@@ -64,7 +64,7 @@
         <p>If the event you selected was postponed or canceled, your slot reopens for a new pick (until the match end date).</p>
     </div>
 
-    {% if is_player_in_match %}
+    {% if is_player_in_match and match.match_state != 'completed' %}
         <button class="upload-button" data-action="open-upload">Upload A Pick</button>
     {% endif %}
 
@@ -105,7 +105,9 @@
             <p>No tiebreaker information available.</p>
         {% endif %}
 
+        {% if match.match_state != 'completed' %}
         <button id="tiebreaker-button" data-action="tiebreaker-open">Submit Your Tiebreaker Score</button>
+        {% endif %}
     </div>
 
     <!-- Tiebreaker Popup -->

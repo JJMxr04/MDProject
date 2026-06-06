@@ -14,7 +14,7 @@ Required context:
     {% with bet=game.bet event=game.event %}
     <div class="{% if is_golden %}golden-game-card{% else %}small-game-event{% endif %}"
          id="{{ dom_id }}" data-game-id="{{ game.id }}"
-         data-action="open-game">
+         {% if match.match_state != 'completed' and not game.is_settled %}data-action="open-game"{% endif %}>
         <h3>{{ slot_label }}</h3>
         <h4><strong>
             {% if event.league %}{{ event.league.name }}{% endif %}{% if event.sport %} — {{ event.sport.name }}{% endif %}

@@ -33,11 +33,19 @@ class MatchViewSet(
         user = self.request.user
         if not user or not user.is_authenticated:
             return Match.objects.none()
-        return (
+        qs = (
             Match.objects.filter(Q(player_1=user) | Q(player_2=user))
             .select_related("player_1", "player_2", "winner")
             .order_by("-start_date")
         )
+        # Optional ``?state=`` filter (CSV of match_state values). The
+        # portal's "Live matches" island passes ``state=accepted`` so
+        # completed matches don't show up as live.
+        state = (self.request.query_params.get("state") or "").strip()
+        if state:
+            states = [s.strip() for s in state.split(",") if s.strip()]
+            qs = qs.filter(match_state__in=states)
+        return qs
 
     @action(detail=True, methods=["post"])
     def tiebreaker(self, request, *args, **kwargs):

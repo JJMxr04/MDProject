@@ -82,7 +82,7 @@
 {% endif %}
 
 <section class="card-ui mt-6" data-island="matches-list" x-data="matches-list"
-         data-src="{% url 'api-v1:matches-list' %}" data-refresh-interval="60000">
+         data-src="{% url 'api-v1:matches-list' %}?state=accepted" data-refresh-interval="60000">
     <header class="card-ui__header">
         <h2><i class="bi bi-broadcast me-2"></i>Live matches</h2>
         <span class="badge-ui badge-ui--muted" x-text="count"></span>
