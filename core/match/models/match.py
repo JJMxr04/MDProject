@@ -18,9 +18,20 @@ REGULAR_GAMES_PER_PLAYER = 5
 
 class MatchManager(AbstractManager):
     def create_match(self, player_1, player_2=None, start_date=None, match_type="public"):
+        """Create a match, raising ``GoldenGameUnavailable`` when the events
+        catalog has nothing a Golden Game could seed against — a match with
+        no pickable events/markets is dead on arrival, so don't create it.
+
+        Public (``player_2=None``): pre-create gate via
+        ``find_golden_candidate`` — nothing is written when it raises.
+        Private: the whole create+accept runs in one transaction, so the
+        same raise from ``accept_match`` rolls the Match row back too
+        (previously it leaked a stray ``created`` match).
+        """
         start_date = timezone.now()
         end_date = start_date + timedelta(weeks=1)
         if player_2 is None:
+            Game.objects.find_golden_candidate(window_end=end_date)
             return self.create(
                 player_1=player_1,
                 player_2=player_2,
@@ -28,14 +39,15 @@ class MatchManager(AbstractManager):
                 end_date=end_date,
                 match_type="public",
             )
-        match = self.create(
-            player_1=player_1,
-            player_2=player_2,
-            start_date=start_date,
-            end_date=end_date,
-            match_type="private",
-        )
-        return self.accept_match(match, player_2)
+        with transaction.atomic():
+            match = self.create(
+                player_1=player_1,
+                player_2=player_2,
+                start_date=start_date,
+                end_date=end_date,
+                match_type="private",
+            )
+            return self.accept_match(match, player_2)
 
     @transaction.atomic
     def accept_match(self, match, player_2):
@@ -67,7 +79,7 @@ class MatchManager(AbstractManager):
 
         # May raise GoldenGameUnavailable — the @transaction.atomic decorator
         # rolls back every write above on raise.
-        golden_game = Game.objects.get_golden_game(match.player_1, match.player_2, match)
+        golden_game = Game.objects.get_golden_game(match)
         match.tiebreaker = TieBreaker.objects.create(golden_game=golden_game)
         match.save()
         return match

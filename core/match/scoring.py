@@ -113,7 +113,13 @@ def score_match(match: "Match") -> Tuple[int, int, bool]:
             if pts is None:
                 decided = False
                 continue
-            user = game.owner if side == "owner" else game.player_2
+            # The Golden Game is ownerless (owner/player_2 NULL) — its sides
+            # map to the match players: owner_outcome ≡ player_1,
+            # player_2_outcome ≡ player_2.
+            if side == "owner":
+                user = game.owner or match.player_1
+            else:
+                user = game.player_2 or match.player_2
             if user_id_eq(user, match.player_1):
                 p1_total += pts
             elif user_id_eq(user, match.player_2):

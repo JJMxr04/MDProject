@@ -17,7 +17,7 @@ class TieBreakerManager(AbstractManager):
         tiebreaker.save()
 
     def set_player_2_total(self,tiebreaker,total):
-        tiebreaker.owner_total=total
+        tiebreaker.player_2_total=total
         tiebreaker.save()
 
     def calculate_event_total(self, tiebreaker):
@@ -29,26 +29,27 @@ class TieBreakerManager(AbstractManager):
         return tiebreaker.total
     
     def calculate_winner(self, tiebreaker):
+        # The Golden Game is ownerless — the two tiebreaker sides are the
+        # match players (owner_total ≡ player_1, player_2_total ≡ player_2).
+        match = tiebreaker.golden_game.match
+        player_1, player_2 = match.player_1, match.player_2
+
         total = self.calculate_event_total(tiebreaker=tiebreaker)
         if total is None:
-            return self.calculate_winner_random(
-                tiebreaker,
-                tiebreaker.golden_game.owner,
-                tiebreaker.golden_game.player_2,
-            )
+            return self.calculate_winner_random(tiebreaker, player_1, player_2)
         owner_dif = abs(tiebreaker.owner_total - total)
         player_2_dif = abs(tiebreaker.player_2_total - total)
 
         if owner_dif < player_2_dif:
-            tiebreaker.winner = tiebreaker.golden_game.owner
+            tiebreaker.winner = player_1
             tiebreaker.save()
             return tiebreaker.winner
         elif player_2_dif < owner_dif:
-            tiebreaker.winner = tiebreaker.golden_game.player_2
+            tiebreaker.winner = player_2
             tiebreaker.save()
             return tiebreaker.winner
         else:
-            return self.calculate_winner_random(tiebreaker,tiebreaker.golden_game.owner,tiebreaker.golden_game.player_2)
+            return self.calculate_winner_random(tiebreaker, player_1, player_2)
 
 
 
@@ -79,4 +80,7 @@ class TieBreaker(AbstractModel):
         db_table = "'core.tiebreaker'"
 
     def __str__(self):
-        return f'Tiebreaker for: {self.golden_game.owner} vs {self.golden_game.player_2} '
+        if self.golden_game is None:
+            return f'Tiebreaker {self.id} (no golden game)'
+        match = self.golden_game.match
+        return f'Tiebreaker for: {match.player_1} vs {match.player_2} '

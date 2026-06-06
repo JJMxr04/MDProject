@@ -35,16 +35,15 @@ from core.match.decorators import player_in_match_required, player_in_game_requi
 @player_in_match_required
 def my_match_detail_view(request, match_id):
     # select_related on the Match's FKs — template + decorator both touch
-    # player_1/player_2/winner/tiebreaker.golden_game.{owner,player_2}.
-    # Without this, each {{ match.player_2.username }} access in the
-    # template is one round-trip to Neon.
+    # player_1/player_2/winner/tiebreaker.golden_game. Without this, each
+    # {{ match.player_2.username }} access in the template is one
+    # round-trip to Neon. (The golden game is ownerless — its sides are
+    # match.player_1/player_2, already selected here.)
     match = get_object_or_404(
         Match.objects
             .select_related(
                 "player_1", "player_2", "winner",
                 "tiebreaker", "tiebreaker__golden_game",
-                "tiebreaker__golden_game__owner",
-                "tiebreaker__golden_game__player_2",
             ),
         id=match_id,
     )
@@ -67,6 +66,7 @@ def my_match_detail_view(request, match_id):
         "event", "event__league", "event__sport",
         "event__home_team", "event__away_team",
         "bet", "bet__owner_outcome", "bet__player_2_outcome",
+        "bet__owner_outcome__market", "bet__locked_market",
         "owner", "player_2",
     )
     player_1_games = (
@@ -78,12 +78,28 @@ def my_match_detail_view(request, match_id):
         if match.player_2 else []
     )
 
+    # Fetched once with the card's relations preloaded — the template used
+    # to call the ``match.golden_game`` property repeatedly, each access a
+    # fresh unjoined query.
+    golden_game = games_qs.filter(is_golden=True).first()
+
+    # Tiebreaker guesses lock at Golden Game kickoff — used to hide the
+    # submit button (the POST endpoint enforces the same gate).
+    golden_event = golden_game.event if golden_game else None
+    tiebreaker_locked = bool(
+        golden_event is not None
+        and golden_event.start_time is not None
+        and golden_event.start_time <= timezone.now()
+    )
+
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
         'available_events': events_ser,
         'player_1_games': player_1_games,
         'player_2_games': player_2_games,
+        'golden_game': golden_game,
+        'tiebreaker_locked': tiebreaker_locked,
     }
 
     return render(request, 'portal/match/my_match_detail.html', context)
@@ -244,10 +260,31 @@ def upload_tiebreaker_score(request, match_id):
 
     if match.match_state == 'completed':
         return JsonResponse({'status': 'error', 'message': 'Match Completed'}, status=403)
-    
+
     # Check if the user is one of the players in the match
     if (request.user != match.player_1) and (request.user != match.player_2):
         return JsonResponse({'status': 'error', 'message': 'Unauthorized user'}, status=403)
+
+    if match.tiebreaker is None:
+        return JsonResponse({'status': 'error', 'message': 'No tiebreaker on this match'}, status=400)
+
+    # The tiebreaker is a guess at the Golden Game's final total — once that
+    # event kicks off the guess window is closed (no betting on a game in
+    # progress).
+    golden_game = match.tiebreaker.golden_game
+    golden_event = golden_game.event if golden_game else None
+    if (
+        golden_event is not None
+        and golden_event.start_time is not None
+        and golden_event.start_time <= timezone.now()
+    ):
+        return JsonResponse(
+            {
+                'status': 'error',
+                'message': 'The Golden Game has already started; tiebreaker submissions are closed',
+            },
+            status=403,
+        )
 
     data = json.loads(request.body)
     tiebreaker_score = data.get('tiebreaker_score')
@@ -257,9 +294,11 @@ def upload_tiebreaker_score(request, match_id):
         return JsonResponse({'status': 'error', 'message': 'Tiebreaker score is required'}, status=400)
 
     try:
-        if request.user == match.tiebreaker.golden_game.owner:
+        # Sides are the match players — the golden game itself is ownerless.
+        # owner_total ≡ player_1's guess, player_2_total ≡ player_2's guess.
+        if request.user == match.player_1:
             TieBreaker.objects.set_owner_total(tiebreaker=match.tiebreaker,total=tiebreaker_score)
-        elif request.user == match.tiebreaker.golden_game.player_2:
+        elif request.user == match.player_2:
             TieBreaker.objects.set_player_2_total(tiebreaker=match.tiebreaker,total=tiebreaker_score)
         # Update the match with the tiebreaker score
         match.save()

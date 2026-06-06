@@ -22,12 +22,15 @@ def player_in_game_required(view_func):
         if not request.user.is_authenticated:
             return JsonResponse({'status': 'error', 'message': 'User not authenticated'}, status=401)
         
-        game = get_object_or_404(Game, id=game_id)
-        # Deny unless the requester is one of the two players on this game.
-        # Was `!= owner OR != player_2`, which is always true (you can't equal
-        # both) -> it rejected everyone / was logically broken. Correct guard
-        # is: reject if NOT owner AND NOT player_2. See findings.md S-15.
-        if request.user != game.owner and request.user != game.player_2:
+        game = get_object_or_404(
+            Game.objects.select_related('match__player_1', 'match__player_2'),
+            id=game_id,
+        )
+        # Deny unless the requester is one of the two players on this game's
+        # match. Checked via the match (not game.owner/player_2) because the
+        # Golden Game is ownerless — both FKs are NULL there; for regular
+        # slots owner/player_2 are always the match players anyway.
+        if request.user != game.match.player_1 and request.user != game.match.player_2:
             return JsonResponse({'status': 'error', 'message': 'Unauthorized user'}, status=403)
         return view_func(request, game_id, *args, **kwargs)
     return _wrapped_view

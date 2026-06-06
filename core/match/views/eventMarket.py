@@ -49,6 +49,11 @@ def event_markets(request, game_id):
         and game.match.player_1_id == request.user.id
     )
 
+    # The Golden Game is ownerless (owner/player_2 NULL) — its sides are the
+    # match players: owner_outcome ≡ player_1, player_2_outcome ≡ player_2.
+    side_1_user = game.owner or game.match.player_1
+    side_2_user = game.player_2 or game.match.player_2
+
     return JsonResponse(
         {
             "event": EventSerializer(game.event).data if game.event else None,
@@ -71,9 +76,9 @@ def event_markets(request, game_id):
             ),
             # Lightweight player info so the picker UI can show who took
             # each already-locked selection.
-            "owner_username": game.owner.username if game.owner else None,
+            "owner_username": side_1_user.username if side_1_user else None,
             "player_2_username": (
-                game.player_2.username if game.player_2 else None
+                side_2_user.username if side_2_user else None
             ),
             "is_current_user_owner": is_current_user_owner,
             "is_golden": game.is_golden,

@@ -79,8 +79,12 @@ class MatchViewSet(AbstractViewSet):
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
+        from core.game.models.game import GoldenGameUnavailable
         player_1 = request.user
-        match = Match.objects.create_match(player_1)
+        try:
+            match = Match.objects.create_match(player_1)
+        except GoldenGameUnavailable as exc:
+            return Response({'detail': str(exc)}, status=400)
         serializer = self.get_serializer(match)
         return Response(serializer.data)
 

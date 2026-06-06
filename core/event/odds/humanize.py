@@ -99,6 +99,34 @@ def humanize_payload(event: dict | None, market: dict | None, selection: dict | 
     return selection.get("label") or sel_type or "Pick"
 
 
+_MARKET_CATEGORY_LABELS = {
+    "MONEYLINE": "Moneyline",
+    "SPREAD": "Spread",
+    "TOTAL": "Total",
+    "PROPS_GAME": "Game props",
+    "PROPS_TEAM": "Team props",
+}
+
+
+def humanize_market(market) -> str:
+    """Render a Market model row as a plain-English label — e.g.
+    "Moneyline", "Spread @ +3.5", "Total @ 44.5 (1st half)".
+
+    Used for the Golden Game's locked market on the match detail card.
+    Mirror of ``humanMarketLabel`` in ``my_match_detail.js`` — keep both
+    sides aligned.
+    """
+    if market is None:
+        return ""
+    cat = (market.category or "").upper()
+    label = _MARKET_CATEGORY_LABELS.get(cat) or (
+        cat[0] + cat[1:].lower().replace("_", " ") if cat else "Market"
+    )
+    if market.line is not None:
+        label += f" @ {_format_line(market.line)}"
+    return label + _scope_hint(market.scope)
+
+
 # ---- Per-category renderers ------------------------------------------------
 
 

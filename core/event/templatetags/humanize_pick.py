@@ -13,7 +13,11 @@ from __future__ import annotations
 
 from django import template
 
-from core.event.odds.humanize import humanize_payload, humanize_selection
+from core.event.odds.humanize import (
+    humanize_market,
+    humanize_payload,
+    humanize_selection,
+)
 
 register = template.Library()
 
@@ -22,6 +26,12 @@ register = template.Library()
 def humanize_pick_filter(selection):
     """Filter for Selection model rows: ``{{ selection|humanize_pick }}``."""
     return humanize_selection(selection)
+
+
+@register.filter(name="humanize_market")
+def humanize_market_filter(market):
+    """Filter for Market model rows: ``{{ bet.locked_market|humanize_market }}``."""
+    return humanize_market(market)
 
 
 @register.simple_tag(name="humanize_pick_payload")

@@ -9,8 +9,13 @@ from core.user.serializers import PublicUserSerializer
 
 
 class GameSerializer(AbstractSerializer):
-    owner = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field="public_id")
-    player_2 = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field="public_id")
+    # Null on the Golden Game — it's ownerless; sides derive from the match.
+    owner = serializers.SlugRelatedField(
+        queryset=User.objects.all(), slug_field="public_id", allow_null=True
+    )
+    player_2 = serializers.SlugRelatedField(
+        queryset=User.objects.all(), slug_field="public_id", allow_null=True
+    )
     event = serializers.SlugRelatedField(
         queryset=Event.objects.all(), slug_field="id", allow_null=True
     )

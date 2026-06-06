@@ -169,7 +169,13 @@ def _upsert_event(
     sport: Sport | None, league: League | None,
     home: Team | None, away: Team | None,
 ) -> Event:
-    obj, _ = Event.objects.get_or_create(
+    # update_or_create (not get_or_create): the aggregator is the source of
+    # truth, and the local mirror can hold a stale lifecycle (e.g. a
+    # finished event re-listed as upcoming after a sim reseed). A stale
+    # ``finished`` status freezes the game card (is_settled) even though
+    # the event hasn't kicked off. Same convention as
+    # ``Event.objects.upsert_from_spec`` on the ingest path.
+    obj, _ = Event.objects.update_or_create(
         id=event_env["id"],
         defaults={
             "sport": sport,
@@ -195,7 +201,7 @@ def _upsert_event(
 
 
 def _upsert_market(market_env: dict, *, event: Event, sport: Sport | None) -> Market:
-    obj, _ = Market.objects.get_or_create(
+    obj, _ = Market.objects.update_or_create(
         id=market_env["id"],
         defaults={
             "event": event,
@@ -218,7 +224,9 @@ def _upsert_market(market_env: dict, *, event: Event, sport: Sport | None) -> Ma
 
 
 def _upsert_selection(sel_env: dict, *, market: Market) -> Selection:
-    obj, _ = Selection.objects.get_or_create(
+    # Refreshed on every pick — odds_at_pick is copied from this row at
+    # bet time, so a stale mirror would freeze outdated odds into the bet.
+    obj, _ = Selection.objects.update_or_create(
         id=sel_env["id"],
         defaults={
             "market": market,

@@ -54,17 +54,24 @@ def public_match_list_view(request):
 @require_POST
 @login_required(login_url='/auth/login/')
 def create_public_match_view(request):
+    from core.game.models.game import GoldenGameUnavailable
+
     if request.method == 'POST':
         form = MatchInviteForm(request.POST)
-        
+
 
         match_type = request.POST.get('type')  # Accessing cleaned data from form
         player = request.POST.get('player')  # Optional field, may be None
         owner = request.user
 
         if match_type == 'public':
-            # Create a public match
-            new_match = Match.objects.create(player_1=owner)
+            # Create a public match via the manager — it gates on the events
+            # catalog (no events with markets → no match) and stamps
+            # start/end dates.
+            try:
+                new_match = Match.objects.create_match(owner)
+            except GoldenGameUnavailable as exc:
+                return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
             return JsonResponse({'status': 'success', 'match_id': new_match.id})
         
         elif match_type == 'private':

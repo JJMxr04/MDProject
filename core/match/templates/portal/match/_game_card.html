@@ -12,6 +12,10 @@ Required context:
 
 {% if game and game.event %}
     {% with bet=game.bet event=game.event %}
+    {# The Golden Game is ownerless (game.owner/player_2 are NULL) — its #}
+    {# sides are the match players. Regular slots carry explicit users.  #}
+    {% firstof game.owner.username match.player_1.username as side_1_name %}
+    {% firstof game.player_2.username match.player_2.username as side_2_name %}
     <div class="{% if is_golden %}golden-game-card{% else %}small-game-event{% endif %}"
          id="{{ dom_id }}" data-game-id="{{ game.id }}"
          {% if match.match_state != 'completed' and not game.is_settled %}data-action="open-game"{% endif %}>
@@ -26,6 +30,21 @@ Required context:
             View event details &rarr;
         </a>
 
+        {% if bet.locked_market %}
+            {# Golden Game: the system locks one market; both players pick a side within it. #}
+            <p class="game-card__locked-market"
+               style="margin:.25rem 0 .5rem;font-size:.85rem;font-weight:600;">
+                <i class="bi bi-lock-fill" aria-hidden="true"></i>
+                Market: {{ bet.locked_market|humanize_market }}
+            </p>
+        {% elif bet.owner_outcome %}
+            {# Regular slot: the market was set by the owner's pick. #}
+            <p class="game-card__locked-market"
+               style="margin:.25rem 0 .5rem;font-size:.85rem;font-weight:600;">
+                Market: {{ bet.owner_outcome.market|humanize_market }}
+            </p>
+        {% endif %}
+
         <div class="golden-game">
             <div class="team">
                 <h4>{{ event.home_team.name|default:"TBD" }}</h4>
@@ -38,21 +57,21 @@ Required context:
         <div class="bet-info">
             <h4>Bet Details:</h4>
             {% if bet.owner_outcome %}
-                <p><strong>{{ game.owner.username }} picked:</strong>
+                <p><strong>{{ side_1_name }} picked:</strong>
                     {{ bet.owner_outcome|humanize_pick }}
                     <span class="text-muted">@ {{ bet.owner_decimal_odds_at_pick|default:bet.owner_outcome.decimal_odds }}</span>
                 </p>
             {% else %}
-                <p><strong>{{ game.owner.username }}'s pick:</strong> <em>not picked</em></p>
+                <p><strong>{{ side_1_name }}'s pick:</strong> <em>not picked</em></p>
             {% endif %}
 
             {% if bet.player_2_outcome %}
-                <p><strong>{{ game.player_2.username }} picked:</strong>
+                <p><strong>{{ side_2_name }} picked:</strong>
                     {{ bet.player_2_outcome|humanize_pick }}
                     <span class="text-muted">@ {{ bet.player_2_decimal_odds_at_pick|default:bet.player_2_outcome.decimal_odds }}</span>
                 </p>
             {% else %}
-                <p><strong>{{ game.player_2.username }}'s pick:</strong> <em>not picked</em></p>
+                <p><strong>{{ side_2_name }}'s pick:</strong> <em>not picked</em></p>
             {% endif %}
 
             <p><strong>Status:</strong>
@@ -68,10 +87,10 @@ Required context:
             <div class="avatar-container">
                 {% with owner_status=bet.owner_outcome.settlement_status p2_status=bet.player_2_outcome.settlement_status %}
                 <div class="avatar-wrapper {% if owner_status == 'WON' %}correct{% elif owner_status == 'LOST' %}incorrect{% else %}pending{% endif %}">
-                    <span class="username">{{ game.owner.username }}</span>
+                    <span class="username">{{ side_1_name }}</span>
                 </div>
                 <div class="avatar-wrapper {% if p2_status == 'WON' %}correct{% elif p2_status == 'LOST' %}incorrect{% else %}pending{% endif %}">
-                    <span class="username">{{ game.player_2.username }}</span>
+                    <span class="username">{{ side_2_name }}</span>
                 </div>
                 {% endwith %}
             </div>

@@ -7,11 +7,11 @@ from core.match.tests.factories import make_user
 
 class MatchSetupTests(TestCase):
     def test_accept_match_seeds_5_owner_5_opp_1_golden(self):
-        from core.match.models import Match
+        from core.match.tests.factories import make_match
 
         p1 = make_user("p1")
         p2 = make_user("p2")
-        match = Match.objects.create_match(player_1=p1, player_2=p2)
+        match = make_match(p1, p2)
 
         self.assertEqual(match.match_state, "accepted")
         self.assertEqual(match.player_1, p1)
@@ -34,21 +34,39 @@ class MatchSetupTests(TestCase):
             p2_game = regulars.get(owner=p2, slot=slot)
             self.assertEqual(p2_game.player_2, p1)
 
-        # All slots seeded with an empty Bet row, no event yet (golden gets
-        # auto-seeded with an event when a candidate exists; in this test no
-        # events have markets so the golden has no event either).
+        # All regular slots seeded with an empty Bet row, no event yet.
         for game in regulars:
             self.assertIsNone(game.event)
             self.assertIsNotNone(game.bet)
             self.assertIsNone(game.bet.owner_outcome)
             self.assertIsNone(game.bet.player_2_outcome)
 
-    def test_tiebreaker_row_created(self):
-        from core.match.models import Match
+    def test_golden_game_is_ownerless_with_locked_market(self):
+        from core.match.tests.factories import make_match
 
         p1 = make_user("p1")
         p2 = make_user("p2")
-        match = Match.objects.create_match(player_1=p1, player_2=p2)
+        match = make_match(p1, p2)
+
+        golden = match.games.get(is_golden=True)
+        # Ownerless — the Golden Game belongs to the match; sides derive
+        # from match.player_1 / match.player_2.
+        self.assertIsNone(golden.owner)
+        self.assertIsNone(golden.player_2)
+        self.assertEqual(golden.slot, 0)
+        # Seeded with an event + a locked market, but neither side's pick
+        # is pre-filled — both players choose their own selection.
+        self.assertIsNotNone(golden.event)
+        self.assertIsNotNone(golden.bet.locked_market)
+        self.assertIsNone(golden.bet.owner_outcome)
+        self.assertIsNone(golden.bet.player_2_outcome)
+
+    def test_tiebreaker_row_created(self):
+        from core.match.tests.factories import make_match
+
+        p1 = make_user("p1")
+        p2 = make_user("p2")
+        match = make_match(p1, p2)
 
         self.assertIsNotNone(match.tiebreaker)
         # Tiebreaker points at the golden game.

@@ -66,8 +66,13 @@ class FullLifecycleTests(TestCase):
     def setUp(self):
         self.p1 = make_user("p1")
         self.p2 = make_user("p2")
-        self.match = make_match(self.p1, self.p2)
         self.league = make_league()
+        # Control the golden seed so the test can pick + settle its market.
+        self.golden_event = make_event(
+            self.league, start_time=timezone.now() + timedelta(days=2),
+        )
+        _, self.g_home, self.g_away = make_two_way_market(self.golden_event)
+        self.match = make_match(self.p1, self.p2, golden_selection=self.g_home)
 
     def _wire_slot(self, game, *, owner_picks_home, home_won):
         """Build an event + selections for one slot, run picks, finalize.
@@ -100,7 +105,8 @@ class FullLifecycleTests(TestCase):
         """Plan:
           - 5 p1-owned slots: p1 picks HOME, all home_won → p1 sweeps +5
           - 5 p2-owned slots: p2 picks HOME, only 2 home_won → p2 +2, p1 +3
-          - Golden (owned by p1): p1 picks HOME, home_won → +2 GOLDEN to p1
+          - Golden (ownerless): p1 picks HOME, p2 picks AWAY, home wins
+            → +2 GOLDEN to p1
         Final: p1 = 5 + 3 + 2 = 10, p2 = 2.
         """
         p1_slots = list(self.match.games.filter(owner=self.p1, is_golden=False).order_by("slot"))
@@ -111,13 +117,15 @@ class FullLifecycleTests(TestCase):
             self._wire_slot(game, owner_picks_home=True, home_won=True)
         for i, game in enumerate(p2_slots):
             self._wire_slot(game, owner_picks_home=True, home_won=(i < 2))
-        # Golden's owner is the player_1 user (per accept_match seeding logic).
-        if golden.owner_id == self.p1.id:
-            self._wire_slot(golden, owner_picks_home=True, home_won=True)
-        else:
-            self._wire_slot(golden, owner_picks_home=True, home_won=False)
-            # If owner isn't p1, flip expectation — but accept_match uses
-            # get_golden_game(player_1, ...) which sets owner=player_1.
+        # Golden is ownerless — both sides pick independently within the
+        # locked market, then the seeded event finalizes.
+        Game.objects.pick_on_locked_slot(
+            current_user=self.p1, game_id=golden.id, selection_id=self.g_home.id,
+        )
+        Game.objects.pick_on_locked_slot(
+            current_user=self.p2, game_id=golden.id, selection_id=self.g_away.id,
+        )
+        _finalize_event(self.golden_event, home_score=24, away_score=17)
 
         p1_score, p2_score, decided = score_match(self.match)
         self.assertTrue(decided, "every slot is settled, match should be fully decided")

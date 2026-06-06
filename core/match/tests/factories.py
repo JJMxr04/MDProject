@@ -9,9 +9,11 @@ call site.
 from __future__ import annotations
 
 import uuid
+from contextlib import contextmanager
 from datetime import timedelta
 from decimal import Decimal
 from typing import Optional
+from unittest.mock import MagicMock, patch
 
 from django.utils import timezone
 
@@ -208,22 +210,75 @@ def make_two_way_market(
     return market, a, b
 
 
+@contextmanager
+def mock_golden_seed(selection: Selection):
+    """Patch the aggregator listing + chain mirror that
+    ``Game.objects.get_golden_game`` calls during ``accept_match``, so the
+    Golden Game seeds from a locally-created (event, market, selection)
+    without any HTTP. Both names are imported inside the function body, so
+    patching the source modules at call time is sufficient."""
+    market = selection.market
+    listing = {
+        "items": [{
+            "id": market.event_id,
+            "markets": [{
+                "category": market.category,
+                "scope": market.scope,
+                "selections": [{
+                    "id": selection.id,
+                    "type": selection.type,
+                    "decimal_odds": str(selection.decimal_odds),
+                }],
+            }],
+        }],
+    }
+    client = MagicMock()
+    client.list_events.return_value = listing
+    with patch(
+        "core.event.providers.aggregator_client.AggrigatorClient",
+        return_value=client,
+    ), patch(
+        "core.event.services.aggregator_chain.ensure_chain",
+        return_value=selection,
+    ):
+        yield
+
+
+def make_golden_seed_selection() -> Selection:
+    """A local event + MONEYLINE market the Golden Game can seed against."""
+    league = make_league("GOLDEN_SEED")
+    event = make_event(
+        league,
+        home=make_team(league, "GOLDEN_HOME"),
+        away=make_team(league, "GOLDEN_AWAY"),
+    )
+    _, home_sel, _ = make_two_way_market(event)
+    return home_sel
+
+
 def make_match(
     player_1: User,
     player_2: User,
     *,
     end_date=None,
     accept: bool = True,
+    golden_selection: Optional[Selection] = None,
 ) -> Match:
     """Build a Match. If ``accept=True`` (default) all 11 game slots are seeded
     via ``MatchManager.accept_match`` so it matches what production looks like
-    after both players join.
+    after both players join. The Golden Game seed (an aggregator call in
+    production) is mocked against ``golden_selection`` — pass one to control
+    which event/market the golden slot locks, otherwise a dedicated
+    GOLDEN_SEED event is created.
     """
     if end_date is None:
         end_date = timezone.now() + timedelta(weeks=1)
 
     if accept:
-        match = Match.objects.create_match(player_1=player_1, player_2=player_2)
+        if golden_selection is None:
+            golden_selection = make_golden_seed_selection()
+        with mock_golden_seed(golden_selection):
+            match = Match.objects.create_match(player_1=player_1, player_2=player_2)
         # Match.objects.create_match already calls accept_match for private matches.
         # Ensure end_date is what the test expects.
         match.end_date = end_date

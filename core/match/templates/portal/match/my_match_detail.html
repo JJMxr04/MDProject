@@ -87,7 +87,7 @@
             <p><strong>Winner:</strong>
                 {% if match.tiebreaker.winner %}{{ match.tiebreaker.winner.username }}{% else %}TBD{% endif %}
             </p>
-            {% with gg=match.golden_game %}
+            {% with gg=golden_game %}
                 {% if gg and gg.event %}
                     <p><strong>Golden Game:</strong>
                         {{ gg.event.home_team.name|default:"TBD" }}
@@ -96,17 +96,20 @@
                     </p>
                 {% endif %}
                 <p><strong>Total:</strong> {{ match.tiebreaker.total }}</p>
-                {% if gg %}
-                    <p><strong>{{ gg.owner.username }}'s Total:</strong> {{ match.tiebreaker.owner_total }}</p>
-                    <p><strong>{{ gg.player_2.username }}'s Total:</strong> {{ match.tiebreaker.player_2_total }}</p>
-                {% endif %}
+                {# Golden game is ownerless — tiebreaker sides are the match players. #}
+                <p><strong>{{ match.player_1.username }}'s Total:</strong> {{ match.tiebreaker.owner_total }}</p>
+                <p><strong>{{ match.player_2.username }}'s Total:</strong> {{ match.tiebreaker.player_2_total }}</p>
             {% endwith %}
         {% else %}
             <p>No tiebreaker information available.</p>
         {% endif %}
 
         {% if match.match_state != 'completed' %}
-        <button id="tiebreaker-button" data-action="tiebreaker-open">Submit Your Tiebreaker Score</button>
+            {% if tiebreaker_locked %}
+                <p class="text-muted">Tiebreaker submissions are closed — the Golden Game has started.</p>
+            {% else %}
+                <button id="tiebreaker-button" data-action="tiebreaker-open">Submit Your Tiebreaker Score</button>
+            {% endif %}
         {% endif %}
     </div>
 
@@ -126,11 +129,9 @@
     <hr>
 
     <!-- Golden Game Section -->
-    {% with gg=match.golden_game %}
-        {% if gg %}
-            {% include "portal/match/_game_card.html" with game=gg slot_label="Golden Game" dom_id="golden-game-id" is_golden=True %}
-        {% endif %}
-    {% endwith %}
+    {% if golden_game %}
+        {% include "portal/match/_game_card.html" with game=golden_game slot_label="Golden Game" dom_id="golden-game-id" is_golden=True %}
+    {% endif %}
 
     <!-- Per-player game cards -->
     <div class="player-games-container">

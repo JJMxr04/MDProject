@@ -51,6 +51,11 @@ class GameManager(AbstractManager):
           - Owner must be picking ≥ 8h before event start.
           - Opponent must pick before event start.
           - No two slots in the same Match may share the same (event, market).
+
+        Golden Game slots never route through here — they are ownerless and
+        both sides pick independently via ``pick_on_locked_slot``. This flow
+        skips them entirely (and points the user at the Golden Game card if
+        they try to pick its locked market from the generic popup).
         """
         if current_user not in (match.player_1, match.player_2):
             raise PickError("Not a participant of this match")
@@ -84,18 +89,35 @@ class GameManager(AbstractManager):
         # current user is acting as owner; otherwise they're acting as opponent
         # on a slot some other user already claimed.
         owned_slots = list(
-            self.filter(match=match, owner=target_owner).select_related(
+            self.filter(match=match, owner=target_owner, is_golden=False)
+            .select_related(
                 "bet", "bet__owner_outcome", "bet__player_2_outcome", "event"
-            ).order_by("is_golden", "slot")
+            ).order_by("slot")
         )
         # First, check if this user is the opponent on an existing game holding
-        # this event — i.e. the other side already claimed it.
+        # this event — i.e. the other side already claimed it. Golden slots are
+        # excluded: they are ownerless and picked via pick_on_locked_slot, so
+        # neither side is ever told to wait for the "owner" there.
         opp_game = next(
-            (g for g in self.filter(match=match, player_2=current_user, event_id=event_pk)
-                  .select_related("bet", "event")), None,
+            (g for g in self.filter(
+                    match=match, player_2=current_user,
+                    event_id=event_pk, is_golden=False,
+                ).select_related("bet", "event")), None,
         )
         if opp_game is not None:
             return self._apply_opponent_pick(opp_game, selection, now)
+
+        # Markets reserved by a locked slot (Golden Game) can't be claimed on
+        # a regular slot — both players pick them on the Golden Game card.
+        locked_pairs = set(
+            self.filter(match=match, bet__locked_market__isnull=False)
+            .values_list("event_id", "bet__locked_market_id")
+        )
+        if (event_pk, selection.market_id) in locked_pairs:
+            raise PickError(
+                "That market belongs to the Golden Game — open the Golden "
+                "Game card to make this pick"
+            )
 
         # Otherwise current user is acting as owner on one of their own slots.
         # Anti-duplicate: same (event, market) cannot appear twice in this match.
@@ -209,45 +231,36 @@ class GameManager(AbstractManager):
         else:
             Bet.objects.set_player_2_outcome(bet, selection)
         return game
-        return game
 
-    def get_golden_game(self, player_1, player_2, match):
-        """Find an event + market for the Golden Game and create the slot.
+    def find_golden_candidate(self, *, window_start=None, window_end=None):
+        """Query the aggregator for a Golden Game seed in the window.
 
-        The aggregator is the source of truth for the events catalog —
-        MDProject's local Event table only holds rows users have already
-        picked. So we query the aggregator over HTTP, walk the fallback
-        chain on its response, then ``ensure_chain`` the chosen
-        (event, selection) into the local DB before linking the Game.
+        Returns ``(event_id, selection_id)``. Raises ``GoldenGameUnavailable``
+        when the catalog is unreachable, has no events in the window, or has
+        events but none with a market we can seed.
+
+        Used both by ``get_golden_game`` (at accept time) and by
+        ``MatchManager.create_match`` as a pre-create gate — a match is only
+        worth opening if a Golden Game could seed right now.
 
         Search policy:
           - Aggregator ``GET /v1/events`` between ``now + DEADLINE_BUFFER``
-            and ``match.end_date``, ordered closest-first by the API.
+            and ``window_end`` (default now + 7d), ordered closest-first by
+            the API.
           - Cross-event preference: try every candidate at the top market
             priority before downgrading. So a MONEYLINE event always wins
             over a SPREAD-only one, even if the SPREAD event starts sooner.
           - Pick a default selection (HOME for ML/SPREAD, OVER for TOTAL,
             else first with non-null odds). Either player can override.
-
-        Failures (raised, not silently returned):
-          - Aggregator unreachable.
-          - No events in the window.
-          - Events exist but none have a market we can seed.
-
-        Caller (``MatchManager.accept_match``) wraps in ``transaction.atomic``
-        so the raise rolls back the partial match.
         """
         from core.event.providers.aggregator_client import (
             AggrigatorClient, AggrigatorError,
         )
-        from core.event.services.aggregator_chain import (
-            ensure_chain, ChainBuildError,
-        )
 
         now = timezone.now()
-        window_start = now + DEADLINE_BUFFER
-        window_end = match.end_date or (now + timedelta(days=7))
-        if window_end <= window_start:
+        if window_start is None:
+            window_start = now + DEADLINE_BUFFER
+        if window_end is None or window_end <= window_start:
             window_end = window_start + timedelta(days=7)
 
         client = AggrigatorClient()
@@ -277,7 +290,35 @@ class GameManager(AbstractManager):
                 "Events are scheduled but none have markets posted yet. "
                 "Try again later."
             )
-        event_id, selection_id = picked
+        return picked
+
+    def get_golden_game(self, match):
+        """Find an event + market for the Golden Game and create the slot.
+
+        The aggregator is the source of truth for the events catalog —
+        MDProject's local Event table only holds rows users have already
+        picked. So we query the aggregator over HTTP (see
+        ``find_golden_candidate`` for the search policy), then
+        ``ensure_chain`` the chosen (event, selection) into the local DB
+        before linking the Game.
+
+        Failures (raised, not silently returned):
+          - Aggregator unreachable.
+          - No events in the window.
+          - Events exist but none have a market we can seed.
+
+        Caller (``MatchManager.accept_match``) wraps in ``transaction.atomic``
+        so the raise rolls back the partial match.
+        """
+        from core.event.services.aggregator_chain import (
+            ensure_chain, ChainBuildError,
+        )
+
+        now = timezone.now()
+        event_id, selection_id = self.find_golden_candidate(
+            window_start=now + DEADLINE_BUFFER,
+            window_end=match.end_date,
+        )
 
         # Mirror the chain into the local DB so we have a real local Market
         # row to lock against. The seed selection is used only as a vehicle
@@ -295,10 +336,13 @@ class GameManager(AbstractManager):
         chosen_event = seed_selection.market.event
         chosen_market = seed_selection.market
 
+        # Ownerless on purpose — the Golden Game belongs to the match, not a
+        # player. Sides are derived from match.player_1 / match.player_2
+        # (owner_outcome ≡ player_1, player_2_outcome ≡ player_2).
         game = self.create_game(
             match=match,
-            owner=player_1,
-            player_2=player_2,
+            owner=None,
+            player_2=None,
             slot=0,
             is_golden=True,
             event=chosen_event,
@@ -377,11 +421,17 @@ class Game(AbstractModel):
     match = models.ForeignKey(
         "core_match.Match", on_delete=models.CASCADE, related_name="games"
     )
+    # Regular slots belong to one player (owner claims the event, player_2
+    # responds). The Golden Game is ownerless — it belongs to the match, so
+    # both FKs are NULL and the two sides are match.player_1 / match.player_2
+    # (owner_outcome ≡ player_1's pick, player_2_outcome ≡ player_2's pick).
     owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="owner_game"
+        User, on_delete=models.CASCADE, related_name="owner_game",
+        null=True, blank=True,
     )
     player_2 = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="player_2_game"
+        User, on_delete=models.CASCADE, related_name="player_2_game",
+        null=True, blank=True,
     )
     event = models.ForeignKey(
         Event,
@@ -405,6 +455,14 @@ class Game(AbstractModel):
             models.UniqueConstraint(
                 fields=["match", "owner", "slot", "is_golden"],
                 name="uq_game_match_owner_slot_golden",
+            ),
+            # Golden games carry owner=NULL, which Postgres treats as
+            # distinct in the constraint above — enforce one-per-match
+            # explicitly.
+            models.UniqueConstraint(
+                fields=["match"],
+                condition=models.Q(is_golden=True),
+                name="uq_game_one_golden_per_match",
             ),
         ]
 

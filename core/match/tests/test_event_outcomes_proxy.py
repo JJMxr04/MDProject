@@ -26,7 +26,7 @@ class EventOutcomesProxyTests(TestCase):
         return patch(
             "core.match.views.eventOutcome.AggrigatorClient",
             return_value=type("C", (), {
-                "get_event_markets": lambda _self, _id: body,
+                "get_event": lambda _self, _id, include_markets=True: body,
             })(),
         )
 
@@ -55,7 +55,7 @@ class EventOutcomesProxyTests(TestCase):
         with patch(
             "core.match.views.eventOutcome.AggrigatorClient",
             return_value=type("C", (), {
-                "get_event_markets": lambda *_: (_ for _ in ()).throw(
+                "get_event": lambda *_, **__: (_ for _ in ()).throw(
                     AggrigatorError("simulated outage"),
                 ),
             })(),

@@ -16,44 +16,44 @@ from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
 
 
 def _markets_response(*, event_id: str, selection_id: str) -> dict:
-    """Shape the aggregator's GET /v1/events/{id}/markets returns."""
+    """Shape ``get_event(event_id, include_markets=True)`` returns — a flat
+    ``EventDetailOut``: event fields at top level + ``markets`` array, with
+    the canonical ``id`` primary key on every entity (post plan v2)."""
     return {
-        "event": {
-            "event_id": event_id,
-            "sport_id": "FOOTBALL",
-            "league_id": "NFL",
-            "type": "match",
-            "season_label": "2024-W15",
-            "start_time": "2026-01-01T18:00:00Z",
-            "status_type": "notstarted",
-            "status_display": "Scheduled",
-            "is_live": False, "is_finalized": False, "completed": False,
-            "feed_locked": False,
-            "home_team": {
-                "team_id": "DAL", "league_id": "NFL",
-                "name_long": "Dallas Cowboys",
-                "name_medium": "Cowboys", "name_short": "DAL",
-                "primary_color": "#003594", "stat_entity_id": "home",
-            },
-            "away_team": {
-                "team_id": "PHI", "league_id": "NFL",
-                "name_long": "Philadelphia Eagles",
-                "name_medium": "Eagles", "name_short": "PHI",
-                "primary_color": "#004C54", "stat_entity_id": "away",
-            },
-            "home_score": None, "away_score": None,
-            "winner_code": None,
+        "id": event_id,
+        "sport_id": "FOOTBALL",
+        "league_id": "NFL",
+        "type": "match",
+        "season_label": "2024-W15",
+        "start_time": "2026-01-01T18:00:00Z",
+        "status_type": "notstarted",
+        "status_display": "Scheduled",
+        "is_live": False, "is_finalized": False, "completed": False,
+        "feed_locked": False,
+        "home_team": {
+            "team_id": "DAL", "league_id": "NFL",
+            "name_long": "Dallas Cowboys",
+            "name_medium": "Cowboys", "name_short": "DAL",
+            "primary_color": "#003594", "stat_entity_id": "home",
         },
+        "away_team": {
+            "team_id": "PHI", "league_id": "NFL",
+            "name_long": "Philadelphia Eagles",
+            "name_medium": "Eagles", "name_short": "PHI",
+            "primary_color": "#004C54", "stat_entity_id": "away",
+        },
+        "home_score": None, "away_score": None,
+        "winner_code": None,
         "markets": [
             {
-                "market_id": f"{event_id}-ml-ft",
+                "id": f"{event_id}-ml-ft",
                 "category": "MONEYLINE", "type": "NFL_POINTS_ML",
                 "scope": "FULL_GAME", "line": None, "side": "",
                 "subject_team_id": None,
                 "is_live": False, "suspended": False,
                 "selections": [
                     {
-                        "selection_id": selection_id,
+                        "id": selection_id,
                         "type": "HOME", "label": "Dallas Cowboys",
                         "decimal_odds": "1.6700",
                         "opening_decimal_odds": "1.7500",
@@ -80,7 +80,9 @@ class EnsureChainTests(TestCase):
     def _patch_client(self, body):
         return patch(
             "core.event.services.aggregator_chain.AggrigatorClient",
-            return_value=type("C", (), {"get_event_markets": lambda _self, _id: body})(),
+            return_value=type("C", (), {
+                "get_event": lambda _self, _id, include_markets=True: body,
+            })(),
         )
 
     def test_first_call_creates_full_chain(self):
@@ -111,12 +113,29 @@ class EnsureChainTests(TestCase):
         self.assertEqual(Market.objects.count(), 1)
         self.assertEqual(Selection.objects.count(), 1)
 
+    def test_refreshes_stale_event_lifecycle(self):
+        """An existing local mirror with a stale terminal status must be
+        refreshed from the aggregator response — a stale ``finished`` row
+        freezes the game card (``is_settled``) even though the event hasn't
+        kicked off (seen after sim reseeds that reuse event ids)."""
+        with self._patch_client(self.payload):
+            ensure_chain(self.event_id, self.selection_id)
+        Event.objects.filter(id=self.event_id).update(
+            status_type="finished", is_finalized=True, completed=True,
+        )
+        with self._patch_client(self.payload):
+            ensure_chain(self.event_id, self.selection_id)
+        ev = Event.objects.get(id=self.event_id)
+        self.assertEqual(ev.status_type, "notstarted")
+        self.assertFalse(ev.is_finalized)
+        self.assertFalse(ev.completed)
+
     def test_aggregator_unreachable_raises(self):
         """If the aggregator returns nothing, surface a clear error so the
         view can return 400 instead of persisting a half-built chain."""
         with patch(
             "core.event.services.aggregator_chain.AggrigatorClient",
-            return_value=type("C", (), {"get_event_markets": lambda *_: None})(),
+            return_value=type("C", (), {"get_event": lambda *_, **__: None})(),
         ):
             with self.assertRaises(ChainBuildError):
                 ensure_chain(self.event_id, self.selection_id)

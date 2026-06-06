@@ -465,6 +465,9 @@ a:hover { color: var(--brand-blue-bright); }
   background: transparent; border: 1px solid transparent; border-radius: var(--radius-pill);
   color: var(--text-secondary); font-size: var(--text-sm); font-weight: var(--weight-medium);
   cursor: pointer;
+  /* Tabs can be <button> (form filters) or <a> (nav, e.g. Browse public). */
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: var(--space-1);
 }
 .filter-bar__tab:hover { background: var(--surface-muted); color: var(--text-primary); }
 .filter-bar__tab.is-active {

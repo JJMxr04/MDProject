@@ -25,6 +25,10 @@
                 {{ f.label }}
             </button>
         {% endfor %}
+        {# Nav link, not a filter — sits after Completed for quick access. #}
+        <a class="filter-bar__tab" href="{% url 'core-portal:portal-public-match-list' %}">
+            Browse public games <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+        </a>
     </div>
     <div class="filter-bar__controls">
         <div class="field">
