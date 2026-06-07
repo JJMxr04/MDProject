@@ -558,11 +558,31 @@ CONTENT_SECURITY_POLICY = {
         # from static.cloudflareinsights.com and POSTs RUM data to
         # cloudflareinsights.com — both origins must be allowed or the beacon
         # is blocked (script-src for the load, connect-src for the report).
-        "script-src": ["'self'", "https://static.cloudflareinsights.com"],
+        #
+        # Matomo (self-hosted at pmat.warforaterra.com) needs the same pair:
+        # script-src for matomo.js, connect-src for the matomo.php tracking
+        # calls (XHR/sendBeacon), plus img-src for the <img> pixel fallback
+        # the tracker uses when XHR is unavailable. The bootstrap snippet
+        # itself is externalized to static/js/matomo-init.js (loaded from the
+        # public + portal base templates) because inline scripts are blocked.
+        "script-src": [
+            "'self'",
+            "https://static.cloudflareinsights.com",
+            "https://pmat.warforaterra.com",
+        ],
         "style-src": ["'self'", "'unsafe-inline'"],
-        "img-src": ["'self'", "data:", "https://*.s3.amazonaws.com"],
+        "img-src": [
+            "'self'",
+            "data:",
+            "https://*.s3.amazonaws.com",
+            "https://pmat.warforaterra.com",
+        ],
         "font-src": ["'self'", "data:"],
-        "connect-src": ["'self'", "https://cloudflareinsights.com"],
+        "connect-src": [
+            "'self'",
+            "https://cloudflareinsights.com",
+            "https://pmat.warforaterra.com",
+        ],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
         "form-action": ["'self'"],
