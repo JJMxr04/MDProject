@@ -449,14 +449,16 @@ AXES_RESET_ON_SUCCESS = True   # a good login clears the failure counter
 AXES_HTTP_RESPONSE_CODE = 429  # "rate limited", not 403
 AXES_ENABLE_ADMIN = True       # review/reset lockouts from Django admin
 AXES_VERBOSE = True
-# Behind Coolify/Traefik the real client IP is in X-Forwarded-For (one proxy
-# hop). Without this, axes would see the proxy's IP for everyone, collapsing the
-# per-IP dimension. Mirrors the single-trusted-proxy assumption in
-# SECURE_PROXY_SSL_HEADER / S-18. Only in prod — local/tests hit REMOTE_ADDR
-# directly (no XFF), where proxy_count would mis-resolve.
-if not DEBUG:
-    AXES_IPWARE_PROXY_COUNT = 1
-    AXES_IPWARE_META_PRECEDENCE_ORDER = ["HTTP_X_FORWARDED_FOR", "REMOTE_ADDR"]
+# Real client IP behind Cloudflare → Coolify/Traefik. REMOTE_ADDR is always
+# Traefik, and X-Forwarded-For depends on Traefik's trust config, so axes
+# resolves the IP via core.ip.get_client_ip (CF-Connecting-IP → XFF last
+# hop → REMOTE_ADDR). NOTE: the AXES_IPWARE_* settings this replaces were
+# silently inert — axes 6+ only reads them when the optional django-ipware
+# package is installed (it isn't), so axes was keying every lockout on the
+# proxy's IP: one attacker's 10 failures 429'd auth for ALL users at once.
+# The callable degrades cleanly in local dev/tests (no proxy headers →
+# REMOTE_ADDR), so it is set unconditionally.
+AXES_CLIENT_IP_CALLABLE = "core.ip.get_client_ip"
 
 
 

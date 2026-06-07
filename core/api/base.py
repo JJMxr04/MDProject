@@ -18,19 +18,20 @@ the single switch for v1 behavior.
 """
 
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework.throttling import UserRateThrottle
 
 from core.api.auth import V1_AUTHENTICATION_CLASSES
 from core.api.exceptions import custom_exception_handler
 from core.api.pagination import EnvelopePageNumberPagination
 from core.api.renderers import EnvelopeJSONRenderer
+from core.api.throttling import ClientIPAnonRateThrottle
 
 
 class V1ViewMixin:
     authentication_classes = V1_AUTHENTICATION_CLASSES
     permission_classes = [IsAuthenticated]
     renderer_classes = [EnvelopeJSONRenderer]
-    throttle_classes = [UserRateThrottle, AnonRateThrottle]
+    throttle_classes = [UserRateThrottle, ClientIPAnonRateThrottle]
     pagination_class = EnvelopePageNumberPagination
 
     def get_exception_handler(self):

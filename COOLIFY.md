@@ -231,7 +231,43 @@ applications.
 
 ---
 
-## 8. Pre-flight checklist
+## 8. Fronting with Cloudflare (orange-cloud)
+
+The app is Cloudflare-aware out of the box, but the zone has to be
+configured to match:
+
+- **SSL/TLS mode: Full (strict).** Coolify's Traefik already terminates
+  TLS with a valid cert. *Flexible* mode would make Cloudflare hit the
+  origin over HTTP → `SECURE_SSL_REDIRECT` 301s → infinite redirect loop.
+- **Rocket Loader: OFF.** It rewrites pages with inline scripts, which
+  the strict CSP (`script-src 'self'` — no `'unsafe-inline'`) blocks.
+  Auto Minify / Brotli / Early Hints are fine.
+- **Web Analytics (Browser Insights)**: already allowed by the CSP —
+  `script-src` lists `static.cloudflareinsights.com` and `connect-src`
+  lists `cloudflareinsights.com`. Nothing to do.
+- **Email Obfuscation / challenge scripts**: served same-origin under
+  `/cdn-cgi/` — covered by `'self'`. Fine either way.
+- **Real client IP**: resolved by `core/ip.py` (`CF-Connecting-IP` → XFF
+  last hop → `REMOTE_ADDR`) and used by django-axes lockouts
+  (`AXES_CLIENT_IP_CALLABLE`) and the v1 anon/auth-sensitive throttles.
+  No Cloudflare config needed — `CF-Connecting-IP` is always set on
+  proxied traffic.
+- **Recommended**: firewall the origin (or a Traefik IP-allowlist) to
+  [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/)
+  so nobody can bypass Cloudflare and forge `CF-Connecting-IP` /
+  hit the origin directly.
+
+> **Beacon shows `ERR_CONNECTION_REFUSED` in *your* browser console?**
+> That's local DNS ad-blocking (Pi-hole / AdGuard / router) sinkholing
+> `cloudflareinsights.com` to `0.0.0.0` — not an app or CSP problem.
+> Whitelist `cloudflareinsights.com` + `static.cloudflareinsights.com`
+> locally if you want your own visits counted. Visitors with ad
+> blockers are simply missing from Web Analytics; everyone else loads
+> the beacon normally.
+
+---
+
+## 9. Pre-flight checklist
 
 - [ ] `https://<mdproject-domain>/healthz` returns `{"ok": true}`.
 - [ ] `https://<mdproject-domain>/robots.txt` lists the public marketing
@@ -251,7 +287,7 @@ applications.
 
 ---
 
-## 9. Troubleshooting
+## 10. Troubleshooting
 
 **`SECRET_KEY must be set in production`** at startup → you set
 `DEBUG=False` but didn't set `SECRET_KEY`. Add it to Coolify env vars.

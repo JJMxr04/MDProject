@@ -18,6 +18,26 @@ revisit a dedicated cache backend if the v1 polling load grows.
 
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
+from core.ip import get_client_ip
+
+
+class ClientIPIdentMixin:
+    """Key IP-scoped throttles on the real client IP (Cloudflare-aware).
+
+    DRF's stock ``get_ident`` uses the WHOLE X-Forwarded-For chain (or
+    REMOTE_ADDR) unless ``NUM_PROXIES`` is set — behind Cloudflare → Traefik
+    that either collapses every visitor onto the proxy's bucket or keys on a
+    client-spoofable string. ``core.ip.get_client_ip`` resolves the chain
+    (CF-Connecting-IP → XFF last hop → REMOTE_ADDR).
+    """
+
+    def get_ident(self, request):
+        return get_client_ip(request) or super().get_ident(request)
+
+
+class ClientIPAnonRateThrottle(ClientIPIdentMixin, AnonRateThrottle):
+    """``anon``-scope floor for v1, keyed on the real client IP."""
+
 
 class LiveOddsRateThrottle(UserRateThrottle):
     """Per-user cap for hot odds polling (~1 req/s)."""
@@ -25,10 +45,10 @@ class LiveOddsRateThrottle(UserRateThrottle):
     scope = "live_odds"
 
 
-class AuthSensitiveRateThrottle(AnonRateThrottle):
+class AuthSensitiveRateThrottle(ClientIPIdentMixin, AnonRateThrottle):
     """Per-IP brake for login / register / password-reset / activation.
 
-    Keyed by IP (inherits ``AnonRateThrottle``'s ident) because the caller is
+    Keyed by real client IP (``ClientIPIdentMixin``) because the caller is
     typically unauthenticated on these endpoints.
     """
 
