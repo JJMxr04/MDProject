@@ -9,6 +9,13 @@
  */
 var _paq = window._paq = window._paq || [];
 /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+/* Cookieless mode — no _pk_* cookies, so the privacy policy's "functional
+ * cookies only" claim stays true and no consent banner is required (pair
+ * with server-side IP anonymization: Matomo admin → Privacy → Anonymize
+ * data, mask >= 2 bytes). setDoNotTrack makes honoring the browser DNT
+ * signal explicit rather than relying on the server default. */
+_paq.push(['disableCookies']);
+_paq.push(['setDoNotTrack', true]);
 _paq.push(['trackPageView']);
 _paq.push(['enableLinkTracking']);
 (function() {
