@@ -47,6 +47,7 @@ case "$ROLE" in
         --timeout "${MDPROJECT_WEB_TIMEOUT:-30}" \
         --graceful-timeout 30 \
         --forwarded-allow-ips="*" \
+        --logger-class CoreRoot.gunicorn_logging.HealthcheckFilteringLogger \
         --access-logfile - \
         --error-logfile -
     ;;
