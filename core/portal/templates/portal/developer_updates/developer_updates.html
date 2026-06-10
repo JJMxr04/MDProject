@@ -1,0 +1,275 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Developer updates{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Developer updates</h1>
+        <p class="page-header__subtitle">What's new, what's changed, and what we're still working on.</p>
+    </div>
+</header>
+
+<div class="updates-grid">
+    <section class="card-ui updates-intro">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-flask me-2"></i>Beta testing notes</h2>
+        </header>
+        <div class="card-ui__body">
+            <p>Thanks for helping us test. This is an early build, so some things
+            will change, move, or break while we iron it out.</p>
+            <div class="updates-callout">
+                <i class="bi bi-bug me-2"></i>
+                <div>
+                    <strong>Hit a snag?</strong> The more detail the better — screenshots,
+                    what you clicked, and what you expected. Send it from the
+                    <a href="{% url 'core-portal:portal-support' %}">Support page</a>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if keep_in_mind %}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-check2-square me-2"></i>While we're testing, keep in mind</h2>
+        </header>
+        <div class="card-ui__body">
+            <ul class="updates-keep">
+                {% for point in keep_in_mind %}
+                <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if feature_status %}
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-table me-2"></i>Feature status</h2>
+        </header>
+        <div class="card-ui__body">
+            <div class="updates-table-wrap">
+                <table class="updates-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Feature</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in feature_status %}
+                        <tr>
+                            <td data-label="Feature"><strong>{{ row.feature }}</strong></td>
+                            <td data-label="Status">
+                                <span class="updates-pill updates-pill--{{ row.status }}">{{ row.status_label }}</span>
+                            </td>
+                            <td data-label="Notes">{{ row.notes }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-megaphone me-2"></i>Latest updates</h2>
+        </header>
+        <div class="card-ui__body">
+            {% if updates %}
+            <ol class="updates-timeline">
+                {% for update in updates %}
+                <li class="updates-entry">
+                    <div class="updates-entry__meta">
+                        <time class="updates-entry__date">{{ update.date }}</time>
+                        <span class="updates-pill updates-pill--{{ update.tag }}">{{ update.tag_label }}</span>
+                    </div>
+                    <h3 class="updates-entry__title">{{ update.title }}</h3>
+                    {% if update.items %}
+                    <ul class="updates-entry__items">
+                        {% for item in update.items %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ol>
+            {% else %}
+            <p class="updates-empty">No updates yet — check back soon.</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .updates-grid {
+        display: grid;
+        gap: var(--space-4);
+        align-items: start;
+        max-width: 820px;
+    }
+    .updates-callout {
+        display: flex;
+        gap: .5rem;
+        margin-top: var(--space-4);
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-sm, 6px);
+        background: var(--surface-muted, #f5f7fa);
+        border: 1px solid var(--border-default, #e5e7eb);
+        line-height: 1.6;
+    }
+    .updates-callout a {
+        font-weight: 600;
+        color: var(--brand-blue-dark, #275d81);
+    }
+    .updates-timeline {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+    .updates-entry {
+        padding-left: var(--space-4);
+        border-left: 3px solid var(--border-default, #e5e7eb);
+    }
+    .updates-entry__meta {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: .25rem;
+    }
+    .updates-entry__date {
+        font-size: var(--text-sm, .85rem);
+        color: var(--text-muted, #6b7280);
+    }
+    .updates-entry__title {
+        margin: 0 0 .35rem;
+        font-size: var(--text-lg, 1.1rem);
+    }
+    .updates-entry__items {
+        margin: 0;
+        padding-left: var(--space-5);
+        line-height: 1.6;
+    }
+    .updates-pill {
+        display: inline-block;
+        padding: .1rem .55rem;
+        border-radius: 999px;
+        font-size: var(--text-xs, .72rem);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .02em;
+        background: var(--surface-muted, #f5f7fa);
+        border: 1px solid var(--border-default, #e5e7eb);
+        color: var(--text-muted, #6b7280);
+    }
+    .updates-pill--new {
+        background: #e7f4ee; border-color: #b7e0cb; color: #1c7a4b;
+    }
+    .updates-pill--improved {
+        background: #e8f0fb; border-color: #bcd4f3; color: #275d81;
+    }
+    .updates-pill--fixed {
+        background: #f1ecfb; border-color: #d4c4f0; color: #6b3fb0;
+    }
+    .updates-pill--known-issue {
+        background: #fdf0e7; border-color: #f3d3b7; color: #b5631c;
+    }
+    .updates-empty {
+        color: var(--text-muted, #6b7280);
+    }
+
+    /* While we're testing, keep in mind */
+    .updates-keep {
+        margin: 0;
+        padding-left: var(--space-5);
+        line-height: 1.7;
+    }
+    .updates-keep li {
+        margin-bottom: .35rem;
+    }
+
+    /* Feature status table */
+    .updates-table-wrap {
+        overflow-x: auto;
+    }
+    .updates-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: var(--text-sm, .9rem);
+    }
+    .updates-table th,
+    .updates-table td {
+        padding: var(--space-3) var(--space-4);
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--border-default, #e5e7eb);
+    }
+    .updates-table thead th {
+        font-size: var(--text-xs, .72rem);
+        text-transform: uppercase;
+        letter-spacing: .03em;
+        color: var(--text-muted, #6b7280);
+        border-bottom-width: 2px;
+    }
+    .updates-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Status pills (shared shape with tag pills) */
+    .updates-pill--working {
+        background: #e7f4ee; border-color: #b7e0cb; color: #1c7a4b;
+    }
+    .updates-pill--in-progress {
+        background: #e8f0fb; border-color: #bcd4f3; color: #275d81;
+    }
+    .updates-pill--broken {
+        background: #fbe9e9; border-color: #f0c2c2; color: #b03a3a;
+    }
+    .updates-pill--planned {
+        background: #f3f4f6; border-color: #d7dae0; color: #4b5563;
+    }
+
+    /* Stack the table into cards on narrow screens */
+    @media (max-width: 560px) {
+        .updates-table thead {
+            display: none;
+        }
+        .updates-table,
+        .updates-table tbody,
+        .updates-table tr,
+        .updates-table td {
+            display: block;
+            width: 100%;
+        }
+        .updates-table tr {
+            margin-bottom: var(--space-3);
+            border: 1px solid var(--border-default, #e5e7eb);
+            border-radius: var(--radius-sm, 6px);
+        }
+        .updates-table td {
+            border-bottom: none;
+            padding: var(--space-2) var(--space-4);
+        }
+        .updates-table td::before {
+            content: attr(data-label);
+            display: block;
+            font-size: var(--text-xs, .72rem);
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            color: var(--text-muted, #6b7280);
+        }
+    }
+</style>
+{% endblock css %}
