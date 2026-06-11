@@ -1028,3 +1028,33 @@ if SILK_ENABLED:
         SILKY_INTERCEPT_PERCENT = int(os.environ.get("SILK_INTERCEPT_PERCENT", "5"))
     except ValueError:
         SILKY_INTERCEPT_PERCENT = 5
+
+
+# ---------------------------------------------------------------------------
+# Error tracking — GlitchTip via sentry-sdk
+#
+# Gated on SENTRY_DSN: empty/missing = sentry stays inert (local dev
+# untouched). One init covers BOTH web and worker — the Procrastinate
+# worker boots via `manage.py procrastinate worker`, which loads these
+# settings. There is no official Procrastinate integration; the Django
+# integration's ERROR-level logging capture picks up task failures.
+#
+# ENVIRONMENT separates prod/staging/dev events in GlitchTip (settings
+# otherwise only know the DEBUG flag). SOURCE_COMMIT is injected as a
+# build arg by Coolify and baked into the image (see Dockerfile.web /
+# Dockerfile.worker) so every event carries the deployed commit SHA.
+# ---------------------------------------------------------------------------
+SENTRY_DSN = os.environ.get("SENTRY_DSN", "").strip()
+
+if SENTRY_DSN:
+    import sentry_sdk
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        environment=os.environ.get("ENVIRONMENT", "dev"),
+        release=os.environ.get("SOURCE_COMMIT") or None,
+        # Errors only — no request bodies, no user PII, no perf tracing.
+        # Revisit traces_sample_rate if perf monitoring is ever wanted.
+        send_default_pii=False,
+        traces_sample_rate=0,
+    )
