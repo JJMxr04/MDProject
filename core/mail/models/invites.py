@@ -80,6 +80,14 @@ class InviteManager(AbstractManager):
         user-friendly error message; only suppresses unexpected system
         errors via the outer view's generic except.
         """
+        # Re-fetch under a row lock. Without it, two concurrent accepts both
+        # pass the view's ownership check and create duplicate side-effects
+        # (two Matches from one invite). The loser of the lock race sees the
+        # row deleted and raises DoesNotExist → the view's 404.
+        invite = self.select_for_update().get(pk=invite.pk)
+        if invite.state != 'sent':
+            raise self.model.DoesNotExist("Invite already handled.")
+
         invite.accepted = True
         invite.accepted_date = timezone.now()
         invite.state = "accepted"
@@ -96,7 +104,17 @@ class InviteManager(AbstractManager):
             Emails.send_match_started_to_accepter(invite.player, invite.sender.username)
         if invite.type == 'tournament':
             from core.tournament.models import Tournament
-            tournament = Tournament.objects.get(id=invite.obj_id)
+            from core.tournament.models.tournament import TournamentJoinUnavailable
+            try:
+                tournament = Tournament.objects.get(id=invite.obj_id)
+            except Tournament.DoesNotExist:
+                raise TournamentJoinUnavailable("This tournament no longer exists.")
+            # Actually enroll — without this the user gets a "you're in!"
+            # email while never appearing in the bracket.
+            if not Tournament.objects.accept_invite(tournament.id, invite.player):
+                raise TournamentJoinUnavailable(
+                    "This tournament is full, already started, or no longer taking players."
+                )
             Emails.send_tournament_acceptance_confirmation(invite.player, tournament)
         if invite.type == 'friend':
             # Bilateral friendship is created at acceptance time, not at

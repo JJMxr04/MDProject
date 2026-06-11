@@ -25,7 +25,7 @@ class InviteViewSet(viewsets.ModelViewSet):
             return Response({'error': 'Invite is not in sent state.'}, status=status.HTTP_400_BAD_REQUEST)
 
         tournament = Tournament.objects.get_object_by_id(invited_player.tournament.id)
-        success = Tournament.objects.accept_invite(tourney_id=tournament.id, invited_player=invited_player)
+        success = Tournament.objects.accept_invite(tourney_id=tournament.id, user=invited_player.player)
         if success:
             # InvitedPlayer.objects.accept_invite now fires the
             # acceptance email internally — don't re-send here.

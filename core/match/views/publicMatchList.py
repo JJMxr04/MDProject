@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 
 from core.mail.forms import InviteForm, MatchInviteForm
 from core.mail.models import Invite
+from core.ratelimit import rate_limit
 from core.user.models import User
 
 
@@ -53,6 +54,9 @@ def public_match_list_view(request):
     return render(request, 'portal/match/public_match_list.html', context)
 @require_POST
 @login_required(login_url='/auth/login/')
+# Each private create fires an invite email — cap the blast radius per user
+# (plan §7.5 item 3). Runs after login_required so it keys on the user.
+@rate_limit("create-match", 30, 3600, per="user")
 def create_public_match_view(request):
     from core.game.models.game import GoldenGameUnavailable
 
@@ -79,8 +83,27 @@ def create_public_match_view(request):
             if not player:
                 return JsonResponse({'status': 'error', 'message': 'Player is required for private matches'}, status=400)
 
-            # Create the match
-            player_2= User.objects.get(id=player)
+            # The id comes straight from the client form — validate it like
+            # the friend-request flow does (friends_list.add_friend_action)
+            # instead of 500ing on a forged/stale uuid. A malformed uuid
+            # raises ValidationError from the UUIDField lookup.
+            from django.core.exceptions import ValidationError
+            try:
+                player_2 = User.objects.get(id=player)
+            except (User.DoesNotExist, ValidationError, ValueError):
+                return JsonResponse({'status': 'error', 'message': 'Player not found.'}, status=404)
+
+            if player_2 == owner:
+                return JsonResponse({'status': 'error', 'message': 'You cannot challenge yourself.'}, status=400)
+
+            # One pending challenge per pair — a resend just re-points the
+            # user at the invite that's already waiting.
+            existing = Invite.objects.filter(
+                sender=owner, player=player_2, type='match', state='sent',
+            ).first()
+            if existing:
+                return JsonResponse({'status': 'success', 'invite_id': existing.id})
+
             # Create the invite
             invite = Invite.objects.create_invite(
                 obj_id=None,

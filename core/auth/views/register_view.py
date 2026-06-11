@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 from core.auth.forms.register_form import RegisterForm
 from django.contrib.auth import login
 from django.contrib import messages
 from core.auth.models import email  # Import your email sending function
+from core.ratelimit import rate_limit
 
 class RegisterView(View):
     form_class = RegisterForm
@@ -13,6 +15,9 @@ class RegisterView(View):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
+    # Anonymous, sends an activation email, and the waitlist-approval form
+    # error makes approval status probeable — brake it (plan §7.5 item 3).
+    @method_decorator(rate_limit("auth-register", 5, 3600))
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():

@@ -1,0 +1,45 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Email preferences · Paradise Sports{% endblock title %}
+{% block meta_description %}Manage your Paradise Sports email notifications.{% endblock meta_description %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <section class="auth">
+        <div class="auth__card auth__card--center">
+            {% if state == "unsubscribed" %}
+                <h1>You&rsquo;re unsubscribed</h1>
+                <p class="ps-lead">
+                    You won&rsquo;t get match or tournament notification emails anymore.
+                    In-app notifications still show up when you&rsquo;re signed in, and
+                    account emails (password resets, activation) are unaffected.
+                </p>
+                <form method="post" action="">
+                    <input type="hidden" name="action" value="resubscribe">
+                    <button type="submit" class="ps-btn ps-btn--primary">Changed my mind — resubscribe</button>
+                </form>
+            {% elif state == "resubscribed" %}
+                <h1>Welcome back! 🎉</h1>
+                <p class="ps-lead">
+                    Notification emails are back on. You&rsquo;ll hear from us when your
+                    matches need attention.
+                </p>
+            {% else %}
+                <h1>That link didn&rsquo;t work</h1>
+                <p class="ps-lead">
+                    This unsubscribe link is invalid or incomplete. Try the link from a
+                    more recent email.
+                </p>
+            {% endif %}
+            <div class="auth__actions">
+                <a href="{% url 'core-web:home' %}" class="ps-btn ps-btn--ghost">Back to home</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

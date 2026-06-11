@@ -1,7 +1,14 @@
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+from django.utils.decorators import method_decorator
+
+from core.ratelimit import rate_limit
 
 
+# Anonymous endpoint that triggers an outbound email per submission — and
+# the send is synchronous (Anymail HTTP call inside the request), so an
+# unthrottled loop also pins web workers (plan §7.5 item 3).
+@method_decorator(rate_limit("auth-pwreset", 5, 3600), name="post")
 class BrandedPasswordResetView(auth_views.PasswordResetView):
     """Drop-in PasswordResetView that uses our branded HTML email
     layout. Adds ``site_url`` / ``logo_url`` to the email template

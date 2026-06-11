@@ -43,6 +43,11 @@
                 You're receiving this email because of activity tied to your account at
                 <a href="{{ site_url }}" style="color:#3D7EAA; text-decoration:underline;">{{ site_url }}</a>.
               </div>
+              {% if unsubscribe_url %}
+              <div style="margin-top:6px;">
+                <a href="{{ unsubscribe_url }}" style="color:#666666; text-decoration:underline;">Unsubscribe from notification emails</a>
+              </div>
+              {% endif %}
             </td>
           </tr>
 

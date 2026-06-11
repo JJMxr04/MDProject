@@ -2,14 +2,20 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework.permissions import AllowAny
 from rest_framework import status
+from core.api.throttling import AuthSensitiveRateThrottle
 from core.auth.serializers import RegisterSerializer
 from core.auth.models.waitlist import WaitlistEntry
 from core.auth.models import email
 
 
+# NOTE: not currently routed (core/routers.py registration is commented
+# out) — the live flow is the /auth/register/ form view. Throttled anyway
+# so re-enabling the route doesn't expose an unthrottled approval-status
+# probe + activation-email sender.
 class RegisterViewSet(ViewSet):
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
+    throttle_classes = (AuthSensitiveRateThrottle,)
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):

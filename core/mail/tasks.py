@@ -45,11 +45,22 @@ def send_email(subject, recipient, template_path, context):
         html_content = render_to_string(template_path, ctx)
         text_content = strip_tags(html_content)
 
+        # RFC 8058 one-click unsubscribe headers — Gmail/Yahoo require them
+        # for bulk-ish senders, and they keep the Resend domain reputation
+        # healthy. Present whenever the caller routed through
+        # Emails._notify (engagement mail); absent on transactional mail.
+        headers = {}
+        unsubscribe_url = ctx.get("unsubscribe_url")
+        if unsubscribe_url:
+            headers["List-Unsubscribe"] = f"<{unsubscribe_url}>"
+            headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
+
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[recipient],
+            headers=headers,
         )
         email.attach_alternative(html_content, "text/html")
         sent = email.send(fail_silently=False)

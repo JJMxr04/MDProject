@@ -4,6 +4,7 @@ from .views.register_view import RegisterView
 from .views.waitlist_view import WaitListView
 from .views import waitlist_view
 from .views.login_view import LoginView
+from .views.unsubscribe import unsubscribe_view
 from django.contrib.auth import views as auth_views
 from core.auth.views.activation_view import ActivateUserView, activate_yoour_account
 
@@ -17,6 +18,9 @@ urlpatterns = [
     path('waitlist/thank-you/', waitlist_view.WaitlistThankYouView, name='waitlist-list-thank-you'),
     path('activate/<str:token>/', ActivateUserView.as_view(), name='activate'),
     path('activate-your-email', activate_yoour_account, name='activation-email'),
+    # Signed-token unsubscribe for engagement emails — works logged-out
+    # (linked from every notification email footer; see core.mail.unsubscribe).
+    path('unsubscribe/<str:token>/', unsubscribe_view, name='unsubscribe'),
 
     
 ]

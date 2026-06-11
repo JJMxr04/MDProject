@@ -11,6 +11,14 @@ from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.views import csp_report, healthz, portal_or_404, robots_txt
 from django.contrib.auth import views as auth_views
 
+# Admin 2FA (plan §7.3 item 9 phase 1): swap the admin site class so login
+# demands a TOTP code. Flag-gated — flipping it before staff have enrolled
+# devices locks everyone out of /admin (see ADMIN_REQUIRE_OTP in settings).
+if settings.ADMIN_REQUIRE_OTP:
+    from django_otp.admin import OTPAdminSite
+
+    admin.site.__class__ = OTPAdminSite
+
 
 urlpatterns = [
     # path('admin/dashboard/', custom_admin_view, name='admin_dashboard'),

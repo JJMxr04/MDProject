@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.utils import timezone
 from core.user.models import User
 from core.mail.models import Invite
+from core.ratelimit import rate_limit
 
 @login_required
 def friend_search(request):
@@ -44,6 +45,8 @@ def friend_search(request):
     return render(request, 'portal/user/friend_search.html', context)
 
 @login_required(login_url='/auth/login/')
+# Friend requests notify the target — cap per user (plan §7.5 item 3).
+@rate_limit("friend-request", 30, 3600, per="user")
 def add_friend_action(request, user_id):
     """Send a *friend request* — bilateral friendship only happens after the
     target user accepts. Replaces the old "click Add → instantly friends"

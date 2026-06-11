@@ -13,10 +13,11 @@ class Tournament2DayReminder():
         return tournaments
 
     def send_players_Email(self,tournament):
-        players = Player.objects.filter(tournament=tournament)
+        players = Player.objects.filter(tournament=tournament).select_related('player')
 
         for player in players:
-            Emails.send_tournament_starting_notification(player,tournament)
+            # Player is the tournament join row; the User lives on .player.
+            Emails.send_tournament_starting_notification(player.player, tournament)
 
     def get_tournments_send_player_email(self):
         tournaments = self.get_upcoming_tournaments()

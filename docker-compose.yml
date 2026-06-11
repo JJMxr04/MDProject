@@ -1,12 +1,13 @@
 # Local prod-like stack for MDProject. Mirrors what Coolify will deploy
-# (Django + postgres) so behavior parity is testable before pushing.
+# (Django web + Procrastinate worker + postgres + redis) so behavior
+# parity is testable before pushing.
 #
-# Coolify itself doesn't read this file — it builds the Dockerfile per
+# Coolify itself doesn't read this file — it builds the Dockerfiles per
 # Application. But you can `docker compose up` here to validate the same
-# image runs end-to-end before deploying.
+# images run end-to-end before deploying.
 #
-# Redis was removed in the Procrastinate cutover — task queue, periodic
-# schedule, and cache all live in Postgres now.
+# Task queue and periodic schedule live in Postgres (Procrastinate).
+# Redis below is pre-provisioned only — see its comment.
 #
 # Aggregator is intentionally NOT in this compose file: in production
 # it's a separate Coolify Application. Locally point ``AGGRIGATOR_BASE_URL``
@@ -16,6 +17,7 @@
 services:
   postgres:
     image: postgres:18
+    restart: unless-stopped
     environment:
       POSTGRES_USER: mdproject
       POSTGRES_PASSWORD: mdproject
@@ -30,8 +32,23 @@ services:
       timeout: 3s
       retries: 10
 
+  # Not consumed by the app yet — pre-provisioned for the cache/throttle-store
+  # migration (plan §7.4): Django's cache backend and the DRF throttle store
+  # will move onto it. No auth locally.
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    restart: unless-stopped
     depends_on:
       postgres: { condition: service_healthy }
     environment:
@@ -47,7 +64,29 @@ services:
       AGGRIGATOR_WEBHOOK_SECRET: ""    # same value as the aggregator's AGG_WEBHOOK_SECRET
       EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
     ports:
-      - "8000:8000"
+      - "${PORT:-8000}:${PORT:-8000}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    restart: unless-stopped
+    depends_on:
+      postgres: { condition: service_healthy }
+      # Gate on web so the migrations run by the web entrypoint finish
+      # before the worker starts consuming tasks.
+      web:      { condition: service_healthy }
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: change-me-locally-but-real-in-prod
+      ALLOWED_HOSTS: localhost,127.0.0.1,0.0.0.0,web
+      DATABASE_URL: postgres://mdproject:mdproject@postgres:5432/mdproject
+      USE_AGGRIGATOR: "True"
+      AGGRIGATOR_BASE_URL: http://host.docker.internal:8001
+      AGGRIGATOR_WEBHOOK_SECRET: ""    # same value as the aggregator's AGG_WEBHOOK_SECRET
+      EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

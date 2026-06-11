@@ -8,6 +8,34 @@ import os
 
 class Emails:
     @classmethod
+    def _notify(cls, user, subject, template_path, context):
+        """Single chokepoint for user-facing engagement notifications.
+
+        Always writes the in-app Notification row; only sends the email if
+        the user hasn't opted out (``User.email_notifications``). Every
+        email carries an unsubscribe link in its context so ``_base.html``
+        can render the footer link and the task can set the
+        ``List-Unsubscribe`` header.
+
+        Transactional mail (account activation, password reset, waitlist)
+        does NOT route through here and ignores the preference.
+        """
+        Notification.objects.create_notification(user, subject)
+
+        if not getattr(user, "email_notifications", True):
+            return
+
+        from core.mail.unsubscribe import unsubscribe_url
+
+        context = {**(context or {}), "unsubscribe_url": unsubscribe_url(user)}
+        send_email.defer(
+            subject=subject,
+            recipient=user.email,
+            template_path=template_path,
+            context=context,
+        )
+
+    @classmethod
     def send_waitlist_thank_you(cls, email):
         subject = "Thank You for Signing Up for the Waitlist"
         template_path = "waitlist/waitlist_thank_you.html"
@@ -25,11 +53,7 @@ class Emails:
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',
         }
-        Notification.objects.create_notification(user,subject)
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
-
-    # Similarly refactor other methods in the Emails class
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_waitlist_granted(cls, email):
@@ -49,10 +73,7 @@ class Emails:
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',
         }
-        Notification.objects.create_notification(user,subject)
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
-
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_opponent_pick_notification(cls, user, opponent_name):
@@ -63,9 +84,7 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user,subject)
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_match_victory_notification(cls, user, opponent_name):
@@ -76,8 +95,7 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user,subject)
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_match_tie_notification(cls, user, opponent_name):
@@ -87,10 +105,7 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user,subject)
-
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_match_lost_notification(cls, user, opponent_name):
@@ -100,9 +115,7 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user,subject)
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_tournament_victory_notification(cls, user, tournament):
@@ -113,9 +126,7 @@ class Emails:
             'tournament_name': tournament.name,
             'username': user.username,
         }
-        Notification.objects.create_notification(user,subject)
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_tournament_starting_notification(cls, user, tournament):
@@ -128,9 +139,7 @@ class Emails:
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',
         }
-        Notification.objects.create_notification(user,subject)
-
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_match_invite(cls, user, opponent_name):
@@ -140,8 +149,7 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user,subject)
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_match_acceptance_confirmation(cls, user, opponent_name):
@@ -155,8 +163,7 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user, subject)
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
+        cls._notify(user, subject, template_path, context)
 
     @classmethod
     def send_match_started_to_accepter(cls, user, opponent_name):
@@ -170,13 +177,4 @@ class Emails:
             'username': user.username,
             'opponent_name': opponent_name,
         }
-        Notification.objects.create_notification(user, subject)
-        send_email.defer(subject=subject, recipient=user.email, template_path=template_path, context=context)
-
-
-
-
-
-
-    
-
+        cls._notify(user, subject, template_path, context)

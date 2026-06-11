@@ -115,6 +115,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'axes',  # brute-force lockout on auth views (S-9)
+    # Admin 2FA (plan §7.3 item 9 phase 1) — TOTP devices + OTPAdminSite.
+    # Enforcement is flag-gated via ADMIN_REQUIRE_OTP (see CoreRoot/urls.py);
+    # apps/middleware stay on unconditionally so devices can be enrolled
+    # BEFORE the flag flips (otherwise: instant admin lockout).
+    'django_otp',
+    'django_otp.plugins.otp_totp',
     "django_celery_results",  # Dead post-Procrastinate cutover; kept so old core_crons migrations replay on fresh DBs.
     "django_celery_beat",     # Dead post-Procrastinate cutover; kept for the same reason.
     "procrastinate.contrib.django",
@@ -159,6 +165,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # OTP device verification — must follow AuthenticationMiddleware.
+    # Populates request.user.is_verified(); OTPAdminSite relies on it.
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -830,6 +839,16 @@ JAZZMIN_SETTINGS = {
 # ---------------------------------------------------------------------------
 
 USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "true", "yes")
+
+# Admin 2FA enforcement (plan §7.3 item 9 phase 1). When true, the Django
+# admin uses OTPAdminSite — staff must enter a TOTP code at login, and a
+# user with NO enrolled device cannot log in to admin at all. Rollout order
+# matters (same transitional-flag pattern as AGG_REQUIRE_KEY_FOR_READS):
+#   1. deploy with the flag off,
+#   2. enroll a TOTP device for each staff user (admin → OTP_TOTP → Add,
+#      scan the qrcode link with an authenticator app),
+#   3. set ADMIN_REQUIRE_OTP=true and redeploy.
+ADMIN_REQUIRE_OTP = os.environ.get("ADMIN_REQUIRE_OTP", "").strip().lower() in ("1", "true", "yes", "on")
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 

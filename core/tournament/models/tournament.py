@@ -16,6 +16,12 @@ from core.user.models import User
 logger = logging.getLogger(__name__)
 
 
+class TournamentJoinUnavailable(Exception):
+    """Raised when an invite is accepted but the tournament can't take the
+    player (closed, full, starting within 3 days, or deleted). The message
+    is user-facing — the invite-accept view surfaces it verbatim."""
+
+
 class TournamentManager(AbstractManager):
     def create(self, name, start_date, max_accepted_players):
         start_date_aware = timezone.make_aware(start_date)
@@ -44,11 +50,14 @@ class TournamentManager(AbstractManager):
     def get_players(self, tournament):
         return Player.objects.filter(tournament=tournament)
 
-    def accept_invite(self, tourney_id, invited_player):
+    def accept_invite(self, tourney_id, user):
+        """Enroll ``user`` (a User instance) in the tournament.
+
+        Returns True on enrollment, False if the tournament is closed, full,
+        starting within 3 days, already joined, or missing.
+        """
         try:
             tournament = self.get(pk=tourney_id)
-            if not tournament:
-                return False
 
             if tournament.state != 'created':
                 return False
@@ -59,20 +68,17 @@ class TournamentManager(AbstractManager):
             if current_date > three_days_prior:
                 return False
 
-            players = list(Player.objects.get_players(tournament=tournament))
-            if len(players) == tournament.max_accepted_players:
+            if Player.objects.filter(tournament=tournament).count() >= tournament.max_accepted_players:
                 return False
 
             if Player.objects.check_player_participating(tournament=tournament, user=user):
                 return False
 
-            Player.objects.create_player(tournament, invited_player)
+            Player.objects.create_player(tournament, user)
 
             return True
 
         except ObjectDoesNotExist:
-            return False
-        except AttributeError:
             return False
 
     def invite_player(self, tourney_id, user_email):

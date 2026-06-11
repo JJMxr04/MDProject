@@ -124,6 +124,13 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     )
     friend_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
+    # Master switch for engagement emails (match/tournament/friend
+    # notifications). Gated centrally in core.mail.models.Emails._notify —
+    # in-app Notification rows still write when this is off. Transactional
+    # mail (activation, password reset) ignores it. Toggled by the signed
+    # unsubscribe link in every engagement email (core.mail.unsubscribe).
+    email_notifications = models.BooleanField(default=True)
+
     # --- Billing / Aggrigator integration (see subscription-plan/02-data-model.md §"core_user.User additions"). ---
     # Stripe Customer object id (``cus_...``). Captured from the
     # checkout.session.completed webhook on first paid checkout; empty

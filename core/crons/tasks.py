@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import logging
 
+from procrastinate import RetryStrategy
 from procrastinate.contrib.django import app
 
 from core.match.crons.matchUpdate import MatchCron
@@ -37,24 +38,29 @@ matchCron = MatchCron()
 tournament2DayReminder = Tournament2DayReminder()
 bracketMaker = BracketMaker()
 
+# A transient failure (DB blip, mail backend hiccup) at midnight would
+# otherwise silently skip that day's run — the next periodic defer is 24h
+# away. Retry a few times with growing waits before giving up.
+CRON_RETRY = RetryStrategy(max_attempts=3, linear_wait=60)
+
 
 # All three crons fire at midnight America/New_York. Procrastinate's @periodic
 # is in UTC by default; PROCRASTINATE_TIMEZONE in settings shifts that. The
 # cron expression "0 0 * * *" matches the previous Celery schedule (daily @
 # 00:00 NY time). `pass_context=False` because none of these need job metadata.
 @app.periodic(cron="0 0 * * *")
-@app.task(name="core.crons.complete_matches_cron", queue="default")
+@app.task(name="core.crons.complete_matches_cron", queue="default", retry=CRON_RETRY)
 def complete_matches_cron(timestamp: int):
     matchCron.completeMatches()
 
 
 @app.periodic(cron="0 0 * * *")
-@app.task(name="core.crons.tournament_cron_bracketMaker", queue="default")
+@app.task(name="core.crons.tournament_cron_bracketMaker", queue="default", retry=CRON_RETRY)
 def tournament_cron_bracketMaker(timestamp: int):
     bracketMaker.create_brackets()
 
 
 @app.periodic(cron="0 0 * * *")
-@app.task(name="core.crons.tournament_cron_2_day_reminder", queue="default")
+@app.task(name="core.crons.tournament_cron_2_day_reminder", queue="default", retry=CRON_RETRY)
 def tournament_cron_2_day_reminder(timestamp: int):
     tournament2DayReminder.get_tournments_send_player_email()
