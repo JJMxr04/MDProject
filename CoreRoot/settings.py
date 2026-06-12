@@ -852,6 +852,13 @@ ADMIN_REQUIRE_OTP = os.environ.get("ADMIN_REQUIRE_OTP", "").strip().lower() in (
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 
+# Single service-tenant key for ALL outbound aggregator calls (plan §6.4,
+# roadmap Phase 2). Minted once by the aggregator's
+# scripts/provision_service_tenant.py; per-user keys are no longer issued
+# or stored. Per-user data calls (bets) assert the acting user via
+# X-Acting-User: <User.public_id> — only this key may assert.
+AGGRIGATOR_SERVICE_KEY = os.environ.get("AGGRIGATOR_SERVICE_KEY", "").strip()
+
 # HMAC secret for the OUTBOUND Paradise channel (MDProject → aggrigator
 # /v1/internal/*). Same value as the aggrigator's AGG_PARADISE_SECRET.
 # Separate from AGGRIGATOR_WEBHOOK_SECRET on purpose — opposite
@@ -907,6 +914,11 @@ if not DEBUG and USE_AGGRIGATOR and not AGGRIGATOR_WEBHOOK_SECRET:
 # webhook handler raise ImproperlyConfigured on every fire.
 if not DEBUG and USE_AGGRIGATOR and not PARADISE_SECRET:
     raise RuntimeError("PARADISE_SECRET must be set when USE_AGGRIGATOR=True")
+# And for the service key — without it every analytics/bets proxy call
+# goes out keyless: 401s on keyed routes, WARNING spam on the rest.
+# Provision via the aggregator's scripts/provision_service_tenant.py.
+if not DEBUG and USE_AGGRIGATOR and not AGGRIGATOR_SERVICE_KEY:
+    raise RuntimeError("AGGRIGATOR_SERVICE_KEY must be set when USE_AGGRIGATOR=True")
 
 
 # ---------------------------------------------------------------------------

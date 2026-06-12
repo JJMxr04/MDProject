@@ -65,16 +65,20 @@ def provision_aggrigator_on_signup(sender, instance, created, **kwargs):
         # them to /billing/upgrade/.
         logger.exception('failed to create FREE Subscription for %s', instance.pk)
 
-    # Aggrigator mirror — only if integration is enabled.
+    # Aggrigator mirror — only if integration is enabled. Creates the
+    # tenant USER row (per-user bet attribution, plan §6.4); since the
+    # service-key cutover (roadmap Phase 2) the per-user API key the
+    # provision endpoint returns is deliberately NOT stored — all
+    # outbound auth rides the single service key in aggrigator_client.
     if not getattr(settings, 'USE_AGGRIGATOR', False):
         return
-    if instance.aggrigator_api_key:
-        # Already provisioned (e.g. user object hot-reloaded after a
-        # backfill run). Don't re-mint a key.
+    if instance.aggrigator_external_id:
+        # Already mirrored (e.g. user object hot-reloaded after a
+        # backfill run).
         return
 
     try:
-        key = aggrigator_internal.provision_user(instance, tier='FREE')
+        aggrigator_internal.provision_user(instance, tier='FREE')
     except Exception:
         logger.exception(
             'aggrigator provisioning failed for user %s — will retry via '
@@ -83,18 +87,12 @@ def provision_aggrigator_on_signup(sender, instance, created, **kwargs):
         )
         return
 
-    # Only update if we got a fresh key back (201). 200 (already exists)
-    # returns empty string; in that case MDProject's record is the stale
-    # one and the operator should re-key via rotate_api_key.
-    if key:
-        User.objects.filter(pk=instance.pk).update(
-            aggrigator_api_key=key,
-            aggrigator_external_id=instance.public_id,
-        )
-        # Refresh in-memory instance so downstream signal handlers see
-        # the new values without a round-trip.
-        instance.aggrigator_api_key = key
-        instance.aggrigator_external_id = instance.public_id
+    User.objects.filter(pk=instance.pk).update(
+        aggrigator_external_id=instance.public_id,
+    )
+    # Refresh in-memory instance so downstream signal handlers see
+    # the new value without a round-trip.
+    instance.aggrigator_external_id = instance.public_id
 
 
 @receiver(post_save, sender=Plan)

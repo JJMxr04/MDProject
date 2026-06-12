@@ -1,16 +1,15 @@
-"""One-shot backfill: provision FREE tenant_user + api_key on the
-aggrigator for every existing MDProject User that doesn't have one.
+"""One-shot backfill: mirror every existing MDProject User into the
+aggrigator as a FREE tenant_user (per-user bet attribution, plan §6.4).
 
-Idempotent — re-running it skips users that already have a non-empty
-``User.aggrigator_api_key``. The aggrigator-side ``POST /v1/internal/users``
-is also idempotent (returns 200 + no key when the user already exists),
-so a partially-completed run is safe to resume.
+Since the service-key cutover (roadmap Phase 2) NO per-user API key is
+stored — outbound auth rides the single service key in aggrigator_client,
+and per-user data calls assert X-Acting-User. This command only ensures
+the tenant_user rows exist.
 
-Run order at cutover (see subscription-plan/08-rollout.md §3):
-1. Migrate the schema (already done).
-2. Deploy the internal-API code on the aggrigator (already done).
-3. Run this command.
-4. THEN flip on the @require_paid decorator.
+Idempotent — re-running skips users whose ``aggrigator_external_id`` is
+already set, and the aggrigator-side ``POST /v1/internal/users`` is also
+idempotent (200 when the user already exists), so a partially-completed
+run is safe to resume.
 
 Typical wall time: ~0.1–0.5s per user with --sleep 0.1. Run under
 tmux/screen so a dropped SSH doesn't kill it.
@@ -32,8 +31,8 @@ logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     help = (
-        "Provision FREE tenant_user + api_key on the aggrigator for every "
-        "existing MDProject User that doesn't have one. Idempotent."
+        "Mirror every MDProject User into the aggrigator as a FREE "
+        "tenant_user (no per-user keys — service-key model). Idempotent."
     )
 
     def add_arguments(self, parser):
@@ -72,9 +71,8 @@ class Command(BaseCommand):
             return
 
         # Pass 1: ensure every User has a Subscription row. Cheap, local,
-        # idempotent. This catches users who already have an
-        # aggrigator_api_key (e.g. from a partial prior run) but were
-        # somehow created without a Subscription.
+        # idempotent. This catches users who were already mirrored (e.g.
+        # by a partial prior run) but somehow lack a Subscription.
         sub_created = 0
         for user in User.objects.iterator(chunk_size=batch_size):
             _, created = Subscription.objects.get_or_create(
@@ -86,8 +84,8 @@ class Command(BaseCommand):
         if sub_created:
             self.stdout.write(f"Created {sub_created} missing Subscription row(s)")
 
-        # Pass 2: provision aggrigator tenant_user for users without a key.
-        qs = User.objects.filter(aggrigator_api_key="").order_by("pk")
+        # Pass 2: mirror unmirrored users into the aggrigator.
+        qs = User.objects.filter(aggrigator_external_id__isnull=True).order_by("pk")
         total = qs.count()
         self.stdout.write(f"Found {total} user(s) needing aggrigator provisioning")
         if dry_run:
@@ -101,7 +99,9 @@ class Command(BaseCommand):
 
         for user in qs.iterator(chunk_size=batch_size):
             try:
-                key = aggrigator_internal.provision_user(user, tier="FREE")
+                # Returned key (if any) deliberately discarded — service-key
+                # model; tenant_user existence is all we need.
+                aggrigator_internal.provision_user(user, tier="FREE")
             except Exception as exc:
                 failed += 1
                 self.stderr.write(self.style.WARNING(
@@ -110,26 +110,9 @@ class Command(BaseCommand):
                 time.sleep(sleep)
                 continue
 
-            updates: dict = {}
-            if key:
-                updates["aggrigator_api_key"] = key
-                updates["aggrigator_external_id"] = user.public_id
-            else:
-                # aggrigator already had the user but MDProject didn't.
-                # We've still got no key on this side — rotate to recover.
-                try:
-                    key = aggrigator_internal.rotate_api_key(user)
-                except Exception as exc:
-                    failed += 1
-                    self.stderr.write(self.style.WARNING(
-                        f"FAIL pk={user.pk} email={user.email} (rotate): {exc}"
-                    ))
-                    time.sleep(sleep)
-                    continue
-                updates["aggrigator_api_key"] = key
-                updates["aggrigator_external_id"] = user.public_id
-
-            User.objects.filter(pk=user.pk).update(**updates)
+            User.objects.filter(pk=user.pk).update(
+                aggrigator_external_id=user.public_id,
+            )
 
             done += 1
             if done % 100 == 0:

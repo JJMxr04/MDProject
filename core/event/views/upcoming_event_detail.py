@@ -24,7 +24,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.utils.dateparse import parse_datetime
 
-from core.billing.entitlement import _safe_subscription, user_can_access_analytics
+from core.billing.entitlement import user_can_access_analytics
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
@@ -81,18 +81,10 @@ def upcoming_event_detail(request, event_id):
     is_entitled = user_can_access_analytics(request.user)
     analytics_ctx: dict = {}
     if is_entitled:
-        # Defensive inline provisioning. Mirrors what @require_paid does
-        # on /analytics/ views: an entitled user with no aggrigator key
-        # (signup signal lost, DB restore, admin user predates billing,
-        # etc.) gets one minted now so the analytics calls below carry
-        # an X-Aggrigator-Tenant-Key header. Without this, kill-switch
-        # users with no key see the analytics block render with empty
-        # data and the aggrigator logs spam 401s.
-        tenant_key = _ensure_aggrigator_key(request.user)
-        context = analytics_client.event_context(event_id, tenant_key=tenant_key)
-        historical_stats = analytics_client.event_historical_stats(
-            event_id, tenant_key=tenant_key,
-        )
+        # Shared catalog data — the client's service key covers auth
+        # (plan §6.4); no per-user provisioning needed anymore.
+        context = analytics_client.event_context(event_id)
+        historical_stats = analytics_client.event_historical_stats(event_id)
         analytics_ctx = {
             "form_into_match": context.get("form_into_match") or {},
             "form_detail": context.get("form_detail") or {},
@@ -103,12 +95,8 @@ def upcoming_event_detail(request, event_id):
         # Model-vs-market is upcoming-only — past events render historical
         # stats instead, which is already in analytics_ctx above.
         if not is_finalized:
-            model_prob = analytics_client.event_probabilities(
-                event_id, tenant_key=tenant_key,
-            )
-            live_odds = analytics_client.event_live_odds(
-                event_id, tenant_key=tenant_key,
-            )
+            model_prob = analytics_client.event_probabilities(event_id)
+            live_odds = analytics_client.event_live_odds(event_id)
             analytics_ctx.update({
                 "model_prob": model_prob or {},
                 "live_odds": live_odds,
@@ -332,61 +320,6 @@ def _to_datetime(value: Any) -> datetime | None:
     if isinstance(value, str):
         return parse_datetime(value)
     return None
-
-
-# ---- aggrigator key backfill ---------------------------------------------
-
-
-def _ensure_aggrigator_key(user) -> str | None:
-    """Return ``user.aggrigator_api_key``, provisioning one inline if
-    empty. Returns ``None`` if provisioning fails or the user doesn't
-    yet have a key — the analytics calls handle empty-state gracefully.
-
-    Tier picks: if the user is on a Subscription whose plan grants
-    analytics (paid PRO), provision PRO; otherwise FREE. The aggrigator
-    side reads the kill-switch separately, so a FREE-tier key is fine
-    when ``ANALYTICS_FREE_FOR_ALL`` is on.
-    """
-    key = getattr(user, "aggrigator_api_key", None) or ""
-    if key:
-        return key
-    from core.billing.services import aggrigator_internal
-    from core.user.models import User
-
-    sub = _safe_subscription(user)
-    tier = (
-        "PRO"
-        if sub and sub.plan.features.get("analytics") is True
-        else "FREE"
-    )
-    try:
-        new_key = aggrigator_internal.provision_user(user, tier=tier)
-    except Exception:
-        logger.exception(
-            "inline aggrigator provisioning failed for %s (tier=%s)",
-            user.pk, tier,
-        )
-        return None
-    if not new_key:
-        # User already existed on the aggrigator side but we don't have
-        # their key locally — rotate to get a fresh plaintext. Avoids
-        # the "stuck without a usable key" edge case after a DB restore.
-        try:
-            new_key = aggrigator_internal.rotate_api_key(user)
-        except Exception:
-            logger.exception(
-                "inline aggrigator key rotation failed for %s", user.pk,
-            )
-            return None
-    if new_key:
-        User.objects.filter(pk=user.pk).update(
-            aggrigator_api_key=new_key,
-            aggrigator_external_id=user.public_id,
-        )
-        user.aggrigator_api_key = new_key
-        user.aggrigator_external_id = user.public_id
-        logger.info("inline-provisioned aggrigator key for %s (tier=%s)", user.pk, tier)
-    return new_key or None
 
 
 # ---- legacy fallback (rollback path) -------------------------------------

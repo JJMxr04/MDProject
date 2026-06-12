@@ -56,18 +56,12 @@ class EventAnalyticsView(V1ViewMixin, APIView):
     pagination_class = None
 
     def get(self, request, event_id: str):
-        tenant_key = request.user.aggrigator_api_key or None
-
-        context = aggrigator_client.event_context(event_id, tenant_key=tenant_key)
-        historical_stats = aggrigator_client.event_historical_stats(
-            event_id, tenant_key=tenant_key,
-        )
-        probabilities = aggrigator_client.event_probabilities(
-            event_id, tenant_key=tenant_key,
-        )
-        live_odds = aggrigator_client.event_live_odds(
-            event_id, tenant_key=tenant_key,
-        )
+        # Shared catalog data — the client's service key covers auth
+        # (plan §6.4); entitlement was already enforced by IsPaid above.
+        context = aggrigator_client.event_context(event_id)
+        historical_stats = aggrigator_client.event_historical_stats(event_id)
+        probabilities = aggrigator_client.event_probabilities(event_id)
+        live_odds = aggrigator_client.event_live_odds(event_id)
 
         # Each helper returns {} on transport failure; all-empty means the
         # upstream is down (a valid event always carries at least one block).

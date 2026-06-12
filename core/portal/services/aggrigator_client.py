@@ -5,6 +5,13 @@ list — never raises on transport failure; on error returns an empty
 shape and logs the cause. Portal templates render an empty-state when
 the result is empty, so a flaky aggrigator never blanks the page.
 
+Auth (plan §6.4, roadmap Phase 2): every call carries the single
+service-tenant key (``settings.AGGRIGATOR_SERVICE_KEY``); the aggregator
+authenticates the *service*, not the subscriber — tier gating lives in
+MDProject's ``@require_paid``. Per-user data (bets) additionally asserts
+the acting user via ``X-Acting-User: <User.public_id>``; only the
+service tenant may assert, so the header is inert from any other key.
+
 Base URL comes from ``settings.AGGRIGATOR_BASE_URL`` (defaults to
 ``http://localhost:8001`` for local dev).
 """
@@ -26,11 +33,27 @@ def _base_url() -> str:
     return (getattr(settings, "AGGRIGATOR_BASE_URL", "") or "").rstrip("/")
 
 
+def _headers(acting_user_id: Any | None = None) -> dict[str, str]:
+    """Service key always; acting-user assertion only for per-user data."""
+    headers: dict[str, str] = {}
+    service_key = (getattr(settings, "AGGRIGATOR_SERVICE_KEY", "") or "").strip()
+    if service_key:
+        headers["X-Aggrigator-Tenant-Key"] = service_key
+    else:
+        # Keyless reads still pass while the aggregator's
+        # AGG_REQUIRE_KEY_FOR_READS flag is false — but every one logs a
+        # WARNING over there, and bets calls 401. Configure the key.
+        logger.warning("AGGRIGATOR_SERVICE_KEY not configured — calling keyless")
+    if acting_user_id:
+        headers["X-Acting-User"] = str(acting_user_id)
+    return headers
+
+
 def _get(
     path: str,
     params: dict[str, Any] | None = None,
     *,
-    tenant_key: str | None = None,
+    acting_user_id: Any | None = None,
 ) -> Any:
     base = _base_url()
     if not base:
@@ -40,13 +63,7 @@ def _get(
         )
         return None
     url = f"{base}{path}"
-    headers: dict[str, str] = {}
-    if tenant_key:
-        # Authenticate as the requesting MDProject user. The aggrigator's
-        # require_pro_user dep reads this header to look up the
-        # TenantApiKey row + verify subscription tier. Without it,
-        # every /v1/analytics/* call gets 401.
-        headers["X-Aggrigator-Tenant-Key"] = tenant_key
+    headers = _headers(acting_user_id)
 
     # Profile passthrough: when the inbound MDProject request set the
     # X-Profile-Aggrigator header and AGGRIGATOR_PROFILE_PASSTHROUGH is
@@ -90,7 +107,7 @@ def _write(
     path: str,
     json_body: Any | None = None,
     *,
-    tenant_key: str | None = None,
+    acting_user_id: Any | None = None,
 ) -> dict:
     """POST / PATCH / DELETE helper. Returns the parsed response dict on
     2xx, or ``{"_error": str, "_status": int}`` on failure — bet write
@@ -100,9 +117,7 @@ def _write(
     if not base:
         return {"_error": "AGGRIGATOR_BASE_URL not configured", "_status": 0}
     url = f"{base}{path}"
-    headers: dict[str, str] = {}
-    if tenant_key:
-        headers["X-Aggrigator-Tenant-Key"] = tenant_key
+    headers = _headers(acting_user_id)
     try:
         with httpx.Client(timeout=_DEFAULT_TIMEOUT) as client:
             resp = client.request(
@@ -123,23 +138,22 @@ def _write(
         return {"_error": f"non-JSON body: {exc}", "_status": resp.status_code}
 
 
-def _post(path: str, body: Any, *, tenant_key: str | None = None) -> dict:
-    return _write("POST", path, body, tenant_key=tenant_key)
+def _post(path: str, body: Any, *, acting_user_id: Any | None = None) -> dict:
+    return _write("POST", path, body, acting_user_id=acting_user_id)
 
 
-def _patch(path: str, body: Any, *, tenant_key: str | None = None) -> dict:
-    return _write("PATCH", path, body, tenant_key=tenant_key)
+def _patch(path: str, body: Any, *, acting_user_id: Any | None = None) -> dict:
+    return _write("PATCH", path, body, acting_user_id=acting_user_id)
 
 
-def _delete(path: str, *, tenant_key: str | None = None) -> dict:
-    return _write("DELETE", path, None, tenant_key=tenant_key)
+def _delete(path: str, *, acting_user_id: Any | None = None) -> dict:
+    return _write("DELETE", path, None, acting_user_id=acting_user_id)
 
 
 def events_today(
     *,
     league: str | None = None,
     hours_ahead: int = 72,
-    tenant_key: str | None = None,
 ) -> dict:
     """Upcoming events with model_prob + has_live_odds + best_edge per row.
 
@@ -149,7 +163,7 @@ def events_today(
     params: dict[str, Any] = {"hours_ahead": hours_ahead}
     if league:
         params["league"] = league
-    body = _get("/v1/analytics/events/today", params, tenant_key=tenant_key)
+    body = _get("/v1/analytics/events/today", params)
     if isinstance(body, dict):
         return body
     return {"from": None, "to": None, "events": []}
@@ -160,7 +174,6 @@ def picks(
     threshold_pp: float = 3.0,
     league: str | None = None,
     hours_ahead: int = 72,
-    tenant_key: str | None = None,
 ) -> dict:
     """Threshold-filtered subset of /events/today, sorted by edge DESC."""
     params: dict[str, Any] = {
@@ -169,13 +182,13 @@ def picks(
     }
     if league:
         params["league"] = league
-    body = _get("/v1/analytics/picks", params, tenant_key=tenant_key)
+    body = _get("/v1/analytics/picks", params)
     if isinstance(body, dict):
         return body
     return {"from": None, "to": None, "threshold_pp": threshold_pp, "events": []}
 
 
-def event_live_odds(event_id: str, *, tenant_key: str | None = None) -> dict:
+def event_live_odds(event_id: str) -> dict:
     """Best price per side + vig-adjusted implied probs for one event.
 
     Returns ``{event_id, fetched_at, markets, reason}`` or empty dict on
@@ -183,12 +196,11 @@ def event_live_odds(event_id: str, *, tenant_key: str | None = None) -> dict:
     standard no-coverage path."""
     body = _get(
         f"/v1/analytics/events/{event_id}/live-odds",
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
 
-def event_probabilities(event_id: str, *, tenant_key: str | None = None) -> dict:
+def event_probabilities(event_id: str) -> dict:
     """Model-derived match probabilities for one event.
 
     Returns ``{event_id, p_home, p_draw, p_away, model_version,
@@ -197,36 +209,32 @@ def event_probabilities(event_id: str, *, tenant_key: str | None = None) -> dict
     sport has no model yet (Phase B is soccer-only)."""
     body = _get(
         f"/v1/analytics/events/{event_id}/probabilities",
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
 
-def event_context(event_id: str, *, tenant_key: str | None = None) -> dict:
+def event_context(event_id: str) -> dict:
     """Form-into-match + H2H for the event detail page. Empty dict on failure."""
     body = _get(
         f"/v1/analytics/events/{event_id}/context",
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
 
-def event_historical_stats(event_id: str, *, tenant_key: str | None = None) -> dict:
+def event_historical_stats(event_id: str) -> dict:
     """Season-context stats for a settled event's two teams. Empty dict on
     transport failure. Past-event-only — future events return
     ``reason="not_finalized"`` with null team blocks."""
     body = _get(
         f"/v1/analytics/events/{event_id}/historical-stats",
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
 
-def event_best_prices(event_id: str, *, tenant_key: str | None = None) -> dict:
+def event_best_prices(event_id: str) -> dict:
     """Return ``{event_id, selections: [...]}`` or empty dict on failure."""
     body = _get(
         f"/v1/analytics/events/{event_id}/best-prices",
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
@@ -236,7 +244,6 @@ def disagreements(
     threshold_pct: float = 2.0,
     hours_ahead: int = 24,
     limit: int = 25,
-    tenant_key: str | None = None,
 ) -> dict:
     """Return ``{rows: [...], threshold_pct}`` or empty rows on failure."""
     body = _get(
@@ -246,16 +253,15 @@ def disagreements(
             "hours_ahead": hours_ahead,
             "limit": limit,
         },
-        tenant_key=tenant_key,
     )
     if isinstance(body, dict):
         return body
     return {"rows": [], "threshold_pct": threshold_pct}
 
 
-def list_leagues(*, tenant_key: str | None = None) -> dict:
+def list_leagues() -> dict:
     """League catalog with summary counts. Empty dict on failure."""
-    body = _get("/v1/analytics/leagues", tenant_key=tenant_key)
+    body = _get("/v1/analytics/leagues")
     return body if isinstance(body, dict) else {}
 
 
@@ -264,7 +270,6 @@ def league_fixtures(
     *,
     season: str | None = None,
     team_id: str | None = None,
-    tenant_key: str | None = None,
 ) -> dict:
     """Fixtures for one league + season. Empty dict on failure."""
     params: dict[str, Any] = {}
@@ -275,7 +280,6 @@ def league_fixtures(
     body = _get(
         f"/v1/analytics/leagues/{league_id}/fixtures",
         params or None,
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
@@ -284,7 +288,6 @@ def league_standings(
     league_id: str,
     *,
     season: str | None = None,
-    tenant_key: str | None = None,
 ) -> dict:
     """Season standings computed from settled events. Empty dict on failure."""
     params: dict[str, Any] = {}
@@ -293,7 +296,6 @@ def league_standings(
     body = _get(
         f"/v1/analytics/leagues/{league_id}/standings",
         params or None,
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
@@ -302,7 +304,6 @@ def team_summary(
     team_id: str,
     *,
     season: str | None = None,
-    tenant_key: str | None = None,
 ) -> dict:
     """Per-team summary — form, season stats, H2H. Empty dict on failure."""
     params: dict[str, Any] = {}
@@ -311,51 +312,59 @@ def team_summary(
     body = _get(
         f"/v1/analytics/teams/{team_id}/summary",
         params or None,
-        tenant_key=tenant_key,
     )
     return body if isinstance(body, dict) else {}
 
 
+# ---- bets: per-user data — every call asserts the acting user --------------
+#
+# ``acting_user_id`` is the MDProject ``User.public_id`` (the aggregator's
+# ``external_user_id``). The aggregator attributes the bet rows to that
+# tenant user — never to the service tenant.
+
+
 def list_bets(
     *,
+    acting_user_id: Any,
     status_filter: str | None = None,
-    tenant_key: str | None = None,
 ) -> list[dict]:
-    """List the caller's bets, newest first. Empty list on transport failure."""
+    """List the acting user's bets, newest first. Empty list on transport failure."""
     params: dict[str, Any] = {"limit": 500}
     if status_filter and status_filter != "all":
         params["status"] = status_filter
-    body = _get("/v1/analytics/bets", params, tenant_key=tenant_key)
+    body = _get("/v1/analytics/bets", params, acting_user_id=acting_user_id)
     return body if isinstance(body, list) else []
 
 
-def bet_summary(*, tenant_key: str | None = None) -> dict:
+def bet_summary(*, acting_user_id: Any) -> dict:
     """Aggregates + equity curve + ROI-by-bucket. Empty dict on failure."""
-    body = _get("/v1/analytics/bets/summary", tenant_key=tenant_key)
+    body = _get("/v1/analytics/bets/summary", acting_user_id=acting_user_id)
     return body if isinstance(body, dict) else {}
 
 
-def create_bet(payload: dict, *, tenant_key: str | None = None) -> dict:
+def create_bet(payload: dict, *, acting_user_id: Any) -> dict:
     """POST /v1/analytics/bets. Returns the created bet dict, or
     ``{"_error": ..., "_status": ...}`` on failure so the view can
     surface a meaningful message."""
-    return _post("/v1/analytics/bets", payload, tenant_key=tenant_key)
+    return _post("/v1/analytics/bets", payload, acting_user_id=acting_user_id)
 
 
 def update_bet(
     bet_id: str,
     payload: dict,
     *,
-    tenant_key: str | None = None,
+    acting_user_id: Any,
 ) -> dict:
     """PATCH /v1/analytics/bets/{id}. Returns the updated bet or error dict."""
-    return _patch(f"/v1/analytics/bets/{bet_id}", payload, tenant_key=tenant_key)
+    return _patch(
+        f"/v1/analytics/bets/{bet_id}", payload, acting_user_id=acting_user_id,
+    )
 
 
-def delete_bet(bet_id: str, *, tenant_key: str | None = None) -> dict:
+def delete_bet(bet_id: str, *, acting_user_id: Any) -> dict:
     """DELETE /v1/analytics/bets/{id}. Returns ``{"_deleted": True}`` on
     success, error dict otherwise."""
-    return _delete(f"/v1/analytics/bets/{bet_id}", tenant_key=tenant_key)
+    return _delete(f"/v1/analytics/bets/{bet_id}", acting_user_id=acting_user_id)
 
 
 def event_detail(event_id: str) -> dict:

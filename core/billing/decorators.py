@@ -8,13 +8,12 @@ Three things this does, in order:
    ``core.billing.entitlement.user_can_access_analytics`` so the
    platform-wide kill-switch (``ANALYTICS_FREE_FOR_ALL``) and missing-
    Subscription edge cases route the same as the normal path.
-3. Defensive aggrigator provisioning — if a *paid* PRO user has no
-   ``aggrigator_api_key`` (DB restore, signup signal crashed, etc.),
-   provision them inline so the downstream analytics call has a key.
-   This step is SKIPPED for kill-switch FREE users — their FREE-tier
-   key from the signup signal is what analytics endpoints see, and
-   upgrading them to PRO at the aggrigator side would misrepresent
-   what they're actually paying for.
+3. Defensive tenant-user mirror — if the user was never mirrored into
+   the aggregator (signup signal crashed, DB restore, account predates
+   billing), provision the tenant *user* row now so per-user data calls
+   (bets, X-Acting-User) can attribute to them. Since the service-key
+   cutover (plan §6.4, roadmap Phase 2) NO per-user API key is issued or
+   stored — auth rides the single service key in aggrigator_client.
 
 The decorator is intentionally permissive about the third step: a
 transient aggrigator failure renders the page in an empty-state instead
@@ -28,8 +27,6 @@ from __future__ import annotations
 import logging
 from functools import wraps
 
-from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
@@ -50,35 +47,24 @@ def require_paid(view_func):
         if not user_can_access_analytics(user):
             return redirect("core-portal:billing-upgrade")
 
-        # Inline aggrigator-key backfill — only runs for paid PRO users.
-        # Kill-switch FREE users skip this: they were provisioned at
-        # FREE tier by the signup signal, that's what their key is, and
-        # bumping them to PRO at the aggrigator just to satisfy an
-        # "everyone is free for now" toggle would lie about tier.
-        free_for_all = getattr(settings, "ANALYTICS_FREE_FOR_ALL", False)
-        if not free_for_all and not user.aggrigator_api_key:
-            logger.warning(
-                "PRO user %s missing aggrigator_api_key — provisioning inline",
-                user.pk,
-            )
+        # Defensive tenant-user mirror (no key — see module docstring).
+        # ``aggrigator_external_id`` doubles as the "already mirrored"
+        # marker; the internal provision endpoint is idempotent so a
+        # repeat for an already-mirrored user is a cheap 200.
+        if not user.aggrigator_external_id:
             try:
-                key = aggrigator_internal.provision_user(user, tier="PRO")
-                if key:
-                    User.objects.filter(pk=user.pk).update(
-                        aggrigator_api_key=key,
-                        aggrigator_external_id=user.public_id,
-                    )
-                    user.aggrigator_api_key = key
-                    user.aggrigator_external_id = user.public_id
+                aggrigator_internal.provision_user(user, tier="FREE")
+                User.objects.filter(pk=user.pk).update(
+                    aggrigator_external_id=user.public_id,
+                )
+                user.aggrigator_external_id = user.public_id
             except Exception:
+                # Non-fatal: shared-data analytics works regardless (the
+                # service key authenticates); only bets attribution
+                # would 404 until the mirror succeeds on a later visit.
                 logger.exception(
-                    "inline aggrigator provisioning failed for %s", user.pk,
+                    "inline aggrigator tenant-user mirror failed for %s", user.pk,
                 )
-                messages.warning(
-                    request,
-                    "Analytics is unavailable for a moment — try again shortly.",
-                )
-                return redirect("core-portal:billing-upgrade")
 
         return view_func(request, *args, **kwargs)
     return wrapper

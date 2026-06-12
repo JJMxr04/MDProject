@@ -53,13 +53,16 @@ def analytics_upcoming_redirect(request):
     )
 
 
-def _tenant_key(request) -> str | None:
-    return request.user.aggrigator_api_key or None
+def _acting(request):
+    """The aggregator-side identity for per-user data calls: User.public_id
+    (= tenant_user.external_user_id). Shared-data calls don't need it —
+    the service key in the client covers auth (plan §6.4)."""
+    return request.user.public_id
 
 
 @require_paid
 def analytics_landing(request):
-    payload = aggrigator_client.list_leagues(tenant_key=_tenant_key(request))
+    payload = aggrigator_client.list_leagues()
     ctx = {
         "leagues": payload.get("leagues", []),
         "active_tab": "explore",
@@ -75,9 +78,8 @@ def analytics_league(request, league_id: str):
     if tab not in ("fixtures", "standings"):
         tab = "fixtures"
 
-    key = _tenant_key(request)
-    fixtures = aggrigator_client.league_fixtures(league_id, season=season, tenant_key=key)
-    standings = aggrigator_client.league_standings(league_id, season=season, tenant_key=key)
+    fixtures = aggrigator_client.league_fixtures(league_id, season=season)
+    standings = aggrigator_client.league_standings(league_id, season=season)
 
     # Pick the effective season — prefer the URL value, fall back to
     # whatever the fixtures payload resolved to (the aggrigator answers
@@ -120,9 +122,7 @@ def analytics_league(request, league_id: str):
 @require_paid
 def analytics_team(request, team_id: str):
     season = request.GET.get("season") or ""
-    payload = aggrigator_client.team_summary(
-        team_id, season=season, tenant_key=_tenant_key(request),
-    )
+    payload = aggrigator_client.team_summary(team_id, season=season)
     team = payload.get("team") or {}
     league_id = team.get("league_id") or ""
     league_label = team.get("league_name") or league_id or "League"
@@ -167,17 +167,16 @@ def _parse_window(raw: str | None, default: int = 72) -> int:
     return h if 1 <= h <= 168 else default
 
 
-def _league_options(tenant_key: str | None) -> list[dict]:
+def _league_options() -> list[dict]:
     """Pull the league catalog for the filter dropdown. Empty list if
     the aggrigator is unreachable."""
-    payload = aggrigator_client.list_leagues(tenant_key=tenant_key)
+    payload = aggrigator_client.list_leagues()
     return payload.get("leagues") or []
 
 
 @require_paid
 def analytics_picks(request):
     """+EV picks — same data as Upcoming, filtered by best_edge ≥ threshold."""
-    key = _tenant_key(request)
     league = request.GET.get("league") or None
     hours_ahead = _parse_window(request.GET.get("hours_ahead"))
     try:
@@ -185,8 +184,7 @@ def analytics_picks(request):
     except ValueError:
         threshold_pp = 3.0
     payload = aggrigator_client.picks(
-        threshold_pp=threshold_pp, league=league,
-        hours_ahead=hours_ahead, tenant_key=key,
+        threshold_pp=threshold_pp, league=league, hours_ahead=hours_ahead,
     )
     ctx = {
         "events": payload.get("events", []),
@@ -195,7 +193,7 @@ def analytics_picks(request):
         "threshold_pp": payload.get("threshold_pp", threshold_pp),
         "selected_league": league or "",
         "selected_hours": hours_ahead,
-        "league_options": _league_options(key),
+        "league_options": _league_options(),
         "window_options": _WINDOW_OPTIONS,
         "active_tab": "picks",
         "crumbs": [
@@ -245,7 +243,7 @@ def _coerce_decimal(raw: str) -> str | None:
 @require_paid
 def analytics_bets(request):
     """Bet log + summary + equity curve. POST creates a new bet."""
-    key = _tenant_key(request)
+    acting = _acting(request)
     form_errors: list[str] = []
     form_values: dict = {}
 
@@ -282,7 +280,7 @@ def analytics_bets(request):
                 payload["placed_at"] = form_values["placed_at"].strip()
             if form_values["note"].strip():
                 payload["note"] = form_values["note"].strip()
-            resp = aggrigator_client.create_bet(payload, tenant_key=key)
+            resp = aggrigator_client.create_bet(payload, acting_user_id=acting)
             if resp.get("_error"):
                 form_errors.append(f"Could not save bet: {resp['_error']}")
             else:
@@ -291,8 +289,8 @@ def analytics_bets(request):
                 return HttpResponseRedirect(request.path)
 
     status_filter = request.GET.get("status") or "all"
-    bets = aggrigator_client.list_bets(status_filter=status_filter, tenant_key=key)
-    summary = aggrigator_client.bet_summary(tenant_key=key)
+    bets = aggrigator_client.list_bets(status_filter=status_filter, acting_user_id=acting)
+    summary = aggrigator_client.bet_summary(acting_user_id=acting)
 
     # Decorate rows with profit_loss for table rendering — Django templates
     # can't do arithmetic on Decimal/float and the API doesn't carry the
@@ -338,17 +336,17 @@ def analytics_bets_action(request, bet_id: str):
     if request.method != "POST":
         return HttpResponseRedirect("/web/portal/analytics/bets/")
     action = request.POST.get("_action", "")
-    key = _tenant_key(request)
+    acting = _acting(request)
     if action == "delete":
-        aggrigator_client.delete_bet(bet_id, tenant_key=key)
+        aggrigator_client.delete_bet(bet_id, acting_user_id=acting)
     elif action == "settle":
         new_status = request.POST.get("settlement_status") or ""
         if new_status:
             aggrigator_client.update_bet(
-                bet_id, {"settlement_status": new_status}, tenant_key=key,
+                bet_id, {"settlement_status": new_status}, acting_user_id=acting,
             )
     elif action == "note":
         aggrigator_client.update_bet(
-            bet_id, {"note": request.POST.get("note") or ""}, tenant_key=key,
+            bet_id, {"note": request.POST.get("note") or ""}, acting_user_id=acting,
         )
     return HttpResponseRedirect("/web/portal/analytics/bets/")

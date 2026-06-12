@@ -141,11 +141,12 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     # the aggrigator's ``tenant_user.external_user_id`` column (which is
     # this User's ``public_id``).
     aggrigator_external_id = models.UUIDField(null=True, blank=True, unique=True)
-    # Plaintext API key returned ONCE by aggrigator at provisioning.
-    # MDProject sends this in ``X-Aggrigator-Tenant-Key`` on every
-    # analytics call to authenticate as this user. Lost keys are not
-    # recoverable — rotate via /v1/internal/.../api-keys/rotate to mint
-    # a fresh one.
+    # LEGACY since the service-key cutover (plan §6.4, roadmap Phase 2):
+    # outbound auth now rides the single AGGRIGATOR_SERVICE_KEY setting and
+    # nothing in the request path reads or writes this field anymore. Kept
+    # (a) to avoid a migration on a hot table, (b) as the storage slot for
+    # the staff-only admin rotate action, the one remaining per-user-key
+    # escape hatch. Safe to drop in a later cleanup migration.
     aggrigator_api_key = models.CharField(max_length=80, blank=True, default='')
 
     USERNAME_FIELD = 'email'
