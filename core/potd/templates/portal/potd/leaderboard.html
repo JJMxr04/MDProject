@@ -1,0 +1,109 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Pick of the Day{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Pick of the Day</h1>
+        <p class="page-header__subtitle">One free pick, every day. Streaks for showing up — wins for being right.</p>
+    </div>
+    <a href="{% url 'core-portal:portal-dashboard' %}" class="btn-ui btn-ui--primary">
+        <i class="bi bi-star-fill"></i> Make today's pick
+    </a>
+</header>
+
+{% if potd %}
+<div class="card-ui mb-4">
+    <div class="card-ui__body d-flex align-items-baseline gap-2 flex-wrap">
+        <strong>Today:</strong>
+        <span>{{ potd.event.home_team.name_medium|default:"Home" }} vs {{ potd.event.away_team.name_medium|default:"Away" }}</span>
+        <span class="text-muted small">&middot; {{ potd.event.league.name }} &middot; {{ potd_pick_count }} pick{{ potd_pick_count|pluralize }} so far</span>
+    </div>
+</div>
+{% endif %}
+
+<div class="potd-boards">
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-fire me-2" style="color:#FF6B35;"></i>Current streaks</h2>
+        </header>
+        {% if streak_board %}
+        <ul class="list-group list-group-flush" style="margin:0;">
+            {% for u in streak_board %}
+            <li class="list-group-item d-flex align-items-center gap-3">
+                <span class="potd-rank">{{ forloop.counter }}</span>
+                {% include "portal/components/_avatar.html" with user=u size=32 %}
+                <span class="flex-grow-1">{{ u.username }}</span>
+                <span class="badge-ui badge-ui--success">🔥 {{ u.potd_current_streak }}</span>
+                <span class="text-muted small">best {{ u.potd_best_streak }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="card-ui__body">
+            {% include "portal/components/_empty_state.html" with icon="fire" title="No streaks yet." body="Pick today to start yours." %}
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-trophy me-2" style="color:#FFB400;"></i>Most wins</h2>
+        </header>
+        {% if wins_board %}
+        <ul class="list-group list-group-flush" style="margin:0;">
+            {% for u in wins_board %}
+            <li class="list-group-item d-flex align-items-center gap-3">
+                <span class="potd-rank">{{ forloop.counter }}</span>
+                {% include "portal/components/_avatar.html" with user=u size=32 %}
+                <span class="flex-grow-1">{{ u.username }}</span>
+                <span class="badge-ui badge-ui--muted">{{ u.potd_wins }} win{{ u.potd_wins|pluralize }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="card-ui__body">
+            {% include "portal/components/_empty_state.html" with icon="trophy" title="No settled wins yet." %}
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-calendar-check me-2"></i>{% if daily_day %}Winners — {{ daily_day|date:"M j" }}{% else %}Daily winners{% endif %}</h2>
+        </header>
+        {% if daily_winners %}
+        <ul class="list-group list-group-flush" style="margin:0;">
+            {% for pick in daily_winners %}
+            <li class="list-group-item d-flex align-items-center gap-3">
+                {% include "portal/components/_avatar.html" with user=pick.user size=32 %}
+                <span class="flex-grow-1">{{ pick.user.username }}</span>
+                <span class="text-muted small">{{ pick.selection.label }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="card-ui__body">
+            {% include "portal/components/_empty_state.html" with icon="calendar-check" title="No settled day yet." body="Winners show here once a Pick of the Day settles." %}
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .potd-boards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-4);
+        align-items: start;
+    }
+    .potd-rank {
+        width: 1.6rem; text-align: center;
+        font-weight: var(--weight-bold); color: var(--text-secondary);
+    }
+</style>
+{% endblock css %}

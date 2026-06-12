@@ -62,6 +62,10 @@ def portal_dashboard(request):
     )
     checklist = _first_run_checklist(user) if is_first_run else None
 
+    # ── Pick of the Day card (plan Phase 6) ────────────────────
+    from core.potd.views import potd_card_context
+    potd_context = potd_card_context(user)
+
     return render(request, "portal/dashboard/dashboard.html", {
         "stats": stats,
         "todo": todo,
@@ -69,6 +73,7 @@ def portal_dashboard(request):
         "activity": activity,
         "is_first_run": is_first_run,
         "checklist": checklist,
+        **potd_context,
     })
 
 

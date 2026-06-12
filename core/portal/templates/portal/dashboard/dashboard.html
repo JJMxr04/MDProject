@@ -11,6 +11,51 @@
     </div>
 </header>
 
+{% if potd %}
+<section class="card-ui potd-card mb-4" aria-label="Pick of the Day"
+         id="potd-card"
+         data-pick-url="{% url 'core-portal:potd-pick' %}"
+         data-csrf="{{ csrf_token }}">
+    <header class="card-ui__header">
+        <h2><i class="bi bi-star-fill me-2" style="color:#FFB400;"></i>Pick of the Day</h2>
+        <div class="d-flex align-items-center gap-2">
+            {% if potd_streak %}<span class="badge-ui badge-ui--success">🔥 {{ potd_streak }}-day streak</span>{% endif %}
+            <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
+        </div>
+    </header>
+    <div class="card-ui__body">
+        <div class="potd-matchup">
+            <strong>{{ potd.event.home_team.name_medium|default:"Home" }}</strong>
+            <span class="text-muted">vs</span>
+            <strong>{{ potd.event.away_team.name_medium|default:"Away" }}</strong>
+            <span class="text-muted small">&middot; {{ potd.event.league.name }} &middot;
+                <time data-localize datetime="{{ potd.lock_time|date:'c' }}">{{ potd.lock_time }}</time>
+            </span>
+        </div>
+        {% if potd_user_pick %}
+            <p class="mt-2 mb-0">
+                <i class="bi bi-check-circle-fill" style="color: var(--state-success);"></i>
+                You picked <strong>{{ potd_user_pick.selection.label }}</strong>.
+                {% if potd_user_pick.result == 'PENDING' %}Good luck — results land after the game settles.{% elif potd_user_pick.result == 'WON' %}You won! 🎉{% elif potd_user_pick.result == 'LOST' %}Not this time.{% else %}Voided — no harm done.{% endif %}
+            </p>
+        {% elif potd_locked %}
+            <p class="mt-2 mb-0 text-muted">Today's pick is closed — the game has started. Come back tomorrow.</p>
+        {% else %}
+            <p class="small text-muted mt-2 mb-2">One free pick a day. Picking daily builds your streak — wins climb the leaderboard.</p>
+            <div class="potd-selections">
+                {% for sel in potd_selections %}
+                <button type="button" class="btn-ui btn-ui--secondary potd-selection"
+                        data-action="potd-pick" data-selection-id="{{ sel.id }}">
+                    {{ sel.label }}
+                    {% if sel.decimal_odds %}<span class="text-muted small ms-1">{{ sel.decimal_odds }}</span>{% endif %}
+                </button>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
 <section class="grid-stats" aria-label="Your stats">
     {% include "portal/components/_stat_card.html" with label="Active matches" value=stats.active_match_count icon="controller" href="/web/portal/match/me/" %}
     {% include "portal/components/_stat_card.html" with label="Upcoming tournaments" value=stats.upcoming_tournament_count icon="trophy" href="/web/portal/tournament/me/" %}
@@ -130,3 +175,15 @@
 </section>
 {% endif %}
 {% endblock content %}
+
+{% block css %}
+<style>
+    .potd-matchup { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+    .potd-selections { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .potd-selection { flex: 1 1 140px; }
+</style>
+{% endblock css %}
+
+{% block scripts %}
+<script src="{% static 'js/pages/potd_card.js' %}"></script>
+{% endblock scripts %}
