@@ -105,9 +105,9 @@ class FullLifecycleTests(TestCase):
         """Plan:
           - 5 p1-owned slots: p1 picks HOME, all home_won → p1 sweeps +5
           - 5 p2-owned slots: p2 picks HOME, only 2 home_won → p2 +2, p1 +3
-          - Golden (ownerless): p1 picks HOME, p2 picks AWAY, home wins
-            → +2 GOLDEN to p1
-        Final: p1 = 5 + 3 + 2 = 10, p2 = 2.
+          - Golden (ownerless): p1 picks HOME, p2 picks AWAY, home wins —
+            the golden is the tiebreaker now, worth 0 match points.
+        Final: p1 = 5 + 3 = 8, p2 = 2.
         """
         p1_slots = list(self.match.games.filter(owner=self.p1, is_golden=False).order_by("slot"))
         p2_slots = list(self.match.games.filter(owner=self.p2, is_golden=False).order_by("slot"))
@@ -118,18 +118,21 @@ class FullLifecycleTests(TestCase):
         for i, game in enumerate(p2_slots):
             self._wire_slot(game, owner_picks_home=True, home_won=(i < 2))
         # Golden is ownerless — both sides pick independently within the
-        # locked market, then the seeded event finalizes.
+        # locked market (with a mandatory total prediction), then the
+        # seeded event finalizes.
         Game.objects.pick_on_locked_slot(
-            current_user=self.p1, game_id=golden.id, selection_id=self.g_home.id,
+            current_user=self.p1, game_id=golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=41,
         )
         Game.objects.pick_on_locked_slot(
-            current_user=self.p2, game_id=golden.id, selection_id=self.g_away.id,
+            current_user=self.p2, game_id=golden.id,
+            selection_id=self.g_away.id, tiebreaker_total=38,
         )
         _finalize_event(self.golden_event, home_score=24, away_score=17)
 
         p1_score, p2_score, decided = score_match(self.match)
         self.assertTrue(decided, "every slot is settled, match should be fully decided")
-        self.assertEqual(p1_score, 10)
+        self.assertEqual(p1_score, 8)
         self.assertEqual(p2_score, 2)
 
         Match.objects.maybe_complete_match(self.match)

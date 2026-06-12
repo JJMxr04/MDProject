@@ -7,14 +7,17 @@
 <header class="page-header">
     <div>
         <h1 class="page-header__title">Invites</h1>
-        <p class="page-header__subtitle">Match, tournament, and friend requests sent to you.</p>
+        <p class="page-header__subtitle">Match, tournament, and friend requests — received and sent.</p>
     </div>
 </header>
 
-{% if invites %}
-<div class="card-ui" id="invite-list"
+<div id="invite-list"
      data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
      data-csrf="{{ csrf_token }}">
+
+<h2 class="h5 mb-2">Received</h2>
+{% if invites %}
+<div class="card-ui mb-4">
     <ul class="list-group list-group-flush" style="margin:0;">
         {% for invite in invites %}
         <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
@@ -22,7 +25,7 @@
             <div class="flex-grow-1">
                 <div class="fw-semibold">
                     {% if invite.type == "match" %}
-                        {{ invite.sender.username }} invited you to a match
+                        {{ invite.sender.username }} invited you to a {{ invite.format_label|default:"" }} match
                     {% elif invite.type == "tournament" %}
                         {{ invite.sender.username }} invited you to a tournament
                     {% elif invite.type == "friend" %}
@@ -32,11 +35,14 @@
                     {% endif %}
                 </div>
                 <div class="small text-muted">
-                    {% include "portal/components/_badge.html" with state=invite.state %}
+                    {% include "portal/components/_badge.html" with state=invite.effective_state %}
                     &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
+                    {% if invite.effective_state == 'sent' and invite.expires_at %}
+                        &nbsp;&middot;&nbsp; expires {{ invite.expires_at|date:"M j, g:i A" }}
+                    {% endif %}
                 </div>
             </div>
-            {% if invite.state == 'sent' %}
+            {% if invite.effective_state == 'sent' %}
             <div class="d-flex gap-2">
                 <button class="btn-ui btn-ui--primary btn-ui--sm"
                         data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">
@@ -55,6 +61,51 @@
 {% else %}
     {% include "portal/components/_empty_state.html" with icon="envelope-open" title="No invites." body="Friends can invite you to matches — your inbox will show them here." %}
 {% endif %}
+
+<h2 class="h5 mb-2 mt-4">Sent</h2>
+{% if outgoing_invites %}
+<div class="card-ui">
+    <ul class="list-group list-group-flush" style="margin:0;">
+        {% for invite in outgoing_invites %}
+        <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
+            {% include "portal/components/_avatar.html" with user=invite.player size=40 %}
+            <div class="flex-grow-1">
+                <div class="fw-semibold">
+                    {% if invite.type == "match" %}
+                        You challenged {{ invite.player.username }} to a {{ invite.format_label|default:"" }} match
+                    {% elif invite.type == "tournament" %}
+                        You invited {{ invite.player.username }} to a tournament
+                    {% elif invite.type == "friend" %}
+                        You sent {{ invite.player.username }} a friend request
+                    {% else %}
+                        You invited {{ invite.player.username }} to a {{ invite.get_type_display }}
+                    {% endif %}
+                </div>
+                <div class="small text-muted">
+                    {% include "portal/components/_badge.html" with state=invite.effective_state %}
+                    &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
+                    {% if invite.effective_state == 'sent' and invite.expires_at %}
+                        &nbsp;&middot;&nbsp; expires {{ invite.expires_at|date:"M j, g:i A" }}
+                    {% endif %}
+                </div>
+            </div>
+            {% if invite.effective_state == 'sent' %}
+            <div class="d-flex gap-2">
+                <button class="btn-ui btn-ui--secondary btn-ui--sm"
+                        data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="cancel">
+                    Cancel
+                </button>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+    {% include "portal/components/_empty_state.html" with icon="send" title="Nothing sent." body="Challenge a friend from the Friends page — your outgoing invites will show here." %}
+{% endif %}
+
+</div>
 {% endblock content %}
 
 {% block scripts %}

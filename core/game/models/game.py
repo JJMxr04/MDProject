@@ -27,6 +27,16 @@ class GoldenGameUnavailable(Exception):
     """
 
 
+class FixtureUnavailable(Exception):
+    """Raised by ``Game.objects.assert_window_viable`` when the window
+    doesn't hold enough distinct pickable events for the requested match
+    format (D-5 #2): fewer distinct events with priced markets than
+    ``games_per_player + 1`` (the Golden Game needs its own event too).
+
+    Message is user-facing — views surface it verbatim in the portal toast.
+    """
+
+
 class GameManager(AbstractManager):
     def create_game(self, *, match, owner, player_2, slot: int, is_golden: bool = False, event=None):
         return self.create(
@@ -187,12 +197,12 @@ class GameManager(AbstractManager):
         return game
 
     @transaction.atomic
-    def pick_on_locked_slot(self, *, current_user, game_id, selection_id):
+    def pick_on_locked_slot(self, *, current_user, game_id, selection_id,
+                            tiebreaker_total=None):
         """Pick handler for slots whose market is pre-locked (Golden Game).
 
         Routes to ``owner_outcome`` or ``player_2_outcome`` based on which
-        side of the match the current user is on — both can pick freely,
-        independent of the other side.
+        side of the match the current user is on.
 
         Validates:
           - User is in the match.
@@ -200,12 +210,18 @@ class GameManager(AbstractManager):
             ``upload_pick`` flow).
           - Selected ``Selection`` belongs to the locked market.
           - Event hasn't started yet.
-          - User can't pick the same selection their opponent already
-            picked (each side must pick a different option).
+          - Zero-sum: the opponent's current selection can't be taken —
+            on a 2-way market exactly one golden pick hits, so the golden
+            decides nearly every tied match (no-draw cascade step 2).
+          - ``tiebreaker_total`` (the player's prediction of the golden
+            event's final combined score) is REQUIRED — it's cascade step
+            4 and is only captured here, never separately.
         """
         try:
             game = self.select_related(
-                "bet", "bet__locked_market", "event", "match",
+                "bet", "bet__locked_market",
+                "bet__owner_outcome", "bet__player_2_outcome",
+                "event", "match",
                 "match__player_1", "match__player_2",
             ).get(pk=game_id)
         except Game.DoesNotExist:
@@ -232,18 +248,114 @@ class GameManager(AbstractManager):
         if game.event.start_time <= timezone.now():
             raise PickError("Event has already started; pick window closed")
 
-        # Both players are free to pick the same selection — picking the
-        # same side as your opponent is a deliberate "block" tactic, not a
-        # mistake. Front-end shows a "Picked by X" badge for visibility but
-        # doesn't disable the card.
+        try:
+            tiebreaker_total = int(tiebreaker_total)
+        except (TypeError, ValueError):
+            raise PickError(
+                "Predict the final total score with your Golden Game pick — "
+                "it breaks ties if the match ends level."
+            )
+        if tiebreaker_total < 0:
+            raise PickError("The total score prediction can't be negative")
+
+        # Zero-sum golden (no-draw design): your opponent's selection is
+        # off the board for you. Each side re-picks freely until kickoff,
+        # but never onto the other's current selection.
         is_player_1 = (current_user == match.player_1)
+        opponent_pick = bet.player_2_outcome if is_player_1 else bet.owner_outcome
+        if opponent_pick is not None and opponent_pick.pk == selection.pk:
+            raise PickError(
+                "Your opponent already took that side — pick a different "
+                "selection. The Golden Game is winner-take-all."
+            )
+
         if is_player_1:
             Bet.objects.set_owner_outcome(bet, selection)
         else:
             Bet.objects.set_player_2_outcome(bet, selection)
+
+        # Store the prediction on the match's TieBreaker row (cascade
+        # step 4). The row always exists — accept_match creates it.
+        tiebreaker = match.tiebreaker
+        if tiebreaker is not None:
+            from core.match.models.TieBreaker import TieBreaker
+            if is_player_1:
+                TieBreaker.objects.set_owner_total(tiebreaker, tiebreaker_total)
+            else:
+                TieBreaker.objects.set_player_2_total(tiebreaker, tiebreaker_total)
+
         from core.metrics.models import track
         track(current_user, "pick_made", match_id=str(match.pk), golden=True)
         return game
+
+    def count_available_events(self, *, window_start=None, window_end=None):
+        """Distinct events with at least one priced market in the window.
+
+        Same aggregator listing the Golden Game seed uses; an event counts
+        only if at least one of its markets has a priced selection — an
+        event with empty/odds-less markets can't host a pick.
+
+        Raises ``FixtureUnavailable`` if the catalog is unreachable (the
+        caller can't tell viable from broken, so don't pretend zero).
+        """
+        from core.event.providers.aggregator_client import (
+            AggrigatorClient, AggrigatorError,
+        )
+
+        now = timezone.now()
+        if window_start is None:
+            window_start = now + DEADLINE_BUFFER
+        if window_end is None or window_end <= window_start:
+            window_end = window_start + timedelta(days=7)
+
+        client = AggrigatorClient()
+        try:
+            body = client.list_events(
+                starts_after=window_start.isoformat(),
+                starts_before=window_end.isoformat(),
+                include="markets",
+                page_size=50,
+            )
+        except AggrigatorError as exc:
+            raise FixtureUnavailable(
+                "Couldn't reach the events catalog right now. Please try "
+                "again in a moment."
+            ) from exc
+
+        count = 0
+        for ev in (body.get("items") or []):
+            for market in (ev.get("markets") or []):
+                if self._default_selection_from_payload(market) is not None:
+                    count += 1
+                    break
+        return count
+
+    def assert_window_viable(self, *, match_format, window_start=None, window_end=None):
+        """Fixture-availability gate (D-5 #2) — reject creation when the
+        window holds fewer distinct pickable events than the format needs
+        (``games_per_player + 1``, the +1 being the Golden Game).
+
+        Returns the available count on success so callers can surface
+        "N games available in this window".
+        """
+        from core.match.formats import (
+            format_label, format_window, min_distinct_events,
+        )
+
+        if window_end is None:
+            window_end = timezone.now() + format_window(match_format)
+        needed = min_distinct_events(match_format)
+        available = self.count_available_events(
+            window_start=window_start, window_end=window_end,
+        )
+        if available < needed:
+            raise FixtureUnavailable(
+                f"Only {available} game{'s' if available != 1 else ''} "
+                f"available in this window — a {format_label(match_format)} "
+                f"match needs {needed}. Try a longer format, or wait for "
+                f"more games to be scheduled."
+            )
+        return available
 
     def find_golden_candidate(self, *, window_start=None, window_end=None):
         """Query the aggregator for a Golden Game seed in the window.

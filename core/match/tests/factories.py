@@ -211,27 +211,45 @@ def make_two_way_market(
 
 
 @contextmanager
-def mock_golden_seed(selection: Selection):
+def mock_golden_seed(selection: Selection, *, extra_events: int = 8):
     """Patch the aggregator listing + chain mirror that
     ``Game.objects.get_golden_game`` calls during ``accept_match``, so the
     Golden Game seeds from a locally-created (event, market, selection)
     without any HTTP. Both names are imported inside the function body, so
-    patching the source modules at call time is sufficient."""
+    patching the source modules at call time is sufficient.
+
+    The listing carries ``extra_events`` synthetic priced events after the
+    seed event so the fixture-availability gate (D-5 #2 — needs
+    ``games_per_player + 1`` distinct events) passes for every format. The
+    seed event comes first, so ``find_golden_candidate`` still locks the
+    intended market."""
     market = selection.market
-    listing = {
-        "items": [{
-            "id": market.event_id,
-            "markets": [{
-                "category": market.category,
-                "scope": market.scope,
-                "selections": [{
-                    "id": selection.id,
-                    "type": selection.type,
-                    "decimal_odds": str(selection.decimal_odds),
-                }],
+    items = [{
+        "id": market.event_id,
+        "markets": [{
+            "category": market.category,
+            "scope": market.scope,
+            "selections": [{
+                "id": selection.id,
+                "type": selection.type,
+                "decimal_odds": str(selection.decimal_odds),
             }],
         }],
-    }
+    }]
+    for i in range(extra_events):
+        items.append({
+            "id": f"availability-filler-{i}",
+            "markets": [{
+                "category": "MONEYLINE",
+                "scope": "FULL_GAME",
+                "selections": [{
+                    "id": f"availability-filler-{i}:home",
+                    "type": "HOME",
+                    "decimal_odds": "1.90",
+                }],
+            }],
+        })
+    listing = {"items": items}
     client = MagicMock()
     client.list_events.return_value = listing
     with patch(

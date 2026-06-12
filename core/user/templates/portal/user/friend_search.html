@@ -37,6 +37,39 @@
                 </form>
             </div>
             <p class="text-muted small mt-2">Share this code with friends so they can find you. It stays valid until you rotate it.</p>
+
+            <div class="referral-link-box mt-3">
+                <label class="field-label" for="referral-link">Your referral link</label>
+                <div class="friend-finder-input">
+                    <input type="text" class="field-input" id="referral-link" readonly
+                           value="{{ referral_link }}">
+                    <button type="button" class="btn-ui btn-ui--secondary" data-action="copy-referral">
+                        <i class="bi bi-clipboard"></i> Copy
+                    </button>
+                </div>
+                <p class="text-muted small mt-2">Anyone who signs up through this link becomes your friend automatically.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2><i class="bi bi-envelope-plus me-2"></i>Invite by email</h2>
+        </header>
+        <div class="card-ui__body">
+            <form id="email-invite-form"
+                  data-url="{% url 'core-portal:invite-by-email' %}"
+                  data-csrf="{{ csrf_token }}">
+                <div class="field">
+                    <label for="invite_email" class="field-label">They don't play yet? Send an invite.</label>
+                    <div class="friend-finder-input">
+                        <input type="email" class="field-input" id="invite_email" name="invite_email"
+                               placeholder="friend@example.com" autocomplete="off" required>
+                        <button type="submit" class="btn-ui btn-ui--primary" id="email-invite-submit">Invite</button>
+                    </div>
+                </div>
+            </form>
+            <p class="text-muted small mt-2">They get a signup link by email — when they join, you're friends automatically. Invites expire after 14 days.</p>
         </div>
     </section>
 
@@ -212,6 +245,11 @@
             {% csrf_token %}
             <input type="hidden" name="type" value="private">
             <input type="hidden" name="player" id="invitePlayerId">
+            <div class="invite-format-group" role="radiogroup" aria-label="Match format">
+                <label class="invite-format"><input type="radio" name="format" value="BLITZ"> <span><strong>Blitz</strong> <small>2 games + Golden · 2 days</small></span></label>
+                <label class="invite-format"><input type="radio" name="format" value="CLASSIC"> <span><strong>Classic</strong> <small>3 games + Golden · 4 days</small></span></label>
+                <label class="invite-format"><input type="radio" name="format" value="MARATHON" checked> <span><strong>Marathon</strong> <small>5 games + Golden · 7 days</small></span></label>
+            </div>
         </form>
         <div class="modal-card__actions">
             <button type="button" class="btn-ui btn-ui--secondary" data-action="invite-close">Cancel</button>
@@ -326,6 +364,19 @@
         animation: spin 1s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    .invite-format-group { display: flex; flex-direction: column; gap: .4rem; margin: .75rem 0 .25rem; }
+    .invite-format {
+        display: flex; align-items: center; gap: .5rem;
+        padding: .5rem .7rem; cursor: pointer;
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: var(--radius-md, 8px);
+    }
+    .invite-format:has(input:checked) {
+        border-color: var(--brand-blue, #3D7EAA);
+        background: rgba(61, 126, 170, .08);
+    }
+    .invite-format small { color: var(--text-secondary); margin-left: .35rem; }
 
     .banner { padding: .55rem .75rem; border-radius: var(--radius-sm, 6px); font-size: .9rem; }
     .banner--success { background: rgba(47, 158, 107, .12); color: #1a7a4a; }

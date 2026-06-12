@@ -92,12 +92,51 @@ function closeRemoveModal() {
     document.getElementById('removeFriendModal').hidden = true;
 }
 
+/* ── Referral link + invite-by-email (plan Phase 4 §3) ─────────── */
+function copyReferralLink() {
+    const link = document.getElementById('referral-link').value;
+    navigator.clipboard.writeText(link)
+        .then(() => window.toast('Referral link copied!', {variant: 'success'}))
+        .catch(() => window.toast('Could not copy link.', {variant: 'danger'}));
+}
+
+const emailInviteForm = document.getElementById('email-invite-form');
+if (emailInviteForm) {
+    emailInviteForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('invite_email').value.trim();
+        if (!email) return;
+        const btn = document.getElementById('email-invite-submit');
+        btn.disabled = true;
+        fetch(this.dataset.url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'X-CSRFToken': this.dataset.csrf},
+            body: JSON.stringify({email: email, invite_type: 'friend'}),
+        })
+        .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+        .then(({ ok, body }) => {
+            btn.disabled = false;
+            if (ok && body.success) {
+                window.toast(body.success, {variant: 'success'});
+                document.getElementById('invite_email').value = '';
+            } else {
+                window.toast((body && body.error) || 'Could not send invite.', {variant: 'danger'});
+            }
+        })
+        .catch(() => {
+            btn.disabled = false;
+            window.toast('Network error sending invite.', {variant: 'danger'});
+        });
+    });
+}
+
 /* ── CSP-safe event wiring (delegation) ────────────────────────── */
 document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-action]');
     if (!el) return;
     const a = el.dataset.action;
     if (a === 'copy-code') copyFriendCode();
+    else if (a === 'copy-referral') copyReferralLink();
     else if (a === 'invite-open') showInvitePopup(el.dataset.friendId, el.dataset.friendUsername);
     else if (a === 'invite-close') closeInvitePopup();
     else if (a === 'invite-submit') submitInviteForm();

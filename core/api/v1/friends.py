@@ -41,8 +41,8 @@ class FriendViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         target = serializer.context["target"]
+        # User.friends is symmetrical — one add writes both directions.
         request.user.add_friend(target)
-        target.add_friend(request.user)
         return Response(
             FriendSerializer(target).data, status=status.HTTP_201_CREATED
         )

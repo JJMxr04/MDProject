@@ -61,6 +61,7 @@ class GoldenGameSymmetricPickTests(GoldenGameBase):
             current_user=self.p2,
             game_id=self.golden.id,
             selection_id=self.g_away.id,
+            tiebreaker_total=41,
         )
         self.golden.bet.refresh_from_db()
         self.assertEqual(self.golden.bet.player_2_outcome_id, self.g_away.id)
@@ -71,6 +72,7 @@ class GoldenGameSymmetricPickTests(GoldenGameBase):
             current_user=self.p1,
             game_id=self.golden.id,
             selection_id=self.g_home.id,
+            tiebreaker_total=38,
         )
         self.golden.bet.refresh_from_db()
         self.assertEqual(self.golden.bet.owner_outcome_id, self.g_home.id)
@@ -78,14 +80,27 @@ class GoldenGameSymmetricPickTests(GoldenGameBase):
 
     def test_both_sides_pick_independently(self):
         Game.objects.pick_on_locked_slot(
-            current_user=self.p2, game_id=self.golden.id, selection_id=self.g_away.id,
+            current_user=self.p2, game_id=self.golden.id,
+            selection_id=self.g_away.id, tiebreaker_total=41,
         )
         Game.objects.pick_on_locked_slot(
-            current_user=self.p1, game_id=self.golden.id, selection_id=self.g_home.id,
+            current_user=self.p1, game_id=self.golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=38,
         )
         self.golden.bet.refresh_from_db()
         self.assertEqual(self.golden.bet.owner_outcome_id, self.g_home.id)
         self.assertEqual(self.golden.bet.player_2_outcome_id, self.g_away.id)
+
+    def test_pick_stores_total_prediction(self):
+        # The prediction (cascade step 4) rides on the golden pick itself.
+        Game.objects.pick_on_locked_slot(
+            current_user=self.p1, game_id=self.golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=38,
+        )
+        tb = self.match.tiebreaker
+        tb.refresh_from_db()
+        self.assertEqual(tb.owner_total, 38)
+        self.assertIsNone(tb.player_2_total)
 
     def test_selection_outside_locked_market_rejected(self):
         other_market = make_market(
@@ -94,7 +109,8 @@ class GoldenGameSymmetricPickTests(GoldenGameBase):
         over = make_selection(other_market, selection_type="OVER")
         with self.assertRaises(PickError) as ctx:
             Game.objects.pick_on_locked_slot(
-                current_user=self.p1, game_id=self.golden.id, selection_id=over.id,
+                current_user=self.p1, game_id=self.golden.id,
+                selection_id=over.id, tiebreaker_total=38,
             )
         self.assertIn("locked market", str(ctx.exception))
 
@@ -152,20 +168,66 @@ class GoldenGameGenericFlowIsolationTests(GoldenGameBase):
 
 
 class GoldenGameScoringTests(GoldenGameBase):
-    def test_golden_points_credit_match_players(self):
-        # Both sides pick; player_1 wins the golden (2 points), player_2 loses.
+    def test_golden_contributes_no_match_points(self):
+        # The golden game is the tiebreaker, not a scoring slot — a settled
+        # golden win adds nothing to the match score (no-draw cascade).
         Game.objects.pick_on_locked_slot(
-            current_user=self.p1, game_id=self.golden.id, selection_id=self.g_home.id,
+            current_user=self.p1, game_id=self.golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=38,
         )
         Game.objects.pick_on_locked_slot(
-            current_user=self.p2, game_id=self.golden.id, selection_id=self.g_away.id,
+            current_user=self.p2, game_id=self.golden.id,
+            selection_id=self.g_away.id, tiebreaker_total=41,
         )
         settle_selection(self.g_home, "WON")
         settle_selection(self.g_away, "LOST")
 
         p1_score, p2_score, _ = score_match(self.match)
-        self.assertEqual(p1_score, 2)
+        self.assertEqual(p1_score, 0)
         self.assertEqual(p2_score, 0)
+
+
+class GoldenGameZeroSumTests(GoldenGameBase):
+    def test_opponent_selection_is_off_the_board(self):
+        Game.objects.pick_on_locked_slot(
+            current_user=self.p1, game_id=self.golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=38,
+        )
+        with self.assertRaises(PickError) as ctx:
+            Game.objects.pick_on_locked_slot(
+                current_user=self.p2, game_id=self.golden.id,
+                selection_id=self.g_home.id, tiebreaker_total=40,
+            )
+        self.assertIn("opponent already took that side", str(ctx.exception))
+
+    def test_own_repick_of_same_selection_allowed(self):
+        Game.objects.pick_on_locked_slot(
+            current_user=self.p1, game_id=self.golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=38,
+        )
+        # Re-submitting (e.g. to revise the prediction) is fine.
+        Game.objects.pick_on_locked_slot(
+            current_user=self.p1, game_id=self.golden.id,
+            selection_id=self.g_home.id, tiebreaker_total=44,
+        )
+        tb = self.match.tiebreaker
+        tb.refresh_from_db()
+        self.assertEqual(tb.owner_total, 44)
+
+    def test_prediction_required(self):
+        with self.assertRaises(PickError) as ctx:
+            Game.objects.pick_on_locked_slot(
+                current_user=self.p1, game_id=self.golden.id,
+                selection_id=self.g_home.id,
+            )
+        self.assertIn("Predict the final total", str(ctx.exception))
+
+    def test_negative_prediction_rejected(self):
+        with self.assertRaises(PickError):
+            Game.objects.pick_on_locked_slot(
+                current_user=self.p1, game_id=self.golden.id,
+                selection_id=self.g_home.id, tiebreaker_total=-3,
+            )
 
 
 class TieBreakerSideTests(GoldenGameBase):
@@ -177,15 +239,12 @@ class TieBreakerSideTests(GoldenGameBase):
         self.assertEqual(tb.owner_total, 40)
         self.assertEqual(tb.player_2_total, 50)
 
-    def test_calculate_winner_uses_match_players(self):
+    def test_calculate_event_total_caches_combined_score(self):
         tb = self.match.tiebreaker
-        TieBreaker.objects.set_owner_total(tiebreaker=tb, total=40)
-        TieBreaker.objects.set_player_2_total(tiebreaker=tb, total=10)
-
-        # Final score 24-20 → total 44; player_1's 40 is closer than 10.
         event = self.golden_event
         event.home_score, event.away_score = 24, 20
         event.save(update_fields=["home_score", "away_score"])
 
-        winner = TieBreaker.objects.calculate_winner(tb)
-        self.assertEqual(winner, self.p1)
+        self.assertEqual(TieBreaker.objects.calculate_event_total(tb), 44)
+        tb.refresh_from_db()
+        self.assertEqual(tb.total, 44)

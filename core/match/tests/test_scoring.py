@@ -14,7 +14,6 @@ from django.utils import timezone
 from core.event.models.odds.selection import SettlementSource, SettlementStatus
 from core.game.models.bet import Bet
 from core.match.scoring import (
-    GOLDEN_POINTS,
     REGULAR_POINTS,
     score_match,
 )
@@ -71,16 +70,19 @@ class ScoreMatchTests(TestCase):
         self.assertEqual(p2, 0)               # opp=p2 lost → 0
         self.assertFalse(decided)
 
-    def test_golden_game_doubles_points(self):
+    def test_golden_game_scores_zero_points(self):
+        """The Golden Game is the tiebreaker, not a scoring slot — a WON
+        golden pick contributes 0 points to either side."""
         golden = self.match.games.get(is_golden=True)
-        # On golden, the owner is p1 (set by accept_match). Player_2 is p2.
+        # Golden is ownerless: owner_outcome ≡ p1's pick, player_2_outcome ≡ p2's.
         _attach_event_with_market(
             golden, self.league,
             home_status=SettlementStatus.WON, away_status=SettlementStatus.LOST,
         )
         p1, p2, decided = score_match(self.match)
-        self.assertEqual(p1, GOLDEN_POINTS)
+        self.assertEqual(p1, 0)
         self.assertEqual(p2, 0)
+        # All 10 regular slots are still PENDING, so the match isn't decided.
         self.assertFalse(decided)
 
     def test_push_and_void_score_zero(self):
@@ -129,8 +131,9 @@ class ScoreMatchTests(TestCase):
         #     slots 1-3 → owner=p2 WON → +1 to p2 each = +3 to p2
         #     slots 4-5 → owner=p2 LOST, opponent=p1 WON → +1 to p1 each = +2 to p1
         # Subtotal regulars: p1 = 3 + 2 = 5, p2 = 3 + 2 = 5.
-        # Golden: HOME WON, owner=p1 → +2 to p1.
-        # Final: p1 = 7, p2 = 5.
+        # Golden (p1's pick WON) contributes NO points — it's the tiebreaker.
+        # Final: 5–5, and the match IS decided: regulars are tied but the
+        # golden's sides have resolved, so the no-draw cascade can run.
         for game in regulars:
             home_won = game.slot in (1, 2, 3)
             _attach_event_with_market(
@@ -145,5 +148,5 @@ class ScoreMatchTests(TestCase):
 
         p1, p2, decided = score_match(self.match)
         self.assertTrue(decided)
-        self.assertEqual(p1, 7)
+        self.assertEqual(p1, 5)
         self.assertEqual(p2, 5)

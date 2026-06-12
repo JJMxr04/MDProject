@@ -11,6 +11,18 @@ import os
 
 
 class Emails:
+    @staticmethod
+    def _match_url(match_id):
+        """Absolute URL of the match detail page — result emails link it so
+        the rematch CTA (Phase 5 §5) is one click away."""
+        if not match_id:
+            return None
+        from django.conf import settings
+        from django.urls import reverse
+        return settings.SITE_URL + reverse(
+            'core-portal:portal-my-match-detail', args=[match_id],
+        )
+
     @classmethod
     def _notify(cls, user, subject, template_path, context, dedupe_key=None):
         """Single chokepoint for user-facing engagement notifications.
@@ -128,6 +140,7 @@ class Emails:
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
+            'match_url': cls._match_url(match_id),
         }
         cls._notify(
             user, subject, template_path, context,
@@ -141,6 +154,7 @@ class Emails:
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
+            'match_url': cls._match_url(match_id),
         }
         cls._notify(
             user, subject, template_path, context,
@@ -154,6 +168,7 @@ class Emails:
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
+            'match_url': cls._match_url(match_id),
         }
         cls._notify(
             user, subject, template_path, context,
@@ -185,14 +200,55 @@ class Emails:
         cls._notify(user, subject, template_path, context)
 
     @classmethod
-    def send_match_invite(cls, user, opponent_name):
+    def send_match_invite(cls, user, opponent_name, format_label=None):
         subject = "Your have Been Invited to Join a Match"
         template_path = "invite/matchInvite.html"
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
+            'format_label': format_label,
         }
         cls._notify(user, subject, template_path, context)
+
+    @classmethod
+    def send_friend_invite(cls, user, sender_name):
+        subject = f"{sender_name} sent you a friend request"
+        template_path = "invite/friendInvite.html"
+        context = {
+            'username': user.username,
+            'sender_name': sender_name,
+        }
+        cls._notify(user, subject, template_path, context)
+
+    @classmethod
+    def send_invite_declined(cls, user, decliner_name, invite_type):
+        """Sender-side: the user who SENT the invite learns it was declined
+        (Phase 4 §2 — decline used to be silent). ``user`` is the sender."""
+        noun = "friend request" if invite_type == 'friend' else f"{invite_type} invite"
+        subject = f"{decliner_name} declined your {noun}"
+        template_path = "invite/inviteDeclined.html"
+        context = {
+            'username': user.username,
+            'decliner_name': decliner_name,
+            'invite_noun': noun,
+        }
+        cls._notify(user, subject, template_path, context)
+
+    @classmethod
+    def send_signup_invite(cls, email, inviter_name, signup_url, format_label=None):
+        """Invite-to-non-user (Phase 4 §3). Transactional — the recipient
+        has no account (and no ``email_notifications`` preference), so this
+        bypasses ``_notify`` like the waitlist mails do. Volume is capped by
+        the create-invite rate budget upstream."""
+        subject = f"{inviter_name} invited you to Paradise Sports"
+        template_path = "invite/signupInvite.html"
+        context = {
+            'inviter_name': inviter_name,
+            'signup_url': signup_url,
+            'format_label': format_label,
+        }
+        send_email.defer(subject=subject, recipient=email,
+                         template_path=template_path, context=context)
 
     @classmethod
     def send_match_acceptance_confirmation(cls, user, opponent_name):

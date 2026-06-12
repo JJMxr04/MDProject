@@ -50,7 +50,7 @@ def _accept(client, invite_id):
 
 
 class TournamentInviteEnrollmentTests(TestCase):
-    def test_accept_enrolls_player_and_consumes_invite(self):
+    def test_accept_enrolls_player_and_marks_invite_accepted(self):
         admin = make_user("tadmin")
         joiner = make_user("tjoiner")
         tournament = _make_tournament()
@@ -65,7 +65,11 @@ class TournamentInviteEnrollmentTests(TestCase):
         self.assertTrue(
             Player.objects.filter(tournament=tournament, player=joiner).exists()
         )
-        self.assertFalse(Invite.objects.filter(id=invite.id).exists())
+        # Lifecycle rework: accepted invites are KEPT (terminal state) for
+        # the invite-list history, not deleted.
+        invite.refresh_from_db()
+        self.assertEqual(invite.state, "accepted")
+        self.assertTrue(invite.accepted)
 
     def test_accept_full_tournament_rejected_and_invite_survives(self):
         admin = make_user("fadmin")
@@ -147,9 +151,12 @@ class PrivateMatchInviteCreationTests(TestCase):
     def _create(self, user, player_value):
         self.client.force_login(user)
         url = reverse(self.URL_NAME)
-        return self.client.post(
-            url, {"type": "private", "player": player_value}, secure=True,
-        )
+        # Private creates now run the fixture-availability gate (D-5 #2),
+        # which lists events from the aggregator — mock it like accepts do.
+        with mock_golden_seed(make_golden_seed_selection()):
+            return self.client.post(
+                url, {"type": "private", "player": player_value}, secure=True,
+            )
 
     def test_unknown_player_id_returns_404_not_500(self):
         owner = make_user("cowner")

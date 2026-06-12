@@ -35,6 +35,13 @@ class RegisterForm(UserCreationForm):
 
     def clean_email(self):
         email_address = self.cleaned_data.get('email')
+        # A live friend invite to this email IS the access grant (plan
+        # Phase 4 §3, D-4b) — being asked-for by an existing player
+        # bypasses the waitlist. Referral links (?ref=<friend_code>) do
+        # NOT bypass it; only explicit email invites do.
+        from core.mail.models import PendingInvite
+        if PendingInvite.objects.valid_for_email(email_address).exists():
+            return email_address
         if not WaitlistEntry.objects.filter(email=email_address, admin_granted_access=True).exists():
             raise forms.ValidationError("You have not been approved to register")
         return email_address

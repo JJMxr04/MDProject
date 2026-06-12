@@ -5,6 +5,12 @@ on arrival: nobody could complete an accept. So creation is blocked up
 front (public create views + manager) and acceptance keeps its existing
 atomic raise. The private create+accept path now rolls back the Match row
 too instead of leaking a stray ``created`` match.
+
+With format presets (D-5 #2) the gate is the fixture-availability check:
+``assert_window_viable`` runs FIRST in ``create_match`` and raises
+``FixtureUnavailable`` ("Only N games available in this window …") when the
+window holds fewer distinct priced events than the format needs
+(``games_per_player + 1``; default MARATHON → 6).
 """
 
 import json
@@ -13,7 +19,7 @@ from unittest.mock import MagicMock, patch
 from django.test import TestCase
 from django.urls import reverse
 
-from core.game.models.game import GoldenGameUnavailable
+from core.game.models.game import FixtureUnavailable
 from core.match.models import Match
 from core.match.tests.factories import make_match, make_user
 
@@ -28,6 +34,25 @@ def patch_catalog(items):
     )
 
 
+def priced_items(n, prefix="evt"):
+    """``n`` distinct events, each with one priced MONEYLINE market —
+    the minimal shape ``count_available_events`` counts as available."""
+    return [
+        {
+            "id": f"{prefix}-{i}",
+            "markets": [{
+                "category": "MONEYLINE", "scope": "FULL_GAME",
+                "selections": [{
+                    "id": f"{prefix}-{i}-ml:home",
+                    "type": "HOME",
+                    "decimal_odds": "1.90",
+                }],
+            }],
+        }
+        for i in range(n)
+    ]
+
+
 class PublicCreateGateTests(TestCase):
     def setUp(self):
         self.user = make_user("creator")
@@ -38,27 +63,21 @@ class PublicCreateGateTests(TestCase):
         with patch_catalog([]):
             r = self.client.post(self.url, {"type": "public"})
         self.assertEqual(r.status_code, 400)
-        self.assertIn("No events", r.json()["message"])
+        self.assertIn("Only 0 games", r.json()["message"])
         self.assertEqual(Match.objects.count(), 0)
 
     def test_create_blocked_when_events_lack_markets(self):
+        # An event with no priced market can't host a pick — counts as 0.
         with patch_catalog([{"id": "evt-1", "markets": []}]):
             r = self.client.post(self.url, {"type": "public"})
         self.assertEqual(r.status_code, 400)
-        self.assertIn("markets", r.json()["message"])
+        self.assertIn("Only 0 games", r.json()["message"])
         self.assertEqual(Match.objects.count(), 0)
 
     def test_create_succeeds_when_catalog_has_markets(self):
-        candidate = [{
-            "id": "evt-ok",
-            "markets": [{
-                "category": "MONEYLINE", "scope": "FULL_GAME",
-                "selections": [
-                    {"id": "evt-ok-ml:home", "type": "HOME", "decimal_odds": "1.90"},
-                ],
-            }],
-        }]
-        with patch_catalog(candidate):
+        # Default format is MARATHON → needs 6 distinct priced events
+        # (5 games per player + the shared Golden Game).
+        with patch_catalog(priced_items(6)):
             r = self.client.post(self.url, {"type": "public"})
         self.assertEqual(r.status_code, 200)
         match = Match.objects.get()
@@ -68,14 +87,15 @@ class PublicCreateGateTests(TestCase):
 
 
 class PrivateCreateRollbackTests(TestCase):
-    def test_failed_golden_seed_rolls_back_match_row(self):
+    def test_failed_availability_gate_rolls_back_match_row(self):
         """create_match(p1, p2) with an empty catalog must leave NOTHING —
         previously the Match row leaked in 'created' state and showed up in
-        the public join list."""
+        the public join list. The empty window now trips the fixture-
+        availability gate (FixtureUnavailable) before anything is written."""
         p1 = make_user("p1")
         p2 = make_user("p2")
         with patch_catalog([]):
-            with self.assertRaises(GoldenGameUnavailable):
+            with self.assertRaises(FixtureUnavailable):
                 Match.objects.create_match(player_1=p1, player_2=p2)
         self.assertEqual(Match.objects.count(), 0)
 

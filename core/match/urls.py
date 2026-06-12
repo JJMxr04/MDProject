@@ -25,6 +25,9 @@ urlpatterns = [
     # Either player can hit it; the manager routes owner_outcome vs
     # player_2_outcome based on which side of the match they're on.
     path('game/<uuid:game_id>/pick_locked/', views.pick_on_locked_slot, name='portal-match-game-pick-locked'),
-    path('<uuid:match_id>/tiebreaker', views.upload_tiebreaker_score, name='portal-upload-tiebreaker-score'),
+    # Pre-submit fixture-availability check for the create-match UI (D-5 #2).
+    path('availability/', views.match_availability_view, name='portal-match-availability'),
+    # Rematch: pre-filled same-format invite, roles swapped (Phase 5 §5).
+    path('<uuid:match_id>/rematch/', views.rematch_view, name='portal-match-rematch'),
 
 ]

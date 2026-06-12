@@ -83,15 +83,6 @@ def my_match_detail_view(request, match_id):
     # fresh unjoined query.
     golden_game = games_qs.filter(is_golden=True).first()
 
-    # Tiebreaker guesses lock at Golden Game kickoff — used to hide the
-    # submit button (the POST endpoint enforces the same gate).
-    golden_event = golden_game.event if golden_game else None
-    tiebreaker_locked = bool(
-        golden_event is not None
-        and golden_event.start_time is not None
-        and golden_event.start_time <= timezone.now()
-    )
-
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
@@ -99,7 +90,6 @@ def my_match_detail_view(request, match_id):
         'player_1_games': player_1_games,
         'player_2_games': player_2_games,
         'golden_game': golden_game,
-        'tiebreaker_locked': tiebreaker_locked,
     }
 
     return render(request, 'portal/match/my_match_detail.html', context)
@@ -199,6 +189,7 @@ def pick_on_locked_slot(request, game_id):
             current_user=request.user,
             game_id=game_id,
             selection_id=selection_id,
+            tiebreaker_total=data.get('tiebreaker_score'),
         )
     except PickError as exc:
         return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
@@ -255,54 +246,64 @@ def player_2_select_outcome(request, game_id):
 @require_POST
 @login_required(login_url='/auth/login/')
 @player_in_match_required
-def upload_tiebreaker_score(request, match_id):
-    match = get_object_or_404(Match, id=match_id)
+def rematch_view(request, match_id):
+    """Rematch CTA (Phase 5 §5): two clicks from the completion screen to a
+    pre-filled invite — same format, roles swapped (the clicker becomes the
+    sender), normal accept flow from there.
+    """
+    from core.game.models import Game
+    from core.game.models.game import FixtureUnavailable
+    from core.mail.models import Invite
 
-    if match.match_state == 'completed':
-        return JsonResponse({'status': 'error', 'message': 'Match Completed'}, status=403)
+    match = get_object_or_404(
+        Match.objects.select_related("player_1", "player_2"), id=match_id,
+    )
 
-    # Check if the user is one of the players in the match
-    if (request.user != match.player_1) and (request.user != match.player_2):
-        return JsonResponse({'status': 'error', 'message': 'Unauthorized user'}, status=403)
-
-    if match.tiebreaker is None:
-        return JsonResponse({'status': 'error', 'message': 'No tiebreaker on this match'}, status=400)
-
-    # The tiebreaker is a guess at the Golden Game's final total — once that
-    # event kicks off the guess window is closed (no betting on a game in
-    # progress).
-    golden_game = match.tiebreaker.golden_game
-    golden_event = golden_game.event if golden_game else None
-    if (
-        golden_event is not None
-        and golden_event.start_time is not None
-        and golden_event.start_time <= timezone.now()
-    ):
+    if match.match_state != 'completed':
         return JsonResponse(
-            {
-                'status': 'error',
-                'message': 'The Golden Game has already started; tiebreaker submissions are closed',
-            },
-            status=403,
+            {'status': 'error', 'message': 'You can only rematch a completed match.'},
+            status=400,
+        )
+    if match.player_2 is None:
+        return JsonResponse(
+            {'status': 'error', 'message': 'This match has no opponent to rematch.'},
+            status=400,
         )
 
-    data = json.loads(request.body)
-    tiebreaker_score = data.get('tiebreaker_score')
+    opponent = match.player_2 if request.user == match.player_1 else match.player_1
 
-    # Validate the tiebreaker score
-    if tiebreaker_score is None:
-        return JsonResponse({'status': 'error', 'message': 'Tiebreaker score is required'}, status=400)
+    # The CTA itself is the loop metric (Phase 3 taxonomy) — fire before
+    # the idempotency check so repeat intent still counts.
+    from core.metrics.models import track
+    track(request.user, "rematch_clicked",
+          match_id=str(match.id), format=match.format)
 
+    # One pending challenge per pair — same dedupe as the create view.
+    existing = Invite.objects.filter(
+        sender=request.user, player=opponent, type='match', state='sent',
+    ).first()
+    if existing:
+        return JsonResponse({
+            'status': 'success', 'invite_id': str(existing.id),
+            'message': f'You already have a challenge waiting for {opponent.username}.',
+        })
+
+    # Same-format fixture check (D-5 #2) — tonight's rematch needs a
+    # viable window right now, not when the original match was created.
     try:
-        # Sides are the match players — the golden game itself is ownerless.
-        # owner_total ≡ player_1's guess, player_2_total ≡ player_2's guess.
-        if request.user == match.player_1:
-            TieBreaker.objects.set_owner_total(tiebreaker=match.tiebreaker,total=tiebreaker_score)
-        elif request.user == match.player_2:
-            TieBreaker.objects.set_player_2_total(tiebreaker=match.tiebreaker,total=tiebreaker_score)
-        # Update the match with the tiebreaker score
-        match.save()
-        return JsonResponse({'status': 'success'})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    
+        Game.objects.assert_window_viable(match_format=match.format)
+    except FixtureUnavailable as exc:
+        return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
+
+    invite = Invite.objects.create_invite(
+        obj_id=None,
+        sender=request.user,
+        player=opponent,
+        invite_type='match',
+        payload={'format': match.format, 'rematch_of': str(match.id)},
+    )
+    return JsonResponse({
+        'status': 'success', 'invite_id': str(invite.id),
+        'message': f'Rematch invite sent to {opponent.username}.',
+    })
+

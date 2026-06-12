@@ -24,11 +24,19 @@ def friend_search(request):
         sender=request.user, type='friend', state='sent',
     ).select_related('player').order_by('-invited_date')
 
+    # Tokenless referral variant of the signup invite (plan Phase 4 §3):
+    # signing up through this link creates the friend edge automatically.
+    from django.urls import reverse
+    referral_link = request.build_absolute_uri(
+        reverse('core-auth:register') + f'?ref={request.user.friend_code}'
+    )
+
     context = {
         'user_friend_code': request.user.friend_code,
         'friends': request.user.friends.all().order_by('username'),
         'pending_invites_count': pending_invites_count,
         'outgoing_friend_requests': outgoing_friend_requests,
+        'referral_link': referral_link,
     }
 
     if request.method == 'POST':

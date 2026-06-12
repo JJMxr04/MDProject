@@ -64,3 +64,19 @@ def tournament_cron_bracketMaker(timestamp: int):
 @app.task(name="core.crons.tournament_cron_2_day_reminder", queue="default", retry=CRON_RETRY)
 def tournament_cron_2_day_reminder(timestamp: int):
     tournament2DayReminder.get_tournments_send_player_email()
+
+
+@app.periodic(cron="0 0 * * *")
+@app.task(name="core.crons.expire_invites_cron", queue="default", retry=CRON_RETRY)
+def expire_invites_cron(timestamp: int):
+    """Flip overdue ``sent`` invites to ``expired`` (plan Phase 4 §2).
+
+    The accept path also checks expiry lazily, so this is list-view
+    bookkeeping, not the correctness gate — a missed run can't let a stale
+    invite through.
+    """
+    from core.mail.models import Invite
+
+    flipped = Invite.objects.expire_stale()
+    if flipped:
+        logger.info("expire_invites_cron: flipped %d invites to expired", flipped)

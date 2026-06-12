@@ -11,7 +11,6 @@ const URL_EVENT_OUTCOMES = _cfg.urlEventOutcomes;
 const URL_PLAYER_2_PICK  = _cfg.urlPlayer2Pick;
 const URL_PICK_LOCKED    = _cfg.urlPickLocked;
 const URL_UPLOAD_PICK    = _cfg.urlUploadPick;
-const URL_TIEBREAKER     = _cfg.urlTiebreaker;
 const CSRF_TOKEN         = _cfg.csrf;
 
 /* ── Generic loading helpers (used by tiebreaker) ───────────────────── */
@@ -82,7 +81,7 @@ const PickModal = (function () {
             markets: [], activeCategory: null,
             selectedMarketId: null, selectedSelectionId: null,
             selectedLabel: null, selectedOdds: null,
-            takenSelections: {},
+            takenSelections: {}, opponentSelectionId: null,
             lockedMarketId: null, lockedMarketLabel: null, lockedByUsername: null,
             lockedBySystem: false, isCurrentUserOwner: false, isGolden: false,
         });
@@ -91,6 +90,8 @@ const PickModal = (function () {
         document.getElementById('pickBackBtn').hidden = true;
         document.getElementById('pickSelections').innerHTML =
             '<p class="text-center text-muted p-4">Loading markets…</p>';
+        const gt = document.getElementById('goldenTotalField');
+        if (gt) { gt.hidden = true; document.getElementById('goldenTotalInput').value = ''; }
         updatePreview();
     }
 
@@ -133,6 +134,12 @@ const PickModal = (function () {
                     state.takenSelections[data.player_2_outcome.selection_id] =
                         data.player_2_username || 'opponent';
                 }
+                // Zero-sum Golden Game: track which selection belongs to
+                // the OPPONENT (own re-picks stay allowed).
+                const oppOutcome = data.is_current_user_owner
+                    ? data.player_2_outcome : data.owner_outcome;
+                state.opponentSelectionId =
+                    (oppOutcome && oppOutcome.selection_id) || null;
                 // Lock priority:
                 //   1. ``data.locked_market`` (set by the system on Golden
                 //      Games — present from the moment the match is
@@ -163,6 +170,10 @@ const PickModal = (function () {
                     state.lockedByUsername = lockedByUsername;
                     state.lockedBySystem = !lockedByUsername && !!data.locked_market;
                 }
+                // Golden picks carry a mandatory total-score prediction
+                // (the deep tiebreaker) — surface the input.
+                const gt = document.getElementById('goldenTotalField');
+                if (gt) gt.hidden = !state.lockedBySystem;
                 applyEvent(data.event);
                 loadMarkets(data.event.event_id);
             })
@@ -435,6 +446,14 @@ const PickModal = (function () {
 
         sels.querySelectorAll('.pickselection:not(.is-suspended)').forEach(btn => {
             btn.addEventListener('click', () => {
+                // Zero-sum Golden Game: the opponent's selection is off the
+                // board (server enforces too). Own re-picks stay allowed.
+                if (state.lockedBySystem && state.opponentSelectionId
+                        && btn.dataset.selectionId === state.opponentSelectionId) {
+                    const who = state.takenSelections[btn.dataset.selectionId] || 'Your opponent';
+                    window.toast(`${who} already took that side — the Golden Game is winner-take-all.`, { variant: 'info' });
+                    return;
+                }
                 sels.querySelectorAll('.pickselection').forEach(o => o.classList.remove('is-selected'));
                 btn.classList.add('is-selected');
                 state.selectedMarketId    = btn.dataset.marketId;
@@ -584,10 +603,22 @@ const PickModal = (function () {
             window.toast('Pick a selection first.', { variant: 'info' });
             return;
         }
-        const body = JSON.stringify({
+        const payload = {
             event_id: state.eventId,
             player_choice: state.selectedSelectionId,
-        });
+        };
+        if (state.lockedBySystem) {
+            // Golden pick: the total-score prediction is mandatory (it's
+            // the deep tiebreaker — captured here, never separately).
+            const raw = (document.getElementById('goldenTotalInput').value || '').trim();
+            if (raw === '' || isNaN(Number(raw)) || Number(raw) < 0) {
+                window.toast('Predict the final total score to lock in your Golden Game pick.', { variant: 'info' });
+                document.getElementById('goldenTotalInput').focus();
+                return;
+            }
+            payload.tiebreaker_score = Math.round(Number(raw));
+        }
+        const body = JSON.stringify(payload);
         const headers = { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN };
 
         let url;
@@ -747,9 +778,28 @@ document.addEventListener('DOMContentLoaded', PickModal.init);
 function openUploadPopup()           { PickModal.openForUpload(); }
 function openGamePopupById(gameId)   { PickModal.openForGame(gameId); }
 
-// --- Tiebreaker
-function openTiebreakerPopup()  { document.getElementById('tiebreaker-popup').style.display = 'block'; }
-function closeTiebreakerPopup() { document.getElementById('tiebreaker-popup').style.display = 'none'; }
+/* ── Rematch (Phase 5 §5): same format, roles swapped ─────────────── */
+function sendRematch(el) {
+    el.disabled = true;
+    fetch(el.dataset.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': el.dataset.csrf },
+        body: JSON.stringify({}),
+    })
+    .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+    .then(({ ok, body }) => {
+        if (ok && body.status === 'success') {
+            window.toast(body.message || 'Rematch invite sent.', {variant: 'success'});
+        } else {
+            el.disabled = false;
+            window.toast((body && body.message) || 'Could not send rematch.', {variant: 'danger'});
+        }
+    })
+    .catch(() => {
+        el.disabled = false;
+        window.toast('Network error sending rematch.', {variant: 'danger'});
+    });
+}
 
 /* ── CSP-safe event wiring (delegation) ────────────────────────────────
    Replaces the onclick= attributes the CSP (script-src-attr) blocks. */
@@ -758,8 +808,7 @@ document.addEventListener('click', (e) => {
     if (!el) return;
     switch (el.dataset.action) {
         case 'open-upload':      openUploadPopup(); break;
-        case 'tiebreaker-open':  openTiebreakerPopup(); break;
-        case 'tiebreaker-close': closeTiebreakerPopup(); break;
+        case 'rematch':          sendRematch(el); break;
         case 'open-game':
             // Links inside the card (e.g. "View event details") navigate;
             // replaces the old inline event.stopPropagation().
@@ -776,17 +825,3 @@ document.querySelectorAll('time[data-localize]').forEach(t => {
     if (!isNaN(dt)) t.textContent = dt.toLocaleString();
 });
 
-document.getElementById('tiebreaker-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const total = document.getElementById('tiebreaker-score').value;
-    showLoading();
-    fetch(URL_TIEBREAKER, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
-        body: JSON.stringify({ tiebreaker_score: total }),
-    })
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(() => { hideLoading(); window.toast('Score submitted!', {variant: 'success'}); window.location.reload(); })
-    .catch(err => { hideLoading(); console.error(err); window.toast('Submit failed: ', {variant: 'danger'}); });
-    closeTiebreakerPopup();
-});

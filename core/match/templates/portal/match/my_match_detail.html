@@ -71,60 +71,23 @@
     <!-- Match Information -->
     <div class="game-info">
         <h2>Match Information</h2>
+        <p><strong>Format:</strong> {{ match.format_label }} ({{ match.games_per_player }} games each + Golden Game)</p>
         <p><strong>Start Date:</strong> {{ match.start_date }}</p>
         <p><strong>End Date:</strong> {{ match.end_date }}</p>
         <p><strong>Winner:</strong>
-            {% if match.winner %}{{ match.winner.username }}{% else %}TBD{% endif %}
+            {% if match.winner %}{{ match.winner.username }}{% elif match.match_state == 'completed' %}—{% else %}TBD{% endif %}
         </p>
+        <p class="text-muted small">Regular picks score the match — there are no draws. Tied? The Golden Game decides. Still tied? Boldest winning picks (highest combined odds), then the closest Golden-total prediction.</p>
     </div>
 
-    <hr>
-
-    <!-- Tiebreaker Section -->
-    <div class="tiebreaker-section">
-        <h2>Tiebreaker Information</h2>
-        {% if match.tiebreaker %}
-            <p><strong>Winner:</strong>
-                {% if match.tiebreaker.winner %}{{ match.tiebreaker.winner.username }}{% else %}TBD{% endif %}
-            </p>
-            {% with gg=golden_game %}
-                {% if gg and gg.event %}
-                    <p><strong>Golden Game:</strong>
-                        {{ gg.event.home_team.name|default:"TBD" }}
-                        Vs.
-                        {{ gg.event.away_team.name|default:"TBD" }}
-                    </p>
-                {% endif %}
-                <p><strong>Total:</strong> {{ match.tiebreaker.total }}</p>
-                {# Golden game is ownerless — tiebreaker sides are the match players. #}
-                <p><strong>{{ match.player_1.username }}'s Total:</strong> {{ match.tiebreaker.owner_total }}</p>
-                <p><strong>{{ match.player_2.username }}'s Total:</strong> {{ match.tiebreaker.player_2_total }}</p>
-            {% endwith %}
-        {% else %}
-            <p>No tiebreaker information available.</p>
-        {% endif %}
-
-        {% if match.match_state != 'completed' %}
-            {% if tiebreaker_locked %}
-                <p class="text-muted">Tiebreaker submissions are closed — the Golden Game has started.</p>
-            {% else %}
-                <button id="tiebreaker-button" data-action="tiebreaker-open">Submit Your Tiebreaker Score</button>
-            {% endif %}
-        {% endif %}
-    </div>
-
-    <!-- Tiebreaker Popup -->
-    <div id="tiebreaker-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" data-action="tiebreaker-close">&times;</span>
-            <h2>Tiebreaker Submission</h2>
-            <form id="tiebreaker-form">
-                <label for="tiebreaker-score">Enter your tiebreaker score:</label>
-                <input type="number" id="tiebreaker-score" name="tiebreaker-score" required>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
+    {% if is_player_in_match and match.match_state == 'completed' and match.player_2 %}
+        <button class="upload-button" id="rematch-button"
+                data-action="rematch"
+                data-url="{% url 'core-portal:portal-match-rematch' match.id %}"
+                data-csrf="{{ csrf_token }}">
+            Rematch ({{ match.format_label }})
+        </button>
+    {% endif %}
 
     <hr>
 
@@ -222,6 +185,12 @@
           <span class="text-muted me-2">Selected:</span>
           <span id="pickPreview"><em class="text-muted">none</em></span>
         </div>
+        <div id="goldenTotalField" class="pickmodal-golden-total" hidden>
+          <label for="goldenTotalInput">Predict the final total score</label>
+          <input type="number" min="0" step="1" id="goldenTotalInput"
+                 placeholder="e.g. 3" autocomplete="off">
+          <span class="text-muted small">Required — breaks ties if the match ends level.</span>
+        </div>
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" id="pickSubmitBtn" disabled>Submit pick</button>
       </div>
@@ -230,7 +199,14 @@
 </div>
 
 <style>
-    /* Loading overlay (still used by tiebreaker submit). */
+    .pickmodal-golden-total {
+        display: flex; flex-direction: column; gap: .15rem;
+        margin-right: auto; padding: .25rem .5rem;
+    }
+    .pickmodal-golden-total label { font-weight: 600; font-size: .85rem; margin: 0; }
+    .pickmodal-golden-total input { max-width: 120px; padding: .3rem .5rem; }
+
+    /* Loading overlay. */
     #loading-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-color: rgba(0,0,0,0.5);
@@ -549,7 +525,6 @@
      data-url-player2-pick="{% url 'core-portal:portal-match-game-player_2_select_outcome' '00000000-0000-0000-0000-000000000000' %}"
      data-url-pick-locked="{% url 'core-portal:portal-match-game-pick-locked' '00000000-0000-0000-0000-000000000000' %}"
      data-url-upload-pick="{% url 'core-portal:portal-upload_pick' match.id %}"
-     data-url-tiebreaker="{% url 'core-portal:portal-upload-tiebreaker-score' match.id %}"
      data-csrf="{{ csrf_token }}"></div>
 <script src="{% static 'js/pages/my_match_detail.js' %}"></script>
 {% endblock content %}

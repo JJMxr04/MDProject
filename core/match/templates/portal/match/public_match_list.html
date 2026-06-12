@@ -66,9 +66,25 @@
             <button type="button" class="modal-ui__close" data-modal-close aria-label="Close">&times;</button>
         </header>
         <div class="modal-ui__body">
-            <p class="text-muted">Pick how you want to play. Both modes create 12 game slots over 7 days, including 1 Golden Game worth 2 points.</p>
+            <p class="text-muted">Pick a format and how you want to play. Every match includes a Golden Game — the tiebreaker if regular picks end level.</p>
 
-            
+
+            <div class="cm-format" role="radiogroup" aria-label="Match format"
+                 data-availability-url="{% url 'core-portal:portal-match-availability' %}">
+                {% for fmt in match_formats %}
+                <label class="cm-format__option">
+                    <input type="radio" name="cm_format" value="{{ fmt.key }}"
+                           {% if fmt.key == default_format %}checked{% endif %}>
+                    <span class="cm-format__body">
+                        <span class="cm-format__label">{{ fmt.label }}</span>
+                        <span class="cm-format__hint">{{ fmt.games }} games each + Golden · {{ fmt.days }} day{{ fmt.days|pluralize }}</span>
+                    </span>
+                </label>
+                {% endfor %}
+            </div>
+            <p class="text-muted small" id="cmAvailability" aria-live="polite"></p>
+
+
             <div class="cm-mode" role="tablist" aria-label="Match type">
                 <button type="button" class="cm-mode__option is-active" data-mode="public" role="tab" aria-selected="true">
                     <i class="bi bi-globe2" aria-hidden="true"></i>
@@ -129,6 +145,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="type" id="cmType" value="public">
                 <input type="hidden" name="player" id="cmPlayer" value="">
+                <input type="hidden" name="format" id="cmFormat" value="{{ default_format }}">
             </form>
         </div>
         <footer class="modal-ui__footer">
@@ -142,6 +159,28 @@
 {% block css %}
 <style>
     .cm-modal { max-width: 560px; }
+    .cm-format {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;
+        margin: var(--space-3) 0 .35rem;
+    }
+    .cm-format__option { cursor: pointer; }
+    .cm-format__option input[type=radio] { display: none; }
+    .cm-format__body {
+        display: flex; flex-direction: column; gap: .15rem;
+        padding: .7rem .8rem; text-align: left;
+        background: var(--surface-card, #fff);
+        border: 1px solid var(--border-default, #e5e7eb);
+        border-radius: var(--radius-md, 8px);
+        transition: border-color .12s, background .12s, box-shadow .12s;
+    }
+    .cm-format__option:hover .cm-format__body { border-color: var(--brand-blue-dark, #275d81); }
+    .cm-format__option input:checked + .cm-format__body {
+        border-color: var(--brand-blue, #3D7EAA); background: rgba(61, 126, 170, .08);
+        box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA);
+    }
+    .cm-format__label { font-weight: var(--weight-semibold); }
+    .cm-format__hint { font-size: .75rem; color: var(--text-secondary); }
+    .text-danger { color: #b91c1c; }
     .cm-mode {
         display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
         margin: var(--space-3) 0;

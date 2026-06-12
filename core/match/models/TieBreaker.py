@@ -1,13 +1,19 @@
+"""Golden-total prediction storage (tie-cascade step 4).
+
+Each player's prediction of the Golden Game's final combined score is
+captured WITH their golden pick (``Game.objects.pick_on_locked_slot``) —
+there is no separate submission window. ``NULL`` means "never picked the
+golden", which the cascade treats as losing the prediction step.
+
+The old chance-based winner methods (closest-total → random fallback) are
+gone: matches never end in a draw and never use randomness — see
+``MatchManager._resolve_winner`` for the full deterministic cascade.
+"""
+
 import uuid
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
-from datetime import datetime, timedelta
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
-from django.utils import timezone
-import random
 from core.user.models import User
-from core.event.models import Event
 from core.game.models import Game
 
 class TieBreakerManager(AbstractManager):
@@ -27,41 +33,6 @@ class TieBreakerManager(AbstractManager):
         tiebreaker.total = event.home_score + event.away_score
         tiebreaker.save(update_fields=["total"])
         return tiebreaker.total
-    
-    def calculate_winner(self, tiebreaker):
-        # The Golden Game is ownerless — the two tiebreaker sides are the
-        # match players (owner_total ≡ player_1, player_2_total ≡ player_2).
-        match = tiebreaker.golden_game.match
-        player_1, player_2 = match.player_1, match.player_2
-
-        total = self.calculate_event_total(tiebreaker=tiebreaker)
-        if total is None:
-            return self.calculate_winner_random(tiebreaker, player_1, player_2)
-        owner_dif = abs(tiebreaker.owner_total - total)
-        player_2_dif = abs(tiebreaker.player_2_total - total)
-
-        if owner_dif < player_2_dif:
-            tiebreaker.winner = player_1
-            tiebreaker.save()
-            return tiebreaker.winner
-        elif player_2_dif < owner_dif:
-            tiebreaker.winner = player_2
-            tiebreaker.save()
-            return tiebreaker.winner
-        else:
-            return self.calculate_winner_random(tiebreaker, player_1, player_2)
-
-
-
-
-    def calculate_winner_random(self,tiebreaker,player_1,player_2):
-        lucky_num =random.randint(1, 2)
-        if lucky_num == 1:
-            tiebreaker.winner = player_1
-        if lucky_num == 2:
-            tiebreaker.winner = player_2
-        tiebreaker.save()
-        return tiebreaker.winner
 
 
 class TieBreaker(AbstractModel):
@@ -69,11 +40,15 @@ class TieBreaker(AbstractModel):
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='winner_tiebreaker', null=True, default=None)
     golden_game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='tiebreaker_golden_game', blank=False, null=True,
                                     default=None)
-    
-    total = models.IntegerField(default=0)
-    owner_total=models.IntegerField(default=0)
-    player_2_total=models.IntegerField(default=0)
-    
+
+    # Actual combined final score of the golden event (cached by
+    # ``calculate_event_total``); NULL until the event finalizes.
+    total = models.IntegerField(null=True, blank=True, default=None)
+    # Per-player predictions. NULL = that side never picked the golden
+    # (predictions are mandatory at golden-pick time, so pick ⇔ prediction).
+    owner_total = models.IntegerField(null=True, blank=True, default=None)
+    player_2_total = models.IntegerField(null=True, blank=True, default=None)
+
     objects = TieBreakerManager()
 
     class meta:

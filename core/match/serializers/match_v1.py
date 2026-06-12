@@ -27,6 +27,7 @@ class MatchV1Serializer(serializers.ModelSerializer):
             "winner",
             "match_state",
             "match_type",
+            "format",
             "start_date",
             "end_date",
             "player_1_score",

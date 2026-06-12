@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 import json
 
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_object_or_404
 
 from core.mail.forms import InviteForm, MatchInviteForm
@@ -42,6 +42,13 @@ def public_match_list_view(request):
     # a specific friend" without making the user navigate to /friends first.
     friends = list(request.user.friends.all().order_by('username'))
 
+    from core.match import formats
+    match_formats = [
+        {'key': key, 'label': cfg['label'], 'days': cfg['days'],
+         'games': cfg['games_per_player']}
+        for key, cfg in formats.MATCH_FORMATS.items()
+    ]
+
     context = {
         'matches': matches_page,
         'search_query': search_query,
@@ -49,6 +56,8 @@ def public_match_list_view(request):
         'current_page': int(page),
         'form': form,
         'friends': friends,
+        'match_formats': match_formats,
+        'default_format': formats.DEFAULT_FORMAT,
     }
 
     return render(request, 'portal/match/public_match_list.html', context)
@@ -58,7 +67,9 @@ def public_match_list_view(request):
 # (plan §7.5 item 3). Runs after login_required so it keys on the user.
 @rate_limit("create-match", 30, 3600, per="user")
 def create_public_match_view(request):
-    from core.game.models.game import GoldenGameUnavailable
+    from core.game.models import Game
+    from core.game.models.game import FixtureUnavailable, GoldenGameUnavailable
+    from core.match import formats
 
     if request.method == 'POST':
         form = MatchInviteForm(request.POST)
@@ -66,18 +77,21 @@ def create_public_match_view(request):
 
         match_type = request.POST.get('type')  # Accessing cleaned data from form
         player = request.POST.get('player')  # Optional field, may be None
+        # Format preset (D-5 #4): fixed here, displayed on the invite,
+        # accept = consent. Unknown values normalize to the default.
+        match_format = formats.normalize_format(request.POST.get('format'))
         owner = request.user
 
         if match_type == 'public':
-            # Create a public match via the manager — it gates on the events
-            # catalog (no events with markets → no match) and stamps
-            # start/end dates.
+            # Create a public match via the manager — it gates on fixture
+            # availability + the events catalog (no events with markets →
+            # no match) and stamps start/end dates from the format window.
             try:
-                new_match = Match.objects.create_match(owner)
-            except GoldenGameUnavailable as exc:
+                new_match = Match.objects.create_match(owner, match_format=match_format)
+            except (GoldenGameUnavailable, FixtureUnavailable) as exc:
                 return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
             return JsonResponse({'status': 'success', 'match_id': new_match.id})
-        
+
         elif match_type == 'private':
             # Ensure the player is provided for private matches
             if not player:
@@ -104,18 +118,55 @@ def create_public_match_view(request):
             if existing:
                 return JsonResponse({'status': 'success', 'invite_id': existing.id})
 
-            # Create the invite
+            # Fixture-availability check at creation (D-5 #2) — a Blitz
+            # invite into an empty midweek window is rejected here with a
+            # useful message instead of failing at accept time.
+            try:
+                Game.objects.assert_window_viable(match_format=match_format)
+            except FixtureUnavailable as exc:
+                return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
+
+            # Create the invite — the format rides on the payload and the
+            # accept path threads it into create_match (Phase 5 §2).
             invite = Invite.objects.create_invite(
                 obj_id=None,
                 sender=owner,
                 player=player_2,  # Add the invited player
-                invite_type='match'
+                invite_type='match',
+                payload={'format': match_format},
             )
 
             return JsonResponse({'status': 'success', 'invite_id': invite.id})
-        
+
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid match type'}, status=400)
+
+
+@require_GET
+@login_required(login_url='/auth/login/')
+def match_availability_view(request):
+    """Pre-submit availability check for the create-match UI (D-5 #2):
+    "N games available in this window" before the user commits."""
+    from core.game.models import Game
+    from core.game.models.game import FixtureUnavailable
+    from core.match import formats
+    from django.utils import timezone
+
+    match_format = formats.normalize_format(request.GET.get('format'))
+    needed = formats.min_distinct_events(match_format)
+    try:
+        available = Game.objects.count_available_events(
+            window_end=timezone.now() + formats.format_window(match_format),
+        )
+    except FixtureUnavailable as exc:
+        return JsonResponse({'status': 'error', 'message': str(exc)}, status=503)
+    return JsonResponse({
+        'status': 'success',
+        'format': match_format,
+        'available': available,
+        'needed': needed,
+        'viable': available >= needed,
+    })
     
 
 

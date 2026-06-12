@@ -17,6 +17,7 @@ STATE_MAP = {
     # Invite
     "sent":       {"variant": "muted",   "label": "Invite sent"},
     "expired":    {"variant": "warning", "label": "Expired"},
+    "canceled":   {"variant": "muted",   "label": "Canceled"},
 }
 
 

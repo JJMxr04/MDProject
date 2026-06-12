@@ -8,29 +8,37 @@ from core.abstract.models import AbstractManager, AbstractModel
 from core.game.models import Game, PickError
 from core.game.models.game import GoldenGameUnavailable
 from core.mail.models import Emails
+from core.match import formats
 from core.match.models.TieBreaker import TieBreaker
-from core.match.scoring import score_match
+from core.match.scoring import golden_winner_side, score_match, winning_odds_totals
 from core.user.models import User
 
 
-REGULAR_GAMES_PER_PLAYER = 5
-
-
 class MatchManager(AbstractManager):
-    def create_match(self, player_1, player_2=None, start_date=None, match_type="public"):
-        """Create a match, raising ``GoldenGameUnavailable`` when the events
-        catalog has nothing a Golden Game could seed against — a match with
-        no pickable events/markets is dead on arrival, so don't create it.
+    def create_match(self, player_1, player_2=None, start_date=None,
+                     match_type="public", match_format=None):
+        """Create a match in the given format (BLITZ/CLASSIC/MARATHON —
+        D-5 #4: fixed at creation, no renegotiation).
 
-        Public (``player_2=None``): pre-create gate via
-        ``find_golden_candidate`` — nothing is written when it raises.
-        Private: the whole create+accept runs in one transaction, so the
-        same raise from ``accept_match`` rolls the Match row back too
+        Raises ``FixtureUnavailable`` when the format's window holds fewer
+        distinct pickable events than the format needs (D-5 #2), and
+        ``GoldenGameUnavailable`` when the Golden Game can't seed — either
+        way nothing is written.
+
+        Public (``player_2=None``): pre-create gates only.
+        Private: the whole create+accept runs in one transaction, so a
+        raise from ``accept_match`` rolls the Match row back too
         (previously it leaked a stray ``created`` match).
         """
+        match_format = formats.normalize_format(match_format)
         start_date = timezone.now()
-        end_date = start_date + timedelta(weeks=1)
+        end_date = start_date + formats.format_window(match_format)
         from core.metrics.models import track
+
+        # Fixture-availability gate (D-5 #2) — applies to both branches.
+        Game.objects.assert_window_viable(
+            match_format=match_format, window_end=end_date,
+        )
 
         if player_2 is None:
             Game.objects.find_golden_candidate(window_end=end_date)
@@ -40,8 +48,10 @@ class MatchManager(AbstractManager):
                 start_date=start_date,
                 end_date=end_date,
                 match_type="public",
+                format=match_format,
             )
-            track(player_1, "match_created", match_id=str(match.id), match_type="public")
+            track(player_1, "match_created", match_id=str(match.id),
+                  match_type="public", format=match_format)
             return match
         with transaction.atomic():
             match = self.create(
@@ -50,8 +60,10 @@ class MatchManager(AbstractManager):
                 start_date=start_date,
                 end_date=end_date,
                 match_type="private",
+                format=match_format,
             )
-            track(player_1, "match_created", match_id=str(match.id), match_type="private")
+            track(player_1, "match_created", match_id=str(match.id),
+                  match_type="private", format=match_format)
             return self.accept_match(match, player_2)
 
     @transaction.atomic
@@ -72,9 +84,11 @@ class MatchManager(AbstractManager):
             return None
         match.match_state = "accepted"
         match.player_2 = player_2
-        match.end_date = timezone.now() + timedelta(days=7)
+        # The window restarts at accept — its length comes from the format
+        # fixed at creation (D-5 #4).
+        match.end_date = timezone.now() + formats.format_window(match.format)
 
-        for slot in range(1, REGULAR_GAMES_PER_PLAYER + 1):
+        for slot in range(1, match.games_per_player + 1):
             Game.objects.create_game(
                 match=match, owner=match.player_1, player_2=match.player_2, slot=slot
             )
@@ -132,27 +146,36 @@ class MatchManager(AbstractManager):
             self.calculate_winner(locked)
 
     def calculate_winner(self, match):
-        p1_score, p2_score, _ = score_match(match)
-        if p1_score > p2_score:
-            match.winner = match.player_1
-        elif p2_score > p1_score:
-            match.winner = match.player_2
-        else:
-            match.winner = TieBreaker.objects.calculate_winner(match.tiebreaker)
+        """Finalize the match — matches NEVER end in a draw (real-money
+        constraint; only Duels may draw, for postponed events).
+
+        Deterministic tie cascade, every step skill-based and auditable:
+          1. Regular-pick points.
+          2. Golden Game pick (zero-sum picks, so at most one side hits).
+          3. Sum of decimal odds across winning picks — bolder correct
+             picks beat safe ones.
+          4. Golden-total prediction (captured WITH the golden pick):
+             closest to the actual total; equidistant → under beats over;
+             only one side predicted → they win.
+          5. Last resort (neither side ever picked the golden): the
+             accepter (player_2) wins — known upfront, the match creator
+             can never farm a dead heat.
+        """
+        match.winner = self._resolve_winner(match)
         match.match_state = "completed"
         match.save(update_fields=["winner", "match_state"])
 
         # dedupe_key guards the email layer independently of the row lock
         # above — a queued result email for this (match, recipient) makes
         # any duplicate defer a no-op.
-        if match.winner == match.player_1:
+        if match.winner == match.player_1 and match.player_2 is not None:
             Emails.send_match_victory_notification(
                 match.player_1, match.player_2.username, match_id=match.id,
             )
             Emails.send_match_lost_notification(
                 match.player_2, match.player_1.username, match_id=match.id,
             )
-        elif match.winner == match.player_2:
+        elif match.winner == match.player_2 and match.player_2 is not None:
             Emails.send_match_victory_notification(
                 match.player_2, match.player_1.username, match_id=match.id,
             )
@@ -167,7 +190,63 @@ class MatchManager(AbstractManager):
             winner_id=str(match.winner_id) if match.winner_id else None,
             player_1_id=str(match.player_1_id),
             player_2_id=str(match.player_2_id) if match.player_2_id else None,
+            format=match.format,
         )
+
+    def _resolve_winner(self, match):
+        """The no-draw cascade (see ``calculate_winner``). Returns a User —
+        ``None`` only for the degenerate case of a never-accepted match
+        (no player_2) whose window expired."""
+        if match.player_2 is None:
+            return None
+
+        # 1. Regular points.
+        p1_score, p2_score, _ = score_match(match)
+        if p1_score > p2_score:
+            return match.player_1
+        if p2_score > p1_score:
+            return match.player_2
+
+        # 2. Golden pick.
+        side = golden_winner_side(match)
+        if side == 1:
+            return match.player_1
+        if side == 2:
+            return match.player_2
+
+        # 3. Boldness: sum of decimal odds across winning picks.
+        p1_odds, p2_odds = winning_odds_totals(match)
+        if p1_odds > p2_odds:
+            return match.player_1
+        if p2_odds > p1_odds:
+            return match.player_2
+
+        # 4. Golden-total prediction (stored on the TieBreaker row at
+        # golden-pick time; NULL = that side never picked the golden).
+        tb = match.tiebreaker
+        if tb is not None:
+            p1_guess, p2_guess = tb.owner_total, tb.player_2_total
+            if p1_guess is not None and p2_guess is None:
+                return match.player_1
+            if p2_guess is not None and p1_guess is None:
+                return match.player_2
+            if p1_guess is not None and p2_guess is not None and p1_guess != p2_guess:
+                actual = TieBreaker.objects.calculate_event_total(tb)
+                if actual is not None:
+                    d1, d2 = abs(p1_guess - actual), abs(p2_guess - actual)
+                    if d1 < d2:
+                        return match.player_1
+                    if d2 < d1:
+                        return match.player_2
+                    # Equidistant with different guesses → exactly one is
+                    # under. Under beats over (price-is-right convention).
+                    return match.player_1 if p1_guess < p2_guess else match.player_2
+                # Event total unknowable (postponed/canceled golden event):
+                # predictions can't be judged — fall through.
+
+        # 5. Dead heat: the accepter wins. Deterministic, known upfront,
+        # and the match creator can never farm a tie.
+        return match.player_2
 
 
 class Match(AbstractModel):
@@ -193,6 +272,15 @@ class Match(AbstractModel):
 
     match_state = models.CharField(max_length=10, default="created")
     match_type = models.CharField(max_length=10, default="public")
+
+    # Format preset fixed at creation (D-5 #4) — window length and game
+    # count derive from it (core.match.formats). Pre-format matches were
+    # all the 5-games/7-day shape, i.e. exactly MARATHON.
+    format = models.CharField(
+        max_length=10,
+        choices=formats.FORMAT_CHOICES,
+        default=formats.DEFAULT_FORMAT,
+    )
 
     tiebreaker = models.ForeignKey(
         TieBreaker,
@@ -225,6 +313,18 @@ class Match(AbstractModel):
     @property
     def fully_decided(self):
         return score_match(self)[2]
+
+    @property
+    def games_per_player(self):
+        return formats.games_per_player(self.format)
+
+    @property
+    def format_label(self):
+        return formats.format_label(self.format)
+
+    @property
+    def window(self):
+        return formats.format_window(self.format)
 
     @property
     def golden_game(self):
