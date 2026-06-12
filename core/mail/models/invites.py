@@ -47,6 +47,8 @@ class InviteManager(AbstractManager):
                 # the invite still records, user sees it in /portal/mail/invites.
                 pass
 
+        from core.metrics.models import track
+        track(sender, "invite_sent", invite_type=invite_type, invite_id=str(invite.pk))
         return invite
 
 
@@ -123,6 +125,9 @@ class InviteManager(AbstractManager):
             # M2M rows are written.
             invite.sender.add_friend(invite.player)
             invite.player.add_friend(invite.sender)
+
+        from core.metrics.models import track
+        track(invite.player, "invite_accepted", invite_type=invite.type, invite_id=str(invite.pk))
         invite.delete()
         return True
 

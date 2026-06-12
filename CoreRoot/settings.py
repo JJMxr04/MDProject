@@ -144,6 +144,7 @@ INSTALLED_APPS = [
     'core.web',
     'core.portal',
     'core.billing',
+    'core.metrics',  # In-house product analytics (roadmap Phase 3) — ProductEvent + track()
     'core.api',  # Portal JSON API (v1) — secure islands surface (plan js-portal-security)
 
     # Custom admin app configuration
@@ -904,6 +905,21 @@ else:
 # the checkout CTA. Stripe catalog, existing PRO subs, and webhooks are
 # untouched — flipping back to "0" restores the normal gate.
 ANALYTICS_FREE_FOR_ALL = os.environ.get("ANALYTICS_FREE_FOR_ALL", "0") == "1"
+
+# --- Fake paywall (roadmap Phase 3 §4, decision D-3) -----------------------
+# Only meaningful while ANALYTICS_FREE_FOR_ALL is on: FREE users see a
+# paywall interstitial (once per session) before being let through anyway.
+# Impressions/clicks land in core_metrics.ProductEvent — the click-through
+# rate is the willingness-to-pay signal that prices PRO (decision D-10).
+FAKE_PAYWALL_ENABLED = os.environ.get("FAKE_PAYWALL_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+# Display-only price on the interstitial (D-3 recommends $7–10/mo). The
+# real Stripe price stays on the Plan row; this is what testers SEE.
+PAYWALL_DISPLAY_PRICE = os.environ.get("PAYWALL_DISPLAY_PRICE", "$9/mo")
+
+# Pick-email coalescing window (plan §7.1 #5): the first pick in a match
+# queues a summary email this many seconds out; further picks inside the
+# window are absorbed into that one send.
+PICK_EMAIL_DEBOUNCE_SECONDS = int(os.environ.get("PICK_EMAIL_DEBOUNCE_SECONDS", "180"))
 
 # Fail fast in production if aggregator is enabled but the webhook secret
 # is missing — without it, inbound deliveries get rejected for signature

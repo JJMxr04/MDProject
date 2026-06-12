@@ -114,7 +114,7 @@ class UserAdmin(BaseUserAdmin):
     ordering = ['-created']
 
     fieldsets = (
-        (None, {'fields': ['username', 'password']}),
+        (None, {'fields': ['username', 'password_reset_link']}),
         ('Personal Information', {'fields': ['email', 'first_name', 'last_name', 'bio']}),
         ('Subscription & Integration', {
             'fields': [
@@ -136,8 +136,20 @@ class UserAdmin(BaseUserAdmin):
         'created', 'updated', 'is_superuser', 'is_active', 'last_login',
         'subscription_tier', 'subscription_status', 'trial_end_display',
         'stripe_customer_display', 'aggrigator_external_id_display',
-        'aggrigator_api_key_display',
+        'aggrigator_api_key_display', 'password_reset_link',
     ]
+
+    @admin.display(description='Password')
+    def password_reset_link(self, obj):
+        """No hash display — same shoulder-surfing rationale as the masked
+        IDs above; the algorithm/salt summary had no ops value. Reset stays:
+        BaseUserAdmin keeps the change-password form mounted at
+        ``<id>/password/`` (named ``auth_user_password_change`` even on
+        custom user models)."""
+        if obj is None or not obj.pk:
+            return '—'
+        url = reverse('admin:auth_user_password_change', args=[obj.pk])
+        return format_html('<a class="button" href="{}">Reset password</a>', url)
 
     # ---- Stripe customer actions (Reconnect / Create new) ----
 

@@ -119,6 +119,9 @@ def _handle_checkout_completed(session: dict) -> None:
         User.objects.filter(pk=user.pk).update(stripe_customer_id=cust_id)
         user.stripe_customer_id = cust_id
 
+    from core.metrics.models import track
+    track(user, "checkout_completed", session_id=session.get("id", ""))
+
 
 def _handle_subscription_event(sub_obj: dict) -> None:
     """customer.subscription.{created,updated,deleted} — single handler.

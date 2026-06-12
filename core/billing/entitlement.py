@@ -39,6 +39,25 @@ def user_can_access_analytics(user) -> bool:
     return sub.is_entitled_to_analytics
 
 
+def user_entitled_ignoring_killswitch(user) -> bool:
+    """The entitlement check WITHOUT the ``ANALYTICS_FREE_FOR_ALL`` grant.
+
+    Used by the fake-paywall interstitial (roadmap Phase 3 §4) to find the
+    users who are only getting in because of the kill-switch — they're the
+    ones who should see the wall; real PRO subscribers never do.
+
+    Can't delegate to ``Subscription.is_entitled_to_analytics``: that
+    property short-circuits True on the kill-switch itself, which is the
+    exact branch this helper must ignore. Mirror its plan/status logic.
+    """
+    sub = _safe_subscription(user)
+    if sub is None:
+        return False
+    if sub.plan.features.get("analytics") is not True:
+        return False
+    return sub.status in ("trialing", "active", "past_due")
+
+
 def _safe_subscription(user):
     """Return ``user.subscription`` or None — catches the ``DoesNotExist``
     that the OneToOneField descriptor raises when no row exists.

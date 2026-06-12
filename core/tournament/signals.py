@@ -23,6 +23,12 @@ def update_round_match(sender, instance, **kwargs):
     round = Round.objects.get_round_by_match(match=match)
     if not round:
         return
+    # Transition guard: this receiver fires on EVERY save of a completed
+    # Match (admin edits, end_date bumps, …), but the bracket advance +
+    # victory email must run exactly once — on the save that completed it.
+    # The round flips to completed on that first pass; bail on re-saves.
+    if round.completed:
+        return
 
     round.completed = True
 

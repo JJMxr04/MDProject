@@ -21,9 +21,13 @@ def upgrade_page(request):
 
     When ``ANALYTICS_FREE_FOR_ALL`` is on there's nothing to upgrade to,
     so we bounce to the billing landing page (which shows the free-mode
-    banner instead).
+    banner instead) — unless the fake paywall is running, in which case
+    this page must keep rendering (it's the Stripe cancel_url and the
+    checkout error target during the paywall experiment).
     """
-    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False):
+    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False) and not getattr(
+        settings, "FAKE_PAYWALL_ENABLED", False
+    ):
         return redirect("core-portal:billing-index")
     pro = Plan.objects.filter(code="PRO", is_active=True).first()
     sub = getattr(request.user, "subscription", None)

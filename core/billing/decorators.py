@@ -27,10 +27,17 @@ from __future__ import annotations
 import logging
 from functools import wraps
 
+from urllib.parse import urlencode
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.urls import reverse
 
-from core.billing.entitlement import user_can_access_analytics
+from core.billing.entitlement import (
+    user_can_access_analytics,
+    user_entitled_ignoring_killswitch,
+)
 from core.billing.services import aggrigator_internal
 from core.user.models import User
 
@@ -46,6 +53,25 @@ def require_paid(view_func):
 
         if not user_can_access_analytics(user):
             return redirect("core-portal:billing-upgrade")
+
+        # Fake paywall (roadmap Phase 3 §4): while the free-for-all
+        # kill-switch is granting access, show non-entitled users the
+        # interstitial once per session before letting them through.
+        # Import here, not at module top — paywall.py imports billing
+        # models and this module loads early.
+        if (
+            getattr(settings, "FAKE_PAYWALL_ENABLED", False)
+            and getattr(settings, "ANALYTICS_FREE_FOR_ALL", False)
+        ):
+            from core.billing.views.paywall import PAYWALL_ACK_SESSION_KEY
+            if (
+                not request.session.get(PAYWALL_ACK_SESSION_KEY)
+                and not user_entitled_ignoring_killswitch(user)
+            ):
+                return redirect(
+                    reverse("core-portal:billing-paywall")
+                    + "?" + urlencode({"next": request.get_full_path()})
+                )
 
         # Defensive tenant-user mirror (no key — see module docstring).
         # ``aggrigator_external_id`` doubles as the "already mirrored"

@@ -8,7 +8,6 @@ from django.utils import timezone
 from core.abstract.models import AbstractManager, AbstractModel
 from core.event.models import Event, Market, Selection
 from core.game.models.bet import Bet
-from core.mail.models import Emails
 from core.match.scoring import DEADLINE_BUFFER
 from core.user.models import User
 
@@ -159,7 +158,14 @@ class GameManager(AbstractManager):
         empty_slot.save(update_fields=["event"])
         Bet.objects.set_owner_outcome(empty_slot.bet, selection)
 
-        Emails.send_opponent_pick_notification(empty_slot.player_2, current_user.username)
+        # Debounced summary instead of one email per pick (plan §7.1 #5) —
+        # filling 5 slots in a sitting produces one "made N picks" email.
+        from core.game.tasks import schedule_pick_summary
+        schedule_pick_summary(
+            match=match, picker=current_user, recipient=empty_slot.player_2,
+        )
+        from core.metrics.models import track
+        track(current_user, "pick_made", match_id=str(match.pk), golden=False)
         return empty_slot
 
     def _apply_opponent_pick(self, game, selection: Selection, now):
@@ -172,7 +178,12 @@ class GameManager(AbstractManager):
         if game.bet.owner_outcome is None:
             raise PickError("Owner has not picked yet on this slot")
         Bet.objects.set_player_2_outcome(game.bet, selection)
-        Emails.send_opponent_pick_notification(game.owner, game.player_2.username)
+        from core.game.tasks import schedule_pick_summary
+        schedule_pick_summary(
+            match=game.match, picker=game.player_2, recipient=game.owner,
+        )
+        from core.metrics.models import track
+        track(game.player_2, "pick_made", match_id=str(game.match_id), golden=False)
         return game
 
     @transaction.atomic
@@ -230,6 +241,8 @@ class GameManager(AbstractManager):
             Bet.objects.set_owner_outcome(bet, selection)
         else:
             Bet.objects.set_player_2_outcome(bet, selection)
+        from core.metrics.models import track
+        track(current_user, "pick_made", match_id=str(match.pk), golden=True)
         return game
 
     def find_golden_candidate(self, *, window_start=None, window_end=None):

@@ -30,15 +30,19 @@ class MatchManager(AbstractManager):
         """
         start_date = timezone.now()
         end_date = start_date + timedelta(weeks=1)
+        from core.metrics.models import track
+
         if player_2 is None:
             Game.objects.find_golden_candidate(window_end=end_date)
-            return self.create(
+            match = self.create(
                 player_1=player_1,
                 player_2=player_2,
                 start_date=start_date,
                 end_date=end_date,
                 match_type="public",
             )
+            track(player_1, "match_created", match_id=str(match.id), match_type="public")
+            return match
         with transaction.atomic():
             match = self.create(
                 player_1=player_1,
@@ -47,6 +51,7 @@ class MatchManager(AbstractManager):
                 end_date=end_date,
                 match_type="private",
             )
+            track(player_1, "match_created", match_id=str(match.id), match_type="private")
             return self.accept_match(match, player_2)
 
     @transaction.atomic
@@ -82,6 +87,9 @@ class MatchManager(AbstractManager):
         golden_game = Game.objects.get_golden_game(match)
         match.tiebreaker = TieBreaker.objects.create(golden_game=golden_game)
         match.save()
+
+        from core.metrics.models import track
+        track(player_2, "match_accepted", match_id=str(match.id))
         return match
 
     def upload_pick(self, player, match, data):
@@ -102,14 +110,26 @@ class MatchManager(AbstractManager):
     def maybe_complete_match(self, match):
         """If the match is decided (every slot scored or window closed),
         finalize it. Idempotent — re-entry on already-completed matches is a
-        no-op."""
+        no-op.
+
+        Settlement webhooks can deliver concurrently (and the cron can race
+        a webhook), so finalization runs under a row lock with a state
+        re-check: only the caller that wins the lock sees ``match_state !=
+        "completed"`` and sends the result emails.
+        """
         if match.match_state == "completed":
             return
         _, _, decided = score_match(match)
         window_closed = bool(match.end_date and match.end_date <= timezone.now())
         if not decided and not window_closed:
             return
-        self.calculate_winner(match)
+        with transaction.atomic():
+            # No select_related here: player_2/tiebreaker are nullable FKs
+            # and FOR UPDATE can't lock the outer side of a LEFT JOIN.
+            locked = self.select_for_update().get(pk=match.pk)
+            if locked.match_state == "completed":
+                return
+            self.calculate_winner(locked)
 
     def calculate_winner(self, match):
         p1_score, p2_score, _ = score_match(match)
@@ -122,12 +142,32 @@ class MatchManager(AbstractManager):
         match.match_state = "completed"
         match.save(update_fields=["winner", "match_state"])
 
+        # dedupe_key guards the email layer independently of the row lock
+        # above — a queued result email for this (match, recipient) makes
+        # any duplicate defer a no-op.
         if match.winner == match.player_1:
-            Emails.send_match_victory_notification(match.player_1, match.player_2.username)
-            Emails.send_match_lost_notification(match.player_2, match.player_1.username)
+            Emails.send_match_victory_notification(
+                match.player_1, match.player_2.username, match_id=match.id,
+            )
+            Emails.send_match_lost_notification(
+                match.player_2, match.player_1.username, match_id=match.id,
+            )
         elif match.winner == match.player_2:
-            Emails.send_match_victory_notification(match.player_2, match.player_1.username)
-            Emails.send_match_lost_notification(match.player_1, match.player_2.username)
+            Emails.send_match_victory_notification(
+                match.player_2, match.player_1.username, match_id=match.id,
+            )
+            Emails.send_match_lost_notification(
+                match.player_1, match.player_2.username, match_id=match.id,
+            )
+
+        from core.metrics.models import track
+        track(
+            None, "match_completed",
+            match_id=str(match.id),
+            winner_id=str(match.winner_id) if match.winner_id else None,
+            player_1_id=str(match.player_1_id),
+            player_2_id=str(match.player_2_id) if match.player_2_id else None,
+        )
 
 
 class Match(AbstractModel):
