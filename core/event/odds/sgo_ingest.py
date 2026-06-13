@@ -38,6 +38,17 @@ def write_markets(event: Event, market_specs: Iterable[MarketSpec]) -> int:
     Also kicks off the SGO ``score``-based settlement grader on finalized
     events — see ``core.event.odds.sgo_settlement.grade_event``.
     """
+    market_specs = list(market_specs)
+    if market_specs and event.sport_id is None:
+        # ``Market.sport`` is NOT NULL — an event whose league/sport isn't
+        # seeded locally can't carry markets. Skip (never break ingest) until
+        # the sport is activated via ``seed_sports_leagues``.
+        logger.warning(
+            "skipping %d market(s) for event=%s: event has no sport",
+            len(market_specs), event.id,
+        )
+        return 0
+
     written = 0
     for mspec in market_specs:
         market = _upsert_market(event, mspec)

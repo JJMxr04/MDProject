@@ -284,6 +284,13 @@ class GameManager(AbstractManager):
             else:
                 TieBreaker.objects.set_player_2_total(tiebreaker, tiebreaker_total)
 
+        # Golden picks notify too (plan Phase 7 #1) — through the same
+        # debounced (match, picker) summary as regular picks, so a session
+        # of 5 regulars + the golden still produces ONE email.
+        opponent = match.player_2 if is_player_1 else match.player_1
+        from core.game.tasks import schedule_pick_summary
+        schedule_pick_summary(match=match, picker=current_user, recipient=opponent)
+
         from core.metrics.models import track
         track(current_user, "pick_made", match_id=str(match.pk), golden=True)
         return game

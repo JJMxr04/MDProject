@@ -153,11 +153,15 @@ def _schedule_closing_nudge(potd):
     nudge_at = potd.lock_time - timedelta(hours=2)
     if nudge_at <= timezone.now():
         return
+    from django.db import transaction
     try:
-        potd_closing_nudge.configure(
-            queueing_lock=f"potd-nudge-{potd.date}",
-            schedule_at=nudge_at,
-        ).defer(potd_id=str(potd.pk))
+        # Savepoint so the queueing-lock unique violation can't poison a
+        # caller's open transaction (same trick as Emails._notify).
+        with transaction.atomic():
+            potd_closing_nudge.configure(
+                queueing_lock=f"potd-nudge-{potd.date}",
+                schedule_at=nudge_at,
+            ).defer(potd_id=str(potd.pk))
     except procrastinate_exceptions.AlreadyEnqueued:
         pass
 

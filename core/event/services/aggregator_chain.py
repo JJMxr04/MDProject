@@ -175,37 +175,49 @@ def _upsert_event(
     # ``finished`` status freezes the game card (is_settled) even though
     # the event hasn't kicked off. Same convention as
     # ``Event.objects.upsert_from_spec`` on the ingest path.
-    obj, _ = Event.objects.update_or_create(
-        id=event_env["id"],
-        defaults={
-            "sport": sport,
-            "league": league,
-            "home_team": home,
-            "away_team": away,
-            "type": (event_env.get("type") or "")[:16],
-            "season_label": (event_env.get("season_label") or "")[:64],
-            "start_time": _iso(event_env.get("start_time")),
-            "status_type": (event_env.get("status_type") or "")[:32],
-            "status_display": (event_env.get("status_display") or "")[:64],
-            "current_period_id": (event_env.get("current_period_id") or "")[:16],
-            "is_live": bool(event_env.get("is_live")),
-            "is_finalized": bool(event_env.get("is_finalized")),
-            "completed": bool(event_env.get("completed")),
-            "home_score": event_env.get("home_score"),
-            "away_score": event_env.get("away_score"),
-            "winner_code": event_env.get("winner_code"),
-            "feed_locked": bool(event_env.get("feed_locked")),
-        },
-    )
+    defaults = {
+        "sport": sport,
+        "league": league,
+        "home_team": home,
+        "away_team": away,
+        "type": (event_env.get("type") or "")[:16],
+        "season_label": (event_env.get("season_label") or "")[:64],
+        "start_time": _iso(event_env.get("start_time")),
+        "status_type": (event_env.get("status_type") or "")[:32],
+        "status_display": (event_env.get("status_display") or "")[:64],
+        "current_period_id": (event_env.get("current_period_id") or "")[:16],
+        "is_live": bool(event_env.get("is_live")),
+        "is_finalized": bool(event_env.get("is_finalized")),
+        "completed": bool(event_env.get("completed")),
+        "home_score": event_env.get("home_score"),
+        "away_score": event_env.get("away_score"),
+        "winner_code": event_env.get("winner_code"),
+        "feed_locked": bool(event_env.get("feed_locked")),
+    }
+    # A payload missing sport/league must not null out a previously resolved
+    # value — Markets copy ``event.sport_id`` into a NOT NULL column.
+    if sport is None:
+        defaults.pop("sport")
+    if league is None:
+        defaults.pop("league")
+    obj, _ = Event.objects.update_or_create(id=event_env["id"], defaults=defaults)
     return obj
 
 
 def _upsert_market(market_env: dict, *, event: Event, sport: Sport | None) -> Market:
+    sport_id = sport.id if sport else event.sport_id
+    if sport_id is None:
+        # ``Market.sport`` is NOT NULL — fail with the chain's designed error
+        # instead of an opaque IntegrityError mid-transaction.
+        raise ChainBuildError(
+            f"No sport resolvable for market {market_env['id']} "
+            f"(event {event.id})"
+        )
     obj, _ = Market.objects.update_or_create(
         id=market_env["id"],
         defaults={
             "event": event,
-            "sport_id": sport.id if sport else event.sport_id,
+            "sport_id": sport_id,
             "category": market_env.get("category", ""),
             "type": (market_env.get("type") or "")[:64],
             "scope": market_env.get("scope", "FULL_GAME"),

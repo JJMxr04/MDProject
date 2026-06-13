@@ -171,9 +171,24 @@ class SportsGameOddsWebhookView(APIView):
             "winner_code": ev.get("winner_code"),
             "feed_locked": bool(ev.get("feed_locked")),
         }
+        # A failed Sport/League lookup (row not seeded locally) must not null
+        # out a previously resolved value — Markets copy ``event.sport_id``
+        # into a NOT NULL column.
+        if sport is None:
+            defaults.pop("sport")
+        if league is None:
+            defaults.pop("league")
         event, _ = Event.objects.update_or_create(
             id=ev["event_id"], defaults=defaults,
         )
+
+        if markets and event.sport_id is None:
+            logger.warning(
+                "skipping %d market(s) for event=%s: no local Sport for "
+                "sport_id=%s league_id=%s (seed via seed_sports_leagues)",
+                len(markets), event.id, ev.get("sport_id"), ev.get("league_id"),
+            )
+            return event
 
         for m in markets:
             _upsert_market_with_selections(event, m)

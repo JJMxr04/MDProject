@@ -87,6 +87,13 @@ class EventManager(models.Manager):
             "winner": _winner_name(spec.winner_code, home, away),
             "feed_locked": bool(spec.feed_locked),
         }
+        # A failed Sport/League lookup (row not seeded locally) must not null
+        # out a previously resolved value — Markets copy ``event.sport_id``
+        # into a NOT NULL column.
+        if sport is None:
+            defaults.pop("sport")
+        if league is None:
+            defaults.pop("league")
 
         previous = self.filter(id=spec.event_id).only(
             "status_type", "home_score", "away_score"

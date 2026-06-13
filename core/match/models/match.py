@@ -102,6 +102,11 @@ class MatchManager(AbstractManager):
         match.tiebreaker = TieBreaker.objects.create(golden_game=golden_game)
         match.save()
 
+        # "Settles tonight" one-shot (plan Phase 7 #3) — deferred inside
+        # this transaction so a rolled-back accept schedules nothing.
+        from core.match.tasks import schedule_settles_tonight
+        schedule_settles_tonight(match)
+
         from core.metrics.models import track
         track(player_2, "match_accepted", match_id=str(match.id))
         return match

@@ -235,6 +235,42 @@ class Emails:
         cls._notify(user, subject, template_path, context)
 
     @classmethod
+    def send_golden_hit(cls, user, opponent_name, your_score, their_score, match_id=None):
+        """Peak #2 (plan Phase 7): the user's Golden Game pick settled WON —
+        the tiebreaker is theirs if the match ends level. Exactly-once is
+        enforced upstream (Bet.golden_hit_notified_at claim); the dedupe key
+        is belt-and-braces for concurrent deliveries."""
+        subject = "Your Golden Game pick hit! 🥇"
+        template_path = "match/goldenHit.html"
+        context = {
+            'username': user.username,
+            'opponent_name': opponent_name,
+            'your_score': your_score,
+            'their_score': their_score,
+            'match_url': cls._match_url(match_id),
+        }
+        cls._notify(
+            user, subject, template_path, context,
+            dedupe_key=f"golden-hit-{match_id}-{user.pk}" if match_id else None,
+        )
+
+    @classmethod
+    def send_match_settles_tonight(cls, user, opponent_name, match_id=None):
+        """Peak #3 (plan Phase 7): the match window closes in a few hours —
+        last call for picks and the result lands tonight."""
+        subject = f"Your match with {opponent_name} settles tonight"
+        template_path = "match/settlesTonight.html"
+        context = {
+            'username': user.username,
+            'opponent_name': opponent_name,
+            'match_url': cls._match_url(match_id),
+        }
+        cls._notify(
+            user, subject, template_path, context,
+            dedupe_key=f"settles-tonight-{match_id}-{user.pk}" if match_id else None,
+        )
+
+    @classmethod
     def send_potd_closing_nudge(cls, user, potd):
         """Streak-protection nudge (plan Phase 6): the user picked yesterday
         and today's Pick of the Day locks in ~2 hours. One per (day, user) —

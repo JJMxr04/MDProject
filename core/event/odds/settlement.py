@@ -246,6 +246,14 @@ def propagate_to_matches(event: Event) -> int:
 
     for match in matches:
         Match.objects.maybe_complete_match(match)
+
+    # Peak notification (plan Phase 7 #2) — the bulk paths (computed
+    # settlement, provider grading, finalize webhooks) skip post_save, so
+    # the golden-hit hook must live here too. Idempotent via the Bet-row
+    # claim; runs after completion so finished matches are excluded.
+    from core.game.notifications import notify_golden_hits
+
+    notify_golden_hits(event=event)
     return len(matches)
 
 

@@ -921,6 +921,9 @@ PAYWALL_DISPLAY_PRICE = os.environ.get("PAYWALL_DISPLAY_PRICE", "$9/mo")
 # queues a summary email this many seconds out; further picks inside the
 # window are absorbed into that one send.
 PICK_EMAIL_DEBOUNCE_SECONDS = int(os.environ.get("PICK_EMAIL_DEBOUNCE_SECONDS", "180"))
+# "Match settles tonight" one-shot fires this many hours before end_date
+# (plan Phase 7 #3).
+MATCH_SETTLES_SOON_HOURS = int(os.environ.get("MATCH_SETTLES_SOON_HOURS", "6"))
 
 # Fail fast in production if aggregator is enabled but the webhook secret
 # is missing — without it, inbound deliveries get rejected for signature

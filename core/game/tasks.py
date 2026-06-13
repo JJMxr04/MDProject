@@ -34,8 +34,9 @@ def send_pick_summary(match_id, picker_id, recipient_id):
         return 0
 
     # Count at send time so every pick made during the debounce window is
-    # covered by this one email. Regular slots only — golden-game picks
-    # are deliberately silent (both sides pick independently).
+    # covered by this one email. Includes the picker's golden-game side
+    # (plan Phase 7 #1) — the golden slot is ownerless, its sides map to
+    # the match players (owner_outcome ≡ player_1).
     pick_count = Game.objects.filter(
         match_id=match_id, owner=picker, is_golden=False,
         bet__owner_outcome__isnull=False,
@@ -43,6 +44,18 @@ def send_pick_summary(match_id, picker_id, recipient_id):
         match_id=match_id, player_2=picker, is_golden=False,
         bet__player_2_outcome__isnull=False,
     ).count()
+
+    from core.match.models import Match
+    match = Match.objects.filter(pk=match_id).first()
+    if match is not None:
+        golden_side = (
+            "bet__owner_outcome__isnull"
+            if match.player_1_id == picker.pk
+            else "bet__player_2_outcome__isnull"
+        )
+        pick_count += Game.objects.filter(
+            match_id=match_id, is_golden=True, **{golden_side: False},
+        ).count()
 
     if pick_count == 0:
         return 0
