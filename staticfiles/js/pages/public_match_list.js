@@ -2,6 +2,36 @@
 let cmMode = 'public';
 let cmFriendId = null;
 let cmFriendUsername = null;
+let cmFormat = (document.querySelector('input[name=cm_format]:checked') || {}).value || 'MARATHON';
+
+/* ── Format presets (Phase 5, D-5 #2): pre-submit availability check ── */
+function checkCmAvailability() {
+    const box = document.querySelector('.cm-format');
+    const note = document.getElementById('cmAvailability');
+    if (!box || !note) return;
+    note.textContent = 'Checking game availability…';
+    fetch(`${box.dataset.availabilityUrl}?format=${encodeURIComponent(cmFormat)}`)
+        .then(r => r.json().then(j => ({ ok: r.ok, body: j })))
+        .then(({ ok, body }) => {
+            if (ok && body.status === 'success') {
+                note.textContent = body.viable
+                    ? `${body.available} games available in this window.`
+                    : `Only ${body.available} of the ${body.needed} games this format needs are available in this window.`;
+                note.classList.toggle('text-danger', !body.viable);
+            } else {
+                note.textContent = (body && body.message) || '';
+            }
+        })
+        .catch(() => { note.textContent = ''; });
+}
+
+document.querySelectorAll('input[name=cm_format]').forEach(input => {
+    input.addEventListener('change', (e) => {
+        cmFormat = e.target.value;
+        document.getElementById('cmFormat').value = cmFormat;
+        checkCmAvailability();
+    });
+});
 
 document.querySelectorAll('.cm-mode__option').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -48,11 +78,11 @@ function filterCmFriends() {
 function updateCmPreview() {
     const el = document.getElementById('cmPreview');
     if (cmMode === 'public') {
-        el.innerHTML = `Creating a <strong>public match</strong>. Anyone can accept and become your opponent. After acceptance, 12 slots are created with a Golden Game pre-seeded from the events catalog.`;
+        el.innerHTML = `Creating a <strong>public match</strong>. Anyone can accept and become your opponent. After acceptance, your game slots are created with a Golden Game (the tiebreaker) pre-seeded from the events catalog.`;
     } else if (cmFriendId) {
-        el.innerHTML = `Inviting <strong>@${escapeHtml(cmFriendUsername || '...')}</strong> to a <strong>private match</strong>. They'll see the invite under <em>Pending invites</em> and can accept or decline.`;
+        el.innerHTML = `Inviting <strong>@${escapeHtml(cmFriendUsername || '...')}</strong> to a <strong>private match</strong>. The invite shows the format — accepting it is consent. They can accept or decline from <em>Pending invites</em>.`;
     } else {
-        el.innerHTML = `Pick a friend to challenge. The 12 slots and Golden Game get created when they accept your invite.`;
+        el.innerHTML = `Pick a friend to challenge. The game slots and Golden Game get created when they accept your invite.`;
     }
 }
 
@@ -134,3 +164,4 @@ document.addEventListener('input', (e) => {
 // Initialize preview text on first open
 updateCmPreview();
 updateCmSubmitState();
+checkCmAvailability();

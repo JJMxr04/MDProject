@@ -45,7 +45,14 @@ class NotificationAccessTests(TestCase):
 
         self.client.force_login(owner)
         url = reverse(self.URL_NAME, args=[notif.id])
-        resp = self.client.post(url, secure=True)
 
+        # First call marks it read (row stays, read_at stamped).
+        resp = self.client.post(url, secure=True)
+        self.assertEqual(resp.status_code, 200)
+        notif.refresh_from_db()
+        self.assertIsNotNone(notif.read_at)
+
+        # Second call on an already-handled notification deletes it.
+        resp = self.client.post(url, secure=True)
         self.assertEqual(resp.status_code, 200)
         self.assertFalse(Notification.objects.filter(id=notif.id).exists())

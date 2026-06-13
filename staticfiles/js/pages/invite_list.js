@@ -19,7 +19,8 @@ function handleInviteAction(inviteId, action) {
     .then(({ ok, body }) => {
         overlay.hidden = true;
         if (ok && body.success) {
-            window.toast(action === 'accept' ? 'Invite accepted.' : 'Invite declined.', {variant: 'success'});
+            const msgs = {accept: 'Invite accepted.', reject: 'Invite declined.', cancel: 'Invite canceled.'};
+            window.toast(msgs[action] || body.success, {variant: 'success'});
             setTimeout(() => window.location.reload(), 600);
         } else {
             // Surface the server-side message so users see "No events are

@@ -2,13 +2,25 @@
 //
 // Replaces the old vanilla notifications.js. Talks ONLY to /api/v1/notifications/
 // via the shared api.js (CSRF, envelope, escaping). Renders loading/error/empty/
-// ready states and lets the owner mark a notification read (PATCH .../<id>/ ->
-// deletes it). Rendered via x-text (auto-escaped) — never x-html.
+// ready states. The list returns only unread/uncleared notifications, so the
+// dropdown is the "actionable" set. The owner can:
+//   - mark one read   (PATCH .../<id>/)
+//   - clear one       (POST  .../<id>/clear/)
+//   - mark all read   (POST  .../mark-all-read/)
+//   - clear all       (POST  .../clear-all/)
+// A second mark/clear on an already-handled row deletes it server-side; here we
+// just drop it from the local list. Rendered via x-text (auto-escaped) — never
+// x-html.
 //
 // CSP build note: directive expressions can only reference property/method NAMES
-// (no operators/ternaries). So every condition the template needs is exposed here
-// as a getter (isLoading/isError/isEmpty/hasItems/...) rather than inlined as
-// `state === 'loading'`. This keeps the page at script-src 'self' (no eval).
+// (no operators, ternaries, OR function-call syntax). The Alpine CSP evaluator
+// resolves an expression by splitting on "." and walking the scope, so
+// `markRead(n.id)` / `clearAll()` are NOT valid — they throw "unable to
+// interpret". Every condition is therefore a getter (isLoading/hasItems/...),
+// and every @click is a BARE method name. x-on passes the DOM event as the
+// argument, so per-item handlers read the id from the element's data-id
+// attribute (bound with `:data-id="n.id"`, a plain dotted path the CSP build
+// does allow) via `event.currentTarget.dataset.id`.
 
 import { api } from '../api.js';
 
@@ -56,12 +68,59 @@ window.Alpine.data('notifications', () => ({
     }
   },
 
-  async markRead(id) {
+  // Drop an item from the local list and fall back to the empty state.
+  _drop(id) {
+    this.items = this.items.filter((n) => n.id !== id);
+    if (!this.items.length) this.state = 'empty';
+  },
+
+  // Per-item handlers receive the DOM event (CSP build passes $event). The id
+  // rides on the clicked element as data-id (bound via :data-id="n.id").
+  _idFromEvent(event) {
+    return event && event.currentTarget && event.currentTarget.dataset.id;
+  },
+
+  async markRead(event) {
+    const id = this._idFromEvent(event);
+    if (!id) return;
     try {
       // dataset.src is the collection URL; the item URL is <src><id>/.
       await api.patch(`${this.$root.dataset.src}${id}/`, {});
-      this.items = this.items.filter((n) => n.id !== id);
-      if (!this.items.length) this.state = 'empty';
+      this._drop(id);
+    } catch (e) {
+      this.error = e;
+      this.state = 'error';
+    }
+  },
+
+  async clear(event) {
+    const id = this._idFromEvent(event);
+    if (!id) return;
+    try {
+      await api.post(`${this.$root.dataset.src}${id}/clear/`, {});
+      this._drop(id);
+    } catch (e) {
+      this.error = e;
+      this.state = 'error';
+    }
+  },
+
+  async markAllRead() {
+    try {
+      await api.post(`${this.$root.dataset.src}mark-all-read/`, {});
+      this.items = [];
+      this.state = 'empty';
+    } catch (e) {
+      this.error = e;
+      this.state = 'error';
+    }
+  },
+
+  async clearAll() {
+    try {
+      await api.post(`${this.$root.dataset.src}clear-all/`, {});
+      this.items = [];
+      this.state = 'empty';
     } catch (e) {
       this.error = e;
       this.state = 'error';

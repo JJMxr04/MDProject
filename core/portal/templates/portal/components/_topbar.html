@@ -21,8 +21,8 @@
          data-refresh-interval="60000"
          x-data="notifications">
         <button class="topbar__bell btn-ui btn-ui--ghost btn-ui--icon-only" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications"
-                :aria-busy="isLoading">
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                aria-label="Notifications" :aria-busy="isLoading">
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="topbar__bell-dot" x-show="hasItems" x-text="count"></span>
         </button>
@@ -31,7 +31,20 @@
             <template x-if="isError"><li class="dropdown-item" x-text="errorMessage"></li></template>
             <template x-if="isEmpty"><li class="dropdown-item">No new notifications</li></template>
             <template x-for="n in items" :key="n.id">
-                <li class="dropdown-item" role="button" tabindex="0" @click="markRead(n.id)" x-text="n.message"></li>
+                <li class="dropdown-item notification-item">
+                    <span class="notification-item__msg" role="button" tabindex="0"
+                          :data-id="n.id" @click="markRead" x-text="n.message"></span>
+                    <button type="button" class="notification-item__clear"
+                            :data-id="n.id" @click.stop="clear" aria-label="Clear notification" title="Clear">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </li>
+            </template>
+            <template x-if="hasItems">
+                <li class="notification-actions">
+                    <button type="button" class="btn-ui btn-ui--ghost btn-ui--sm" @click="markAllRead">Mark all read</button>
+                    <button type="button" class="btn-ui btn-ui--danger btn-ui--sm" @click="clearAll">Clear all</button>
+                </li>
             </template>
         </ul>
     </div>
