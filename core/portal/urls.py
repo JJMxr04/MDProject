@@ -25,6 +25,7 @@ urlpatterns = [
     path('billing/', include('core.billing.urls')),
     path('event/', include(eventUrls)),
     path('match/', include(matchUrls)),
+    path('potd/', include('core.potd.urls')),
     path('tournament/', include('core.tournament.urls')),
     path('user/', include(userUrls)),
     path('mail/', include(notificationUrls)),

@@ -124,6 +124,13 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     )
     friend_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
+    # --- Pick of the Day streaks (plan Phase 6). Streak = consecutive
+    # product days (NY calendar) with a pick — advanced/reset inside
+    # DailyPickManager.record_pick, never recomputed from history.
+    potd_current_streak = models.PositiveIntegerField(default=0)
+    potd_best_streak = models.PositiveIntegerField(default=0)
+    potd_last_pick_date = models.DateField(null=True, blank=True)
+
     # Master switch for engagement emails (match/tournament/friend
     # notifications). Gated centrally in core.mail.models.Emails._notify —
     # in-app Notification rows still write when this is off. Transactional

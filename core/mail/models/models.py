@@ -235,6 +235,25 @@ class Emails:
         cls._notify(user, subject, template_path, context)
 
     @classmethod
+    def send_potd_closing_nudge(cls, user, potd):
+        """Streak-protection nudge (plan Phase 6): the user picked yesterday
+        and today's Pick of the Day locks in ~2 hours. One per (day, user) —
+        the dedupe key guards re-runs of the nudge task."""
+        home = getattr(potd.event.home_team, "name_medium", None) or "Home"
+        away = getattr(potd.event.away_team, "name_medium", None) or "Away"
+        subject = "Your streak is on the line — today's pick closes in 2 hours"
+        template_path = "potd/closingNudge.html"
+        context = {
+            'username': user.username,
+            'matchup': f"{home} vs {away}",
+            'streak': user.potd_current_streak,
+        }
+        cls._notify(
+            user, subject, template_path, context,
+            dedupe_key=f"potd-nudge-{potd.date}-{user.pk}",
+        )
+
+    @classmethod
     def send_signup_invite(cls, email, inviter_name, signup_url, format_label=None):
         """Invite-to-non-user (Phase 4 §3). Transactional — the recipient
         has no account (and no ``email_notifications`` preference), so this
