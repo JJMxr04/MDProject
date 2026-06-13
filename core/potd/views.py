@@ -14,32 +14,47 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+from core.event.odds.humanize import humanize_selection
 from core.potd.models import (
     DailyPick, DailyPickResult, PickError, PickOfDay, potd_today,
 )
 from core.ratelimit import rate_limit
 
 
+# Card ordering: home side, then the draw (3-way soccer lines), then away.
+_SELECTION_ORDER = {"HOME": 0, "DRAW": 1, "AWAY": 2}
+
+
 def potd_card_context(user):
-    """Dashboard-card context: today's pick, its selections, the user's
-    pick if any. Selections come from the locally mirrored market — no
-    aggregator round-trip on dashboard render."""
+    """Dashboard-card context: today's pick, its selections (humanized,
+    HOME → DRAW → AWAY), the user's pick if any. Selections come from the
+    locally mirrored market — no aggregator round-trip on dashboard render."""
     potd = PickOfDay.objects.for_today()
     if potd is None:
         return {"potd": None}
-    selections = list(
-        potd.market.selections.all().order_by("type")
+    selections = sorted(
+        potd.market.selections.select_related(
+            "market", "market__event",
+            "market__event__home_team", "market__event__away_team",
+        ),
+        key=lambda s: (_SELECTION_ORDER.get(s.type, 9), s.type),
     )
+    options = [
+        {"id": s.id, "label": humanize_selection(s), "odds": s.decimal_odds}
+        for s in selections
+    ]
     user_pick = DailyPick.objects.filter(user=user, potd=potd).select_related(
-        "selection",
+        "selection", "selection__market", "selection__market__event",
+        "selection__market__event__home_team",
+        "selection__market__event__away_team",
     ).first()
     return {
         "potd": potd,
-        "potd_selections": selections,
+        "potd_options": options,
         "potd_user_pick": user_pick,
+        "potd_user_pick_label": humanize_selection(user_pick.selection) if user_pick else None,
         "potd_locked": potd.is_locked,
         "potd_streak": user.potd_current_streak,
     }
@@ -94,12 +109,21 @@ def leaderboard(request):
         day = today - timedelta(days=offset)
         winners = list(
             DailyPick.objects.filter(potd__date=day, result=DailyPickResult.WON)
-            .select_related("user", "selection")
+            .select_related(
+                "user", "selection", "selection__market",
+                "selection__market__event",
+                "selection__market__event__home_team",
+                "selection__market__event__away_team",
+            )
             .order_by("created_at")[:50]
         )
         if winners:
             daily_day, daily_winners = day, winners
             break
+    daily_winners = [
+        {"user": p.user, "label": humanize_selection(p.selection)}
+        for p in daily_winners
+    ]
 
     streak_board = list(
         User.objects.filter(potd_current_streak__gt=0)

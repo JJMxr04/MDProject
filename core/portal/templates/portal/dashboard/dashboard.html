@@ -35,7 +35,7 @@
         {% if potd_user_pick %}
             <p class="mt-2 mb-0">
                 <i class="bi bi-check-circle-fill" style="color: var(--state-success);"></i>
-                You picked <strong>{{ potd_user_pick.selection.label }}</strong>.
+                You picked <strong>{{ potd_user_pick_label }}</strong>.
                 {% if potd_user_pick.result == 'PENDING' %}Good luck — results land after the game settles.{% elif potd_user_pick.result == 'WON' %}You won! 🎉{% elif potd_user_pick.result == 'LOST' %}Not this time.{% else %}Voided — no harm done.{% endif %}
             </p>
         {% elif potd_locked %}
@@ -43,11 +43,11 @@
         {% else %}
             <p class="small text-muted mt-2 mb-2">One free pick a day. Picking daily builds your streak — wins climb the leaderboard.</p>
             <div class="potd-selections">
-                {% for sel in potd_selections %}
+                {% for opt in potd_options %}
                 <button type="button" class="btn-ui btn-ui--secondary potd-selection"
-                        data-action="potd-pick" data-selection-id="{{ sel.id }}">
-                    {{ sel.label }}
-                    {% if sel.decimal_odds %}<span class="text-muted small ms-1">{{ sel.decimal_odds }}</span>{% endif %}
+                        data-action="potd-pick" data-selection-id="{{ opt.id }}">
+                    {{ opt.label }}
+                    {% if opt.odds %}<span class="text-muted small ms-1">{{ opt.odds }}</span>{% endif %}
                 </button>
                 {% endfor %}
             </div>

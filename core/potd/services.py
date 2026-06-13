@@ -43,9 +43,10 @@ def _league_rank(item) -> int:
         return len(featured)
 
 
-def _moneyline_home_selection(item):
-    """The FULL_GAME MONEYLINE market's priced default selection, or None.
-    Mirrors the Golden Game's seed preference (HOME first)."""
+def _moneyline_market(item):
+    """The FULL_GAME MONEYLINE market dict with its priced selections, or
+    None. A 2-way (US sports) or 3-way (soccer: HOME/DRAW/AWAY) market both
+    qualify — every priced selection becomes a pickable card option."""
     for market in (item.get("markets") or []):
         if market.get("category") != "MONEYLINE":
             continue
@@ -55,25 +56,23 @@ def _moneyline_home_selection(item):
             s for s in (market.get("selections") or [])
             if s.get("decimal_odds") is not None
         ]
-        if not priced:
-            continue
-        for s in priced:
-            if s.get("type") == "HOME":
-                return s
-        return priced[0]
+        if priced:
+            return {**market, "selections": priced}
     return None
 
 
 def pick_candidate(items, *, date):
     """Pure heuristic over an aggregator listing: returns
-    ``(event_id, selection_id, start_time)`` of the most prominent fixture
-    with a priced moneyline, or None."""
+    ``(event_id, market_dict, start_time)`` of the most prominent fixture
+    with a priced moneyline, or None. The market dict carries every priced
+    selection so curation can mirror the FULL market locally — the card
+    renders from local rows, and a missing side would be unpickable."""
     prime = datetime.combine(date, time(hour=PRIME_TIME_HOUR), tzinfo=POTD_TZ)
     best = None
     best_key = None
     for item in items:
-        selection = _moneyline_home_selection(item)
-        if selection is None:
+        market = _moneyline_market(item)
+        if market is None:
             continue
         start_raw = item.get("start_time")
         start = parse_datetime(start_raw) if isinstance(start_raw, str) else start_raw
@@ -81,7 +80,7 @@ def pick_candidate(items, *, date):
             continue
         key = (_league_rank(item), abs((start - prime).total_seconds()), start)
         if best_key is None or key < best_key:
-            best, best_key = (item["id"], selection["id"], start), key
+            best, best_key = (item["id"], market, start), key
     return best
 
 
@@ -119,10 +118,16 @@ def curate_pick_of_day(date=None):
     candidate = pick_candidate(body.get("items") or [], date=date)
     if candidate is None:
         raise CurationError(f"no viable fixture with a priced moneyline on {date}")
-    event_id, selection_id, start = candidate
+    event_id, market, start = candidate
 
+    # Mirror EVERY priced selection of the chosen market — the dashboard
+    # card renders from local rows, so each side (incl. DRAW on 3-way
+    # soccer moneylines) must exist locally to be pickable.
+    selection = None
     try:
-        selection = ensure_chain(event_id, selection_id)
+        for sel in market["selections"]:
+            mirrored = ensure_chain(event_id, sel["id"])
+            selection = selection or mirrored
     except ChainBuildError as exc:
         raise CurationError(f"couldn't mirror {event_id} locally: {exc}") from exc
 
@@ -132,8 +137,8 @@ def curate_pick_of_day(date=None):
         market=selection.market,
         lock_time=selection.market.event.start_time or start,
     )
-    logger.info("PotD curated for %s: event=%s market=%s", date, event_id,
-                selection.market_id)
+    logger.info("PotD curated for %s: event=%s market=%s (%d selections)",
+                date, event_id, selection.market_id, len(market["selections"]))
 
     _schedule_closing_nudge(potd)
     return potd

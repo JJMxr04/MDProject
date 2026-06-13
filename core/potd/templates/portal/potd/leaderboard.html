@@ -76,11 +76,11 @@
         </header>
         {% if daily_winners %}
         <ul class="list-group list-group-flush" style="margin:0;">
-            {% for pick in daily_winners %}
+            {% for row in daily_winners %}
             <li class="list-group-item d-flex align-items-center gap-3">
-                {% include "portal/components/_avatar.html" with user=pick.user size=32 %}
-                <span class="flex-grow-1">{{ pick.user.username }}</span>
-                <span class="text-muted small">{{ pick.selection.label }}</span>
+                {% include "portal/components/_avatar.html" with user=row.user size=32 %}
+                <span class="flex-grow-1">{{ row.user.username }}</span>
+                <span class="text-muted small">{{ row.label }}</span>
             </li>
             {% endfor %}
         </ul>

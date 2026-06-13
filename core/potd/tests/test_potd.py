@@ -39,7 +39,8 @@ def make_potd(*, date=None, lock_in=timedelta(hours=6)):
     return potd, home, away
 
 
-def listing_item(event_id, *, league_id="NHL", start, priced=True):
+def listing_item(event_id, *, league_id="NHL", start, priced=True,
+                 types=("HOME", "AWAY")):
     return {
         "id": event_id,
         "league": {"id": league_id},
@@ -47,11 +48,14 @@ def listing_item(event_id, *, league_id="NHL", start, priced=True):
         "markets": [{
             "category": "MONEYLINE",
             "scope": "FULL_GAME",
-            "selections": [{
-                "id": f"{event_id}:home",
-                "type": "HOME",
-                "decimal_odds": "1.90" if priced else None,
-            }],
+            "selections": [
+                {
+                    "id": f"{event_id}:{t.lower()}",
+                    "type": t,
+                    "decimal_odds": "1.90" if priced else None,
+                }
+                for t in types
+            ],
         }],
     }
 
@@ -69,9 +73,12 @@ class CurationHeuristicTests(TestCase):
             listing_item("prime", start=self.prime + timedelta(minutes=10)),
             listing_item("late", start=self.prime + timedelta(hours=4)),
         ]
-        event_id, selection_id, _ = pick_candidate(items, date=self.date)
+        event_id, market, _ = pick_candidate(items, date=self.date)
         self.assertEqual(event_id, "prime")
-        self.assertEqual(selection_id, "prime:home")
+        self.assertEqual(
+            [s["id"] for s in market["selections"]],
+            ["prime:home", "prime:away"],
+        )
 
     def test_featured_league_outranks_prime_time(self):
         items = [
@@ -91,12 +98,22 @@ class CurationHeuristicTests(TestCase):
         event_id, _, _ = pick_candidate(items, date=self.date)
         self.assertEqual(event_id, "priced")
 
+    def test_three_way_market_keeps_draw_selection(self):
+        items = [listing_item(
+            "soccer", start=self.prime, types=("HOME", "DRAW", "AWAY"),
+        )]
+        _, market, _ = pick_candidate(items, date=self.date)
+        self.assertEqual(
+            [s["type"] for s in market["selections"]],
+            ["HOME", "DRAW", "AWAY"],
+        )
+
     def test_empty_slate_returns_none(self):
         self.assertIsNone(pick_candidate([], date=self.date))
 
 
 class CurateServiceTests(TestCase):
-    def _curate(self, items, local_selection):
+    def _curate(self, items, chain_side_effect):
         client = MagicMock()
         client.list_events.return_value = {"items": items}
         with patch(
@@ -104,22 +121,29 @@ class CurateServiceTests(TestCase):
             return_value=client,
         ), patch(
             "core.event.services.aggregator_chain.ensure_chain",
-            return_value=local_selection,
-        ):
-            return curate_pick_of_day()
+            side_effect=chain_side_effect,
+        ) as chain:
+            potd = curate_pick_of_day()
+        return potd, chain
 
-    def test_creates_row_and_is_idempotent(self):
+    def test_creates_row_and_mirrors_every_selection(self):
         league = make_league("CUR")
         event = make_event(league, start_time=timezone.now() + timedelta(hours=8))
-        market, home, _ = make_two_way_market(event)
+        market, home, away = make_two_way_market(event)
         items = [listing_item(event.id, start=event.start_time)]
+        # ensure_chain returns the matching local selection per call.
+        chain_map = {f"{event.id}:home": home, f"{event.id}:away": away}
 
         with patch("core.potd.services._schedule_closing_nudge") as nudge:
-            potd = self._curate(items, home)
+            potd, chain = self._curate(
+                items, lambda eid, sid: chain_map[sid],
+            )
         self.assertEqual(potd.date, potd_today())
         self.assertEqual(potd.event_id, event.id)
         self.assertEqual(potd.market_id, market.id)
         self.assertEqual(potd.lock_time, event.start_time)
+        # Every priced selection mirrored — both sides pickable on the card.
+        self.assertEqual(chain.call_count, 2)
         nudge.assert_called_once_with(potd)
 
         # Second run returns the same row without touching the catalog.
@@ -298,6 +322,26 @@ class PickEndpointTests(TestCase):
         self.assertEqual(resp.status_code, 400)
 
 
+class DashboardCardTests(TestCase):
+    def test_card_offers_every_selection_humanized(self):
+        """Regression: the card only rendered the single mirrored seed
+        selection ("home home") — every side must be a button, with
+        team-name labels."""
+        from core.potd.views import potd_card_context
+
+        user = make_user("card")
+        potd, home, away = make_potd()
+        ctx = potd_card_context(user)
+
+        labels = [o["label"] for o in ctx["potd_options"]]
+        self.assertEqual(len(labels), 2)
+        # humanize_selection renders "<team long name> to win"
+        self.assertTrue(any("to win" in l for l in labels), labels)
+        self.assertNotIn("home", [l.lower() for l in labels])
+        # HOME sorts before AWAY.
+        self.assertEqual(ctx["potd_options"][0]["id"], home.id)
+
+
 class LeaderboardViewTests(TestCase):
     def test_renders_boards_and_syncs_results(self):
         potd, home, away = make_potd()
@@ -319,6 +363,25 @@ class LeaderboardViewTests(TestCase):
         self.assertEqual(
             DailyPick.objects.get(user=winner).result, DailyPickResult.WON,
         )
+
+
+class AdminPicksVisibilityTests(TestCase):
+    def test_potd_admin_page_lists_picks(self):
+        """The PickOfDay admin change page shows everyone's picks inline."""
+        admin_user = make_user("admin")
+        admin_user.is_staff = True
+        admin_user.is_superuser = True
+        admin_user.save()
+
+        potd, home, _ = make_potd()
+        picker = make_user("crowd")
+        DailyPick.objects.create(user=picker, potd=potd, selection=home)
+
+        self.client.force_login(admin_user)
+        url = reverse("admin:core_potd_pickofday_change", args=[potd.pk])
+        resp = self.client.get(url, secure=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, picker.username)
 
 
 class ClosingNudgeTests(TestCase):

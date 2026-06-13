@@ -57,7 +57,8 @@ class PickOfDay(models.Model):
         Event, on_delete=models.PROTECT, related_name="potd_days",
     )
     # Everyone picks within this one market (Golden Game pattern). Curation
-    # prefers FULL_GAME MONEYLINE.
+    # prefers FULL_GAME MONEYLINE and mirrors EVERY priced selection so all
+    # sides (incl. DRAW on 3-way soccer lines) are pickable.
     market = models.ForeignKey(
         Market, on_delete=models.PROTECT, related_name="potd_days",
     )

@@ -32,3 +32,14 @@ document.addEventListener('click', (e) => {
     if (!el) return;
     submitPotdPick(el.dataset.selectionId);
 });
+
+/* Kickoff times render in the visitor's locale (same pattern as the match
+   detail page). */
+document.querySelectorAll('#potd-card time[data-localize]').forEach(t => {
+    const dt = new Date(t.getAttribute('datetime'));
+    if (!isNaN(dt)) {
+        t.textContent = dt.toLocaleString(undefined, {
+            month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+        });
+    }
+});
