@@ -23,6 +23,42 @@ dispatches on `$1` (`web` runs migrate-then-gunicorn; `worker` runs
 
 ---
 
+## Worker sizing
+
+Worker counts are **hardcoded in `docker-entrypoint.sh`** — intentionally
+NOT Coolify env vars, so they can't be changed by accident. To change one,
+edit the entrypoint and redeploy. (The old `MDPROJECT_WEB_WORKERS` /
+`MDPROJECT_WORKER_CONCURRENCY` env vars are no longer read — setting them
+in Coolify does nothing.)
+
+The four app services (MDProject web + worker, aggregator web + worker)
+share a **~16 vCPU envelope** on the 64 GB / 21 vCPU host; the remaining
+~5 vCPU is for Coolify, Matomo, GlitchTip, and the two Postgres resources.
+MDProject's split of that envelope:
+
+| Role   | Setting                | Value | Why                                                      |
+| ------ | ---------------------- | ----- | -------------------------------------------------------- |
+| web    | gunicorn `--workers`   | **8** | user-facing portal; sync workers → 8 concurrent requests |
+| worker | procrastinate concurr. | **2** | low email/settlement/cron volume                         |
+
+(The aggregator takes the other ~6 of the 16: web 4 async + worker 2 —
+see its own COOLIFY.md.)
+
+The binding constraint is host vCPU, not RAM (all four services use ~4 GB
+total) and not connections (web 8 + worker 2 ≈ 10 to mdproject-pg, far
+under the default `max_connections=100`).
+
+**Implement the 16/5 split as CPU _reservations_ (soft floors), not hard
+caps** — in each Application → Configuration → Resource Limits. Reservations
+guarantee each service its floor while letting it borrow idle host CPU
+during the others' quiet periods (web workers are I/O-bound and rarely all
+busy at once, so the box has spare cycles most of the time). Add **memory
+limits** too so a runaway can't OOM a co-tenant: suggested Matomo ~8 GB /
+CPU limit ~4 vCPU; GlitchTip ~6 GB; each app-web ~2 GB; each Postgres
+~4 GB.
+
+---
+
 ## 1. Create the Postgres resource
 
 Coolify → **Resources → New Resource → Postgres** (version 18).

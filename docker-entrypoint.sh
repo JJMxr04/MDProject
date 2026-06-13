@@ -41,8 +41,16 @@ case "$ROLE" in
     # the browser ends up in an infinite loop. Trusting "*" is safe because
     # Coolify's edge proxy is the only thing that can reach the container;
     # external clients never bypass it.
+    #
+    # --workers is INTENTIONALLY hardcoded (was MDPROJECT_WEB_WORKERS).
+    # The four app services share a ~16 vCPU envelope on the 64 GB /
+    # 21 vCPU Coolify host (the rest goes to Matomo, GlitchTip, Coolify,
+    # and the Postgres resources) — see COOLIFY.md §"Worker sizing". This
+    # user-facing portal gets the biggest share: sync workers, so 8 = 8
+    # concurrent requests. Setting MDPROJECT_WEB_WORKERS in Coolify now has
+    # NO effect; change the number here + redeploy.
     exec gunicorn CoreRoot.wsgi:application \
-        --workers "${MDPROJECT_WEB_WORKERS:-3}" \
+        --workers 8 \
         --bind "0.0.0.0:${PORT:-8000}" \
         --timeout "${MDPROJECT_WEB_TIMEOUT:-30}" \
         --graceful-timeout 30 \
@@ -61,10 +69,13 @@ case "$ROLE" in
     #
     # --concurrency tunes how many jobs run in parallel within this
     # process. The Procrastinate worker uses Postgres LISTEN/NOTIFY for
-    # push-based job delivery (no polling), so a small concurrency is
-    # plenty for this app's volume.
+    # push-based job delivery (no polling). INTENTIONALLY hardcoded (was
+    # MDPROJECT_WORKER_CONCURRENCY) — part of the apps' ~16 vCPU envelope,
+    # see COOLIFY.md §"Worker sizing". Low email/settlement/cron volume, so
+    # 2 is plenty. Setting that env var in Coolify now has NO effect;
+    # change here + redeploy.
     exec python manage.py procrastinate worker \
-        --concurrency "${MDPROJECT_WORKER_CONCURRENCY:-2}"
+        --concurrency 2
     ;;
 
   migrate-only)

@@ -144,11 +144,7 @@ class SportsGameOddsWebhookView(APIView):
 
     @transaction.atomic
     def _apply(self, ev: dict, markets: list[dict]) -> Event:
-        league = League.objects.filter(id=ev.get("league_id")).first()
-        sport = (
-            (league.sport if league else None)
-            or Sport.objects.filter(id=ev.get("sport_id")).first()
-        )
+        sport, league = _resolve_sport_league(ev)
         home_team = _upsert_team(ev.get("home_team"))
         away_team = _upsert_team(ev.get("away_team"))
 
@@ -183,9 +179,13 @@ class SportsGameOddsWebhookView(APIView):
         )
 
         if markets and event.sport_id is None:
+            # _resolve_sport_league provisions any sport the envelope names, so
+            # reaching here means the envelope carried no usable sport_id at
+            # all. Markets can't be written (sport_id NOT NULL) — skip them
+            # rather than 500 the delivery.
             logger.warning(
-                "skipping %d market(s) for event=%s: no local Sport for "
-                "sport_id=%s league_id=%s (seed via seed_sports_leagues)",
+                "skipping %d market(s) for event=%s: envelope has no "
+                "resolvable sport (sport_id=%r league_id=%r)",
                 len(markets), event.id, ev.get("sport_id"), ev.get("league_id"),
             )
             return event
@@ -196,6 +196,48 @@ class SportsGameOddsWebhookView(APIView):
 
 
 # ---- helpers ---------------------------------------------------------------
+
+
+def _resolve_sport_league(ev: dict) -> tuple[Sport | None, League | None]:
+    """Get-or-create the ``Sport`` + ``League`` named by the envelope.
+
+    Unlike MDProject's own SGO cron, the aggregator is the catalog authority:
+    it has already gated which leagues it forwards, so a league we haven't
+    seen locally (e.g. a newly-activated sport like VOLLEYBALL/VNL) must be
+    materialized here rather than dropped — otherwise the event lands with a
+    null sport and ``Market`` inserts (sport_id NOT NULL) 500 the webhook.
+
+    The v1 envelope carries only string IDs (no nested name objects, see
+    ``aggrigator/webhooks/payload.py``), so names are derived from the IDs.
+    Rows are created INACTIVE on purpose: ``League.active`` drives MDProject's
+    local SGO ingest cron, and these leagues have no SportsGameOdds presence —
+    their data arrives via this webhook. Activation, if ever wanted, is a
+    deliberate admin/seed action.
+    """
+    sport_id = ev.get("sport_id")
+    league_id = ev.get("league_id")
+
+    sport = None
+    if sport_id:
+        sport, _ = Sport.objects.get_or_create(
+            id=sport_id, defaults={"name": sport_id.title()}
+        )
+
+    league = None
+    if league_id:
+        if sport is not None:
+            league, _ = League.objects.get_or_create(
+                id=league_id, defaults={"sport": sport, "name": league_id}
+            )
+        else:
+            # No sport_id to hang a new League off of — only adopt one that
+            # already exists.
+            league = League.objects.filter(id=league_id).first()
+
+    # A pre-existing League is authoritative for its own sport.
+    if league is not None:
+        sport = league.sport
+    return sport, league
 
 
 def _verify_signature(request, secret: str) -> None:
