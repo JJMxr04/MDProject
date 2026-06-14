@@ -36,6 +36,16 @@ def public_match_list_view(request):
     # Paginate the matches
     paginator = Paginator(matches, 10)  # Show 10 matches per page
     matches_page = paginator.get_page(page)
+
+    # Creator flair (phase 8): level + current-season division, one query each.
+    from core.ranking.standings import divisions_for, levels_for
+    creator_ids = [m.player_1_id for m in matches_page.object_list]
+    levels = levels_for(creator_ids)
+    divisions = divisions_for(creator_ids)
+    for match in matches_page.object_list:
+        match.creator_level = levels.get(match.player_1_id)
+        match.creator_division = divisions.get(match.player_1_id)
+
     form = MatchInviteForm()
 
     # Friends list is needed so the Create-match modal can offer "challenge
@@ -110,11 +120,16 @@ def create_public_match_view(request):
             if player_2 == owner:
                 return JsonResponse({'status': 'error', 'message': 'You cannot challenge yourself.'}, status=400)
 
-            # One pending challenge per pair — a resend just re-points the
-            # user at the invite that's already waiting.
+            # One pending *match* challenge per pair — a resend just re-points
+            # the user at the invite that's already waiting. Duels are
+            # independent (they're per event+market, and many can be pending),
+            # so a waiting duel must not be mistaken for a pending match.
+            # ``has_key`` (not ``payload__duel=True``): regular match invites
+            # have no ``duel`` key, and excluding on a value lookup would drop
+            # them too via JSON NULL semantics.
             existing = Invite.objects.filter(
                 sender=owner, player=player_2, type='match', state='sent',
-            ).first()
+            ).exclude(payload__has_key='duel').first()
             if existing:
                 return JsonResponse({'status': 'success', 'invite_id': existing.id})
 
@@ -193,9 +208,18 @@ def public_match_detail_view(request, match_id):
         from django.http import Http404
         raise Http404("No Match matches the given query.")
 
+    from core.ranking.standings import divisions_for, levels_for
+    ids = [match.player_1_id, match.player_2_id]
+    levels = levels_for(ids)
+    divisions = divisions_for(ids)
+
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
+        'player_1_level': levels.get(match.player_1_id),
+        'player_2_level': levels.get(match.player_2_id),
+        'player_1_division': divisions.get(match.player_1_id),
+        'player_2_division': divisions.get(match.player_2_id),
     }
 
     return render(request, 'portal/match/public_match_detail.html', context)

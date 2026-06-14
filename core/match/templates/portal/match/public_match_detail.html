@@ -12,7 +12,7 @@
     <!-- Player Cards -->
     <div class="player-cards">
         <div class="player-card">
-            <h2>{{ match.player_1.username }}</h2>
+            <h2>{{ match.player_1.username }} {% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}</h2>
         </div>
 
     </div>

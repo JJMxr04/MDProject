@@ -59,6 +59,7 @@ def accept_invite(request, invite_id):
     """Invite action endpoint: accept / reject (decline) by the recipient,
     cancel (withdraw) by the sender."""
     from core.game.models.game import FixtureUnavailable, GoldenGameUnavailable
+    from core.match.duels import DuelError
     from core.tournament.models.tournament import TournamentJoinUnavailable
 
     try:
@@ -76,7 +77,7 @@ def accept_invite(request, invite_id):
             try:
                 Invite.objects.accept_invite(invite)
             except (GoldenGameUnavailable, FixtureUnavailable,
-                    TournamentJoinUnavailable, InviteExpired) as exc:
+                    TournamentJoinUnavailable, InviteExpired, DuelError) as exc:
                 # Domain failure (catalog can't seed / window not viable /
                 # tournament can't take the player / invite expired).
                 # Surface the message verbatim so the portal toast is

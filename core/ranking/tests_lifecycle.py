@@ -110,7 +110,8 @@ class RunLifecycleTests(TestCase):
 
     def test_activation_notifies_engaged_players(self):
         # A player with a progress row exists (engaged); a brand-new DRAFT is due.
-        PlayerProgress.objects.create(user=make_user("engaged"))
+        # (Every user gets a PlayerProgress at signup, so just create the user.)
+        make_user("engaged")
         draft = _season("Q1", Season.Status.DRAFT, date(2026, 1, 1), date(2026, 3, 31))
         lifecycle.run_lifecycle(today=date(2026, 1, 2))
         draft.refresh_from_db()

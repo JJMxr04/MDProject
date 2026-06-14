@@ -143,6 +143,24 @@ class MatchManager(AbstractManager):
         payload = invite.payload or {}
         challenger, opponent = invite.sender, invite.player
 
+        # Serialize concurrent duel accepts that involve either player: lock
+        # their User rows (consistent pk order → no deadlock) before counting.
+        # Without this, two simultaneous accepts could each read count < cap
+        # and both create, landing a player over MAX_ACTIVE_DUELS. The locks
+        # are held until this accept transaction commits, so the second accept
+        # blocks, then re-counts against the just-created duel and is rejected.
+        from core.user.models import User
+        list(
+            User.objects.select_for_update()
+            .filter(pk__in=[challenger.id, opponent.id])
+            .order_by("pk")
+        )
+
+        # Cap concurrent in-progress duels (both players). Checked here, inside
+        # the row-locked accept transaction, so a raise rolls the invite state
+        # back and the challenge stays acceptable later.
+        duels.assert_duel_capacity(challenger, opponent)
+
         sel = (
             Selection.objects.filter(pk=payload.get("selection_id"))
             .select_related("market", "market__event")

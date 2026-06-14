@@ -407,6 +407,144 @@ class DuelPagePaginationTests(TestCase):
         self.assertEqual(len(page2.context["finished_rows"]), 1)
 
 
+@override_settings(USE_AGGRIGATOR=False)
+class DuelCapTests(TestCase):
+    """A player may hold at most MAX_ACTIVE_DUELS concurrent in-progress duels
+    (both roles); the cap is enforced when a duel is accepted, not sent."""
+
+    def setUp(self):
+        self.a = make_user("a")
+        self.b = make_user("b")
+        self.a.add_friend(self.b)
+        self.league = make_league()
+
+    def _fill_active_duels(self, user, n, state="accepted"):
+        # Lightweight stand-ins for in-progress duels (player_1 role is enough —
+        # active_duel_count counts both roles).
+        for _ in range(n):
+            Match.objects.create(player_1=user, match_type="duel", match_state=state)
+
+    def _send(self):
+        event = make_event(self.league)
+        _, home, _ = make_two_way_market(event)
+        return duels.send_duel(self.a, self.b, event.id, home.id)
+
+    def test_accept_blocked_when_accepter_at_cap(self):
+        self._fill_active_duels(self.b, duels.MAX_ACTIVE_DUELS)
+        invite = self._send()
+        with self.assertRaises(duels.DuelError):
+            Invite.objects.accept_invite(invite)
+        invite.refresh_from_db()
+        self.assertEqual(invite.state, "sent")  # rolled back, still acceptable
+
+    def test_accept_blocked_when_challenger_at_cap(self):
+        self._fill_active_duels(self.a, duels.MAX_ACTIVE_DUELS)
+        invite = self._send()
+        with self.assertRaises(duels.DuelError):
+            Invite.objects.accept_invite(invite)
+
+    def test_completed_duels_do_not_count(self):
+        self._fill_active_duels(self.b, duels.MAX_ACTIVE_DUELS, state="completed")
+        invite = self._send()
+        Invite.objects.accept_invite(invite)  # completed don't count → allowed
+        self.assertTrue(
+            Match.objects.filter(match_type="duel", player_2=self.b, match_state="accepted").exists()
+        )
+
+    def test_accept_allowed_just_under_cap(self):
+        self._fill_active_duels(self.b, duels.MAX_ACTIVE_DUELS - 1)
+        invite = self._send()
+        Invite.objects.accept_invite(invite)  # brings b to exactly the cap
+        self.assertEqual(duels.active_duel_count(self.b), duels.MAX_ACTIVE_DUELS)
+
+    def test_sending_is_not_capped(self):
+        # Sending stays open even when in-progress duels are at the cap.
+        self._fill_active_duels(self.b, duels.MAX_ACTIVE_DUELS)
+        invite = self._send()  # must not raise
+        self.assertEqual(invite.state, "sent")
+
+    def test_accept_locks_player_rows(self):
+        # The cap check + create must serialize per player: accepting a duel
+        # acquires a SELECT ... FOR UPDATE on both players' User rows so two
+        # concurrent accepts can't both slip past the cap.
+        from django.db import connection
+        from django.test.utils import CaptureQueriesContext
+
+        from core.user.models import User
+
+        invite = self._send()
+        with CaptureQueriesContext(connection) as ctx:
+            Invite.objects.accept_invite(invite)
+        table = User._meta.db_table
+        locked = [
+            q["sql"] for q in ctx.captured_queries
+            if "for update" in q["sql"].lower() and table in q["sql"].lower()
+        ]
+        self.assertTrue(locked, "expected SELECT ... FOR UPDATE on the user table")
+
+
+def _catalog(items):
+    from unittest.mock import MagicMock, patch
+    client = MagicMock()
+    client.list_events.return_value = {"items": items}
+    return patch(
+        "core.event.providers.aggregator_client.AggrigatorClient",
+        return_value=client,
+    )
+
+
+def _priced_items(n):
+    return [
+        {"id": f"evt-{i}", "markets": [{
+            "category": "MONEYLINE", "scope": "FULL_GAME",
+            "selections": [{"id": f"evt-{i}-ml:home", "type": "HOME", "decimal_odds": "1.90"}],
+        }]}
+        for i in range(n)
+    ]
+
+
+@override_settings(USE_AGGRIGATOR=False)
+class DuelMatchIndependenceTests(TestCase):
+    """Duels and matches are independent challenges — a pending duel must not
+    be mistaken for a pending match (the dedup excludes duels)."""
+
+    def setUp(self):
+        self.a = make_user("a")
+        self.b = make_user("b")
+        self.a.add_friend(self.b)
+        self.league = make_league()
+
+    def test_pending_duel_does_not_block_private_match(self):
+        from django.urls import reverse
+
+        event = make_event(self.league)
+        _, home, _ = make_two_way_market(event)
+        duel_invite = duels.send_duel(self.a, self.b, event.id, home.id)
+
+        self.client.force_login(self.a)
+        with _catalog(_priced_items(6)):  # satisfy the MARATHON fixture gate
+            r = self.client.post(
+                reverse("core-portal:portal-create-public-match"),
+                {"type": "private", "player": str(self.b.id), "format": "MARATHON"},
+            )
+        self.assertEqual(r.status_code, 200)
+        # A NEW match invite was created — the duel was not returned as a dupe.
+        self.assertNotEqual(str(r.json()["invite_id"]), str(duel_invite.id))
+        self.assertEqual(
+            Invite.objects.filter(sender=self.a, player=self.b, type="match")
+            .exclude(payload__has_key="duel").count(),
+            1,
+        )
+
+    def test_pair_has_no_match_uniqueness(self):
+        # A tournament must be able to pair two users who already have a
+        # personal match — Match carries no (player_1, player_2) uniqueness.
+        m1 = Match.objects.create(player_1=self.a, player_2=self.b, match_type="private", match_state="accepted")
+        m2 = Match.objects.create(player_1=self.a, player_2=self.b, match_type="public", match_state="accepted")
+        self.assertNotEqual(m1.id, m2.id)
+        self.assertEqual(Match.objects.filter(player_1=self.a, player_2=self.b).count(), 2)
+
+
 def _past():
     from datetime import timedelta
     from django.utils import timezone

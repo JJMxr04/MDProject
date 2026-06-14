@@ -66,7 +66,7 @@
                         {% if match.opponent %}
                             {% include "portal/components/_avatar.html" with user=match.opponent size=32 %}
                             <span>{{ match.opponent.username }}</span>
-                            {% if match.opponent_level %}<span class="lvl-chip">Lv {{ match.opponent_level }}</span>{% endif %}
+                            {% include "portal/components/_player_flair.html" with level=match.opponent_level division=match.opponent_division %}
                         {% else %}
                             <span class="text-muted">Awaiting player</span>
                         {% endif %}

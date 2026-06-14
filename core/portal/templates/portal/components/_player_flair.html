@@ -1,0 +1,7 @@
+{% comment %}
+Player rank flair (phase 8) — level + (current-season) division chips. Each
+chip renders only when its value is truthy: a player with no ranked activity
+has no level, and a player not in the active season has no division. Both
+reuse the `.lvl-chip` style in global.css. Usage:
+  {% include "portal/components/_player_flair.html" with level=l division=d %}
+{% endcomment %}{% if level %}<span class="lvl-chip">Lv {{ level }}</span>{% endif %}{% if division %}<span class="lvl-chip">Div {{ division }}</span>{% endif %}

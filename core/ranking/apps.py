@@ -7,6 +7,8 @@ class RankingConfig(AppConfig):
     label = "core_ranking"
 
     def ready(self):
-        # Engine hooks are called directly from match completion (no signals),
-        # so nothing to wire here yet. Kept for symmetry / future signals.
-        return None
+        # Progression credit (points/XP/Elo) is called directly from match
+        # completion, not via signals. The one signal we wire here gives every
+        # new user a PlayerProgress row at signup so the portal always has a
+        # level/XP to show.
+        from core.ranking import signals  # noqa: F401

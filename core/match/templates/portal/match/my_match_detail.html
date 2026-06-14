@@ -42,6 +42,7 @@
         <div class="match-header-ui__side {% if match.winner == match.player_1 %}is-winner{% endif %}">
             {% include "portal/components/_avatar.html" with user=match.player_1 size=64 %}
             <div class="match-header-ui__name">{{ match.player_1.username }}</div>
+            {% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}
             <div class="match-header-ui__score">{{ match.player_1_score }}</div>
         </div>
         <div class="match-header-ui__center">
@@ -52,6 +53,7 @@
             {% if match.player_2 %}
                 {% include "portal/components/_avatar.html" with user=match.player_2 size=64 %}
                 <div class="match-header-ui__name">{{ match.player_2.username }}</div>
+                {% include "portal/components/_player_flair.html" with level=player_2_level division=player_2_division %}
                 <div class="match-header-ui__score">{{ match.player_2_score }}</div>
             {% else %}
                 <div class="avatar" style="--avatar-size: 64px;"><span class="avatar__initials">?</span></div>

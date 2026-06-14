@@ -174,12 +174,43 @@ def outgoing_duel_invites(user):
     )
 
 
+# A player may hold at most this many in-progress duels at once (accepted but
+# not yet settled), counting both roles. Sending challenges stays unbounded —
+# duels are per event+market, so a user can queue many; the cap only governs
+# how many can be *live* at the same moment, enforced at accept time.
+MAX_ACTIVE_DUELS = 10
+
+
 def _duel_queryset(user):
     from core.match.models import Match
 
     return Match.objects.filter(match_type="duel").filter(
         Q(player_1=user) | Q(player_2=user)
     )
+
+
+def active_duel_count(user) -> int:
+    """In-progress duels for ``user`` — accepted, not yet completed — counting
+    both player_1 and player_2 roles. The figure the cap measures against."""
+    return _duel_queryset(user).exclude(match_state="completed").count()
+
+
+def assert_duel_capacity(challenger, opponent) -> None:
+    """Neither party may exceed ``MAX_ACTIVE_DUELS`` concurrent in-progress
+    duels (role-agnostic). Enforced when a duel is *accepted* (that's the
+    moment a duel becomes live for both). Raises ``DuelError`` naming whoever
+    is full — the accept view surfaces the message verbatim.
+    """
+    if active_duel_count(opponent) >= MAX_ACTIVE_DUELS:
+        raise DuelError(
+            f"You already have {MAX_ACTIVE_DUELS} duels in progress — "
+            "finish some before taking on another."
+        )
+    if active_duel_count(challenger) >= MAX_ACTIVE_DUELS:
+        raise DuelError(
+            f"{challenger.username} already has {MAX_ACTIVE_DUELS} duels in "
+            "progress — try again once one of theirs settles."
+        )
 
 
 # Prefetch the bits ``duel_row`` reads so a 10-row page is a constant query

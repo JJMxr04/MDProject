@@ -62,11 +62,50 @@ class SeasonStandingsTests(TestCase):
 class GlobalStandingsTests(TestCase):
     def test_orders_by_global_points(self):
         u1, u2 = make_user(), make_user()
-        PlayerProgress.objects.create(user=u1, global_points=100, level=2)
-        PlayerProgress.objects.create(user=u2, global_points=500, level=5)
+        # Every user already has a PlayerProgress (signup signal) — set values.
+        PlayerProgress.objects.filter(user=u1).update(global_points=100, level=2, lifetime_games=4)
+        PlayerProgress.objects.filter(user=u2).update(global_points=500, level=5, lifetime_games=9)
         rows = standings.global_leaderboard()
         self.assertEqual(rows[0]["user"], u2)
         self.assertEqual(rows[0]["rank"], 1)
+
+
+class LevelsForTests(TestCase):
+    def test_maps_ids_to_levels_and_omits_unranked(self):
+        ranked = make_user("ranked")
+        PlayerProgress.objects.filter(user=ranked).update(level=7)
+        unranked = make_user("unranked")
+        # Simulate a user with no progress row (defensive: the chip hides).
+        PlayerProgress.objects.filter(user=unranked).delete()
+        result = standings.levels_for([ranked.id, unranked.id])
+        self.assertEqual(result, {ranked.id: 7})
+
+    def test_empty_input_skips_query(self):
+        with self.assertNumQueries(0):
+            self.assertEqual(standings.levels_for([]), {})
+            self.assertEqual(standings.levels_for([None]), {})
+
+
+class DivisionsForTests(TestCase):
+    def test_maps_ids_to_active_season_division(self):
+        s = _season()
+        p = _part(s, points=10, division=2)
+        result = standings.divisions_for([p.user.id])
+        self.assertEqual(result, {p.user.id: 2})
+
+    def test_no_active_season_returns_empty(self):
+        s = _season(status=Season.Status.CLOSED)
+        p = _part(s, points=10, division=3)
+        self.assertEqual(standings.divisions_for([p.user.id]), {})
+
+    def test_unparticipated_user_omitted(self):
+        _season()
+        stranger = make_user("stranger")  # no participation this season
+        self.assertEqual(standings.divisions_for([stranger.id]), {})
+
+    def test_empty_input_skips_query(self):
+        with self.assertNumQueries(0):
+            self.assertEqual(standings.divisions_for([]), {})
 
 
 class LeaderboardViewTests(TestCase):
@@ -82,7 +121,7 @@ class LeaderboardViewTests(TestCase):
         self.assertContains(resp, "Leaderboard")
 
     def test_global_scope_renders(self):
-        PlayerProgress.objects.create(user=self.user, global_points=42, level=2)
+        PlayerProgress.objects.filter(user=self.user).update(global_points=42, level=2, lifetime_games=3)
         resp = self.client.get(reverse("core-portal:portal-leaderboard") + "?scope=global")
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, "Career")

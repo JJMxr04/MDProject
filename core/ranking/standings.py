@@ -12,6 +12,44 @@ from core.ranking import constants
 from core.ranking.models import PlayerProgress, Season, SeasonParticipation
 
 
+def levels_for(user_ids) -> dict:
+    """Map ``user_id -> level`` for the given ids in one query.
+
+    Match cards show a player's level chip (phase 8 flair). Callers pass a
+    page's worth of player ids and attach the result, so a list of N players
+    costs one query, not N. Ids without a ``PlayerProgress`` row (no ranked
+    activity yet) are simply absent — the chip partial hides when level is
+    falsy.
+    """
+    ids = [i for i in user_ids if i]
+    if not ids:
+        return {}
+    return dict(
+        PlayerProgress.objects.filter(user_id__in=ids).values_list("user_id", "level")
+    )
+
+
+def divisions_for(user_ids) -> dict:
+    """Map ``user_id -> division`` from the ACTIVE season in one query.
+
+    Drives the division chip on match cards alongside the level chip. Empty
+    when there's no active season, or for ids with no participation row this
+    season (a player who hasn't been ranked yet) — the flair partial hides the
+    chip when division is falsy.
+    """
+    ids = [i for i in user_ids if i]
+    if not ids:
+        return {}
+    season = Season.active()
+    if season is None:
+        return {}
+    return dict(
+        SeasonParticipation.objects
+        .filter(season=season, user_id__in=ids)
+        .values_list("user_id", "division")
+    )
+
+
 def _season_sort_key(p: SeasonParticipation):
     # season points → win rate → wins → fewer games (D-8).
     return (-p.season_points, -p.win_rate, -p.wins, p.games_played)
@@ -47,9 +85,18 @@ def season_divisions(season: Season) -> list[int]:
 
 def global_leaderboard(limit: int = 100) -> list[dict]:
     """Career standings, ordered by global points (tiebreak lifetime win rate
-    → wins)."""
+    → wins).
+
+    Every user owns a PlayerProgress row from signup (so the portal can always
+    show a level), so the board filters to players who've actually earned
+    something — career points or a completed game — to avoid listing the whole
+    membership at 0 points.
+    """
+    from django.db.models import Q
+
     rows = list(
         PlayerProgress.objects.select_related("user")
+        .filter(Q(global_points__gt=0) | Q(lifetime_games__gt=0))
         .order_by("-global_points", "-lifetime_wins")[:limit]
     )
     out = []

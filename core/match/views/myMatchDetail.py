@@ -83,6 +83,14 @@ def my_match_detail_view(request, match_id):
     # fresh unjoined query.
     golden_game = games_qs.filter(is_golden=True).first()
 
+    # Rank flair for the match header (phase 8) — level + current-season
+    # division for both players, one query each.
+    from core.ranking.standings import divisions_for, levels_for
+    p2_id = match.player_2_id
+    ids = [match.player_1_id, p2_id]
+    levels = levels_for(ids)
+    divisions = divisions_for(ids)
+
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
@@ -90,6 +98,10 @@ def my_match_detail_view(request, match_id):
         'player_1_games': player_1_games,
         'player_2_games': player_2_games,
         'golden_game': golden_game,
+        'player_1_level': levels.get(match.player_1_id),
+        'player_2_level': levels.get(p2_id),
+        'player_1_division': divisions.get(match.player_1_id),
+        'player_2_division': divisions.get(p2_id),
     }
 
     return render(request, 'portal/match/my_match_detail.html', context)
@@ -278,10 +290,13 @@ def rematch_view(request, match_id):
     track(request.user, "rematch_clicked",
           match_id=str(match.id), format=match.format)
 
-    # One pending challenge per pair — same dedupe as the create view.
+    # One pending *match* challenge per pair — same dedupe as the create view.
+    # Duels (per event+market) are independent and must not block a rematch.
+    # ``has_key`` avoids the JSON-NULL trap that ``payload__duel=True`` exclude
+    # hits for regular match invites (which carry no ``duel`` key).
     existing = Invite.objects.filter(
         sender=request.user, player=opponent, type='match', state='sent',
-    ).first()
+    ).exclude(payload__has_key='duel').first()
     if existing:
         return JsonResponse({
             'status': 'success', 'invite_id': str(existing.id),

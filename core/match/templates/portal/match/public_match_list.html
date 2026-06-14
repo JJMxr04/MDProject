@@ -45,6 +45,7 @@
                     <a class="table-ui__row-link d-flex align-items-center gap-3" href="{% url 'core-portal:portal-public-match-detail' match.id %}">
                         {% include "portal/components/_avatar.html" with user=match.player_1 size=32 %}
                         <span>{{ match.player_1.username }}</span>
+                        {% include "portal/components/_player_flair.html" with level=match.creator_level division=match.creator_division %}
                     </a>
                 </td>
                 <td>{{ match.start_date|timesince }} ago</td>
