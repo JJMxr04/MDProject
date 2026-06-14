@@ -1,0 +1,42 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Backup codes{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Save your backup codes</h1>
+        <p class="page-header__subtitle">
+            {% if context_event == "enabled" %}Two-factor authentication is now on.{% else %}Your backup codes were regenerated.{% endif %}
+        </p>
+    </div>
+</header>
+
+<div class="settings-layout">
+    {% include "portal/components/_settings_rail.html" with active="security" %}
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2>Backup codes</h2>
+        </header>
+        <div class="card-ui__body">
+            <p class="twofa-meta">
+                Each code works <strong>once</strong> if you lose access to your authenticator app.
+                Store them somewhere safe — this is the only time they're shown. Generating a new
+                set replaces these.
+            </p>
+
+            <ul class="twofa-codes">
+                {% for code in codes %}<li>{{ code }}</li>{% endfor %}
+            </ul>
+
+            <div class="form-actions">
+                <a class="btn-ui btn-ui--primary" href="{% url 'core-auth:2fa-security' %}">I've saved my codes</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}{% include "portal/security/_styles.html" %}{% endblock css %}

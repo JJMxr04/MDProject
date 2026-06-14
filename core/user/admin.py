@@ -20,6 +20,7 @@ from core.billing.services.subscription_sync import (
     SubscriptionSyncError,
     refresh_from_stripe as subscription_refresh_from_stripe,
 )
+from core.auth import twofa
 
 from .models import User
 
@@ -99,7 +100,7 @@ class UserAdmin(BaseUserAdmin):
         'email', 'username',
         'subscription_tier', 'subscription_status', 'trial_end_display',
         'stripe_customer_link', 'aggrigator_external_id_display',
-        'last_login', 'is_staff', 'is_admin',
+        'last_login', 'is_staff', 'is_admin', 'twofa_status',
     ]
     search_fields = [
         'email', 'username', 'first_name', 'last_name',
@@ -129,6 +130,16 @@ class UserAdmin(BaseUserAdmin):
                 "<code>aggrigator_internal.rotate_api_key</code>."
             ),
         }),
+        ('Security', {
+            'fields': ['twofa_display'],
+            'description': (
+                "TOTP enrollment must be done by the account holder — they scan "
+                "the QR with their own authenticator app — so 2FA cannot be "
+                "turned on for another user from here. The buttons at the top of "
+                "this page reset a user's devices for lost-device recovery, and "
+                "let you enroll your own admin account."
+            ),
+        }),
         ('Permissions', {'fields': ['activated_link', 'is_staff', 'is_admin', 'is_active', 'is_superuser', 'groups', 'user_permissions']}),
         ('Important Dates', {'fields': ['last_login', 'created', 'updated']}),
     )
@@ -136,7 +147,7 @@ class UserAdmin(BaseUserAdmin):
         'created', 'updated', 'is_superuser', 'is_active', 'last_login',
         'subscription_tier', 'subscription_status', 'trial_end_display',
         'stripe_customer_display', 'aggrigator_external_id_display',
-        'aggrigator_api_key_display', 'password_reset_link',
+        'aggrigator_api_key_display', 'password_reset_link', 'twofa_display',
     ]
 
     @admin.display(description='Password')
@@ -186,6 +197,11 @@ class UserAdmin(BaseUserAdmin):
                 "<uuid:user_id>/subscription-refresh/",
                 self.admin_site.admin_view(self.subscription_refresh_view),
                 name="core_user_user_subscription_refresh",
+            ),
+            path(
+                "<uuid:user_id>/reset-2fa/",
+                self.admin_site.admin_view(self.reset_2fa_view),
+                name="core_user_user_reset_2fa",
             ),
         ]
         # Custom URLs first so the int-converter doesn't fight the
@@ -383,6 +399,61 @@ class UserAdmin(BaseUserAdmin):
                 "or check PARADISE_SECRET / AGGRIGATOR_BASE_URL.",
             )
         return self._redirect_to_user(user_id)
+
+    # ---- Two-factor (phase 15) ----
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        # The "Set up my two-factor" link only makes sense on your OWN row
+        # (TOTP must be enrolled by the account holder). Compute it here rather
+        # than compare UUIDs in the template.
+        extra_context = extra_context or {}
+        extra_context['is_self'] = str(object_id) == str(request.user.pk)
+        return super().change_view(request, object_id, form_url, extra_context)
+
+    @method_decorator(require_POST)
+    def reset_2fa_view(self, request, user_id: uuid.UUID):
+        """Remove a user's TOTP + backup-code devices — the lost-device
+        recovery path (D-15b). Enrollment can't be done on a user's behalf
+        (they must scan), so the admin capability is reset, not enable. Sends
+        the user the standard 2FA-disabled security email."""
+        if not request.user.is_staff:
+            messages.error(request, "Staff only.")
+            return HttpResponseRedirect(reverse("admin:index"))
+        user = get_object_or_404(User, pk=user_id)
+        had_2fa = twofa.has_2fa(user)
+        twofa.disable_2fa(user)
+        if had_2fa:
+            twofa.send_security_email(user, "disabled")
+            messages.success(
+                request,
+                f"Two-factor reset for {user.email}. They'll re-enroll on their "
+                "next visit to the Security page.",
+            )
+        else:
+            messages.info(request, f"{user.email} had no two-factor devices to reset.")
+        return self._redirect_to_user(user_id)
+
+    @admin.display(description='2FA', boolean=True)
+    def twofa_status(self, obj):
+        """Changelist column — green check when a confirmed device exists."""
+        return twofa.has_2fa(obj)
+
+    @admin.display(description='Two-factor authentication')
+    def twofa_display(self, obj):
+        """Detail-page status. The Reset / self-enroll buttons live in the
+        object-tools row (see ``change_form.html``) — a <form> can't be nested
+        in the readonly field area without breaking the change form."""
+        if obj is None or not obj.pk:
+            return '—'
+        device = twofa.confirmed_totp(obj)
+        if device is None:
+            return format_html('<strong style="color:#900">Off</strong> — no confirmed device')
+        remaining = twofa.backup_codes_remaining(obj)
+        return format_html(
+            '<strong style="color:#080">On</strong> · enrolled {} · '
+            '{} backup code{} remaining',
+            device.created_at.date(), remaining, '' if remaining == 1 else 's',
+        )
 
     def _redirect_to_user(self, user_id: uuid.UUID) -> HttpResponseRedirect:
         return HttpResponseRedirect(

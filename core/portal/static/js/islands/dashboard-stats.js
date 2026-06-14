@@ -9,6 +9,14 @@ window.Alpine.data('dashboard-stats', () => ({
 
   init() {
     this.load();
+    // Refresh immediately when notifications are read/cleared elsewhere
+    // (e.g. the navbar bell) instead of waiting for the next poll.
+    this._onNotificationsChanged = () => this.load();
+    window.addEventListener('notifications:changed', this._onNotificationsChanged);
+  },
+
+  destroy() {
+    window.removeEventListener('notifications:changed', this._onNotificationsChanged);
   },
 
   get isLoading() {

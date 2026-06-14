@@ -1,0 +1,76 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Security{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Security</h1>
+        <p class="page-header__subtitle">Protect your account with two-factor authentication.</p>
+    </div>
+</header>
+
+<div class="settings-layout">
+    {% include "portal/components/_settings_rail.html" with active="security" %}
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2>Two-factor authentication</h2>
+        </header>
+        <div class="card-ui__body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'error' %}field-error{% else %}twofa-meta{% endif %}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% if twofa_enabled %}
+                <div class="twofa-status">
+                    <span class="twofa-pill twofa-pill--on"><i class="bi bi-shield-check" aria-hidden="true"></i> On</span>
+                    <span class="twofa-meta">
+                        Enabled {{ confirmed_at|date:"M j, Y" }} ·
+                        {{ backup_codes_remaining }} backup code{{ backup_codes_remaining|pluralize }} left
+                    </span>
+                </div>
+                <p class="twofa-meta">
+                    You'll be asked for a code from your authenticator app each time you log in.
+                    Lost your device? Use a backup code, or contact support to reset access.
+                </p>
+
+                <div class="twofa-actions">
+                    <form method="post" action="{% url 'core-auth:2fa-regenerate' %}" class="twofa-form">
+                        {% csrf_token %}
+                        <label for="regen_token">Regenerate backup codes</label>
+                        <input class="twofa-input" id="regen_token" name="otp_token" inputmode="numeric"
+                               autocomplete="one-time-code" placeholder="Current code" required>
+                        <button type="submit" class="btn-ui btn-ui--secondary">Regenerate codes</button>
+                    </form>
+
+                    <form method="post" action="{% url 'core-auth:2fa-disable' %}" class="twofa-form">
+                        {% csrf_token %}
+                        <label for="disable_token">Turn off two-factor</label>
+                        <input class="twofa-input" id="disable_token" name="otp_token" inputmode="numeric"
+                               autocomplete="one-time-code" placeholder="Current code" required>
+                        <button type="submit" class="btn-ui btn-ui--danger">Disable 2FA</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="twofa-status">
+                    <span class="twofa-pill twofa-pill--off"><i class="bi bi-shield-slash" aria-hidden="true"></i> Off</span>
+                    <span class="twofa-meta">Your account is protected by your password only.</span>
+                </div>
+                <p class="twofa-meta">
+                    Two-factor authentication adds a second step at login — a code from an
+                    authenticator app like Google Authenticator, 1Password, or Authy.
+                </p>
+                <div class="form-actions" style="margin-top: var(--space-4);">
+                    <a class="btn-ui btn-ui--primary" href="{% url 'core-auth:2fa-setup' %}">Enable two-factor authentication</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}{% include "portal/security/_styles.html" %}{% endblock css %}

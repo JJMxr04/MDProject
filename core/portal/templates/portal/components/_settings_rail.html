@@ -3,7 +3,7 @@ Shared rail for the Settings section. Renders the same nav on both
 the profile page and the billing page so users see the same shape and
 can jump between the two.
 
-Pass ``active`` as one of: ``profile``, ``billing``.
+Pass ``active`` as one of: ``profile``, ``billing``, ``security``.
 {% endcomment %}
 <aside class="settings-rail" aria-label="Settings sections">
     <ul>
@@ -22,9 +22,11 @@ Pass ``active`` as one of: ``profile``, ``billing``.
             </a>
         </li>
         <li>
-            <span class="is-disabled" aria-disabled="true" title="Coming soon">
+            <a href="{% url 'core-auth:2fa-security' %}"
+               class="{% if active == 'security' %}is-active{% endif %}"
+               {% if active == 'security' %}aria-current="page"{% endif %}>
                 <i class="bi bi-shield-lock" aria-hidden="true"></i> Security
-            </span>
+            </a>
         </li>
         <li>
             <span class="is-disabled" aria-disabled="true" title="Coming soon">

@@ -25,7 +25,7 @@ class DashboardStatsView(V1ViewMixin, APIView):
             .count()
         )
         pending_invites = Invite.objects.filter(player=user, state="sent").count()
-        notifications = Notification.objects.filter(user=user).count()
+        notifications = Notification.objects.unread(user).count()
         return Response(
             {
                 "active_matches": active_matches,

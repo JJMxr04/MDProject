@@ -10,6 +10,7 @@ from core.tournament.models.tournament import Tournament
 import calendar
 from core.auth.models.waitlist import WaitlistEntry
 from core.admin.status import check_redis, get_worker_status
+from core.auth import twofa
 
 @staff_member_required
 def custom_admin_view(request):
@@ -34,6 +35,9 @@ def custom_admin_view(request):
         'redis_status': check_redis(),
         'worker_status': get_worker_status(),
         'checked_at': timezone.localtime(),
+        # Nudge staff to self-enroll in 2FA so ADMIN_REQUIRE_OTP can be flipped
+        # without hand-walking each admin through the raw device model (phase 15).
+        'needs_2fa_setup': not twofa.has_2fa(request.user),
     }
     return TemplateResponse(request, "admin/dashboard/dashboard.html", context)
 

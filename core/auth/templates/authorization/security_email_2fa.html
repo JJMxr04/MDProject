@@ -1,0 +1,34 @@
+{% extends "email/_base.html" %}
+
+{% block preview %}{{ headline }}.{% endblock %}
+
+{% block content %}
+  <h1 style="margin:0 0 16px; font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:bold; color:#3D7EAA; line-height:1.3;">
+    {{ headline }}
+  </h1>
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    Hi{% if username %} {{ username }}{% endif %},
+  </p>
+
+  {% if event == "enabled" %}
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    Two-factor authentication was just turned on for your Paradise Sports account.
+    From now on you'll enter a code from your authenticator app each time you log in.
+  </p>
+  {% elif event == "disabled" %}
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    Two-factor authentication was just turned off for your Paradise Sports account.
+    Your account is now protected by your password only.
+  </p>
+  {% else %}
+  <p style="margin:0 0 14px; font-size:15px; line-height:1.6; color:#333333;">
+    A new set of backup codes was generated for your Paradise Sports account.
+    Your previous backup codes no longer work.
+  </p>
+  {% endif %}
+
+  <p style="margin:24px 0 0; font-size:13px; line-height:1.6; color:#666666;">
+    Didn't do this? Your password may be compromised — reset it immediately and
+    contact us at <a href="mailto:{{ support_email }}" style="color:#3D7EAA;">{{ support_email }}</a>.
+  </p>
+{% endblock content %}

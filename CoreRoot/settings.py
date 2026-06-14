@@ -121,6 +121,10 @@ INSTALLED_APPS = [
     # BEFORE the flag flips (otherwise: instant admin lockout).
     'django_otp',
     'django_otp.plugins.otp_totp',
+    # Static (backup) codes — single-use recovery tokens issued at enrollment
+    # (phase 15, D-15b). Recovery is backup-codes + admin device reset; no
+    # email-based 2FA reset.
+    'django_otp.plugins.otp_static',
     "django_celery_results",  # Dead post-Procrastinate cutover; kept so old core_crons migrations replay on fresh DBs.
     "django_celery_beat",     # Dead post-Procrastinate cutover; kept for the same reason.
     "procrastinate.contrib.django",
@@ -851,6 +855,10 @@ USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "tru
 #      scan the qrcode link with an authenticator app),
 #   3. set ADMIN_REQUIRE_OTP=true and redeploy.
 ADMIN_REQUIRE_OTP = os.environ.get("ADMIN_REQUIRE_OTP", "").strip().lower() in ("1", "true", "yes", "on")
+
+# Label shown in authenticator apps for enrolled TOTP devices (phase 15).
+# django_otp reads this for the otpauth:// issuer field.
+OTP_TOTP_ISSUER = os.environ.get("OTP_TOTP_ISSUER", "Paradise Sports")
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 

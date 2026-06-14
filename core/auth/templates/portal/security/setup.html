@@ -1,0 +1,55 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Set up two-factor{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Set up two-factor authentication</h1>
+        <p class="page-header__subtitle">Scan the code, then enter the 6-digit number to confirm.</p>
+    </div>
+</header>
+
+<div class="settings-layout">
+    {% include "portal/components/_settings_rail.html" with active="security" %}
+
+    <section class="card-ui">
+        <header class="card-ui__header">
+            <h2>Scan with your authenticator app</h2>
+        </header>
+        <div class="card-ui__body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="field-error" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="twofa-qr">
+                <div class="twofa-qr__code" role="img" aria-label="Two-factor QR code">{{ qr_svg }}</div>
+                <div>
+                    <p class="twofa-meta">
+                        Open Google Authenticator, 1Password, Authy, or similar and scan this code.
+                    </p>
+                    <p class="twofa-meta">Can't scan? Enter this key manually:</p>
+                    <p><code class="twofa-key">{{ manual_key }}</code></p>
+                </div>
+            </div>
+
+            <form method="post" action="{% url 'core-auth:2fa-setup' %}" class="twofa-form">
+                {% csrf_token %}
+                <label for="otp_token">Enter the 6-digit code</label>
+                <input class="twofa-input" id="otp_token" name="otp_token" inputmode="numeric"
+                       autocomplete="one-time-code" pattern="[0-9]*" maxlength="6"
+                       placeholder="000000" required autofocus>
+                <div class="form-actions">
+                    <button type="submit" class="btn-ui btn-ui--primary">Confirm &amp; turn on</button>
+                    <a class="btn-ui btn-ui--ghost" href="{% url 'core-auth:2fa-security' %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}{% include "portal/security/_styles.html" %}{% endblock css %}
