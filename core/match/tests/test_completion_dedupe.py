@@ -123,11 +123,16 @@ class CompletionConcurrencyTests(TransactionTestCase):
             if j.args["recipient"] == p1.email and "Won the Match" in j.args["subject"]
         ]
         self.assertEqual(len(victory_jobs), 1)
-        self.assertEqual(
-            Notification.objects.filter(user=p1).count()
-            + Notification.objects.filter(user=p2).count(),
-            2,
+        # Exactly two RESULT notifications (one per player), not doubled by the
+        # concurrent completion. Level-up notifications from the phase-8 engine
+        # also land here (created once, under the same lock) — exclude them so
+        # this stays a dedupe assertion on the result emails.
+        result_notifs = (
+            Notification.objects.filter(user__in=[p1, p2])
+            .exclude(message__icontains="level")
+            .count()
         )
+        self.assertEqual(result_notifs, 2)
 
 
 class TournamentSignalTransitionTests(TestCase):

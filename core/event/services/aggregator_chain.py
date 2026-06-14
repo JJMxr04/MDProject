@@ -47,7 +47,9 @@ class ChainBuildError(Exception):
     """Raised when the aggregator can't supply enough data to build the chain."""
 
 
-def ensure_chain(event_id: str, selection_id: str) -> Selection:
+def ensure_chain(
+    event_id: str, selection_id: str, *, mirror_full_market: bool = False,
+) -> Selection:
     """Fetch the chain from the aggregator and ``get_or_create`` it locally.
 
     Returns the local ``Selection`` row. Raises ``ChainBuildError`` if the
@@ -55,6 +57,12 @@ def ensure_chain(event_id: str, selection_id: str) -> Selection:
 
     Idempotent — re-calling with the same ``(event_id, selection_id)`` after
     the chain exists is just a series of get-or-create no-ops.
+
+    ``mirror_full_market`` also mirrors the parent market's *other* selections
+    (not just ``selection_id``). Duels need this: ``opposite_selection`` reads
+    the two-way market's sibling side from the local DB, so the opposite side
+    must exist locally too — otherwise the market looks one-sided and the duel
+    is rejected.
     """
     if not getattr(settings, "USE_AGGRIGATOR", False):
         # Pre-cutover: the local DB is the catalog; no chain build needed.
@@ -95,6 +103,13 @@ def ensure_chain(event_id: str, selection_id: str) -> Selection:
         # Per-book quotes — display-only data the popup uses to show
         # "DraftKings -150 / FanDuel -145" and the deeplinks.
         _upsert_book_quotes(selection, chosen.get("by_bookmaker") or [])
+        if mirror_full_market:
+            # Duels resolve the opposite side from the local market, so the
+            # sibling selection(s) must land in the DB too. Quotes aren't
+            # needed for the opposite — only the priced Selection row is.
+            for sib in (parent_market.get("selections") or []):
+                if sib.get("id") and sib.get("id") != selection.id:
+                    _upsert_selection(sib, market=market)
     return selection
 
 

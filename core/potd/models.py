@@ -134,6 +134,17 @@ class DailyPickManager(models.Manager):
               potd_id=str(potd.pk), potd_date=str(potd.date),
               selection_id=selection.pk,
               streak=locked_user.potd_current_streak)
+
+        # Progression credit (phase 8): participation points + XP + streak
+        # milestone. Never break a pick on a ranking bug.
+        try:
+            from core.ranking.engine import record_potd_pick
+            record_potd_pick(pick)
+        except Exception:  # noqa: BLE001
+            import logging
+            logging.getLogger(__name__).exception(
+                "record_potd_pick failed for pick=%s", pick.pk
+            )
         return pick
 
     def sync_pending(self):

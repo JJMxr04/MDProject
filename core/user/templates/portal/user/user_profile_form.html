@@ -14,6 +14,28 @@
 <div class="settings-layout">
     {% include "portal/components/_settings_rail.html" with active="profile" %}
 
+  <div class="settings-col">
+    {% if progress %}
+    <section class="card-ui" style="margin-bottom: var(--space-4);">
+        <header class="card-ui__header"><h2>Progress</h2></header>
+        <div class="card-ui__body">
+            <p class="profile-progress-line">
+                <span class="lvl-chip">Lv {{ progress.level }}</span>
+                <span class="text-muted">{{ progress.global_points }} career points · {{ progress.lifetime_wins }}–{{ progress.lifetime_losses }} lifetime</span>
+            </p>
+            {% if badges %}
+            <div class="badge-case" style="margin-top: var(--space-3);">
+                {% for b in badges %}
+                <span class="badge-pill" title="{% if b.season %}{{ b.season.name }}{% endif %}">🏅 {{ b.get_type_display }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-muted" style="margin-top: var(--space-2);">No badges yet — win a season to earn your first.</p>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
     <section class="card-ui">
         <header class="card-ui__header">
             <h2>Profile</h2>
@@ -41,6 +63,7 @@
             </form>
         </div>
     </section>
+  </div>
 </div>
 {% endblock content %}
 

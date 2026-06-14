@@ -211,6 +211,57 @@ class Emails:
         cls._notify(user, subject, template_path, context)
 
     @classmethod
+    def send_duel_invite(cls, user, challenger_name, payload):
+        """Phase 14: ``challenger_name`` dares ``user`` to take the other side
+        of a single game. Accepting locks ``user`` onto the opposite outcome."""
+        payload = payload or {}
+        subject = f"{challenger_name} challenged you to a duel"
+        template_path = "invite/duelInvite.html"
+        context = {
+            'username': user.username,
+            'challenger_name': challenger_name,
+            'event_label': payload.get('event_label', ''),
+            'challenger_label': payload.get('challenger_label', ''),
+            'opponent_label': payload.get('opponent_label', ''),
+        }
+        cls._notify(user, subject, template_path, context)
+
+    @classmethod
+    def send_duel_result(cls, user, opponent_name, outcome, match_id=None):
+        """Phase 14: a duel settled. ``outcome`` is ``won`` / ``lost`` / ``draw``
+        (push/void → draw, D-14 #2). dedupe_key guards the bulk + signal
+        settlement paths from double-sending."""
+        subjects = {
+            "won": f"You won your duel against {opponent_name} 🏆",
+            "lost": f"Your duel against {opponent_name} didn't land",
+            "draw": f"Your duel against {opponent_name} was a push",
+        }
+        subject = subjects.get(outcome, "Your duel settled")
+        template_path = "match/duelResult.html"
+        context = {
+            'username': user.username,
+            'opponent_name': opponent_name,
+            'outcome': outcome,
+            'match_url': cls._match_url(match_id),
+        }
+        cls._notify(
+            user, subject, template_path, context,
+            dedupe_key=f"duel-result-{match_id}-{user.pk}" if match_id else None,
+        )
+
+    @classmethod
+    def send_season_started(cls, user, season_name):
+        """Phase 8: a new ranked season just opened — points reset, the race
+        is back to zero."""
+        subject = f"{season_name} has begun — a new season starts now"
+        template_path = "ranking/seasonStarted.html"
+        context = {
+            'username': user.username,
+            'season_name': season_name,
+        }
+        cls._notify(user, subject, template_path, context)
+
+    @classmethod
     def send_friend_invite(cls, user, sender_name):
         subject = f"{sender_name} sent you a friend request"
         template_path = "invite/friendInvite.html"

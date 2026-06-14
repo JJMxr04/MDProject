@@ -150,6 +150,7 @@ INSTALLED_APPS = [
     'core.billing',
     'core.metrics',  # In-house product analytics (roadmap Phase 3) — ProductEvent + track()
     'core.potd',  # Pick of the Day + streaks (roadmap Phase 6)
+    'core.ranking',  # Seasons, ranks, XP/leveling, leaderboards (roadmap Phase 8)
     'core.api',  # Portal JSON API (v1) — secure islands surface (plan js-portal-security)
 
     # Custom admin app configuration

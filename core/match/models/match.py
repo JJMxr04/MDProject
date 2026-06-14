@@ -126,6 +126,58 @@ class MatchManager(AbstractManager):
             selection_id=data.get("player_choice"),
         )
 
+    @transaction.atomic
+    def create_duel(self, invite):
+        """Build the degenerate match for an accepted duel invite (phase 14).
+
+        A duel is one Game (slot 1, owner = challenger, not golden) whose Bet
+        already holds BOTH sides: the challenger's selection and the other
+        selection in the same locked market. No regular slots, no Golden Game,
+        no TieBreaker. ``match_state`` goes straight to ``accepted``; the match
+        completes when the event settles (``_complete_duel_if_ready``).
+        """
+        from core.event.models import Selection
+        from core.game.models import Bet
+        from core.match import duels
+
+        payload = invite.payload or {}
+        challenger, opponent = invite.sender, invite.player
+
+        sel = (
+            Selection.objects.filter(pk=payload.get("selection_id"))
+            .select_related("market", "market__event")
+            .first()
+        )
+        if sel is None:
+            raise duels.DuelError("This duel's event is no longer available.")
+        opposite = Selection.objects.filter(pk=payload.get("opposite_selection_id")).first()
+        if opposite is None:
+            opposite = duels.opposite_selection(sel)
+
+        event = sel.market.event
+        match = self.create(
+            player_1=challenger,
+            player_2=opponent,
+            match_type="duel",
+            match_state="accepted",
+            # Format is unused for duels (no slots/window), but the column is
+            # non-null — park it on the default.
+            format=formats.DEFAULT_FORMAT,
+            end_date=event.start_time,
+        )
+        game = Game.objects.create_game(
+            match=match, owner=challenger, player_2=opponent,
+            slot=1, is_golden=False, event=event,
+        )
+        Bet.objects.set_owner_outcome(game.bet, sel)
+        Bet.objects.set_player_2_outcome(game.bet, opposite)
+        game.bet.locked_market = sel.market
+        game.bet.save(update_fields=["locked_market", "updated_at"])
+
+        from core.metrics.models import track
+        track(opponent, "duel_accepted", match_id=str(match.id))
+        return match
+
     def maybe_complete_match(self, match):
         """If the match is decided (every slot scored or window closed),
         finalize it. Idempotent — re-entry on already-completed matches is a
@@ -137,6 +189,13 @@ class MatchManager(AbstractManager):
         "completed"`` and sends the result emails.
         """
         if match.match_state == "completed":
+            return
+        if match.match_type == "duel":
+            with transaction.atomic():
+                locked = self.select_for_update().get(pk=match.pk)
+                if locked.match_state == "completed":
+                    return
+                self._complete_duel_if_ready(locked)
             return
         _, _, decided = score_match(match)
         window_closed = bool(match.end_date and match.end_date <= timezone.now())
@@ -198,6 +257,18 @@ class MatchManager(AbstractManager):
             format=match.format,
         )
 
+        # Progression credit (phase 8): points / XP / Elo, exactly once. Runs
+        # inside the row-locked completion path. Never break completion on a
+        # ranking bug.
+        try:
+            from core.ranking.engine import record_match_result
+            record_match_result(match)
+        except Exception:  # noqa: BLE001
+            import logging
+            logging.getLogger(__name__).exception(
+                "record_match_result failed for match=%s", match.id
+            )
+
     def _resolve_winner(self, match):
         """The no-draw cascade (see ``calculate_winner``). Returns a User —
         ``None`` only for the degenerate case of a never-accepted match
@@ -252,6 +323,81 @@ class MatchManager(AbstractManager):
         # 5. Dead heat: the accepter wins. Deterministic, known upfront,
         # and the match creator can never farm a tie.
         return match.player_2
+
+    # ------------------------------------------------------------- duels
+
+    def _complete_duel_if_ready(self, match):
+        """Finalize a duel once its deciding market has settled (phase 14).
+
+        The single Bet holds both sides in one two-way market, so the sides
+        settle together. Winner = whichever side's selection WON; PUSH / VOID /
+        postponed (neither WON) completes as a draw (``winner=None``, D-14 #2).
+        Stays open while the selections are still PENDING.
+        """
+        game = (
+            match.games.filter(is_golden=False)
+            .select_related("bet", "bet__owner_outcome", "bet__player_2_outcome")
+            .first()
+        )
+        bet = getattr(game, "bet", None) if game else None
+        if bet is None:
+            return
+        owner_sel, p2_sel = bet.owner_outcome, bet.player_2_outcome
+
+        def _settled(sel):
+            return sel is not None and sel.settlement_status in ("WON", "LOST", "PUSH", "VOID")
+
+        if not (_settled(owner_sel) and _settled(p2_sel)):
+            return  # deciding market hasn't graded yet
+
+        if owner_sel.settlement_status == "WON":
+            winner = match.player_1
+        elif p2_sel.settlement_status == "WON":
+            winner = match.player_2
+        else:
+            winner = None  # PUSH / VOID / postponed → draw
+
+        match.winner = winner
+        match.match_state = "completed"
+        match.save(update_fields=["winner", "match_state"])
+
+        self._notify_duel_result(match)
+
+        # Ladder-exempt (D-14 #4): winner gets a small XP award only — no
+        # points, no rating. Draws award nobody.
+        try:
+            from core.ranking.engine import grant_duel_xp
+            grant_duel_xp(match)
+        except Exception:  # noqa: BLE001
+            import logging
+            logging.getLogger(__name__).exception(
+                "grant_duel_xp failed for match=%s", match.id
+            )
+
+        from core.metrics.models import track
+        track(
+            None, "duel_settled",
+            match_id=str(match.id),
+            winner_id=str(winner.pk) if winner else None,
+            draw=winner is None,
+        )
+
+    @staticmethod
+    def _notify_duel_result(match):
+        """Win/loss/draw notifications for a completed duel. dedupe_key guards
+        against the bulk + signal settlement paths double-sending."""
+        p1, p2 = match.player_1, match.player_2
+        if p2 is None:
+            return
+        if match.winner is None:
+            Emails.send_duel_result(p1, p2.username, "draw", match_id=match.id)
+            Emails.send_duel_result(p2, p1.username, "draw", match_id=match.id)
+        elif match.winner == p1:
+            Emails.send_duel_result(p1, p2.username, "won", match_id=match.id)
+            Emails.send_duel_result(p2, p1.username, "lost", match_id=match.id)
+        else:
+            Emails.send_duel_result(p2, p1.username, "won", match_id=match.id)
+            Emails.send_duel_result(p1, p2.username, "lost", match_id=match.id)
 
 
 class Match(AbstractModel):

@@ -71,10 +71,13 @@ class InviteManager(AbstractManager):
             expires_at=expires_at,
         )
         if invite_type == 'match':
-            Emails.send_match_invite(
-                player, sender.username,
-                format_label=invite.format_label,
-            )
+            if (payload or {}).get('duel'):
+                Emails.send_duel_invite(player, sender.username, payload)
+            else:
+                Emails.send_match_invite(
+                    player, sender.username,
+                    format_label=invite.format_label,
+                )
 
         if invite_type == 'tournament':
             from core.tournament.models import Tournament
@@ -153,15 +156,22 @@ class InviteManager(AbstractManager):
 
         if invite.type == 'match':
             from core.match.models import Match
-            # May raise GoldenGameUnavailable / FixtureUnavailable —
-            # @transaction.atomic rolls back the invite state above so the
-            # user can retry. The format rides on the invite payload
-            # (D-5 #4: accept = consent to the displayed format).
-            Match.objects.create_match(
-                player_1=invite.sender,
-                player_2=invite.player,
-                match_format=(invite.payload or {}).get('format'),
-            )
+            payload = invite.payload or {}
+            if payload.get('duel'):
+                # Duel (phase 14): one game, sides set at accept, settles at
+                # event end. May raise DuelError if the event vanished from the
+                # catalog — @transaction.atomic rolls the invite state back.
+                Match.objects.create_duel(invite)
+            else:
+                # May raise GoldenGameUnavailable / FixtureUnavailable —
+                # @transaction.atomic rolls back the invite state above so the
+                # user can retry. The format rides on the invite payload
+                # (D-5 #4: accept = consent to the displayed format).
+                Match.objects.create_match(
+                    player_1=invite.sender,
+                    player_2=invite.player,
+                    match_format=payload.get('format'),
+                )
             # Notify both sides — the sender (their invite was accepted)
             # and the accepter (they just joined a match).
             Emails.send_match_acceptance_confirmation(invite.sender, invite.player.username)

@@ -50,6 +50,16 @@ def my_match_list_view(request):
     for match in matches_page.object_list:
         match.opponent = match.player_2 if match.player_1_id == user.id else match.player_1
 
+    # Opponent level flair (phase 8). One query for the whole page — map
+    # opponent id → level, attach for the template.
+    from core.ranking.models import PlayerProgress
+    opp_ids = [m.opponent.id for m in matches_page.object_list if m.opponent]
+    levels = dict(
+        PlayerProgress.objects.filter(user_id__in=opp_ids).values_list("user_id", "level")
+    )
+    for match in matches_page.object_list:
+        match.opponent_level = levels.get(match.opponent.id) if match.opponent else None
+
     quick_filters = [
         {"label": "All",         "value": "",          "is_active": state == ""},
         {"label": "Pending",     "value": "created",   "is_active": state == "created"},

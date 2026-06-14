@@ -66,6 +66,10 @@ def portal_dashboard(request):
     from core.potd.views import potd_card_context
     potd_context = potd_card_context(user)
 
+    # ── Progression widget (plan Phase 8) ──────────────────────
+    from core.ranking.standings import progress_card_context
+    progress_context = progress_card_context(user)
+
     return render(request, "portal/dashboard/dashboard.html", {
         "stats": stats,
         "todo": todo,
@@ -74,6 +78,7 @@ def portal_dashboard(request):
         "is_first_run": is_first_run,
         "checklist": checklist,
         **potd_context,
+        **progress_context,
     })
 
 

@@ -68,10 +68,17 @@ window.Alpine.data('notifications', () => ({
     }
   },
 
+  // Tell other islands (e.g. the dashboard stats card) that the unread set
+  // changed so their badge counts can refresh without waiting for the poll.
+  _announceChange() {
+    window.dispatchEvent(new CustomEvent('notifications:changed'));
+  },
+
   // Drop an item from the local list and fall back to the empty state.
   _drop(id) {
     this.items = this.items.filter((n) => n.id !== id);
     if (!this.items.length) this.state = 'empty';
+    this._announceChange();
   },
 
   // Per-item handlers receive the DOM event (CSP build passes $event). The id
@@ -110,6 +117,7 @@ window.Alpine.data('notifications', () => ({
       await api.post(`${this.$root.dataset.src}mark-all-read/`, {});
       this.items = [];
       this.state = 'empty';
+      this._announceChange();
     } catch (e) {
       this.error = e;
       this.state = 'error';
@@ -121,6 +129,7 @@ window.Alpine.data('notifications', () => ({
       await api.post(`${this.$root.dataset.src}clear-all/`, {});
       this.items = [];
       this.state = 'empty';
+      this._announceChange();
     } catch (e) {
       this.error = e;
       this.state = 'error';

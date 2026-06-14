@@ -4,15 +4,15 @@ The lowest-blast-radius page, used to prove the secure pattern end to end:
 
 - **List** (`GET /api/v1/notifications/`) — scoped by `OwnedQuerysetMixin`, so it
   can NEVER return another user's rows (L3 primary control).
-- **Count** (`GET /api/v1/notifications/count/`) — the badge number; counts only
-  *unread* notifications (neither read nor cleared).
+- **Count** (`GET /api/v1/notifications/count/`) — the badge number; the count of
+  the requester's notifications (reading/clearing deletes them, so all that
+  remain are unread).
 - **Mark read** (`PATCH /api/v1/notifications/<id>/`) and **Clear**
   (`POST /api/v1/notifications/<id>/clear/`) — fetched from the scoped queryset
-  (a non-owned id 404s before anything runs — existence not leaked). A fresh
-  notification is stamped read/cleared; one that was *already* read or cleared is
-  deleted instead (the "second tap removes it" rule).
+  (a non-owned id 404s before anything runs — existence not leaked). Reading or
+  clearing a notification deletes it outright.
 - **Mark all read / Clear all** (`POST .../mark-all-read/`, `POST .../clear-all/`)
-  — the same rule applied across the whole inbox in two queries.
+  — delete every notification the requester owns.
 
 Object-level safety is doubly enforced: the scoped `get_queryset` 404s non-owned
 ids, and `IsRecipient` is declared as a belt-and-braces object permission. Session
@@ -42,44 +42,33 @@ class NotificationViewSet(
     # OwnedQuerysetMixin.get_queryset() filters this to request.user.
     queryset = Notification.objects.all().order_by("-created_at")
 
-    def get_queryset(self):
-        qs = super().get_queryset()  # scoped to request.user by OwnedQuerysetMixin
-        if self.action == "list":
-            # The bell only surfaces actionable notifications. Read/cleared
-            # rows linger in the table (until a second tap deletes them) but
-            # must not reappear in the dropdown on the next poll.
-            return qs.filter(read_at__isnull=True, cleared_at__isnull=True)
-        # Detail actions (mark read / clear) must still reach an already-read
-        # row so the "second tap deletes it" rule can fire.
-        return qs
-
     @action(detail=False, methods=["get"])
     def count(self, request):
-        """Badge count — the requester's own *unread* notifications (those
-        neither read nor cleared)."""
+        """Badge count — the requester's notifications (reading/clearing deletes
+        them, so the remaining rows are exactly the unread set)."""
         return Response({"count": Notification.objects.unread(request.user).count()})
 
     def partial_update(self, request, *args, **kwargs):
-        """Mark read — or delete if it was already read/cleared (S-13)."""
+        """Mark read — deletes the notification (S-13)."""
         notification = self.get_object()  # 404 for a non-owned id (scoped qs)
         notification.mark_read()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=["post"])
     def clear(self, request, *args, **kwargs):
-        """Clear — or delete if it was already read/cleared."""
+        """Clear — deletes the notification."""
         notification = self.get_object()  # 404 for a non-owned id (scoped qs)
         notification.clear()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False, methods=["post"], url_path="mark-all-read")
     def mark_all_read(self, request):
-        """Mark every fresh notification read and drop any already handled."""
+        """Delete every notification the requester owns."""
         result = Notification.objects.mark_all_read(request.user)
         return Response(result, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["post"], url_path="clear-all")
     def clear_all(self, request):
-        """Clear every fresh notification and drop any already handled."""
+        """Delete every notification the requester owns."""
         result = Notification.objects.clear_all(request.user)
         return Response(result, status=status.HTTP_200_OK)

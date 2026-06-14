@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from core.user.models import User
 import uuid
 
@@ -9,13 +8,12 @@ class NotificationManager(models.Manager):
         return self.filter(user=user).all()
 
     def unread(self, user):
-        """The user's still-actionable notifications — neither read nor
-        cleared. This is the badge set."""
-        return self.filter(user=user, read_at__isnull=True, cleared_at__isnull=True)
+        """The user's notifications. Reading or clearing a notification deletes
+        it, so every row that still exists is unread — this is the badge set."""
+        return self.filter(user=user)
 
     def mark_read(self, id, user):
-        """Mark the user's notification read, or delete it if it was already
-        handled (read or cleared). Returns True if the row was deleted.
+        """Delete the user's notification — reading dismisses it.
 
         Ownership-scoped: filtering by (id, user) means another user's id
         matches no row -> DoesNotExist -> the view returns 404 (existence not
@@ -24,41 +22,26 @@ class NotificationManager(models.Manager):
         notification = self.filter(id=id, user=user).first()
         if notification is None:
             raise self.model.DoesNotExist
-        return notification.mark_read()
+        notification.delete()
 
     def clear(self, id, user):
-        """Clear the user's notification, or delete it if it was already
-        handled (read or cleared). Returns True if the row was deleted.
+        """Delete the user's notification — clearing dismisses it.
         Ownership-scoped exactly like ``mark_read``."""
         notification = self.filter(id=id, user=user).first()
         if notification is None:
             raise self.model.DoesNotExist
-        return notification.clear()
+        notification.delete()
 
     def mark_all_read(self, user):
-        """Apply the per-item rule across every notification the user owns:
-        already-handled rows are deleted, fresh rows are marked read.
-        Returns ``{"marked": n, "deleted": m}``."""
-        return self._sweep(user, field="read_at")
+        """Delete every notification the user owns. Returns
+        ``{"deleted": n}``."""
+        deleted, _ = self.filter(user=user).delete()
+        return {"deleted": deleted}
 
     def clear_all(self, user):
-        """Like ``mark_all_read`` but stamps ``cleared_at`` on fresh rows.
-        Returns ``{"cleared": n, "deleted": m}``."""
-        result = self._sweep(user, field="cleared_at")
-        return {"cleared": result["marked"], "deleted": result["deleted"]}
-
-    def _sweep(self, user, *, field):
-        # Already-handled (read or cleared) rows are removed; the rest get the
-        # requested timestamp. Two queries, no per-row Python loop.
-        handled = self.filter(user=user).exclude(
-            read_at__isnull=True, cleared_at__isnull=True
-        )
-        deleted = handled.count()
-        handled.delete()
-        marked = self.filter(
-            user=user, read_at__isnull=True, cleared_at__isnull=True
-        ).update(**{field: timezone.now()})
-        return {"marked": marked, "deleted": deleted}
+        """Delete every notification the user owns. Returns
+        ``{"deleted": n}``."""
+        return self.mark_all_read(user)
 
     def create_notification(self, user, message):
         # Ensure the user and message are valid
@@ -78,10 +61,8 @@ class Notification(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # Lifecycle: a notification starts fresh (both null), is read OR cleared
-    # once (one timestamp set), then a second mark/clear action deletes it.
-    read_at = models.DateTimeField(null=True, blank=True)
-    cleared_at = models.DateTimeField(null=True, blank=True)
+    # Lifecycle: a notification is fresh until it is read or cleared, at which
+    # point it is deleted outright (no read/cleared state is retained).
 
     # Use Manager as the default manager
     objects = NotificationManager()
@@ -92,27 +73,10 @@ class Notification(models.Model):
     def __str__(self):
         return self.message
 
-    @property
-    def is_handled(self) -> bool:
-        """Has this notification already been read or cleared?"""
-        return self.read_at is not None or self.cleared_at is not None
+    def mark_read(self) -> None:
+        """Reading dismisses the notification — delete it."""
+        self.delete()
 
-    def mark_read(self) -> bool:
-        """Stamp ``read_at``, or delete the row if it was already handled.
-        Returns True if the row was deleted."""
-        if self.is_handled:
-            self.delete()
-            return True
-        self.read_at = timezone.now()
-        self.save(update_fields=["read_at"])
-        return False
-
-    def clear(self) -> bool:
-        """Stamp ``cleared_at``, or delete the row if it was already handled.
-        Returns True if the row was deleted."""
-        if self.is_handled:
-            self.delete()
-            return True
-        self.cleared_at = timezone.now()
-        self.save(update_fields=["cleared_at"])
-        return False
+    def clear(self) -> None:
+        """Clearing dismisses the notification — delete it."""
+        self.delete()

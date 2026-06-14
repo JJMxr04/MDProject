@@ -13,3 +13,12 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         # We override get_object to return the currently logged-in user
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        from core.ranking.models import PlayerProgress
+        ctx["progress"] = PlayerProgress.objects.filter(user=self.request.user).first()
+        ctx["badges"] = (
+            self.request.user.badges.select_related("season").order_by("-earned_at")
+        )
+        return ctx

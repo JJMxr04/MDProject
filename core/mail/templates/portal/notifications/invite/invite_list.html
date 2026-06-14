@@ -25,7 +25,11 @@
             <div class="flex-grow-1">
                 <div class="fw-semibold">
                     {% if invite.type == "match" %}
-                        {{ invite.sender.username }} invited you to a {{ invite.format_label|default:"" }} match
+                        {% if invite.payload.duel %}
+                            ⚔️ {{ invite.sender.username }} challenged you to a duel
+                        {% else %}
+                            {{ invite.sender.username }} invited you to a {{ invite.format_label|default:"" }} match
+                        {% endif %}
                     {% elif invite.type == "tournament" %}
                         {{ invite.sender.username }} invited you to a tournament
                     {% elif invite.type == "friend" %}
@@ -34,11 +38,16 @@
                         {{ invite.sender.username }} invited you to a {{ invite.get_type_display }}
                     {% endif %}
                 </div>
+                {% if invite.payload.duel %}
+                <div class="small">
+                    They took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — accepting puts you on <strong>{{ invite.payload.opponent_label }}</strong>.
+                </div>
+                {% endif %}
                 <div class="small text-muted">
                     {% include "portal/components/_badge.html" with state=invite.effective_state %}
                     &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
                     {% if invite.effective_state == 'sent' and invite.expires_at %}
-                        &nbsp;&middot;&nbsp; expires {{ invite.expires_at|date:"M j, g:i A" }}
+                        &nbsp;&middot;&nbsp; {% if invite.payload.duel %}kickoff{% else %}expires{% endif %} {{ invite.expires_at|date:"M j, g:i A" }}
                     {% endif %}
                 </div>
             </div>

@@ -17,7 +17,8 @@ def can_access_analytics(user) -> bool:
 
 
 @register.inclusion_tag("portal/components/_sidenav_item.html", takes_context=True)
-def sidenav_item(context, url, icon, label, prefix=None, badge=None, exact=False):
+def sidenav_item(context, url, icon, label, prefix=None, badge=None, exact=False,
+                 exclude=None):
     """Render a single sidebar nav item. Active when the current request
     path starts with `prefix` (or the resolved `url` if no prefix given).
     Set ``exact=True`` to require an exact path match instead of a prefix
@@ -29,6 +30,11 @@ def sidenav_item(context, url, icon, label, prefix=None, badge=None, exact=False
     item highlights when the current path starts with any of them. Used
     by the Settings row, which is the parent of both /web/portal/user/
     profile/ and /web/portal/billing/.
+    ``exclude`` (string, comma-string, or list/tuple) suppresses the active
+    state when the current path starts with one of its prefixes — used when
+    a broad item's prefix is the parent of a more specific item's subtree
+    (e.g. Matches at ``/web/portal/match/`` excluding the Duel subtree at
+    ``/web/portal/match/duels/``), so the two don't both highlight.
     Optional ``badge`` renders a small label after the item text — used
     by the analytics row to flag PRO-gated features for FREE users.
     """
@@ -53,6 +59,17 @@ def sidenav_item(context, url, icon, label, prefix=None, badge=None, exact=False
         is_active = any(
             bool(p) and current_path.startswith(p) for p in match_prefixes
         )
+        if is_active and exclude:
+            if isinstance(exclude, (list, tuple)):
+                exclude_prefixes = list(exclude)
+            elif isinstance(exclude, str) and "," in exclude:
+                exclude_prefixes = [e.strip() for e in exclude.split(",") if e.strip()]
+            else:
+                exclude_prefixes = [exclude]
+            if any(
+                bool(e) and current_path.startswith(e) for e in exclude_prefixes
+            ):
+                is_active = False
 
     return {
         "href": href,

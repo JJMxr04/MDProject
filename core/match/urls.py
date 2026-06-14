@@ -29,5 +29,9 @@ urlpatterns = [
     path('availability/', views.match_availability_view, name='portal-match-availability'),
     # Rematch: pre-filled same-format invite, roles swapped (Phase 5 §5).
     path('<uuid:match_id>/rematch/', views.rematch_view, name='portal-match-rematch'),
+    # Duel: send a single-game opposite-side challenge (phase 14).
+    path('duels/', views.duels_page_view, name='portal-duels'),
+    path('duel/events/', views.duel_events_view, name='portal-match-duel-events'),
+    path('duel/send/', views.send_duel_view, name='portal-match-duel-send'),
 
 ]

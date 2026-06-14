@@ -1,0 +1,123 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Leaderboard{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Leaderboard</h1>
+        <p class="page-header__subtitle">Season race and all-time standings.</p>
+    </div>
+</header>
+
+<div class="lb-tabs">
+    <a class="lb-tab {% if scope != 'global' %}is-active{% endif %}"
+       href="?scope=season{% if chosen_season %}&season={{ chosen_season.slug }}{% endif %}">Season</a>
+    <a class="lb-tab {% if scope == 'global' %}is-active{% endif %}" href="?scope=global">Global</a>
+</div>
+
+{% if scope == 'global' %}
+<section class="card-ui">
+    <header class="card-ui__header"><h2>All-time</h2></header>
+    <div class="card-ui__body">
+        <table class="lb-table">
+            <thead>
+                <tr><th>#</th><th>Player</th><th>Level</th><th>Career pts</th><th>W–L</th><th>Win %</th><th>Badges</th></tr>
+            </thead>
+            <tbody>
+                {% for row in global_rows %}
+                <tr>
+                    <td class="lb-rank">{{ row.rank }}</td>
+                    <td>{{ row.user.username }}</td>
+                    <td>{{ row.level }}</td>
+                    <td>{{ row.global_points }}</td>
+                    <td>{{ row.wins }}–{{ row.losses }}</td>
+                    <td>{{ row.win_rate|floatformat:0 }}%</td>
+                    <td>{{ row.badges }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" class="lb-empty">No ranked players yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% else %}
+<section class="card-ui">
+    <header class="card-ui__header">
+        <h2>{% if chosen_season %}{{ chosen_season.name }}{% else %}Season{% endif %}</h2>
+        <div class="lb-filters">
+            {% if seasons %}
+            <form method="get" class="lb-filter-form">
+                <input type="hidden" name="scope" value="season">
+                <select name="season" onchange="this.form.submit()">
+                    {% for s in seasons %}
+                    <option value="{{ s.slug }}" {% if s.slug == chosen_season.slug %}selected{% endif %}>
+                        {{ s.name }}{% if s.status == 'ACTIVE' %} (live){% endif %}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+            {% endif %}
+        </div>
+    </header>
+    <div class="card-ui__body">
+        {% if divisions|length > 1 %}
+        <div class="lb-divisions">
+            <a class="lb-pill {% if not active_division %}is-active{% endif %}"
+               href="?scope=season&season={{ chosen_season.slug }}">All divisions</a>
+            {% for d in divisions %}
+            <a class="lb-pill {% if active_division == d %}is-active{% endif %}"
+               href="?scope=season&season={{ chosen_season.slug }}&division={{ d }}">Division {{ d }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if chosen_season %}
+        <table class="lb-table">
+            <thead>
+                <tr><th>#</th><th>Player</th>{% if divisions|length > 1 %}<th>Div</th>{% endif %}<th>Points</th><th>W–L–D</th><th>Win %</th><th>POTD</th></tr>
+            </thead>
+            <tbody>
+                {% for row in season_rows %}
+                <tr>
+                    <td class="lb-rank">{{ row.rank }}</td>
+                    <td>{{ row.user.username }}</td>
+                    {% if divisions|length > 1 %}<td>{{ row.division }}</td>{% endif %}
+                    <td>{{ row.season_points }}</td>
+                    <td>{{ row.wins }}–{{ row.losses }}–{{ row.draws }}</td>
+                    <td>{{ row.win_rate|floatformat:0 }}%</td>
+                    <td>{{ row.potd_wins }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" class="lb-empty">No ranked players yet this season — play {{ 3 }}+ matches to appear.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="lb-empty">No season is running yet. Check back when one opens.</p>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endblock content %}
+
+{% block css %}
+<style>
+    .lb-tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
+    .lb-tab { padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary); font-weight: var(--weight-medium); }
+    .lb-tab.is-active { background: var(--brand-yellow); color: var(--text-on-accent); }
+    .lb-filters { margin-left: auto; }
+    .lb-filter-form select { padding: var(--space-1) var(--space-2); border: 1px solid var(--border-strong); border-radius: var(--radius-md); }
+    .lb-divisions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3); }
+    .lb-pill { padding: var(--space-1) var(--space-3); border-radius: 999px; border: 1px solid var(--border-strong); text-decoration: none; color: var(--text-secondary); font-size: var(--text-xs); }
+    .lb-pill.is-active { background: var(--brand-blue-dark); color: #fff; border-color: var(--brand-blue-dark); }
+    .lb-table { width: 100%; border-collapse: collapse; }
+    .lb-table th, .lb-table td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--border-strong); }
+    .lb-table th { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+    .lb-rank { font-weight: var(--weight-semibold); color: var(--text-secondary); }
+    .lb-empty { color: var(--text-secondary); text-align: center; padding: var(--space-5); }
+    .card-ui__header { display: flex; align-items: center; gap: var(--space-3); }
+</style>
+{% endblock css %}

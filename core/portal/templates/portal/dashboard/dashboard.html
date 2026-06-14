@@ -11,6 +11,48 @@
     </div>
 </header>
 
+{% if rank_progress %}
+<section class="card-ui mb-4 rank-widget" aria-label="Your progression">
+    <div class="card-ui__body">
+        <div class="rank-widget__row">
+            <div class="rank-widget__level">
+                <span class="rank-widget__level-num">{{ rank_progress.level }}</span>
+                <span class="rank-widget__level-label">Level</span>
+            </div>
+            <div class="rank-widget__bar-wrap">
+                <div class="rank-widget__bar"><span style="width: {{ rank_progress.xp_pct }}%"></span></div>
+                <div class="rank-widget__bar-meta">
+                    {{ rank_progress.xp_into }} / {{ rank_progress.xp_span }} XP to next level
+                    {% if rank_progress.xp_this_week %}&middot; <strong>+{{ rank_progress.xp_this_week }} XP</strong> this week{% endif %}
+                </div>
+            </div>
+            <div class="rank-widget__stat">
+                {% if rank_progress.season_rank %}
+                    <span class="rank-widget__stat-num">#{{ rank_progress.season_rank }}</span>
+                    <span class="rank-widget__stat-label">Season rank</span>
+                {% else %}
+                    <span class="rank-widget__stat-num">{{ rank_progress.global_points }}</span>
+                    <span class="rank-widget__stat-label">Career points</span>
+                {% endif %}
+            </div>
+            <a href="{% url 'core-portal:portal-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
+        </div>
+    </div>
+</section>
+<style>
+    .rank-widget__row { display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; }
+    .rank-widget__level { text-align: center; }
+    .rank-widget__level-num { display: block; font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--brand-blue-dark); }
+    .rank-widget__level-label, .rank-widget__stat-label { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+    .rank-widget__bar-wrap { flex: 1; min-width: 180px; }
+    .rank-widget__bar { height: 10px; background: var(--surface-muted); border-radius: 999px; overflow: hidden; }
+    .rank-widget__bar span { display: block; height: 100%; background: var(--brand-yellow); }
+    .rank-widget__bar-meta { font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-1); }
+    .rank-widget__stat { text-align: center; }
+    .rank-widget__stat-num { display: block; font-size: var(--text-lg); font-weight: var(--weight-semibold); }
+</style>
+{% endif %}
+
 {% if potd %}
 <section class="card-ui potd-card mb-4" aria-label="Pick of the Day"
          id="potd-card"

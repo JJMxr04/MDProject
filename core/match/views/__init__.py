@@ -4,3 +4,4 @@ from .eventMarket import event_markets
 from .myMatchList import my_match_list_view
 from .publicMatchList import public_match_list_view, create_public_match_view, public_match_detail_view, accept_public_match_view, match_availability_view
 from .available_events import available_events_for_match
+from .duel import send_duel_view, duels_page_view, duel_events_view

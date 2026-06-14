@@ -80,3 +80,16 @@ def expire_invites_cron(timestamp: int):
     flipped = Invite.objects.expire_stale()
     if flipped:
         logger.info("expire_invites_cron: flipped %d invites to expired", flipped)
+
+
+# Season lifecycle (roadmap Phase 8): close ended seasons (freeze final_rank,
+# award badges + finish bonuses, apply promotion/relegation), activate the next
+# DRAFT, warn when none is scheduled. Daily at midnight NY like the rest.
+@app.periodic(cron="0 0 * * *")
+@app.task(name="core.crons.season_lifecycle_cron", queue="default", retry=CRON_RETRY)
+def season_lifecycle_cron(timestamp: int):
+    from core.ranking.lifecycle import run_lifecycle
+
+    report = run_lifecycle()
+    if report.get("closed") or report.get("activated"):
+        logger.info("season_lifecycle_cron: %s", report)

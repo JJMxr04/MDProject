@@ -1,0 +1,129 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Duel a friend{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Duel a friend</h1>
+        <p class="page-header__subtitle">One game, opposite sides — pick a friend, an event, and your side.</p>
+    </div>
+</header>
+
+<section class="card-ui"
+         data-island="duel-builder"
+         x-data="duel-builder"
+         data-friends-url="{% url 'api-v1:friends-list' %}"
+         data-events-url="{% url 'core-portal:portal-match-duel-events' %}"
+         data-outcomes-url="{% url 'core-portal:portal-match-event-outcomes' 'EVENTID' %}"
+         data-send-url="{% url 'core-portal:portal-match-duel-send' %}">
+    <div class="card-ui__body">
+        <template x-if="isLoading"><p class="duel-meta">Loading…</p></template>
+        <template x-if="isError"><p class="duel-meta">Couldn't load the duel builder. Refresh to try again.</p></template>
+
+        <template x-if="hasMessage">
+            <div class="duel-flash" :class="messageType" x-text="message"></div>
+        </template>
+
+        <!-- Step 1 — pick a friend -->
+        <template x-if="showFriendStep">
+            <div>
+                <h2 class="duel-step">1 · Choose a friend</h2>
+                <template x-if="hasFriends">
+                    <div class="duel-grid">
+                        <template x-for="f in friends" :key="f.id">
+                            <button type="button" class="duel-chip"
+                                    :data-id="f.id" :data-name="f.username"
+                                    @click="selectFriend" x-text="f.username"></button>
+                        </template>
+                    </div>
+                </template>
+                <p class="duel-meta" x-show="noFriends">
+                    Add a friend first — duels are friend-to-friend.
+                </p>
+            </div>
+        </template>
+
+        <!-- Step 2 — pick an event -->
+        <template x-if="showEventStep">
+            <div>
+                <h2 class="duel-step">
+                    2 · Choose an event
+                    <button type="button" class="duel-link" @click="resetFriend">change friend (<span x-text="selectedFriendName"></span>)</button>
+                </h2>
+                <template x-if="hasEvents">
+                    <div class="duel-list">
+                        <template x-for="ev in events" :key="ev.event_id">
+                            <button type="button" class="duel-row"
+                                    :data-id="ev.event_id" :data-label="ev.label"
+                                    @click="selectEvent">
+                                <span class="duel-row__label" x-text="ev.label"></span>
+                                <span class="duel-row__meta" x-text="ev.league"></span>
+                            </button>
+                        </template>
+                    </div>
+                </template>
+                <p class="duel-meta" x-show="noEvents">No upcoming events available right now.</p>
+            </div>
+        </template>
+
+        <!-- Step 3 — pick your side -->
+        <template x-if="showSideStep">
+            <div>
+                <h2 class="duel-step">
+                    3 · Take your side
+                    <button type="button" class="duel-link" @click="resetEvent">change event (<span x-text="selectedEventLabel"></span>)</button>
+                </h2>
+                <p class="duel-meta">You'll take the side you tap — <span x-text="selectedFriendName"></span> gets the other one.</p>
+                <template x-if="hasSides">
+                    <div class="duel-markets">
+                        <template x-for="m in duelMarkets" :key="m.label">
+                            <div class="duel-market">
+                                <div class="duel-market__label" x-text="m.label"></div>
+                                <div class="duel-market__sides">
+                                    <template x-for="s in m.sides" :key="s.selection_id">
+                                        <button type="button" class="duel-side"
+                                                :data-selection-id="s.selection_id"
+                                                @click="sendDuel">
+                                            <span x-text="s.label"></span>
+                                            <span class="duel-side__odds" x-text="s.odds"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <p class="duel-meta" x-show="noSides">No two-way markets on this event — try another.</p>
+            </div>
+        </template>
+    </div>
+</section>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .duel-step { font-size: var(--text-lg); margin: 0 0 var(--space-4); display: flex; align-items: baseline; gap: var(--space-3); }
+    .duel-meta { color: var(--text-secondary); font-size: var(--text-sm); }
+    .duel-link { background: none; border: 0; color: var(--brand-blue-dark); font-size: var(--text-xs); cursor: pointer; text-decoration: underline; padding: 0; }
+    .duel-flash { padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-4); font-size: var(--text-sm); }
+    .duel-flash.success { background: var(--state-success, #1f8a4c); color: #fff; }
+    .duel-flash.error { background: var(--state-danger); color: #fff; }
+    .duel-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .duel-chip { padding: var(--space-2) var(--space-4); border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface-card); cursor: pointer; font-weight: var(--weight-medium); }
+    .duel-chip:hover { background: var(--surface-muted); }
+    .duel-list { display: flex; flex-direction: column; gap: var(--space-2); max-height: 460px; overflow-y: auto; }
+    .duel-row { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); cursor: pointer; text-align: left; }
+    .duel-row:hover { background: var(--surface-muted); }
+    .duel-row__label { font-weight: var(--weight-medium); }
+    .duel-row__meta { color: var(--text-secondary); font-size: var(--text-xs); }
+    .duel-markets { display: flex; flex-direction: column; gap: var(--space-4); }
+    .duel-market__label { font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
+    .duel-market__sides { display: flex; gap: var(--space-3); }
+    .duel-side { flex: 1; display: flex; justify-content: space-between; gap: var(--space-2); padding: var(--space-3) var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); cursor: pointer; font-weight: var(--weight-medium); }
+    .duel-side:hover { background: var(--brand-yellow); color: var(--text-on-accent); }
+    .duel-side__odds { color: var(--text-secondary); }
+    .duel-side:hover .duel-side__odds { color: var(--text-on-accent); }
+</style>
+{% endblock css %}

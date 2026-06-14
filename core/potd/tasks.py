@@ -41,6 +41,17 @@ def sync_results_cron(timestamp: int):
     if changed:
         logger.info("PotD results synced: %d picks settled", changed)
 
+    # Credit newly-WON picks with season/global points + XP (phase 8). Runs
+    # after the bulk result sync (which skips signals); idempotent per pick.
+    try:
+        from core.ranking.engine import credit_settled_potd
+
+        credited = credit_settled_potd()
+        if credited:
+            logger.info("PotD wins credited to ranking: %d", credited)
+    except Exception:  # noqa: BLE001
+        logger.exception("credit_settled_potd failed")
+
 
 @app.task(name="core.potd.closing_nudge", queue="default",
           retry=RetryStrategy(max_attempts=2, linear_wait=120))
