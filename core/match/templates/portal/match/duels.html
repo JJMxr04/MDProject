@@ -1,109 +1,281 @@
 {% extends "portal/base_app.html" %}
 {% load static %}
 
-{% block title %}Duel a friend{% endblock title %}
+{% block title %}Duels{% endblock title %}
 
 {% block content %}
 <header class="page-header">
     <div>
-        <h1 class="page-header__title">Duel a friend</h1>
-        <p class="page-header__subtitle">One game, opposite sides — pick a friend, an event, and your side.</p>
+        <h1 class="page-header__title">Duels</h1>
+        <p class="page-header__subtitle">One game, opposite sides. Challenge a friend and settle when the event ends.</p>
     </div>
+    <button type="button" class="btn-ui btn-ui--primary" data-modal-open="#duel-create-modal">
+        <i class="bi bi-plus-lg" aria-hidden="true"></i> Create duel
+    </button>
 </header>
 
-<section class="card-ui"
-         data-island="duel-builder"
-         x-data="duel-builder"
-         data-friends-url="{% url 'api-v1:friends-list' %}"
-         data-events-url="{% url 'core-portal:portal-match-duel-events' %}"
-         data-outcomes-url="{% url 'core-portal:portal-match-event-outcomes' 'EVENTID' %}"
-         data-send-url="{% url 'core-portal:portal-match-duel-send' %}">
+<!-- Record -->
+<section class="duel-stats">
+    <div class="duel-stat"><span class="duel-stat__num">{{ duel_record.total }}</span><span class="duel-stat__lbl">Duels</span></div>
+    <div class="duel-stat"><span class="duel-stat__num duel-stat__num--won">{{ duel_record.won }}</span><span class="duel-stat__lbl">Won</span></div>
+    <div class="duel-stat"><span class="duel-stat__num duel-stat__num--lost">{{ duel_record.lost }}</span><span class="duel-stat__lbl">Lost</span></div>
+    <div class="duel-stat"><span class="duel-stat__num">{{ duel_record.draw }}</span><span class="duel-stat__lbl">Draws</span></div>
+    {% if duel_record.win_rate is not None %}
+    <div class="duel-stat"><span class="duel-stat__num">{{ duel_record.win_rate }}%</span><span class="duel-stat__lbl">Win rate</span></div>
+    {% endif %}
+</section>
+
+<!-- Incoming challenges — accept / decline reuse invite_list.js via #invite-list -->
+<section class="card-ui mb-4">
+    <div class="card-ui__header"><h2 class="card-ui__title">Accept the duel challenge</h2></div>
     <div class="card-ui__body">
-        <template x-if="isLoading"><p class="duel-meta">Loading…</p></template>
-        <template x-if="isError"><p class="duel-meta">Couldn't load the duel builder. Refresh to try again.</p></template>
-
-        <template x-if="hasMessage">
-            <div class="duel-flash" :class="messageType" x-text="message"></div>
-        </template>
-
-        <!-- Step 1 — pick a friend -->
-        <template x-if="showFriendStep">
-            <div>
-                <h2 class="duel-step">1 · Choose a friend</h2>
-                <template x-if="hasFriends">
-                    <div class="duel-grid">
-                        <template x-for="f in friends" :key="f.id">
-                            <button type="button" class="duel-chip"
-                                    :data-id="f.id" :data-name="f.username"
-                                    @click="selectFriend" x-text="f.username"></button>
-                        </template>
+        <div id="invite-list"
+             data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
+             data-csrf="{{ csrf_token }}">
+            {% if challenges %}
+            <ul class="list-group list-group-flush" style="margin:0;">
+                {% for invite in challenges %}
+                <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
+                    {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">⚔️ {{ invite.sender.username }} challenged you to a duel</div>
+                        <div class="small">
+                            They took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — accepting puts you on <strong>{{ invite.payload.opponent_label }}</strong>.
+                        </div>
+                        {% if invite.expires_at %}
+                        <div class="small text-muted">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</div>
+                        {% endif %}
                     </div>
-                </template>
-                <p class="duel-meta" x-show="noFriends">
-                    Add a friend first — duels are friend-to-friend.
-                </p>
-            </div>
-        </template>
-
-        <!-- Step 2 — pick an event -->
-        <template x-if="showEventStep">
-            <div>
-                <h2 class="duel-step">
-                    2 · Choose an event
-                    <button type="button" class="duel-link" @click="resetFriend">change friend (<span x-text="selectedFriendName"></span>)</button>
-                </h2>
-                <template x-if="hasEvents">
-                    <div class="duel-list">
-                        <template x-for="ev in events" :key="ev.event_id">
-                            <button type="button" class="duel-row"
-                                    :data-id="ev.event_id" :data-label="ev.label"
-                                    @click="selectEvent">
-                                <span class="duel-row__label" x-text="ev.label"></span>
-                                <span class="duel-row__meta" x-text="ev.league"></span>
-                            </button>
-                        </template>
+                    <div class="d-flex gap-2">
+                        <button class="btn-ui btn-ui--primary btn-ui--sm"
+                                data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">
+                            Accept
+                        </button>
+                        <button class="btn-ui btn-ui--secondary btn-ui--sm"
+                                data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="reject">
+                            Decline
+                        </button>
                     </div>
-                </template>
-                <p class="duel-meta" x-show="noEvents">No upcoming events available right now.</p>
-            </div>
-        </template>
-
-        <!-- Step 3 — pick your side -->
-        <template x-if="showSideStep">
-            <div>
-                <h2 class="duel-step">
-                    3 · Take your side
-                    <button type="button" class="duel-link" @click="resetEvent">change event (<span x-text="selectedEventLabel"></span>)</button>
-                </h2>
-                <p class="duel-meta">You'll take the side you tap — <span x-text="selectedFriendName"></span> gets the other one.</p>
-                <template x-if="hasSides">
-                    <div class="duel-markets">
-                        <template x-for="m in duelMarkets" :key="m.label">
-                            <div class="duel-market">
-                                <div class="duel-market__label" x-text="m.label"></div>
-                                <div class="duel-market__sides">
-                                    <template x-for="s in m.sides" :key="s.selection_id">
-                                        <button type="button" class="duel-side"
-                                                :data-selection-id="s.selection_id"
-                                                @click="sendDuel">
-                                            <span x-text="s.label"></span>
-                                            <span class="duel-side__odds" x-text="s.odds"></span>
-                                        </button>
-                                    </template>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </template>
-                <p class="duel-meta" x-show="noSides">No two-way markets on this event — try another.</p>
-            </div>
-        </template>
+                </li>
+                {% endfor %}
+            </ul>
+            {% include "portal/components/_pagination_param.html" with page_obj=challenges param_name="cpage" other_qs=challenges_other_qs %}
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="inbox" title="No challenges waiting." body="When a friend duels you, it shows up here to accept or decline." %}
+            {% endif %}
+        </div>
     </div>
 </section>
+
+<!-- Sent / pending — outgoing challenges awaiting a response. Cancel reuses
+     invite_list.js (config read from the always-present #invite-list above). -->
+<section class="card-ui mb-4">
+    <div class="card-ui__header"><h2 class="card-ui__title">Sent &middot; pending</h2></div>
+    <div class="card-ui__body">
+        {% if sent %}
+        <ul class="list-group list-group-flush" style="margin:0;">
+            {% for invite in sent %}
+            <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
+                {% include "portal/components/_avatar.html" with user=invite.player size=40 %}
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">⚔️ You challenged {{ invite.player.username }} to a duel</div>
+                    <div class="small">
+                        You took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — they'd get <strong>{{ invite.payload.opponent_label }}</strong>.
+                    </div>
+                    {% if invite.expires_at %}
+                    <div class="small text-muted">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</div>
+                    {% endif %}
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn-ui btn-ui--secondary btn-ui--sm"
+                            data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="cancel">
+                        Cancel
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% include "portal/components/_pagination_param.html" with page_obj=sent param_name="spage" other_qs=sent_other_qs %}
+        {% else %}
+            {% include "portal/components/_empty_state.html" with icon="send" title="Nothing pending." body="Challenges you send sit here until your friend accepts or the event starts." %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- In-progress duels -->
+<section class="card-ui mb-4">
+    <div class="card-ui__header"><h2 class="card-ui__title">In progress</h2></div>
+    <div class="card-ui__body">
+        {% if accepted_rows %}
+        <ul class="duel-history">
+            {% for d in accepted_rows %}
+            <li class="duel-history__row">
+                <div class="duel-history__main">
+                    <div class="fw-semibold">vs {{ d.opponent_name }}</div>
+                    {% if d.event_label %}<div class="small text-muted">{{ d.event_label }}</div>{% endif %}
+                    <div class="small">You: <strong>{{ d.your_side }}</strong> &middot; Them: {{ d.opponent_side }}</div>
+                </div>
+                <span class="duel-badge duel-badge--open">In progress</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% include "portal/components/_pagination_param.html" with page_obj=accepted param_name="apage" other_qs=accepted_other_qs %}
+        {% else %}
+            {% include "portal/components/_empty_state.html" with icon="hourglass-split" title="No duels in progress." body="Accepted duels live here until the event settles." %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- Finished duels -->
+<section class="card-ui">
+    <div class="card-ui__header"><h2 class="card-ui__title">Finished</h2></div>
+    <div class="card-ui__body">
+        {% if finished_rows %}
+        <ul class="duel-history">
+            {% for d in finished_rows %}
+            <li class="duel-history__row">
+                <div class="duel-history__main">
+                    <div class="fw-semibold">vs {{ d.opponent_name }}</div>
+                    {% if d.event_label %}<div class="small text-muted">{{ d.event_label }}</div>{% endif %}
+                    <div class="small">You: <strong>{{ d.your_side }}</strong> &middot; Them: {{ d.opponent_side }}</div>
+                </div>
+                <span class="duel-badge duel-badge--{{ d.status }}">
+                    {% if d.status == "won" %}Won{% elif d.status == "lost" %}Lost{% else %}Draw{% endif %}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% include "portal/components/_pagination_param.html" with page_obj=finished param_name="fpage" other_qs=finished_other_qs %}
+        {% else %}
+            {% include "portal/components/_empty_state.html" with icon="trophy" title="No finished duels yet." body="Settled duels — your wins, losses and draws — show up here." %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- Create-duel modal: hosts the duel-builder island (shell.js toggles .is-open) -->
+<div class="modal-ui" id="duel-create-modal" role="dialog" aria-modal="true" aria-labelledby="duel-create-modal-title" data-modal>
+    <div class="modal-ui__content">
+        <header class="modal-ui__header">
+            <h2 id="duel-create-modal-title">Create a duel</h2>
+            <button type="button" class="modal-ui__close" data-modal-close aria-label="Close">&times;</button>
+        </header>
+        <div class="modal-ui__body"
+             data-island="duel-builder"
+             x-data="duel-builder"
+             data-friends-url="{% url 'api-v1:friends-list' %}"
+             data-events-url="{% url 'core-portal:portal-match-duel-events' %}"
+             data-outcomes-url="{% url 'core-portal:portal-match-event-outcomes' 'EVENTID' %}"
+             data-send-url="{% url 'core-portal:portal-match-duel-send' %}">
+            <template x-if="isLoading"><p class="duel-meta">Loading…</p></template>
+            <template x-if="isError"><p class="duel-meta">Couldn't load the duel builder. Refresh to try again.</p></template>
+
+            <template x-if="hasMessage">
+                <div class="duel-flash" :class="messageType" x-text="message"></div>
+            </template>
+
+            <!-- Step 1 — pick a friend -->
+            <template x-if="showFriendStep">
+                <div>
+                    <h2 class="duel-step">1 · Choose a friend</h2>
+                    <template x-if="hasFriends">
+                        <div class="duel-grid">
+                            <template x-for="f in friends" :key="f.id">
+                                <button type="button" class="duel-chip"
+                                        :data-id="f.id" :data-name="f.username"
+                                        @click="selectFriend" x-text="f.username"></button>
+                            </template>
+                        </div>
+                    </template>
+                    <p class="duel-meta" x-show="noFriends">
+                        Add a friend first — duels are friend-to-friend.
+                    </p>
+                </div>
+            </template>
+
+            <!-- Step 2 — pick an event -->
+            <template x-if="showEventStep">
+                <div>
+                    <h2 class="duel-step">
+                        2 · Choose an event
+                        <button type="button" class="duel-link" @click="resetFriend">change friend (<span x-text="selectedFriendName"></span>)</button>
+                    </h2>
+                    <template x-if="hasEvents">
+                        <div class="duel-list">
+                            <template x-for="ev in events" :key="ev.event_id">
+                                <button type="button" class="duel-row"
+                                        :data-id="ev.event_id" :data-label="ev.label"
+                                        @click="selectEvent">
+                                    <span class="duel-row__label" x-text="ev.label"></span>
+                                    <span class="duel-row__meta" x-text="ev.league"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </template>
+                    <p class="duel-meta" x-show="noEvents">No upcoming events available right now.</p>
+                </div>
+            </template>
+
+            <!-- Step 3 — pick your side -->
+            <template x-if="showSideStep">
+                <div>
+                    <h2 class="duel-step">
+                        3 · Take your side
+                        <button type="button" class="duel-link" @click="resetEvent">change event (<span x-text="selectedEventLabel"></span>)</button>
+                    </h2>
+                    <p class="duel-meta">You'll take the side you tap — <span x-text="selectedFriendName"></span> gets the other one.</p>
+                    <template x-if="hasSides">
+                        <div class="duel-markets">
+                            <template x-for="m in duelMarkets" :key="m.label">
+                                <div class="duel-market">
+                                    <div class="duel-market__label" x-text="m.label"></div>
+                                    <div class="duel-market__sides">
+                                        <template x-for="s in m.sides" :key="s.selection_id">
+                                            <button type="button" class="duel-side"
+                                                    :data-selection-id="s.selection_id"
+                                                    @click="sendDuel">
+                                                <span x-text="s.label"></span>
+                                                <span class="duel-side__odds" x-text="s.odds"></span>
+                                            </button>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <p class="duel-meta" x-show="noSides">No two-way markets on this event — try another.</p>
+                </div>
+            </template>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
 {% block css %}
 <style>
+    .duel-stats { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .duel-stat { flex: 1 1 0; min-width: 96px; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); padding: var(--space-4) var(--space-3); background: var(--surface-card); border: 1px solid var(--border-strong); border-radius: var(--radius-md); }
+    .duel-stat__num { font-size: var(--text-2xl, 1.5rem); font-weight: var(--weight-semibold); }
+    .duel-stat__num--won { color: var(--state-success); }
+    .duel-stat__num--lost { color: var(--state-danger); }
+    .duel-stat__lbl { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+
+    .card-ui.mb-4 { margin-bottom: var(--space-5); }
+    .card-ui__title { font-size: var(--text-lg); margin: 0; }
+
+    .duel-history { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+    .duel-history__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle, var(--surface-muted)); }
+    .duel-history__row:last-child { border-bottom: 0; }
+    .duel-history__main { min-width: 0; }
+
+    .duel-badge { flex-shrink: 0; padding: var(--space-1) var(--space-3); border-radius: 999px; font-size: var(--text-xs); font-weight: var(--weight-semibold); }
+    .duel-badge--won { background: var(--state-success); color: #fff; }
+    .duel-badge--lost { background: var(--state-danger); color: #fff; }
+    .duel-badge--draw { background: var(--surface-muted); color: var(--text-secondary); }
+    .duel-badge--open { background: var(--state-warning); color: #fff; }
+
+    .pager { display: flex; align-items: center; justify-content: center; gap: var(--space-3); margin-top: var(--space-4); }
+
+    /* Builder steps (inside the create modal) */
     .duel-step { font-size: var(--text-lg); margin: 0 0 var(--space-4); display: flex; align-items: baseline; gap: var(--space-3); }
     .duel-meta { color: var(--text-secondary); font-size: var(--text-sm); }
     .duel-link { background: none; border: 0; color: var(--brand-blue-dark); font-size: var(--text-xs); cursor: pointer; text-decoration: underline; padding: 0; }
@@ -127,3 +299,7 @@
     .duel-side:hover .duel-side__odds { color: var(--text-on-accent); }
 </style>
 {% endblock css %}
+
+{% block scripts %}
+<script src="{% static 'js/pages/invite_list.js' %}"></script>
+{% endblock scripts %}

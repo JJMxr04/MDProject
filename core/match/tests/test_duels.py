@@ -227,8 +227,21 @@ class DuelPageTests(TestCase):
         from django.urls import reverse
         resp = self.client.get(reverse("core-portal:portal-duels"))
         self.assertEqual(resp.status_code, 200)
-        self.assertContains(resp, "Duel a friend")
+        # The builder now lives behind a "Create duel" button + modal.
+        self.assertContains(resp, 'data-modal-open="#duel-create-modal"')
         self.assertContains(resp, 'data-island="duel-builder"')
+        self.assertContains(resp, "Accept the duel challenge")
+        self.assertContains(resp, "Finished")
+
+    def test_duels_page_context_pages(self):
+        from django.core.paginator import Page
+        from django.urls import reverse
+        resp = self.client.get(reverse("core-portal:portal-duels"))
+        for key in ("challenges", "sent", "accepted", "finished"):
+            self.assertIsInstance(resp.context[key], Page)
+        record = resp.context["duel_record"]
+        self.assertEqual(record["total"], 0)
+        self.assertIsNone(record["win_rate"])
 
     def test_events_endpoint_shapes_upcoming_events(self):
         from unittest.mock import MagicMock, patch
@@ -254,6 +267,144 @@ class DuelPageTests(TestCase):
         self.client.logout()
         resp = self.client.get(reverse("core-portal:portal-match-duel-events"))
         self.assertEqual(resp.status_code, 302)
+
+
+@override_settings(USE_AGGRIGATOR=False)
+class DuelRecordTests(TestCase):
+    """`duel_record` / `duel_row` / list helpers — the duel-page read layer."""
+
+    def setUp(self):
+        self.challenger = make_user("challenger")
+        self.opponent = make_user("opponent")
+        self.challenger.add_friend(self.opponent)
+        self.league = make_league()
+
+    def _duel(self, home_status=None, away_status=None):
+        """Send + accept a fresh duel; optionally settle it. Returns the Match."""
+        event = make_event(self.league)
+        _, home, away = make_two_way_market(event)
+        invite = duels.send_duel(self.challenger, self.opponent, event.id, home.id)
+        Invite.objects.accept_invite(invite)
+        match = Match.objects.get(match_type="duel", games__event=event)
+        if home_status is not None:
+            home.settlement_status = home_status
+            home.save()
+            away.settlement_status = away_status
+            away.save()
+            match.refresh_from_db()
+        return match, home, away
+
+    def test_duel_record_counts_won_lost_draw(self):
+        self._duel(SettlementStatus.WON, SettlementStatus.LOST)   # challenger wins
+        self._duel(SettlementStatus.LOST, SettlementStatus.WON)   # challenger loses
+        self._duel(SettlementStatus.PUSH, SettlementStatus.PUSH)  # draw
+        rec = duels.duel_record(self.challenger)
+        self.assertEqual(rec["total"], 3)
+        self.assertEqual(rec["won"], 1)
+        self.assertEqual(rec["lost"], 1)
+        self.assertEqual(rec["draw"], 1)
+        self.assertEqual(rec["open"], 0)
+        self.assertEqual(rec["win_rate"], 50)
+        # The opponent sees the mirror image.
+        opp = duels.duel_record(self.opponent)
+        self.assertEqual(opp["won"], 1)
+        self.assertEqual(opp["lost"], 1)
+
+    def test_open_duel_not_counted_as_draw(self):
+        self._duel()  # accepted, unsettled
+        rec = duels.duel_record(self.challenger)
+        self.assertEqual(rec["open"], 1)
+        self.assertEqual(rec["draw"], 0)
+        self.assertIsNone(rec["win_rate"])
+
+    def test_duel_row_your_side_perspective(self):
+        match, home, away = self._duel()
+        chal_row = duels.duel_row(match, self.challenger)
+        opp_row = duels.duel_row(match, self.opponent)
+        self.assertEqual(chal_row["your_side"], home.label)
+        self.assertEqual(chal_row["opponent_side"], away.label)
+        self.assertEqual(chal_row["status"], "open")
+        # Same match, opposite perspective → sides swap.
+        self.assertEqual(opp_row["your_side"], away.label)
+        self.assertEqual(opp_row["opponent_name"], self.challenger.username)
+
+    def test_finished_and_accepted_lists_split_by_state(self):
+        self._duel(SettlementStatus.WON, SettlementStatus.LOST)  # finished
+        self._duel()  # in progress
+        self.assertEqual(duels.accepted_duels(self.challenger).count(), 1)
+        self.assertEqual(duels.finished_duels(self.challenger).count(), 1)
+
+    def test_outgoing_duel_invites_pending_then_clears_on_accept(self):
+        event = make_event(self.league)
+        _, home, _ = make_two_way_market(event)
+        invite = duels.send_duel(self.challenger, self.opponent, event.id, home.id)
+        # Visible to the sender as pending, not to the recipient's sent list.
+        self.assertIn(invite, list(duels.outgoing_duel_invites(self.challenger)))
+        self.assertEqual(list(duels.outgoing_duel_invites(self.opponent)), [])
+        # Once accepted it's a Match, so it leaves the pending list.
+        Invite.objects.accept_invite(invite)
+        self.assertEqual(list(duels.outgoing_duel_invites(self.challenger)), [])
+
+    def test_incoming_duel_invites_excludes_expired_and_non_duels(self):
+        # A live duel invite is visible to the opponent.
+        event = make_event(self.league)
+        _, home, _ = make_two_way_market(event)
+        live = duels.send_duel(self.challenger, self.opponent, event.id, home.id)
+        self.assertIn(live, list(duels.incoming_duel_invites(self.opponent)))
+
+        # An expired duel invite drops out.
+        ev2 = make_event(self.league)
+        _, home2, _ = make_two_way_market(ev2)
+        expired = duels.send_duel(self.challenger, self.opponent, ev2.id, home2.id)
+        Invite.objects.filter(pk=expired.pk).update(expires_at=_past())
+        self.assertNotIn(expired, list(duels.incoming_duel_invites(self.opponent)))
+
+        # A non-duel match invite is excluded (payload.duel filter). Created
+        # directly to avoid the manager's match-invite email path.
+        Invite.objects.create(
+            player=self.opponent, sender=self.challenger,
+            type="match", state="sent", payload={"duel": False},
+        )
+        ids = {i.pk for i in duels.incoming_duel_invites(self.opponent)}
+        self.assertEqual(ids, {live.pk})
+
+
+@override_settings(USE_AGGRIGATOR=False)
+class DuelPagePaginationTests(TestCase):
+    def setUp(self):
+        self.challenger = make_user("challenger")
+        self.opponent = make_user("opponent")
+        self.challenger.add_friend(self.opponent)
+        self.client.force_login(self.challenger)
+        self.league = make_league()
+
+    def test_incoming_challenge_renders_accept_buttons(self):
+        from django.urls import reverse
+        event = make_event(self.league)
+        _, home, _ = make_two_way_market(event)
+        duels.send_duel(self.challenger, self.opponent, event.id, home.id)
+        self.client.force_login(self.opponent)
+        resp = self.client.get(reverse("core-portal:portal-duels"))
+        self.assertContains(resp, 'id="invite-list"')
+        self.assertContains(resp, 'data-action="invite-act"')
+        self.assertContains(resp, "challenged you to a duel")
+
+    def test_finished_list_paginates_at_10(self):
+        from django.urls import reverse
+        for _ in range(11):
+            event = make_event(self.league)
+            _, home, away = make_two_way_market(event)
+            invite = duels.send_duel(self.challenger, self.opponent, event.id, home.id)
+            Invite.objects.accept_invite(invite)
+            home.settlement_status = SettlementStatus.WON
+            home.save()
+            away.settlement_status = SettlementStatus.LOST
+            away.save()
+        url = reverse("core-portal:portal-duels")
+        page1 = self.client.get(url)
+        self.assertEqual(len(page1.context["finished_rows"]), 10)
+        page2 = self.client.get(url, {"fpage": 2})
+        self.assertEqual(len(page2.context["finished_rows"]), 1)
 
 
 def _past():

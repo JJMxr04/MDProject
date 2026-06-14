@@ -124,15 +124,20 @@ window.Alpine.data('duel-builder', () => ({
     const selectionId = event.currentTarget.dataset.selectionId;
     if (!selectionId || !this.selectedFriendId || !this.selectedEventId) return;
     try {
+      const friendName = this.selectedFriendName;
       await api.post(this.$root.dataset.sendUrl, {
         event_id: this.selectedEventId,
         selection_id: selectionId,
         opponent_id: this.selectedFriendId,
       });
-      this.message = `Challenge sent to ${this.selectedFriendName}! They have until kickoff to accept.`;
-      this.messageType = 'success';
-      // Reset back to the start for the next challenge.
-      this.resetFriend();
+      // Close the host modal, toast, and reload so the new duel lands in the
+      // "In progress" list (the page is server-rendered).
+      const modal = this.$root.closest('[data-modal]');
+      if (modal) modal.classList.remove('is-open');
+      if (window.toast) {
+        window.toast(`Challenge sent to ${friendName}! They have until kickoff to accept.`, { variant: 'success' });
+      }
+      window.location.reload();
     } catch (e) {
       this.message = (e && e.message) || 'Could not send that duel.';
       this.messageType = 'error';

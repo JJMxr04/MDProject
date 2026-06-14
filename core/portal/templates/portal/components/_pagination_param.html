@@ -1,0 +1,29 @@
+{% comment %}
+Pager for a page that hosts MORE THAN ONE independently-paged list. Unlike
+_pagination.html (which owns the single `page` param), this takes:
+  page_obj    — the Django Page for this list
+  param_name  — the GET param this list pages on (e.g. "cpage")
+  other_qs    — querystring of the *other* lists' page params, so paging one
+                list preserves the others' positions (e.g. "apage=2&fpage=1")
+{% endcomment %}
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="pager" aria-label="Pagination">
+    <a class="pager__btn"
+       {% if page_obj.has_previous %}
+           href="?{% if other_qs %}{{ other_qs }}&{% endif %}{{ param_name }}={{ page_obj.previous_page_number }}"
+       {% else %}
+           aria-disabled="true"
+       {% endif %}>
+        <i class="bi bi-chevron-left" aria-hidden="true"></i> Prev
+    </a>
+    <span class="pager__pages">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    <a class="pager__btn"
+       {% if page_obj.has_next %}
+           href="?{% if other_qs %}{{ other_qs }}&{% endif %}{{ param_name }}={{ page_obj.next_page_number }}"
+       {% else %}
+           aria-disabled="true"
+       {% endif %}>
+        Next <i class="bi bi-chevron-right" aria-hidden="true"></i>
+    </a>
+</nav>
+{% endif %}

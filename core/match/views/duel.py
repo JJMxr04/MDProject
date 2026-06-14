@@ -1,6 +1,10 @@
 """Duel challenge UI + send endpoint (phase 14).
 
-- ``duels_page_view`` renders the "Duel a friend" page (the duel-builder island).
+- ``duels_page_view`` renders the duel hub: a "Create duel" modal (the
+  duel-builder island), incoming challenges to accept/decline, and the user's
+  in-progress + finished duels with a W/L/D record. The three lists page
+  independently (``cpage`` / ``apage`` / ``fpage``); read helpers live in
+  ``core.match.duels``.
 - ``duel_events_view`` returns the upcoming-events catalog the island browses.
 - ``send_duel_view`` is the JSON write: ``event_id`` + ``selection_id`` (the side
   the challenger takes) + ``opponent_id`` (a friend's public_id). Per-event
@@ -15,6 +19,7 @@ from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -27,10 +32,43 @@ from core.user.models import User
 DUEL_LOOKAHEAD = timedelta(days=14)
 DUEL_EVENTS_TTL = 30  # seconds
 
+# Each of the three duel-page lists pages independently at this size.
+DUEL_PAGE_SIZE = 10
+
 
 @login_required(login_url="/auth/login/")
 def duels_page_view(request):
-    return render(request, "portal/match/duels.html", {})
+    user = request.user
+    challenges = Paginator(
+        duels.incoming_duel_invites(user), DUEL_PAGE_SIZE,
+    ).get_page(request.GET.get("cpage"))
+    sent = Paginator(
+        duels.outgoing_duel_invites(user), DUEL_PAGE_SIZE,
+    ).get_page(request.GET.get("spage"))
+    accepted = Paginator(
+        duels.accepted_duels(user), DUEL_PAGE_SIZE,
+    ).get_page(request.GET.get("apage"))
+    finished = Paginator(
+        duels.finished_duels(user), DUEL_PAGE_SIZE,
+    ).get_page(request.GET.get("fpage"))
+
+    # Pager links for one list must preserve the other lists' page positions,
+    # so each carries the siblings' current page numbers.
+    c, s, a, f = challenges.number, sent.number, accepted.number, finished.number
+    context = {
+        "duel_record": duels.duel_record(user),
+        "challenges": challenges,
+        "sent": sent,
+        "accepted": accepted,
+        "finished": finished,
+        "accepted_rows": [duels.duel_row(m, user) for m in accepted],
+        "finished_rows": [duels.duel_row(m, user) for m in finished],
+        "challenges_other_qs": f"spage={s}&apage={a}&fpage={f}",
+        "sent_other_qs": f"cpage={c}&apage={a}&fpage={f}",
+        "accepted_other_qs": f"cpage={c}&spage={s}&fpage={f}",
+        "finished_other_qs": f"cpage={c}&spage={s}&apage={a}",
+    }
+    return render(request, "portal/match/duels.html", context)
 
 
 @require_GET
