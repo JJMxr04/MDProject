@@ -52,8 +52,8 @@ class Command(BaseCommand):
         plans = Plan.objects.exclude(code="FREE").order_by("code")
         if not plans.exists():
             self.stdout.write(self.style.WARNING(
-                "No non-FREE plans found. Create one in /admin/billing/plan/ "
-                "first, then re-run."
+                "No non-FREE plans found. Create one in "
+                "/admin/core_billing/plan/add/ first, then re-run."
             ))
             return
 

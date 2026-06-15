@@ -31,6 +31,7 @@ class Command(BaseCommand):
 
     def _steps(self):
         return [
+            ("billing plans", self._billing_plans),
             ("pick of the day", self._potd),
             ("season lifecycle", self._season_lifecycle),
             ("complete matches", self._complete_matches),
@@ -38,6 +39,10 @@ class Command(BaseCommand):
             ("expire invites", self._expire_invites),
             ("reconcile subscriptions", self._reconcile_subscriptions),
         ]
+
+    def _billing_plans(self):
+        from core.billing.services.seed import ensure_default_plans
+        return "; ".join(ensure_default_plans())
 
     def _potd(self):
         from core.potd.services import CurationError, curate_pick_of_day
