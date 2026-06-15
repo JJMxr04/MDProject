@@ -34,7 +34,7 @@ Replaces the desktop sidebar on small screens (shell.js toggles .is-open).{% end
             <a href="{% url 'core-portal:friend_search' %}"><i class="bi bi-people" aria-hidden="true"></i> Friends</a>
             <a href="{% url 'core-portal:invite-list' %}">
                 <i class="bi bi-envelope" aria-hidden="true"></i> Invites
-                {% if request.user.received_invites.exists %}<span class="mobile-menu__badge">New</span>{% endif %}
+                {% if request.user.has_pending_invites %}<span class="mobile-menu__badge">New</span>{% endif %}
             </a>
 
             <span class="mobile-menu__label">Account &amp; help</span>

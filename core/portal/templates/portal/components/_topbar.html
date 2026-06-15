@@ -18,7 +18,7 @@
     {% if request.user.is_authenticated %}
     <a class="topbar__bell btn-ui btn-ui--ghost btn-ui--icon-only" href="{% url 'core-portal:invite-list' %}" aria-label="Invites">
         <i class="bi bi-envelope" aria-hidden="true"></i>
-        {% if request.user.received_invites.exists %}<span class="topbar__bell-dot" aria-hidden="true"></span>{% endif %}
+        {% if request.user.has_pending_invites %}<span class="topbar__bell-dot" aria-hidden="true"></span>{% endif %}
     </a>
 
     <div class="dropdown" data-island="notifications"

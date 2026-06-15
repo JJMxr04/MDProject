@@ -20,6 +20,6 @@
     </a>
     <button class="bottom-nav__item" type="button" data-mobile-menu-toggle aria-haspopup="true" aria-label="More navigation">
         <i class="bi bi-grid" aria-hidden="true"></i><span>More</span>
-        {% if request.user.received_invites.exists %}<span class="bottom-nav__dot" aria-hidden="true"></span>{% endif %}
+        {% if request.user.has_pending_invites %}<span class="bottom-nav__dot" aria-hidden="true"></span>{% endif %}
     </button>
 </nav>

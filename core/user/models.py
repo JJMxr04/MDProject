@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import Http404
 from core.abstract.models import AbstractModel, AbstractManager
+from django.utils.functional import cached_property
 import os
 from django.contrib.auth.hashers import make_password, check_password
 import random
@@ -167,6 +168,19 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
+    @cached_property
+    def has_pending_invites(self):
+        """True only when there's a received invite still awaiting action —
+        i.e. ``effective_state == 'sent'`` (state='sent' and not past expiry).
+        Drives the nav invite dot/badge so it isn't lit by old accepted/
+        declined/expired invites. cached_property → one query per request even
+        though the topbar, bottom bar, and mobile menu all read it."""
+        from django.db.models import Q
+        from django.utils import timezone
+        return self.received_invites.filter(state='sent').filter(
+            Q(expires_at__isnull=True) | Q(expires_at__gt=timezone.now())
+        ).exists()
 
     def add_friend(self, user):
         """Add a new friend"""
