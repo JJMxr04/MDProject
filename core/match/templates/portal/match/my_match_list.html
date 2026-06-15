@@ -51,6 +51,7 @@
         <thead>
             <tr>
                 <th scope="col">Opponent</th>
+                <th scope="col">Format</th>
                 <th scope="col">Status</th>
                 <th scope="col">Start</th>
                 <th scope="col">Ends</th>
@@ -71,6 +72,7 @@
                         {% endif %}
                     </a>
                 </td>
+                <td><span class="badge-ui badge-ui--muted">{{ match.format_label }}</span></td>
                 <td>{% include "portal/components/_badge.html" with state=match.match_state %}</td>
                 <td>{{ match.start_date|date:"M j, Y" }}</td>
                 <td>{% if match.end_date %}{{ match.end_date|date:"M j, Y" }}{% else %}—{% endif %}</td>
