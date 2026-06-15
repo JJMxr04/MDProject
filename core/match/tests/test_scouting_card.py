@@ -79,9 +79,28 @@ class ScoutUserQueryTests(TestCase):
         self.assertEqual(out["side"], {"home": 4, "away": 1})
         self.assertEqual(out["over_under"], {"over": 1, "under": 1})
         self.assertEqual(out["fav_dog"], {"favorite": 5, "underdog": 2})
-        self.assertEqual(out["markets"]["moneyline"]["picks"], 5)
-        self.assertEqual(out["markets"]["total"]["picks"], 2)
+        markets = {m["key"]: m for m in out["markets"]}
+        self.assertEqual(markets["moneyline"]["picks"], 5)
+        self.assertEqual(markets["total"]["picks"], 2)
         self.assertEqual(len(out["recent_form"]), 7)
+
+    def test_markets_breakdown_applies_floor(self):
+        W, L = SettlementStatus.WON, SettlementStatus.LOST
+        # Moneyline: 4 decided (3W/1L) — above the floor, win_rate shown.
+        self._add_pick(sel_type="HOME", status=W, category=MarketCategory.MONEYLINE)
+        self._add_pick(sel_type="HOME", status=W, category=MarketCategory.MONEYLINE)
+        self._add_pick(sel_type="HOME", status=W, category=MarketCategory.MONEYLINE)
+        self._add_pick(sel_type="AWAY", status=L, category=MarketCategory.MONEYLINE)
+        # Total: 2 decided — below the floor, win_rate suppressed as noise.
+        self._add_pick(sel_type="OVER", status=W, category=MarketCategory.TOTAL)
+        self._add_pick(sel_type="UNDER", status=L, category=MarketCategory.TOTAL)
+
+        markets = {m["key"]: m for m in scouting.scout_user(self.user)["markets"]}
+        self.assertEqual(markets["moneyline"]["market"], "Moneyline")
+        self.assertEqual((markets["moneyline"]["wins"], markets["moneyline"]["losses"]), (3, 1))
+        self.assertEqual(markets["moneyline"]["win_rate"], round(3 / 4, 3))
+        self.assertEqual(markets["total"]["picks"], 2)
+        self.assertIsNone(markets["total"]["win_rate"])  # below floor
 
     def _add_golden_pick(self, *, sel_type, status, as_player_1=True):
         """A pick on an ownerless Golden Game (sides are player_1/player_2)."""
@@ -155,7 +174,8 @@ _SCOUT = {
     "side": {"home": 4, "away": 1},
     "over_under": {"over": 1, "under": 1},
     "fav_dog": {"favorite": 5, "underdog": 2},
-    "markets": {"moneyline": {"picks": 5, "win_rate": 0.8}},
+    "markets": [{"key": "moneyline", "market": "Moneyline", "picks": 5,
+                 "wins": 4, "losses": 1, "win_rate": 0.8}],
     "leagues": [{"league": "NBA", "picks": 5, "wins": 3, "losses": 2}],
     "recent_form": [{"type": "HOME", "result": "WON", "label": "x"}],
 }
@@ -190,6 +210,7 @@ class ScoutingCardTests(TestCase):
         self.assertContains(r, "5–2")
         self.assertContains(r, "71%")
         self.assertContains(r, "NBA 3–2")
+        self.assertContains(r, "Moneyline 4–1")
         self.assertFalse(ProductEvent.objects.filter(name="paywall_viewed").exists())
 
     def test_free_user_sees_upsell_and_emits_paywall_viewed(self):
@@ -203,6 +224,20 @@ class ScoutingCardTests(TestCase):
         evt = ProductEvent.objects.filter(name="paywall_viewed").first()
         self.assertIsNotNone(evt)
         self.assertEqual(evt.props.get("feature"), "opponent_scouting")
+
+    def test_stranded_payer_sees_refresh_not_pay_again(self):
+        # A stripe_customer_id on a non-entitled user = paid-but-stranded.
+        # They get "activating / refresh", never a pay-again CTA.
+        self.p1.stripe_customer_id = "cus_stranded"
+        self.p1.save(update_fields=["stripe_customer_id"])
+        self.client.force_login(self.p1)
+        with mock.patch(_SCOUT_FN) as m:
+            r = self.client.get(self.url)
+        self.assertEqual(r.status_code, 200)
+        m.assert_not_called()
+        self.assertContains(r, "Refresh my plan")
+        self.assertContains(r, "activating")
+        self.assertNotContains(r, "Upgrade to PRO")
 
     def test_pro_user_sparse_history_shows_empty_state(self):
         self._make_pro(self.p1)

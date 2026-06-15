@@ -34,6 +34,30 @@ def user_can_access_analytics(user) -> bool:
     return sub.is_entitled_to_analytics
 
 
+def subscription_pending(user) -> bool:
+    """True if ``user`` looks like a payer stranded on FREE — has a Stripe
+    customer on file but no live PRO entitlement, and isn't in a terminal
+    state (canceled / unpaid / incomplete_expired).
+
+    This is the signal to offer self-serve "refresh your plan" instead of a
+    pay-again CTA. It distinguishes the stranded case (webhook resolved to
+    None and 200'd, so the local row is the synthetic FREE/``active`` one)
+    from a legitimately-canceled ex-PRO user (status ``canceled``) and a
+    never-paid free user (no ``stripe_customer_id``) — both of whom should
+    keep seeing the normal upsell. See ``core/billing/views/refresh.py``.
+    """
+    if not getattr(user, "is_authenticated", False):
+        return False
+    if not getattr(user, "stripe_customer_id", ""):
+        return False  # never reached Stripe checkout — a plain free user
+    if user_can_access_analytics(user):
+        return False  # already entitled — nothing pending
+    sub = _safe_subscription(user)
+    if sub is None:
+        return True  # has a customer but no row yet → mid-provision
+    return sub.status not in ("canceled", "unpaid", "incomplete_expired")
+
+
 def _safe_subscription(user):
     """Return ``user.subscription`` or None — catches the ``DoesNotExist``
     that the OneToOneField descriptor raises when no row exists.

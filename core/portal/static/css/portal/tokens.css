@@ -38,6 +38,14 @@
   --border-strong:     rgba(12, 43, 51, .18);
   --border-brand:      var(--brand-blue-dark);
 
+  /* ── Soft status fills (flip-aware) — bg + readable text per state.
+        Use these for tinted pills/banners instead of hardcoding rgba()+hex. ── */
+  --fill-success-bg:   rgba(47, 158, 107, .14);  --fill-success-text: #1a7a4a;
+  --fill-danger-bg:    rgba(220, 38, 38, .10);   --fill-danger-text:  #b91c1c;
+  --fill-warning-bg:   rgba(185, 131, 27, .14);  --fill-warning-text: #92660d;
+  --fill-info-bg:      rgba(61, 126, 170, .12);  --fill-info-text:    #275d81;
+  --fill-neutral-bg:   rgba(107, 114, 128, .10); --fill-neutral-text: var(--text-secondary);
+
   /* ── Glass ("Sea Glass") + atmosphere ────────────────────── */
   --glass-bg:        rgba(252, 251, 247, .62);
   --glass-bg-strong: rgba(252, 251, 247, .80);

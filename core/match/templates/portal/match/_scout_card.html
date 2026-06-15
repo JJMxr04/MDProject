@@ -15,6 +15,24 @@ public accept screen, and duel challenges.
     </div>
     <div class="card-ui__body">
         {% if not entitled %}
+            {% if pending %}
+            {% comment %}Payer stranded on FREE (webhook resolve drift) — offer
+            self-serve refresh, never a pay-again CTA they'd double-charge on.{% endcomment %}
+            <div class="scout-upsell">
+                <div>
+                    <p class="scout-upsell__lead">Your <strong>PRO</strong> subscription is activating.</p>
+                    <p class="duel-meta">If you just upgraded this can take a moment to sync. Already paid? Pull your subscription now.</p>
+                </div>
+                <div class="scout-upsell__cta">
+                    <form method="post" action="{% url 'core-portal:billing-refresh' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <button type="submit" class="btn-ui btn-ui--primary btn-ui--lg">Refresh my plan</button>
+                    </form>
+                    <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">Manage billing</a>
+                </div>
+            </div>
+            {% else %}
             <div class="scout-upsell">
                 <div>
                     <p class="scout-upsell__lead">See how <strong>{{ opponent.username }}</strong> bets before the games settle.</p>
@@ -30,6 +48,7 @@ public accept screen, and duel challenges.
                     <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
                 </div>
             </div>
+            {% endif %}
         {% elif not scouting.side %}
             <p class="duel-meta">Not enough betting history yet to scout {{ opponent.username }}.</p>
         {% else %}
@@ -42,6 +61,15 @@ public accept screen, and duel challenges.
                 <div class="scout-stat"><span class="scout-stat__num">{{ scouting.fav_dog.favorite }}/{{ scouting.fav_dog.underdog }}</span><span class="scout-stat__lbl">Fav/Dog</span></div>
                 <div class="scout-stat"><span class="scout-stat__num">{{ scouting.over_under.over }}/{{ scouting.over_under.under }}</span><span class="scout-stat__lbl">Over/Under</span></div>
             </div>
+
+            {% if scouting.markets %}
+            <div class="scout-row">
+                <span class="scout-row__label">By market</span>
+                <span class="scout-row__val">
+                    {% for m in scouting.markets %}<span class="scout-pill">{{ m.market }} {{ m.wins }}–{{ m.losses }}{% if m.win_rate is not None %} · {% widthratio m.win_rate 1 100 %}%{% endif %}</span>{% endfor %}
+                </span>
+            </div>
+            {% endif %}
 
             {% if scouting.leagues %}
             <div class="scout-row">

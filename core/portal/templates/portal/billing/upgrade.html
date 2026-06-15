@@ -13,6 +13,17 @@
     {% endfor %}
   {% endif %}
 
+  {% if subscription_pending %}
+    <div class="alert alert-info d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <span><strong>Already subscribed?</strong> If you've paid, your PRO may still be activating.</span>
+      <form method="post" action="{% url 'core-portal:billing-refresh' %}" class="m-0">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button type="submit" class="btn btn-sm btn-outline-primary">Refresh my plan</button>
+      </form>
+    </div>
+  {% endif %}
+
   <div class="card shadow-sm">
     <div class="card-body p-4 p-md-5 text-center">
       <span class="badge bg-primary mb-3">PRO</span>

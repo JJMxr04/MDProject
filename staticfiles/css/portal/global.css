@@ -802,6 +802,11 @@ a:hover { color: var(--brand-blue-bright); }
     --glass-bg:          rgba(17, 46, 54, .55);
     --glass-bg-strong:   rgba(17, 46, 54, .80);
     --glass-border:      rgba(255, 255, 255, .12);
+  --fill-success-bg:   rgba(47, 158, 107, .20);  --fill-success-text: #8FE0B3;
+  --fill-danger-bg:    rgba(220, 38, 38, .22);   --fill-danger-text:  #F0A39E;
+  --fill-warning-bg:   rgba(185, 131, 27, .26);  --fill-warning-text: #F1C98A;
+  --fill-info-bg:      rgba(61, 126, 170, .26);  --fill-info-text:    #A9CBF0;
+  --fill-neutral-bg:   rgba(255, 255, 255, .08); --fill-neutral-text: var(--text-secondary);
     --shadow-sm:  0 1px 2px  rgba(0, 0, 0, .30);
     --shadow-md:  0 4px 12px rgba(0, 0, 0, .38);
     --shadow-lg:  0 12px 28px rgba(0, 0, 0, .48);
@@ -829,6 +834,11 @@ a:hover { color: var(--brand-blue-bright); }
   --glass-bg:          rgba(17, 46, 54, .55);
   --glass-bg-strong:   rgba(17, 46, 54, .80);
   --glass-border:      rgba(255, 255, 255, .12);
+  --fill-success-bg:   rgba(47, 158, 107, .20);  --fill-success-text: #8FE0B3;
+  --fill-danger-bg:    rgba(220, 38, 38, .22);   --fill-danger-text:  #F0A39E;
+  --fill-warning-bg:   rgba(185, 131, 27, .26);  --fill-warning-text: #F1C98A;
+  --fill-info-bg:      rgba(61, 126, 170, .26);  --fill-info-text:    #A9CBF0;
+  --fill-neutral-bg:   rgba(255, 255, 255, .08); --fill-neutral-text: var(--text-secondary);
   --shadow-sm:  0 1px 2px  rgba(0, 0, 0, .30);
   --shadow-md:  0 4px 12px rgba(0, 0, 0, .38);
   --shadow-lg:  0 12px 28px rgba(0, 0, 0, .48);

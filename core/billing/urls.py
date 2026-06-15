@@ -20,4 +20,5 @@ urlpatterns = [
     path("checkout/", views.start_checkout, name="billing-checkout"),
     path("thanks/", views.checkout_thanks, name="billing-thanks"),
     path("portal/", views.open_customer_portal, name="billing-portal"),
+    path("refresh/", views.refresh_subscription, name="billing-refresh"),
 ]

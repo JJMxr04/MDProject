@@ -108,7 +108,7 @@
   background: var(--ps-surface-alt);
   color: var(--ps-ocean-700);
 }
-.ps-badge--wip { background: #fff4d6; color: #8a6a09; }
+.ps-badge--wip { background: var(--ps-fill-warning-bg); color: var(--ps-fill-warning-text); }
 
 /* --- Hero --- */
 .ps-hero {

@@ -2,7 +2,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--surface-muted);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -28,21 +28,21 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
   }
 
   .formGroup input,
   .formGroup textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-default);
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
   }
 
   .formGroup input:read-only {
-    background-color: #eee;
+    background-color: var(--surface-muted);
   }
 
   textarea {
@@ -70,7 +70,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--surface-muted);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -83,21 +83,21 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
   }
 
   .formGroup input,
   .formGroup textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-default);
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
   }
 
   .formGroup input:read-only {
-    background-color: #eee;
+    background-color: var(--surface-muted);
   }
 
   textarea {

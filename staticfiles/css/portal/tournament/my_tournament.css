@@ -15,7 +15,7 @@
 }
 .sidebar {
     width: 200px;
-    background-color: #f0f0f0;
+    background-color: var(--surface-muted);
     padding: 20px;
     margin-right: 20px;
     border-radius: 10px;
@@ -37,7 +37,7 @@
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-strong);
     box-sizing: border-box; /* Ensure padding is included in the width */
 }
 .tournaments-list-table-container {
@@ -47,17 +47,17 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #fff;
-    border: 1px solid #000;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-strong);
 }
 .tournaments-list-table th,
 .tournaments-list-table td {
     padding: 10px;
     text-align: left;
-    border: 1px solid #000;
+    border: 1px solid var(--border-strong);
 }
 .tournaments-list-table th {
-    background-color: #f4f4f4;
+    background-color: var(--surface-muted);
     font-weight: bold;
 }
 .tournaments-list-table tbody tr {

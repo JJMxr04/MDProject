@@ -222,8 +222,12 @@ def public_match_detail_view(request, match_id):
         opponent = match.player_2
     scouting = None
     scouting_entitled = False
+    scouting_pending = False
     if opponent is not None:
-        from core.billing.entitlement import user_can_access_analytics
+        from core.billing.entitlement import (
+            subscription_pending,
+            user_can_access_analytics,
+        )
         scouting_entitled = user_can_access_analytics(viewer)
         if scouting_entitled:
             from core.match import scouting as scouting_mod
@@ -235,6 +239,9 @@ def public_match_detail_view(request, match_id):
                     "scout_user failed for opponent=%s", opponent.pk,
                 )
         else:
+            # Stranded payer vs. genuine free user — drives "activating /
+            # refresh" instead of a pay-again CTA on the card.
+            scouting_pending = subscription_pending(viewer)
             from core.metrics.models import track
             track(viewer, "paywall_viewed",
                   feature="opponent_scouting", context="public_accept")
@@ -249,6 +256,7 @@ def public_match_detail_view(request, match_id):
         'scout_opponent': opponent,
         'scouting': scouting,
         'scouting_entitled': scouting_entitled,
+        'scouting_pending': scouting_pending,
     }
 
     return render(request, 'portal/match/public_match_detail.html', context)

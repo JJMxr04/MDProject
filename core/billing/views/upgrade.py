@@ -26,6 +26,8 @@ def upgrade_page(request):
         from core.metrics.models import track
         track(request.user, "paywall_upgrade_clicked", feature=src)
 
+    from core.billing.entitlement import subscription_pending
+
     pro = Plan.objects.filter(code="PRO", is_active=True).first()
     sub = getattr(request.user, "subscription", None)
     ctx = {
@@ -35,6 +37,9 @@ def upgrade_page(request):
         # (so we don't say "Start free trial" to someone who already
         # consumed theirs — file 06 §5).
         "had_prior_paid_sub": _had_prior_paid_sub(request.user),
+        # A payer stranded on FREE gets a "refresh" banner instead of being
+        # nudged to check out (and pay) a second time.
+        "subscription_pending": subscription_pending(request.user),
     }
     return render(request, "portal/billing/upgrade.html", ctx)
 

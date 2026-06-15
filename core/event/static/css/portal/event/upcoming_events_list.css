@@ -4,8 +4,8 @@
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-    color: #333;
+    background-color: var(--surface-muted);
+    color: var(--text-primary);
     display: flex;
     justify-content: center;
     padding: 20px;
@@ -21,7 +21,7 @@
   
   header h1 {
     font-size: 2em;
-    color: #222;
+    color: var(--text-primary);
     margin-bottom: 20px;
     text-align: center;
   }
@@ -36,7 +36,7 @@
   .form-control {
     margin: 5px 0;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-strong);
     border-radius: 5px;
   }
   
@@ -62,8 +62,8 @@
   
   /* Individual event card */
   .event-card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
     border-radius: 10px;
     width: calc(33.333% - 20px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -85,17 +85,17 @@
   .event-card h3 {
     font-size: 1.25em;
     margin: 15px;
-    color: #333;
+    color: var(--text-primary);
   }
   
   .event-card p {
     margin: 5px 15px;
-    color: #666;
+    color: var(--text-secondary);
   }
   
   .commence-time {
     font-weight: bold;
-    color: #444;
+    color: var(--text-secondary);
   }
   
   /* Teams section */
@@ -104,7 +104,7 @@
     flex-direction: row; /* Default to row for larger screens */
     justify-content: space-around;
     padding: 15px;
-    background: #f7f7f7;
+    background: var(--surface-muted);
     flex-wrap: wrap; /* Allow wrapping for smaller screens */
   }
   
@@ -126,7 +126,7 @@
   .vs {
     font-size: 1.2em;
     font-weight: bold;
-    color: #777;
+    color: var(--text-secondary);
   }
   
   /* Pagination Styling */
@@ -144,7 +144,7 @@
   }
   
   .pagination .page-item.disabled .page-link {
-    color: #ccc;
+    color: var(--text-secondary);
   }
   
   /* Responsive Styling */

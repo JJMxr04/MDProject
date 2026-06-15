@@ -107,17 +107,40 @@ def _dispatch(event: dict[str, Any]) -> None:
 
 
 def _handle_checkout_completed(session: dict) -> None:
-    """checkout.session.completed — capture stripe_customer_id on the
-    User. Subscription state itself arrives via
-    customer.subscription.created (which often fires moments earlier or
-    later); we don't depend on order here."""
+    """checkout.session.completed — the canonical "they paid" event, and the
+    one we treat as authoritative for entitlement.
+
+    We capture ``stripe_customer_id`` AND upsert the Subscription here rather
+    than depending solely on ``customer.subscription.created``. That second
+    event resolves the user from the subscription payload
+    (``subscription_data.metadata`` → ``stripe_customer_id`` fallback); if the
+    metadata didn't propagate and the customer on the sub is stale/mismatched
+    vs the User row, it resolves to None and the user is silently stranded on
+    their default FREE row while every webhook still 200s. checkout.session
+    .completed is always enabled + delivered for a completed checkout and we
+    resolve it via ``client_reference_id`` (which ``start_checkout`` always
+    sets to the user's public_id) — immune to customer/metadata drift.
+    customer.subscription.* still flows through _handle_subscription_event for
+    later lifecycle changes (renewals, cancellations)."""
     user = _resolve_user(session)
     if user is None:
         return
     cust_id = session.get("customer", "") or ""
-    if cust_id and not user.stripe_customer_id:
+    # Overwrite even when already set — a *stale* customer id is the root of
+    # stranding, and it also breaks self-serve refresh + the customer portal,
+    # which both list subs by ``user.stripe_customer_id``. The most recent
+    # completed checkout is authoritative.
+    if cust_id and user.stripe_customer_id != cust_id:
         User.objects.filter(pk=user.pk).update(stripe_customer_id=cust_id)
         user.stripe_customer_id = cust_id
+
+    # Authoritative entitlement: pull the subscription Stripe just created and
+    # apply it now, for the user we already resolved from client_reference_id.
+    # A Stripe API failure raises → 500 → Stripe redelivers; apply is idempotent.
+    sub_id = session.get("subscription") or ""
+    if session.get("mode") == "subscription" and sub_id:
+        sub_obj = stripe.Subscription.retrieve(sub_id)
+        _apply_subscription(user, sub_obj)
 
     from core.metrics.models import track
     track(user, "checkout_completed", session_id=session.get("id", ""))
@@ -133,7 +156,17 @@ def _handle_subscription_event(sub_obj: dict) -> None:
     user = _resolve_user(sub_obj)
     if user is None:
         return
+    _apply_subscription(user, sub_obj)
 
+
+def _apply_subscription(user: User, sub_obj: dict) -> None:
+    """Upsert ``user``'s Subscription from a Stripe Subscription object and
+    push the resulting entitlement to the aggrigator.
+
+    Shared by the customer.subscription.* handler (resolves the user from the
+    payload) and checkout.session.completed (passes the user it already
+    resolved from client_reference_id). Idempotent.
+    """
     # Pick the plan from the local catalog based on the Stripe price_id.
     # If we can't match (e.g. mid-rollout, before catalog sync), fall
     # back to PRO by code — every paid sub is PRO in v1.

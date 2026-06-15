@@ -332,8 +332,8 @@
         --evd-fav: #275d81;
         --evd-dog: #2f9e6b;
         --evd-line: #b9831b;
-        --evd-bg-soft: #f5f7fa;
-        --evd-border: #e5e7eb;
+        --evd-bg-soft: var(--surface-muted);
+        --evd-border: var(--border-default);
     }
 
     /* ── PRO chip + upsell card ──────────────────────────────────── */
@@ -402,7 +402,7 @@
         padding: .15rem .5rem; border-radius: 6px;
         font-size: .78rem; font-weight: 700;
     }
-    .evd-edge-pill.is-good { background: rgba(47, 158, 107, .14); color: var(--evd-dog); }
+    .evd-edge-pill.is-good { background: var(--fill-success-bg); color: var(--evd-dog); }
     .evd-edge-pill.is-flat { background: var(--evd-bg-soft); color: var(--text-secondary, #6b7280); }
     .evd-edge-pill.is-bad  { background: var(--evd-bg-soft); color: var(--text-secondary, #9ca3af); }
     .evd-edge-row__price { font-weight: 800; }
@@ -502,8 +502,8 @@
         background: var(--evd-bg-soft); color: var(--text-secondary, #6b7280);
         text-transform: uppercase; letter-spacing: .04em;
     }
-    .evd-chip--sport { background: rgba(61, 126, 170, .12); color: var(--evd-fav); }
-    .evd-chip--league { background: rgba(47, 158, 107, .12); color: var(--evd-dog); }
+    .evd-chip--sport { background: var(--fill-info-bg); color: var(--evd-fav); }
+    .evd-chip--league { background: var(--fill-success-bg); color: var(--evd-dog); }
 
     .evd-pill {
         display: inline-flex; align-items: center; gap: .3rem;
@@ -512,11 +512,11 @@
         background: var(--evd-bg-soft); color: var(--text-secondary);
         text-transform: uppercase; letter-spacing: .05em;
     }
-    .evd-pill--live { background: rgba(220, 38, 38, .1); color: #b91c1c; }
-    .evd-pill--final { background: rgba(75, 85, 99, .12); color: #4b5563; }
-    .evd-pill--upcoming { background: rgba(61, 126, 170, .12); color: var(--evd-fav); }
-    .evd-pill--warn { background: rgba(185, 131, 27, .12); color: var(--evd-line); }
-    .evd-pill--danger { background: rgba(220, 38, 38, .1); color: #b91c1c; }
+    .evd-pill--live { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
+    .evd-pill--final { background: var(--fill-neutral-bg); color: var(--fill-neutral-text); }
+    .evd-pill--upcoming { background: var(--fill-info-bg); color: var(--evd-fav); }
+    .evd-pill--warn { background: var(--fill-warning-bg); color: var(--evd-line); }
+    .evd-pill--danger { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
 
     /* ── Markets layout ─────────────────────────────────────────── */
     .evd-markets-header {
@@ -526,7 +526,7 @@
         display: flex; flex-direction: column; gap: 1.25rem;
     }
     .evd-market-cat {
-        background: #fff; border: 1px solid var(--evd-border); border-radius: 12px;
+        background: var(--surface-card); border: 1px solid var(--evd-border); border-radius: 12px;
         padding: 1rem;
     }
     .evd-market-cat__head {
@@ -561,7 +561,7 @@
     }
     .evd-market__line {
         font-variant-numeric: tabular-nums;
-        background: rgba(185, 131, 27, .12); color: var(--evd-line);
+        background: var(--fill-warning-bg); color: var(--evd-line);
         font-size: .78rem; font-weight: 700;
         padding: .1rem .55rem; border-radius: 6px;
     }
@@ -575,8 +575,8 @@
         text-transform: uppercase; letter-spacing: .04em;
         background: var(--evd-bg-soft); color: var(--text-secondary, #6b7280);
     }
-    .evd-badge--live { background: rgba(220, 38, 38, .1); color: #b91c1c; }
-    .evd-badge--warn { background: rgba(185, 131, 27, .12); color: var(--evd-line); }
+    .evd-badge--live { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
+    .evd-badge--warn { background: var(--fill-warning-bg); color: var(--evd-line); }
 
     /* ── Selection cards ────────────────────────────────────────── */
     .evd-selections {
@@ -590,9 +590,9 @@
         background: var(--surface-card);
     }
     .evd-sel.is-suspended { opacity: .55; }
-    .evd-sel.is-won { border-color: var(--evd-dog); background: rgba(47, 158, 107, .04); }
-    .evd-sel.is-lost { border-color: rgba(220, 38, 38, .35); background: rgba(220, 38, 38, .04); opacity: .8; }
-    .evd-sel.is-push { border-color: var(--evd-line); background: rgba(185, 131, 27, .04); }
+    .evd-sel.is-won { border-color: var(--evd-dog); background: var(--fill-success-bg); }
+    .evd-sel.is-lost { border-color: rgba(220, 38, 38, .35); background: var(--fill-danger-bg); opacity: .8; }
+    .evd-sel.is-push { border-color: var(--evd-line); background: var(--fill-warning-bg); }
     .evd-sel.is-void { opacity: .55; }
 
     .evd-sel__top {
@@ -611,9 +611,9 @@
         text-transform: uppercase; letter-spacing: .04em;
         flex-shrink: 0;
     }
-    .evd-sel__settle--won { background: rgba(47, 158, 107, .14); color: var(--evd-dog); }
-    .evd-sel__settle--lost { background: rgba(220, 38, 38, .12); color: #b91c1c; }
-    .evd-sel__settle--push { background: rgba(185, 131, 27, .14); color: var(--evd-line); }
+    .evd-sel__settle--won { background: var(--fill-success-bg); color: var(--evd-dog); }
+    .evd-sel__settle--lost { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
+    .evd-sel__settle--push { background: var(--fill-warning-bg); color: var(--evd-line); }
     .evd-sel__settle--void { background: var(--evd-bg-soft); color: var(--text-secondary, #6b7280); }
 
     .evd-sel__odds-row {

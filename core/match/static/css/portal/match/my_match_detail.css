@@ -1,13 +1,13 @@
 .match-detail {
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-strong);
     padding: 20px;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--surface-muted);
     margin: 0 auto;
 }
 
 .match-detail h1, .match-detail h2, .match-detail h3 {
-    color: #333;
+    color: var(--text-primary);
 }
 
 .match-detail p {
@@ -24,10 +24,10 @@
 
 /* Individual player card styling */
 .player-card {
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-default);
     border-radius: 8px;
     padding: 15px;
-    background-color: #fff;
+    background-color: var(--surface-card);
     text-align: center;
     flex: 1 1 45%; /* Adjusts width based on screen size */
     margin: 10px;
@@ -44,7 +44,7 @@
 
 /* Game info container styling */
 .game-info {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--border-default);
     padding-top: 20px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .player-games {
-    background-color: #f5f5f5;
+    background-color: var(--surface-muted);
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -92,13 +92,13 @@
 
 .player-games h3 {
     margin-top: 0;
-    color: #333;
-    border-bottom: 2px solid #ddd;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-default);
     padding-bottom: 10px;
 }
 
 .small-game-event {
-    background-color: white;
+    background-color: var(--surface-card);
     border-radius: 6px;
     padding: 15px;
     margin-bottom: 15px;
@@ -128,7 +128,7 @@
 }
 
 .golden-game-popup-card {
-    background-color: #f0f0f0;
+    background-color: var(--surface-muted);
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
@@ -136,7 +136,7 @@
 }
 
 .golden-game-card {
-    background-color: #f0f0f0;
+    background-color: var(--surface-muted);
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
@@ -145,7 +145,7 @@
 }
 
 .golden-game-card:hover {
-    background-color: #e0e0e0;
+    background-color: var(--border-default);
 }
 
 /* Popup styles */
@@ -162,17 +162,17 @@
 }
 
 .popup-content {
-    background-color: #fefefe;
+    background-color: var(--surface-card);
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid var(--border-default);
     width: 80%;
     max-width: auto;
     border-radius: 5px;
 }
 
 .close {
-    color: #aaa;
+    color: var(--text-secondary);
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -181,7 +181,7 @@
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: var(--text-primary);
     text-decoration: none;
     cursor: pointer;
 }
@@ -234,7 +234,7 @@
 /* Event card styling */
 .event-container {
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-strong);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -242,7 +242,7 @@
 .event-card {
     display: flex;
     width: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--surface-muted);
     padding: 15px;
     border: none;
     cursor: pointer;
@@ -252,7 +252,7 @@
 }
 
 .event-card:hover {
-    background-color: #e0e0e0;
+    background-color: var(--border-default);
 }
 
 .event-card.selected {
@@ -269,7 +269,7 @@
 
 .bookmakers-section {
     display: none;
-    background-color: #fff;
+    background-color: var(--surface-card);
     padding: 15px;
 }
 
@@ -283,7 +283,7 @@
 .bookmaker {
     flex: 0 0 auto;
     min-width: 200px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-strong);
     padding: 10px;
     border-radius: 5px;
 }
@@ -296,7 +296,7 @@
 }
 
 .outcome:hover {
-    background-color: #f0f0f0;
+    background-color: var(--surface-muted);
 }
 
 .outcome.selected {
@@ -330,13 +330,13 @@
 
 .event-card .event-info .event-time {
     font-size: 0.9em;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 #market-outcomes-container {
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-default);
     padding: 15px;
-    background-color: #fff;
+    background-color: var(--surface-card);
     margin-top: 20px;
     max-width: 300px;
 }
@@ -367,7 +367,7 @@
 /* Adjust styling of event cards and bookmaker items */
 .event-card, .bookmaker {
     padding: 15px;
-    background-color: #f4f4f4;
+    background-color: var(--surface-muted);
     border-radius: 8px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -387,7 +387,7 @@
 .bookmaker {
     flex: 0 0 auto;
     min-width: 200px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-strong);
     padding: 10px;
     border-radius: 5px;
 }
@@ -397,17 +397,17 @@
     justify-content: space-between;
     padding: 10px;
     margin: 5px 0;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-default);
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .outcome:hover {
-    background-color: #f0f0f0;
+    background-color: var(--surface-muted);
 }
 
 .outcome.selected {
-    background-color: #e0e0e0;
+    background-color: var(--surface-muted);
     font-weight: bold;
 }
 
@@ -415,12 +415,12 @@
     text-align: center;
     padding: 20px;
     font-style: italic;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .bet-info {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
+    background-color: var(--surface-muted);
+    border: 1px solid var(--border-default);
     border-radius: 5px;
     padding: 10px;
     margin-top: 10px;
@@ -507,7 +507,7 @@
 .correct-outcomes {
     margin-top: 15px;
     padding: 10px;
-    background-color: #f8f9fa;
+    background-color: var(--surface-muted);
     border-radius: 8px;
 }
 
@@ -545,7 +545,7 @@
 }
 
 .avatar-wrapper.pending {
-    border-color: #6c757d;
+    border-color: var(--border-strong);
     opacity: 0.7;
 }
 
@@ -559,12 +559,12 @@
 
 .username {
     font-size: 0.9em;
-    color: #495057;
+    color: var(--text-secondary);
     text-align: center;
 }
 
 .no-picks {
-    color: #6c757d;
+    color: var(--text-secondary);
     font-style: italic;
 }
 

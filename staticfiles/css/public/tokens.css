@@ -32,6 +32,12 @@
   --ps-border:      rgba(12, 43, 51, .10);
   --ps-border-strong: rgba(12, 43, 51, .20);
 
+  /* Soft status fills (flip-aware) */
+  --ps-fill-success-bg: rgba(47, 158, 107, .14);  --ps-fill-success-text: #1a7a4a;
+  --ps-fill-danger-bg:  rgba(220, 38, 38, .10);   --ps-fill-danger-text:  #b91c1c;
+  --ps-fill-warning-bg: rgba(185, 131, 27, .14);  --ps-fill-warning-text: #92660d;
+  --ps-fill-info-bg:    rgba(61, 126, 170, .12);  --ps-fill-info-text:    #275d81;
+
   /* --- Feedback --- */
   --ps-success: #2F8F5B;
   --ps-danger:  #D8453B;
@@ -105,6 +111,10 @@
     --ps-glass-bg:        rgba(17, 46, 54, .58);
     --ps-glass-bg-strong: rgba(17, 46, 54, .80);
     --ps-glass-border:    rgba(255, 255, 255, .12);
+    --ps-fill-success-bg: rgba(47, 158, 107, .20);  --ps-fill-success-text: #8FE0B3;
+    --ps-fill-danger-bg:  rgba(220, 38, 38, .22);   --ps-fill-danger-text:  #F0A39E;
+    --ps-fill-warning-bg: rgba(185, 131, 27, .26);  --ps-fill-warning-text: #F1C98A;
+    --ps-fill-info-bg:    rgba(61, 126, 170, .26);  --ps-fill-info-text:    #A9CBF0;
     --ps-shadow-sm: 0 1px 2px rgba(0, 0, 0, .30);
     --ps-shadow-md: 0 8px 24px rgba(0, 0, 0, .40);
     --ps-shadow-lg: 0 20px 48px rgba(0, 0, 0, .55);

@@ -25,6 +25,14 @@ from core.event.models.odds.selection import SelectionType, SettlementStatus
 MIN_PICKS = 5
 RECENT_N = 10
 TOP_LEAGUES = 5
+# Per-market win-rate is suppressed below this many *decided* (won+lost) picks
+# — a 1-for-1 "100%" reads as a strong tell when it's just noise. The record
+# (W–L) still shows; only the percentage is withheld.
+MIN_MARKET_DECIDED = 3
+# Only the three markets the upsell sells get their own row; anything else
+# still counts toward the overall record but isn't broken out.
+_MARKET_LABELS = {"moneyline": "Moneyline", "spread": "Spread", "total": "Total"}
+_MARKET_ORDER = {"moneyline": 0, "spread": 1, "total": 2}
 # Shorter than evens = backing a favorite (no consensus-line join needed).
 FAVORITE_MAX_ODDS = Decimal("2.0")
 
@@ -122,17 +130,35 @@ def scout_user(user) -> dict:
     }
 
 
-def _markets(settled) -> dict:
-    out: dict[str, dict] = {}
+def _markets(settled) -> list[dict]:
+    agg: dict[str, dict] = {}
     for s, _ in settled:
         cat = (s.market.category or "OTHER").lower()
-        m = out.setdefault(cat, {"picks": 0, "_w": 0, "_l": 0})
+        if cat not in _MARKET_LABELS:
+            continue  # non-core market — still in the overall record, not broken out
+        m = agg.setdefault(cat, {"picks": 0, "wins": 0, "losses": 0})
         m["picks"] += 1
         if s.settlement_status == SettlementStatus.WON:
-            m["_w"] += 1
+            m["wins"] += 1
         elif s.settlement_status == SettlementStatus.LOST:
-            m["_l"] += 1
-    return {k: {"picks": v["picks"], "win_rate": _win_rate(v["_w"], v["_l"])} for k, v in out.items()}
+            m["losses"] += 1
+    rows = [
+        {
+            "key": cat,
+            "market": _MARKET_LABELS[cat],
+            "picks": v["picks"],
+            "wins": v["wins"],
+            "losses": v["losses"],
+            # Withheld below the floor — too few decided picks to mean anything.
+            "win_rate": (
+                _win_rate(v["wins"], v["losses"])
+                if v["wins"] + v["losses"] >= MIN_MARKET_DECIDED
+                else None
+            ),
+        }
+        for cat, v in agg.items()
+    ]
+    return sorted(rows, key=lambda r: (_MARKET_ORDER.get(r["key"], 9), -r["picks"]))
 
 
 def _league_of(selection):

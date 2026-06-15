@@ -62,7 +62,7 @@
         </div>
     </section>
 
-    {% include "portal/match/_scout_card.html" with opponent=scout_opponent scouting=scouting entitled=scouting_entitled %}
+    {% include "portal/match/_scout_card.html" with opponent=scout_opponent scouting=scouting entitled=scouting_entitled pending=scouting_pending %}
 
     <div class="warning-message">
         <p>If the event you selected was postponed or canceled, your slot reopens for a new pick (until the match end date).</p>
@@ -231,8 +231,8 @@
         --pm-fav: #275d81;       /* favorite (negative American) */
         --pm-dog: #2f9e6b;       /* underdog (positive American) */
         --pm-line: #b9831b;      /* spread / total line accent */
-        --pm-bg-soft: #f5f7fa;
-        --pm-border: #e5e7eb;
+        --pm-bg-soft: var(--surface-muted);
+        --pm-border: var(--border-default);
     }
 
     .pickmodal-header { background: var(--pm-bg-soft); }
@@ -281,8 +281,8 @@
         background: var(--pm-bg-soft); color: var(--text-secondary, #6b7280);
         text-transform: uppercase; letter-spacing: .04em;
     }
-    .pm-chip.is-sport { background: rgba(61, 126, 170, 0.12); color: var(--brand-blue-dark, #275d81); }
-    .pm-chip.is-league { background: rgba(47, 158, 107, 0.12); color: var(--pm-dog); }
+    .pm-chip.is-sport { background: var(--fill-info-bg); color: var(--fill-info-text); }
+    .pm-chip.is-league { background: var(--fill-success-bg); color: var(--pm-dog); }
     .pickevent-card__time {
         color: var(--text-secondary, #6b7280); font-size: .78rem;
         display: flex; align-items: center; gap: .35rem;
@@ -333,11 +333,11 @@
     /* Live score banner — only shown when event is live or finalized. */
     .pickstep__score {
         display: inline-flex; align-items: center; gap: .35rem;
-        background: rgba(220, 38, 38, .08);
-        color: #b91c1c; font-weight: 700; font-size: .85rem;
+        background: var(--fill-danger-bg);
+        color: var(--fill-danger-text); font-weight: 700; font-size: .85rem;
         padding: .15rem .55rem; border-radius: 999px;
     }
-    .pickstep__score.is-final { background: rgba(75, 85, 99, .1); color: #4b5563; }
+    .pickstep__score.is-final { background: var(--fill-neutral-bg); color: var(--fill-neutral-text); }
     .pickstep__score-num { font-variant-numeric: tabular-nums; }
 
     /* ── Step 2 — market category tabs ────────────────────────────── */
@@ -372,7 +372,7 @@
     }
     .pickmarket-group__line-pill {
         font-variant-numeric: tabular-nums;
-        background: rgba(185, 131, 27, .12);
+        background: var(--fill-warning-bg);
         color: var(--pm-line);
         font-size: .8rem; font-weight: 700;
         padding: .1rem .55rem; border-radius: 6px;
@@ -399,7 +399,7 @@
     }
     .pickselection.is-selected {
         border-color: var(--brand-blue, #3D7EAA);
-        background: rgba(61, 126, 170, 0.08);
+        background: var(--fill-info-bg);
         box-shadow: inset 0 0 0 1px var(--brand-blue, #3D7EAA), 0 4px 14px rgba(61, 126, 170, .15);
     }
     .pickselection.is-suspended { opacity: .5; pointer-events: none; }
@@ -423,7 +423,7 @@
     .pickselection__line {
         font-variant-numeric: tabular-nums;
         font-size: .75rem; font-weight: 700; color: var(--pm-line);
-        background: rgba(185, 131, 27, .12);
+        background: var(--fill-warning-bg);
         padding: .1rem .45rem; border-radius: 5px;
         flex-shrink: 0;
     }
@@ -454,16 +454,16 @@
         padding: .1rem .4rem; border-radius: 4px;
         text-transform: uppercase; letter-spacing: .04em;
     }
-    .pm-badge.is-fav { background: rgba(39, 93, 129, .1); color: var(--pm-fav); }
-    .pm-badge.is-dog { background: rgba(47, 158, 107, .1); color: var(--pm-dog); }
+    .pm-badge.is-fav { background: var(--fill-info-bg); color: var(--pm-fav); }
+    .pm-badge.is-dog { background: var(--fill-success-bg); color: var(--pm-dog); }
     .pm-badge.is-implied {
         background: var(--pm-bg-soft); color: var(--text-secondary, #6b7280);
         font-weight: 600;
     }
     /* Settlement state — surfaced post-finalization via the webhook. */
-    .pm-badge.is-won { background: rgba(47, 158, 107, .14); color: var(--pm-dog); }
-    .pm-badge.is-lost { background: rgba(220, 38, 38, .12); color: #b91c1c; }
-    .pm-badge.is-push { background: rgba(185, 131, 27, .14); color: var(--pm-line); }
+    .pm-badge.is-won { background: var(--fill-success-bg); color: var(--pm-dog); }
+    .pm-badge.is-lost { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
+    .pm-badge.is-push { background: var(--fill-warning-bg); color: var(--pm-line); }
     .pm-badge.is-void { background: var(--pm-bg-soft); color: var(--text-secondary, #6b7280); }
     /* When the user's chosen selection is a winner, give the whole card a
        green outline so the result is unmissable. */
@@ -514,7 +514,7 @@
     .pickmodal-locked-notice {
         font-size: .85rem;
         color: var(--text-primary, #111827);
-        background: rgba(61, 126, 170, 0.08);
+        background: var(--fill-info-bg);
         border: 1px solid var(--brand-blue, #3D7EAA);
         border-radius: 8px;
         padding: .55rem .75rem;
