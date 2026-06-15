@@ -15,6 +15,7 @@ app_name = 'core-portal'
 
 urlpatterns = [
     path('dashboard/', views.portal_dashboard, name='portal-dashboard'),
+    path('stats/', views.portal_stats, name='portal-stats'),
     path('rules/', views.rules_view, name='portal-rules'),
     path('support/', views.support_view, name='portal-support'),
     path('developer-updates/', views.developer_updates_view, name='portal-developer-updates'),

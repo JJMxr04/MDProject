@@ -89,3 +89,42 @@
   --ps-dur: .25s;
   --ps-dur-slow: .4s;
 }
+
+/* --- Dark / light. AUTO follows the OS; a user choice (data-theme) overrides.
+   Only semantic values flip; the dark block is shared by auto + forced dark. --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ps-bg:          #0B2027;
+    --ps-surface:     #112E36;
+    --ps-surface-alt: #173A44;
+    --ps-text:        #EAF4F2;
+    --ps-text-muted:  #9DB6BA;
+    --ps-border:      rgba(255, 255, 255, .10);
+    --ps-border-strong: rgba(255, 255, 255, .20);
+    --ps-ocean-700:   #5FD3D9;
+    --ps-glass-bg:        rgba(17, 46, 54, .58);
+    --ps-glass-bg-strong: rgba(17, 46, 54, .80);
+    --ps-glass-border:    rgba(255, 255, 255, .12);
+    --ps-shadow-sm: 0 1px 2px rgba(0, 0, 0, .30);
+    --ps-shadow-md: 0 8px 24px rgba(0, 0, 0, .40);
+    --ps-shadow-lg: 0 20px 48px rgba(0, 0, 0, .55);
+    --ps-shadow-glass: 0 8px 32px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+}
+:root[data-theme="dark"] {
+  --ps-bg:          #0B2027;
+  --ps-surface:     #112E36;
+  --ps-surface-alt: #173A44;
+  --ps-text:        #EAF4F2;
+  --ps-text-muted:  #9DB6BA;
+  --ps-border:      rgba(255, 255, 255, .10);
+  --ps-border-strong: rgba(255, 255, 255, .20);
+  --ps-ocean-700:   #5FD3D9;
+  --ps-glass-bg:        rgba(17, 46, 54, .58);
+  --ps-glass-bg-strong: rgba(17, 46, 54, .80);
+  --ps-glass-border:    rgba(255, 255, 255, .12);
+  --ps-shadow-sm: 0 1px 2px rgba(0, 0, 0, .30);
+  --ps-shadow-md: 0 8px 24px rgba(0, 0, 0, .40);
+  --ps-shadow-lg: 0 20px 48px rgba(0, 0, 0, .55);
+  --ps-shadow-glass: 0 8px 32px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255,255,255,.06);
+}

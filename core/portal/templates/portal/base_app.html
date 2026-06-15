@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Portal{% endblock title %}</title>
 
+    {# theme.js sets the dark/light attribute before paint (no flash). External = CSP-safe. #}
+    <script src="{% static 'js/theme.js' %}"></script>
+
     <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
 
@@ -12,8 +15,6 @@
     <link rel="stylesheet" href="{% static 'css/portal/global.css' %}">
     <link rel="shortcut icon" href="{% static 'assets/Images/favicon.ico' %}" type="image/x-icon">
 
-    {# Matomo analytics — external file, not inline: the strict CSP #}
-    {# (script-src 'self', no 'unsafe-inline') blocks inline scripts. #}
     <script src="{% static 'js/matomo-init.js' %}" defer></script>
 
     {% block css %}{% endblock css %}
@@ -36,7 +37,10 @@
     </main>
 </div>
 
-{% if request.user.is_authenticated %}{% include "portal/components/_bottomnav.html" %}{% endif %}
+{% if request.user.is_authenticated %}
+{% include "portal/components/_bottomnav.html" %}
+{% include "portal/components/_mobilemenu.html" %}
+{% endif %}
 
 {% include "portal/components/_toast_host.html" %}
 {% include "portal/components/_loading_overlay.html" %}

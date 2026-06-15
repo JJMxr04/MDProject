@@ -61,6 +61,7 @@
 .site-nav .nav-link.active::after { transform: scaleX(1); }
 
 .site-nav__actions { display: flex; align-items: center; gap: var(--ps-space-2); }
+.ps-theme-toggle { padding: .6rem .75rem; min-height: 44px; }
 
 .site-nav__toggler { border: 0; padding: .4rem .55rem; }
 .site-nav__toggler:focus { box-shadow: var(--ps-ring); }

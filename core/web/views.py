@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
@@ -44,7 +45,19 @@ def contact(request):
 
 @_cached_view
 def pricing(request):
-    return render(request, 'public/pricing.html')
+    # Pull the live PRO price from the Plan row (seeded from the PLATFORM_COST
+    # env var via `manage.py sync_platform_cost`) rather than hardcoding it.
+    from core.billing.models import Plan
+    plan = (Plan.objects.filter(code='PRO', is_active=True).first()
+            or Plan.objects.filter(code='PRO').first())
+    cents = plan.amount_cents if (plan and plan.amount_cents) else \
+        getattr(settings, 'PLATFORM_COST_CENTS', 999)
+    ctx = {
+        'pro_price': f"{cents / 100:.2f}",
+        'pro_interval': plan.interval if plan else 'month',
+        'pro_trial_days': getattr(plan, 'trial_days', 0) if plan else 0,
+    }
+    return render(request, 'public/pricing.html', ctx)
 
 
 def gameRules(request):

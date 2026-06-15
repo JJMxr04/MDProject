@@ -1,0 +1,129 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}Your stats{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Your stats</h1>
+        <p class="page-header__subtitle">Your records across matches, duels and Pick of the Day — all in one place.</p>
+    </div>
+    <a href="{% url 'core-portal:portal-leaderboard' %}" class="btn-ui btn-ui--secondary">
+        <i class="bi bi-bar-chart" aria-hidden="true"></i> Leaderboard
+    </a>
+</header>
+
+{% if rank_progress %}
+<section class="card-ui mb-4">
+    <div class="card-ui__body stats-rank">
+        <div class="stats-rank__level">
+            <span class="stats-rank__num">{{ rank_progress.level }}</span>
+            <span class="stats-rank__lbl">Level</span>
+        </div>
+        <div class="stats-rank__bar-wrap">
+            <div class="stats-rank__bar"><span style="width: {{ rank_progress.xp_pct }}%"></span></div>
+            <div class="stats-rank__meta">
+                {{ rank_progress.xp_into }} / {{ rank_progress.xp_span }} XP to next level
+                {% if rank_progress.xp_this_week %}&middot; <strong>+{{ rank_progress.xp_this_week }} XP</strong> this week{% endif %}
+            </div>
+        </div>
+        <div class="stats-rank__side">
+            {% if rank_progress.season_rank %}
+                <span class="stats-rank__num">#{{ rank_progress.season_rank }}</span><span class="stats-rank__lbl">Season rank</span>
+            {% else %}
+                <span class="stats-rank__num">{{ rank_progress.global_points }}</span><span class="stats-rank__lbl">Career points</span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<div class="stats-grid">
+    <!-- Matches -->
+    <section class="card-ui">
+        <header class="card-ui__header"><h2><i class="bi bi-controller me-2"></i>Matches</h2></header>
+        <div class="card-ui__body">
+            {% if match_record %}
+            <div class="stats-figures">
+                <div class="stats-fig"><span class="stats-fig__num">{{ match_record.wins }}</span><span class="stats-fig__lbl">Won</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ match_record.losses }}</span><span class="stats-fig__lbl">Lost</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ match_record.draws }}</span><span class="stats-fig__lbl">Drawn</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{% if match_record.win_rate is not None %}{{ match_record.win_rate }}%{% else %}—{% endif %}</span><span class="stats-fig__lbl">Win rate</span></div>
+            </div>
+            <p class="text-muted small mt-3 mb-0">{{ match_record.games }} match{{ match_record.games|pluralize:"es" }} played all-time.</p>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="controller" title="No matches yet" body="Play a match to start your record." action_label="Find a match" action_href="/web/portal/match/public/" %}
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Duels -->
+    <section class="card-ui">
+        <header class="card-ui__header"><h2><i class="bi bi-fire me-2"></i>Duels</h2></header>
+        <div class="card-ui__body">
+            {% if duel_stats.total %}
+            <div class="stats-figures">
+                <div class="stats-fig"><span class="stats-fig__num">{{ duel_stats.won }}</span><span class="stats-fig__lbl">Won</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ duel_stats.lost }}</span><span class="stats-fig__lbl">Lost</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ duel_stats.draw }}</span><span class="stats-fig__lbl">Drawn</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{% if duel_stats.win_rate is not None %}{{ duel_stats.win_rate }}%{% else %}—{% endif %}</span><span class="stats-fig__lbl">Win rate</span></div>
+            </div>
+            <p class="text-muted small mt-3 mb-0">{{ duel_stats.open }} in progress &middot; {{ duel_stats.total }} total.</p>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="fire" title="No duels yet" body="Challenge a friend to a quick duel." action_label="Duels" action_href="/web/portal/match/duels/" %}
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Pick of the Day -->
+    <section class="card-ui">
+        <header class="card-ui__header"><h2><i class="bi bi-star me-2"></i>Pick of the Day</h2></header>
+        <div class="card-ui__body">
+            <div class="stats-figures">
+                <div class="stats-fig"><span class="stats-fig__num">{% if season_record %}{{ season_record.potd_wins }}{% else %}0{% endif %}</span><span class="stats-fig__lbl">Wins (season)</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">🔥 {{ potd_current_streak }}</span><span class="stats-fig__lbl">Current streak</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ potd_best_streak }}</span><span class="stats-fig__lbl">Best streak</span></div>
+            </div>
+            <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm mt-3">View board</a>
+        </div>
+    </section>
+
+    <!-- Season -->
+    <section class="card-ui">
+        <header class="card-ui__header"><h2><i class="bi bi-trophy me-2"></i>This season</h2></header>
+        <div class="card-ui__body">
+            {% if season_record %}
+            <div class="stats-figures">
+                <div class="stats-fig"><span class="stats-fig__num">{{ season_record.points }}</span><span class="stats-fig__lbl">Points</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ season_record.wins }}–{{ season_record.losses }}–{{ season_record.draws }}</span><span class="stats-fig__lbl">W–L–D</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{% if season_record.win_rate is not None %}{{ season_record.win_rate }}%{% else %}—{% endif %}</span><span class="stats-fig__lbl">Win rate</span></div>
+                <div class="stats-fig"><span class="stats-fig__num">{{ season_record.division }}</span><span class="stats-fig__lbl">Division</span></div>
+            </div>
+            <p class="text-muted small mt-3 mb-0">{% if season %}{{ season.name }}{% endif %}</p>
+            {% else %}
+                {% include "portal/components/_empty_state.html" with icon="trophy" title="Not in this season yet" body="Play ranked matches to join the season standings." %}
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .stats-rank { display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; }
+    .stats-rank__level, .stats-rank__side { text-align: center; }
+    .stats-rank__num { display: block; font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--brand-blue-dark); }
+    .stats-rank__lbl { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+    .stats-rank__bar-wrap { flex: 1; min-width: 180px; }
+    .stats-rank__bar { height: 10px; background: var(--surface-muted); border-radius: 999px; overflow: hidden; }
+    .stats-rank__bar span { display: block; height: 100%; background: var(--brand-yellow); }
+    .stats-rank__meta { font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-1); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--space-5); align-items: start; }
+    .stats-figures { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+    .stats-fig { flex: 1 1 0; min-width: 72px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: var(--space-3); background: var(--surface-muted); border-radius: var(--radius-md); }
+    .stats-fig__num { font-size: var(--text-xl); font-weight: var(--weight-bold); }
+    .stats-fig__lbl { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; text-align: center; }
+</style>
+{% endblock css %}

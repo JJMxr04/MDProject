@@ -12,4 +12,5 @@ from .availability import availability_view
 from .dashboard import portal_dashboard
 from .developer_updates import developer_updates_view
 from .rules import rules_view
+from .stats import portal_stats
 from .support import support_view

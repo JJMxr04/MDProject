@@ -18,8 +18,12 @@
 <div class="card-ui mb-4">
     <div class="card-ui__body d-flex align-items-baseline gap-2 flex-wrap">
         <strong>Today:</strong>
-        <span>{{ potd.event.home_team.name_medium|default:"Home" }} vs {{ potd.event.away_team.name_medium|default:"Away" }}</span>
-        <span class="text-muted small">&middot; {{ potd.event.league.name }} &middot; {{ potd_pick_count }} pick{{ potd_pick_count|pluralize }} so far</span>
+        <a class="potd-today-link" href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">
+            {{ potd.event.home_team.name_medium|default:"Home" }} vs {{ potd.event.away_team.name_medium|default:"Away" }}
+        </a>
+        <span class="text-muted small">&middot; {{ potd.event.league.name }} &middot; {{ potd_pick_count }} pick{{ potd_pick_count|pluralize }} so far &middot;
+            <a href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">View event</a>
+        </span>
     </div>
 </div>
 {% endif %}
@@ -105,5 +109,7 @@
         width: 1.6rem; text-align: center;
         font-weight: var(--weight-bold); color: var(--text-secondary);
     }
+    .potd-today-link { font-weight: var(--weight-semibold); color: var(--text-primary); text-decoration: none; }
+    .potd-today-link:hover { text-decoration: underline; }
 </style>
 {% endblock css %}

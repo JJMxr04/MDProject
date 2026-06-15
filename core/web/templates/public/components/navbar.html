@@ -24,6 +24,9 @@
         </li>
       </ul>
       <div class="site-nav__actions">
+        <button class="ps-btn ps-btn--ghost ps-theme-toggle" type="button" data-theme-toggle aria-label="Theme">
+          <i class="bi bi-circle-half" aria-hidden="true"></i>
+        </button>
         <a class="ps-btn ps-btn--ghost" href="{% url 'core-auth:login' %}">Log in</a>
         <a class="ps-btn ps-btn--accent" href="{% url 'core-auth:register' %}">Start free</a>
       </div>

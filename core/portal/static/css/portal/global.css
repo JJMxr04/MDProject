@@ -294,14 +294,27 @@ a:hover { color: var(--brand-blue-bright); }
 .form-chip--unknown { background: var(--border-strong); color: var(--text-secondary); }
 
 @media (max-width: 768px) {
-  .sidebar-toggle {
-    display: inline-flex; background: transparent; border: 0; color: #fff;
-    font-size: 24px; padding: var(--space-2); cursor: pointer;
-  }
-  .sidebar { transform: translateX(-100%); transition: transform var(--motion-base) var(--ease-out); }
-  .sidebar.is-open { transform: translateX(0); }
-  .content { margin-left: 0; }
+  /* Mobile navigates via the bottom bar + "More" sheet, not the sidebar. */
+  .sidebar { display: none; }
+  .sidebar-toggle { display: none; }
+  .topbar { padding-inline: var(--space-4); }
+  /* overflow-x guard: stops any stray wide child from scrolling the whole
+     page sideways, which would unanchor the fixed bottom bar. */
+  .content { margin-left: 0; overflow-x: hidden; }
+  .content__inner { padding: var(--space-4); }
 }
+
+/* Sidebar section labels (desktop rail grouping) */
+.sidenav__label {
+  list-style: none;
+  margin: var(--space-4) var(--space-3) var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-secondary);
+}
+.sidenav__label:first-child { margin-top: 0; }
 
 /* ── Page header ──────────────────────────────────────────── */
 .page-header {
@@ -648,7 +661,8 @@ a:hover { color: var(--brand-blue-bright); }
 }
 .turn-hero__potd-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: .04em; color: var(--brand-blue-dark); }
 .turn-hero__potd-label i { color: #FFB400; }
-.turn-hero__potd-matchup { margin: 0; font-weight: var(--weight-semibold); }
+.turn-hero__potd-matchup { margin: 0; font-weight: var(--weight-semibold); color: var(--text-primary); text-decoration: none; }
+.turn-hero__potd-matchup:hover { text-decoration: underline; }
 .turn-hero__potd-status { margin: 0; }
 .turn-hero__potd-status i { color: var(--state-success); }
 .turn-hero__potd-status--muted { color: var(--text-secondary); }
@@ -692,7 +706,7 @@ a:hover { color: var(--brand-blue-bright); }
 }
 
 /* ── Filter bar: stack cleanly on small screens ───────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .filter-bar { flex-direction: column; align-items: stretch; }
   /* tabs become a horizontal scroller instead of wrapping/overflowing */
   .filter-bar__tabs {
@@ -707,8 +721,114 @@ a:hover { color: var(--brand-blue-bright); }
 }
 
 /* ── Wide tables: horizontal scroll instead of overflow ───── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   /* any card wrapping a data table scrolls sideways rather than clipping */
   .card-ui { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .table-ui { min-width: 540px; }
 }
+
+/* ── Mobile menu sheet (bottom-bar "More") ────────────────── */
+.mobile-menu { display: none; }
+.mobile-menu.is-open { display: block; }
+.mobile-menu__backdrop {
+  position: fixed; inset: 0; z-index: 1090;
+  background: rgba(10, 31, 38, .45);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+}
+.mobile-menu__panel {
+  position: fixed; top: 0; bottom: 0; right: 0; z-index: 1100;
+  width: min(86vw, 360px);
+  display: flex; flex-direction: column;
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+          backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  border-left: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  animation: mm-in var(--motion-base) var(--ease-out);
+}
+@keyframes mm-in { from { transform: translateX(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .mobile-menu__panel { background: var(--surface-card); }
+}
+.mobile-menu__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
+.mobile-menu__user { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.mobile-menu__name { font-weight: var(--weight-semibold); }
+.mobile-menu__profilelink { font-size: var(--text-sm); color: var(--brand-blue-dark); }
+.mobile-menu__close { background: transparent; border: 0; font-size: 20px; color: var(--text-secondary); cursor: pointer; padding: var(--space-2); }
+.mobile-menu__nav { display: flex; flex-direction: column; gap: 2px; }
+.mobile-menu__label { margin: var(--space-3) 0 var(--space-1); font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: .06em; color: var(--text-secondary); }
+.mobile-menu__nav a {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3); border-radius: var(--radius-md);
+  color: var(--text-primary); text-decoration: none; font-weight: var(--weight-medium);
+  min-height: 44px;
+}
+.mobile-menu__nav a:hover, .mobile-menu__nav a:active { background: var(--surface-muted); }
+.mobile-menu__nav a i { font-size: 18px; opacity: .9; width: 20px; text-align: center; }
+.mobile-menu__badge { margin-left: auto; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-on-accent); background: var(--brand-yellow); padding: 0 var(--space-2); border-radius: var(--radius-pill); }
+.mobile-menu__logout { margin-top: var(--space-4); }
+@media (min-width: 769px) { .mobile-menu, .bottom-nav { display: none !important; } }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   AUTO DARK / LIGHT  — follows the OS setting via prefers-color-scheme.
+   Only the semantic tokens flip; every component re-themes automatically.
+   ══════════════════════════════════════════════════════════════════════════ */
+/* Dark token values are shared by AUTO (OS) and FORCED (data-theme="dark").
+   The `:not([data-theme="light"])` guard lets a user override OS dark → light.
+   The body background flips automatically because it references --surface-page. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-page:      #0B2027;
+    --surface-card:      #112E36;
+    --surface-muted:     #173A44;
+    --text-primary:      #EAF4F2;
+    --text-secondary:    #9DB6BA;
+    --text-on-accent:    #0C2B33;
+    --brand-blue:        #2BC4CC;
+    --brand-blue-dark:   #5FD3D9;
+    --brand-blue-bright: #7FE0DB;
+    --border-default:    rgba(255, 255, 255, .10);
+    --border-strong:     rgba(255, 255, 255, .20);
+    --glass-bg:          rgba(17, 46, 54, .55);
+    --glass-bg-strong:   rgba(17, 46, 54, .80);
+    --glass-border:      rgba(255, 255, 255, .12);
+    --shadow-sm:  0 1px 2px  rgba(0, 0, 0, .30);
+    --shadow-md:  0 4px 12px rgba(0, 0, 0, .38);
+    --shadow-lg:  0 12px 28px rgba(0, 0, 0, .48);
+    --shadow-glass: 0 8px 28px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  :root:not([data-theme="light"]) .badge-ui--info    { background: #0B3A45; color: #8FE3E8; }
+  :root:not([data-theme="light"]) .badge-ui--primary { background: #0E3550; color: #A9CBF0; }
+  :root:not([data-theme="light"]) .badge-ui--success { background: #123A2A; color: #8FE0B3; }
+  :root:not([data-theme="light"]) .badge-ui--warning { background: #3A2C12; color: #F1C98A; }
+  :root:not([data-theme="light"]) .badge-ui--danger  { background: #3A1715; color: #F0A39E; }
+}
+/* Forced dark — applies even when the OS is in light mode. */
+:root[data-theme="dark"] {
+  --surface-page:      #0B2027;
+  --surface-card:      #112E36;
+  --surface-muted:     #173A44;
+  --text-primary:      #EAF4F2;
+  --text-secondary:    #9DB6BA;
+  --text-on-accent:    #0C2B33;
+  --brand-blue:        #2BC4CC;
+  --brand-blue-dark:   #5FD3D9;
+  --brand-blue-bright: #7FE0DB;
+  --border-default:    rgba(255, 255, 255, .10);
+  --border-strong:     rgba(255, 255, 255, .20);
+  --glass-bg:          rgba(17, 46, 54, .55);
+  --glass-bg-strong:   rgba(17, 46, 54, .80);
+  --glass-border:      rgba(255, 255, 255, .12);
+  --shadow-sm:  0 1px 2px  rgba(0, 0, 0, .30);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, .38);
+  --shadow-lg:  0 12px 28px rgba(0, 0, 0, .48);
+  --shadow-glass: 0 8px 28px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255,255,255,.06);
+}
+:root[data-theme="dark"] .badge-ui--info    { background: #0B3A45; color: #8FE3E8; }
+:root[data-theme="dark"] .badge-ui--primary { background: #0E3550; color: #A9CBF0; }
+:root[data-theme="dark"] .badge-ui--success { background: #123A2A; color: #8FE0B3; }
+:root[data-theme="dark"] .badge-ui--warning { background: #3A2C12; color: #F1C98A; }
+:root[data-theme="dark"] .badge-ui--danger  { background: #3A1715; color: #F0A39E; }

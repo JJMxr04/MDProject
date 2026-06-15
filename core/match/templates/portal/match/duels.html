@@ -14,88 +14,73 @@
     </button>
 </header>
 
-<!-- Record -->
-<section class="duel-stats">
-    <div class="duel-stat"><span class="duel-stat__num">{{ duel_record.total }}</span><span class="duel-stat__lbl">Duels</span></div>
-    <div class="duel-stat"><span class="duel-stat__num duel-stat__num--won">{{ duel_record.won }}</span><span class="duel-stat__lbl">Won</span></div>
-    <div class="duel-stat"><span class="duel-stat__num duel-stat__num--lost">{{ duel_record.lost }}</span><span class="duel-stat__lbl">Lost</span></div>
-    <div class="duel-stat"><span class="duel-stat__num">{{ duel_record.draw }}</span><span class="duel-stat__lbl">Draws</span></div>
-    {% if duel_record.win_rate is not None %}
-    <div class="duel-stat"><span class="duel-stat__num">{{ duel_record.win_rate }}%</span><span class="duel-stat__lbl">Win rate</span></div>
-    {% endif %}
-</section>
+{% comment %}#invite-list carries the config invite_list.js reads (accept / decline /
+cancel). It must always render, so it wraps the conditional alert sections.{% endcomment %}
+<div id="invite-list"
+     data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
+     data-csrf="{{ csrf_token }}">
 
-<!-- Incoming challenges — accept / decline reuse invite_list.js via #invite-list -->
-<section class="card-ui mb-4">
-    <div class="card-ui__header"><h2 class="card-ui__title">Accept the duel challenge</h2></div>
-    <div class="card-ui__body">
-        <div id="invite-list"
-             data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
-             data-csrf="{{ csrf_token }}">
-            {% if challenges %}
-            {% if not scouting_entitled %}
-            <section class="card-ui scout-card" style="margin-bottom: var(--space-3);">
-                <div class="card-ui__body">
-                    <div class="scout-upsell">
-                        <div>
-                            <p class="scout-upsell__lead">Scout your challengers before you accept.</p>
-                            <ul class="scout-upsell__list">
-                                <li>Record &amp; hit rate</li>
-                                <li>Side &amp; favorite/underdog lean</li>
-                                <li>Recent form</li>
-                            </ul>
-                        </div>
-                        <div class="scout-upsell__cta">
-                            <a href="{% url 'core-portal:billing-upgrade' %}?src=opponent_scouting" class="btn-ui btn-ui--primary btn-ui--lg">Upgrade to PRO</a>
-                            <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {% endif %}
-            <div class="list-group list-group-flush" style="margin:0;">
-                {% for invite in challenges %}
-                <div class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
-                    {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
-                    <div class="flex-grow-1">
-                        <div class="fw-semibold">⚔️ {{ invite.sender.username }} challenged you to a duel</div>
-                        <div class="small">
-                            They took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — accepting puts you on <strong>{{ invite.payload.opponent_label }}</strong>.
-                        </div>
-                        {% if invite.expires_at %}
-                        <div class="small text-muted">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn-ui btn-ui--primary btn-ui--sm"
-                                data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">
-                            Accept
-                        </button>
-                        <button class="btn-ui btn-ui--secondary btn-ui--sm"
-                                data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="reject">
-                            Decline
-                        </button>
-                    </div>
-                </div>
-                {% if scouting_entitled %}
-                {% include "portal/match/_scout_card.html" with opponent=invite.sender scouting=invite.scouting entitled=True %}
-                {% endif %}
-                {% endfor %}
-            </div>
-            {% include "portal/components/_pagination_param.html" with page_obj=challenges param_name="cpage" other_qs=challenges_other_qs %}
-            {% else %}
-                {% include "portal/components/_empty_state.html" with icon="inbox" title="No challenges waiting." body="When a friend duels you, it shows up here to accept or decline." %}
-            {% endif %}
+    {% if challenges %}
+    <section class="duel-alert duel-alert--action">
+        <div class="duel-alert__head">
+            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+            {{ challenges.paginator.count }} duel challenge{{ challenges.paginator.count|pluralize }} waiting
         </div>
-    </div>
-</section>
+        {% if not scouting_entitled %}
+        <div class="scout-upsell duel-alert__upsell">
+            <div>
+                <p class="scout-upsell__lead">Scout your challengers before you accept.</p>
+                <ul class="scout-upsell__list">
+                    <li>Record &amp; hit rate</li>
+                    <li>Side &amp; favorite/underdog lean</li>
+                    <li>Recent form</li>
+                </ul>
+            </div>
+            <div class="scout-upsell__cta">
+                <a href="{% url 'core-portal:billing-upgrade' %}?src=opponent_scouting" class="btn-ui btn-ui--primary">Upgrade to PRO</a>
+                <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
+            </div>
+        </div>
+        {% endif %}
+        <div class="list-group list-group-flush" style="margin:0;">
+            {% for invite in challenges %}
+            <div class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
+                {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">⚔️ {{ invite.sender.username }} challenged you to a duel</div>
+                    <div class="small">
+                        They took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — accepting puts you on <strong>{{ invite.payload.opponent_label }}</strong>.
+                    </div>
+                    {% if invite.expires_at %}
+                    <div class="small text-muted">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</div>
+                    {% endif %}
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn-ui btn-ui--primary btn-ui--sm"
+                            data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">
+                        Accept
+                    </button>
+                    <button class="btn-ui btn-ui--secondary btn-ui--sm"
+                            data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="reject">
+                        Decline
+                    </button>
+                </div>
+            </div>
+            {% if scouting_entitled %}
+            {% include "portal/match/_scout_card.html" with opponent=invite.sender scouting=invite.scouting entitled=True %}
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% include "portal/components/_pagination_param.html" with page_obj=challenges param_name="cpage" other_qs=challenges_other_qs %}
+    </section>
+    {% endif %}
 
-<!-- Sent / pending — outgoing challenges awaiting a response. Cancel reuses
-     invite_list.js (config read from the always-present #invite-list above). -->
-<section class="card-ui mb-4">
-    <div class="card-ui__header"><h2 class="card-ui__title">Sent &middot; pending</h2></div>
-    <div class="card-ui__body">
-        {% if sent %}
+    {% if sent %}
+    <section class="duel-alert">
+        <div class="duel-alert__head">
+            <i class="bi bi-hourglass-split" aria-hidden="true"></i>
+            {{ sent.paginator.count }} duel{{ sent.paginator.count|pluralize }} awaiting a response
+        </div>
         <ul class="list-group list-group-flush" style="margin:0;">
             {% for invite in sent %}
             <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
@@ -119,13 +104,12 @@
             {% endfor %}
         </ul>
         {% include "portal/components/_pagination_param.html" with page_obj=sent param_name="spage" other_qs=sent_other_qs %}
-        {% else %}
-            {% include "portal/components/_empty_state.html" with icon="send" title="Nothing pending." body="Challenges you send sit here until your friend accepts or the event starts." %}
-        {% endif %}
-    </div>
-</section>
+    </section>
+    {% endif %}
 
-<!-- In-progress duels -->
+</div>
+
+<!-- In-progress duels (primary) -->
 <section class="card-ui mb-4">
     <div class="card-ui__header"><h2 class="card-ui__title">In progress</h2></div>
     <div class="card-ui__body">
@@ -144,7 +128,7 @@
         </ul>
         {% include "portal/components/_pagination_param.html" with page_obj=accepted param_name="apage" other_qs=accepted_other_qs %}
         {% else %}
-            {% include "portal/components/_empty_state.html" with icon="hourglass-split" title="No duels in progress." body="Accepted duels live here until the event settles." %}
+            {% include "portal/components/_empty_state.html" with icon="hourglass-split" title="No duels in progress." body="Accepted duels live here until the event settles. Create one to get started." %}
         {% endif %}
     </div>
 </section>
@@ -281,6 +265,14 @@
     .duel-stat__num--won { color: var(--state-success); }
     .duel-stat__num--lost { color: var(--state-danger); }
     .duel-stat__lbl { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+
+    /* Compact alert sections for incoming challenges + pending duels */
+    .duel-alert { background: var(--surface-card); border: 1px solid var(--border-strong); border-left: 4px solid var(--brand-blue); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-4); }
+    .duel-alert--action { border-left-color: var(--state-warning); }
+    .duel-alert__head { display: flex; align-items: center; gap: var(--space-2); font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
+    .duel-alert__head i { font-size: 1.1rem; }
+    .duel-alert--action .duel-alert__head i { color: var(--state-warning); }
+    .duel-alert__upsell { padding: var(--space-3) 0; border-bottom: 1px solid var(--border-default); margin-bottom: var(--space-2); }
 
     .card-ui.mb-4 { margin-bottom: var(--space-5); }
     .card-ui__title { font-size: var(--text-lg); margin: 0; }

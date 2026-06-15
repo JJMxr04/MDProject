@@ -1,0 +1,55 @@
+{% load static %}
+{% comment %}Full mobile navigation sheet opened by the bottom bar's "More" tab.
+Replaces the desktop sidebar on small screens (shell.js toggles .is-open).{% endcomment %}
+<div class="mobile-menu" data-mobile-menu>
+    <div class="mobile-menu__backdrop" data-mobile-menu-close></div>
+    <div class="mobile-menu__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="mobile-menu__head">
+            <div class="mobile-menu__user">
+                {% include "portal/components/_avatar.html" with user=request.user size=44 %}
+                <div>
+                    <div class="mobile-menu__name">{{ request.user.username }}</div>
+                    <a class="mobile-menu__profilelink" href="{% url 'core-portal:profile' %}">Profile &amp; settings</a>
+                </div>
+            </div>
+            <button class="mobile-menu__close" type="button" data-mobile-menu-close aria-label="Close menu">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <nav class="mobile-menu__nav" aria-label="All sections">
+            <span class="mobile-menu__label">Play</span>
+            <a href="{% url 'core-portal:portal-dashboard' %}"><i class="bi bi-house" aria-hidden="true"></i> Dashboard</a>
+            <a href="{% url 'core-portal:portal-my-match-list' %}"><i class="bi bi-controller" aria-hidden="true"></i> Matches</a>
+            <a href="{% url 'core-portal:portal-duels' %}"><i class="bi bi-fire" aria-hidden="true"></i> Duel</a>
+            <a href="{% url 'core-portal:upcoming-events' %}"><i class="bi bi-calendar-event" aria-hidden="true"></i> Events</a>
+            <a href="{% url 'core-portal:potd-leaderboard' %}"><i class="bi bi-star" aria-hidden="true"></i> Pick of the Day</a>
+
+            <span class="mobile-menu__label">Compete</span>
+            <a href="{% url 'core-portal:portal-leaderboard' %}"><i class="bi bi-bar-chart" aria-hidden="true"></i> Leaderboard</a>
+            <a href="{% url 'core-portal:core-portal-tournament:portal-my-tournaments' %}"><i class="bi bi-trophy" aria-hidden="true"></i> Tournaments</a>
+            <a href="{% url 'core-portal:portal-stats' %}"><i class="bi bi-graph-up" aria-hidden="true"></i> Your stats</a>
+
+            <span class="mobile-menu__label">Social</span>
+            <a href="{% url 'core-portal:friend_search' %}"><i class="bi bi-people" aria-hidden="true"></i> Friends</a>
+            <a href="{% url 'core-portal:invite-list' %}">
+                <i class="bi bi-envelope" aria-hidden="true"></i> Invites
+                {% if request.user.received_invites.exists %}<span class="mobile-menu__badge">New</span>{% endif %}
+            </a>
+
+            <span class="mobile-menu__label">Account &amp; help</span>
+            <a href="{% url 'core-portal:profile' %}"><i class="bi bi-gear" aria-hidden="true"></i> Settings</a>
+            <a href="{% url 'core-portal:billing-index' %}"><i class="bi bi-credit-card" aria-hidden="true"></i> Billing</a>
+            <a href="{% url 'core-portal:portal-availability' %}"><i class="bi bi-grid" aria-hidden="true"></i> What's available</a>
+            <a href="{% url 'core-portal:portal-rules' %}"><i class="bi bi-book" aria-hidden="true"></i> Rules</a>
+            <a href="{% url 'core-portal:portal-support' %}"><i class="bi bi-life-preserver" aria-hidden="true"></i> Support</a>
+        </nav>
+
+        <form method="post" action="{% url 'logout' %}" class="mobile-menu__logout">
+            {% csrf_token %}
+            <button type="submit" class="btn-ui btn-ui--secondary btn-ui--block">
+                <i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Logout
+            </button>
+        </form>
+    </div>
+</div>

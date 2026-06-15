@@ -1,33 +1,23 @@
 {% load portal_nav %}
 <nav class="sidenav" aria-label="Primary">
     <ul class="sidenav__list">
+        <li class="sidenav__label">Play</li>
         {% sidenav_item url="core-portal:portal-dashboard" icon="house" label="Dashboard" %}
-        {% comment %}
-        Analytics tree disabled 2026-05-22 while the IA is in flux —
-        URL patterns for landing / picks / bets are commented out in
-        core/portal/urls_analytics.py to match. Uncomment to restore.
-        {% sidenav_item url="core-portal:analytics-landing" icon="graph-up" label="Analytics" prefix="/web/portal/analytics/" %}
-        <li class="sidenav__section">
-            <ul class="sidenav__sublist">
-                {% sidenav_item url="core-portal:analytics-landing" icon="compass" label="Explore" exact=1 %}
-                {% sidenav_item url="core-portal:analytics-picks" icon="lightning" label="Picks" prefix="/web/portal/analytics/picks/" %}
-                {% sidenav_item url="core-portal:analytics-bets" icon="journal-text" label="My bets" prefix="/web/portal/analytics/bets/" %}
-            </ul>
-        </li>
-        Locked variant for FREE users (when entitlement is off):
-        {% sidenav_item url="core-portal:billing-upgrade" icon="graph-up" label="Analytics" prefix="/web/portal/analytics/" badge="PRO" %}
-        {% endcomment %}
-        {% sidenav_item url="core-portal:upcoming-events" icon="calendar-event" label="Events" prefix="/web/portal/event/" %}
         {% sidenav_item url="core-portal:portal-my-match-list" icon="controller" label="Matches" prefix="/web/portal/match/" exclude="/web/portal/match/duels/" %}
         {% sidenav_item url="core-portal:portal-duels" icon="fire" label="Duel" prefix="/web/portal/match/duels/" %}
+        {% sidenav_item url="core-portal:upcoming-events" icon="calendar-event" label="Events" prefix="/web/portal/event/" %}
+        {% sidenav_item url="core-portal:potd-leaderboard" icon="star" label="Pick of the Day" prefix="/web/portal/potd/" %}
+
+        <li class="sidenav__label">Compete</li>
         {% sidenav_item url="core-portal:portal-leaderboard" icon="bar-chart" label="Leaderboard" prefix="/web/portal/leaderboard/" %}
         {% sidenav_item url="core-portal:core-portal-tournament:portal-my-tournaments" icon="trophy" label="Tournaments" prefix="/web/portal/tournament/" %}
-        {% sidenav_item url="core-portal:friend_search" icon="people" label="Friends" prefix="/web/portal/user/" exclude="/web/portal/user/profile/" %}
-        {% sidenav_item url="core-portal:invite-list" icon="envelope" label="Invites" prefix="/web/portal/mail/" %}
+        {% sidenav_item url="core-portal:portal-stats" icon="graph-up" label="Your stats" prefix="/web/portal/stats/" %}
+
+        <li class="sidenav__label">More</li>
         {% sidenav_item url="core-portal:portal-availability" icon="grid" label="What's available" prefix="/web/portal/availability/" %}
         {% sidenav_item url="core-portal:portal-rules" icon="book" label="Rules" prefix="/web/portal/rules/" %}
-        {% sidenav_item url="core-portal:portal-support" icon="life-preserver" label="Support" prefix="/web/portal/support/" %}
         {% sidenav_item url="core-portal:portal-developer-updates" icon="megaphone" label="Developer updates" prefix="/web/portal/developer-updates/" %}
-        {% sidenav_item url="core-portal:profile" icon="gear" label="Settings" prefix="/web/portal/user/profile/,/web/portal/billing/" %}
     </ul>
+    {% comment %}Friends, Invites, Settings, Billing and Support now live in the
+    avatar dropdown (desktop) and the mobile "More" sheet, to declutter the rail.{% endcomment %}
 </nav>

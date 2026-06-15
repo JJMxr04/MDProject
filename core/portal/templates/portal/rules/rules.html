@@ -18,68 +18,84 @@
         </header>
         <nav class="card-ui__body">
             <ul class="rules-toc__list">
-                <li><a href="#tournament-structure">Tournament structure</a></li>
-                <li><a href="#match-structure">Match structure</a></li>
-                <li><a href="#scoring-system">Scoring system</a></li>
-                <li><a href="#offensive-defensive-picks">Offensive &amp; defensive picks</a></li>
-                <li><a href="#gameplay-details">Gameplay details</a></li>
-                <li><a href="#golden-game-rules">Golden Game rules</a></li>
-                <li><a href="#tiebreakers">Tiebreakers</a></li>
+                <li><a href="#match-formats">Match formats</a></li>
+                <li><a href="#how-a-match-works">How a match works</a></li>
+                <li><a href="#scoring-system">Scoring</a></li>
+                <li><a href="#golden-game-rules">The Golden Game</a></li>
+                <li><a href="#no-draws">No draws &amp; tiebreakers</a></li>
+                <li><a href="#duels">Duels</a></li>
+                <li><a href="#pick-of-the-day">Pick of the Day</a></li>
+                <li><a href="#tournaments">Tournaments</a></li>
             </ul>
         </nav>
     </aside>
 
     <section class="rules-content card-ui">
         <div class="card-ui__body">
-            <article id="tournament-structure" class="rules-section">
-                <h2>Tournament structure</h2>
-                <p>Each tournament round consists of a single match. Matches are played between two teams and comprise <strong>11 games</strong>.</p>
-                <p>One of these 11 games is designated as the <strong>Golden Game</strong> — it carries extra weight and is worth 2 points. The Golden Game is auto-selected by the system when the match is created.</p>
+            <article id="match-formats" class="rules-section">
+                <h2>Match formats</h2>
+                <p>A match is a head-to-head contest between you and one opponent across a set of games, plus a <strong>Golden Game</strong>. Pick a format when you create or invite:</p>
+                <ul>
+                    <li><strong>Blitz</strong> — 2 games + Golden Game. Settles in ~2 days.</li>
+                    <li><strong>Classic</strong> — 3 games + Golden Game. Settles in ~4 days.</li>
+                    <li><strong>Marathon</strong> — 5 games + Golden Game. Settles in ~7 days.</li>
+                </ul>
+                <p>Every game is built around a real sporting event with set market outcomes. The Golden Game is auto-selected by the system and is worth double.</p>
             </article>
 
-            <article id="match-structure" class="rules-section">
-                <h2>Match structure</h2>
-                <p>Each match includes 11 individual game slots, each based on a sports event with predetermined market outcomes.</p>
-                <p><strong>Golden Game:</strong> the system pre-selects the market for this slot. Both players pick within that locked market — picking the same outcome is allowed (it's a defensive blocking tactic).</p>
+            <article id="how-a-match-works" class="rules-section">
+                <h2>How a match works</h2>
+                <p>Players alternate <strong>offensive</strong> and <strong>defensive</strong> roles across the regular games:</p>
+                <ul>
+                    <li><strong>Offence (slot owner):</strong> you pick first — choose the event, market and outcome.</li>
+                    <li><strong>Defence (opponent):</strong> you then pick within the same market the owner chose.</li>
+                </ul>
+                <p>You own half the regular games and defend the other half. Plus the Golden Game, where the system locks the market and both players pick simultaneously (picking the same outcome is allowed — it's a valid blocking tactic).</p>
+                <p><strong>Deadlines:</strong> the owner picks at least 8 hours before event start; the opponent picks any time before start. Miss a pick and that game is forfeited. <strong>Settlement</strong> is automatic — when each event finishes, every selection is graded (won, lost, push or void) and scores update.</p>
             </article>
 
             <article id="scoring-system" class="rules-section">
-                <h2>Scoring system</h2>
+                <h2>Scoring</h2>
                 <ul>
-                    <li>1 point for a correct prediction on a regular slot.</li>
-                    <li>2 points for a correct prediction on the <strong>Golden Game</strong>.</li>
-                    <li>0 points if you don't pick a slot before its event starts (forfeit).</li>
+                    <li><strong>1 point</strong> for a correct prediction on a regular game.</li>
+                    <li><strong>2 points</strong> for a correct prediction on the Golden Game.</li>
+                    <li><strong>0 points</strong> if you don't pick a game before its event starts (forfeit).</li>
                 </ul>
-                <p>The team with the most points after all 11 events finalize wins the match. If tied, tiebreakers decide the winner.</p>
-            </article>
-
-            <article id="offensive-defensive-picks" class="rules-section">
-                <h2>Offensive &amp; defensive picks</h2>
-                <p>Teams alternate between offensive and defensive roles per slot:</p>
-                <ul>
-                    <li><strong>Offensive role:</strong> the slot owner picks first — they choose an event + market + outcome.</li>
-                    <li><strong>Defensive role:</strong> the opponent then picks within the same market the owner chose.</li>
-                </ul>
-                <p>Each team owns 5 regular slots; you're the opponent on the other 5. Plus 1 Golden Game where the system locks the market and both pick simultaneously.</p>
-            </article>
-
-            <article id="gameplay-details" class="rules-section">
-                <h2>Gameplay details</h2>
-                <p><strong>Owner pick deadline:</strong> at least 8 hours before event start.</p>
-                <p><strong>Opponent pick deadline:</strong> any time before event start.</p>
-                <p><strong>Settlement:</strong> once the event finishes, the system grades every selection (won, lost, push, or void) and updates your match score automatically.</p>
+                <p>The player with the most points once all events settle wins the match.</p>
             </article>
 
             <article id="golden-game-rules" class="rules-section">
-                <h2>Golden Game rules</h2>
-                <p>The Golden Game's event + market are auto-selected from the events catalog when your match is created. Both teams must submit their picks before the event starts. The Golden Game is worth 2 points.</p>
-                <p>Each team also submits a predicted total score — the first tiebreaker if the match ends tied.</p>
+                <h2>The Golden Game</h2>
+                <p>Every match has one Golden Game. Its event and market are auto-selected when the match is created, it's worth 2 points, and both players must submit a pick before the event starts.</p>
+                <p>You also submit a <strong>predicted total score</strong> for the Golden Game — this is mandatory and is the first tiebreaker.</p>
             </article>
 
-            <article id="tiebreakers" class="rules-section">
-                <h2>Tiebreakers</h2>
-                <p><strong>First tiebreaker:</strong> total score predicted for the Golden Game — closest to the actual final score wins.</p>
-                <p><strong>Second tiebreaker:</strong> each team submits one extra game that the opponent can't choose.</p>
+            <article id="no-draws" class="rules-section">
+                <h2>No draws &amp; tiebreakers</h2>
+                <p>Matches <strong>always produce a winner</strong> — they can't end in a draw. If players are level on points, the result is decided by a deterministic cascade:</p>
+                <ol>
+                    <li>Closest predicted total score on the Golden Game.</li>
+                    <li>Golden Game outcome correct vs incorrect.</li>
+                    <li>More correct regular picks.</li>
+                    <li>Earlier-locked picks (decisiveness).</li>
+                    <li>A final deterministic fallback so there is always exactly one winner.</li>
+                </ol>
+            </article>
+
+            <article id="duels" class="rules-section">
+                <h2>Duels</h2>
+                <p>A <strong>duel</strong> is the fastest way to play: one game, opposite sides. You pick a friend, an event and a market, then take one side — your opponent automatically gets the other. When the event settles, whoever called it right wins the duel.</p>
+                <p>Duels are friend-to-friend and settle as soon as the event ends. Unlike matches, a duel can end in a <strong>draw</strong> if the event is postponed or the market voids.</p>
+            </article>
+
+            <article id="pick-of-the-day" class="rules-section">
+                <h2>Pick of the Day</h2>
+                <p>Each day the system features one game on your dashboard. Make <strong>one free pick</strong> before it locks. Correct picks climb the daily Pick of the Day leaderboard, and picking every day builds your <strong>streak</strong>.</p>
+            </article>
+
+            <article id="tournaments" class="rules-section">
+                <h2>Tournaments</h2>
+                <p>Tournaments are brackets of matches. Each round is a head-to-head match against another player; win to advance to the next round. Climb the bracket to take the title — and season ranking points along the way.</p>
             </article>
         </div>
     </section>

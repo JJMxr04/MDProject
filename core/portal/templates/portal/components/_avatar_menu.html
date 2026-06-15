@@ -4,8 +4,11 @@
         {% include "portal/components/_avatar.html" with user=request.user size=36 %}
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}"><i class="bi bi-person me-2"></i>Profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'core-portal:profile' %}"><i class="bi bi-gear me-2"></i>Profile &amp; settings</a></li>
         <li><a class="dropdown-item" href="{% url 'core-portal:friend_search' %}"><i class="bi bi-people me-2"></i>Friends</a></li>
+        <li><a class="dropdown-item" href="{% url 'core-portal:invite-list' %}"><i class="bi bi-envelope me-2"></i>Invites</a></li>
+        <li><a class="dropdown-item" href="{% url 'core-portal:billing-index' %}"><i class="bi bi-credit-card me-2"></i>Billing</a></li>
+        <li><a class="dropdown-item" href="{% url 'core-portal:portal-support' %}"><i class="bi bi-life-preserver me-2"></i>Support</a></li>
         <li><hr class="dropdown-divider"></li>
         <li>
             <form method="post" action="{% url 'logout' %}" class="px-2">

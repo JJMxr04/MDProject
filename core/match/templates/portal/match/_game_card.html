@@ -12,8 +12,6 @@ Required context:
 
 {% if game and game.event %}
     {% with bet=game.bet event=game.event %}
-    {# The Golden Game is ownerless (game.owner/player_2 are NULL) — its #}
-    {# sides are the match players. Regular slots carry explicit users.  #}
     {% firstof game.owner.username match.player_1.username as side_1_name %}
     {% firstof game.player_2.username match.player_2.username as side_2_name %}
     <div class="{% if is_golden %}golden-game-card{% else %}small-game-event{% endif %}"
@@ -31,14 +29,12 @@ Required context:
         </a>
 
         {% if bet.locked_market %}
-            {# Golden Game: the system locks one market; both players pick a side within it. #}
             <p class="game-card__locked-market"
                style="margin:.25rem 0 .5rem;font-size:.85rem;font-weight:600;">
                 <i class="bi bi-lock-fill" aria-hidden="true"></i>
                 Market: {{ bet.locked_market|humanize_market }}
             </p>
         {% elif bet.owner_outcome %}
-            {# Regular slot: the market was set by the owner's pick. #}
             <p class="game-card__locked-market"
                style="margin:.25rem 0 .5rem;font-size:.85rem;font-weight:600;">
                 Market: {{ bet.owner_outcome.market|humanize_market }}
