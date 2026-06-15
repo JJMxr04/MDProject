@@ -45,7 +45,7 @@ KEEP_IN_MIND = [
 # Status table. ``status`` drives the pill color — keep it to one of:
 # "working", "in-progress", "broken", "planned".
 FEATURE_STATUS = [
-    {"feature": "Single PVP Bets", "status": "planned", "notes": "Challenge your opponent to a single outcome"},
+    {"feature": "Single PVP Bets", "working": "planned", "notes": "Challenge your opponent to a single outcome"},
     {"feature": "Matches", "status": "working", "notes": "Create, play, and score matches."},
     {"feature": "Tournaments", "status": "in-progress", "notes": "Bracket generation still being refined."},
     {"feature": "Analytics", "status": "in-progress", "notes": "Coming in a later beta round."},
