@@ -1,45 +1,111 @@
 /* ==========================================================================
-   home.css — home-page specific styling layered on the shared design system.
+   home.css — home-page styling on the shared Paradise design system.
+   Sunset-beach hero (image + sea-glass), how-it-works, modes, why-strip.
    ========================================================================== */
 
-.home-hero { margin-top: var(--ps-space-5); }
-.home-hero__title {
+/* --- Beach hero --- */
+.beach-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(30rem, 70vh, 44rem);
+  display: flex;
+  align-items: center;
+  padding-block: var(--ps-space-6);
+  background-image: var(--beach-img);
+  background-size: cover;
+  background-position: center 35%;
+  overflow: hidden;
+}
+/* readability scrim — warm, fades from bottom-left so the glass panel pops */
+.beach-hero__scrim {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(100deg, rgba(10,61,73,.55) 0%, rgba(10,61,73,.18) 45%, rgba(10,61,73,0) 70%),
+    linear-gradient(0deg, rgba(10,61,73,.35), rgba(10,61,73,0) 40%);
+}
+.beach-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: var(--ps-space-5);
+  align-items: center;
+  width: 100%;
+}
+.beach-hero__panel {
+  padding: clamp(var(--ps-space-4), 4vw, var(--ps-space-5));
+  max-width: 38rem;
+}
+.beach-hero__eyebrow { color: var(--ps-ocean-700); }
+.beach-hero__title {
   font-size: var(--ps-step-4);
+  line-height: 1.05;
+  letter-spacing: -.02em;
   margin-bottom: var(--ps-space-3);
 }
-.home-hero__lead {
-  max-width: 42rem;
-  margin-inline: auto;
-  margin-bottom: var(--ps-space-4);
-}
-.home-hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ps-space-3);
-  justify-content: center;
-}
-.home-hero__note {
-  margin-top: var(--ps-space-4);
-  margin-bottom: 0;
+.beach-hero__lead { max-width: 34rem; margin-bottom: var(--ps-space-4); color: var(--ps-text); }
+.beach-hero__actions { display: flex; flex-wrap: wrap; gap: var(--ps-space-3); }
+.beach-hero__trust {
+  margin: var(--ps-space-4) 0 0;
   font-size: var(--ps-step--1);
   color: var(--ps-text-muted);
 }
 
-.home-feature__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: var(--ps-radius);
-  background: var(--ps-gradient-soft);
-  color: var(--ps-ocean-700);
-  font-size: 1.6rem;
-  margin-bottom: var(--ps-space-3);
+/* --- Floating "live match" proof card --- */
+.match-proof {
+  padding: var(--ps-space-4);
+  max-width: 22rem;
+  justify-self: center;
+  width: 100%;
+  display: grid;
+  gap: var(--ps-space-3);
 }
+.match-proof__head { display: flex; justify-content: space-between; align-items: center; font-size: var(--ps-step--1); }
+.match-proof__live { display: inline-flex; align-items: center; gap: .4rem; font-weight: 700; color: var(--ps-coral); }
+.match-proof__dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--ps-coral); box-shadow: 0 0 0 0 rgba(255,122,89,.6); animation: proof-pulse 1.8s var(--ps-ease) infinite; }
+.match-proof__league { color: var(--ps-text-muted); }
+.match-proof__teams { display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: var(--ps-step-1); }
+.match-proof__vs { color: var(--ps-text-muted); font-weight: 500; font-size: var(--ps-step--1); }
+.match-proof__pick { display: flex; align-items: center; justify-content: space-between; padding: var(--ps-space-2) var(--ps-space-3); background: rgba(23,182,190,.12); border-radius: var(--ps-radius-sm); }
+.match-proof__label { font-size: var(--ps-step--1); color: var(--ps-text-muted); }
+.match-proof__sel { font-weight: 700; color: var(--ps-ocean-700); }
+.match-proof__foot { display: flex; align-items: center; justify-content: space-between; }
+.match-proof__locked { display: inline-flex; align-items: center; gap: .4rem; font-weight: 600; color: var(--ps-palm); }
+.match-proof__odds { font-family: var(--ps-font-sans); font-weight: 700; font-size: var(--ps-step-1); }
 
-.home-feature__icon + h3 { display: flex; align-items: center; gap: .5rem; }
+@keyframes proof-pulse { 70% { box-shadow: 0 0 0 .5rem rgba(255,122,89,0); } 100% { box-shadow: 0 0 0 0 rgba(255,122,89,0); } }
 
-.home-modes { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+/* --- Feature icons / modes --- */
+.home-feature__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3.25rem; height: 3.25rem; border-radius: var(--ps-radius);
+  background: var(--ps-gradient-soft); color: var(--ps-ocean-700);
+  font-size: 1.6rem; margin-bottom: var(--ps-space-3);
+}
+.home-modes { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
 .home-modes .ps-card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--ps-space-2); }
-.home-modes .ps-card .ps-btn { margin-top: auto; }
+
+/* --- Why-strip --- */
+.why-strip {
+  border-radius: var(--ps-radius-lg);
+  padding: var(--ps-space-4) var(--ps-space-5);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ps-space-4);
+  background-image: var(--ps-gradient-lagoon);
+}
+.why-strip__item { display: flex; align-items: center; gap: var(--ps-space-2); font-weight: 600; }
+.why-strip__item i { font-size: 1.4rem; opacity: .9; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 860px) {
+  .beach-hero { min-height: 0; padding-block: var(--ps-space-5); background-position: center; }
+  .beach-hero__grid { grid-template-columns: 1fr; }
+  .beach-hero__panel { max-width: none; }
+  .match-proof { display: none; } /* keep mobile hero focused on the CTA */
+  .why-strip { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .beach-hero__actions .ps-btn { width: 100%; }
+  .why-strip { grid-template-columns: 1fr; }
+}

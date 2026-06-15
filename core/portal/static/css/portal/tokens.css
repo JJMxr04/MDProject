@@ -1,40 +1,50 @@
 /* Portal design tokens.
  * Single source of truth for colors, spacing, type, motion.
- * Colors are the existing palette, redistributed into semantic roles.
- * No file outside this one should use raw hex values.
+ * THEME: "Working from paradise" — sunset-lagoon palette sampled from the
+ * beach hero. Variable NAMES are unchanged (semantic roles) so every
+ * component in global.css re-themes automatically; only VALUES changed,
+ * plus a glass + atmosphere layer was added.
  */
 
 @import url('../../vendor/fonts/inter/inter.css');
 
 :root {
-  /* ── Brand (existing palette) ────────────────────────────── */
-  --brand-blue:        #3D7EAA;
-  --brand-blue-dark:   #275d81;
-  --brand-yellow:      #FFE47A;
-  --brand-yellow-alt:  #FFE47E;
-  --brand-blue-bright: #1E90FF;
+  /* ── Brand: lagoon (primary) + sunset gold (accent) ──────── */
+  --brand-blue:        #17B6BE;   /* lagoon turquoise — primary */
+  --brand-blue-dark:   #0E7C8B;   /* deep lagoon — links / hover */
+  --brand-yellow:      #FFB24C;   /* sunset gold — accent / primary buttons */
+  --brand-yellow-alt:  #FFC97A;
+  --brand-blue-bright: #129AA3;
 
-  /* ── Surfaces ────────────────────────────────────────────── */
-  --surface-page:      #F5F7FA;
+  /* ── Surfaces (warm sand canvas, foam cards) ─────────────── */
+  --surface-page:      #FBF3E4;
   --surface-card:      #FFFFFF;
-  --surface-muted:     #EEF2F7;
+  --surface-muted:     #F3E9D6;
 
-  /* ── Text ────────────────────────────────────────────────── */
-  --text-primary:      #111827;
-  --text-secondary:    #6B7280;
+  /* ── Text (deep teal-ink) ────────────────────────────────── */
+  --text-primary:      #0C2B33;
+  --text-secondary:    #3F5B62;
   --text-on-brand:     #FFFFFF;
-  --text-on-accent:    #111827;
+  --text-on-accent:    #0C2B33;
 
   /* ── Semantic ────────────────────────────────────────────── */
-  --state-success:     #1F9D55;
-  --state-warning:     #D97706;
-  --state-danger:      #DC2626;
+  --state-success:     #2F8F5B;
+  --state-warning:     #E08A1E;
+  --state-danger:      #D8453B;
   --state-info:        var(--brand-blue);
 
   /* ── Borders ─────────────────────────────────────────────── */
-  --border-default:    #E5E7EB;
-  --border-strong:     #D1D5DB;
+  --border-default:    rgba(12, 43, 51, .10);
+  --border-strong:     rgba(12, 43, 51, .18);
   --border-brand:      var(--brand-blue-dark);
+
+  /* ── Glass ("Sea Glass") + atmosphere ────────────────────── */
+  --glass-bg:        rgba(252, 251, 247, .62);
+  --glass-bg-strong: rgba(252, 251, 247, .80);
+  --glass-border:    rgba(255, 255, 255, .55);
+  --glass-blur:      18px;
+  --grad-dusk:       linear-gradient(160deg, #0A3D49 0%, #0E5C6B 60%, #17B6BE 130%);
+  --grad-topbar:     linear-gradient(120deg, #0A3D49 0%, #0E7C8B 55%, #17B6BE 100%);
 
   /* ── Spacing (4px base) ──────────────────────────────────── */
   --space-1: 0.25rem;
@@ -72,22 +82,24 @@
   --motion-base: 200ms;
   --motion-slow: 320ms;
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* ── Elevation ───────────────────────────────────────────── */
-  --shadow-sm:  0 1px 2px  rgba(17, 24, 39, 0.04);
-  --shadow-md:  0 4px 8px  rgba(17, 24, 39, 0.06);
-  --shadow-lg:  0 12px 24px rgba(17, 24, 39, 0.10);
+  /* ── Elevation (warm teal-ink tint) ──────────────────────── */
+  --shadow-sm:  0 1px 2px  rgba(12, 43, 51, 0.06);
+  --shadow-md:  0 4px 12px rgba(12, 43, 51, 0.10);
+  --shadow-lg:  0 12px 28px rgba(12, 43, 51, 0.16);
+  --shadow-glass: 0 8px 28px rgba(12, 43, 51, 0.14), inset 0 1px 0 rgba(255,255,255,.32);
 
   /* ── Radii ───────────────────────────────────────────────── */
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
   --radius-pill: 999px;
 
   /* ── Layout ──────────────────────────────────────────────── */
   --shell-topbar-h:   64px;
-  --shell-sidebar-w:  240px;
-  --content-max-w:    1280px;
+  --shell-sidebar-w:  248px;
+  --content-max-w:    1200px;
 }
 
 @media (prefers-reduced-motion: reduce) {

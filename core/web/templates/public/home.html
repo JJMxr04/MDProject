@@ -1,7 +1,7 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Paradise Sports — the friendly sports prediction game{% endblock title %}
+{% block title %}Paradise Sports — outpick your friends, from paradise{% endblock title %}
 {% block meta_description %}Paradise Sports turns the strategy of sports betting into a free, friendly game. Make your picks, earn points, and compete with friends — no real-money wagering.{% endblock meta_description %}
 
 {% block css %}
@@ -9,80 +9,131 @@
 {% endblock css %}
 
 {% block content %}
+
+<!-- HERO — the paradise -->
+<section class="beach-hero reveal" style="--beach-img: url('{% static 'assets/Images/beach_landing_page.png' %}');">
+    <div class="beach-hero__scrim"></div>
+    <div class="container beach-hero__grid">
+        <div class="beach-hero__panel glass glass--strong">
+            <span class="ps-eyebrow beach-hero__eyebrow">No real money · Just bragging rights</span>
+            <h1 class="beach-hero__title">Outpick your friends.<br>From paradise.</h1>
+            <p class="ps-lead beach-hero__lead">
+                Free-to-play sports predictions, head-to-head matches and daily picks.
+                Compete all season long — no wagering, all glory.
+            </p>
+            <div class="beach-hero__actions">
+                <a href="{% url 'core-auth:register' %}" class="ps-btn ps-btn--accent ps-btn--lg">Start free</a>
+                <a href="#how" class="ps-btn ps-btn--ghost ps-btn--lg">See how it works</a>
+            </div>
+            <p class="beach-hero__trust">18+ · No real-money wagering · Free to play</p>
+        </div>
+
+        <!-- floating "live match" card — product as proof -->
+        <aside class="match-proof glass" aria-label="Example match">
+            <div class="match-proof__head">
+                <span class="match-proof__live"><span class="match-proof__dot"></span> Live match</span>
+                <span class="match-proof__league">Premier League</span>
+            </div>
+            <div class="match-proof__teams">
+                <span>Arsenal</span><span class="match-proof__vs">vs</span><span>Spurs</span>
+            </div>
+            <div class="match-proof__pick">
+                <span class="match-proof__label">Your pick</span>
+                <span class="match-proof__sel">Over 2.5 goals</span>
+            </div>
+            <div class="match-proof__foot">
+                <span class="match-proof__locked"><i class="bi bi-lock-fill"></i> Locked</span>
+                <span class="match-proof__odds">+1.85</span>
+            </div>
+        </aside>
+    </div>
+</section>
+
 <div class="container">
 
-    <!-- Hero -->
-    <section class="ps-hero home-hero reveal">
-        <div class="ps-hero__inner">
-            <span class="ps-eyebrow">Paradise Sports</span>
-            <h1 class="home-hero__title">Outpick your friends — no money on the line.</h1>
-            <p class="ps-lead home-hero__lead">
-                The strategy and thrill of sports betting, reimagined as a free, friendly
-                game. Make your picks, earn points, and climb the leaderboard. No wagers,
-                no cash — just bragging rights.
-            </p>
-            <div class="home-hero__actions">
-                <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--primary ps-btn--lg">Join the waitlist</a>
-                <a href="{% url 'core-auth:login' %}" class="ps-btn ps-btn--ghost ps-btn--lg">Log in</a>
-            </div>
-            <p class="home-hero__note">For entertainment only · No real-money wagering · 18+</p>
+    <!-- HOW IT WORKS -->
+    <section class="ps-section" id="how" aria-labelledby="how-heading">
+        <div class="ps-section__head reveal">
+            <span class="ps-eyebrow">How it works</span>
+            <h2 id="how-heading">From beach chair to bragging rights in three steps</h2>
+        </div>
+        <div class="ps-steps">
+            <article class="ps-step reveal">
+                <span class="ps-step__num">1</span>
+                <h3>Pick your games</h3>
+                <p>Choose real fixtures across the sports you love and call the outcomes. Sharp reads win the round.</p>
+            </article>
+            <article class="ps-step reveal">
+                <span class="ps-step__num">2</span>
+                <h3>Challenge a friend</h3>
+                <p>Send a head-to-head match, a quick duel, or jump into a tournament bracket.</p>
+            </article>
+            <article class="ps-step reveal">
+                <span class="ps-step__num">3</span>
+                <h3>Climb the leaderboard</h3>
+                <p>Earn points, build streaks and rise up the season standings. All glory, no wagers.</p>
+            </article>
         </div>
     </section>
 
-    <!-- Features -->
-    <section class="ps-section" aria-labelledby="features-heading">
+    <!-- GAME MODES -->
+    <section class="ps-section" aria-labelledby="modes-heading">
         <div class="ps-section__head reveal">
-            <span class="ps-eyebrow">Why Paradise Sports</span>
-            <h2 id="features-heading">All the competition, none of the risk</h2>
+            <span class="ps-eyebrow">Ways to play</span>
+            <h2 id="modes-heading">More than one way to win</h2>
         </div>
-        <div class="ps-grid">
+        <div class="ps-grid home-modes">
             <article class="ps-card ps-card--hover reveal">
                 <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-controller"></i></div>
-                <h3>Head-to-head play</h3>
-                <p>Go head-to-head with friends in match-ups built around real sporting events. Sharp predictions win the round.</p>
+                <h3>Head-to-head matches</h3>
+                <p>Go one-on-one with a friend across a set of fixtures. Best reads take the match.</p>
+            </article>
+            <article class="ps-card ps-card--hover reveal">
+                <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-fire"></i></div>
+                <h3>Duels</h3>
+                <p>One game, opposite calls, instant stakes-free showdown. Fast and fun.</p>
             </article>
             <article class="ps-card ps-card--hover reveal">
                 <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-trophy"></i></div>
-                <h3>Tournaments &amp; brackets</h3>
-                <p>Climb the leaderboard in live tournaments and head-to-head brackets. Prove you are the sharpest in your group.</p>
+                <h3>Tournaments</h3>
+                <p>Climb the bracket against the sharpest predictors in your group.</p>
             </article>
             <article class="ps-card ps-card--hover reveal">
-                <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-graph-up-arrow"></i></div>
-                <h3>Analytics <span class="ps-badge ps-badge--wip">WIP</span></h3>
-                <p>Explore past results — event wins and final scores — to inform your next pick. More analytics are on the way.</p>
+                <div class="home-feature__icon" aria-hidden="true"><i class="bi bi-bullseye"></i></div>
+                <h3>Pick of the Day</h3>
+                <p>One featured game, every day. Build a streak and top the daily board.</p>
             </article>
         </div>
     </section>
 
-    <hr>
+    <!-- WHY PARADISE strip -->
+    <section class="ps-section ps-section--tight">
+        <div class="why-strip glass--dark reveal">
+            <div class="why-strip__item"><i class="bi bi-cash-stack"></i><span>Free forever core</span></div>
+            <div class="why-strip__item"><i class="bi bi-shield-check"></i><span>No real-money risk</span></div>
+            <div class="why-strip__item"><i class="bi bi-lightning-charge"></i><span>Play in seconds</span></div>
+            <div class="why-strip__item"><i class="bi bi-people"></i><span>Friends &amp; global ranks</span></div>
+        </div>
+    </section>
 
-    <!-- Game modes -->
-    <section class="ps-section" aria-labelledby="thegame-heading">
+    <!-- PRICING teaser -->
+    <section class="ps-section" aria-labelledby="pricing-heading">
         <div class="ps-section__head reveal">
-            <span class="ps-eyebrow">How you play</span>
-            <h2 id="thegame-heading">Experience Paradise Sports</h2>
-            <p class="ps-lead">Play one-on-one matches or join a tournament. Make your picks, rise through the ranks, and win the bragging rights.</p>
+            <span class="ps-eyebrow">Pricing</span>
+            <h2 id="pricing-heading">Play free. Go Pro for the edge.</h2>
+            <p class="ps-lead">The full game is free. Upgrade to Pro for deep analytics when you want them.</p>
         </div>
-        <div class="ps-grid home-modes">
-            <article class="ps-card reveal">
-                <h3>Individual matches</h3>
-                <p>Challenge a friend in a one-on-one match-up and see who reads the game better. Strategy and sharp predictions decide the winner.</p>
-                <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--ghost">Join a match</a>
-            </article>
-            <article class="ps-card reveal">
-                <h3>Tournaments</h3>
-                <p>Enter tournaments where the best predictors compete for the top of the leaderboard. Pick smart and climb the bracket.</p>
-                <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--primary">Join a tournament</a>
-            </article>
+        <div class="reveal" style="text-align:center;">
+            <a href="{% url 'core-web:pricing' %}" class="ps-btn ps-btn--primary ps-btn--lg">See plans</a>
         </div>
     </section>
 
-    <!-- CTA -->
+    <!-- FINAL CTA -->
     <section class="ps-section ps-section--tight">
         <div class="ps-cta reveal">
-            <h2>Ready to make your picks?</h2>
-            <p class="ps-lead">Join the waitlist and be first in line when the next season opens.</p>
-            <a href="{% url 'core-auth:waitlist-list' %}" class="ps-btn ps-btn--accent ps-btn--lg">Join the waitlist</a>
+            <h2>Your beach chair is waiting.</h2>
+            <p class="ps-lead">Create a free account and make your first pick today.</p>
+            <a href="{% url 'core-auth:register' %}" class="ps-btn ps-btn--accent ps-btn--lg">Start free</a>
         </div>
     </section>
 

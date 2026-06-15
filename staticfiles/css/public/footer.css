@@ -1,13 +1,12 @@
 /* ==========================================================================
-   footer.css — site footer. Cohesive single surface (no dark frame around a
-   card — that was the old "black spacing"). Sits flush at the bottom via the
+   footer.css — site footer. Dark "dusk" surface (deep ocean → lagoon) for a
+   premium close to the page. One cohesive band, flush to the bottom via the
    sticky-footer layout in base.css.
    ========================================================================== */
 
 .site-footer {
-  background: var(--ps-surface);
-  border-top: 1px solid var(--ps-border);
-  color: var(--ps-text-muted);
+  background-image: linear-gradient(160deg, #0A3D49 0%, #0E5C6B 70%, #0E7C8B 130%);
+  color: rgba(252, 251, 247, .78);
   padding-block: var(--ps-space-6) var(--ps-space-4);
   margin-top: var(--ps-space-6);
 }
@@ -29,7 +28,7 @@
 .site-footer__tagline {
   margin: 0;
   font-size: var(--ps-step--1);
-  color: var(--ps-text-muted);
+  color: rgba(252, 251, 247, .7);
   max-width: 18rem;
 }
 
@@ -44,16 +43,16 @@
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: var(--ps-text);
+  color: var(--ps-text-invert);
 }
 .site-footer__col a {
   display: block;
   padding: .3rem 0;
-  color: var(--ps-text-muted);
+  color: rgba(252, 251, 247, .78);
   font-size: var(--ps-step-0);
   transition: color var(--ps-dur-fast) var(--ps-ease);
 }
-.site-footer__col a:hover { color: var(--ps-ocean-700); text-decoration: none; }
+.site-footer__col a:hover { color: var(--ps-sand); text-decoration: none; }
 
 .site-footer__bottom {
   display: flex;
@@ -63,8 +62,9 @@
   gap: var(--ps-space-2);
   margin-top: var(--ps-space-5);
   padding-top: var(--ps-space-4);
-  border-top: 1px solid var(--ps-border);
+  border-top: 1px solid rgba(255, 255, 255, .14);
   font-size: var(--ps-step--1);
+  color: rgba(252, 251, 247, .65);
 }
 .site-footer__disclaimer { font-style: italic; }
 

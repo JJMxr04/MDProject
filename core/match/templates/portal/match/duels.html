@@ -315,8 +315,8 @@
     .duel-row__meta { color: var(--text-secondary); font-size: var(--text-xs); }
     .duel-markets { display: flex; flex-direction: column; gap: var(--space-4); }
     .duel-market__label { font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
-    .duel-market__sides { display: flex; gap: var(--space-3); }
-    .duel-side { flex: 1; display: flex; justify-content: space-between; gap: var(--space-2); padding: var(--space-3) var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); cursor: pointer; font-weight: var(--weight-medium); }
+    .duel-market__sides { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+    .duel-side { flex: 1 1 9rem; min-width: 0; display: flex; justify-content: space-between; gap: var(--space-2); padding: var(--space-3) var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); cursor: pointer; font-weight: var(--weight-medium); }
     .duel-side:hover { background: var(--brand-yellow); color: var(--text-on-accent); }
     .duel-side__odds { color: var(--text-secondary); }
     .duel-side:hover .duel-side__odds { color: var(--text-on-accent); }

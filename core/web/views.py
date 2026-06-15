@@ -42,6 +42,11 @@ def contact(request):
     return render(request, 'public/contact.html')
 
 
+@_cached_view
+def pricing(request):
+    return render(request, 'public/pricing.html')
+
+
 def gameRules(request):
     """Old public URL — rules now live in the auth-gated portal so only
     real users see them. ``login_required`` on ``portal-rules`` will bounce

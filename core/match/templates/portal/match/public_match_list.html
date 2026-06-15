@@ -238,6 +238,12 @@
         border-left: 3px solid var(--brand-blue, #3D7EAA);
     }
     .cm-preview strong { color: var(--text-primary); }
+
+    /* Small screens: stack the format/mode choosers so they don't crush. */
+    @media (max-width: 480px) {
+        .cm-format { grid-template-columns: 1fr; }
+        .cm-mode { grid-template-columns: 1fr; }
+    }
 </style>
 {% endblock css %}
 

@@ -17,11 +17,15 @@
           <a class="nav-link" aria-current="page" href="{% url 'core-web:home' %}">Home</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'core-web:pricing' %}">Pricing</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'core-web:about' %}">About</a>
         </li>
       </ul>
       <div class="site-nav__actions">
-        <a class="ps-btn ps-btn--accent" href="{% url 'core-auth:login' %}">Log in</a>
+        <a class="ps-btn ps-btn--ghost" href="{% url 'core-auth:login' %}">Log in</a>
+        <a class="ps-btn ps-btn--accent" href="{% url 'core-auth:register' %}">Start free</a>
       </div>
     </div>
   </div>

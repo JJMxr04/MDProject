@@ -387,6 +387,14 @@
         .friends-grid { grid-template-columns: 1fr; }
         .friends-grid > .friends-list-card { grid-row: auto; }
     }
+    /* Tiny screens: stack code/finder buttons and friend-row actions full-width
+       so nothing gets crushed or overflows. */
+    @media (max-width: 480px) {
+        .found-user, .friend-card { flex-wrap: wrap; }
+        .friend-card__actions { width: 100%; justify-content: flex-end; }
+        .friend-finder-input { flex-wrap: wrap; }
+        .friend-finder-input .btn-ui { flex: 1 1 auto; justify-content: center; }
+    }
 </style>
 {% endblock css %}
 

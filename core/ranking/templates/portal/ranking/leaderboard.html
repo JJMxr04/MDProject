@@ -119,5 +119,12 @@
     .lb-rank { font-weight: var(--weight-semibold); color: var(--text-secondary); }
     .lb-empty { color: var(--text-secondary); text-align: center; padding: var(--space-5); }
     .card-ui__header { display: flex; align-items: center; gap: var(--space-3); }
+    /* Mobile: let the wide standings table scroll sideways (parent .card-ui
+       gets overflow-x:auto from global.css) rather than crushing columns. */
+    @media (max-width: 640px) {
+        .lb-table { min-width: 580px; }
+        .lb-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .lb-filters { margin-left: 0; }
+    }
 </style>
 {% endblock css %}

@@ -179,5 +179,11 @@
         display: flex; align-items: center; gap: var(--space-2);
         font-size: var(--text-sm); color: var(--text-secondary);
     }
+    /* Mobile: the live board is its own container (not .card-ui), so it needs
+       its own horizontal scroll for the 5-column table. */
+    @media (max-width: 640px) {
+        .events-board { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .events-board__table { min-width: 520px; }
+    }
 </style>
 {% endblock css %}

@@ -4,12 +4,49 @@
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-<header class="page-header">
-    <div>
-        <h1 class="page-header__title">Welcome{% if request.user.first_name %}, {{ request.user.first_name }}{% endif %}.</h1>
-        <p class="page-header__subtitle">Your portal home.</p>
+<section class="turn-hero" aria-label="Your turn">
+    <div class="turn-hero__main">
+        <p class="turn-hero__greeting">
+            Good to see you{% if request.user.first_name %}, {{ request.user.first_name }}{% endif %}
+            {% if potd_streak %}<span class="turn-hero__streak">🔥 {{ potd_streak }}-day streak</span>{% endif %}
+        </p>
+        {% if stats.active_match_count %}
+            <h1 class="turn-hero__title">It&rsquo;s your move.</h1>
+            <p class="turn-hero__sub">You have {{ stats.active_match_count }} active match{{ stats.active_match_count|pluralize:"es" }} in play.</p>
+            <div class="turn-hero__actions">
+                <a class="btn-ui btn-ui--primary btn-ui--lg" href="{% url 'core-portal:portal-my-match-list' %}">Open my matches</a>
+                {% if stats.pending_invite_count %}<a class="btn-ui btn-ui--secondary" href="{% url 'core-portal:invite-list' %}">{{ stats.pending_invite_count }} invite{{ stats.pending_invite_count|pluralize }}</a>{% endif %}
+            </div>
+        {% elif stats.pending_invite_count %}
+            <h1 class="turn-hero__title">You&rsquo;ve got {{ stats.pending_invite_count }} invite{{ stats.pending_invite_count|pluralize }}.</h1>
+            <p class="turn-hero__sub">Someone wants to play — jump in and accept a challenge.</p>
+            <div class="turn-hero__actions">
+                <a class="btn-ui btn-ui--primary btn-ui--lg" href="{% url 'core-portal:invite-list' %}">Review invites</a>
+            </div>
+        {% else %}
+            <h1 class="turn-hero__title">Ready to play?</h1>
+            <p class="turn-hero__sub">Challenge a friend or browse public matches to make your first pick.</p>
+            <div class="turn-hero__actions">
+                <a class="btn-ui btn-ui--primary btn-ui--lg" href="{% url 'core-portal:portal-public-match-list' %}">Find a match</a>
+                <a class="btn-ui btn-ui--secondary" href="{% url 'core-portal:friend_search' %}">Add a friend</a>
+            </div>
+        {% endif %}
     </div>
-</header>
+
+    {% if potd %}
+    <aside class="turn-hero__potd" aria-label="Pick of the Day">
+        <span class="turn-hero__potd-label"><i class="bi bi-star-fill" aria-hidden="true"></i> Pick of the Day</span>
+        {% if potd_user_pick %}
+            <p class="turn-hero__potd-status"><i class="bi bi-check-circle-fill" aria-hidden="true"></i> You&rsquo;ve picked today.</p>
+        {% elif potd_locked %}
+            <p class="turn-hero__potd-status turn-hero__potd-status--muted">Today&rsquo;s pick is closed.</p>
+        {% else %}
+            <p class="turn-hero__potd-matchup">{{ potd.event.home_team.name_medium|default:"Home" }} vs {{ potd.event.away_team.name_medium|default:"Away" }}</p>
+            <a class="btn-ui btn-ui--accent btn-ui--sm" href="#potd-card">Pick now</a>
+        {% endif %}
+    </aside>
+    {% endif %}
+</section>
 
 {% if rank_progress %}
 <section class="card-ui mb-4 rank-widget" aria-label="Your progression">

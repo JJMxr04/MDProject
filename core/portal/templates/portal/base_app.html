@@ -36,6 +36,8 @@
     </main>
 </div>
 
+{% if request.user.is_authenticated %}{% include "portal/components/_bottomnav.html" %}{% endif %}
+
 {% include "portal/components/_toast_host.html" %}
 {% include "portal/components/_loading_overlay.html" %}
 

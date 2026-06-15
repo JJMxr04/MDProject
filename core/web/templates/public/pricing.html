@@ -1,0 +1,84 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Pricing · Paradise Sports{% endblock title %}
+{% block meta_description %}Paradise Sports is free to play. Upgrade to Pro for opponent analytics and pick assist. No real-money wagering.{% endblock meta_description %}
+
+{% block content %}
+<div class="container">
+
+    <section class="ps-section" aria-labelledby="pricing-heading">
+        <div class="ps-section__head reveal">
+            <span class="ps-eyebrow">Pricing</span>
+            <h2 id="pricing-heading">Play free. Go Pro for the edge.</h2>
+            <p class="ps-lead">The full game — matches, duels, tournaments, daily picks and the season leaderboard — is free forever. Pro adds the analytics serious predictors want.</p>
+        </div>
+
+        <div class="ps-pricing reveal">
+            <!-- FREE -->
+            <article class="ps-plan">
+                <span class="ps-plan__name">Free</span>
+                <div class="ps-plan__price">$0 <span>forever</span></div>
+                <ul class="ps-plan__list">
+                    <li><i class="bi bi-check-circle-fill"></i> Head-to-head matches</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Duels &amp; tournaments</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Pick of the Day</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Season leaderboard</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Friends &amp; invites</li>
+                    <li><i class="bi bi-check-circle-fill"></i> General analytics dashboard</li>
+                </ul>
+                <a href="{% url 'core-auth:register' %}" class="ps-btn ps-btn--ghost ps-btn--block">Start free</a>
+            </article>
+
+            <!-- PRO -->
+            <article class="ps-plan ps-plan--featured">
+                <span class="ps-plan__flag">Most popular</span>
+                <span class="ps-plan__name">Pro</span>
+                <div class="ps-plan__price">$9.99 <span>/ month</span></div>
+                <ul class="ps-plan__list">
+                    <li><i class="bi bi-check-circle-fill"></i> Everything in Free</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Opponent analytics</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Pick assist</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Team &amp; league deep stats</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Form &amp; head-to-head history</li>
+                </ul>
+                <a href="{% url 'core-auth:register' %}" class="ps-btn ps-btn--accent ps-btn--block">Go Pro</a>
+                <p class="ps-plan__note">Billed monthly · cancel anytime</p>
+            </article>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- FAQ -->
+    <section class="ps-section ps-section--tight" aria-labelledby="faq-heading">
+        <div class="ps-section__head reveal">
+            <span class="ps-eyebrow">Good to know</span>
+            <h2 id="faq-heading">Questions</h2>
+        </div>
+        <div class="ps-grid" style="max-width:56rem;margin-inline:auto;">
+            <article class="ps-card reveal">
+                <h3>Is this gambling?</h3>
+                <p>No. Paradise Sports is for entertainment only — there is no real-money wagering. You play for points and bragging rights. 18+.</p>
+            </article>
+            <article class="ps-card reveal">
+                <h3>Can I cancel Pro?</h3>
+                <p>Anytime, from your billing settings. You keep Pro until the end of the period, then drop back to Free — your account and history stay.</p>
+            </article>
+            <article class="ps-card reveal">
+                <h3>Do I need a card to start?</h3>
+                <p>No. The full game is free with no card required. You only add payment if you choose to go Pro.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="ps-section ps-section--tight">
+        <div class="ps-cta reveal">
+            <h2>Start free. Upgrade when you want the edge.</h2>
+            <a href="{% url 'core-auth:register' %}" class="ps-btn ps-btn--accent ps-btn--lg">Create your account</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
