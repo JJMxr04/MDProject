@@ -17,8 +17,6 @@ from core.billing import views
 urlpatterns = [
     path("", views.billing_index, name="billing-index"),
     path("upgrade/", views.upgrade_page, name="billing-upgrade"),
-    path("paywall/", views.paywall_interstitial, name="billing-paywall"),
-    path("paywall/continue/", views.paywall_continue, name="billing-paywall-continue"),
     path("checkout/", views.start_checkout, name="billing-checkout"),
     path("thanks/", views.checkout_thanks, name="billing-thanks"),
     path("portal/", views.open_customer_portal, name="billing-portal"),

@@ -6,9 +6,8 @@ which creates a Stripe Checkout Session and 303s out to Stripe.
 
 from __future__ import annotations
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 
 from core.billing.models import Plan
 
@@ -18,17 +17,15 @@ def upgrade_page(request):
     """Show the PRO offer + CTA. Renders an empty-state message if the
     PRO plan isn't seeded yet (admin hasn't created it, or it's marked
     inactive) so the FREE user sees a useful page instead of a 500.
-
-    When ``ANALYTICS_FREE_FOR_ALL`` is on there's nothing to upgrade to,
-    so we bounce to the billing landing page (which shows the free-mode
-    banner instead) — unless the fake paywall is running, in which case
-    this page must keep rendering (it's the Stripe cancel_url and the
-    checkout error target during the paywall experiment).
     """
-    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False) and not getattr(
-        settings, "FAKE_PAYWALL_ENABLED", False
-    ):
-        return redirect("core-portal:billing-index")
+    # A ``src`` marks the upsell surface that sent them here (e.g. the
+    # opponent-scouting card) — the click side of the willingness-to-pay
+    # funnel (paywall_viewed → paywall_upgrade_clicked).
+    src = request.GET.get("src")
+    if src:
+        from core.metrics.models import track
+        track(request.user, "paywall_upgrade_clicked", feature=src)
+
     pro = Plan.objects.filter(code="PRO", is_active=True).first()
     sub = getattr(request.user, "subscription", None)
     ctx = {

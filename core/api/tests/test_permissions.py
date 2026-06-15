@@ -1,7 +1,8 @@
 """Unit tests for the v1 IsPaid permission.
 
 Mirrors the @require_paid entitlement gate: entitled subscription allows,
-non-entitled denies, ANALYTICS_FREE_FOR_ALL grants everyone.
+non-entitled denies. (Phase 16/D-16d removed the ANALYTICS_FREE_FOR_ALL kill
+switch; IsPaid is now the PRO gate for opponent scouting — Phase 9.)
 """
 
 from __future__ import annotations
@@ -15,7 +16,7 @@ from core.billing.models import Plan, Subscription
 
 # STRIPE_SECRET_KEY="" so the Plan post_save signal skips the real Stripe
 # catalog push — keeps these unit tests hermetic and fast.
-@override_settings(ANALYTICS_FREE_FOR_ALL=False, STRIPE_SECRET_KEY="")
+@override_settings(STRIPE_SECRET_KEY="")
 class IsPaidPermissionTests(V1APITestCase):
     def setUp(self):
         self.perm = IsPaid()
@@ -49,11 +50,6 @@ class IsPaidPermissionTests(V1APITestCase):
 
     def test_no_subscription_denied(self):
         self.assertFalse(self._check())
-
-    @override_settings(ANALYTICS_FREE_FOR_ALL=True)
-    def test_free_for_all_allows_everyone(self):
-        # No subscription, kill-switch on -> allowed.
-        self.assertTrue(self._check())
 
 
 class _FakeRequest:

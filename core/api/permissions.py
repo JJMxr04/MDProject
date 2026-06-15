@@ -15,12 +15,12 @@ from core.billing.entitlement import user_can_access_analytics
 
 
 class IsPaid(BasePermission):
-    """Requester is entitled to analytics.
+    """Requester is PRO-entitled.
 
     Mirrors the portal ``@require_paid`` gate: defers to
-    ``user_can_access_analytics``, which honors ``ANALYTICS_FREE_FOR_ALL``
-    (everyone entitled when set) and the user's Subscription otherwise.
-    Groundwork for v1 analytics endpoints.
+    ``user_can_access_analytics`` (the user's Subscription entitlement).
+    Currently unapplied — analytics is free (Phase 16/D-16d); this is the
+    gate for the opponent-scouting endpoint (Phase 9).
     """
 
     def has_permission(self, request, view):

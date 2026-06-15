@@ -213,6 +213,32 @@ def public_match_detail_view(request, match_id):
     levels = levels_for(ids)
     divisions = divisions_for(ids)
 
+    # Scout the opponent before joining (phase 9) — the creator (player_1) for a
+    # prospective joiner. PRO sees tendencies; FREE sees the upsell + a
+    # paywall_viewed signal.
+    viewer = request.user
+    opponent = match.player_1
+    if viewer.is_authenticated and viewer.id == match.player_1_id:
+        opponent = match.player_2
+    scouting = None
+    scouting_entitled = False
+    if opponent is not None:
+        from core.billing.entitlement import user_can_access_analytics
+        scouting_entitled = user_can_access_analytics(viewer)
+        if scouting_entitled:
+            from core.match import scouting as scouting_mod
+            try:
+                scouting = scouting_mod.scout_user(opponent)
+            except Exception:
+                import logging
+                logging.getLogger(__name__).exception(
+                    "scout_user failed for opponent=%s", opponent.pk,
+                )
+        else:
+            from core.metrics.models import track
+            track(viewer, "paywall_viewed",
+                  feature="opponent_scouting", context="public_accept")
+
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
@@ -220,6 +246,9 @@ def public_match_detail_view(request, match_id):
         'player_2_level': levels.get(match.player_2_id),
         'player_1_division': divisions.get(match.player_1_id),
         'player_2_division': divisions.get(match.player_2_id),
+        'scout_opponent': opponent,
+        'scouting': scouting,
+        'scouting_entitled': scouting_entitled,
     }
 
     return render(request, 'portal/match/public_match_detail.html', context)

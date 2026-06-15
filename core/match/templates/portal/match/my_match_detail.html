@@ -62,6 +62,8 @@
         </div>
     </section>
 
+    {% include "portal/match/_scout_card.html" with opponent=scout_opponent scouting=scouting entitled=scouting_entitled %}
+
     <div class="warning-message">
         <p>If the event you selected was postponed or canceled, your slot reopens for a new pick (until the match end date).</p>
     </div>

@@ -25,6 +25,8 @@
     </a>
     {% endif %}
 
+    {% include "portal/match/_scout_card.html" with opponent=scout_opponent scouting=scouting entitled=scouting_entitled %}
+
     <!-- Match Information -->
     <div class="game-info">
         <h2>Match Information</h2>

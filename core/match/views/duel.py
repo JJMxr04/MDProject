@@ -52,10 +52,28 @@ def duels_page_view(request):
         duels.finished_duels(user), DUEL_PAGE_SIZE,
     ).get_page(request.GET.get("fpage"))
 
+    # Scout the challenger before accepting (phase 9). PRO gets a card per
+    # incoming challenge; FREE gets one upsell for the section (not one per
+    # row) + a single paywall_viewed signal.
+    from core.billing.entitlement import user_can_access_analytics
+    scouting_entitled = user_can_access_analytics(user)
+    if scouting_entitled:
+        from core.match import scouting as scouting_mod
+        for inv in challenges:
+            try:
+                inv.scouting = scouting_mod.scout_user(inv.sender)
+            except Exception:
+                inv.scouting = None
+    elif challenges.object_list:
+        from core.metrics.models import track
+        track(user, "paywall_viewed",
+              feature="opponent_scouting", context="duel_challenge")
+
     # Pager links for one list must preserve the other lists' page positions,
     # so each carries the siblings' current page numbers.
     c, s, a, f = challenges.number, sent.number, accepted.number, finished.number
     context = {
+        "scouting_entitled": scouting_entitled,
         "duel_record": duels.duel_record(user),
         "challenges": challenges,
         "sent": sent,

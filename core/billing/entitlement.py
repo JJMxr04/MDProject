@@ -1,61 +1,37 @@
-"""Single source of truth for "can this user use analytics?".
+"""Single source of truth for "is this user PRO-entitled?".
 
-Two reasons this exists instead of a one-liner on ``Subscription``:
+Exists instead of a one-liner on ``Subscription`` because
+``getattr(user, "subscription", None)`` doesn't catch Django's
+``Subscription.DoesNotExist`` (only ``AttributeError``). Centralizing the
+access protects every caller from that latent 500.
 
-1. The kill-switch (``settings.ANALYTICS_FREE_FOR_ALL``) is platform-wide
-   — it should grant access even to users whose ``Subscription`` row is
-   missing (data restore, signup signal failure, etc.). The property on
-   the Subscription instance can't be reached when the instance doesn't
-   exist.
+Phase 16 (D-16d) removed the platform-wide ``ANALYTICS_FREE_FOR_ALL`` kill
+switch and made the analytics dashboard free; this check now reflects the
+real Stripe entitlement only, and the PRO-gated surface is opponent scouting
+(Phase 9). The name is kept for now; generalize to ``is_pro`` /
+``plan.features`` when a second gated feature lands (subscription-plan
+open-questions §6).
 
-2. ``getattr(user, "subscription", None)`` doesn't catch Django's
-   ``Subscription.DoesNotExist`` (only ``AttributeError``). Centralizing
-   the access protects every caller from that latent 500.
-
-The Subscription.is_entitled_to_analytics property remains for templates
+The ``Subscription.is_entitled_to_analytics`` property remains for templates
 and code that already has a ``Subscription`` instance in hand.
 """
 
 from __future__ import annotations
 
-from django.conf import settings
-
 
 def user_can_access_analytics(user) -> bool:
-    """True if ``user`` should see analytics surfaces.
+    """True if ``user`` is PRO-entitled.
 
     - Anonymous users: False (callers should still gate with ``@login_required``).
-    - Kill-switch on: always True for any logged-in user.
-    - Otherwise: defer to the Subscription's per-instance check, treating
-      a missing Subscription row as "no access".
+    - Otherwise: defer to the Subscription's per-instance check, treating a
+      missing Subscription row as "no access".
     """
     if not getattr(user, "is_authenticated", False):
         return False
-    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False):
-        return True
     sub = _safe_subscription(user)
     if sub is None:
         return False
     return sub.is_entitled_to_analytics
-
-
-def user_entitled_ignoring_killswitch(user) -> bool:
-    """The entitlement check WITHOUT the ``ANALYTICS_FREE_FOR_ALL`` grant.
-
-    Used by the fake-paywall interstitial (roadmap Phase 3 §4) to find the
-    users who are only getting in because of the kill-switch — they're the
-    ones who should see the wall; real PRO subscribers never do.
-
-    Can't delegate to ``Subscription.is_entitled_to_analytics``: that
-    property short-circuits True on the kill-switch itself, which is the
-    exact branch this helper must ignore. Mirror its plan/status logic.
-    """
-    sub = _safe_subscription(user)
-    if sub is None:
-        return False
-    if sub.plan.features.get("analytics") is not True:
-        return False
-    return sub.status in ("trialing", "active", "past_due")
 
 
 def _safe_subscription(user):

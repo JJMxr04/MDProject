@@ -1,12 +1,13 @@
 """``/api/v1/analytics/events/<event_id>/`` — catalog/event analytics.
 
-Paywalled mirror of the inline analytics block on the portal event-detail
-page: form-into-match + H2H (context), season-to-date (historical-stats),
-and — for not-yet-finalized events — model probabilities + live odds.
+Mirror of the inline analytics block on the portal event-detail page:
+form-into-match + H2H (context), season-to-date (historical-stats), and —
+for not-yet-finalized events — model probabilities + live odds.
 
 Not user-owned data (it's catalog analytics for an event), so no cross-user
-scoping. But it requires auth (``IsAuthenticated`` from the mixin) AND
-entitlement (``IsPaid``).
+scoping. Requires auth (``IsAuthenticated`` from the mixin) but **not** PRO
+entitlement — Phase 16 (D-16d) made the analytics dashboard free. (PRO gating
+moved to opponent scouting, Phase 9, which is where ``IsPaid`` will be used.)
 
 Reuses the portal's ``aggrigator_client`` helpers — the same HTTP calls the
 event-detail view makes — rather than reimplementing them. Each helper returns
@@ -23,7 +24,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.api.base import V1ViewMixin
-from core.api.permissions import IsPaid
 from core.portal.services import aggrigator_client
 
 
@@ -50,14 +50,14 @@ class EventAnalyticsSerializer(serializers.Serializer):
 
 
 class EventAnalyticsView(V1ViewMixin, APIView):
-    """Aggregator analytics for one event. Auth + entitlement required."""
+    """Aggregator analytics for one event. Auth required; free (D-16d)."""
 
-    permission_classes = V1ViewMixin.permission_classes + [IsPaid]
+    permission_classes = V1ViewMixin.permission_classes
     pagination_class = None
 
     def get(self, request, event_id: str):
         # Shared catalog data — the client's service key covers auth
-        # (plan §6.4); entitlement was already enforced by IsPaid above.
+        # (plan §6.4). Analytics is free; no entitlement gate here.
         context = aggrigator_client.event_context(event_id)
         historical_stats = aggrigator_client.event_historical_stats(event_id)
         probabilities = aggrigator_client.event_probabilities(event_id)

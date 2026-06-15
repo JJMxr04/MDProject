@@ -25,31 +25,6 @@
 
   <h2 class="h4 mb-4">Billing</h2>
 
-  {% if free_for_all %}
-    {% if has_paid_sub and sub_is_paused %}
-      <div class="alert alert-info">
-        <i class="bi bi-pause-circle me-1"></i>
-        <strong>Your subscription is paused.</strong>
-        Analytics is free for everyone right now, so we've paused your billing.
-        No charges will land while the free window is open.
-        When billing resumes, this card will reflect the change.
-      </div>
-    {% elif has_paid_sub and sub_is_paused is False %}
-      <div class="alert alert-warning">
-        <i class="bi bi-exclamation-triangle me-1"></i>
-        <strong>Analytics is free for everyone right now</strong> — but Stripe still has your subscription set to auto-charge.
-        An admin needs to run <code>./manage.py sync_kill_switch</code> to pause billing.
-        Until then, contact support if you want a manual pause.
-      </div>
-    {% else %}
-      <div class="alert alert-success">
-        <i class="bi bi-stars me-1"></i>
-        <strong>Analytics is free for everyone right now.</strong>
-        No subscription required — open the dashboard from the sidebar or below.
-      </div>
-    {% endif %}
-  {% endif %}
-
   {% if is_past_due %}
     <div class="alert alert-warning">
       <strong><i class="bi bi-exclamation-triangle me-1"></i> Your last payment failed.</strong>
@@ -140,7 +115,7 @@
         Open Events →
       </a>
     {% endif %}
-    {% if not has_paid_sub and not is_past_due and not free_for_all %}
+    {% if not has_paid_sub and not is_past_due %}
       <a href="{% url 'core-portal:billing-upgrade' %}" class="btn btn-primary">
         {% if is_canceled %}Resubscribe to PRO{% else %}Upgrade to PRO{% endif %}
       </a>

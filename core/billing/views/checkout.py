@@ -34,31 +34,6 @@ def start_checkout(request):
     """Mint a Stripe Checkout Session for PRO and redirect the browser."""
     from core.metrics.models import track
 
-    # Upgrade clicked from the fake-paywall interstitial — the
-    # willingness-to-pay signal (Phase 3 §4). Recorded before any config
-    # checks: a click is a click even if checkout then fails. Also stop
-    # walling this session so a Stripe cancel-return doesn't loop them.
-    came_from_paywall = request.POST.get("source") == "paywall"
-    if came_from_paywall:
-        track(request.user, "paywall_upgrade_clicked")
-        from core.billing.views.paywall import PAYWALL_ACK_SESSION_KEY
-        request.session[PAYWALL_ACK_SESSION_KEY] = True
-
-    # Defensive — the upgrade page already hides the Subscribe button
-    # when free-for-all is on, but a direct POST to /billing/checkout/
-    # would otherwise still mint a Stripe Checkout Session. Don't let
-    # users pay during a free-for-all window — EXCEPT in fake-paywall
-    # mode, where the whole point is walking testers into a Stripe TEST
-    # checkout (Phase 3 §4).
-    if getattr(settings, "ANALYTICS_FREE_FOR_ALL", False) and not getattr(
-        settings, "FAKE_PAYWALL_ENABLED", False
-    ):
-        messages.info(
-            request,
-            "Analytics is free for everyone right now — no subscription needed.",
-        )
-        return redirect("core-portal:billing-index")
-
     if not settings.STRIPE_SECRET_KEY:
         messages.error(request, "Billing is not configured. Contact support.")
         return redirect("core-portal:billing-upgrade")
@@ -129,10 +104,7 @@ def start_checkout(request):
         messages.error(request, f"Checkout failed: {exc.user_message or 'try again'}")
         return redirect("core-portal:billing-upgrade")
 
-    track(
-        request.user, "checkout_started",
-        source="paywall" if came_from_paywall else "upgrade_page",
-    )
+    track(request.user, "checkout_started", source="upgrade_page")
     return HttpResponseRedirect(session.url)
 
 

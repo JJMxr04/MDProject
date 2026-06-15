@@ -33,9 +33,29 @@
              data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
              data-csrf="{{ csrf_token }}">
             {% if challenges %}
-            <ul class="list-group list-group-flush" style="margin:0;">
+            {% if not scouting_entitled %}
+            <section class="card-ui scout-card" style="margin-bottom: var(--space-3);">
+                <div class="card-ui__body">
+                    <div class="scout-upsell">
+                        <div>
+                            <p class="scout-upsell__lead">Scout your challengers before you accept.</p>
+                            <ul class="scout-upsell__list">
+                                <li>Record &amp; hit rate</li>
+                                <li>Side &amp; favorite/underdog lean</li>
+                                <li>Recent form</li>
+                            </ul>
+                        </div>
+                        <div class="scout-upsell__cta">
+                            <a href="{% url 'core-portal:billing-upgrade' %}?src=opponent_scouting" class="btn-ui btn-ui--primary btn-ui--lg">Upgrade to PRO</a>
+                            <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+            <div class="list-group list-group-flush" style="margin:0;">
                 {% for invite in challenges %}
-                <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
+                <div class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
                     {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
                     <div class="flex-grow-1">
                         <div class="fw-semibold">⚔️ {{ invite.sender.username }} challenged you to a duel</div>
@@ -56,9 +76,12 @@
                             Decline
                         </button>
                     </div>
-                </li>
+                </div>
+                {% if scouting_entitled %}
+                {% include "portal/match/_scout_card.html" with opponent=invite.sender scouting=invite.scouting entitled=True %}
+                {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
             {% include "portal/components/_pagination_param.html" with page_obj=challenges param_name="cpage" other_qs=challenges_other_qs %}
             {% else %}
                 {% include "portal/components/_empty_state.html" with icon="inbox" title="No challenges waiting." body="When a friend duels you, it shows up here to accept or decline." %}

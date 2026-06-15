@@ -91,6 +91,38 @@ def my_match_detail_view(request, match_id):
     levels = levels_for(ids)
     divisions = divisions_for(ids)
 
+    # Opponent scouting (phase 9) — the one PRO feature. From the viewer's POV
+    # the opponent is the other player. PRO users get their tendencies; FREE
+    # users get a teaser + upsell (and a paywall_viewed signal — the headline
+    # willingness-to-pay metric now the fake paywall is gone).
+    viewer = request.user
+    opponent = None
+    if match.player_1_id == viewer.id:
+        opponent = match.player_2
+    elif p2_id == viewer.id:
+        opponent = match.player_1
+
+    scouting = None
+    scouting_entitled = False
+    if opponent is not None:
+        from core.billing.entitlement import user_can_access_analytics
+        scouting_entitled = user_can_access_analytics(viewer)
+        if scouting_entitled:
+            # Computed from the opponent's actual MATCH picks (MDProject
+            # gameplay), not the aggregator's parked bet-tracking table.
+            from core.match import scouting as scouting_mod
+            try:
+                scouting = scouting_mod.scout_user(opponent)
+            except Exception:
+                import logging
+                logging.getLogger(__name__).exception(
+                    "scout_user failed for opponent=%s", opponent.pk,
+                )
+        else:
+            from core.metrics.models import track
+            track(viewer, "paywall_viewed",
+                  feature="opponent_scouting", context="match_detail")
+
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
@@ -102,6 +134,9 @@ def my_match_detail_view(request, match_id):
         'player_2_level': levels.get(p2_id),
         'player_1_division': divisions.get(match.player_1_id),
         'player_2_division': divisions.get(p2_id),
+        'scout_opponent': opponent,
+        'scouting': scouting,
+        'scouting_entitled': scouting_entitled,
     }
 
     return render(request, 'portal/match/my_match_detail.html', context)

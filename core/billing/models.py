@@ -17,7 +17,6 @@ a 200 no-op.
 
 from __future__ import annotations
 
-from django.conf import settings
 from django.db import models
 
 from core.abstract.models import AbstractModel
@@ -101,18 +100,19 @@ class Subscription(AbstractModel):
 
     @property
     def is_entitled_to_analytics(self) -> bool:
-        """True iff the plan grants analytics AND status is "live enough".
+        """True iff the plan grants the PRO feature flag AND status is
+        "live enough".
 
         Grace: ``trialing`` / ``active`` / ``past_due`` keep access. The
         past_due grace exists so Stripe's retry-schedule for a declined
-        card doesn't blank the dashboard overnight. ``unpaid`` + ``canceled``
+        card doesn't blank a paid surface overnight. ``unpaid`` + ``canceled``
         revoke immediately.
 
-        ``ANALYTICS_FREE_FOR_ALL`` short-circuits to True for every user —
-        platform-wide kill-switch flipped via env. See settings.py.
+        (Phase 16/D-16d removed the ``ANALYTICS_FREE_FOR_ALL`` kill switch and
+        made the analytics dashboard free; this flag now gates opponent
+        scouting — Phase 9. The ``analytics`` feature key is retained as the
+        PRO marker until generalized to ``is_pro``/``plan.features``.)
         """
-        if getattr(settings, 'ANALYTICS_FREE_FOR_ALL', False):
-            return True
         if self.plan.features.get('analytics') is not True:
             return False
         return self.status in ('trialing', 'active', 'past_due')

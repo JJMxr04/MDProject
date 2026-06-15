@@ -909,22 +909,9 @@ if _raw_platform_cost:
 else:
     PLATFORM_COST_CENTS = None
 
-# ANALYTICS_FREE_FOR_ALL: platform-wide kill-switch. When "1", every
-# logged-in user is treated as entitled to analytics regardless of their
-# Subscription plan/status. The billing/upgrade pages swap copy and hide
-# the checkout CTA. Stripe catalog, existing PRO subs, and webhooks are
-# untouched — flipping back to "0" restores the normal gate.
-ANALYTICS_FREE_FOR_ALL = os.environ.get("ANALYTICS_FREE_FOR_ALL", "0") == "1"
-
-# --- Fake paywall (roadmap Phase 3 §4, decision D-3) -----------------------
-# Only meaningful while ANALYTICS_FREE_FOR_ALL is on: FREE users see a
-# paywall interstitial (once per session) before being let through anyway.
-# Impressions/clicks land in core_metrics.ProductEvent — the click-through
-# rate is the willingness-to-pay signal that prices PRO (decision D-10).
-FAKE_PAYWALL_ENABLED = os.environ.get("FAKE_PAYWALL_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
-# Display-only price on the interstitial (D-3 recommends $7–10/mo). The
-# real Stripe price stays on the Plan row; this is what testers SEE.
-PAYWALL_DISPLAY_PRICE = os.environ.get("PAYWALL_DISPLAY_PRICE", "$9/mo")
+# (Phase 16 / D-16d removed the ANALYTICS_FREE_FOR_ALL kill switch + fake
+# paywall. The analytics dashboard is free; billing uses normal Stripe gating,
+# and PRO gating is reserved for opponent scouting — Phase 9.)
 
 # Pick-email coalescing window (plan §7.1 #5): the first pick in a match
 # queues a summary email this many seconds out; further picks inside the

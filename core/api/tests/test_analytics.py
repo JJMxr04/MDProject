@@ -1,23 +1,18 @@
-"""/api/v1/analytics/events/<id>/ — paywalled event analytics.
+"""/api/v1/analytics/events/<id>/ — event analytics (free, auth-only).
 
-Proves the IsPaid wiring on a real v1 endpoint: anon -> 401, authenticated
-but not entitled -> 403, entitled (or kill-switch) -> 200. The aggregator
-helpers are patched so every test is hermetic.
-
-STRIPE_SECRET_KEY="" on the class so creating Plan/Subscription rows doesn't
-fire the real Stripe catalog push (mirrors test_permissions.py).
+Phase 16 (D-16d) made the analytics dashboard free: this endpoint requires
+auth (anon -> 401) but no PRO entitlement (any authenticated user -> 200).
+The aggregator helpers are patched so every test is hermetic.
 """
 
 from __future__ import annotations
 
 from unittest import mock
 
-from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
 
 from core.api.tests.base import V1APITestCase
-from core.billing.models import Plan, Subscription
 
 MODULE = "core.api.v1.analytics.aggrigator_client"
 
@@ -51,43 +46,18 @@ def _stub_aggrigator(**overrides):
     )
 
 
-@override_settings(ANALYTICS_FREE_FOR_ALL=False, STRIPE_SECRET_KEY="")
 class EventAnalyticsApiTests(V1APITestCase):
     def setUp(self):
         self.user = self.make_user("viewer")
         self.url = reverse("api-v1:analytics-event", args=["evt_1"])
-
-    def _entitle(self, *, analytics: bool = True, status: str = "active"):
-        plan = Plan.objects.create(
-            code=f"p_{analytics}_{status}",
-            name="Plan",
-            amount_cents=0,
-            features={"analytics": analytics},
-        )
-        Subscription.objects.update_or_create(
-            user=self.user, defaults={"plan": plan, "status": status},
-        )
 
     def test_anonymous_is_401(self):
         resp = self.client.get(self.url)
         self.assertEqual(resp.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assert_error_envelope(resp, code="not_authenticated")
 
-    def test_authenticated_not_entitled_is_403(self):
-        # No subscription, kill-switch off -> IsPaid denies.
-        self.client.force_authenticate(self.user)
-        resp = self.client.get(self.url)
-        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
-        self.assert_error_envelope(resp, code="forbidden")
-
-    def test_non_analytics_plan_is_403(self):
-        self._entitle(analytics=False)
-        self.client.force_authenticate(self.user)
-        resp = self.client.get(self.url)
-        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_entitled_subscription_returns_200(self):
-        self._entitle(analytics=True)
+    def test_authenticated_returns_200_no_subscription_needed(self):
+        # Analytics is free (D-16d): any authenticated user, no sub, gets 200.
         self.client.force_authenticate(self.user)
         with _stub_aggrigator():
             resp = self.client.get(self.url)
@@ -98,16 +68,6 @@ class EventAnalyticsApiTests(V1APITestCase):
         self.assertEqual(data["h2h_last_5"], [{"id": "x"}])
         self.assertFalse(data["is_finalized"])
 
-    @override_settings(ANALYTICS_FREE_FOR_ALL=True)
-    def test_kill_switch_grants_access(self):
-        # No subscription at all, but kill-switch on -> 200.
-        self.client.force_authenticate(self.user)
-        with _stub_aggrigator():
-            resp = self.client.get(self.url)
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assert_success_envelope(resp)
-
-    @override_settings(ANALYTICS_FREE_FOR_ALL=True)
     def test_serializer_does_not_leak_upstream_fields(self):
         self.client.force_authenticate(self.user)
         leaky = {
@@ -135,7 +95,6 @@ class EventAnalyticsApiTests(V1APITestCase):
             },
         )
 
-    @override_settings(ANALYTICS_FREE_FOR_ALL=True)
     def test_aggregator_outage_is_502_envelope(self):
         # All four helpers return {} (their transport-failure shape).
         self.client.force_authenticate(self.user)

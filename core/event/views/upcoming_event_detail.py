@@ -24,7 +24,6 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.utils.dateparse import parse_datetime
 
-from core.billing.entitlement import user_can_access_analytics
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
@@ -71,14 +70,11 @@ def upcoming_event_detail(request, event_id):
     is_finalized = bool(body.get("is_finalized"))
 
     # Analytics block — H2H, form, season-to-date PLUS the model-vs-market
-    # edge table (formerly on /web/portal/analytics/event/{id}/). The entire
-    # block is paywalled: free users get an upsell card in this slot
-    # instead. We skip the aggrigator-analytics API calls entirely when
-    # the user isn't entitled — no point spending the budget on data we
-    # won't render. Entitlement goes through the helper so the
-    # ANALYTICS_FREE_FOR_ALL kill-switch + missing-Subscription cases
-    # route through the same code path as the normal one.
-    is_entitled = user_can_access_analytics(request.user)
+    # edge table. Phase 16 (D-16d) made the analytics dashboard FREE — the
+    # block renders for everyone (the model-vs-market edge degrades gracefully
+    # to empty while the model is parked). PRO gating now lives on opponent
+    # scouting (Phase 9), not here.
+    is_entitled = True
     analytics_ctx: dict = {}
     if is_entitled:
         # Shared catalog data — the client's service key covers auth

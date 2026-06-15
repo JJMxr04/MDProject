@@ -1,0 +1,66 @@
+{% comment %}
+Opponent scouting card (phase 9). Renders only when `opponent` is set.
+  opponent  — the User being scouted
+  scouting  — dict from core.match.scouting.scout_user (or None)
+  entitled  — bool: viewer is PRO
+PRO + data → tendencies; PRO + sparse/None → empty state; FREE → upsell.
+Styles live in portal/global.css (.scout-*). Reused on match detail, the
+public accept screen, and duel challenges.
+{% endcomment %}
+{% if opponent %}
+<section class="card-ui scout-card">
+    <div class="card-ui__header">
+        <h2 class="card-ui__title"><i class="bi bi-binoculars" aria-hidden="true"></i> Scouting {{ opponent.username }}</h2>
+        <span class="scout-chip">PRO</span>
+    </div>
+    <div class="card-ui__body">
+        {% if not entitled %}
+            <div class="scout-upsell">
+                <div>
+                    <p class="scout-upsell__lead">See how <strong>{{ opponent.username }}</strong> bets before the games settle.</p>
+                    <ul class="scout-upsell__list">
+                        <li>Win/loss record &amp; hit rate</li>
+                        <li>Home/away &amp; favorite/underdog lean</li>
+                        <li>Market preferences (moneyline / spread / total)</li>
+                        <li>Per-league record &amp; recent form</li>
+                    </ul>
+                </div>
+                <div class="scout-upsell__cta">
+                    <a href="{% url 'core-portal:billing-upgrade' %}?src=opponent_scouting" class="btn-ui btn-ui--primary btn-ui--lg">Upgrade to PRO</a>
+                    <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
+                </div>
+            </div>
+        {% elif not scouting.side %}
+            <p class="duel-meta">Not enough betting history yet to scout {{ opponent.username }}.</p>
+        {% else %}
+            <div class="scout-stats">
+                <div class="scout-stat"><span class="scout-stat__num">{{ scouting.wins }}–{{ scouting.losses }}</span><span class="scout-stat__lbl">Record</span></div>
+                {% if scouting.hit_rate is not None %}
+                <div class="scout-stat"><span class="scout-stat__num">{% widthratio scouting.hit_rate 1 100 %}%</span><span class="scout-stat__lbl">Hit rate</span></div>
+                {% endif %}
+                <div class="scout-stat"><span class="scout-stat__num">{{ scouting.side.home }}/{{ scouting.side.away }}</span><span class="scout-stat__lbl">Home/Away</span></div>
+                <div class="scout-stat"><span class="scout-stat__num">{{ scouting.fav_dog.favorite }}/{{ scouting.fav_dog.underdog }}</span><span class="scout-stat__lbl">Fav/Dog</span></div>
+                <div class="scout-stat"><span class="scout-stat__num">{{ scouting.over_under.over }}/{{ scouting.over_under.under }}</span><span class="scout-stat__lbl">Over/Under</span></div>
+            </div>
+
+            {% if scouting.leagues %}
+            <div class="scout-row">
+                <span class="scout-row__label">By league</span>
+                <span class="scout-row__val">
+                    {% for lg in scouting.leagues %}<span class="scout-pill">{{ lg.league }} {{ lg.wins }}–{{ lg.losses }}</span>{% endfor %}
+                </span>
+            </div>
+            {% endif %}
+
+            {% if scouting.recent_form %}
+            <div class="scout-row">
+                <span class="scout-row__label">Recent</span>
+                <span class="scout-row__val scout-form">
+                    {% for f in scouting.recent_form %}<span class="scout-res scout-res--{{ f.result|lower }}" title="{{ f.label }}">{% if f.result == 'WON' %}W{% elif f.result == 'LOST' %}L{% elif f.result == 'PUSH' %}P{% else %}V{% endif %}</span>{% endfor %}
+                </span>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+{% endif %}
