@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from core.match.models import Match, TieBreaker
 from core.match.serializers.match import MatchSerializer
@@ -47,6 +47,12 @@ def my_match_detail_view(request, match_id):
             ),
         id=match_id,
     )
+
+    # Duels are a degenerate one-game match but have their own surface — they
+    # must not open in the full match-detail UI. Send them to the duels hub.
+    if match.match_type == "duel":
+        return redirect("core-portal:portal-duels")
+
     is_player_in_match = match.player_2 is not None and request.user.id in [
         match.player_1.id,
         match.player_2.id,

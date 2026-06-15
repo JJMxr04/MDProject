@@ -25,6 +25,7 @@ def public_match_list_view(request):
     matches = (
         Match.objects.filter(match_state='created')
         .exclude(player_1=request.user)
+        .exclude(match_type="duel")  # duels live at /match/duels/, never here
         .select_related("player_1", "player_2")
         .order_by('-start_date')
     )

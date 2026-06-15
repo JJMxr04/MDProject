@@ -19,9 +19,12 @@ def my_match_list_view(request):
     # player_2, winner). Without this, every row in the table drives 3
     # extra round-trips per match × 10 matches per page = 30+ queries
     # on top of the count query.
+    # Duels (match_type="duel") are their own surface at /match/duels/ — keep
+    # them out of the regular match list.
     matches = (
         Match.objects
         .filter(Q(player_1=request.user) | Q(player_2=request.user))
+        .exclude(match_type="duel")
         .select_related("player_1", "player_2", "winner")
     )
 
