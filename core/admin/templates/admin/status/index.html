@@ -156,7 +156,7 @@
     {% endfor %}
   </div>
 
-  <h2>Beat schedule (live, from <code>django_celery_beat</code>)</h2>
+  <h2>Periodic schedule (live, from Procrastinate <code>@app.periodic</code>)</h2>
   <table class="status-table">
     <thead>
       <tr>
@@ -166,6 +166,7 @@
         <th>Enabled</th>
         <th>Last run</th>
         <th>Total runs</th>
+        <th>Run</th>
       </tr>
     </thead>
     <tbody>
@@ -186,11 +187,18 @@
           {% else %}<span class="muted">never</span>{% endif %}
         </td>
         <td class="mono">{{ row.total_runs }}</td>
+        <td>
+          <form method="post" action="{% url 'core-admin:admin_run_task' %}" style="margin:0;">
+            {% csrf_token %}
+            <input type="hidden" name="task" value="{{ row.task }}">
+            <button type="submit" class="pill pill--success" style="border:0;cursor:pointer;">Run now</button>
+          </form>
+        </td>
       </tr>
       {% empty %}
-      <tr><td colspan="6" class="empty">
-        No periodic tasks in <code>django_celery_beat</code> yet — run
-        the worker once so it seeds the DB from <code>CELERY_BEAT_SCHEDULE</code>.
+      <tr><td colspan="7" class="empty">
+        No periodic tasks registered — check that the worker service is running
+        and that <code>@app.periodic</code> tasks were imported.
       </td></tr>
       {% endfor %}
     </tbody>

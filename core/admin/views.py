@@ -65,6 +65,40 @@ def status_page(request):
 
 
 @staff_member_required
+@require_http_methods(["POST"])
+def run_task(request):
+    """Manually queue one of the registered periodic tasks from /admin/status/.
+
+    Defers the job onto the Procrastinate queue (the worker runs it, same as
+    the scheduled fire) rather than running it inline — non-blocking and uses
+    the worker's retry strategy. Only names present in the live periodic
+    registry are accepted, so this can't be used to defer arbitrary tasks.
+    """
+    import time
+
+    name = (request.POST.get("task") or "").strip()
+    try:
+        from procrastinate.contrib.django import app
+
+        periodic_names = {
+            pt.task.name for pt in app.periodic_registry.periodic_tasks.values()
+        }
+        if name not in periodic_names:
+            messages.error(request, f"Unknown or non-periodic task: {name!r}")
+            return redirect("core-admin:admin_status")
+
+        app.tasks[name].defer(timestamp=int(time.time()))
+        messages.success(
+            request,
+            f"Queued “{name}”. The worker will run it shortly — refresh to see "
+            f"it under Recent jobs. (Requires the worker service to be running.)",
+        )
+    except Exception as exc:  # noqa: BLE001
+        messages.error(request, f"Couldn't queue {name}: {exc}")
+    return redirect("core-admin:admin_status")
+
+
+@staff_member_required
 @require_http_methods(["GET", "POST"])
 def stripe_setup_page(request):
     """One-click Stripe setup page.
