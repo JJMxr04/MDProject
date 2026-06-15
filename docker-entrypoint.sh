@@ -30,6 +30,13 @@ case "$ROLE" in
     echo "[entrypoint] ensuring cache table..."
     python manage.py createcachetable
 
+    # Ensure recurring state (today's Pick of the Day, active season, due
+    # settlements) exists right away instead of waiting for the midnight cron.
+    # Idempotent get-or-create; backgrounded so it never delays readiness, and
+    # its own steps are isolated so a slow/unreachable dependency can't block.
+    echo "[entrypoint] bootstrapping periodic state (idempotent, backgrounded)..."
+    python manage.py bootstrap_periodic &
+
     echo "[entrypoint] starting gunicorn..."
     # Sync workers — Django doesn't need ASGI here. ``access-logfile -``
     # routes access logs to stdout for journald / Coolify / Railway logs.

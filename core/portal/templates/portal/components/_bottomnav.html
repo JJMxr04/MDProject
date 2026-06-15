@@ -14,9 +14,9 @@
        href="{% url 'core-portal:portal-duels' %}">
         <i class="bi bi-fire" aria-hidden="true"></i><span>Duel</span>
     </a>
-    <a class="bottom-nav__item {% if '/web/portal/leaderboard/' in request.path %}is-active{% endif %}"
-       href="{% url 'core-portal:portal-leaderboard' %}">
-        <i class="bi bi-bar-chart" aria-hidden="true"></i><span>Ranks</span>
+    <a class="bottom-nav__item {% if '/web/portal/stats/' in request.path %}is-active{% endif %}"
+       href="{% url 'core-portal:portal-stats' %}">
+        <i class="bi bi-graph-up" aria-hidden="true"></i><span>Stats</span>
     </a>
     <button class="bottom-nav__item" type="button" data-mobile-menu-toggle aria-haspopup="true" aria-label="More navigation">
         <i class="bi bi-grid" aria-hidden="true"></i><span>More</span>
