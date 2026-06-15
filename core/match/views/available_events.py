@@ -35,6 +35,13 @@ logger = logging.getLogger(__name__)
 # Owner-side deadline: pick must be ≥ 8h before event start (per
 # Game.objects.upload_pick rules / api-switch/game-match-audit-plan.md §5.1).
 OWNER_DEADLINE_BUFFER = timedelta(hours=8)
+# Headroom for an event to FINISH and settle before the match window closes.
+# The aggregator gives us only a ``start_time`` (no end/duration), so we
+# approximate "the event fits inside the match timeframe" as
+# ``start_time + EVENT_COMPLETION_BUFFER <= match.end_date``. Without it a
+# late-starting event clears the start-time bound but wouldn't settle until
+# after the match itself ended — acute on the short Blitz (2-day) window.
+EVENT_COMPLETION_BUFFER = timedelta(hours=6)
 CACHE_TTL = 30  # seconds; matches plan §2.4.2 table
 
 
@@ -60,8 +67,19 @@ def build_available_events(match: Match) -> list[dict]:
     if cached is not None:
         return cached
 
-    starts_after = (timezone.now() + OWNER_DEADLINE_BUFFER).isoformat()
-    starts_before = match.end_date.isoformat()
+    starts_after_dt = timezone.now() + OWNER_DEADLINE_BUFFER
+    # Pull the upper bound in so a pick can still finish + settle inside the
+    # match's format window (Blitz 2d / Classic 4d / Marathon 7d — end_date is
+    # derived from the format at creation/accept).
+    starts_before_dt = match.end_date - EVENT_COMPLETION_BUFFER
+
+    # Window effectively closed: nothing can start late enough to clear the
+    # owner deadline yet early enough to settle before the match ends.
+    if starts_before_dt <= starts_after_dt:
+        return []
+
+    starts_after = starts_after_dt.isoformat()
+    starts_before = starts_before_dt.isoformat()
 
     try:
         body = AggrigatorClient().list_events(
