@@ -24,14 +24,18 @@ class Emails:
         )
 
     @classmethod
-    def _notify(cls, user, subject, template_path, context, dedupe_key=None):
+    def _notify(cls, user, subject, template_path, context, dedupe_key=None, in_app=True):
         """Single chokepoint for user-facing engagement notifications.
 
-        Always writes the in-app Notification row; only sends the email if
-        the user hasn't opted out (``User.email_notifications``). Every
-        email carries an unsubscribe link in its context so ``_base.html``
-        can render the footer link and the task can set the
-        ``List-Unsubscribe`` header.
+        Writes the in-app Notification row (the bell) unless ``in_app=False``;
+        only sends the email if the user hasn't opted out
+        (``User.email_notifications``). Every email carries an unsubscribe link
+        in its context so ``_base.html`` can render the footer link and the
+        task can set the ``List-Unsubscribe`` header.
+
+        ``in_app=False`` is used for things that already surface in their own
+        UI — e.g. invites have their own envelope icon + list, so they don't
+        also need a bell notification (would double-count the same event).
 
         ``dedupe_key`` maps to a Procrastinate queueing lock: while a job
         holding the key is still queued, a second defer with the same key
@@ -42,7 +46,8 @@ class Emails:
         Transactional mail (account activation, password reset, waitlist)
         does NOT route through here and ignores the preference.
         """
-        Notification.objects.create_notification(user, subject)
+        if in_app:
+            Notification.objects.create_notification(user, subject)
 
         if not getattr(user, "email_notifications", True):
             return
@@ -83,7 +88,8 @@ class Emails:
             'tournament_date': tournament.start_date.strftime('%B %d, %Y'),
             'tournament_location': 'Tournament Location',
         }
-        cls._notify(user, subject, template_path, context)
+        # Invites surface via the envelope icon + list — no bell notification.
+        cls._notify(user, subject, template_path, context, in_app=False)
 
     @classmethod
     def send_waitlist_granted(cls, email):
@@ -208,7 +214,8 @@ class Emails:
             'opponent_name': opponent_name,
             'format_label': format_label,
         }
-        cls._notify(user, subject, template_path, context)
+        # Invites surface via the envelope icon + list — no bell notification.
+        cls._notify(user, subject, template_path, context, in_app=False)
 
     @classmethod
     def send_duel_invite(cls, user, challenger_name, payload):
@@ -224,7 +231,8 @@ class Emails:
             'challenger_label': payload.get('challenger_label', ''),
             'opponent_label': payload.get('opponent_label', ''),
         }
-        cls._notify(user, subject, template_path, context)
+        # Invites surface via the envelope icon + list — no bell notification.
+        cls._notify(user, subject, template_path, context, in_app=False)
 
     @classmethod
     def send_duel_result(cls, user, opponent_name, outcome, match_id=None):
@@ -269,7 +277,8 @@ class Emails:
             'username': user.username,
             'sender_name': sender_name,
         }
-        cls._notify(user, subject, template_path, context)
+        # Invites surface via the envelope icon + list — no bell notification.
+        cls._notify(user, subject, template_path, context, in_app=False)
 
     @classmethod
     def send_invite_declined(cls, user, decliner_name, invite_type):

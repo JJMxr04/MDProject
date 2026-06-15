@@ -550,19 +550,26 @@ a:hover { color: var(--brand-blue-bright); }
   display: none;
   position: fixed; inset: 0; background: rgba(17, 24, 39, 0.5);
   align-items: center; justify-content: center; z-index: 1500;
+  padding: var(--space-4);
+  overflow-y: auto;            /* overlay scrolls if a modal is taller than the viewport */
+  -webkit-overflow-scrolling: touch;
 }
 .modal-ui.is-open { display: flex; }
 .modal-ui__content {
   background: var(--surface-card); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   width: 92%; max-width: 480px;
-  overflow: hidden;
+  /* Cap height to the viewport and scroll the body, so tall content (e.g. the
+     friend list after picking "private") is reachable on mobile + desktop. */
+  display: flex; flex-direction: column;
+  max-height: calc(100dvh - 2 * var(--space-4));
+  overflow: hidden;           /* clip rounded corners; the body scrolls */
 }
-.modal-ui__header  { padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border-default); display: flex; justify-content: space-between; align-items: center; }
+.modal-ui__header  { flex: 0 0 auto; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border-default); display: flex; justify-content: space-between; align-items: center; }
 .modal-ui__header h2 { margin: 0; }
 .modal-ui__close   { background: transparent; border: 0; font-size: 22px; line-height: 1; cursor: pointer; color: var(--text-secondary); }
-.modal-ui__body    { padding: var(--space-5); }
-.modal-ui__footer  { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border-default); display: flex; justify-content: flex-end; gap: var(--space-2); }
+.modal-ui__body    { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--space-5); }
+.modal-ui__footer  { flex: 0 0 auto; padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border-default); display: flex; justify-content: flex-end; gap: var(--space-2); }
 
 /* ── Stat card ────────────────────────────────────────────── */
 .stat-card {

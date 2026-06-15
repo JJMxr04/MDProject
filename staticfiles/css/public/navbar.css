@@ -36,9 +36,12 @@
 }
 
 .site-nav__links { gap: var(--ps-space-1); }
+/* The navbar is a fixed light frosted bar (it does NOT flip in dark mode), so
+   its text/controls use FIXED dark colors in both themes — using the theme
+   tokens here would flip them light and make light-on-light text. */
 .site-nav .nav-link {
   position: relative;
-  color: var(--ps-text);
+  color: #14202b;
   font-weight: 600;
   padding: .5rem .9rem;
   border-radius: var(--ps-radius-sm);
@@ -49,18 +52,22 @@
   position: absolute;
   left: .9rem; right: .9rem; bottom: .35rem;
   height: 2px;
-  background: var(--ps-ocean);
+  background: #17B6BE;
   border-radius: 2px;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--ps-dur) var(--ps-ease);
 }
 .site-nav .nav-link:hover,
-.site-nav .nav-link.active { color: var(--ps-ocean-700); text-decoration: none; }
+.site-nav .nav-link.active { color: #0E7C8B; text-decoration: none; }
 .site-nav .nav-link:hover::after,
 .site-nav .nav-link.active::after { transform: scaleX(1); }
 
 .site-nav__actions { display: flex; align-items: center; gap: var(--ps-space-2); }
+/* Ghost buttons (Log in, theme toggle) sit on the same light bar — keep them
+   dark in both themes too. */
+.site-nav .ps-btn--ghost { color: #14202b; border-color: rgba(12, 43, 51, .22); }
+.site-nav .ps-btn--ghost:hover { background: rgba(12, 43, 51, .06); color: #14202b; }
 .ps-theme-toggle { padding: .6rem .75rem; min-height: 44px; }
 
 .site-nav__toggler { border: 0; padding: .4rem .55rem; }
