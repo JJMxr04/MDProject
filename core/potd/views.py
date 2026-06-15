@@ -147,3 +147,90 @@ def leaderboard(request):
         "wins_board": wins_board,
     }
     return render(request, "portal/potd/leaderboard.html", context)
+
+
+def _win_streaks(results_chrono):
+    """Current + best 'wins in a row'. A LOST breaks the run; VOID/PENDING are
+    neutral (skipped) — same philosophy as the picked-day streak."""
+    cur = best = 0
+    for r in results_chrono:
+        if r == DailyPickResult.WON:
+            cur += 1
+            best = max(best, cur)
+        elif r == DailyPickResult.LOST:
+            cur = 0
+    return cur, best
+
+
+_RESULT_META = {
+    DailyPickResult.WON: ("Won", "success"),
+    DailyPickResult.LOST: ("Lost", "danger"),
+    DailyPickResult.VOID: ("Void", "muted"),
+    DailyPickResult.PENDING: ("Pending", "warning"),
+}
+
+
+@login_required(login_url="/auth/login/")
+def my_picks(request):
+    """The user's own Pick of the Day history + personal stats. The leaderboard
+    stays general/global; this page is just 'me' — wins/losses, both streaks
+    (days picked in a row + wins in a row), and which ones I got right."""
+    user = request.user
+
+    # Settlement is lazy — pull any of this user's just-settled results in.
+    DailyPick.objects.sync_pending()
+
+    picks = list(
+        DailyPick.objects
+        .filter(user=user)
+        .select_related(
+            "potd", "potd__event",
+            "potd__event__home_team", "potd__event__away_team",
+            "selection", "selection__market", "selection__market__event",
+            "selection__market__event__home_team",
+            "selection__market__event__away_team",
+        )
+        .order_by("-potd__date")
+    )
+
+    wins = sum(1 for p in picks if p.result == DailyPickResult.WON)
+    losses = sum(1 for p in picks if p.result == DailyPickResult.LOST)
+    void = sum(1 for p in picks if p.result == DailyPickResult.VOID)
+    pending = sum(1 for p in picks if p.result == DailyPickResult.PENDING)
+    decided = wins + losses
+    win_rate = round(100 * wins / decided) if decided else None
+
+    # chronological (oldest → newest) for streak math
+    cur_win_streak, best_win_streak = _win_streaks([p.result for p in reversed(picks)])
+
+    def _team(ev, side):
+        t = getattr(ev, side, None) if ev else None
+        return getattr(t, "name_medium", None) or "TBD"
+
+    rows = []
+    for p in picks:
+        label, kind = _RESULT_META.get(p.result, ("—", "muted"))
+        rows.append({
+            "date": p.potd.date,
+            "event_id": p.potd.event_id,
+            "home": _team(p.potd.event, "home_team"),
+            "away": _team(p.potd.event, "away_team"),
+            "pick": humanize_selection(p.selection),
+            "result_label": label,
+            "result_kind": kind,
+        })
+
+    context = {
+        "total": len(picks),
+        "wins": wins,
+        "losses": losses,
+        "void": void,
+        "pending": pending,
+        "win_rate": win_rate,
+        "participation_current": user.potd_current_streak,
+        "participation_best": user.potd_best_streak,
+        "win_current": cur_win_streak,
+        "win_best": best_win_streak,
+        "rows": rows,
+    }
+    return render(request, "portal/potd/my_picks.html", context)

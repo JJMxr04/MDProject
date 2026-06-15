@@ -1,0 +1,113 @@
+{% extends "portal/base_app.html" %}
+{% load static %}
+
+{% block title %}My Pick of the Day{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">My Pick of the Day</h1>
+        <p class="page-header__subtitle">Your record, streaks, and every pick you've made.</p>
+    </div>
+    <div class="page-header__actions">
+        <a href="{% url 'core-portal:portal-dashboard' %}" class="btn-ui btn-ui--primary">
+            <i class="bi bi-star-fill"></i> Make today's pick
+        </a>
+        <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--secondary">
+            <i class="bi bi-bar-chart"></i> Leaderboard
+        </a>
+    </div>
+</header>
+
+<!-- Record -->
+<section class="card-ui mb-4">
+    <header class="card-ui__header"><h2><i class="bi bi-clipboard-data me-2"></i>Your record</h2></header>
+    <div class="card-ui__body">
+        <div class="mp-figures">
+            <div class="mp-fig"><span class="mp-fig__num mp-fig__num--won">{{ wins }}</span><span class="mp-fig__lbl">Won</span></div>
+            <div class="mp-fig"><span class="mp-fig__num mp-fig__num--lost">{{ losses }}</span><span class="mp-fig__lbl">Lost</span></div>
+            <div class="mp-fig"><span class="mp-fig__num">{% if win_rate is not None %}{{ win_rate }}%{% else %}—{% endif %}</span><span class="mp-fig__lbl">Win rate</span></div>
+            <div class="mp-fig"><span class="mp-fig__num">{{ total }}</span><span class="mp-fig__lbl">Picks</span></div>
+            {% if pending %}<div class="mp-fig"><span class="mp-fig__num">{{ pending }}</span><span class="mp-fig__lbl">Pending</span></div>{% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Streaks -->
+<section class="card-ui mb-4">
+    <header class="card-ui__header"><h2><i class="bi bi-fire me-2"></i>Streaks</h2></header>
+    <div class="card-ui__body">
+        <div class="mp-streaks">
+            <div class="mp-streak">
+                <span class="mp-streak__label">Days picked in a row</span>
+                <span class="mp-streak__cur">🌅 {{ participation_current }}</span>
+                <span class="mp-streak__best">best {{ participation_best }}</span>
+            </div>
+            <div class="mp-streak">
+                <span class="mp-streak__label">Wins in a row</span>
+                <span class="mp-streak__cur">🔥 {{ win_current }}</span>
+                <span class="mp-streak__best">best {{ win_best }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- History -->
+<section class="card-ui">
+    <header class="card-ui__header"><h2><i class="bi bi-clock-history me-2"></i>Your picks</h2></header>
+    {% if rows %}
+    <table class="table-ui">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Match</th>
+                <th scope="col">My pick</th>
+                <th scope="col">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td class="mono">{{ row.date|date:"M j, Y" }}</td>
+                <td>
+                    {% if row.event_id %}
+                        <a class="mp-match" href="{% url 'core-portal:upcoming-events-detail' row.event_id %}">{{ row.home }} vs {{ row.away }}</a>
+                    {% else %}
+                        {{ row.home }} vs {{ row.away }}
+                    {% endif %}
+                </td>
+                <td>{{ row.pick }}</td>
+                <td><span class="badge-ui badge-ui--{{ row.result_kind }}">{{ row.result_label }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="card-ui__body">
+        {% include "portal/components/_empty_state.html" with icon="star" title="No picks yet" body="Make your first Pick of the Day from the dashboard to start your record." action_label="Make today's pick" action_href="/web/portal/dashboard/" %}
+    </div>
+    {% endif %}
+</section>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .mp-figures { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+    .mp-fig { flex: 1 1 0; min-width: 84px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: var(--space-3); background: var(--surface-muted); border-radius: var(--radius-md); }
+    .mp-fig__num { font-size: var(--text-2xl); font-weight: var(--weight-bold); }
+    .mp-fig__num--won { color: var(--state-success); }
+    .mp-fig__num--lost { color: var(--state-danger); }
+    .mp-fig__lbl { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+
+    .mp-streaks { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+    .mp-streak { flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; padding: var(--space-4); background: var(--surface-muted); border-radius: var(--radius-md); }
+    .mp-streak__label { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+    .mp-streak__cur { font-size: var(--text-3xl); font-weight: var(--weight-bold); line-height: 1.1; }
+    .mp-streak__best { font-size: var(--text-sm); color: var(--text-secondary); }
+
+    .mp-match { color: var(--text-primary); text-decoration: none; font-weight: var(--weight-medium); }
+    .mp-match:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) { .table-ui { min-width: 460px; } }
+</style>
+{% endblock css %}

@@ -9,9 +9,14 @@
         <h1 class="page-header__title">Pick of the Day</h1>
         <p class="page-header__subtitle">One free pick, every day. Streaks for showing up — wins for being right.</p>
     </div>
-    <a href="{% url 'core-portal:portal-dashboard' %}" class="btn-ui btn-ui--primary">
-        <i class="bi bi-star-fill"></i> Make today's pick
-    </a>
+    <div class="page-header__actions">
+        <a href="{% url 'core-portal:potd-my-picks' %}" class="btn-ui btn-ui--secondary">
+            <i class="bi bi-person-lines-fill"></i> My picks
+        </a>
+        <a href="{% url 'core-portal:portal-dashboard' %}" class="btn-ui btn-ui--primary">
+            <i class="bi bi-star-fill"></i> Make today's pick
+        </a>
+    </div>
 </header>
 
 {% if potd %}

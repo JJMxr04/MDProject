@@ -101,6 +101,7 @@
         <h2><i class="bi bi-star-fill me-2" style="color:#FFB400;"></i>Pick of the Day</h2>
         <div class="d-flex align-items-center gap-2">
             {% if potd_streak %}<span class="badge-ui badge-ui--success">🔥 {{ potd_streak }}-day streak</span>{% endif %}
+            <a href="{% url 'core-portal:potd-my-picks' %}" class="btn-ui btn-ui--ghost btn-ui--sm">My picks</a>
             <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
         </div>
     </header>
