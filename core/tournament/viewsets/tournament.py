@@ -18,7 +18,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     ordering = ['start_date']
     search_fields = ['name', 'state', 'start_date']
-    pagination_class = TournamentPagination  # Use the custom pagination class
+    pagination_class = TournamentPagination
 
     def get_queryset(self):
         user = self.request.user

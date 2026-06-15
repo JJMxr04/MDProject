@@ -52,10 +52,9 @@ class PublicUserSerializer(AbstractSerializer):
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
-        from core.user.models import User  # Import User model here
+        from core.user.models import User
         token = super().get_token(user)
 
-        # Customize the token payload here
         token["user_id"] = user.id
         token["email"] = user.email
         token["role"] = "admin" if user.is_staff else "user"

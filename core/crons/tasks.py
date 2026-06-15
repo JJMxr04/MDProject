@@ -93,3 +93,16 @@ def season_lifecycle_cron(timestamp: int):
     report = run_lifecycle()
     if report.get("closed") or report.get("activated"):
         logger.info("season_lifecycle_cron: %s", report)
+
+
+# Stripe webhooks are the primary subscription-state path, but they can be
+# missed (delivery failure, downtime). Since entitlement gates on status, a
+# missed cancellation would linger as PRO access. This daily safety net
+# re-pulls Stripe's canonical state for locally-active subs and corrects drift.
+# Offset to 00:30 NY so it doesn't pile onto the midnight crowd.
+@app.periodic(cron="30 0 * * *")
+@app.task(name="core.crons.reconcile_subscriptions_cron", queue="default", retry=CRON_RETRY)
+def reconcile_subscriptions_cron(timestamp: int):
+    from core.billing.services.reconcile import reconcile_subscriptions
+
+    reconcile_subscriptions()

@@ -6,7 +6,7 @@ from django.views import View
 from core.auth.forms.register_form import RegisterForm
 from django.contrib.auth import login
 from django.contrib import messages
-from core.auth.models import email  # Import your email sending function
+from core.auth.models import email
 from core.ratelimit import rate_limit
 
 logger = logging.getLogger(__name__)

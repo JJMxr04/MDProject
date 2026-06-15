@@ -92,35 +92,30 @@ class TournamentAdmin(admin.ModelAdmin):
 
         context = {
             'tournament': tournament_with_rounds,
-            'opts': self.model._meta,  # Add this line to ensure breadcrumbs are rendered
-            'original': tournament,    # Add this line to ensure breadcrumbs are rendered
+            'opts': self.model._meta,
+            'original': tournament,
         }
 
         return render(request, 'admin/tournament_detail.html', context)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        # Customize queryset as needed, e.g., prefetch related fields
         return queryset
 
     def get_list_display(self, request):
         list_display = super().get_list_display(request)
-        # Add or modify list_display as needed
         return list_display
 
     def get_list_filter(self, request):
         list_filter = super().get_list_filter(request)
-        # Add or modify list_filter as needed
         return list_filter
 
     def get_search_fields(self, request):
         search_fields = super().get_search_fields(request)
-        # Add or modify search_fields as needed
         return search_fields
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = super().get_fieldsets(request, obj=obj)
-        # Add or modify fieldsets as needed
         return fieldsets
 
     def get_readonly_fields(self, request, obj=None):
@@ -131,12 +126,10 @@ class TournamentAdmin(admin.ModelAdmin):
 
     def get_ordering(self, request):
         ordering = super().get_ordering(request)
-        # Add or modify ordering as needed
         return ordering
 
     def get_actions(self, request):
         actions = super().get_actions(request)
-        # Add or modify actions as needed
         return actions
 
     def create_bracket_action(self, request, queryset):
@@ -155,7 +148,6 @@ class PlayerAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        # Customize queryset as needed, e.g., prefetch related fields
         return queryset
 
     def tournament_name(self, obj):

@@ -23,7 +23,7 @@ class MatchViewSet(AbstractViewSet):
     queryset = Match.objects.all()
     ordering = ['-created']
     # ordering = []
-    pagination_class = MatchPagination  # Use the custom pagination class
+    pagination_class = MatchPagination
 
     def get_queryset(self):
         return Match.objects.filter(match_state="created",match_type="public")
@@ -77,8 +77,8 @@ class MyMatchViewSet(AbstractViewSet):
     serializer_class = MatchSerializer
     queryset = Match.objects.all()
     ordering = ['-created']
-    pagination_class = MatchPagination  # Use the custom pagination class
-    search_fields = ['player_1__username', 'player_2__username', 'match_state', 'match_type']  # Add more fields if needed
+    pagination_class = MatchPagination
+    search_fields = ['player_1__username', 'player_2__username', 'match_state', 'match_type']
 
     def get_queryset(self):
         user = self.request.user

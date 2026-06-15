@@ -57,21 +57,21 @@ def stripe_webhook(request: HttpRequest) -> HttpResponse:
         logger.warning("rejecting Stripe webhook: %s", exc)
         return HttpResponse(status=400)
 
-    # Idempotency — INSERT-or-skip. If the row exists, we already
-    # processed (or attempted to process) this event id; return 200
-    # without re-dispatching.
-    _, created = StripeWebhookEvent.objects.get_or_create(
+    # Idempotency — INSERT-or-find keyed by event id. A row with
+    # ``processed_at`` set means we already applied it: a true duplicate, ack
+    # and skip. A row with ``processed_at`` null is a *failed* prior attempt
+    # (dispatch raised → 500) — re-dispatch it. The handlers are idempotent
+    # (re-applying the same Stripe state is a no-op), so a redelivery race is
+    # safe. Without this, a transiently-failed event short-circuits to 200 on
+    # every redelivery and never recovers → state drifts silently.
+    evt, created = StripeWebhookEvent.objects.get_or_create(
         stripe_event_id=event["id"],
         defaults={
             "event_type": event["type"],
             "body_excerpt": json.dumps(event)[:2000],
         },
     )
-    if not created:
-        # Re-delivery. If processed_at is null we failed last time and
-        # could retry — but we DON'T re-dispatch automatically. Stripe
-        # will keep delivering until we 200; we'd rather examine the
-        # stale row + retry by hand than loop.
+    if not created and evt.processed_at is not None:
         return HttpResponse(status=200)
 
     try:

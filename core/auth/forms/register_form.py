@@ -3,9 +3,9 @@ from datetime import date
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from core.user.models import User  # Import your custom user model
+from core.user.models import User
 from core.auth.models.waitlist import WaitlistEntry
-from core.auth.models import email  # Import your email sending function
+from core.auth.models import email
 
 # Paradise Sports is an 18+ only service.
 MINIMUM_AGE = 18

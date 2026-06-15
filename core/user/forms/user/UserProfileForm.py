@@ -1,9 +1,9 @@
 from django import forms
-from core.user.models import User  # Import your custom User model
+from core.user.models import User
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = User  # Use the custom User model
+        model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'bio']
 
     def clean_email(self):
