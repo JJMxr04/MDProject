@@ -601,7 +601,16 @@ CONTENT_SECURITY_POLICY = {
         ],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
-        "form-action": ["'self'"],
+        # Billing forms POST to our own checkout/portal views, which 302 out
+        # to Stripe-hosted pages. form-action applies to the whole navigation
+        # chain incl. redirects, so the Stripe hosts must be allowed or the
+        # redirect is blocked (checkout.stripe.com = Checkout, billing.stripe.com
+        # = Customer Portal).
+        "form-action": [
+            "'self'",
+            "https://checkout.stripe.com",
+            "https://billing.stripe.com",
+        ],
         "object-src": ["'none'"],
         "report-uri": "/csp-report/",
     },
