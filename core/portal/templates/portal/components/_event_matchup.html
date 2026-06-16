@@ -1,0 +1,45 @@
+{% comment %}Team-vs-team matchup core. ctx: fixture (cards.fixture_from_*).
+Renders league badge, time, both teams (logo+name+score), a status-aware
+center, and a winner pill when final.{% endcomment %}
+{% if fixture %}
+<div class="matchup matchup--{{ fixture.status }}">
+    <div class="matchup__head">
+        {% if fixture.league_name %}<span class="matchup__league">{{ fixture.league_name }}</span>{% endif %}
+        {% if fixture.start_time %}
+        <time class="matchup__time" datetime="{{ fixture.start_time|date:'c' }}">
+            {{ fixture.start_time|date:"M j · g:i A" }}
+        </time>
+        {% endif %}
+    </div>
+
+    <div class="matchup__teams">
+        <div class="matchup__team matchup__team--home">
+            {% include "portal/components/_team_logo.html" with team=fixture.home size=44 %}
+            <span class="matchup__name">{{ fixture.home.name }}</span>
+            {% if fixture.status == "final" %}<span class="matchup__score">{{ fixture.home.score|default:"–" }}</span>{% endif %}
+        </div>
+
+        <div class="matchup__center">
+            {% if fixture.status == "final" %}
+                <span class="matchup__dash">—</span>
+            {% elif fixture.status == "live" %}
+                <span class="matchup__live"><span class="matchup__live-dot"></span>LIVE</span>
+            {% else %}
+                <span class="matchup__vs">VS</span>
+            {% endif %}
+        </div>
+
+        <div class="matchup__team matchup__team--away">
+            {% include "portal/components/_team_logo.html" with team=fixture.away size=44 %}
+            <span class="matchup__name">{{ fixture.away.name }}</span>
+            {% if fixture.status == "final" %}<span class="matchup__score">{{ fixture.away.score|default:"–" }}</span>{% endif %}
+        </div>
+    </div>
+
+    {% if fixture.status == "final" and fixture.winner_label %}
+    <div class="matchup__winner">
+        <i class="bi bi-trophy-fill" aria-hidden="true"></i> {{ fixture.winner_label }} won
+    </div>
+    {% endif %}
+</div>
+{% endif %}
