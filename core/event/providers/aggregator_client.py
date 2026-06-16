@@ -127,6 +127,29 @@ class AggrigatorClient:
         params = {"since": since} if since else None
         return self._get(f"/v1/selections/{selection_id}/movement", params=params) or {}
 
+    def get_team_logo_bytes(self, team_id: str):
+        """Fetch a team crest from the aggregator's keyless endpoint.
+
+        Returns ``(bytes, content_type, etag)`` on 200, ``None`` on 404.
+        Binary endpoint — bypasses the JSON ``_get`` path.
+        """
+        url = f"{self.base_url}/v1/teams/{team_id}/logo"
+        try:
+            resp = self.session.get(url, timeout=self.timeout)
+        except requests.RequestException as exc:
+            raise AggrigatorError(f"GET logo {team_id} failed: {exc}") from exc
+        if resp.status_code == 404:
+            return None
+        if resp.status_code >= 400:
+            raise AggrigatorError(
+                f"GET logo {team_id} returned {resp.status_code}"
+            )
+        return (
+            resp.content,
+            resp.headers.get("Content-Type", "image/png"),
+            resp.headers.get("ETag"),
+        )
+
     def get_events(self, **kwargs) -> Iterator[dict]:
         """Compatibility shim: pages through ``/v1/events`` and yields each
         event dict — same shape as the legacy client returned."""

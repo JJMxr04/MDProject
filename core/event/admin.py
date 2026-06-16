@@ -12,9 +12,10 @@ Inlines use ``show_change_link=True`` so the chain works both directions
 without breadcrumbs alone.
 """
 
+import hashlib
+
 from django import forms
 from django.contrib import admin, messages
-from django.core.files.uploadedfile import UploadedFile
 from django.shortcuts import redirect
 from django.urls import path, reverse
 from django.utils.html import format_html
@@ -31,6 +32,7 @@ from .models import (
     Selection,
     Sport,
     Team,
+    TeamLogo,
 )
 
 
@@ -415,21 +417,43 @@ class EventAdmin(admin.ModelAdmin):
 class TeamAdminForm(forms.ModelForm):
     """Admin form that routes a new logo upload through the shared image
     pipeline: validate real bytes + caps, then re-encode to WEBP (strips
-    polyglots/EXIF). An unchanged existing logo passes through untouched.
+    polyglots/EXIF). Returns raw WEBP bytes so save_model can persist them
+    to a TeamLogo row. An omitted upload is a no-op.
     """
+
+    logo_upload = forms.ImageField(
+        required=False,
+        help_text="Upload a crest; validated and stored as WEBP in the DB.",
+    )
 
     class Meta:
         model = Team
         fields = "__all__"
 
-    def clean_logo_url(self):
-        f = self.cleaned_data.get("logo_url")
-        # Only a freshly uploaded file is an UploadedFile; an unchanged value is
-        # a FieldFile (or empty) and must be left alone.
-        if isinstance(f, UploadedFile):
-            validate_image_file(f)
-            return process_image(f)
-        return f
+    def clean_logo_upload(self):
+        f = self.cleaned_data.get("logo_upload")
+        if not f:
+            return None
+        validate_image_file(f)
+        webp_file = process_image(f)
+        return webp_file.read()
+
+
+def _store_admin_logo(team: Team, webp_bytes: bytes) -> TeamLogo:
+    """Persist WEBP bytes as an authoritative (source=admin) TeamLogo row."""
+    etag = hashlib.sha256(webp_bytes).hexdigest()
+    logo, _ = TeamLogo.objects.update_or_create(
+        team=team,
+        defaults={
+            "image": webp_bytes,
+            "content_type": "image/webp",
+            "byte_size": len(webp_bytes),
+            "etag": etag,
+            "status": "ok",
+            "source": "admin",
+        },
+    )
+    return logo
 
 
 @admin.register(Team)
@@ -438,20 +462,38 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = ["id", "name_long", "name_short", "league", "sport"]
     list_filter = ["league", "sport"]
     search_fields = ["id", "team_id", "name_long", "name_short", "name_medium"]
-    # logo_url is now an editable upload: TeamAdminForm validates + re-encodes
-    # it, and logo_upload_path stores it under a random key.
-    readonly_fields = ["id", "public_id", "created", "updated", "league_link"]
+    readonly_fields = ["id", "public_id", "created", "updated", "league_link", "logo_preview"]
     fieldsets = (
         ("Identity", {"fields": ("id", "public_id", "team_id")}),
         ("Hierarchy", {"fields": ("league_link", "league", "sport")}),
         ("Names", {"fields": ("name_long", "name_medium", "name_short", "stat_entity_id")}),
-        ("Branding", {"fields": ("primary_color", "secondary_color", "primary_contrast", "secondary_contrast", "logo_url")}),
+        ("Branding", {"fields": (
+            "primary_color", "secondary_color", "primary_contrast", "secondary_contrast",
+            "logo_preview", "logo_upload",
+        )}),
         ("Bookkeeping", {"fields": ("created", "updated")}),
     )
 
     @admin.display(description="League (open)")
     def league_link(self, obj):
         return _link(obj.league)
+
+    @admin.display(description="Logo")
+    def logo_preview(self, obj):
+        url = obj.logo_url
+        if not url:
+            return "—"
+        return format_html('<img src="{}" height="32" />', url)
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        webp_bytes = form.cleaned_data.get("logo_upload")
+        if webp_bytes:
+            _store_admin_logo(obj, webp_bytes)
+            messages.success(
+                request,
+                f"Logo for {obj.name_long} saved ({len(webp_bytes):,} bytes).",
+            )
 
 
 @admin.register(Market)

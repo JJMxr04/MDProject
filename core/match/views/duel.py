@@ -69,11 +69,15 @@ def duels_page_view(request):
         track(user, "paywall_viewed",
               feature="opponent_scouting", context="duel_challenge")
 
+    from core.ranking.standings import global_leaderboard
+    leaderboard = global_leaderboard(limit=5)
+
     # Pager links for one list must preserve the other lists' page positions,
     # so each carries the siblings' current page numbers.
     c, s, a, f = challenges.number, sent.number, accepted.number, finished.number
     context = {
         "scouting_entitled": scouting_entitled,
+        "leaderboard": leaderboard,
         "duel_record": duels.duel_record(user),
         "challenges": challenges,
         "sent": sent,

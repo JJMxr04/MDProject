@@ -39,6 +39,23 @@ from core.event.models import (
 logger = logging.getLogger(__name__)
 
 
+def enqueue_team_logo(team_pk: str) -> None:
+    """Best-effort enqueue of a logo fetch. Never raises into the webhook —
+    a queue hiccup must not fail event receipt."""
+    try:
+        from core.event.tasks.logos import fetch_team_logo_task
+
+        fetch_team_logo_task.defer(team_id=team_pk)
+    except Exception:  # noqa: BLE001
+        logger.exception("logo enqueue failed for %s", team_pk)
+
+
+def _team_has_ok_logo(team) -> bool:
+    from core.event.models import TeamLogo
+
+    return TeamLogo.objects.filter(pk=team.id, status="ok").exists()
+
+
 SCHEMA_VERSION = 1
 SIGNATURE_HEADER = "HTTP_X_AGGRIGATOR_SIGNATURE"
 MAX_SKEW_SECONDS = 300
@@ -177,6 +194,10 @@ class SportsGameOddsWebhookView(APIView):
         event, _ = Event.objects.update_or_create(
             id=ev["event_id"], defaults=defaults,
         )
+
+        for team in (home_team, away_team):
+            if team is not None and not _team_has_ok_logo(team):
+                enqueue_team_logo(team.id)
 
         if markets and event.sport_id is None:
             # _resolve_sport_league provisions any sport the envelope names, so

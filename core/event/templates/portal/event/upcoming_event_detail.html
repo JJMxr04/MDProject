@@ -16,6 +16,7 @@
     <div class="card-ui__body">
         <div class="evd-teams">
             <div class="evd-team">
+                {% include "portal/components/_team_logo.html" with team=event.home_team size=96 %}
                 <h2 class="evd-team__name">{{ event.home_team.name|default:"TBD" }}</h2>
                 {% if event.home_score is not None %}
                     <div class="evd-team__score {% if event.winner_code == 1 %}is-winner{% endif %}">{{ event.home_score }}</div>
@@ -52,6 +53,7 @@
             </div>
 
             <div class="evd-team">
+                {% include "portal/components/_team_logo.html" with team=event.away_team size=96 %}
                 <h2 class="evd-team__name">{{ event.away_team.name|default:"TBD" }}</h2>
                 {% if event.away_score is not None %}
                     <div class="evd-team__score {% if event.winner_code == 2 %}is-winner{% endif %}">{{ event.away_score }}</div>

@@ -290,7 +290,12 @@ const PickModal = (function () {
 
     function renderTeamLogo(team) {
         const name = (team && (team.name_short || team.name)) || '?';
-        return escapeHtml(name.toString());
+        const logoUrl = team && team.logo_url;
+        if (logoUrl) {
+            return `<img class="team-logo" src="${escapeAttr(logoUrl)}" alt="${escapeAttr(name)}" style="--logo-size:48px;">`;
+        }
+        const initials = name.toString().slice(0, 2).toUpperCase();
+        return `<span class="team-logo team-logo--fallback" style="--logo-size:48px;" aria-hidden="true">${escapeHtml(initials)}</span>`;
     }
 
     function loadMarkets(eventId) {

@@ -5,7 +5,6 @@
 
 import uuid
 
-import core.event.models.team
 import django.db.models.deletion
 from django.db import migrations, models
 
@@ -83,7 +82,7 @@ class Migration(migrations.Migration):
                 (
                     "logo_url",
                     models.ImageField(
-                        blank=True, null=True, upload_to=core.event.models.team.logo_upload_path
+                        blank=True, null=True, upload_to="teamLogos/"
                     ),
                 ),
                 ("created", models.DateTimeField(auto_now_add=True)),

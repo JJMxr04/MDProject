@@ -1,0 +1,28 @@
+{% comment %}Duels hero: player-vs-player wrapping the event matchup.
+ctx: duel (extended duel_row: opponent, opponent_name, your_side, opponent_side,
+status, fixture) · my_win_rate (int|None) · request.user (for the left avatar).
+{% endcomment %}
+{% if duel %}
+<section class="vs-card">
+    <div class="vs-card__side vs-card__side--home">
+        {% if request.user %}{% include "portal/components/_avatar.html" with user=request.user size=72 %}{% endif %}
+        <div class="vs-card__name">{% if request.user %}{{ request.user.username }}{% endif %}</div>
+        {% if my_win_rate is not None %}<div class="vs-card__wr">{{ my_win_rate }}% win rate</div>{% endif %}
+        <div class="vs-card__pick">{{ duel.your_side }}</div>
+    </div>
+
+    <div class="vs-card__mid">
+        <span class="vs-card__glyph">VS</span>
+    </div>
+
+    <div class="vs-card__side vs-card__side--away">
+        {% if duel.opponent %}{% include "portal/components/_avatar.html" with user=duel.opponent size=72 %}{% endif %}
+        <div class="vs-card__name">{{ duel.opponent_name }}</div>
+        <div class="vs-card__pick">{{ duel.opponent_side }}</div>
+    </div>
+
+    <div class="vs-card__event">
+        {% include "portal/components/_event_matchup.html" with fixture=duel.fixture %}
+    </div>
+</section>
+{% endif %}

@@ -24,6 +24,7 @@ class _TeamBriefField(serializers.Field):
             "team_id": team.team_id,
             "name": team.name_long,
             "short": team.name_short or team.name_medium or team.name_long,
+            "logo_url": team.logo_url,
         }
 
 

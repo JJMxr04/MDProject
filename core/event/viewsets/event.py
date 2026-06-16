@@ -25,7 +25,11 @@ class EventViewSet(AbstractViewSet):
     pagination_class = EventPagination
 
     def get_queryset(self):
-        queryset = Event.objects.active()
+        queryset = Event.objects.active().select_related(
+            "home_team", "home_team__logo",
+            "away_team", "away_team__logo",
+            "sport",
+        )
         allowed_params = [
             "sport_id",
             "league_id",

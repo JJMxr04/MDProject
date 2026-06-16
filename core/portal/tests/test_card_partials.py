@@ -76,3 +76,34 @@ class EventFixtureFilterTests(SimpleTestCase):
         from core.event.templatetags.event_cards import event_fixture
         fx = event_fixture({"home_team": {"name": "A"}, "away_team": {"name": "B"}})
         self.assertEqual(fx["home"]["name"], "A")
+
+
+class VsCardPartialTests(SimpleTestCase):
+    TPL = "portal/components/_vs_card.html"
+
+    def _duel(self, **over):
+        d = {
+            "opponent_name": "Mike23",
+            "your_side": "Mavericks +1.5",
+            "opponent_side": "Celtics -1.5",
+            "status": "open",
+            "fixture": {
+                "league_name": "NBA", "start_time": None, "status": "upcoming",
+                "home": {"name": "Mavericks", "logo_url": "", "score": None},
+                "away": {"name": "Celtics", "logo_url": "", "score": None},
+                "winner_label": None,
+            },
+        }
+        d.update(over)
+        return d
+
+    def test_shows_both_players_and_picks(self):
+        html = render_to_string(self.TPL, {"duel": self._duel(), "my_win_rate": 62})
+        self.assertIn("Mike23", html)
+        self.assertIn("Mavericks +1.5", html)
+        self.assertIn("Celtics -1.5", html)
+        self.assertIn("62%", html)
+
+    def test_no_duel_renders_nothing(self):
+        html = render_to_string(self.TPL, {"duel": None})
+        self.assertEqual(html.strip(), "")

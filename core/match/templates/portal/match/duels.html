@@ -4,6 +4,9 @@
 {% block title %}Duels{% endblock title %}
 
 {% block content %}
+<div class="page-layout">
+<div class="page-layout__main">
+
 <header class="page-header">
     <div>
         <h1 class="page-header__title">Duels</h1>
@@ -14,150 +17,194 @@
     </button>
 </header>
 
-{% comment %}#invite-list carries the config invite_list.js reads (accept / decline /
-cancel). It must always render, so it wraps the conditional alert sections.{% endcomment %}
+{% comment %}Hero: feature the most relevant duel — first incoming challenge,
+else first in-progress, else first finished.{% endcomment %}
+{% if accepted_rows %}
+    {% include "portal/components/_vs_card.html" with duel=accepted_rows.0 my_win_rate=duel_record.win_rate %}
+{% elif finished_rows %}
+    {% include "portal/components/_vs_card.html" with duel=finished_rows.0 my_win_rate=duel_record.win_rate %}
+{% endif %}
+
+{% comment %}#invite-list carries the config invite_list.js reads. It must always
+render, so it wraps the conditional alert sections.{% endcomment %}
 <div id="invite-list"
      data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
      data-csrf="{{ csrf_token }}">
 
-    {% if challenges %}
-    <section class="duel-alert duel-alert--action">
-        <div class="duel-alert__head">
-            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
-            {{ challenges.paginator.count }} duel challenge{{ challenges.paginator.count|pluralize }} waiting
+    {% if not scouting_entitled and challenges %}
+    <div class="scout-upsell duel-alert__upsell">
+        <div>
+            <p class="scout-upsell__lead">Scout your challengers before you accept.</p>
+            <ul class="scout-upsell__list">
+                <li>Record &amp; hit rate</li>
+                <li>Side &amp; favorite/underdog lean</li>
+                <li>Recent form</li>
+            </ul>
         </div>
-        {% if not scouting_entitled %}
-        <div class="scout-upsell duel-alert__upsell">
-            <div>
-                <p class="scout-upsell__lead">Scout your challengers before you accept.</p>
-                <ul class="scout-upsell__list">
-                    <li>Record &amp; hit rate</li>
-                    <li>Side &amp; favorite/underdog lean</li>
-                    <li>Recent form</li>
-                </ul>
-            </div>
-            <div class="scout-upsell__cta">
-                <a href="{% url 'core-portal:billing-upgrade' %}?src=opponent_scouting" class="btn-ui btn-ui--primary">Upgrade to PRO</a>
-                <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
-            </div>
+        <div class="scout-upsell__cta">
+            <a href="{% url 'core-portal:billing-upgrade' %}?src=opponent_scouting" class="btn-ui btn-ui--primary">Upgrade to PRO</a>
+            <a href="{% url 'core-portal:billing-index' %}" class="scout-upsell__secondary">See plans</a>
         </div>
-        {% endif %}
-        <div class="list-group list-group-flush" style="margin:0;">
+    </div>
+    {% endif %}
+
+    {% comment %}CSS-only segmented tabs. Default to whichever pane is non-empty,
+    favouring challenges.{% endcomment %}
+    <input class="seg-tabs__radio" type="radio" name="duel-seg" id="seg-a"
+           {% if challenges or not accepted_rows and not finished_rows %}checked{% endif %}>
+    <input class="seg-tabs__radio" type="radio" name="duel-seg" id="seg-b"
+           {% if not challenges and accepted_rows %}checked{% endif %}>
+    <input class="seg-tabs__radio" type="radio" name="duel-seg" id="seg-c"
+           {% if not challenges and not accepted_rows and finished_rows %}checked{% endif %}>
+
+    <div class="seg-tabs" role="tablist">
+        <label class="seg-tabs__label" for="seg-a">Challenges{% if challenges.paginator.count %}<span class="seg-tabs__count">{{ challenges.paginator.count }}</span>{% endif %}</label>
+        <label class="seg-tabs__label" for="seg-b">In progress{% if accepted.paginator.count %}<span class="seg-tabs__count">{{ accepted.paginator.count }}</span>{% endif %}</label>
+        <label class="seg-tabs__label" for="seg-c">Finished</label>
+    </div>
+
+    {# ---- Pane A: incoming challenges + sent ---- #}
+    <div class="seg-pane" id="pane-a">
+        {% if challenges %}
+        <div class="vs-grid">
             {% for invite in challenges %}
-            <div class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
-                {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">⚔️ {{ invite.sender.username }} challenged you to a duel</div>
-                    <div class="small">
-                        They took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — accepting puts you on <strong>{{ invite.payload.opponent_label }}</strong>.
-                    </div>
-                    {% if invite.expires_at %}
-                    <div class="small text-muted">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</div>
-                    {% endif %}
+            <div class="vs-mini" id="invite-{{ invite.id }}">
+                <div class="matchup__head">
+                    <span class="matchup__league">Challenge</span>
+                    {% if invite.expires_at %}<time class="matchup__time">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</time>{% endif %}
                 </div>
-                <div class="d-flex gap-2">
-                    <button class="btn-ui btn-ui--primary btn-ui--sm"
-                            data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">
-                        Accept
-                    </button>
-                    <button class="btn-ui btn-ui--secondary btn-ui--sm"
-                            data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="reject">
-                        Decline
-                    </button>
+                <div class="d-flex align-items-center gap-3">
+                    {% include "portal/components/_avatar.html" with user=invite.sender size=40 %}
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">{{ invite.sender.username }} challenged you to a duel</div>
+                        <div class="small">They took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — you'd get <strong>{{ invite.payload.opponent_label }}</strong>.</div>
+                    </div>
+                </div>
+                {% if scouting_entitled %}
+                {% include "portal/match/_scout_card.html" with opponent=invite.sender scouting=invite.scouting entitled=True %}
+                {% endif %}
+                <div class="vs-mini__footer">
+                    <button class="btn-ui btn-ui--primary btn-ui--sm" data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="accept">Accept</button>
+                    <button class="btn-ui btn-ui--secondary btn-ui--sm" data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="reject">Decline</button>
                 </div>
             </div>
-            {% if scouting_entitled %}
-            {% include "portal/match/_scout_card.html" with opponent=invite.sender scouting=invite.scouting entitled=True %}
-            {% endif %}
             {% endfor %}
         </div>
         {% include "portal/components/_pagination_param.html" with page_obj=challenges param_name="cpage" other_qs=challenges_other_qs %}
-    </section>
-    {% endif %}
+        {% endif %}
 
-    {% if sent %}
-    <section class="duel-alert">
-        <div class="duel-alert__head">
-            <i class="bi bi-hourglass-split" aria-hidden="true"></i>
-            {{ sent.paginator.count }} duel{{ sent.paginator.count|pluralize }} awaiting a response
-        </div>
-        <ul class="list-group list-group-flush" style="margin:0;">
+        {% if sent %}
+        <h3 class="card-ui__title" style="margin: var(--space-4) 0 var(--space-3);">Awaiting a response</h3>
+        <div class="vs-grid">
             {% for invite in sent %}
-            <li class="list-group-item d-flex align-items-center gap-3" id="invite-{{ invite.id }}">
-                {% include "portal/components/_avatar.html" with user=invite.player size=40 %}
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">⚔️ You challenged {{ invite.player.username }} to a duel</div>
-                    <div class="small">
-                        You took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %} — they'd get <strong>{{ invite.payload.opponent_label }}</strong>.
+            <div class="vs-mini" id="invite-{{ invite.id }}">
+                <div class="d-flex align-items-center gap-3">
+                    {% include "portal/components/_avatar.html" with user=invite.player size=40 %}
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">You challenged {{ invite.player.username }}</div>
+                        <div class="small">You took <strong>{{ invite.payload.challenger_label }}</strong>{% if invite.payload.event_label %} on {{ invite.payload.event_label }}{% endif %}.</div>
                     </div>
-                    {% if invite.expires_at %}
-                    <div class="small text-muted">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</div>
-                    {% endif %}
                 </div>
-                <div class="d-flex gap-2">
-                    <button class="btn-ui btn-ui--secondary btn-ui--sm"
-                            data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="cancel">
-                        Cancel
-                    </button>
+                <div class="vs-mini__footer">
+                    <button class="btn-ui btn-ui--secondary btn-ui--sm" data-action="invite-act" data-invite-id="{{ invite.id }}" data-invite-choice="cancel">Cancel</button>
                 </div>
-            </li>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
         {% include "portal/components/_pagination_param.html" with page_obj=sent param_name="spage" other_qs=sent_other_qs %}
-    </section>
-    {% endif %}
+        {% endif %}
 
-</div>
+        {% if not challenges and not sent %}
+            {% include "portal/components/_empty_state.html" with icon="exclamation-circle" title="Accept the duel challenge" body="When a friend challenges you, accept the duel challenge here." %}
+        {% endif %}
+    </div>
 
-<!-- In-progress duels (primary) -->
-<section class="card-ui mb-4">
-    <div class="card-ui__header"><h2 class="card-ui__title">In progress</h2></div>
-    <div class="card-ui__body">
+    {# ---- Pane B: in progress ---- #}
+    <div class="seg-pane" id="pane-b">
         {% if accepted_rows %}
-        <ul class="duel-history">
+        <div class="vs-grid">
             {% for d in accepted_rows %}
-            <li class="duel-history__row">
-                <div class="duel-history__main">
-                    <div class="fw-semibold">vs {{ d.opponent_name }}</div>
-                    {% if d.event_label %}<div class="small text-muted">{{ d.event_label }}</div>{% endif %}
-                    <div class="small">You: <strong>{{ d.your_side }}</strong> &middot; Them: {{ d.opponent_side }}</div>
+            <div class="vs-mini">
+                {% include "portal/components/_event_matchup.html" with fixture=d.fixture %}
+                <div class="vs-mini__footer">
+                    <span class="small">vs <strong>{{ d.opponent_name }}</strong> · You: {{ d.your_side }}</span>
+                    <span class="outcome-pill outcome-pill--pending">In progress</span>
                 </div>
-                <span class="duel-badge duel-badge--open">In progress</span>
-            </li>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
         {% include "portal/components/_pagination_param.html" with page_obj=accepted param_name="apage" other_qs=accepted_other_qs %}
         {% else %}
-            {% include "portal/components/_empty_state.html" with icon="hourglass-split" title="No duels in progress." body="Accepted duels live here until the event settles. Create one to get started." %}
+            {% include "portal/components/_empty_state.html" with icon="hourglass-split" title="No duels in progress." body="Accepted duels live here until the event settles." %}
         {% endif %}
     </div>
-</section>
 
-<!-- Finished duels -->
-<section class="card-ui">
-    <div class="card-ui__header"><h2 class="card-ui__title">Finished</h2></div>
-    <div class="card-ui__body">
+    {# ---- Pane C: finished ---- #}
+    <div class="seg-pane" id="pane-c">
         {% if finished_rows %}
-        <ul class="duel-history">
+        <div class="vs-grid">
             {% for d in finished_rows %}
-            <li class="duel-history__row">
-                <div class="duel-history__main">
-                    <div class="fw-semibold">vs {{ d.opponent_name }}</div>
-                    {% if d.event_label %}<div class="small text-muted">{{ d.event_label }}</div>{% endif %}
-                    <div class="small">You: <strong>{{ d.your_side }}</strong> &middot; Them: {{ d.opponent_side }}</div>
+            <div class="vs-mini">
+                {% include "portal/components/_event_matchup.html" with fixture=d.fixture %}
+                <div class="vs-mini__footer">
+                    <span class="small">vs <strong>{{ d.opponent_name }}</strong></span>
+                    <span class="outcome-pill outcome-pill--{{ d.status }}">{% if d.status == "won" %}You won{% elif d.status == "lost" %}Lost{% else %}Draw{% endif %}</span>
                 </div>
-                <span class="duel-badge duel-badge--{{ d.status }}">
-                    {% if d.status == "won" %}Won{% elif d.status == "lost" %}Lost{% else %}Draw{% endif %}
-                </span>
-            </li>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
         {% include "portal/components/_pagination_param.html" with page_obj=finished param_name="fpage" other_qs=finished_other_qs %}
         {% else %}
-            {% include "portal/components/_empty_state.html" with icon="trophy" title="No finished duels yet." body="Settled duels — your wins, losses and draws — show up here." %}
+            {% include "portal/components/_empty_state.html" with icon="trophy" title="No finished duels yet." body="Settled duels show up here." %}
         {% endif %}
     </div>
-</section>
+
+</div>{# /#invite-list #}
+</div>{# /.page-layout__main #}
+
+<aside class="page-layout__rail">
+    <section class="rail-panel">
+        <h2 class="rail-panel__title">Duel stats</h2>
+        <div class="rail-stats">
+            <div class="rail-stat"><div class="rail-stat__num rail-stat__num--won">{{ duel_record.won }}</div><div class="rail-stat__lbl">Wins</div></div>
+            <div class="rail-stat"><div class="rail-stat__num rail-stat__num--lost">{{ duel_record.lost }}</div><div class="rail-stat__lbl">Losses</div></div>
+            <div class="rail-stat"><div class="rail-stat__num">{% if duel_record.win_rate is not None %}{{ duel_record.win_rate }}%{% else %}—{% endif %}</div><div class="rail-stat__lbl">Win rate</div></div>
+        </div>
+    </section>
+
+    <section class="rail-panel">
+        <h2 class="rail-panel__title">Activity</h2>
+        <ul class="rail-list">
+            {% for d in finished_rows|slice:":4" %}
+            <li class="rail-list__row">
+                {% include "portal/components/_avatar.html" with user=d.opponent size=28 %}
+                <span class="rail-list__name">vs {{ d.opponent_name }}</span>
+                <span class="rail-list__meta">{% if d.status == "won" %}Won{% elif d.status == "lost" %}Lost{% else %}Draw{% endif %}</span>
+            </li>
+            {% empty %}
+            <li class="rail-list__row"><span class="rail-list__meta">No recent duels yet.</span></li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="rail-panel">
+        <h2 class="rail-panel__title">Top players</h2>
+        <ul class="rail-list">
+            {% for row in leaderboard %}
+            <li class="rail-list__row">
+                <span class="rail-list__rank">{{ row.rank }}</span>
+                {% include "portal/components/_avatar.html" with user=row.user size=28 %}
+                <span class="rail-list__name">{{ row.user.username }}</span>
+                <span class="rail-list__meta">Lv {{ row.level }}</span>
+            </li>
+            {% empty %}
+            <li class="rail-list__row"><span class="rail-list__meta">No ranked players yet.</span></li>
+            {% endfor %}
+        </ul>
+    </section>
+</aside>
+
+</div>{# /.page-layout #}
 
 <!-- Create-duel modal: hosts the duel-builder island (shell.js toggles .is-open) -->
 <div class="modal-ui" id="duel-create-modal" role="dialog" aria-modal="true" aria-labelledby="duel-create-modal-title" data-modal>
@@ -175,43 +222,29 @@ cancel). It must always render, so it wraps the conditional alert sections.{% en
              data-send-url="{% url 'core-portal:portal-match-duel-send' %}">
             <template x-if="isLoading"><p class="duel-meta">Loading…</p></template>
             <template x-if="isError"><p class="duel-meta">Couldn't load the duel builder. Refresh to try again.</p></template>
-
-            <template x-if="hasMessage">
-                <div class="duel-flash" :class="messageType" x-text="message"></div>
-            </template>
-
-            <!-- Step 1 — pick a friend -->
+            <template x-if="hasMessage"><div class="duel-flash" :class="messageType" x-text="message"></div></template>
             <template x-if="showFriendStep">
                 <div>
                     <h2 class="duel-step">1 · Choose a friend</h2>
                     <template x-if="hasFriends">
                         <div class="duel-grid">
                             <template x-for="f in friends" :key="f.id">
-                                <button type="button" class="duel-chip"
-                                        :data-id="f.id" :data-name="f.username"
-                                        @click="selectFriend" x-text="f.username"></button>
+                                <button type="button" class="duel-chip" :data-id="f.id" :data-name="f.username" @click="selectFriend" x-text="f.username"></button>
                             </template>
                         </div>
                     </template>
-                    <p class="duel-meta" x-show="noFriends">
-                        Add a friend first — duels are friend-to-friend.
-                    </p>
+                    <p class="duel-meta" x-show="noFriends">Add a friend first — duels are friend-to-friend.</p>
                 </div>
             </template>
-
-            <!-- Step 2 — pick an event -->
             <template x-if="showEventStep">
                 <div>
-                    <h2 class="duel-step">
-                        2 · Choose an event
+                    <h2 class="duel-step">2 · Choose an event
                         <button type="button" class="duel-link" @click="resetFriend">change friend (<span x-text="selectedFriendName"></span>)</button>
                     </h2>
                     <template x-if="hasEvents">
                         <div class="duel-list">
                             <template x-for="ev in events" :key="ev.event_id">
-                                <button type="button" class="duel-row"
-                                        :data-id="ev.event_id" :data-label="ev.label"
-                                        @click="selectEvent">
+                                <button type="button" class="duel-row" :data-id="ev.event_id" :data-label="ev.label" @click="selectEvent">
                                     <span class="duel-row__label" x-text="ev.label"></span>
                                     <span class="duel-row__meta" x-text="ev.league"></span>
                                 </button>
@@ -221,12 +254,9 @@ cancel). It must always render, so it wraps the conditional alert sections.{% en
                     <p class="duel-meta" x-show="noEvents">No upcoming events available right now.</p>
                 </div>
             </template>
-
-            <!-- Step 3 — pick your side -->
             <template x-if="showSideStep">
                 <div>
-                    <h2 class="duel-step">
-                        3 · Take your side
+                    <h2 class="duel-step">3 · Take your side
                         <button type="button" class="duel-link" @click="resetEvent">change event (<span x-text="selectedEventLabel"></span>)</button>
                     </h2>
                     <p class="duel-meta">You'll take the side you tap — <span x-text="selectedFriendName"></span> gets the other one.</p>
@@ -237,9 +267,7 @@ cancel). It must always render, so it wraps the conditional alert sections.{% en
                                     <div class="duel-market__label" x-text="m.label"></div>
                                     <div class="duel-market__sides">
                                         <template x-for="s in m.sides" :key="s.selection_id">
-                                            <button type="button" class="duel-side"
-                                                    :data-selection-id="s.selection_id"
-                                                    @click="sendDuel">
+                                            <button type="button" class="duel-side" :data-selection-id="s.selection_id" @click="sendDuel">
                                                 <span x-text="s.label"></span>
                                                 <span class="duel-side__odds" x-text="s.odds"></span>
                                             </button>
@@ -258,6 +286,7 @@ cancel). It must always render, so it wraps the conditional alert sections.{% en
 {% endblock content %}
 
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/portal/components/cards.css' %}">
 <style>
     .duel-stats { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
     .duel-stat { flex: 1 1 0; min-width: 96px; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); padding: var(--space-4) var(--space-3); background: var(--surface-card); border: 1px solid var(--border-strong); border-radius: var(--radius-md); }

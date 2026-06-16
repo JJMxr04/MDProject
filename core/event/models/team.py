@@ -19,12 +19,6 @@ from core.event.models.league import League
 from core.event.models.sport import Sport
 
 
-def logo_upload_path(instance, filename):
-    # Random key; never trust the client filename. Extension matches the
-    # process_image output (see core.abstract.image_security).
-    return f"teamLogos/{instance.league_id}/{instance.team_id}/{uuid.uuid4().hex}.webp"
-
-
 class TeamManager(models.Manager):
     def get_by_public_id(self, public_id):
         return self.filter(public_id=public_id).first()
@@ -87,8 +81,6 @@ class Team(models.Model):
 
     stat_entity_id = models.CharField(max_length=8, blank=True)
 
-    logo_url = models.ImageField(upload_to=logo_upload_path, null=True, blank=True)
-
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -110,6 +102,28 @@ class Team(models.Model):
     @property
     def short_name(self) -> str:
         return self.name_short or self.name_medium or self.name_long
+
+    @property
+    def logo_url(self) -> str | None:
+        """Serve-endpoint URL for this team's crest, or None when absent.
+
+        Returns a string (not a FieldFile) so templates' ``{{ team.logo_url }}``
+        and ``{% if team.logo_url %}`` keep working after the S3 ImageField was
+        retired. Routes persisted surfaces (matches/duels/events/teams) to
+        MDProject's own bytes. Callers rendering many teams should
+        ``select_related("logo")`` to avoid an N+1.
+        """
+        from core.event.models.team_logo import TeamLogo
+
+        try:
+            logo = self.logo
+        except TeamLogo.DoesNotExist:
+            return None
+        if logo.status != "ok":
+            return None
+        from django.urls import reverse
+
+        return reverse("team-logo", kwargs={"team_id": self.id})
 
     def __str__(self):
         return self.name_long

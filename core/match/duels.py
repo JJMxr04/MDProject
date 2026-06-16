@@ -218,6 +218,7 @@ def assert_duel_capacity(challenger, opponent) -> None:
 _ROW_PREFETCH = (
     "games__event__home_team",
     "games__event__away_team",
+    "games__event__league",
     "games__bet__owner_outcome",
     "games__bet__player_2_outcome",
 )
@@ -299,10 +300,14 @@ def duel_row(match, user) -> dict:
     else:
         status = "lost"
 
+    from core.portal.cards import fixture_from_event
+
     return {
         "id": str(match.id),
+        "opponent": opponent,
         "opponent_name": opponent.username if opponent else "—",
         "event_label": _event_label(event) if event else "",
+        "fixture": fixture_from_event(event),
         "your_side": your_sel.label if your_sel else "",
         "opponent_side": opp_sel.label if opp_sel else "",
         "status": status,  # won | lost | draw | open

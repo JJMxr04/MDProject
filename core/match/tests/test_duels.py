@@ -17,10 +17,13 @@ from core.mail.models.notifications import Notification
 from core.match import duels
 from core.match.models import Match
 from core.match.tests.factories import (
+    assign_event_to_slot,
     make_event,
     make_league,
     make_market,
+    make_match,
     make_selection,
+    make_team,
     make_two_way_market,
     make_user,
 )
@@ -543,6 +546,34 @@ class DuelMatchIndependenceTests(TestCase):
         m2 = Match.objects.create(player_1=self.a, player_2=self.b, match_type="public", match_state="accepted")
         self.assertNotEqual(m1.id, m2.id)
         self.assertEqual(Match.objects.filter(player_1=self.a, player_2=self.b).count(), 2)
+
+
+@override_settings(USE_AGGRIGATOR=False)
+class DuelRowFixtureTests(TestCase):
+    def test_duel_row_includes_event_fixture_and_opponent(self):
+        p1 = make_user("p1")
+        p2 = make_user("p2")
+        p1.add_friend(p2)
+        league = make_league()
+        home = make_team(league, "DAL", name="Mavericks")
+        away = make_team(league, "BOS", name="Celtics")
+        event = make_event(
+            league, home=home, away=away, status_type="finished",
+            is_finalized=True, home_score=112, away_score=108,
+        )
+        market, home_sel, away_sel = make_two_way_market(event)
+
+        # Use a real duel match (exactly 1 non-golden game, event pre-set).
+        invite = duels.send_duel(p1, p2, event.id, home_sel.id)
+        Invite.objects.accept_invite(invite)
+        match = Match.objects.get(match_type="duel", player_1=p1)
+
+        row = duels.duel_row(match, p1)
+        self.assertIsNotNone(row["fixture"])
+        self.assertEqual(row["fixture"]["home"]["name"], "Mavericks")
+        self.assertEqual(row["fixture"]["home"]["score"], 112)
+        self.assertEqual(row["fixture"]["winner_label"], "Mavericks")
+        self.assertEqual(row["opponent"], p2)
 
 
 def _past():

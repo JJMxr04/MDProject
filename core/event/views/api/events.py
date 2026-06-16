@@ -82,7 +82,11 @@ class EventListView(APIView):
         if league:
             qs = qs.filter(league_id=league)
 
-        qs = qs.select_related("home_team", "away_team", "sport").order_by("start_time")
+        qs = qs.select_related(
+            "home_team", "home_team__logo",
+            "away_team", "away_team__logo",
+            "sport",
+        ).order_by("start_time")
 
         paginator = self.pagination_class()
         page = paginator.paginate_queryset(qs, request, view=self)
@@ -102,7 +106,11 @@ class EventDetailView(APIView):
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, event_id):
-        event = Event.objects.select_related("home_team", "away_team", "sport").filter(pk=event_id).first()
+        event = Event.objects.select_related(
+            "home_team", "home_team__logo",
+            "away_team", "away_team__logo",
+            "sport",
+        ).filter(pk=event_id).first()
         if event is None:
             return Response({"detail": "event not found"}, status=status.HTTP_404_NOT_FOUND)
 

@@ -33,7 +33,8 @@ def fixture_from_event(event) -> dict | None:
     status = _status(is_live=bool(event.is_live), is_final=is_final)
 
     def _logo(team):
-        return team.logo_url.url if (team and team.logo_url) else None
+        # Team.logo_url is now a string serve-URL (or None), not an ImageFieldFile.
+        return team.logo_url if (team and team.logo_url) else None
 
     return {
         "league_name": event.league.name if event.league_id else "",

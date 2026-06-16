@@ -231,19 +231,6 @@ def _fetch_leagues() -> list[dict]:
 # ---- adapters: aggregator dict → template-friendly objects ---------------
 
 
-class _LogoUrlBox:
-    """Mirrors Django's ImageFieldFile so ``{{ team.logo_url.url }}`` works
-    on aggregator data and ``{% if team.logo_url %}`` falsy-checks correctly
-    when the URL is blank.
-    """
-
-    def __init__(self, url: str):
-        self.url = url
-
-    def __bool__(self) -> bool:
-        return bool(self.url)
-
-
 class _NamedRef:
     """Stand-in for sport/league objects whose only template usage is ``.name``."""
 
@@ -261,13 +248,13 @@ class _TeamAdapter:
             self.logo_url = None
             self.team_id = None
             return
-        # Template uses ``team.name`` and ``team.logo_url.url`` — wire those
-        # to the aggregator's wider ``name_long`` and bare URL string.
         self.name = (
             team.get("name_long") or team.get("name_medium") or team.get("name_short")
         )
-        url = team.get("logo_url")
-        self.logo_url = _LogoUrlBox(url) if url else None
+        # Plain string so ``{{ team.logo_url }}`` and ``{% if team.logo_url %}``
+        # both work — matches the _team_logo.html partial contract and the
+        # legacy Team model's .logo_url property.
+        self.logo_url = team.get("logo_url") or None
         # ``team_id`` is the fallback display when ``name`` is blank —
         # several analytics partials do ``team.name|default:team.team_id``.
         # Aggregator payload may carry it as ``id`` or ``team_id`` depending
@@ -328,7 +315,11 @@ def _legacy_local_db_path(request, event_id):
 
     try:
         event = get_object_or_404(
-            Event.objects.select_related("home_team", "away_team", "sport"),
+            Event.objects.select_related(
+                "home_team", "home_team__logo",
+                "away_team", "away_team__logo",
+                "sport",
+            ),
             pk=event_id,
         )
     except ValueError:

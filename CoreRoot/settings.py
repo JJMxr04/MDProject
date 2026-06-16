@@ -552,6 +552,11 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
 # ---------------------------------------------------------------------------
+# Browser-reachable aggregator origin for upcoming/upload-picks logo <img>
+# tags (team logos). May differ from the server-to-server AGGRIGATOR_BASE_URL.
+# Empty -> no extra CSP host added.
+AGG_PUBLIC_BASE = os.environ.get("AGG_PUBLIC_BASE", "").strip()
+
 # Content-Security-Policy (S-7) — django-csp, ENFORCED.
 #
 # All scripts/styles/fonts/images are self-hosted (Bootstrap, bootstrap-icons,
@@ -598,6 +603,7 @@ CONTENT_SECURITY_POLICY = {
             "data:",
             "https://*.s3.amazonaws.com",
             "https://pmat.warforaterra.com",
+            *([AGG_PUBLIC_BASE] if AGG_PUBLIC_BASE else []),
         ],
         "font-src": ["'self'", "data:"],
         "connect-src": [

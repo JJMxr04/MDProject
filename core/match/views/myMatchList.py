@@ -26,6 +26,11 @@ def my_match_list_view(request):
         .filter(Q(player_1=request.user) | Q(player_2=request.user))
         .exclude(match_type="duel")
         .select_related("player_1", "player_2", "winner")
+        .prefetch_related(
+            "games__event__home_team",
+            "games__event__away_team",
+            "games__event__league",
+        )
     )
 
 
@@ -50,8 +55,10 @@ def my_match_list_view(request):
 
     # Annotate each match on the page with the opponent from the viewer's POV.
     user = request.user
+    from core.portal.cards import match_outcome
     for match in matches_page.object_list:
         match.opponent = match.player_2 if match.player_1_id == user.id else match.player_1
+        match.outcome = match_outcome(match, user)
 
     # Opponent flair (phase 8): level + current-season division. One query
     # each for the whole page — map opponent id → level/division, attach.

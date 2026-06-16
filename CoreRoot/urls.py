@@ -8,6 +8,7 @@ from core.admin.admin import custom_admin_view
 from core.auth.views.password_reset import BrandedPasswordResetView
 from core.billing.views.webhook import stripe_webhook
 from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
+from core.event.views.logos import team_logo as team_logo_view
 from core.views import csp_report, healthz, portal_or_404, robots_txt
 from django.contrib.auth import views as auth_views
 
@@ -44,6 +45,7 @@ urlpatterns = [
     path("csp-report/", csp_report, name="csp-report"),
     # Container health probe — Coolify / docker / k8s readiness check.
     path("healthz", healthz, name="healthz"),
+    path('logos/teams/<str:team_id>', team_logo_view, name='team-logo'),
     path('web/portal/', include(('core.portal.urls', 'core-portal'), namespace='core-portal')),
     # path('mail/', include(('core.mail.urls', 'core-mail'), namespace='core-mail')), # Updated path
 
