@@ -69,3 +69,10 @@ class RailPanelPartialTests(SimpleTestCase):
         html = render_to_string(self.TPL, {"title": "Duel Stats", "body_html": "<b>hi</b>"})
         self.assertIn("Duel Stats", html)
         self.assertIn("<b>hi</b>", html)
+
+
+class EventFixtureFilterTests(SimpleTestCase):
+    def test_filter_normalizes_dict(self):
+        from core.event.templatetags.event_cards import event_fixture
+        fx = event_fixture({"home_team": {"name": "A"}, "away_team": {"name": "B"}})
+        self.assertEqual(fx["home"]["name"], "A")
