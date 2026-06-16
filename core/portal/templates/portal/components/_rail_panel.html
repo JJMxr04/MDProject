@@ -1,0 +1,7 @@
+{% comment %}Generic right-rail card. ctx: title · body_html (safe) — OR use the
+`{% include %}` form and put content between via the `body` slot pattern below.
+For most callers pass title + body_html.{% endcomment %}
+<section class="rail-panel">
+    {% if title %}<h2 class="rail-panel__title">{{ title }}</h2>{% endif %}
+    <div class="rail-panel__body">{{ body_html|safe }}</div>
+</section>
