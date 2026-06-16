@@ -12,8 +12,9 @@ import string
 
 
 def user_avatar_upload_path(instance, filename):
-    # File will be uploaded to MEDIA_ROOT/avatars/<username>/<filename>
-    return os.path.join('avatars', instance.username, filename)
+    # Random key; never trust the client filename or username (path-traversal /
+    # overwrite / predictable-URL guards). Extension matches process_image output.
+    return f"avatars/{instance.public_id.hex}/{uuid.uuid4().hex}.webp"
 
 
 class UserManager(BaseUserManager, AbstractManager):

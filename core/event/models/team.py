@@ -20,7 +20,9 @@ from core.event.models.sport import Sport
 
 
 def logo_upload_path(instance, filename):
-    return f"teamLogos/{instance.league_id}/{instance.team_id}/{filename}"
+    # Random key; never trust the client filename. Extension matches the
+    # process_image output (see core.abstract.image_security).
+    return f"teamLogos/{instance.league_id}/{instance.team_id}/{uuid.uuid4().hex}.webp"
 
 
 class TeamManager(models.Manager):
