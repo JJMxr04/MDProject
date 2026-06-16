@@ -482,6 +482,12 @@ AXES_CLIENT_IP_CALLABLE = "core.ip.get_client_ip"
 MEDIA_URL = f'https://{os.getenv("BUCKETEER_BUCKET_NAME")}.s3.amazonaws.com/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Upload hardening — cap request body and in-memory file size so a giant
+# upload can't exhaust memory before our image validator runs.
+# See plans/images and logos/security/.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+
 LOGIN_REDIRECT_URL = '/web/portal/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -657,6 +663,11 @@ STORAGES = {
     "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
+
+# Uploaded media are re-encoded to .webp, so S3Boto3Storage guesses
+# Content-Type: image/webp (non-renderable as markup). A cache header keeps
+# avatars/logos edge-cached. Do NOT set a renderable default content type here.
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 
 # Debug-mode overrides — relax cookie / redirect hardening so HTTP-only
 # local dev keeps working. Database SSL is NOT touched: the driver honors

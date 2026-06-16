@@ -3,6 +3,7 @@ from rest_framework import serializers
 from core.user.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from core.abstract.serializers import AbstractSerializer
+from core.abstract.image_security import SecureImageField
 
 
 class UserSerializer(AbstractSerializer):
@@ -10,6 +11,9 @@ class UserSerializer(AbstractSerializer):
     id = serializers.UUIDField(source='public_id', read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
+    # Avatar is validated and re-encoded to WEBP on write (strips polyglots/EXIF,
+    # caps size/dimensions). See core.abstract.image_security.
+    avatar = SecureImageField(required=False, allow_null=True)
 
     class Meta:
         model = User
@@ -21,8 +25,6 @@ class UserSerializer(AbstractSerializer):
         # S-14. Privilege + identity fields are now genuinely read-only.
         read_only_fields = ['id', 'is_active', 'is_admin', 'is_staff', 'activated_link',
                             'created', 'updated']
-        # Avatar is exposed read-only — uploads are disabled until S3 is wired.
-        extra_kwargs = {'avatar': {'read_only': True}}
 
     def create(self, validated_data):
         portal_password = validated_data.pop('portal_password', None)
@@ -65,6 +67,8 @@ class UserMeSerializer(AbstractSerializer):
     id = serializers.UUIDField(source='public_id', read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
+    # Validated + re-encoded on write (see core.abstract.image_security).
+    avatar = SecureImageField(required=False, allow_null=True)
 
     class Meta:
         model = User
@@ -74,7 +78,5 @@ class UserMeSerializer(AbstractSerializer):
         # S-14. Privilege fields aren't in this serializer's `fields`; keep the
         # identity fields read-only with the correct attribute name.
         read_only_fields = ['id', 'created', 'updated']
-        # Avatar is exposed read-only — uploads are disabled until S3 is wired.
-        extra_kwargs = {'avatar': {'read_only': True}}
 
 
