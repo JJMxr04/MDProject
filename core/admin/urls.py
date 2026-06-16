@@ -2,6 +2,7 @@ from django.urls import path
 
 from core.admin.admin import custom_admin_view
 from core.admin.views import (
+    backfill_logos,
     check_ping_partial,
     redis_ping_partial,
     run_task,
@@ -22,6 +23,9 @@ urlpatterns = [
     path('status/worker/', status_worker_partial, name='admin_status_worker'),
     # Manually queue a registered periodic task (POST, staff-only).
     path('status/run-task/', run_task, name='admin_run_task'),
+    # Backfill team logos — enqueue a crest fetch for every team
+    # missing an ok logo (POST, staff-only).
+    path('status/backfill-logos/', backfill_logos, name='admin_backfill_logos'),
     path('redis-ping/', redis_ping_partial, name='admin_redis_ping'),
     path('worker-ping/', worker_ping_partial, name='admin_worker_ping'),
     # /admin/check-ping/<name>/ — per-card manual ping on /admin/status/.

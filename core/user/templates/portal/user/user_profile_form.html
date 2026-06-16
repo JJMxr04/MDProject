@@ -41,11 +41,30 @@
             <h2>Profile</h2>
         </header>
         <div class="card-ui__body">
-            <form method="post" class="profile-form">
+            <form method="post" class="profile-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                     <div class="field-error" role="alert">{{ form.non_field_errors }}</div>
                 {% endif %}
+
+                <div class="profile-form__avatar">
+                    {% if request.user.avatar_url %}
+                    <img src="{{ request.user.avatar_url }}" alt="Your avatar"
+                         width="96" height="96"
+                         style="border-radius: var(--radius-md); object-fit: cover;">
+                    {% else %}
+                    <span class="avatar" style="--avatar-size: 96px;" aria-hidden="true">
+                        <span class="avatar__initials">{{ request.user.first_name|default:request.user.username|slice:":1"|upper }}</span>
+                    </span>
+                    {% endif %}
+                    <div>
+                        {{ form.avatar_upload }}
+                        {% if form.avatar_upload.errors %}
+                        <div class="field-error">{{ form.avatar_upload.errors }}</div>
+                        {% endif %}
+                        <p class="text-muted">JPEG, PNG, WEBP or GIF. Max 5 MB.</p>
+                    </div>
+                </div>
 
                 <div class="grid-profile-two">
                     {% include "portal/components/_field.html" with field=form.first_name %}

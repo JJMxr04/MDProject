@@ -1,3 +1,9 @@
+{% if user.avatar_url %}
+<span class="avatar avatar--img" style="--avatar-size: {{ size|default:40 }}px;" aria-hidden="true">
+    <img class="avatar__img" src="{{ user.avatar_url }}" alt="" width="{{ size|default:40 }}" height="{{ size|default:40 }}">
+</span>
+{% else %}
 <span class="avatar" style="--avatar-size: {{ size|default:40 }}px;" aria-hidden="true">
     <span class="avatar__initials">{{ user.first_name|default:user.username|slice:":1"|upper }}</span>
 </span>
+{% endif %}

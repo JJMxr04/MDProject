@@ -28,6 +28,7 @@ CHECK_REGISTRY = {
                    "admin/status/_worker_banner.html", "worker"),
 }
 from core.billing.services import stripe_setup
+from core.event.tasks.logos import run_backfill_team_logos
 
 
 @staff_member_required
@@ -95,6 +96,31 @@ def run_task(request):
         )
     except Exception as exc:  # noqa: BLE001
         messages.error(request, f"Couldn't queue {name}: {exc}")
+    return redirect("core-admin:admin_status")
+
+
+@staff_member_required
+@require_http_methods(["POST"])
+def backfill_logos(request):
+    """Enqueue a logo fetch for every team lacking an ``ok`` crest.
+
+    Wraps ``run_backfill_team_logos`` (core/event/tasks/logos.py), which
+    defers one ``fetch_team_logo_task`` per team that has no ``ok``
+    TeamLogo and returns the enqueued count. Non-blocking: the worker
+    runs the fetches. POST-only + staff-gated so it can't be triggered
+    by a drive-by GET.
+    """
+    try:
+        enqueued = run_backfill_team_logos()
+        messages.success(
+            request,
+            f"Backfill queued {enqueued} team-logo fetch"
+            f"{'' if enqueued == 1 else 'es'}. The worker will process them "
+            f"shortly — refresh Recent jobs to watch progress. (Requires the "
+            f"worker service to be running.)",
+        )
+    except Exception as exc:  # noqa: BLE001
+        messages.error(request, f"Couldn't queue logo backfill: {exc}")
     return redirect("core-admin:admin_status")
 
 

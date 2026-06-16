@@ -14,11 +14,18 @@ class FriendSerializer(serializers.ModelSerializer):
     """Read-only view of one of the requester's friends."""
 
     id = serializers.UUIDField(source="public_id", read_only=True, format="hex")
+    # avatar reads the UserAvatar BYTEA serve URL, not the S3 ImageField. A
+    # SerializerMethodField can't appear in read_only_fields (DRF raises), so
+    # read_only_fields below lists only the model-backed fields.
+    avatar = serializers.SerializerMethodField()
+
+    def get_avatar(self, user):
+        return user.avatar_url
 
     class Meta:
         model = User
         fields = ["id", "username", "avatar", "friend_code"]
-        read_only_fields = fields
+        read_only_fields = ["id", "username", "friend_code"]
 
 
 class AddFriendSerializer(serializers.Serializer):

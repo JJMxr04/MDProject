@@ -21,6 +21,7 @@ from django.urls import path, reverse
 from django.utils.html import format_html
 
 from core.abstract.image_security import process_image, validate_image_file
+from core.event.tasks.logos import fetch_team_logo_task
 
 from .models import (
     Bookmaker,
@@ -461,6 +462,7 @@ class TeamAdmin(admin.ModelAdmin):
     form = TeamAdminForm
     list_display = ["id", "name_long", "name_short", "league", "sport"]
     list_filter = ["league", "sport"]
+    actions = ["fetch_logo_from_aggregator"]
     search_fields = ["id", "team_id", "name_long", "name_short", "name_medium"]
     readonly_fields = ["id", "public_id", "created", "updated", "league_link", "logo_preview"]
     fieldsets = (
@@ -484,6 +486,34 @@ class TeamAdmin(admin.ModelAdmin):
         if not url:
             return "—"
         return format_html('<img src="{}" height="32" />', url)
+
+    @admin.action(description="Fetch logo from aggregator")
+    def fetch_logo_from_aggregator(self, request, queryset):
+        """Enqueue an aggregator crest fetch for each selected team that
+        lacks an ``ok`` logo. Teams that already have an ok TeamLogo are
+        skipped (no redundant aggregator calls). Non-blocking: the worker
+        runs the fetches via ``fetch_team_logo_task``.
+        """
+        ok_ids = set(
+            TeamLogo.objects.filter(
+                team__in=queryset, status="ok",
+            ).values_list("team_id", flat=True)
+        )
+        enqueued = 0
+        for team in queryset:
+            if team.id in ok_ids:
+                continue
+            # Team.id is the composite PK "{league_id}:{team_id}".
+            fetch_team_logo_task.defer(team_id=team.id)
+            enqueued += 1
+
+        skipped = queryset.count() - enqueued
+        self.message_user(
+            request,
+            f"Queued {enqueued} logo fetch{'' if enqueued == 1 else 'es'}; "
+            f"skipped {skipped} team{'' if skipped == 1 else 's'} that already "
+            f"had an ok crest. (Requires the worker service to be running.)",
+        )
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)

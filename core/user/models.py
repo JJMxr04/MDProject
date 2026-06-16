@@ -12,8 +12,8 @@ import string
 
 
 def user_avatar_upload_path(instance, filename):
-    # Random key; never trust the client filename or username (path-traversal /
-    # overwrite / predictable-URL guards). Extension matches process_image output.
+    # Retained only because migration 0001_initial imports this symbol by reference
+    # (not as a string); the User.avatar ImageField it served has been retired.
     return f"avatars/{instance.public_id.hex}/{uuid.uuid4().hex}.webp"
 
 
@@ -116,7 +116,6 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     is_writer= models.BooleanField(default=False)
     activated_link = models.BooleanField(default=False)
     bio = models.TextField(null=True)
-    avatar = models.ImageField(null=True, upload_to=user_avatar_upload_path)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     friends = models.ManyToManyField(
@@ -228,6 +227,55 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
         self.friend_code = self.generate_friend_code()
         self.save(update_fields=['friend_code'])
         return self.friend_code
+
+    @property
+    def avatar_url(self):
+        """Serve-endpoint URL for this user's avatar, or None when absent.
+
+        Returns a string (not a FieldFile) so templates' ``{{ user.avatar_url }}``
+        and ``{% if user.avatar_url %}`` work after the S3 ImageField is retired.
+        Keyed by the opaque ``public_id`` (never the enumerable integer pk).
+        Mirrors core.event.models.Team.logo_url.
+        """
+        try:
+            row = self.avatar_row
+        except UserAvatar.DoesNotExist:
+            return None
+        if row.status != "ok":
+            return None
+        from django.urls import reverse
+
+        return reverse("user-avatar", kwargs={"public_id": self.public_id.hex})
+
+
+class UserAvatar(models.Model):
+    """User avatar bytes stored in MDProject's own Postgres (BYTEA).
+
+    1:1 with User — bytes live in a side table (not on User) so hot User
+    queries stay lean, mirroring core.event.models.TeamLogo. ``status`` is
+    ``ok`` (bytes present) or ``missing``. ``source`` is ``upload``.
+    """
+
+    user = models.OneToOneField(
+        "core_user.User",
+        on_delete=models.CASCADE,
+        related_name="avatar_row",
+        primary_key=True,
+    )
+    image = models.BinaryField(null=True, blank=True, editable=False)
+    content_type = models.CharField(max_length=64, null=True, blank=True)
+    byte_size = models.PositiveIntegerField(default=0)
+    etag = models.CharField(max_length=64, null=True, blank=True)
+    # "ok" | "missing"
+    status = models.CharField(max_length=16)
+    source = models.CharField(max_length=32, default="upload")
+    fetched = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "core_user_avatar"
+
+    def __str__(self):
+        return f"{self.user_id} [{self.status}]"
 
 
 

@@ -204,6 +204,19 @@
     </tbody>
   </table>
 
+  <div class="status-actions" style="margin:1rem 0;">
+    <form method="post" action="{% url 'core-admin:admin_backfill_logos' %}" style="margin:0;">
+      {% csrf_token %}
+      <button type="submit" class="pill pill--success" style="border:0;cursor:pointer;">
+        Backfill team logos
+      </button>
+    </form>
+    <p class="muted" style="margin:.35rem 0 0;">
+      Enqueues a crest fetch for every team missing an “ok” logo. Runs on the
+      worker; watch progress under Recent jobs.
+    </p>
+  </div>
+
   <h2>Recent task results (latest 25)</h2>
   <table class="status-table">
     <thead>

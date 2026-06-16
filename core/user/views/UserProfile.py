@@ -1,8 +1,10 @@
+import hashlib
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.user.forms import UserProfileForm
-from core.user.models import User  # custom user (app label core_user), not django.contrib.auth.User
+from core.user.models import User, UserAvatar  # custom user (app label core_user), not django.contrib.auth.User
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
@@ -22,3 +24,21 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
             self.request.user.badges.select_related("season").order_by("-earned_at")
         )
         return ctx
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        avatar_bytes = form.cleaned_data.get('avatar_upload')
+        if avatar_bytes:
+            etag = hashlib.sha256(avatar_bytes).hexdigest()[:32]
+            UserAvatar.objects.update_or_create(
+                user=self.request.user,
+                defaults={
+                    "image": avatar_bytes,
+                    "content_type": "image/webp",
+                    "byte_size": len(avatar_bytes),
+                    "etag": etag,
+                    "status": "ok",
+                    "source": "upload",
+                },
+            )
+        return response

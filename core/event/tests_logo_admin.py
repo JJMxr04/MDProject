@@ -10,7 +10,7 @@ Tests cover:
 """
 
 import io
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
@@ -18,6 +18,7 @@ from PIL import Image
 
 from core.event.admin import TeamAdmin, TeamAdminForm, _store_admin_logo
 from core.event.models import League, Sport, Team, TeamLogo
+from core.portal.cards import fixture_from_dict
 
 
 def _img_upload(name, fmt, content_type):
@@ -133,3 +134,116 @@ class TeamAdminLogoUploadTests(TestCase):
         logo = TeamLogo.objects.get(team=self.team)
         self.assertEqual(logo.status, "ok")
         self.assertEqual(logo.source, "admin")
+
+
+class TeamAdminFetchLogoActionTests(TestCase):
+    def setUp(self):
+        self.sport = Sport.objects.create(id="basketball", name="Basketball")
+        self.league = League.objects.create(id="usa-nba", sport=self.sport, name="NBA")
+        self.team_missing = Team.objects.create(
+            id="usa-nba:38", league=self.league, team_id="38",
+            sport=self.sport, name_long="Lakers",
+        )
+        self.team_ok = Team.objects.create(
+            id="usa-nba:39", league=self.league, team_id="39",
+            sport=self.sport, name_long="Celtics",
+        )
+        TeamLogo.objects.create(
+            team=self.team_ok, status="ok", source="aggregator", byte_size=10,
+        )
+
+    @patch("core.event.admin.fetch_team_logo_task")
+    def test_action_enqueues_only_missing_teams(self, mock_task):
+        admin_instance = TeamAdmin(Team, None)
+        admin_instance.message_user = MagicMock()
+        request = MagicMock()
+        qs = Team.objects.filter(league=self.league)
+        admin_instance.fetch_logo_from_aggregator(request, qs)
+        mock_task.defer.assert_called_once_with(team_id="usa-nba:38")
+        admin_instance.message_user.assert_called_once()
+        report = admin_instance.message_user.call_args.args[1]
+        self.assertIn("1", report)
+
+    @patch("core.event.admin.fetch_team_logo_task")
+    def test_action_noop_when_all_have_ok_logos(self, mock_task):
+        admin_instance = TeamAdmin(Team, None)
+        admin_instance.message_user = MagicMock()
+        request = MagicMock()
+        qs = Team.objects.filter(id="usa-nba:39")
+        admin_instance.fetch_logo_from_aggregator(request, qs)
+        mock_task.defer.assert_not_called()
+        admin_instance.message_user.assert_called_once()
+
+
+class LogoRoutingAuditTests(TestCase):
+    """Routing contract: persisted surfaces serve MDProject's own mirror,
+    aggregator surfaces pass the aggregator's logo_url string through verbatim.
+    """
+
+    def setUp(self):
+        self.sport = Sport.objects.create(id="basketball", name="Basketball")
+        self.league = League.objects.create(id="usa-nba", sport=self.sport, name="NBA")
+        self.team = Team.objects.create(
+            id="usa-nba:38", league=self.league, team_id="38",
+            sport=self.sport, name_long="Lakers",
+        )
+
+    def test_persisted_team_logo_url_routes_to_mdproject_mirror(self):
+        TeamLogo.objects.create(
+            team=self.team, status="ok", source="aggregator", byte_size=10,
+        )
+        self.assertEqual(self.team.logo_url, "/logos/teams/usa-nba:38")
+
+    def test_persisted_team_logo_url_none_when_not_ok(self):
+        TeamLogo.objects.create(
+            team=self.team, status="missing", source="aggregator", byte_size=0,
+        )
+        self.assertIsNone(self.team.logo_url)
+
+    def test_persisted_team_logo_url_none_when_no_row(self):
+        self.assertIsNone(self.team.logo_url)
+
+    def test_aggregator_fixture_passes_through_logo_url(self):
+        # fixture_from_dict reads the aggregator event dict directly — the
+        # nested ``home_team``/``away_team`` dicts and their ``logo_url``
+        # strings. No MDProject Team is consulted, so whatever URL the
+        # aggregator supplies must survive unchanged into the fixture.
+        ev = {
+            "league": {"name": "NBA"},
+            "start_time": "2026-06-16T18:00:00Z",
+            "is_live": False,
+            "is_finalized": False,
+            "home_team": {
+                "name": "Lakers",
+                "logo_url": "https://cdn.aggrigator.example/logos/home.png",
+            },
+            "away_team": {
+                "name": "Celtics",
+                "logo_url": "https://cdn.aggrigator.example/logos/away.png",
+            },
+            "home_score": None,
+            "away_score": None,
+        }
+        fixture = fixture_from_dict(ev)
+        self.assertEqual(
+            fixture["home"]["logo_url"],
+            "https://cdn.aggrigator.example/logos/home.png",
+        )
+        self.assertEqual(
+            fixture["away"]["logo_url"],
+            "https://cdn.aggrigator.example/logos/away.png",
+        )
+        # Passthrough must NOT route through MDProject's own /logos/teams mirror.
+        self.assertNotIn("/logos/teams/", fixture["home"]["logo_url"])
+        self.assertNotIn("/logos/teams/", fixture["away"]["logo_url"])
+
+    def test_aggregator_fixture_missing_logo_is_empty_string(self):
+        # team_side coerces a missing logo_url to "" so {% if team.logo_url %}
+        # falls through to the initials fallback in _team_logo.html.
+        ev = {
+            "home_team": {"name": "Lakers"},
+            "away_team": {"name": "Celtics"},
+        }
+        fixture = fixture_from_dict(ev)
+        self.assertEqual(fixture["home"]["logo_url"], "")
+        self.assertEqual(fixture["away"]["logo_url"], "")
