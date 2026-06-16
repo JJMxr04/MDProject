@@ -60,3 +60,12 @@ class EventMatchupPartialTests(SimpleTestCase):
     def test_no_fixture_renders_nothing(self):
         html = render_to_string(self.TPL, {"fixture": None})
         self.assertEqual(html.strip(), "")
+
+
+class RailPanelPartialTests(SimpleTestCase):
+    TPL = "portal/components/_rail_panel.html"
+
+    def test_renders_title_and_body(self):
+        html = render_to_string(self.TPL, {"title": "Duel Stats", "body_html": "<b>hi</b>"})
+        self.assertIn("Duel Stats", html)
+        self.assertIn("<b>hi</b>", html)

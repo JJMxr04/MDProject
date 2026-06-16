@@ -12,10 +12,14 @@ Inlines use ``show_change_link=True`` so the chain works both directions
 without breadcrumbs alone.
 """
 
+from django import forms
 from django.contrib import admin, messages
+from django.core.files.uploadedfile import UploadedFile
 from django.shortcuts import redirect
 from django.urls import path, reverse
 from django.utils.html import format_html
+
+from core.abstract.image_security import process_image, validate_image_file
 
 from .models import (
     Bookmaker,
@@ -408,13 +412,35 @@ class EventAdmin(admin.ModelAdmin):
             )
 
 
+class TeamAdminForm(forms.ModelForm):
+    """Admin form that routes a new logo upload through the shared image
+    pipeline: validate real bytes + caps, then re-encode to WEBP (strips
+    polyglots/EXIF). An unchanged existing logo passes through untouched.
+    """
+
+    class Meta:
+        model = Team
+        fields = "__all__"
+
+    def clean_logo_url(self):
+        f = self.cleaned_data.get("logo_url")
+        # Only a freshly uploaded file is an UploadedFile; an unchanged value is
+        # a FieldFile (or empty) and must be left alone.
+        if isinstance(f, UploadedFile):
+            validate_image_file(f)
+            return process_image(f)
+        return f
+
+
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
+    form = TeamAdminForm
     list_display = ["id", "name_long", "name_short", "league", "sport"]
     list_filter = ["league", "sport"]
     search_fields = ["id", "team_id", "name_long", "name_short", "name_medium"]
-    # logo_url is rendered read-only — uploads disabled until S3 is wired.
-    readonly_fields = ["id", "public_id", "created", "updated", "league_link", "logo_url"]
+    # logo_url is now an editable upload: TeamAdminForm validates + re-encodes
+    # it, and logo_upload_path stores it under a random key.
+    readonly_fields = ["id", "public_id", "created", "updated", "league_link"]
     fieldsets = (
         ("Identity", {"fields": ("id", "public_id", "team_id")}),
         ("Hierarchy", {"fields": ("league_link", "league", "sport")}),
