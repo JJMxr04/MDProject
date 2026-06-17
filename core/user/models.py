@@ -157,6 +157,14 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     # escape hatch. Safe to drop in a later cleanup migration.
     aggrigator_api_key = models.CharField(max_length=80, blank=True, default='')
 
+    # --- Matchup avatar tints (matchup-colors-mobile design §7). Users pick
+    # their own home + away colors; their avatar in a match-detail hero uses
+    # the color for the side they're on. NULL → template/CSS fall back to the
+    # standard brand-blue (home) / state-danger (away). max_length=9 mirrors
+    # Team's color columns (#RRGGBB or #RRGGBBAA).
+    home_color = models.CharField(max_length=9, null=True, blank=True)
+    away_color = models.CharField(max_length=9, null=True, blank=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

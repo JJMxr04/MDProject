@@ -11,323 +11,492 @@
     </ol>
 </nav>
 
+<div class="page-layout">
+<div class="page-layout__main">
 
-<section class="card-ui evd-header">
-    <div class="card-ui__body">
-        {% include "portal/components/_event_matchup.html" with fixture=fixture %}
-    </div>
-</section>
+    {# ── Hero: matchup + countdown + win-probability bars ───────────── #}
+    <header class="card-ui evt-hero">
+        <div class="card-ui__body">
+            {% include "portal/components/_event_matchup.html" with fixture=fixture %}
 
+            {% if fixture.status == "upcoming" and event.start_time %}
+                <div class="evt-countdown" data-countdown-to="{{ event.start_time|date:'c' }}" data-status="{{ fixture.status }}" aria-live="polite">
+                    <div class="evt-countdown__unit"><span class="evt-countdown__num" data-unit="d">--</span><span class="evt-countdown__lbl">days</span></div>
+                    <div class="evt-countdown__sep">:</div>
+                    <div class="evt-countdown__unit"><span class="evt-countdown__num" data-unit="h">--</span><span class="evt-countdown__lbl">hrs</span></div>
+                    <div class="evt-countdown__sep">:</div>
+                    <div class="evt-countdown__unit"><span class="evt-countdown__num" data-unit="m">--</span><span class="evt-countdown__lbl">min</span></div>
+                    <div class="evt-countdown__sep">:</div>
+                    <div class="evt-countdown__unit"><span class="evt-countdown__num" data-unit="s">--</span><span class="evt-countdown__lbl">sec</span></div>
+                </div>
+            {% endif %}
 
-<section class="card-ui">
-    <header class="card-ui__header evd-markets-header">
-        <h2><i class="bi bi-bar-chart-line me-2"></i>Markets &amp; odds</h2>
-        <span class="badge-ui badge-ui--muted">{{ markets|length }}</span>
-    </header>
-    <div class="card-ui__body">
-        {% if markets %}
-            {% regroup markets by category as cat_groups %}
-            <div class="evd-markets">
-            {% for cat_group in cat_groups %}
-                <div class="evd-market-cat">
-                    <div class="evd-market-cat__head">
-                        <span class="evd-market-cat__title">
-                            {% if cat_group.grouper == "MONEYLINE" %}<i class="bi bi-trophy me-1"></i>Moneyline
-                            {% elif cat_group.grouper == "SPREAD" %}<i class="bi bi-arrows-expand-vertical me-1"></i>Point spread
-                            {% elif cat_group.grouper == "TOTAL" %}<i class="bi bi-distribute-vertical me-1"></i>Over / Under
-                            {% elif cat_group.grouper == "PROPS_GAME" %}<i class="bi bi-puzzle me-1"></i>Game props
-                            {% elif cat_group.grouper == "PROPS_TEAM" %}<i class="bi bi-people me-1"></i>Team props
-                            {% else %}<i class="bi bi-tag me-1"></i>{{ cat_group.grouper|capfirst }}
-                            {% endif %}
-                        </span>
-                        <span class="evd-market-cat__count">{{ cat_group.list|length }} market{{ cat_group.list|length|pluralize }}</span>
-                    </div>
-
-                    {% for market in cat_group.list %}
-                    <div class="evd-market {% if market.suspended %}is-suspended{% endif %}">
-                        <div class="evd-market__head">
-                            <span class="evd-market__type">{{ market.type|default:"Market" }}</span>
-                            {% if market.line is not None %}
-                                <span class="evd-market__line">
-                                    {% if market.line > 0 %}+{% endif %}{{ market.line }}
-                                </span>
-                            {% endif %}
-                            {% if market.is_live %}<span class="evd-badge evd-badge--live">LIVE</span>{% endif %}
-                            {% if market.suspended %}<span class="evd-badge evd-badge--warn">SUSPENDED</span>{% endif %}
-                            {% if market.scope and market.scope != "FULL_GAME" %}
-                                <span class="evd-market__scope">{{ market.scope|lower }}</span>
-                            {% endif %}
+            {% if win_prob %}
+                <div class="evt-winprob">
+                    <div class="evt-winprob__side">
+                        <div class="evt-winprob__head">
+                            <span class="evt-winprob__team">{{ fixture.home.name|default:"Home" }}</span>
+                            <span class="evt-winprob__pct">{{ win_prob.home_pct }}%</span>
                         </div>
+                        <div class="evt-winprob__bar"><span class="evt-winprob__fill evt-winprob__fill--home" style="width: {{ win_prob.home_pct }}%"></span></div>
+                    </div>
+                    <div class="evt-winprob__side">
+                        <div class="evt-winprob__head">
+                            <span class="evt-winprob__team">{{ fixture.away.name|default:"Away" }}</span>
+                            <span class="evt-winprob__pct">{{ win_prob.away_pct }}%</span>
+                        </div>
+                        <div class="evt-winprob__bar"><span class="evt-winprob__fill evt-winprob__fill--away" style="width: {{ win_prob.away_pct }}%"></span></div>
+                    </div>
+                    <p class="evt-winprob__cap">Model win probability</p>
+                </div>
+            {% endif %}
+        </div>
+    </header>
 
-                        <div class="evd-selections">
-                        {% for sel in market.selections %}
-                            <div class="evd-sel {% if sel.suspended %}is-suspended{% endif %} {% if sel.settlement_status == 'WON' %}is-won{% elif sel.settlement_status == 'LOST' %}is-lost{% elif sel.settlement_status == 'PUSH' %}is-push{% elif sel.settlement_status == 'VOID' %}is-void{% endif %}">
-                                <div class="evd-sel__top">
-                                    <span class="evd-sel__label">{% humanize_pick_payload event_raw market sel %}</span>
-                                    {% if sel.settlement_status and sel.settlement_status != "PENDING" %}
-                                        <span class="evd-sel__settle evd-sel__settle--{{ sel.settlement_status|lower }}">{{ sel.settlement_status }}</span>
-                                    {% endif %}
-                                </div>
-                                <div class="evd-sel__odds-row">
-                                    {% if sel.odds.american is not None %}
-                                        <span class="evd-sel__odds {% if sel.odds.american < 0 %}is-fav{% else %}is-dog{% endif %}">
-                                            {% if sel.odds.american > 0 %}+{% endif %}{{ sel.odds.american }}
-                                        </span>
-                                    {% elif sel.odds.decimal is not None %}
-                                        <span class="evd-sel__odds">{{ sel.odds.decimal }}</span>
-                                    {% else %}
-                                        <span class="evd-sel__odds evd-sel__odds--na">—</span>
-                                    {% endif %}
-                                    <div class="evd-sel__odds-sub">
-                                        {% if sel.odds.decimal %}<span>Dec {{ sel.odds.decimal }}</span>{% endif %}
-                                        {% if sel.odds.fractional %}<span>{{ sel.odds.fractional }}</span>{% endif %}
-                                    </div>
-                                </div>
+    {# ── CSS-only segmented tabs (no JS → CSP-safe). Overview always shows;
+         Odds / Analytics render only when populated. ─────────────────── #}
+    <input class="seg-tabs__radio" type="radio" name="evt-seg" id="seg-a" checked>
+    {% if has_odds %}<input class="seg-tabs__radio" type="radio" name="evt-seg" id="seg-b">{% endif %}
+    {% if has_analytics %}<input class="seg-tabs__radio" type="radio" name="evt-seg" id="seg-c">{% endif %}
 
-                                
-                                {% if sel.by_bookmaker %}
-                                <details class="evd-books">
-                                    <summary class="evd-books__summary">
-                                        <i class="bi bi-shop"></i>
-                                        Compare {{ sel.by_bookmaker|length }} book{{ sel.by_bookmaker|length|pluralize }}
-                                    </summary>
-                                    <div class="evd-books__grid">
-                                        {% for book in sel.by_bookmaker %}
-                                        <div class="evd-book {% if not book.available %}is-unavailable{% endif %}">
-                                            <span class="evd-book__name">{{ book.bookmaker_name|default:book.bookmaker_id }}</span>
-                                            {% if book.odds.american is not None %}
-                                                <span class="evd-book__odds {% if book.odds.american < 0 %}is-fav{% else %}is-dog{% endif %}">
-                                                    {% if book.odds.american > 0 %}+{% endif %}{{ book.odds.american }}
-                                                </span>
-                                            {% elif book.odds.decimal is not None %}
-                                                <span class="evd-book__odds">{{ book.odds.decimal }}</span>
+    <div class="seg-tabs" role="tablist">
+        <label class="seg-tabs__label" for="seg-a">Overview</label>
+        {% if has_odds %}<label class="seg-tabs__label" for="seg-b">Odds<span class="seg-tabs__count">{{ markets|length }}</span></label>{% endif %}
+        {% if has_analytics %}<label class="seg-tabs__label" for="seg-c">Analytics</label>{% endif %}
+    </div>
+
+    {# ── Pane A — Overview: top markets + at-a-glance snapshot ───────── #}
+    <div class="seg-pane" id="pane-a">
+        <section class="card-ui">
+            <div class="card-ui__body evt-overview">
+                {% if markets %}
+                    {% regroup markets by category as ov_groups %}
+                    <div class="evt-overview__markets">
+                    {% for cat_group in ov_groups %}
+                        {% if cat_group.grouper == "MONEYLINE" or cat_group.grouper == "SPREAD" or cat_group.grouper == "TOTAL" %}
+                            {% with market=cat_group.list.0 %}
+                            <div class="evt-overview__market">
+                                <div class="evt-overview__market-title">
+                                    {% if cat_group.grouper == "MONEYLINE" %}<i class="bi bi-trophy me-1"></i>Moneyline
+                                    {% elif cat_group.grouper == "SPREAD" %}<i class="bi bi-arrows-expand-vertical me-1"></i>Point spread
+                                    {% else %}<i class="bi bi-distribute-vertical me-1"></i>Over / Under{% endif %}
+                                </div>
+                                <div class="evd-selections">
+                                {% for sel in market.selections %}
+                                    <div class="evd-sel">
+                                        <div class="evd-sel__top">
+                                            <span class="evd-sel__label">{% humanize_pick_payload event_raw market sel %}</span>
+                                        </div>
+                                        <div class="evd-sel__odds-row">
+                                            {% if sel.odds.american is not None %}
+                                                <span class="evd-sel__odds {% if sel.odds.american < 0 %}is-fav{% else %}is-dog{% endif %}">{% if sel.odds.american > 0 %}+{% endif %}{{ sel.odds.american }}</span>
+                                            {% elif sel.odds.decimal is not None %}
+                                                <span class="evd-sel__odds">{{ sel.odds.decimal }}</span>
                                             {% else %}
-                                                <span class="evd-book__odds evd-book__odds--na">—</span>
-                                            {% endif %}
-                                            {% if book.deeplink %}
-                                                <a class="evd-book__link" href="{{ book.deeplink }}" target="_blank" rel="noopener noreferrer" aria-label="Open at {{ book.bookmaker_name }}">
-                                                    <i class="bi bi-box-arrow-up-right"></i>
-                                                </a>
+                                                <span class="evd-sel__odds evd-sel__odds--na">—</span>
                                             {% endif %}
                                         </div>
-                                        {% endfor %}
                                     </div>
-                                </details>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                    {% if has_odds %}<p class="evt-overview__more"><label for="seg-b" class="evt-link">See all {{ markets|length }} market{{ markets|length|pluralize }} <i class="bi bi-arrow-right"></i></label></p>{% endif %}
+                {% else %}
+                    {% include "portal/components/_empty_state.html" with icon="bar-chart" title="No markets available yet." body="Odds usually post a few hours before start time." %}
+                {% endif %}
+
+                {% if h2h_aggregate.played or form_into_match.home_last_5 or form_into_match.away_last_5 %}
+                    <div class="evt-snapshot">
+                        {% if h2h_aggregate.played %}
+                            <div class="evt-snapshot__item">
+                                <span class="evt-snapshot__lbl">Head-to-head</span>
+                                <span class="evt-snapshot__val">{{ h2h_aggregate.home_team_wins }}–{{ h2h_aggregate.draws }}–{{ h2h_aggregate.away_team_wins }} <small>· {{ h2h_aggregate.played }} meeting{{ h2h_aggregate.played|pluralize }}</small></span>
+                            </div>
+                        {% endif %}
+                        {% if form_into_match.home_last_5 %}
+                            <div class="evt-snapshot__item">
+                                <span class="evt-snapshot__lbl">{{ fixture.home.name|default:"Home" }} form</span>
+                                <span class="evt-form">{% for r in form_into_match.home_last_5 %}<span class="evt-form__chip evt-form__chip--{{ r|lower }}">{{ r }}</span>{% endfor %}</span>
+                            </div>
+                        {% endif %}
+                        {% if form_into_match.away_last_5 %}
+                            <div class="evt-snapshot__item">
+                                <span class="evt-snapshot__lbl">{{ fixture.away.name|default:"Away" }} form</span>
+                                <span class="evt-form">{% for r in form_into_match.away_last_5 %}<span class="evt-form__chip evt-form__chip--{{ r|lower }}">{{ r }}</span>{% endfor %}</span>
+                            </div>
+                        {% endif %}
+                        {% if has_analytics %}<p class="evt-overview__more"><label for="seg-c" class="evt-link">Full analytics <i class="bi bi-arrow-right"></i></label></p>{% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+    {# ── Pane B — Odds: full market depth + model vs market ──────────── #}
+    {% if has_odds %}
+    <div class="seg-pane" id="pane-b">
+        <section class="card-ui">
+            <header class="card-ui__header evd-markets-header">
+                <h2><i class="bi bi-bar-chart-line me-2"></i>Markets &amp; odds</h2>
+                <span class="badge-ui badge-ui--muted">{{ markets|length }}</span>
+            </header>
+            <div class="card-ui__body">
+                {% regroup markets by category as cat_groups %}
+                <div class="evd-markets">
+                {% for cat_group in cat_groups %}
+                    <div class="evd-market-cat">
+                        <div class="evd-market-cat__head">
+                            <span class="evd-market-cat__title">
+                                {% if cat_group.grouper == "MONEYLINE" %}<i class="bi bi-trophy me-1"></i>Moneyline
+                                {% elif cat_group.grouper == "SPREAD" %}<i class="bi bi-arrows-expand-vertical me-1"></i>Point spread
+                                {% elif cat_group.grouper == "TOTAL" %}<i class="bi bi-distribute-vertical me-1"></i>Over / Under
+                                {% elif cat_group.grouper == "PROPS_GAME" %}<i class="bi bi-puzzle me-1"></i>Game props
+                                {% elif cat_group.grouper == "PROPS_TEAM" %}<i class="bi bi-people me-1"></i>Team props
+                                {% else %}<i class="bi bi-tag me-1"></i>{{ cat_group.grouper|capfirst }}
+                                {% endif %}
+                            </span>
+                            <span class="evd-market-cat__count">{{ cat_group.list|length }} market{{ cat_group.list|length|pluralize }}</span>
+                        </div>
+
+                        {% for market in cat_group.list %}
+                        <div class="evd-market {% if market.suspended %}is-suspended{% endif %}">
+                            <div class="evd-market__head">
+                                <span class="evd-market__type">{{ market.type|default:"Market" }}</span>
+                                {% if market.line is not None %}
+                                    <span class="evd-market__line">
+                                        {% if market.line > 0 %}+{% endif %}{{ market.line }}
+                                    </span>
+                                {% endif %}
+                                {% if market.is_live %}<span class="evd-badge evd-badge--live">LIVE</span>{% endif %}
+                                {% if market.suspended %}<span class="evd-badge evd-badge--warn">SUSPENDED</span>{% endif %}
+                                {% if market.scope and market.scope != "FULL_GAME" %}
+                                    <span class="evd-market__scope">{{ market.scope|lower }}</span>
                                 {% endif %}
                             </div>
-                        {% endfor %}
+
+                            <div class="evd-selections">
+                            {% for sel in market.selections %}
+                                <div class="evd-sel {% if sel.suspended %}is-suspended{% endif %} {% if sel.settlement_status == 'WON' %}is-won{% elif sel.settlement_status == 'LOST' %}is-lost{% elif sel.settlement_status == 'PUSH' %}is-push{% elif sel.settlement_status == 'VOID' %}is-void{% endif %}">
+                                    <div class="evd-sel__top">
+                                        <span class="evd-sel__label">{% humanize_pick_payload event_raw market sel %}</span>
+                                        {% if sel.settlement_status and sel.settlement_status != "PENDING" %}
+                                            <span class="evd-sel__settle evd-sel__settle--{{ sel.settlement_status|lower }}">{{ sel.settlement_status }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="evd-sel__odds-row">
+                                        {% if sel.odds.american is not None %}
+                                            <span class="evd-sel__odds {% if sel.odds.american < 0 %}is-fav{% else %}is-dog{% endif %}">
+                                                {% if sel.odds.american > 0 %}+{% endif %}{{ sel.odds.american }}
+                                            </span>
+                                        {% elif sel.odds.decimal is not None %}
+                                            <span class="evd-sel__odds">{{ sel.odds.decimal }}</span>
+                                        {% else %}
+                                            <span class="evd-sel__odds evd-sel__odds--na">—</span>
+                                        {% endif %}
+                                        <div class="evd-sel__odds-sub">
+                                            {% if sel.odds.decimal %}<span>Dec {{ sel.odds.decimal }}</span>{% endif %}
+                                            {% if sel.odds.fractional %}<span>{{ sel.odds.fractional }}</span>{% endif %}
+                                        </div>
+                                    </div>
+
+                                    {% if sel.by_bookmaker %}
+                                    <details class="evd-books">
+                                        <summary class="evd-books__summary">
+                                            <i class="bi bi-shop"></i>
+                                            Compare {{ sel.by_bookmaker|length }} book{{ sel.by_bookmaker|length|pluralize }}
+                                        </summary>
+                                        <div class="evd-books__grid">
+                                            {% for book in sel.by_bookmaker %}
+                                            <div class="evd-book {% if not book.available %}is-unavailable{% endif %}">
+                                                <span class="evd-book__name">{{ book.bookmaker_name|default:book.bookmaker_id }}</span>
+                                                {% if book.odds.american is not None %}
+                                                    <span class="evd-book__odds {% if book.odds.american < 0 %}is-fav{% else %}is-dog{% endif %}">
+                                                        {% if book.odds.american > 0 %}+{% endif %}{{ book.odds.american }}
+                                                    </span>
+                                                {% elif book.odds.decimal is not None %}
+                                                    <span class="evd-book__odds">{{ book.odds.decimal }}</span>
+                                                {% else %}
+                                                    <span class="evd-book__odds evd-book__odds--na">—</span>
+                                                {% endif %}
+                                                {% if book.deeplink %}
+                                                    <a class="evd-book__link" href="{{ book.deeplink }}" target="_blank" rel="noopener noreferrer" aria-label="Open at {{ book.bookmaker_name }}">
+                                                        <i class="bi bi-box-arrow-up-right"></i>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </details>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                {% endfor %}
                 </div>
-            {% endfor %}
             </div>
-        {% else %}
-            {% include "portal/components/_empty_state.html" with icon="bar-chart" title="No markets available yet." body="Odds usually post a few hours before start time." %}
-        {% endif %}
-    </div>
-</section>
+        </section>
 
-
-{% if is_entitled_to_analytics %}
-
-  
-  {% if not is_past %}
-    <section class="card-ui evd-analytics">
-      <header class="card-ui__header">
-        <h2><i class="bi bi-graph-up-arrow me-2"></i>Model vs market</h2>
-        <span class="evd-chip evd-chip--pro">PRO</span>
-      </header>
-      <div class="card-ui__body">
-        {% if edge_rows %}
-          <div class="evd-edge-table">
-            <div class="evd-edge-table__head">
-              <div>Side</div>
-              <div class="text-end">Model</div>
-              <div class="text-end">Market</div>
-              <div class="text-end">Edge</div>
-              <div>Best price</div>
-            </div>
-            {% for r in edge_rows %}
-              <div class="evd-edge-row">
-                <div class="evd-edge-row__side">{{ r.side }}</div>
-                <div class="text-end">{% widthratio r.model_prob 1 100 %}%</div>
-                <div class="text-end">{% widthratio r.market_prob 1 100 %}%</div>
-                <div class="text-end">
-                  <span class="evd-edge-pill {% if r.edge_pp >= 3 %}is-good{% elif r.edge_pp >= 0 %}is-flat{% else %}is-bad{% endif %}">
-                    {% if r.edge_pp > 0 %}+{% endif %}{{ r.edge_pp|floatformat:1 }} pp
-                  </span>
-                </div>
-                <div>
-                  {% if r.best_decimal %}
-                    <strong class="evd-edge-row__price">{{ r.best_decimal|floatformat:2 }}</strong>
-                    <span class="evd-edge-row__book">@ {{ r.best_bookmaker|default:"?" }}</span>
-                    {% if r.best_deeplink %}
-                      <a href="{{ r.best_deeplink }}" target="_blank" rel="noopener" class="evd-edge-row__open" aria-label="Open at {{ r.best_bookmaker }}"><i class="bi bi-box-arrow-up-right"></i></a>
+        {% if not is_past %}
+        <section class="card-ui evd-analytics">
+            <header class="card-ui__header">
+                <h2><i class="bi bi-graph-up-arrow me-2"></i>Model vs market</h2>
+            </header>
+            <div class="card-ui__body">
+                {% if edge_rows %}
+                    <div class="evd-edge-table">
+                        <div class="evd-edge-table__head">
+                            <div>Side</div>
+                            <div class="text-end">Model</div>
+                            <div class="text-end">Market</div>
+                            <div class="text-end">Edge</div>
+                            <div>Best price</div>
+                        </div>
+                        {% for r in edge_rows %}
+                            <div class="evd-edge-row">
+                                <div class="evd-edge-row__side">{{ r.side }}</div>
+                                <div class="text-end">{% widthratio r.model_prob 1 100 %}%</div>
+                                <div class="text-end">{% widthratio r.market_prob 1 100 %}%</div>
+                                <div class="text-end">
+                                    <span class="evd-edge-pill {% if r.edge_pp >= 3 %}is-good{% elif r.edge_pp >= 0 %}is-flat{% else %}is-bad{% endif %}">
+                                        {% if r.edge_pp > 0 %}+{% endif %}{{ r.edge_pp|floatformat:1 }} pp
+                                    </span>
+                                </div>
+                                <div>
+                                    {% if r.best_decimal %}
+                                        <strong class="evd-edge-row__price">{{ r.best_decimal|floatformat:2 }}</strong>
+                                        <span class="evd-edge-row__book">@ {{ r.best_bookmaker|default:"?" }}</span>
+                                        {% if r.best_deeplink %}
+                                            <a href="{{ r.best_deeplink }}" target="_blank" rel="noopener" class="evd-edge-row__open" aria-label="Open at {{ r.best_bookmaker }}"><i class="bi bi-box-arrow-up-right"></i></a>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="text-muted">—</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if live_odds.fetched_at %}
+                        <p class="transparency-tell mb-0">
+                            Live odds last refreshed at {{ live_odds.fetched_at }} — freshness depends on the league's ingest cadence.
+                        </p>
                     {% endif %}
-                  {% else %}
-                    <span class="text-muted">—</span>
-                  {% endif %}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-          {% if live_odds.fetched_at %}
-            <p class="transparency-tell mb-0">
-              Live odds last refreshed at {{ live_odds.fetched_at }} — freshness depends on the league's ingest cadence.
-            </p>
-          {% endif %}
-        {% else %}
-          <div class="analytics-empty-state">
-            <p class="mb-0 text-muted small">
-              {% if live_odds.reason == 'no_markets_for_event' %}
-                The ingest cron hasn't populated bookmaker prices for this event yet.
-                Check back closer to kickoff — most books open lines ~5 days out.
-              {% elif live_odds.reason == 'no_books_cover_event' %}
-                No tracked bookmakers carry this event right now.
-              {% elif model_prob.p_home is None %}
-                Model probabilities aren't available yet, so the edge table can't render.
-              {% else %}
-                No model-vs-market data available for this event yet.
-              {% endif %}
-            </p>
-          </div>
+                {% else %}
+                    <div class="analytics-empty-state">
+                        <p class="mb-0 text-muted small">
+                            {% if live_odds.reason == 'no_markets_for_event' %}
+                                The ingest cron hasn't populated bookmaker prices for this event yet.
+                                Check back closer to kickoff — most books open lines ~5 days out.
+                            {% elif live_odds.reason == 'no_books_cover_event' %}
+                                No tracked bookmakers carry this event right now.
+                            {% elif model_prob.p_home is None %}
+                                Model probabilities aren't available yet, so the edge table can't render.
+                            {% else %}
+                                No model-vs-market data available for this event yet.
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
         {% endif %}
-      </div>
-    </section>
-  {% endif %}
-
-  
-  {% if h2h_aggregate.played or h2h_last_5 %}
-    <section class="card-ui evd-analytics">
-      <header class="card-ui__header">
-        <h2><i class="bi bi-arrow-left-right me-2"></i>Head-to-head</h2>
-      </header>
-      <div class="card-ui__body">
-        <div class="row g-3">
-          {% include "portal/analytics/_h2h_summary.html" with h2h_aggregate=h2h_aggregate h2h_last_5=h2h_last_5 event=event %}
-        </div>
-      </div>
-    </section>
-  {% endif %}
-
-  
-  {% if form_detail.home or form_detail.away %}
-    <section class="card-ui evd-analytics">
-      <header class="card-ui__header">
-        <h2><i class="bi bi-bar-chart-steps me-2"></i>Recent form</h2>
-      </header>
-      <div class="card-ui__body">
-        <div class="row g-3">
-          {% if form_detail.home %}
-            {% include "portal/analytics/_form_chart.html" with team_name=event.home_team.name|default:"Home" venue="home" form_letters=form_into_match.home_last_5 form_rows=form_detail.home chart_id="form-chart-home" %}
-          {% endif %}
-          {% if form_detail.away %}
-            {% include "portal/analytics/_form_chart.html" with team_name=event.away_team.name|default:"Away" venue="away" form_letters=form_into_match.away_last_5 form_rows=form_detail.away chart_id="form-chart-away" %}
-          {% endif %}
-        </div>
-      </div>
-    </section>
-  {% endif %}
-
-  
-  {% if historical_stats.home or historical_stats.away %}
-    <section class="card-ui evd-analytics">
-      <header class="card-ui__header">
-        <h2>
-          <i class="bi bi-table me-2"></i>Season to date
-          {% if historical_stats.season_label %}
-            <span class="evd-chip ms-2">{{ historical_stats.season_label }}</span>
-          {% endif %}
-        </h2>
-      </header>
-      <div class="card-ui__body">
-        <div class="row g-3">
-          {% if historical_stats.home %}
-            {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.home venue="home" event=event %}
-          {% endif %}
-          {% if historical_stats.away %}
-            {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.away venue="away" event=event %}
-          {% endif %}
-        </div>
-      </div>
-    </section>
-  {% endif %}
-
-{% else %}
-  
-  <section class="card-ui evd-analytics evd-upsell">
-    <div class="card-ui__body">
-      <div class="evd-upsell__inner">
-        <div>
-          <span class="evd-chip evd-chip--pro mb-2 d-inline-block">PRO</span>
-          <h2 class="evd-upsell__title">Unlock advanced analytics for this event</h2>
-          <ul class="evd-upsell__list">
-            <li>Model probability vs vig-adjusted market — per side</li>
-            <li>Edge (in pp) and best price across tracked bookmakers</li>
-            <li>Head-to-head: aggregate record + last meetings + combined-goal trend</li>
-            <li>Recent form: last-5 chips + points-per-game chart per team</li>
-            <li>Season-to-date stats + scoring profile per team</li>
-          </ul>
-        </div>
-        <div class="evd-upsell__cta">
-          <a href="{% url 'core-portal:billing-upgrade' %}" class="btn btn-primary btn-lg">Upgrade to PRO</a>
-          <a href="{% url 'core-portal:billing-index' %}" class="evd-upsell__secondary">See plans</a>
-        </div>
-      </div>
     </div>
-  </section>
-{% endif %}
+    {% endif %}
+
+    {# ── Pane C — Analytics: H2H + form + season to date ─────────────── #}
+    {% if has_analytics %}
+    <div class="seg-pane" id="pane-c">
+        {% if h2h_aggregate.played or h2h_last_5 %}
+        <section class="card-ui evd-analytics">
+            <header class="card-ui__header">
+                <h2><i class="bi bi-arrow-left-right me-2"></i>Head-to-head</h2>
+            </header>
+            <div class="card-ui__body">
+                <div class="row g-3">
+                    {% include "portal/analytics/_h2h_summary.html" with h2h_aggregate=h2h_aggregate h2h_last_5=h2h_last_5 event=event %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if form_detail.home or form_detail.away %}
+        <section class="card-ui evd-analytics">
+            <header class="card-ui__header">
+                <h2><i class="bi bi-bar-chart-steps me-2"></i>Recent form</h2>
+            </header>
+            <div class="card-ui__body">
+                <div class="row g-3">
+                    {% if form_detail.home %}
+                        {% include "portal/analytics/_form_chart.html" with team_name=event.home_team.name|default:"Home" venue="home" form_letters=form_into_match.home_last_5 form_rows=form_detail.home chart_id="form-chart-home" %}
+                    {% endif %}
+                    {% if form_detail.away %}
+                        {% include "portal/analytics/_form_chart.html" with team_name=event.away_team.name|default:"Away" venue="away" form_letters=form_into_match.away_last_5 form_rows=form_detail.away chart_id="form-chart-away" %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if historical_stats.home or historical_stats.away %}
+        <section class="card-ui evd-analytics">
+            <header class="card-ui__header">
+                <h2>
+                    <i class="bi bi-table me-2"></i>Season to date
+                    {% if historical_stats.season_label %}
+                        <span class="evd-chip ms-2">{{ historical_stats.season_label }}</span>
+                    {% endif %}
+                </h2>
+            </header>
+            <div class="card-ui__body">
+                <div class="row g-3">
+                    {% if historical_stats.home %}
+                        {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.home venue="home" event=event %}
+                    {% endif %}
+                    {% if historical_stats.away %}
+                        {% include "portal/analytics/_season_context_card.html" with team_block=historical_stats.away venue="away" event=event %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>{# /.page-layout__main #}
+
+{# ── Right rail: Event Info + Challenge CTA ─────────────────────────── #}
+<aside class="page-layout__rail">
+    <section class="rail-panel evt-info">
+        <h2 class="rail-panel__title">Event info</h2>
+        <dl class="evt-info__list">
+            {% if event.league %}<div class="evt-info__row"><dt>League</dt><dd>{{ event.league.name }}</dd></div>{% endif %}
+            {% if event.sport %}<div class="evt-info__row"><dt>Sport</dt><dd>{{ event.sport.name|capfirst }}</dd></div>{% endif %}
+            {% if event.season_label %}<div class="evt-info__row"><dt>Season</dt><dd>{{ event.season_label }}</dd></div>{% endif %}
+            {% if event.start_time %}
+                <div class="evt-info__row"><dt>Date</dt><dd>{{ event.start_time|date:"D, M j" }}</dd></div>
+                <div class="evt-info__row"><dt>Time</dt><dd>{{ event.start_time|date:"g:i A" }}</dd></div>
+            {% endif %}
+            {% if fixture.status %}<div class="evt-info__row"><dt>Status</dt><dd>{{ fixture.status|capfirst }}</dd></div>{% endif %}
+        </dl>
+    </section>
+
+    <section class="rail-panel evt-challenge">
+        <h2 class="rail-panel__title">Duels</h2>
+        <p class="evt-challenge__lead">Pick a side and settle it head-to-head.</p>
+        <a href="{% url 'core-portal:portal-duels' %}" class="btn-ui btn-ui--primary evt-challenge__cta">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i> Challenge a friend
+        </a>
+    </section>
+</aside>
+
+</div>{# /.page-layout #}
 {% endblock content %}
 
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/portal/components/cards.css' %}">
 <style>
-    /* Color tokens scoped to the Event Detail page (evd-) so design-system
-       updates can override --pm-* without affecting this page. Mirror the
-       popup's color language so users see the same fav/dog/line treatment. */
+    /* Color tokens scoped to the Event Detail page (evd-), pointed at the
+       light "lagoon" theme tokens so the markets / edge treatments share the
+       portal palette (fav = brand blue, dog = success green, line = gold). */
     :root {
-        --evd-fav: #275d81;
-        --evd-dog: #2f9e6b;
-        --evd-line: #b9831b;
+        --evd-fav: var(--brand-blue-dark);
+        --evd-dog: var(--state-success);
+        --evd-line: var(--state-warning);
         --evd-bg-soft: var(--surface-muted);
         --evd-border: var(--border-default);
     }
 
-    /* ── PRO chip + upsell card ──────────────────────────────────── */
-    .evd-chip--pro {
-        background: linear-gradient(135deg, #f5c34d 0%, #b9831b 100%);
-        color: #1f2937; letter-spacing: .08em;
+    /* ── Hero ─────────────────────────────────────────────────────── */
+    .evt-hero { margin-bottom: var(--space-5); }
+    .evt-hero .card-ui__body { display: flex; flex-direction: column; gap: var(--space-4); }
+
+    /* Tipoff countdown */
+    .evt-countdown {
+        display: flex; align-items: flex-end; justify-content: center; gap: var(--space-2);
+        padding: var(--space-3) 0; border-top: 1px solid var(--evd-border);
     }
-    .evd-upsell { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); }
-    .evd-upsell__inner {
-        display: grid; grid-template-columns: 1fr auto; gap: var(--space-5, 1.25rem);
-        align-items: center;
+    .evt-countdown__unit { display: flex; flex-direction: column; align-items: center; min-width: 3rem; }
+    .evt-countdown__num {
+        font-size: var(--text-2xl, 1.6rem); font-weight: var(--weight-bold);
+        font-variant-numeric: tabular-nums; line-height: 1; color: var(--brand-blue-dark);
     }
-    .evd-upsell__title {
-        margin: 0 0 .5rem 0; font-size: 1.15rem; font-weight: 700;
-        color: var(--text-primary, #111827);
+    .evt-countdown__lbl {
+        font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .05em;
+        color: var(--text-secondary); margin-top: 2px;
     }
-    .evd-upsell__list {
-        list-style: none; padding: 0; margin: 0;
-        display: grid; gap: .3rem;
-        font-size: .88rem; color: var(--text-secondary, #4b5563);
+    .evt-countdown__sep {
+        font-size: var(--text-xl); font-weight: var(--weight-bold);
+        color: var(--border-strong); align-self: flex-start; line-height: 1.1;
     }
-    .evd-upsell__list li::before {
-        content: "✓"; color: var(--evd-dog, #2f9e6b); font-weight: 700;
-        margin-right: .5rem;
+
+    /* Win-probability bars */
+    .evt-winprob {
+        display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3) var(--space-5);
+        border-top: 1px solid var(--evd-border); padding-top: var(--space-4);
     }
-    .evd-upsell__cta {
-        display: flex; flex-direction: column; gap: .5rem;
-        align-items: center; min-width: 180px;
+    .evt-winprob__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-2); margin-bottom: 4px; }
+    .evt-winprob__team { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .evt-winprob__pct { font-size: var(--text-sm); font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; }
+    .evt-winprob__bar { height: 8px; border-radius: 999px; background: var(--surface-muted); overflow: hidden; }
+    .evt-winprob__fill { display: block; height: 100%; border-radius: 999px; }
+    .evt-winprob__fill--home { background: var(--brand-blue); }
+    .evt-winprob__fill--away { background: var(--state-danger); }
+    .evt-winprob__cap {
+        grid-column: 1 / -1; margin: 0; text-align: center;
+        font-size: var(--text-xs); color: var(--text-secondary);
+        text-transform: uppercase; letter-spacing: .05em;
     }
-    .evd-upsell__secondary {
-        font-size: .8rem; color: var(--text-secondary, #6b7280); text-decoration: none;
+    @media (max-width: 640px) { .evt-winprob { grid-template-columns: 1fr; } }
+
+    /* ── Overview pane ────────────────────────────────────────────── */
+    .evt-overview { display: flex; flex-direction: column; gap: var(--space-4); }
+    .evt-overview__markets { display: grid; gap: var(--space-4); }
+    .evt-overview__market-title {
+        font-size: var(--text-sm); font-weight: var(--weight-bold);
+        color: var(--text-primary); margin-bottom: var(--space-2);
+        display: inline-flex; align-items: center;
     }
-    .evd-upsell__secondary:hover { color: var(--evd-fav, #275d81); }
-    @media (max-width: 640px) {
-        .evd-upsell__inner { grid-template-columns: 1fr; }
-        .evd-upsell__cta { align-items: stretch; }
+    .evt-overview__more { margin: 0; }
+    .evt-link {
+        cursor: pointer; font-size: var(--text-sm); font-weight: var(--weight-semibold);
+        color: var(--brand-blue-dark); display: inline-flex; align-items: center; gap: 4px;
     }
+    .evt-link:hover { color: var(--brand-blue); }
+
+    /* At-a-glance snapshot (H2H record + recent-form chips) */
+    .evt-snapshot {
+        display: flex; flex-wrap: wrap; gap: var(--space-4);
+        padding-top: var(--space-4); border-top: 1px solid var(--evd-border);
+    }
+    .evt-snapshot__item { display: flex; flex-direction: column; gap: 4px; }
+    .evt-snapshot__lbl { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .05em; color: var(--text-secondary); }
+    .evt-snapshot__val { font-size: var(--text-sm); font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
+    .evt-snapshot__val small { color: var(--text-secondary); font-weight: var(--weight-regular); }
+    .evt-form { display: inline-flex; gap: 3px; }
+    .evt-form__chip {
+        width: 1.25rem; height: 1.25rem; border-radius: var(--radius-sm);
+        display: grid; place-items: center;
+        font-size: var(--text-xs); font-weight: var(--weight-bold); color: #fff;
+        background: var(--text-secondary);
+    }
+    .evt-form__chip--w { background: var(--state-success); }
+    .evt-form__chip--l { background: var(--state-danger); }
+    .evt-form__chip--d { background: var(--state-warning); }
+
+    /* ── Right rail panels ────────────────────────────────────────── */
+    .evt-info__list { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+    .evt-info__row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
+    .evt-info__row dt { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .04em; color: var(--text-secondary); margin: 0; }
+    .evt-info__row dd { margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); text-align: right; }
+    .evt-challenge__lead { font-size: var(--text-sm); color: var(--text-secondary); margin: 0 0 var(--space-3); }
+    .evt-challenge__cta { width: 100%; justify-content: center; }
 
     /* ── Model vs market edge table ───────────────────────────────── */
     .evd-edge-table {
@@ -410,13 +579,10 @@
         border: 1px dashed var(--evd-border);
     }
 
-    /* ── Header card ─────────────────────────────────────────────── */
-    /* The team matchup now renders via the shared
-       portal/components/_event_matchup.html partial (.matchup-*); the
-       bespoke .evd-teams/.evd-team/.evd-center/.evd-pill rules were removed
-       with it. .evd-chip is kept — still used by the analytics/upsell
-       sections below. */
-    .evd-header { margin-bottom: var(--space-5); }
+    /* ── Misc chip ───────────────────────────────────────────────── */
+    /* .evd-chip is still used by the season-to-date header label. The hero
+       now lives under .evt-hero (see above); the bespoke .evd-header/.evd-teams
+       rules were retired with the redesign. */
     .evd-chip {
         font-size: .68rem; font-weight: 700;
         padding: .15rem .55rem; border-radius: 999px;
@@ -583,6 +749,9 @@
 
 {% block scripts %}
 {{ block.super }}
+{% if not is_past %}
+<script src="{% static 'js/pages/event-countdown.js' %}" defer></script>
+{% endif %}
 {% if form_detail.home or form_detail.away or h2h_last_5 %}
 <script src="{% static 'vendor/chartjs/chart.umd.min.js' %}"></script>
 <script src="{% static 'js/pages/event-detail-charts.js' %}"></script>

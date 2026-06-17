@@ -75,6 +75,23 @@
                 {% include "portal/components/_field.html" with field=form.email %}
                 {% include "portal/components/_field.html" with field=form.bio hint="Up to 280 characters." %}
 
+                <div class="grid-profile-two">
+                    <div class="field">
+                        <label for="{{ form.home_color.id_for_label }}" class="field-label">Your home color</label>
+                        <input type="color" name="home_color" id="{{ form.home_color.id_for_label }}"
+                               class="field-input"
+                               value="{{ form.home_color.value|default:'#17B6BE' }}">
+                        {% for error in form.home_color.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                    </div>
+                    <div class="field">
+                        <label for="{{ form.away_color.id_for_label }}" class="field-label">Your away color</label>
+                        <input type="color" name="away_color" id="{{ form.away_color.id_for_label }}"
+                               class="field-input"
+                               value="{{ form.away_color.value|default:'#D8453B' }}">
+                        {% for error in form.away_color.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                    </div>
+                </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn-ui btn-ui--primary">Save changes</button>
                     <a class="btn-ui btn-ui--ghost" href="{% url 'core-portal:portal-dashboard' %}">Cancel</a>

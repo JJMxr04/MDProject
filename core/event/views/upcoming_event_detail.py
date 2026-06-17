@@ -106,9 +106,22 @@ def upcoming_event_detail(request, event_id):
     # markets / analytics sections below).
     fixture = fixture_from_dict(body)
 
+    # Hero win-probability bars. Soccer-only: the model returns probabilities
+    # only for sports with a parked-or-live model, so this is None elsewhere
+    # and the template hides the bars.
+    win_prob = _win_prob(analytics_ctx.get("model_prob"))
+
+    # Tab visibility — only render the Odds / Analytics tabs when there is
+    # something in them (the page degrades to just Overview otherwise).
+    has_odds = bool(markets)
+    has_analytics = _has_analytics(analytics_ctx)
+
     ctx = {
         "event": event_view,
         "fixture": fixture,
+        "win_prob": win_prob,
+        "has_odds": has_odds,
+        "has_analytics": has_analytics,
         # Raw aggregator dict — used by ``{% humanize_pick_payload %}``
         # so the template can render plain-English selection labels
         # without us having to maintain dict-or-attribute fallbacks
@@ -121,6 +134,39 @@ def upcoming_event_detail(request, event_id):
     }
     ctx.update(analytics_ctx)
     return render(request, "portal/event/upcoming_event_detail.html", ctx)
+
+
+def _win_prob(model_prob: dict | None) -> dict | None:
+    """Hero win-probability bars from the model's home/away probabilities.
+
+    Returns ``None`` when no model probability is available (e.g. non-soccer
+    events, where the template hides the bars). The draw probability is folded
+    away — the bars are a two-sided home-vs-away split.
+    """
+    if not model_prob or model_prob.get("p_home") is None:
+        return None
+    p_home = model_prob.get("p_home")
+    p_away = model_prob.get("p_away")
+    return {
+        "p_home": p_home,
+        "p_away": p_away,
+        "home_pct": round((p_home or 0) * 100),
+        "away_pct": round((p_away or 0) * 100),
+    }
+
+
+def _has_analytics(analytics_ctx: dict) -> bool:
+    """Whether the Analytics tab has any populated section to show."""
+    h2h = analytics_ctx.get("h2h_aggregate") or {}
+    form = analytics_ctx.get("form_detail") or {}
+    hist = analytics_ctx.get("historical_stats") or {}
+    return bool(
+        h2h.get("played")
+        or analytics_ctx.get("h2h_last_5")
+        or form.get("home") or form.get("away")
+        or hist.get("home") or hist.get("away")
+        or analytics_ctx.get("edge_rows")
+    )
 
 
 def _build_edge_rows(model_prob: dict | None, live_odds: dict | None) -> list[dict]:
@@ -347,5 +393,8 @@ def _legacy_local_db_path(request, event_id):
     return render(
         request,
         "portal/event/upcoming_event_detail.html",
-        {"event": event, "markets": markets},
+        {
+            "event": event, "markets": markets, "win_prob": None,
+            "has_odds": bool(markets), "has_analytics": False,
+        },
     )
