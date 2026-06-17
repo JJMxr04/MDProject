@@ -93,6 +93,42 @@ class MatchDetailFixtureTests(TestCase):
         self.assertContains(resp, "vs-card__side--home")
         self.assertContains(resp, "vs-card__side--away")
 
+    def test_player_hero_carries_per_side_colors(self):
+        # The hero context dicts surface each player's own home/away color:
+        # the home side uses player_1's home_color, the away side uses
+        # player_2's away_color. NULL → None (CSS default applies).
+        self.p1.home_color = "#112233"
+        self.p1.away_color = "#445566"
+        self.p1.save(update_fields=["home_color", "away_color"])
+        self.p2.home_color = "#778899"
+        self.p2.away_color = "#AABBCC"
+        self.p2.save(update_fields=["home_color", "away_color"])
+
+        resp = self._get()
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.context["home_player"]["color"], "#112233")
+        self.assertEqual(resp.context["away_player"]["color"], "#AABBCC")
+
+    def test_player_hero_colors_default_to_none(self):
+        # Unset colors leave the dicts' color None so the template omits the
+        # inline var and the CSS blue/red default takes over.
+        resp = self._get()
+        self.assertEqual(resp.status_code, 200)
+        self.assertIsNone(resp.context["home_player"]["color"])
+        self.assertIsNone(resp.context["away_player"]["color"])
+
+    def test_player_hero_handles_missing_opponent(self):
+        # A match without an opponent (player_2 None) must not blow up on the
+        # away color; it falls back to None.
+        from core.match.tests.factories import make_match
+        solo = make_match(self.p1, None, accept=False)
+        self.client.force_login(self.p1)
+        resp = self.client.get(
+            reverse("core-portal:portal-my-match-detail", args=[solo.id])
+        )
+        self.assertEqual(resp.status_code, 200)
+        self.assertIsNone(resp.context["away_player"]["color"])
+
     def test_fixtures_do_not_nplus1_on_team_logos(self):
         # Team.logo_url reads the reverse OneToOne Team.logo (TeamLogo). The
         # games queryset must select_related it so the per-game fixtures don't

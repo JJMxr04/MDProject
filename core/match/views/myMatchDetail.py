@@ -160,12 +160,16 @@ def my_match_detail_view(request, match_id):
         'name': match.player_1.username if match.player_1 else "",
         'sub': levels.get(match.player_1_id),
         'pick': None,
+        # Home side tints with the player's chosen home_color (NULL → CSS
+        # default brand-blue). away side uses away_color.
+        'color': match.player_1.home_color if match.player_1 else None,
     }
     away_player = {
         'user': match.player_2,
         'name': match.player_2.username if match.player_2 else "Waiting for opponent",
         'sub': levels.get(p2_id),
         'pick': None,
+        'color': match.player_2.away_color if match.player_2 else None,
     }
 
     context = {

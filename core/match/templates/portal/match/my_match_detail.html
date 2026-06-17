@@ -2,7 +2,7 @@
 {% load static portal_state %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/portal/components/cards.css' %}">
     <style>
         .match-hero { margin-bottom: var(--space-5); }
         .match-hero__scoreline {
@@ -21,10 +21,37 @@
             letter-spacing: .06em; color: var(--state-success);
             font-weight: var(--weight-semibold);
         }
+
+        /* Migrated from the retired match-detail stylesheet (still-live rules). */
+        .game-info { border-top: 1px solid var(--border-default); padding-top: var(--space-5); }
+        .upload-button {
+            display: block; margin: var(--space-5) auto; padding: var(--space-3) var(--space-5);
+            background: var(--brand-yellow); color: var(--text-on-accent);
+            border: none; border-radius: var(--radius-md); cursor: pointer;
+            font-size: var(--text-md); font-weight: var(--weight-semibold);
+        }
+        .upload-button:hover { background: var(--brand-yellow-alt); }
+        .player-games-container { display: flex; gap: var(--space-5); margin-top: var(--space-5); }
+        .player-games {
+            flex: 1 1 0; min-width: 0;
+            background: var(--surface-muted); border-radius: var(--radius-md);
+            padding: var(--space-5);
+        }
+        .player-games h3 {
+            margin-top: 0; color: var(--text-primary);
+            border-bottom: 2px solid var(--border-default); padding-bottom: var(--space-2);
+        }
+
+        @media (max-width: 640px) {
+            .match-hero__scoreline { grid-template-columns: 1fr; gap: var(--space-3); }
+            .player-games-container { flex-direction: column; }
+        }
     </style>
 {% endblock css %}
 
 {% block content %}
+<div class="page-layout">
+<div class="page-layout__main">
 <nav aria-label="Breadcrumb" class="breadcrumbs">
     <ol>
         <li><a href="/web/portal/match/me/">Matches</a></li>
@@ -32,7 +59,7 @@
     </ol>
 </nav>
 
-<div class="match-detail">
+<div class="match-detail-body">
     <section class="card-ui match-hero">
         {% include "portal/components/_player_vs.html" with home_player=home_player away_player=away_player %}
         <div class="match-hero__scoreline">
@@ -116,7 +143,9 @@
     </div>
 
     {% csrf_token %}
-</div>
+</div>{# /.match-detail-body #}
+</div>{# /.page-layout__main #}
+</div>{# /.page-layout #}
 
 {{ available_events|json_script:"available-events-data" }}
 

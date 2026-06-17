@@ -3,7 +3,7 @@ ctx: home_player, away_player — each a dict/object with:
   .user  (for _avatar.html), .name, optional .sub, optional .pick
 {% endcomment %}
 <section class="vs-card">
-    <div class="vs-card__side vs-card__side--home">
+    <div class="vs-card__side vs-card__side--home"{% if home_player.color %} style="--side-tint: {{ home_player.color }};"{% endif %}>
         {% if home_player.user %}{% include "portal/components/_avatar.html" with user=home_player.user size=72 %}{% endif %}
         <div class="vs-card__name">{{ home_player.name }}</div>
         {% if home_player.sub %}<div class="vs-card__wr">{{ home_player.sub }}</div>{% endif %}
@@ -14,7 +14,7 @@ ctx: home_player, away_player — each a dict/object with:
         <span class="vs-card__glyph">VS</span>
     </div>
 
-    <div class="vs-card__side vs-card__side--away">
+    <div class="vs-card__side vs-card__side--away"{% if away_player.color %} style="--side-tint: {{ away_player.color }};"{% endif %}>
         {% if away_player.user %}{% include "portal/components/_avatar.html" with user=away_player.user size=72 %}{% endif %}
         <div class="vs-card__name">{{ away_player.name }}</div>
         {% if away_player.sub %}<div class="vs-card__wr">{{ away_player.sub }}</div>{% endif %}

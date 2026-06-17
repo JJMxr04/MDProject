@@ -63,6 +63,9 @@ a.vs-mini:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); col
     background: linear-gradient(120deg, color-mix(in srgb, var(--brand-blue) 10%, var(--surface-card)) 0%, var(--surface-card) 50%, color-mix(in srgb, var(--state-danger) 9%, var(--surface-card)) 100%);
     border: 1px solid var(--border-strong); }
 .vs-card__side { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); text-align: center; }
+.vs-card__side--home { --side-tint: var(--brand-blue); }
+.vs-card__side--away { --side-tint: var(--state-danger); }
+.vs-card__side .avatar { background: var(--side-tint, var(--surface-muted)); }
 .vs-card__name { font-size: var(--text-lg); font-weight: var(--weight-bold); }
 .vs-card__wr { font-size: var(--text-xs); color: var(--text-secondary); }
 .vs-card__pick { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
