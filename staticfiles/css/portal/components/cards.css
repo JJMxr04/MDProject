@@ -37,13 +37,17 @@
     font-weight: var(--weight-bold); color: var(--state-danger); letter-spacing: .08em; }
 .matchup__live-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--state-danger); animation: vs-pulse 1.4s ease-in-out infinite; }
 @keyframes vs-pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.matchup__status { font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: .06em;
+    padding: 2px var(--space-2); border-radius: 999px; background: var(--surface-muted); color: var(--text-secondary); }
+.matchup__status--postponed { background: color-mix(in srgb, var(--state-warning) 14%, transparent); color: var(--state-warning); }
+.matchup__status--canceled { background: color-mix(in srgb, var(--state-danger) 12%, transparent); color: var(--state-danger); }
 .matchup__winner { display: inline-flex; align-items: center; gap: 6px; align-self: center;
     font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--state-success);
     background: color-mix(in srgb, var(--state-success) 12%, transparent); padding: 3px var(--space-3); border-radius: 999px; }
 .matchup__winner i { font-size: .8rem; }
 /* cool/warm side tints — the one strong visual borrow from the reference */
-.matchup__team--home { background: linear-gradient(180deg, color-mix(in srgb, var(--brand-blue) 8%, transparent), transparent); border-radius: var(--radius-md); padding: var(--space-2); }
-.matchup__team--away { background: linear-gradient(180deg, color-mix(in srgb, var(--state-danger) 7%, transparent), transparent); border-radius: var(--radius-md); padding: var(--space-2); }
+.matchup__team--home { background: linear-gradient(180deg, color-mix(in srgb, var(--team-tint, var(--brand-blue)) 8%, transparent), transparent); border-radius: var(--radius-md); padding: var(--space-2); }
+.matchup__team--away { background: linear-gradient(180deg, color-mix(in srgb, var(--team-tint, var(--state-danger)) 7%, transparent), transparent); border-radius: var(--radius-md); padding: var(--space-2); }
 
 /* ---- VS mini card (grid item shell) ------------------------------------ */
 .vs-mini { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4);

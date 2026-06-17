@@ -71,10 +71,15 @@ def my_match_detail_view(request, match_id):
     games_qs = match.games.select_related(
         "event", "event__league", "event__sport",
         "event__home_team", "event__away_team",
+        # ``Team.logo_url`` (used by the per-game fixture below) reads the
+        # reverse OneToOne ``Team.logo`` (TeamLogo) — select_related it so the
+        # fixtures don't N+1, and defer the heavy ``image`` BYTEA column we
+        # never render here (only ``status`` is read).
+        "event__home_team__logo", "event__away_team__logo",
         "bet", "bet__owner_outcome", "bet__player_2_outcome",
         "bet__owner_outcome__market", "bet__locked_market",
         "owner", "player_2",
-    )
+    ).defer("event__home_team__logo__image", "event__away_team__logo__image")
     player_1_games = (
         list(games_qs.filter(owner=match.player_1, is_golden=False).order_by("slot"))
         if match.player_1 else []
@@ -88,6 +93,18 @@ def my_match_detail_view(request, match_id):
     # to call the ``match.golden_game`` property repeatedly, each access a
     # fresh unjoined query.
     golden_game = games_qs.filter(is_golden=True).first()
+
+    # Shared team-matchup fixture per game (MDProject Event/Team data → local
+    # logos + primary_color tint + score/status). games_qs select_relateds
+    # event__home_team/away_team(+__logo) and league/sport, so this reads
+    # already-loaded objects — no per-game queries.
+    from core.portal.cards import fixture_from_event
+    for _g in (
+        *player_1_games,
+        *player_2_games,
+        *([golden_game] if golden_game else []),
+    ):
+        _g.fixture = fixture_from_event(_g.event)
 
     # Rank flair for the match header (phase 8) — level + current-season
     # division for both players, one query each.
@@ -136,9 +153,26 @@ def my_match_detail_view(request, match_id):
             track(viewer, "paywall_viewed",
                   feature="opponent_scouting", context="match_detail")
 
+    # Player-vs-player hero (shared _player_vs.html). sub = level chip text;
+    # division stays on the surrounding flair, not the hero.
+    home_player = {
+        'user': match.player_1,
+        'name': match.player_1.username if match.player_1 else "",
+        'sub': levels.get(match.player_1_id),
+        'pick': None,
+    }
+    away_player = {
+        'user': match.player_2,
+        'name': match.player_2.username if match.player_2 else "Waiting for opponent",
+        'sub': levels.get(p2_id),
+        'pick': None,
+    }
+
     context = {
         'match': match,
         'is_player_in_match': is_player_in_match,
+        'home_player': home_player,
+        'away_player': away_player,
         'available_events': events_ser,
         'player_1_games': player_1_games,
         'player_2_games': player_2_games,

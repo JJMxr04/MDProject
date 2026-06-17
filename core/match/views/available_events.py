@@ -25,9 +25,11 @@ from django.views.decorators.http import require_GET
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
+    absolutize_logo_url,
 )
 from core.match.decorators import player_in_match_required
 from core.match.models import Match
+from core.portal.cards import resolve_matchup_tints
 
 logger = logging.getLogger(__name__)
 
@@ -47,14 +49,28 @@ CACHE_TTL = 30  # seconds; matches plan §2.4.2 table
 
 def _shape_for_popup(item: dict) -> dict:
     """Tiny adapter — popup JS uses ``event_id`` everywhere; aggregator's
-    schema field is ``id``. Add the alias; leave the rest of the (now-enriched)
-    shape alone — sport/league/home_team/away_team already arrive nested.
-
-    Same role MDProject's legacy ``EventSerializer`` used to play; we just
-    don't need a Django serializer because the aggregator side already
-    produces the right shape.
+    schema field is ``id``. Add the alias; absolutize team logos at the
+    source (the popup renders client-side and must not rebuild URLs against
+    MDProject's origin); and resolve the matchup tints from each team's
+    primary_color so the JS only applies the already-computed values.
     """
-    return {**item, "event_id": item["id"]}
+    home = dict(item.get("home_team") or {})
+    away = dict(item.get("away_team") or {})
+    if home:
+        home["logo_url"] = absolutize_logo_url(home.get("logo_url"))
+    if away:
+        away["logo_url"] = absolutize_logo_url(away.get("logo_url"))
+    home_tint, away_tint = resolve_matchup_tints(
+        home.get("primary_color"), away.get("primary_color")
+    )
+    out = {**item, "event_id": item["id"]}
+    if home:
+        out["home_team"] = home
+    if away:
+        out["away_team"] = away
+    out["home_tint"] = home_tint
+    out["away_tint"] = away_tint
+    return out
 
 
 def build_available_events(match: Match) -> list[dict]:

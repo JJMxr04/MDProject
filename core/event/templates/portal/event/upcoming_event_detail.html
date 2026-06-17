@@ -14,52 +14,7 @@
 
 <section class="card-ui evd-header">
     <div class="card-ui__body">
-        <div class="evd-teams">
-            <div class="evd-team">
-                {% include "portal/components/_team_logo.html" with team=event.home_team size=96 %}
-                <h2 class="evd-team__name">{{ event.home_team.name|default:"TBD" }}</h2>
-                {% if event.home_score is not None %}
-                    <div class="evd-team__score {% if event.winner_code == 1 %}is-winner{% endif %}">{{ event.home_score }}</div>
-                {% endif %}
-            </div>
-
-            <div class="evd-center">
-                <div class="evd-vs">VS</div>
-                <div class="evd-status-row">
-                    {% if event.is_live %}
-                        <span class="evd-pill evd-pill--live"><i class="bi bi-broadcast"></i> LIVE</span>
-                    {% elif event.is_finalized %}
-                        <span class="evd-pill evd-pill--final">FINAL</span>
-                    {% elif event.status_type == "notstarted" %}
-                        <span class="evd-pill evd-pill--upcoming">Upcoming</span>
-                    {% elif event.status_type == "postponed" %}
-                        <span class="evd-pill evd-pill--warn">Postponed</span>
-                    {% elif event.status_type == "canceled" %}
-                        <span class="evd-pill evd-pill--danger">Canceled</span>
-                    {% elif event.status_display %}
-                        <span class="evd-pill">{{ event.status_display }}</span>
-                    {% endif %}
-                </div>
-                {% if event.start_time %}
-                    <time class="evd-time" datetime="{{ event.start_time|date:'c' }}" data-time="{{ event.start_time|date:'c' }}">
-                        {{ event.start_time|date:"M j, Y · g:i A" }}
-                    </time>
-                {% endif %}
-                <div class="evd-chips">
-                    {% if event.sport %}<span class="evd-chip evd-chip--sport">{{ event.sport.name|capfirst }}</span>{% endif %}
-                    {% if event.league %}<span class="evd-chip evd-chip--league">{{ event.league.name }}</span>{% endif %}
-                    {% if event.season_label %}<span class="evd-chip">{{ event.season_label }}</span>{% endif %}
-                </div>
-            </div>
-
-            <div class="evd-team">
-                {% include "portal/components/_team_logo.html" with team=event.away_team size=96 %}
-                <h2 class="evd-team__name">{{ event.away_team.name|default:"TBD" }}</h2>
-                {% if event.away_score is not None %}
-                    <div class="evd-team__score {% if event.winner_code == 2 %}is-winner{% endif %}">{{ event.away_score }}</div>
-                {% endif %}
-            </div>
-        </div>
+        {% include "portal/components/_event_matchup.html" with fixture=fixture %}
     </div>
 </section>
 
@@ -456,69 +411,18 @@
     }
 
     /* ── Header card ─────────────────────────────────────────────── */
+    /* The team matchup now renders via the shared
+       portal/components/_event_matchup.html partial (.matchup-*); the
+       bespoke .evd-teams/.evd-team/.evd-center/.evd-pill rules were removed
+       with it. .evd-chip is kept — still used by the analytics/upsell
+       sections below. */
     .evd-header { margin-bottom: var(--space-5); }
-    .evd-teams {
-        display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-        gap: var(--space-5);
-    }
-    .evd-team {
-        display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
-        text-align: center;
-    }
-    .evd-team img {
-        width: 96px; height: 96px; object-fit: contain;
-        background: var(--surface-muted, #f5f7fa); border-radius: var(--radius-lg);
-        padding: var(--space-2);
-        border: 1px solid var(--evd-border);
-    }
-    .evd-team__initials {
-        width: 96px; height: 96px;
-        display: grid; place-items: center;
-        background: var(--surface-muted, #f5f7fa); border-radius: var(--radius-lg);
-        font-weight: var(--weight-bold); color: var(--brand-blue-dark, #275d81);
-        font-size: var(--text-3xl);
-    }
-    .evd-team__name {
-        margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold);
-    }
-    .evd-team__score {
-        font-size: var(--text-3xl); font-weight: var(--weight-bold);
-        color: var(--text-secondary);
-        font-variant-numeric: tabular-nums;
-    }
-    .evd-team__score.is-winner { color: var(--state-success, #2f9e6b); }
-
-    .evd-center {
-        display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    }
-    .evd-vs {
-        font-size: .8rem; font-weight: 700;
-        color: var(--text-secondary, #6b7280); letter-spacing: .12em;
-    }
-    .evd-status-row { display: flex; gap: .35rem; }
-    .evd-time { font-size: .85rem; color: var(--text-secondary, #6b7280); }
-    .evd-chips { display: flex; flex-wrap: wrap; gap: .3rem; justify-content: center; }
     .evd-chip {
         font-size: .68rem; font-weight: 700;
         padding: .15rem .55rem; border-radius: 999px;
         background: var(--evd-bg-soft); color: var(--text-secondary, #6b7280);
         text-transform: uppercase; letter-spacing: .04em;
     }
-    .evd-chip--sport { background: var(--fill-info-bg); color: var(--evd-fav); }
-    .evd-chip--league { background: var(--fill-success-bg); color: var(--evd-dog); }
-
-    .evd-pill {
-        display: inline-flex; align-items: center; gap: .3rem;
-        font-size: .72rem; font-weight: 700;
-        padding: .2rem .6rem; border-radius: 999px;
-        background: var(--evd-bg-soft); color: var(--text-secondary);
-        text-transform: uppercase; letter-spacing: .05em;
-    }
-    .evd-pill--live { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
-    .evd-pill--final { background: var(--fill-neutral-bg); color: var(--fill-neutral-text); }
-    .evd-pill--upcoming { background: var(--fill-info-bg); color: var(--evd-fav); }
-    .evd-pill--warn { background: var(--fill-warning-bg); color: var(--evd-line); }
-    .evd-pill--danger { background: var(--fill-danger-bg); color: var(--fill-danger-text); }
 
     /* ── Markets layout ─────────────────────────────────────────── */
     .evd-markets-header {
@@ -674,11 +578,6 @@
         padding: .15rem .25rem;
     }
     .evd-book__link:hover { color: var(--evd-fav); }
-
-    @media (max-width: 640px) {
-        .evd-teams { grid-template-columns: 1fr; }
-        .evd-team img, .evd-team__initials { width: 72px; height: 72px; font-size: var(--text-2xl); }
-    }
 </style>
 {% endblock css %}
 

@@ -4,28 +4,23 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/portal/match/my_match_detail.css' %}">
     <style>
-        .match-header-ui {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: var(--space-5);
-            padding: var(--space-5);
-            margin-bottom: var(--space-5);
+        .match-hero { margin-bottom: var(--space-5); }
+        .match-hero__scoreline {
+            display: grid; grid-template-columns: 1fr auto 1fr;
+            align-items: center; gap: var(--space-5);
+            margin-top: var(--space-4);
         }
-        .match-header-ui__side {
+        .match-hero__side {
             display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
             text-align: center;
         }
-        .match-header-ui__name { font-weight: var(--weight-semibold); }
-        .match-header-ui__score { font-size: var(--text-3xl); font-weight: var(--weight-bold); line-height: 1; }
-        .match-header-ui__side.is-winner { color: var(--state-success); }
-        .match-header-ui__side.is-winner::after {
+        .match-hero__score { font-size: var(--text-3xl); font-weight: var(--weight-bold); line-height: 1; }
+        .match-hero__side.is-winner { color: var(--state-success); }
+        .match-hero__side.is-winner::after {
             content: "Winner"; font-size: var(--text-xs); text-transform: uppercase;
             letter-spacing: .06em; color: var(--state-success);
             font-weight: var(--weight-semibold);
         }
-        .match-header-ui__center { display: flex; flex-direction: column; gap: var(--space-2); align-items: center; }
-        .match-header-ui__vs { color: var(--text-secondary); font-weight: var(--weight-semibold); font-size: var(--text-sm); }
     </style>
 {% endblock css %}
 
@@ -38,27 +33,20 @@
 </nav>
 
 <div class="match-detail">
-    <section class="card-ui match-header-ui">
-        <div class="match-header-ui__side {% if match.winner == match.player_1 %}is-winner{% endif %}">
-            {% include "portal/components/_avatar.html" with user=match.player_1 size=64 %}
-            <div class="match-header-ui__name">{{ match.player_1.username }}</div>
-            {% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}
-            <div class="match-header-ui__score">{{ match.player_1_score }}</div>
-        </div>
-        <div class="match-header-ui__center">
-            <span class="match-header-ui__vs">VS</span>
+    <section class="card-ui match-hero">
+        {% include "portal/components/_player_vs.html" with home_player=home_player away_player=away_player %}
+        <div class="match-hero__scoreline">
+            <div class="match-hero__side {% if match.winner == match.player_1 %}is-winner{% endif %}">
+                {% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}
+                <div class="match-hero__score">{{ match.player_1_score }}</div>
+            </div>
             {% include "portal/components/_badge.html" with state=match.match_state %}
-        </div>
-        <div class="match-header-ui__side {% if match.winner == match.player_2 %}is-winner{% endif %}">
-            {% if match.player_2 %}
-                {% include "portal/components/_avatar.html" with user=match.player_2 size=64 %}
-                <div class="match-header-ui__name">{{ match.player_2.username }}</div>
-                {% include "portal/components/_player_flair.html" with level=player_2_level division=player_2_division %}
-                <div class="match-header-ui__score">{{ match.player_2_score }}</div>
-            {% else %}
-                <div class="avatar" style="--avatar-size: 64px;"><span class="avatar__initials">?</span></div>
-                <div class="match-header-ui__name text-muted">Waiting for opponent</div>
-            {% endif %}
+            <div class="match-hero__side {% if match.winner == match.player_2 %}is-winner{% endif %}">
+                {% if match.player_2 %}
+                    {% include "portal/components/_player_flair.html" with level=player_2_level division=player_2_division %}
+                    <div class="match-hero__score">{{ match.player_2_score }}</div>
+                {% endif %}
+            </div>
         </div>
     </section>
 
@@ -132,16 +120,15 @@
 
 {{ available_events|json_script:"available-events-data" }}
 
-<div class="modal fade" id="pickModal" tabindex="-1" aria-labelledby="pickModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header pickmodal-header">
-        <h2 class="modal-title h5 mb-0" id="pickModalLabel">Make a pick</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+<div class="modal-ui" id="pickModal" role="dialog" aria-modal="true" aria-labelledby="pickModalLabel" data-modal>
+  <div class="modal-ui__content">
+    <header class="modal-ui__header">
+      <h2 id="pickModalLabel">Make a pick</h2>
+      <button type="button" class="modal-ui__close" data-modal-close aria-label="Close">&times;</button>
+    </header>
 
-      <div class="modal-body p-0">
-        
+    <div class="modal-ui__body">
+
         <div id="pickStep-events" class="pickstep" hidden>
           <div class="pickstep__toolbar">
             <input type="search" id="pickEventSearch" class="form-control form-control-sm"
@@ -182,23 +169,22 @@
             <p class="text-center text-muted p-4">Loading markets…</p>
           </div>
         </div>
-      </div>
-
-      <div class="modal-footer pickmodal-footer">
-        <div class="pickmodal-preview me-auto">
-          <span class="text-muted me-2">Selected:</span>
-          <span id="pickPreview"><em class="text-muted">none</em></span>
-        </div>
-        <div id="goldenTotalField" class="pickmodal-golden-total" hidden>
-          <label for="goldenTotalInput">Predict the final total score</label>
-          <input type="number" min="0" step="1" id="goldenTotalInput"
-                 placeholder="e.g. 3" autocomplete="off">
-          <span class="text-muted small">Required — breaks ties if the match ends level.</span>
-        </div>
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="pickSubmitBtn" disabled>Submit pick</button>
-      </div>
     </div>
+
+    <footer class="modal-ui__footer pickmodal-footer">
+      <div class="pickmodal-preview me-auto">
+        <span class="text-muted me-2">Selected:</span>
+        <span id="pickPreview"><em class="text-muted">none</em></span>
+      </div>
+      <div id="goldenTotalField" class="pickmodal-golden-total" hidden>
+        <label for="goldenTotalInput">Predict the final total score</label>
+        <input type="number" min="0" step="1" id="goldenTotalInput"
+               placeholder="e.g. 3" autocomplete="off">
+        <span class="text-muted small">Required — breaks ties if the match ends level.</span>
+      </div>
+      <button type="button" class="btn-ui btn-ui--secondary" data-modal-close>Cancel</button>
+      <button type="button" class="btn-ui btn-ui--primary" id="pickSubmitBtn" disabled>Submit pick</button>
+    </footer>
   </div>
 </div>
 

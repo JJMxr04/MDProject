@@ -41,14 +41,7 @@ Required context:
             </p>
         {% endif %}
 
-        <div class="golden-game">
-            <div class="team">
-                <h4>{{ event.home_team.name|default:"TBD" }}</h4>
-            </div>
-            <div class="team">
-                <h4>{{ event.away_team.name|default:"TBD" }}</h4>
-            </div>
-        </div>
+        {% include "portal/components/_event_matchup.html" with fixture=game.fixture %}
 
         <div class="bet-info">
             <h4>Bet Details:</h4>

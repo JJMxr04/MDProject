@@ -13,10 +13,10 @@ center, and a winner pill when final.{% endcomment %}
     </div>
 
     <div class="matchup__teams">
-        <div class="matchup__team matchup__team--home">
+        <div class="matchup__team matchup__team--home"{% if fixture.home.tint %} style="--team-tint: {{ fixture.home.tint }};"{% endif %}>
             {% include "portal/components/_team_logo.html" with team=fixture.home size=44 %}
             <span class="matchup__name">{{ fixture.home.name }}</span>
-            {% if fixture.status == "final" %}<span class="matchup__score">{{ fixture.home.score|default:"–" }}</span>{% endif %}
+            {% if fixture.status == "final" or fixture.status == "live" %}<span class="matchup__score">{{ fixture.home.score|default:"–" }}</span>{% endif %}
         </div>
 
         <div class="matchup__center">
@@ -24,15 +24,19 @@ center, and a winner pill when final.{% endcomment %}
                 <span class="matchup__dash">—</span>
             {% elif fixture.status == "live" %}
                 <span class="matchup__live"><span class="matchup__live-dot"></span>LIVE</span>
+            {% elif fixture.status == "postponed" %}
+                <span class="matchup__status matchup__status--postponed" title="Postponed">PPD</span>
+            {% elif fixture.status == "canceled" %}
+                <span class="matchup__status matchup__status--canceled" title="Canceled">CXL</span>
             {% else %}
                 <span class="matchup__vs">VS</span>
             {% endif %}
         </div>
 
-        <div class="matchup__team matchup__team--away">
+        <div class="matchup__team matchup__team--away"{% if fixture.away.tint %} style="--team-tint: {{ fixture.away.tint }};"{% endif %}>
             {% include "portal/components/_team_logo.html" with team=fixture.away size=44 %}
             <span class="matchup__name">{{ fixture.away.name }}</span>
-            {% if fixture.status == "final" %}<span class="matchup__score">{{ fixture.away.score|default:"–" }}</span>{% endif %}
+            {% if fixture.status == "final" or fixture.status == "live" %}<span class="matchup__score">{{ fixture.away.score|default:"–" }}</span>{% endif %}
         </div>
     </div>
 

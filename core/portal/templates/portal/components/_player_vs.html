@@ -1,0 +1,23 @@
+{% comment %}Generic player-vs-player hero. Reuses .vs-card / .vs-card__side.
+ctx: home_player, away_player — each a dict/object with:
+  .user  (for _avatar.html), .name, optional .sub, optional .pick
+{% endcomment %}
+<section class="vs-card">
+    <div class="vs-card__side vs-card__side--home">
+        {% if home_player.user %}{% include "portal/components/_avatar.html" with user=home_player.user size=72 %}{% endif %}
+        <div class="vs-card__name">{{ home_player.name }}</div>
+        {% if home_player.sub %}<div class="vs-card__wr">{{ home_player.sub }}</div>{% endif %}
+        {% if home_player.pick %}<div class="vs-card__pick">{{ home_player.pick }}</div>{% endif %}
+    </div>
+
+    <div class="vs-card__mid">
+        <span class="vs-card__glyph">VS</span>
+    </div>
+
+    <div class="vs-card__side vs-card__side--away">
+        {% if away_player.user %}{% include "portal/components/_avatar.html" with user=away_player.user size=72 %}{% endif %}
+        <div class="vs-card__name">{{ away_player.name }}</div>
+        {% if away_player.sub %}<div class="vs-card__wr">{{ away_player.sub }}</div>{% endif %}
+        {% if away_player.pick %}<div class="vs-card__pick">{{ away_player.pick }}</div>{% endif %}
+    </div>
+</section>

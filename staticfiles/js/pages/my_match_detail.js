@@ -61,8 +61,16 @@ const PickModal = (function () {
 
     function init() {
         const el = document.getElementById('pickModal');
-        modal = new bootstrap.Modal(el);
-        el.addEventListener('hidden.bs.modal', resetState);
+        modal = {
+            el: el,
+            show() { el.classList.add('is-open'); },
+            hide() { el.classList.remove('is-open'); },
+        };
+        // The portal shell (shell.js) removes .is-open on close/backdrop/ESC.
+        // Mirror Bootstrap's hidden.bs.modal → resetState by watching the class.
+        new MutationObserver(() => {
+            if (!el.classList.contains('is-open')) resetState();
+        }).observe(el, { attributes: true, attributeFilter: ['class'] });
 
         document.getElementById('pickBackBtn').addEventListener('click', goToStep1);
         document.getElementById('pickSubmitBtn').addEventListener('click', submit);
@@ -261,6 +269,11 @@ const PickModal = (function () {
         document.getElementById('pickHomeLogo').innerHTML = renderTeamLogo(home);
         document.getElementById('pickAwayLogo').innerHTML = renderTeamLogo(away);
 
+        // Server-resolved tints (absolutize + clash handling live in
+        // _shape_for_popup). Apply only; never recompute here.
+        applyTint(document.getElementById('pickHomeLogo'), ev.home_tint);
+        applyTint(document.getElementById('pickAwayLogo'), ev.away_tint);
+
         const metaEl = document.getElementById('pickEventMeta');
         const chips = [];
         if (ev.sport && ev.sport.name) {
@@ -286,6 +299,15 @@ const PickModal = (function () {
             </span>`);
         }
         metaEl.innerHTML = chips.join('');
+    }
+
+    function applyTint(el, tint) {
+        if (!el) return;
+        if (tint) {
+            el.style.setProperty('--team-tint', tint);
+        } else {
+            el.style.removeProperty('--team-tint');
+        }
     }
 
     function renderTeamLogo(team) {

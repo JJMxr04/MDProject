@@ -28,6 +28,7 @@ from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
 )
+from core.portal.cards import fixture_from_dict
 from core.portal.services import aggrigator_client as analytics_client
 
 logger = logging.getLogger(__name__)
@@ -99,8 +100,15 @@ def upcoming_event_detail(request, event_id):
                 "edge_rows": _build_edge_rows(model_prob, live_odds),
             })
 
+    # Shared matchup cluster (same component as duels / upcoming list).
+    # Built from the RAW aggregator dict so logos are absolutized and the
+    # team primary_color tints apply (the _EventAdapter is kept for the
+    # markets / analytics sections below).
+    fixture = fixture_from_dict(body)
+
     ctx = {
         "event": event_view,
+        "fixture": fixture,
         # Raw aggregator dict — used by ``{% humanize_pick_payload %}``
         # so the template can render plain-English selection labels
         # without us having to maintain dict-or-attribute fallbacks
