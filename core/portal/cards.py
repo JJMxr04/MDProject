@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from django.utils.dateparse import parse_datetime
 
+from core.event.providers.aggregator_client import absolutize_logo_url
+
 
 def _status(*, is_live: bool, is_final: bool) -> str:
     if is_final:
@@ -70,10 +72,14 @@ def fixture_from_dict(ev) -> dict | None:
         "start_time": start,
         "status": status,
         "home": team_side(
-            name=home.get("name"), logo_url=home.get("logo_url"), score=ev.get("home_score")
+            name=home.get("name"),
+            logo_url=absolutize_logo_url(home.get("logo_url")),
+            score=ev.get("home_score"),
         ),
         "away": team_side(
-            name=away.get("name"), logo_url=away.get("logo_url"), score=ev.get("away_score")
+            name=away.get("name"),
+            logo_url=absolutize_logo_url(away.get("logo_url")),
+            score=ev.get("away_score"),
         ),
         "winner_label": ev.get("winner") if status == "final" else None,
     }

@@ -253,8 +253,12 @@ class _TeamAdapter:
         )
         # Plain string so ``{{ team.logo_url }}`` and ``{% if team.logo_url %}``
         # both work — matches the _team_logo.html partial contract and the
-        # legacy Team model's .logo_url property.
-        self.logo_url = team.get("logo_url") or None
+        # legacy Team model's .logo_url property. Absolutize: the aggregator
+        # emits a relative /v1/teams/{id}/logo when its own public-base is
+        # unset, which a browser would resolve against MDProject's origin.
+        from core.event.providers.aggregator_client import absolutize_logo_url
+
+        self.logo_url = absolutize_logo_url(team.get("logo_url")) or None
         # ``team_id`` is the fallback display when ``name`` is blank —
         # several analytics partials do ``team.name|default:team.team_id``.
         # Aggregator payload may carry it as ``id`` or ``team_id`` depending

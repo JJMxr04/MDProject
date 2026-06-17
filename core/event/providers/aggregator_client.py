@@ -57,6 +57,29 @@ def _parse_max_age(cache_control_header: str | None) -> int | None:
         return None
 
 
+def absolutize_logo_url(url: str | None) -> str | None:
+    """Resolve a possibly-relative aggregator logo URL to an absolute,
+    browser-reachable one.
+
+    The aggregator emits a *relative* ``/v1/teams/{id}/logo`` when its own
+    ``AGG_PUBLIC_BASE_URL`` is unset; a browser would resolve that against
+    MDProject's origin (→ 404). Prefix it with the aggregator's public
+    origin: prefer ``AGG_PUBLIC_BASE`` (browser-facing), else fall back to
+    the server-to-server ``AGGRIGATOR_BASE_URL`` (correct for local dev and
+    single-origin deploys). Absolute URLs and non-URLs pass through
+    unchanged, so this is idempotent.
+    """
+    if not url or not url.startswith("/"):
+        return url
+    from django.conf import settings
+
+    base = (
+        (getattr(settings, "AGG_PUBLIC_BASE", "") or "")
+        or getattr(settings, "AGGRIGATOR_BASE_URL", "")
+    ).rstrip("/")
+    return f"{base}{url}" if base else url
+
+
 def _cache_key(method: str, url: str, params: dict) -> str:
     # Stable, length-bounded key — Django's Redis backend doesn't like
     # giant keys, and Memcached caps at 250 bytes. Hash the URL+params
@@ -68,6 +91,18 @@ def _cache_key(method: str, url: str, params: dict) -> str:
 
 class AggrigatorError(Exception):
     """Any non-recoverable aggregator-side failure."""
+
+
+class AggrigatorRateLimited(AggrigatorError):
+    """The aggregator's rate limiter returned 429. Carries the server's
+    ``Retry-After`` (seconds) so callers back off instead of hammering the
+    tripped limiter — distinct from a real failure or a 404 miss."""
+
+    def __init__(self, team_id: str, retry_after: int):
+        self.retry_after = retry_after
+        super().__init__(
+            f"GET logo {team_id} rate limited (429); retry after {retry_after}s"
+        )
 
 
 class AggrigatorClient:
@@ -140,6 +175,13 @@ class AggrigatorClient:
             raise AggrigatorError(f"GET logo {team_id} failed: {exc}") from exc
         if resp.status_code == 404:
             return None
+        if resp.status_code == 429:
+            raw = resp.headers.get("Retry-After")
+            try:
+                retry_after = int(raw) if raw else 60
+            except (TypeError, ValueError):
+                retry_after = 60
+            raise AggrigatorRateLimited(team_id, retry_after)
         if resp.status_code >= 400:
             raise AggrigatorError(
                 f"GET logo {team_id} returned {resp.status_code}"

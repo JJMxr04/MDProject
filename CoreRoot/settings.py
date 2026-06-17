@@ -556,6 +556,14 @@ USE_X_FORWARDED_HOST = True
 # tags (team logos). May differ from the server-to-server AGGRIGATOR_BASE_URL.
 # Empty -> no extra CSP host added.
 AGG_PUBLIC_BASE = os.environ.get("AGG_PUBLIC_BASE", "").strip()
+# Origin the browser actually loads aggregator logos from. Prefer the
+# explicit public base; fall back to the server-to-server base so logos
+# work locally (same host) without a second env var. Kept in sync with the
+# URL absolutization in aggregator_client.absolutize_logo_url.
+AGG_IMG_ORIGIN = (
+    AGG_PUBLIC_BASE
+    or os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001").strip()
+)
 
 # Content-Security-Policy (S-7) — django-csp, ENFORCED.
 #
@@ -603,7 +611,7 @@ CONTENT_SECURITY_POLICY = {
             "data:",
             "https://*.s3.amazonaws.com",
             "https://pmat.warforaterra.com",
-            *([AGG_PUBLIC_BASE] if AGG_PUBLIC_BASE else []),
+            *([AGG_IMG_ORIGIN] if AGG_IMG_ORIGIN else []),
         ],
         "font-src": ["'self'", "data:"],
         "connect-src": [

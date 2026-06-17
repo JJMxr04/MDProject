@@ -28,7 +28,9 @@ class BackfillTests(TestCase):
     def test_enqueues_only_missing(self):
         with mock.patch.object(logos, "fetch_team_logo_task") as task:
             count = logos.run_backfill_team_logos()
-        task.defer.assert_called_once_with(team_id="usa-nba:38")
+        # Enqueues are paced: task.configure(schedule_in=...).defer(...).
+        deferred = task.configure.return_value.defer
+        deferred.assert_called_once_with(team_id="usa-nba:38")
         self.assertEqual(count, 1)
 
     def test_reenqueues_missing_status_row(self):
@@ -40,6 +42,29 @@ class BackfillTests(TestCase):
         TeamLogo.objects.create(team_id="usa-nba:40", status="missing")
         with mock.patch.object(logos, "fetch_team_logo_task") as task:
             logos.run_backfill_team_logos()
-        called_ids = {c.kwargs["team_id"] for c in task.defer.call_args_list}
+        deferred = task.configure.return_value.defer
+        called_ids = {c.kwargs["team_id"] for c in deferred.call_args_list}
         assert "usa-nba:40" in called_ids   # missing row -> re-enqueued
         assert "usa-nba:39" not in called_ids  # ok row -> skipped
+
+    def test_enqueue_is_paced_with_increasing_schedule(self):
+        # Enough missing teams to span several rate buckets.
+        for tid in range(100, 100 + logos.BACKFILL_ENQUEUE_RATE_PER_SEC * 3):
+            Team.objects.create(
+                id=f"usa-nba:{tid}", league=self.league, team_id=str(tid),
+                sport=self.league.sport, name_long=f"Team {tid}",
+            )
+        with mock.patch.object(logos, "fetch_team_logo_task") as task:
+            logos.run_backfill_team_logos()
+        delays = [
+            c.kwargs["schedule_in"]["seconds"]
+            for c in task.configure.call_args_list
+        ]
+        # Monotonic (paced over time), and not all zero (actually staggered).
+        self.assertEqual(delays, sorted(delays))
+        self.assertGreater(max(delays), 0)
+        # At most RATE_PER_SEC jobs share any one-second start bucket.
+        from collections import Counter
+        self.assertLessEqual(
+            max(Counter(delays).values()), logos.BACKFILL_ENQUEUE_RATE_PER_SEC
+        )
