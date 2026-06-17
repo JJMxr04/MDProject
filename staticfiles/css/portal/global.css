@@ -451,7 +451,6 @@ a:hover { color: var(--brand-blue-bright); }
   display: inline-flex; align-items: center; justify-content: center;
   width: var(--avatar-size); height: var(--avatar-size);
   border-radius: 50%; overflow: hidden;
-  background: var(--surface-muted);
   color: var(--brand-blue-dark);
   font-weight: var(--weight-semibold);
   text-transform: uppercase;

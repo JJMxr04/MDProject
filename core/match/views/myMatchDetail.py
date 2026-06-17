@@ -114,16 +114,40 @@ def my_match_detail_view(request, match_id):
     levels = levels_for(ids)
     divisions = divisions_for(ids)
 
+    # Lifetime W/L for the rail's record panels — PlayerProgress counters
+    # (all match types). One query for both players; the viewer is one of them.
+    from core.ranking.models import PlayerProgress
+
+    def _record(prog):
+        if prog is None:
+            return {"won": 0, "lost": 0, "win_rate": None}
+        won, lost = prog.lifetime_wins, prog.lifetime_losses
+        decided = won + lost
+        return {
+            "won": won, "lost": lost,
+            "win_rate": round(100 * won / decided) if decided else None,
+        }
+
+    _progs = {
+        p.user_id: p
+        for p in PlayerProgress.objects.filter(user_id__in=[i for i in ids if i])
+    }
+    player_1_record = _record(_progs.get(match.player_1_id))
+    player_2_record = _record(_progs.get(p2_id))
+
     # Opponent scouting (phase 9) — the one PRO feature. From the viewer's POV
     # the opponent is the other player. PRO users get their tendencies; FREE
     # users get a teaser + upsell (and a paywall_viewed signal — the headline
     # willingness-to-pay metric now the fake paywall is gone).
     viewer = request.user
     opponent = None
+    your_record = None
     if match.player_1_id == viewer.id:
         opponent = match.player_2
+        your_record = player_1_record
     elif p2_id == viewer.id:
         opponent = match.player_1
+        your_record = player_2_record
 
     scouting = None
     scouting_entitled = False
@@ -185,6 +209,9 @@ def my_match_detail_view(request, match_id):
         'player_2_level': levels.get(p2_id),
         'player_1_division': divisions.get(match.player_1_id),
         'player_2_division': divisions.get(p2_id),
+        'player_1_record': player_1_record,
+        'player_2_record': player_2_record,
+        'your_record': your_record,
         'scout_opponent': opponent,
         'scouting': scouting,
         'scouting_entitled': scouting_entitled,
