@@ -24,9 +24,33 @@ from typing import Any
 import httpx
 from django.conf import settings
 
+from core.event.providers.aggregator_client import proxy_logo_url
+
 logger = logging.getLogger(__name__)
 
 _DEFAULT_TIMEOUT = 4.0  # seconds; analytics queries are read-only + indexed
+
+
+def _proxy_team_logos(payload: Any) -> Any:
+    """Rewrite every nested ``logo_url`` to MDProject's same-origin proxy.
+
+    Analytics payloads (h2h_last_5, form blocks) embed raw aggregator
+    ``/v1/teams/{id}/logo`` URLs that reach the browser via the detail
+    page's json_script blob and the portal analytics API. Left raw they'd
+    hit the key-gated aggregator directly (→401). Walks dicts/lists in
+    place and returns ``payload``; idempotent, since ``proxy_logo_url``
+    passes through already-proxied and non-logo values.
+    """
+    if isinstance(payload, dict):
+        for key, value in payload.items():
+            if key == "logo_url" and (value is None or isinstance(value, str)):
+                payload[key] = proxy_logo_url(value)
+            else:
+                _proxy_team_logos(value)
+    elif isinstance(payload, list):
+        for item in payload:
+            _proxy_team_logos(item)
+    return payload
 
 
 def _base_url() -> str:
