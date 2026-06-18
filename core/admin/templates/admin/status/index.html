@@ -215,6 +215,16 @@
       Enqueues a crest fetch for every team missing an “ok” logo. Runs on the
       worker; watch progress under Recent jobs.
     </p>
+    <form method="post" action="{% url 'core-admin:admin_sync_team_data' %}" style="margin:.75rem 0 0;">
+      {% csrf_token %}
+      <button type="submit" class="pill pill--success" style="border:0;cursor:pointer;">
+        Sync team data
+      </button>
+    </form>
+    <p class="muted" style="margin:.35rem 0 0;">
+      Defers a full team-data sync from the aggregator (names, colors,
+      stat ids). Runs on the worker; watch progress under Recent jobs.
+    </p>
   </div>
 
   <h2>Recent task results (latest 25)</h2>

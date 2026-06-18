@@ -9,6 +9,7 @@ from core.admin.views import (
     status_page,
     status_worker_partial,
     stripe_setup_page,
+    sync_team_data,
     worker_ping_partial,
 )
 
@@ -26,6 +27,9 @@ urlpatterns = [
     # Backfill team logos — enqueue a crest fetch for every team
     # missing an ok logo (POST, staff-only).
     path('status/backfill-logos/', backfill_logos, name='admin_backfill_logos'),
+    # Sync team data — defer a full team-data sync from the aggregator
+    # (POST, staff-only).
+    path('status/sync-team-data/', sync_team_data, name='admin_sync_team_data'),
     path('redis-ping/', redis_ping_partial, name='admin_redis_ping'),
     path('worker-ping/', worker_ping_partial, name='admin_worker_ping'),
     # /admin/check-ping/<name>/ — per-card manual ping on /admin/status/.

@@ -309,6 +309,9 @@ def _upsert_team(team_envelope: dict | None) -> Team | None:
         "name_medium": (team_envelope.get("name_medium") or team_id)[:64],
         "name_short": (team_envelope.get("name_short") or team_id)[:32],
         "primary_color": team_envelope.get("primary_color"),
+        "secondary_color": team_envelope.get("secondary_color"),
+        "primary_contrast": team_envelope.get("primary_contrast"),
+        "secondary_contrast": team_envelope.get("secondary_contrast"),
         "stat_entity_id": (team_envelope.get("stat_entity_id") or "")[:8],
     }
     # (league, team_id) is unique. A row can already hold that pair under a

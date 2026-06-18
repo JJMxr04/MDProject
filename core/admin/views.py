@@ -29,6 +29,7 @@ CHECK_REGISTRY = {
 }
 from core.billing.services import stripe_setup
 from core.event.tasks.logos import run_backfill_team_logos
+from core.event.tasks.team_sync import sync_team_data_task
 
 
 @staff_member_required
@@ -121,6 +122,28 @@ def backfill_logos(request):
         )
     except Exception as exc:  # noqa: BLE001
         messages.error(request, f"Couldn't queue logo backfill: {exc}")
+    return redirect("core-admin:admin_status")
+
+
+@staff_member_required
+@require_http_methods(["POST"])
+def sync_team_data(request):
+    """Enqueue a full team-data sync from the aggregator (design §5).
+
+    Defers ``sync_team_data_task`` onto the Procrastinate queue — the worker
+    pages through the aggregator's /v1/teams and overwrites names + colors +
+    stat_entity_id on every team MDProject already has. Non-blocking,
+    POST-only + staff-gated.
+    """
+    try:
+        sync_team_data_task.defer()
+        messages.success(
+            request,
+            "Team-data sync queued — runs on the worker; refresh Recent jobs "
+            "to watch progress. (Requires the worker service to be running.)",
+        )
+    except Exception as exc:  # noqa: BLE001
+        messages.error(request, f"Couldn't queue team-data sync: {exc}")
     return redirect("core-admin:admin_status")
 
 

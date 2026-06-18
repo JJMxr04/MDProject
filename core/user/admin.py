@@ -1,7 +1,10 @@
+import hashlib
 import uuid
 
+from django import forms
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.forms import UserChangeForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import path, reverse
@@ -21,8 +24,9 @@ from core.billing.services.subscription_sync import (
     refresh_from_stripe as subscription_refresh_from_stripe,
 )
 from core.auth import twofa
+from core.abstract.image_security import validate_image_file, process_image
 
-from .models import User
+from .models import User, UserAvatar
 
 
 # ---- click-to-reveal helpers ----
@@ -88,9 +92,42 @@ def _mask_uuid(value) -> str:
     return f'…{s[-12:]}'
 
 
+class UserAdminForm(UserChangeForm):
+    """User change form + avatar upload/remove controls.
+
+    Avatar bytes live in the ``UserAvatar`` side table (BYTEA), not on
+    ``User``, and every write goes through the image_security pipeline
+    (validate + re-encode to WEBP) — the same path as the portal profile
+    form. Persistence / removal happens in ``UserAdmin.save_model``.
+    """
+
+    avatar_upload = forms.ImageField(
+        required=False,
+        label="Upload new avatar",
+        help_text="Replaces the current avatar. Re-encoded to WEBP on save.",
+    )
+    avatar_clear = forms.BooleanField(
+        required=False,
+        label="Remove current avatar",
+        help_text="Deletes the stored avatar — the user falls back to initials. "
+                  "(Ignored if a new file is uploaded above.)",
+    )
+
+    class Meta(UserChangeForm.Meta):
+        model = User
+
+    def clean_avatar_upload(self):
+        f = self.cleaned_data.get('avatar_upload')
+        if not f:
+            return None
+        validate_image_file(f)          # raises ValidationError on bad input
+        return process_image(f).read()  # WEBP bytes
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     model = User
+    form = UserAdminForm
     # Adds the Reconnect / Create-new Stripe buttons to the
     # object-tools row at the top of the change form. The template
     # extends jazzmin/admin's default — block override only.
@@ -117,6 +154,14 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ['username', 'password_reset_link']}),
         ('Personal Information', {'fields': ['email', 'first_name', 'last_name', 'bio']}),
+        ('Avatar', {
+            'fields': ['avatar_preview', 'avatar_upload', 'avatar_clear'],
+            'description': (
+                "The avatar is stored in MDProject's own Postgres (not S3). "
+                "Uploads are re-encoded to WEBP before saving. Tick "
+                "<em>Remove current avatar</em> to clear it."
+            ),
+        }),
         ('Subscription & Integration', {
             'fields': [
                 'subscription_tier', 'subscription_status', 'trial_end_display',
@@ -148,7 +193,49 @@ class UserAdmin(BaseUserAdmin):
         'subscription_tier', 'subscription_status', 'trial_end_display',
         'stripe_customer_display', 'aggrigator_external_id_display',
         'aggrigator_api_key_display', 'password_reset_link', 'twofa_display',
+        'avatar_preview',
     ]
+
+    @admin.display(description='Current avatar')
+    def avatar_preview(self, obj):
+        """Show the stored avatar (served from Postgres BYTEA) or note the
+        initials fallback. The serve view is login-gated; the admin session
+        carries the cookie, so the <img> loads for staff."""
+        if obj is None or not obj.pk:
+            return '—'
+        url = obj.avatar_url
+        if not url:
+            return format_html('<span style="opacity:.6">No avatar — user shows initials.</span>')
+        return format_html(
+            '<img src="{}" alt="" width="72" height="72" '
+            'style="border-radius:50%;object-fit:cover;background:#eee">',
+            url,
+        )
+
+    def save_model(self, request, obj, form, change):
+        """Persist the User, then apply the avatar upload/removal into the
+        UserAvatar side table. Upload takes precedence over the remove
+        checkbox. Bytes are already validated + WEBP-encoded by the form."""
+        super().save_model(request, obj, form, change)
+        avatar_bytes = form.cleaned_data.get('avatar_upload')
+        clear = form.cleaned_data.get('avatar_clear')
+        if avatar_bytes:
+            etag = hashlib.sha256(avatar_bytes).hexdigest()[:32]
+            UserAvatar.objects.update_or_create(
+                user=obj,
+                defaults={
+                    "image": avatar_bytes, "content_type": "image/webp",
+                    "byte_size": len(avatar_bytes), "etag": etag,
+                    "status": "ok", "source": "upload",
+                },
+            )
+            messages.success(request, f"Avatar updated for {obj.email}.")
+        elif clear:
+            deleted, _ = UserAvatar.objects.filter(pk=obj.pk).delete()
+            if deleted:
+                messages.success(request, f"Avatar removed for {obj.email}.")
+            else:
+                messages.info(request, f"{obj.email} had no stored avatar to remove.")
 
     @admin.display(description='Password')
     def password_reset_link(self, obj):

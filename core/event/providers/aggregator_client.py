@@ -119,6 +119,18 @@ class AggrigatorClient:
         self.timeout = timeout
         self.session = requests.Session()
 
+        # Authenticate every read with the single service-tenant key
+        # (roadmap Phase 2). Settings is the source of truth; fall back to
+        # the OS env only when settings is empty. Mirrors the portal client.
+        from django.conf import settings
+
+        key = (
+            getattr(settings, "AGGRIGATOR_SERVICE_KEY", "")
+            or os.environ.get("AGGRIGATOR_SERVICE_KEY", "")
+        ).strip()
+        if key:
+            self.session.headers["X-Aggrigator-Tenant-Key"] = key
+
     # ---- public surface (matches the legacy SportsGameOdds client) --------
 
     def get_account_usage(self) -> dict:
@@ -147,6 +159,14 @@ class AggrigatorClient:
 
     def list_events(self, **params) -> dict:
         return self._get("/v1/events", params=params) or {}
+
+    def list_teams(
+        self, page: int = 1, page_size: int = 200, league_id: str | None = None,
+    ) -> dict:
+        params = {"page": page, "page_size": page_size}
+        if league_id:
+            params["league_id"] = league_id
+        return self._get("/v1/teams", params=params) or {}
 
     def get_event(self, event_id: str, *, include_markets: bool = True) -> dict | None:
         params = {"include": "markets"} if include_markets else None

@@ -43,3 +43,39 @@ class BackfillLogosViewTests(TestCase):
         mock_backfill.assert_called_once_with()
         self.assertEqual(resp.redirect_chain[-1][0], reverse("core-admin:admin_status"))
         self.assertIn("queued 7 team-logo", resp.content.decode())
+
+
+class SyncTeamDataViewTests(TestCase):
+    def setUp(self):
+        self.url = reverse("core-admin:admin_sync_team_data")
+        self.staff = User.objects.create_user(
+            username="staff2", email="staff2@example.com", password="pw-123456789",
+        )
+        self.staff.is_staff = True
+        self.staff.save(update_fields=["is_staff"])
+
+    def test_get_is_rejected_post_only(self):
+        self.client.force_login(self.staff)
+        self.assertEqual(self.client.get(self.url).status_code, 405)
+
+    def test_anonymous_redirected_to_login(self):
+        resp = self.client.post(self.url)
+        self.assertEqual(resp.status_code, 302)
+        self.assertNotIn("admin_status", resp["Location"])
+
+    def test_logged_in_non_staff_is_blocked(self):
+        non_staff = User.objects.create_user(
+            username="member2", email="member2@example.com", password="pw-123456789",
+        )
+        self.client.force_login(non_staff)
+        resp = self.client.post(self.url)
+        self.assertEqual(resp.status_code, 302)
+        self.assertNotIn("admin_status", resp["Location"])
+
+    @patch("core.admin.views.sync_team_data_task")
+    def test_staff_post_defers_task_and_redirects(self, mock_task):
+        self.client.force_login(self.staff)
+        resp = self.client.post(self.url, follow=True)
+        mock_task.defer.assert_called_once_with()
+        self.assertEqual(resp.redirect_chain[-1][0], reverse("core-admin:admin_status"))
+        self.assertIn("Team-data sync queued", resp.content.decode())

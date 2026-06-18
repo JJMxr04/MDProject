@@ -163,3 +163,35 @@ class WebhookProvisioningTests(TestCase):
         self.assertEqual(self._post(env).status_code, 200)
 
         self.assertEqual(Event.objects.get(id="68882968").sport_id, "VOLLEYBALL")
+
+
+@override_settings(AGGRIGATOR_WEBHOOK_SECRET=SECRET)
+class WebhookTeamColorsTests(TestCase):
+    def setUp(self):
+        self.url = reverse("sportgameodds-webhook")
+
+    def _post(self, envelope: dict, *, ts: int | None = None):
+        body = json.dumps(envelope).encode()
+        return self.client.post(
+            self.url, data=body, content_type="application/json",
+            HTTP_X_AGGRIGATOR_SIGNATURE=_sign(body, ts=ts),
+        )
+
+    def test_team_stores_all_four_colors(self):
+        from core.event.models import Team
+
+        env = _vnl_envelope(event_id="69000001")
+        env["event"]["home_team"].update({
+            "primary_color": "#0A3161",
+            "secondary_color": "#B31942",
+            "primary_contrast": "#FFFFFF",
+            "secondary_contrast": "#000000",
+        })
+
+        self.assertEqual(self._post(env).status_code, 200)
+
+        team = Team.objects.get(id="VNL:USA")
+        self.assertEqual(team.primary_color, "#0A3161")
+        self.assertEqual(team.secondary_color, "#B31942")
+        self.assertEqual(team.primary_contrast, "#FFFFFF")
+        self.assertEqual(team.secondary_contrast, "#000000")
