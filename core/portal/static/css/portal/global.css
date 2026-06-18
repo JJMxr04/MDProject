@@ -640,10 +640,6 @@ a:hover { color: var(--brand-blue-bright); }
 
 /* ── Dashboard turn-hero ──────────────────────────────────── */
 .turn-hero {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-5);
-  align-items: center;
   padding: var(--space-5) var(--space-6);
   margin-bottom: var(--space-5);
   border-radius: var(--radius-lg);
@@ -656,24 +652,8 @@ a:hover { color: var(--brand-blue-bright); }
 .turn-hero__title { margin: 0 0 var(--space-1); color: #fff; font-size: var(--text-3xl); }
 .turn-hero__sub { margin: 0 0 var(--space-4); opacity: .92; }
 .turn-hero__actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
-.turn-hero__potd {
-  display: flex; flex-direction: column; gap: var(--space-2);
-  min-width: 210px; padding: var(--space-4);
-  color: var(--text-primary);
-  background: var(--glass-bg-strong);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-}
-.turn-hero__potd-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: .04em; color: var(--brand-blue-dark); }
-.turn-hero__potd-label i { color: #FFB400; }
-.turn-hero__potd-matchup { margin: 0; font-weight: var(--weight-semibold); color: var(--text-primary); text-decoration: none; }
-.turn-hero__potd-matchup:hover { text-decoration: underline; }
-.turn-hero__potd-status { margin: 0; }
-.turn-hero__potd-status i { color: var(--state-success); }
-.turn-hero__potd-status--muted { color: var(--text-secondary); }
 @media (max-width: 768px) {
-  .turn-hero { grid-template-columns: 1fr; padding: var(--space-5); }
+  .turn-hero { padding: var(--space-5); }
   .turn-hero__actions .btn-ui { flex: 1 1 auto; justify-content: center; }
 }
 

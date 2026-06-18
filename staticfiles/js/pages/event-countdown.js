@@ -35,6 +35,8 @@
                 return;
             }
             var totalSec = Math.floor(diff / 1000);
+            // Under an hour → urgency styling (consumers may style .is-urgent).
+            el.classList.toggle("is-urgent", totalSec < 3600);
             var days = Math.floor(totalSec / 86400);
             var hours = Math.floor((totalSec % 86400) / 3600);
             var mins = Math.floor((totalSec % 3600) / 60);

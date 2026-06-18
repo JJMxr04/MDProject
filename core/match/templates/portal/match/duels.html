@@ -123,9 +123,9 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         <div class="vs-grid">
             {% for d in accepted_rows %}
             <div class="vs-mini">
+                {% include "portal/components/_vs_mini_players.html" with duel=d %}
                 {% include "portal/components/_event_matchup.html" with fixture=d.fixture %}
                 <div class="vs-mini__footer">
-                    <span class="small">vs <strong>{{ d.opponent_name }}</strong> · You: {{ d.your_side }}</span>
                     <span class="outcome-pill outcome-pill--pending">In progress</span>
                 </div>
             </div>
@@ -142,9 +142,9 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         <div class="vs-grid">
             {% for d in finished_rows %}
             <div class="vs-mini">
+                {% include "portal/components/_vs_mini_players.html" with duel=d %}
                 {% include "portal/components/_event_matchup.html" with fixture=d.fixture %}
                 <div class="vs-mini__footer">
-                    <span class="small">vs <strong>{{ d.opponent_name }}</strong></span>
                     <span class="outcome-pill outcome-pill--{{ d.status }}">{% if d.status == "won" %}You won{% elif d.status == "lost" %}Lost{% else %}Draw{% endif %}</span>
                 </div>
             </div>

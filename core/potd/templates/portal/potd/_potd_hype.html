@@ -1,0 +1,116 @@
+{% load static %}
+{% comment %}
+Shared Pick-of-the-Day "hype" card. Used on the dashboard (top of the feed)
+and pinned to the top of the Pick of the Day page.
+
+Context (from core.potd.views.potd_card_context):
+  potd, potd_options, potd_user_pick, potd_user_pick_label,
+  potd_locked, potd_streak, crowd{total, threshold_met, sides[], user_side_pct}
+
+States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
+· MISSED (locked, no pick).
+{% endcomment %}
+{% if potd %}
+<section class="potd-hype{% if potd_user_pick %} is-picked{% endif %}{% if potd_user_pick.result == 'WON' %} potd-hype--won{% elif potd_user_pick.result == 'LOST' %} potd-hype--lost{% elif potd_user_pick.result == 'VOID' %} potd-hype--void{% endif %}"
+         id="potd-card"
+         data-pick-url="{% url 'core-portal:potd-pick' %}"
+         data-csrf="{{ csrf_token }}">
+    <div class="potd-hype__glow" aria-hidden="true"></div>
+    <div class="potd-hype__inner">
+
+        <div class="potd-hype__top">
+            <span class="potd-hype__eyebrow"><i class="bi bi-star-fill" aria-hidden="true"></i> Pick of the Day</span>
+            {% if potd_streak %}<span class="potd-hype__streak">🔥 {{ potd_streak }}-day streak</span>{% endif %}
+        </div>
+
+        <a class="potd-hype__matchup" href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">
+            <span class="potd-hype__team">{{ potd.event.home_team.name_medium|default:"Home" }}</span>
+            <span class="potd-hype__vs">vs</span>
+            <span class="potd-hype__team">{{ potd.event.away_team.name_medium|default:"Away" }}</span>
+        </a>
+        <p class="potd-hype__meta">{{ potd.event.league.name }} &middot;
+            <time data-localize datetime="{{ potd.lock_time|date:'c' }}">{{ potd.lock_time }}</time>
+        </p>
+
+        {% if potd_user_pick %}
+            {% if potd_user_pick.result == 'PENDING' %}
+                {# ── LOCKED IN ───────────────────────────────────── #}
+                <div class="potd-hype__locked">
+                    <span class="potd-hype__locked-badge">🔥 LOCKED IN{% if potd_streak %} &mdash; {{ potd_streak }}-DAY STREAK{% endif %}</span>
+                    <p class="potd-hype__locked-pick">You&rsquo;re on <strong>{{ potd_user_pick_label }}</strong>{% if crowd.threshold_met and crowd.user_side_pct != None %} &mdash; you + {{ crowd.user_side_pct }}% of today&rsquo;s picks{% endif %}.</p>
+                </div>
+                {% if not potd_locked %}
+                <div class="potd-hype__countdown" data-countdown-to="{{ potd.lock_time|date:'c' }}" data-status="upcoming" aria-live="polite">
+                    <span class="potd-hype__cd-label">Kicks off in</span>
+                    <span class="potd-hype__cd-unit"><b data-unit="d">--</b><i>d</i></span>
+                    <span class="potd-hype__cd-unit"><b data-unit="h">--</b><i>h</i></span>
+                    <span class="potd-hype__cd-unit"><b data-unit="m">--</b><i>m</i></span>
+                    <span class="potd-hype__cd-unit"><b data-unit="s">--</b><i>s</i></span>
+                </div>
+                {% endif %}
+                <p class="potd-hype__note">Results land after the game settles.</p>
+            {% elif potd_user_pick.result == 'WON' %}
+                {# ── RESULT: WON ─────────────────────────────────── #}
+                <div class="potd-hype__result potd-hype__result--won">
+                    <span class="potd-hype__result-headline">YOU WON 🎉</span>
+                    <p>Streak extended &mdash; nice read on <strong>{{ potd_user_pick_label }}</strong>.</p>
+                </div>
+            {% elif potd_user_pick.result == 'LOST' %}
+                <div class="potd-hype__result potd-hype__result--lost">
+                    <span class="potd-hype__result-headline">Not this time</span>
+                    <p>You were on {{ potd_user_pick_label }}. Back tomorrow for redemption.</p>
+                </div>
+            {% else %}
+                <div class="potd-hype__result potd-hype__result--void">
+                    <span class="potd-hype__result-headline">Voided</span>
+                    <p>No harm done &mdash; your streak is safe.</p>
+                </div>
+            {% endif %}
+
+        {% elif potd_locked %}
+            {# ── MISSED ──────────────────────────────────────────── #}
+            <p class="potd-hype__closed">Today&rsquo;s pick is closed &mdash; the game has started. Come back tomorrow.</p>
+
+        {% else %}
+            {# ── OPEN ────────────────────────────────────────────── #}
+            <div class="potd-hype__countdown potd-hype__countdown--lead" data-countdown-to="{{ potd.lock_time|date:'c' }}" data-status="upcoming" aria-live="polite">
+                <span class="potd-hype__cd-label">Picks close in</span>
+                <span class="potd-hype__cd-unit"><b data-unit="d">--</b><i>d</i></span>
+                <span class="potd-hype__cd-unit"><b data-unit="h">--</b><i>h</i></span>
+                <span class="potd-hype__cd-unit"><b data-unit="m">--</b><i>m</i></span>
+                <span class="potd-hype__cd-unit"><b data-unit="s">--</b><i>s</i></span>
+            </div>
+
+            <div class="potd-hype__crowd">
+                {% if crowd.threshold_met %}
+                    <div class="potd-hype__crowd-head"><i class="bi bi-people-fill" aria-hidden="true"></i> {{ crowd.total }} picks today</div>
+                    <div class="potd-hype__crowd-bar" role="img" aria-label="How the crowd is split">
+                        {% for s in crowd.sides %}<span class="potd-hype__crowd-seg potd-hype__crowd-seg--{{ forloop.counter }}" style="width: {{ s.pct }}%"></span>{% endfor %}
+                    </div>
+                    <div class="potd-hype__crowd-legend">
+                        {% for s in crowd.sides %}<span class="potd-hype__crowd-key"><i class="potd-hype__dot potd-hype__dot--{{ forloop.counter }}" aria-hidden="true"></i>{{ s.label }} {{ s.pct }}%</span>{% endfor %}
+                    </div>
+                {% else %}
+                    <p class="potd-hype__crowd-early"><i class="bi bi-people-fill" aria-hidden="true"></i> Be early &mdash; {{ crowd.total }} player{{ crowd.total|pluralize }} in so far.</p>
+                {% endif %}
+            </div>
+
+            <div class="potd-hype__selections">
+                {% for opt in potd_options %}
+                <button type="button" class="btn-ui btn-ui--primary potd-hype__pick"
+                        data-action="potd-pick" data-selection-id="{{ opt.id }}">
+                    <span class="potd-hype__pick-label">{{ opt.label }}</span>
+                    {% if opt.odds %}<span class="potd-hype__pick-odds">{{ opt.odds }}</span>{% endif %}
+                </button>
+                {% endfor %}
+            </div>
+            <p class="potd-hype__fineprint">One free pick a day. Picking daily builds your streak &mdash; wins climb the leaderboard.</p>
+        {% endif %}
+
+        <div class="potd-hype__links">
+            <a href="{% url 'core-portal:potd-my-picks' %}" class="btn-ui btn-ui--ghost btn-ui--sm">My picks</a>
+            <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
+        </div>
+    </div>
+</section>
+{% endif %}

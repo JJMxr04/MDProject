@@ -52,25 +52,36 @@
             <span class="matchup__league">{{ match.format_label }}</span>
             <time class="matchup__time">{{ match.start_date|date:"M j, Y" }}{% if match.end_date %} – {{ match.end_date|date:"M j" }}{% endif %}</time>
         </div>
-        <div class="matchup__teams">
-            <div class="matchup__team matchup__team--home"{% if match.player_1.home_color %} style="--team-tint: {{ match.player_1.home_color }};"{% endif %}>
-                {% include "portal/components/_avatar.html" with user=match.player_1 size=44 %}
-                <span class="matchup__name">{% if match.player_1_id == request.user.id %}You{% else %}{{ match.player_1.username }}{% endif %}</span>
+
+        <div class="vs-mini__card"{% if match.player_1.home_color or match.player_2.away_color %} style="{% if match.player_1.home_color %}--home-tint: {{ match.player_1.home_color }};{% endif %}{% if match.player_2.away_color %}--away-tint: {{ match.player_2.away_color }};{% endif %}"{% endif %}>
+            <div class="vs-mini__side">
+                {% include "portal/components/_avatar.html" with user=match.player_1 size=56 %}
+                <span class="vs-mini__name">{% if match.player_1_id == request.user.id %}You{% else %}{{ match.player_1.username }}{% endif %}</span>
             </div>
-            <div class="matchup__center"><span class="matchup__vs">VS</span></div>
-            <div class="matchup__team matchup__team--away"{% if match.opponent.away_color %} style="--team-tint: {{ match.opponent.away_color }};"{% endif %}>
-                {% if match.opponent %}
-                    {% include "portal/components/_avatar.html" with user=match.opponent size=44 %}
-                    <span class="matchup__name">{{ match.opponent.username }}</span>
+            <span class="vs-mini__glyph">VS</span>
+            <div class="vs-mini__side">
+                {% if match.player_2 %}
+                    {% include "portal/components/_avatar.html" with user=match.player_2 size=56 %}
+                    <span class="vs-mini__name">{% if match.player_2_id == request.user.id %}You{% else %}{{ match.player_2.username }}{% endif %}</span>
                 {% else %}
-                    <span class="team-logo team-logo--fallback" style="--logo-size:44px;" aria-hidden="true">?</span>
-                    <span class="matchup__name text-muted">Awaiting player</span>
+                    <span class="team-logo team-logo--fallback" style="--logo-size:56px;" aria-hidden="true">?</span>
+                    <span class="vs-mini__name text-muted">Awaiting player</span>
                 {% endif %}
             </div>
         </div>
-        <div class="vs-mini__footer">
-            {% if match.opponent %}{% include "portal/components/_player_flair.html" with level=match.opponent_level division=match.opponent_division %}{% endif %}
+
+        <div class="vs-mini__scoreline">
+            <div class="vs-mini__score-side {% if match.winner_id and match.winner_id == match.player_1_id %}is-winner{% endif %}">
+                {% include "portal/components/_player_flair.html" with level=match.p1_level division=match.p1_division %}
+                <span class="vs-mini__score">{{ match.p1_score }}</span>
+            </div>
             <span class="outcome-pill outcome-pill--{{ match.outcome.state }}">{{ match.outcome.label }}</span>
+            <div class="vs-mini__score-side {% if match.winner_id and match.winner_id == match.player_2_id %}is-winner{% endif %}">
+                {% if match.player_2 %}
+                    {% include "portal/components/_player_flair.html" with level=match.p2_level division=match.p2_division %}
+                    <span class="vs-mini__score">{{ match.p2_score }}</span>
+                {% endif %}
+            </div>
         </div>
     </a>
     {% endfor %}

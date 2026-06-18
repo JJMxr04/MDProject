@@ -53,23 +53,37 @@ def my_match_list_view(request):
     paginator = Paginator(matches, 10)  # Show 10 matches per page
     matches_page = paginator.get_page(page)
 
-    # Annotate each match on the page with the opponent from the viewer's POV.
+    # Annotate each row for the hero-style mini card (mirrors the match-detail
+    # hero): viewer-relative outcome pill, both players' rank flair, and the
+    # running score for each side.
     user = request.user
     from core.portal.cards import match_outcome
-    for match in matches_page.object_list:
-        match.opponent = match.player_2 if match.player_1_id == user.id else match.player_1
-        match.outcome = match_outcome(match, user)
-
-    # Opponent flair (phase 8): level + current-season division. One query
-    # each for the whole page — map opponent id → level/division, attach.
     from core.ranking.standings import divisions_for, levels_for
-    opp_ids = [m.opponent.id for m in matches_page.object_list if m.opponent]
-    levels = levels_for(opp_ids)
-    divisions = divisions_for(opp_ids)
-    for match in matches_page.object_list:
-        oid = match.opponent.id if match.opponent else None
-        match.opponent_level = levels.get(oid)
-        match.opponent_division = divisions.get(oid)
+    from core.match.scoring import score_match
+
+    object_list = matches_page.object_list
+
+    # Rank flair (phase 8): level + current-season division for BOTH players —
+    # the mini now shows each side symmetrically, not just the opponent. One
+    # query each for the whole page.
+    player_ids = set()
+    for m in object_list:
+        player_ids.add(m.player_1_id)
+        if m.player_2_id:
+            player_ids.add(m.player_2_id)
+    levels = levels_for(list(player_ids))
+    divisions = divisions_for(list(player_ids))
+
+    for match in object_list:
+        match.outcome = match_outcome(match, user)
+        match.p1_level = levels.get(match.player_1_id)
+        match.p2_level = levels.get(match.player_2_id)
+        match.p1_division = divisions.get(match.player_1_id)
+        match.p2_division = divisions.get(match.player_2_id)
+        # Running score for the scoreline. score_match() issues its own games
+        # query, so call it once and unpack — the player_1_score/player_2_score
+        # model properties would each run it again (two queries per match).
+        match.p1_score, match.p2_score, _ = score_match(match)
 
     quick_filters = [
         {"label": "All",         "value": "",          "is_active": state == ""},

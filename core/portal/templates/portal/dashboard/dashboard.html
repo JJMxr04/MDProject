@@ -33,22 +33,10 @@
         {% endif %}
     </div>
 
-    {% if potd %}
-    <aside class="turn-hero__potd" aria-label="Pick of the Day">
-        <span class="turn-hero__potd-label"><i class="bi bi-star-fill" aria-hidden="true"></i> Pick of the Day</span>
-        {% if potd_user_pick %}
-            <p class="turn-hero__potd-status"><i class="bi bi-check-circle-fill" aria-hidden="true"></i> You&rsquo;ve picked today.</p>
-        {% elif potd_locked %}
-            <p class="turn-hero__potd-status turn-hero__potd-status--muted">Today&rsquo;s pick is closed.</p>
-        {% else %}
-            <a class="turn-hero__potd-matchup" href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">
-                {{ potd.event.home_team.name_medium|default:"Home" }} vs {{ potd.event.away_team.name_medium|default:"Away" }}
-            </a>
-            <a class="btn-ui btn-ui--accent btn-ui--sm" href="#potd-card">Pick now</a>
-        {% endif %}
-    </aside>
-    {% endif %}
 </section>
+
+{# Pick of the Day — hype card, top of the feed so it's above the fold on mobile. #}
+{% include "portal/potd/_potd_hype.html" %}
 
 {% if rank_progress %}
 <section class="card-ui mb-4 rank-widget" aria-label="Your progression">
@@ -90,55 +78,6 @@
     .rank-widget__stat { text-align: center; }
     .rank-widget__stat-num { display: block; font-size: var(--text-lg); font-weight: var(--weight-semibold); }
 </style>
-{% endif %}
-
-{% if potd %}
-<section class="card-ui potd-card mb-4" aria-label="Pick of the Day"
-         id="potd-card"
-         data-pick-url="{% url 'core-portal:potd-pick' %}"
-         data-csrf="{{ csrf_token }}">
-    <header class="card-ui__header">
-        <h2><i class="bi bi-star-fill me-2" style="color:#FFB400;"></i>Pick of the Day</h2>
-        <div class="d-flex align-items-center gap-2">
-            {% if potd_streak %}<span class="badge-ui badge-ui--success">🔥 {{ potd_streak }}-day streak</span>{% endif %}
-            <a href="{% url 'core-portal:potd-my-picks' %}" class="btn-ui btn-ui--ghost btn-ui--sm">My picks</a>
-            <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
-        </div>
-    </header>
-    <div class="card-ui__body">
-        <div class="potd-matchup">
-            <a class="potd-matchup__link" href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">
-                <strong>{{ potd.event.home_team.name_medium|default:"Home" }}</strong>
-                <span class="text-muted">vs</span>
-                <strong>{{ potd.event.away_team.name_medium|default:"Away" }}</strong>
-            </a>
-            <span class="text-muted small">&middot; {{ potd.event.league.name }} &middot;
-                <time data-localize datetime="{{ potd.lock_time|date:'c' }}">{{ potd.lock_time }}</time>
-                &middot; <a href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">View event</a>
-            </span>
-        </div>
-        {% if potd_user_pick %}
-            <p class="mt-2 mb-0">
-                <i class="bi bi-check-circle-fill" style="color: var(--state-success);"></i>
-                You picked <strong>{{ potd_user_pick_label }}</strong>.
-                {% if potd_user_pick.result == 'PENDING' %}Good luck — results land after the game settles.{% elif potd_user_pick.result == 'WON' %}You won! 🎉{% elif potd_user_pick.result == 'LOST' %}Not this time.{% else %}Voided — no harm done.{% endif %}
-            </p>
-        {% elif potd_locked %}
-            <p class="mt-2 mb-0 text-muted">Today's pick is closed — the game has started. Come back tomorrow.</p>
-        {% else %}
-            <p class="small text-muted mt-2 mb-2">One free pick a day. Picking daily builds your streak — wins climb the leaderboard.</p>
-            <div class="potd-selections">
-                {% for opt in potd_options %}
-                <button type="button" class="btn-ui btn-ui--secondary potd-selection"
-                        data-action="potd-pick" data-selection-id="{{ opt.id }}">
-                    {{ opt.label }}
-                    {% if opt.odds %}<span class="text-muted small ms-1">{{ opt.odds }}</span>{% endif %}
-                </button>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
-</section>
 {% endif %}
 
 <section class="grid-stats" aria-label="Your stats">
@@ -236,15 +175,10 @@
 {% endblock content %}
 
 {% block css %}
-<style>
-    .potd-matchup { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
-    .potd-matchup__link { display: inline-flex; align-items: baseline; gap: .4rem; color: inherit; text-decoration: none; }
-    .potd-matchup__link:hover strong { text-decoration: underline; }
-    .potd-selections { display: flex; gap: .5rem; flex-wrap: wrap; }
-    .potd-selection { flex: 1 1 140px; }
-</style>
+<link rel="stylesheet" href="{% static 'css/portal/components/potd_hype.css' %}">
 {% endblock css %}
 
 {% block scripts %}
+<script src="{% static 'js/pages/event-countdown.js' %}" defer></script>
 <script src="{% static 'js/pages/potd_card.js' %}"></script>
 {% endblock scripts %}

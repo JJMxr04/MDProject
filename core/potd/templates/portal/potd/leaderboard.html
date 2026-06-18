@@ -19,19 +19,8 @@
     </div>
 </header>
 
-{% if potd %}
-<div class="card-ui mb-4">
-    <div class="card-ui__body d-flex align-items-baseline gap-2 flex-wrap">
-        <strong>Today:</strong>
-        <a class="potd-today-link" href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">
-            {{ potd.event.home_team.name_medium|default:"Home" }} vs {{ potd.event.away_team.name_medium|default:"Away" }}
-        </a>
-        <span class="text-muted small">&middot; {{ potd.event.league.name }} &middot; {{ potd_pick_count }} pick{{ potd_pick_count|pluralize }} so far &middot;
-            <a href="{% url 'core-portal:upcoming-events-detail' potd.event.id %}">View event</a>
-        </span>
-    </div>
-</div>
-{% endif %}
+{# Hype card pinned at the top — same component as the dashboard. #}
+{% include "portal/potd/_potd_hype.html" %}
 
 <div class="potd-boards">
     <section class="card-ui">
@@ -103,18 +92,23 @@
 {% endblock content %}
 
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/portal/components/potd_hype.css' %}">
 <style>
     .potd-boards {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: var(--space-4);
         align-items: start;
+        margin-top: var(--space-5);
     }
     .potd-rank {
         width: 1.6rem; text-align: center;
         font-weight: var(--weight-bold); color: var(--text-secondary);
     }
-    .potd-today-link { font-weight: var(--weight-semibold); color: var(--text-primary); text-decoration: none; }
-    .potd-today-link:hover { text-decoration: underline; }
 </style>
 {% endblock css %}
+
+{% block scripts %}
+<script src="{% static 'js/pages/event-countdown.js' %}" defer></script>
+<script src="{% static 'js/pages/potd_card.js' %}"></script>
+{% endblock scripts %}

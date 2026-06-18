@@ -26,11 +26,50 @@ from core.ratelimit import rate_limit
 # Card ordering: home side, then the draw (3-way soccer lines), then away.
 _SELECTION_ORDER = {"HOME": 0, "DRAW": 1, "AWAY": 2}
 
+# The crowd % split is hidden until enough people have picked, so it never
+# looks empty or lopsided (100%/0%) early in the day.
+CROWD_THRESHOLD = 10
+
+
+def _crowd_split(potd, options, user_pick):
+    """Social-proof split: per-selection pick counts + share of the day's
+    total, the viewer's own side share, and whether we have enough picks to
+    show the bar at all (cold-start guard)."""
+    counts = {
+        row["selection"]: row["n"]
+        for row in DailyPick.objects.filter(potd=potd)
+        .values("selection")
+        .annotate(n=Count("id"))
+    }
+    total = sum(counts.values())
+    sides = []
+    for opt in options:
+        c = counts.get(opt["id"], 0)
+        sides.append({
+            "selection_id": opt["id"],
+            "label": opt["label"],
+            "count": c,
+            "pct": round(100 * c / total) if total else 0,
+        })
+    user_side_pct = None
+    if user_pick:
+        for s in sides:
+            if s["selection_id"] == user_pick.selection_id:
+                user_side_pct = s["pct"]
+                break
+    return {
+        "total": total,
+        "threshold_met": total >= CROWD_THRESHOLD,
+        "sides": sides,
+        "user_side_pct": user_side_pct,
+    }
+
 
 def potd_card_context(user):
     """Dashboard-card context: today's pick, its selections (humanized,
-    HOME → DRAW → AWAY), the user's pick if any. Selections come from the
-    locally mirrored market — no aggregator round-trip on dashboard render."""
+    HOME → DRAW → AWAY), the user's pick if any, and the crowd split.
+    Selections come from the locally mirrored market — no aggregator
+    round-trip on dashboard render."""
     potd = PickOfDay.objects.for_today()
     if potd is None:
         return {"potd": None}
@@ -57,6 +96,7 @@ def potd_card_context(user):
         "potd_user_pick_label": humanize_selection(user_pick.selection) if user_pick else None,
         "potd_locked": potd.is_locked,
         "potd_streak": user.potd_current_streak,
+        "crowd": _crowd_split(potd, options, user_pick),
     }
 
 
@@ -145,6 +185,9 @@ def leaderboard(request):
         "daily_winners": daily_winners,
         "streak_board": streak_board,
         "wins_board": wins_board,
+        # The shared hype card pinned at the top of the page uses the same
+        # context as the dashboard (options, the viewer's pick, crowd split).
+        **potd_card_context(request.user),
     }
     return render(request, "portal/potd/leaderboard.html", context)
 

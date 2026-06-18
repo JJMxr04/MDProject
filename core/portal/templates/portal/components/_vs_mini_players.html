@@ -1,0 +1,20 @@
+{% comment %}Compact player-vs-player header for a duel mini card — small
+avatars + names + each side's pick, above the team matchup.
+ctx: duel (opponent, opponent_name, your_side, opponent_side) · request.user.{% endcomment %}
+<div class="vs-players">
+    <div class="vs-players__side">
+        {% include "portal/components/_avatar.html" with user=request.user size=28 %}
+        <span class="vs-players__meta">
+            <span class="vs-players__name">You</span>
+            {% if duel.your_side %}<span class="vs-players__pick">{{ duel.your_side }}</span>{% endif %}
+        </span>
+    </div>
+    <span class="vs-players__vs">vs</span>
+    <div class="vs-players__side vs-players__side--away">
+        {% if duel.opponent %}{% include "portal/components/_avatar.html" with user=duel.opponent size=28 %}{% endif %}
+        <span class="vs-players__meta">
+            <span class="vs-players__name">{{ duel.opponent_name }}</span>
+            {% if duel.opponent_side %}<span class="vs-players__pick">{{ duel.opponent_side }}</span>{% endif %}
+        </span>
+    </div>
+</div>
