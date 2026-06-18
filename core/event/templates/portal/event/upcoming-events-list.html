@@ -45,9 +45,11 @@
 {% if page_obj.object_list %}
 <section class="vs-grid">
     {% for event in page_obj %}
-    <a class="vs-mini" href="{% url 'core-portal:upcoming-events-detail' event.id %}">
-        {% include "portal/components/_event_matchup.html" with fixture=event|event_fixture %}
+    {% with fx=event|event_fixture %}
+    <a class="vs-mini vs-mini--tinted" href="{% url 'core-portal:upcoming-events-detail' event.id %}"{% if fx.home.tint or fx.away.tint %} style="{% if fx.home.tint %}--home-tint: {{ fx.home.tint }};{% endif %}{% if fx.away.tint %}--away-tint: {{ fx.away.tint }};{% endif %}"{% endif %}>
+        {% include "portal/components/_event_matchup.html" with fixture=fx %}
     </a>
+    {% endwith %}
     {% endfor %}
 </section>
 

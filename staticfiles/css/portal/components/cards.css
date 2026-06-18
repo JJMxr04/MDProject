@@ -48,6 +48,15 @@
 /* cool/warm side tints — the one strong visual borrow from the reference */
 .matchup__team--home { background: linear-gradient(180deg, color-mix(in srgb, var(--team-tint, var(--brand-blue)) 30%, transparent), transparent); border-radius: var(--radius-md); padding: var(--space-2); }
 .matchup__team--away { background: linear-gradient(180deg, color-mix(in srgb, var(--team-tint, var(--state-danger)) 30%, transparent), transparent); border-radius: var(--radius-md); padding: var(--space-2); }
+/* Inside a diagonally-washed card the per-column tints double up with the
+   card-level home→away gradient, so drop them and let the single diagonal
+   carry the versus feel. Standalone game cards (no card wash) keep theirs. */
+.vs-mini--tinted .matchup__team--home,
+.vs-mini--tinted .matchup__team--away,
+.evt-hero .matchup__team--home,
+.evt-hero .matchup__team--away,
+.vs-card .matchup__team--home,
+.vs-card .matchup__team--away { background: none; }
 
 /* ---- VS mini card (grid item shell) ------------------------------------ */
 /* A shrunk mirror of the match-detail hero (.vs-card + .match-hero__scoreline):
@@ -57,6 +66,11 @@
     background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg);
     text-decoration: none; color: inherit; transition: transform var(--motion-fast), box-shadow var(--motion-fast); }
 a.vs-mini:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); color: inherit; }
+/* Opt-in diagonal home→away wash, mirroring the .vs-card hero. Kept off the
+   base .vs-mini so the match-list cards (whose gradient lives on the inner
+   .vs-mini__card) keep their plain surface. --home-tint/--away-tint default to
+   brand blue (home) / danger red (away) when no team/player colors are set. */
+.vs-mini--tinted { background: linear-gradient(120deg, color-mix(in srgb, var(--home-tint, var(--brand-blue)) 24%, var(--surface-card)) 0%, var(--surface-card) 52%, color-mix(in srgb, var(--away-tint, var(--state-danger)) 24%, var(--surface-card)) 100%); }
 .vs-mini__card { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-3);
     padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--border-default);
     background: linear-gradient(120deg, color-mix(in srgb, var(--home-tint, var(--brand-blue)) 32%, var(--surface-card)) 0%, var(--surface-card) 50%, color-mix(in srgb, var(--away-tint, var(--state-danger)) 32%, var(--surface-card)) 100%); }

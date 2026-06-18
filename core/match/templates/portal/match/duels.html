@@ -67,7 +67,7 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         {% if challenges %}
         <div class="vs-grid">
             {% for invite in challenges %}
-            <div class="vs-mini" id="invite-{{ invite.id }}">
+            <div class="vs-mini vs-mini--tinted" id="invite-{{ invite.id }}">
                 <div class="matchup__head">
                     <span class="matchup__league">Challenge</span>
                     {% if invite.expires_at %}<time class="matchup__time">kickoff {{ invite.expires_at|date:"M j, g:i A" }}</time>{% endif %}
@@ -96,7 +96,7 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         <h3 class="card-ui__title" style="margin: var(--space-4) 0 var(--space-3);">Awaiting a response</h3>
         <div class="vs-grid">
             {% for invite in sent %}
-            <div class="vs-mini" id="invite-{{ invite.id }}">
+            <div class="vs-mini vs-mini--tinted" id="invite-{{ invite.id }}">
                 <div class="d-flex align-items-center gap-3">
                     {% include "portal/components/_avatar.html" with user=invite.player size=40 %}
                     <div class="flex-grow-1">
@@ -122,7 +122,7 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         {% if accepted_rows %}
         <div class="vs-grid">
             {% for d in accepted_rows %}
-            <div class="vs-mini">
+            <div class="vs-mini vs-mini--tinted">
                 {% include "portal/components/_vs_mini_players.html" with duel=d %}
                 {% include "portal/components/_event_matchup.html" with fixture=d.fixture %}
                 <div class="vs-mini__footer">
@@ -141,7 +141,7 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         {% if finished_rows %}
         <div class="vs-grid">
             {% for d in finished_rows %}
-            <div class="vs-mini">
+            <div class="vs-mini vs-mini--tinted">
                 {% include "portal/components/_vs_mini_players.html" with duel=d %}
                 {% include "portal/components/_event_matchup.html" with fixture=d.fixture %}
                 <div class="vs-mini__footer">

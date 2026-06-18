@@ -14,7 +14,7 @@
 <div class="page-layout">
 <div class="page-layout__main">
 
-    <header class="card-ui evt-hero">
+    <header class="card-ui evt-hero"{% if fixture.home.tint or fixture.away.tint %} style="{% if fixture.home.tint %}--home-tint: {{ fixture.home.tint }};{% endif %}{% if fixture.away.tint %}--away-tint: {{ fixture.away.tint }};{% endif %}"{% endif %}>
         <div class="card-ui__body">
             {% include "portal/components/_event_matchup.html" with fixture=fixture %}
 
@@ -406,7 +406,16 @@
     }
 
     /* ── Hero ─────────────────────────────────────────────────────── */
-    .evt-hero { margin-bottom: var(--space-5); }
+    /* Diagonal home→away team-color wash, mirroring the .vs-card hero. The
+       .card-ui.evt-hero specificity wins over the base .card-ui surface;
+       --home-tint/--away-tint fall back to brand blue / danger red. */
+    .card-ui.evt-hero {
+        margin-bottom: var(--space-5);
+        background: linear-gradient(120deg,
+            color-mix(in srgb, var(--home-tint, var(--brand-blue)) 30%, var(--surface-card)) 0%,
+            var(--surface-card) 50%,
+            color-mix(in srgb, var(--away-tint, var(--state-danger)) 30%, var(--surface-card)) 100%);
+    }
     .evt-hero .card-ui__body { display: flex; flex-direction: column; gap: var(--space-4); }
 
     /* Tipoff countdown */
