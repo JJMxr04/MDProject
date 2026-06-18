@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from django.utils.dateparse import parse_datetime
 
-from core.event.providers.aggregator_client import absolutize_logo_url
+from core.event.providers.aggregator_client import proxy_logo_url
 
 
 # Provider status_type values that map to a non-playing state. The aggregator
@@ -134,13 +134,13 @@ def fixture_from_dict(ev) -> dict | None:
         "status": status,
         "home": team_side(
             name=home.get("name"),
-            logo_url=absolutize_logo_url(home.get("logo_url")),
+            logo_url=proxy_logo_url(home.get("logo_url")),
             score=ev.get("home_score"),
             tint=home_tint,
         ),
         "away": team_side(
             name=away.get("name"),
-            logo_url=absolutize_logo_url(away.get("logo_url")),
+            logo_url=proxy_logo_url(away.get("logo_url")),
             score=ev.get("away_score"),
             tint=away_tint,
         ),

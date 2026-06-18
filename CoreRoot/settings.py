@@ -552,14 +552,12 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
 # ---------------------------------------------------------------------------
-# Browser-reachable aggregator origin for upcoming/upload-picks logo <img>
-# tags (team logos). May differ from the server-to-server AGGRIGATOR_BASE_URL.
+# Browser-reachable aggregator origin. Logos are now served same-origin via
+# MDProject's /logos/teams/{id} proxy (see aggregator_client.proxy_logo_url),
+# so the browser no longer loads them from here. Retained only as a defensive
+# CSP img-src allowance; safe to drop once the proxy is confirmed in prod.
 # Empty -> no extra CSP host added.
 AGG_PUBLIC_BASE = os.environ.get("AGG_PUBLIC_BASE", "").strip()
-# Origin the browser actually loads aggregator logos from. Prefer the
-# explicit public base; fall back to the server-to-server base so logos
-# work locally (same host) without a second env var. Kept in sync with the
-# URL absolutization in aggregator_client.absolutize_logo_url.
 AGG_IMG_ORIGIN = (
     AGG_PUBLIC_BASE
     or os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001").strip()

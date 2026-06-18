@@ -4,37 +4,44 @@ from __future__ import annotations
 
 from unittest import mock
 
-from django.test import SimpleTestCase, override_settings
+from django.test import SimpleTestCase
+from django.urls import reverse
 
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
-    absolutize_logo_url,
+    proxy_logo_url,
 )
 
 
-class AbsolutizeLogoUrlTests(SimpleTestCase):
-    @override_settings(AGG_PUBLIC_BASE="http://pub:9", AGGRIGATOR_BASE_URL="http://srv:8001")
-    def test_relative_uses_public_base_first(self):
+class ProxyLogoUrlTests(SimpleTestCase):
+    """An aggregator team-logo URL is rewritten to MDProject's same-origin
+    proxy endpoint, so the browser never calls the (key-gated) aggregator."""
+
+    def test_relative_url_rewritten_to_proxy(self):
         self.assertEqual(
-            absolutize_logo_url("/v1/teams/USL:1/logo"),
-            "http://pub:9/v1/teams/USL:1/logo",
+            proxy_logo_url("/v1/teams/USL:1/logo"),
+            reverse("team-logo", kwargs={"team_id": "USL:1"}),
         )
 
-    @override_settings(AGG_PUBLIC_BASE="", AGGRIGATOR_BASE_URL="http://localhost:8001")
-    def test_relative_falls_back_to_server_base(self):
+    def test_absolute_aggregator_url_rewritten_to_proxy(self):
         self.assertEqual(
-            absolutize_logo_url("/v1/teams/USL:1/logo"),
-            "http://localhost:8001/v1/teams/USL:1/logo",
+            proxy_logo_url("http://agg:8001/v1/teams/USL:1/logo"),
+            reverse("team-logo", kwargs={"team_id": "USL:1"}),
         )
 
-    @override_settings(AGG_PUBLIC_BASE="http://pub:9", AGGRIGATOR_BASE_URL="http://srv:8001")
-    def test_absolute_url_unchanged(self):
-        url = "http://agg/v1/teams/USL:1/logo"
-        self.assertEqual(absolutize_logo_url(url), url)
+    def test_team_id_with_colon_preserved(self):
+        self.assertEqual(
+            proxy_logo_url("/v1/teams/usa-nba:38/logo"),
+            reverse("team-logo", kwargs={"team_id": "usa-nba:38"}),
+        )
+
+    def test_non_logo_url_unchanged(self):
+        url = "https://cdn.example.com/some/other/image.png"
+        self.assertEqual(proxy_logo_url(url), url)
 
     def test_none_and_empty_pass_through(self):
-        self.assertIsNone(absolutize_logo_url(None))
-        self.assertEqual(absolutize_logo_url(""), "")
+        self.assertIsNone(proxy_logo_url(None))
+        self.assertEqual(proxy_logo_url(""), "")
 
 
 class GetTeamLogoBytesTests(SimpleTestCase):

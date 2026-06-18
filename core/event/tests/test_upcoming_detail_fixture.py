@@ -38,13 +38,17 @@ class UpcomingDetailFixtureTests(TestCase):
     @mock.patch("core.event.views.upcoming_event_detail._fetch_leagues", return_value=[])
     @mock.patch("core.event.views.upcoming_event_detail._fetch_sports", return_value=[])
     @mock.patch("core.event.views.upcoming_event_detail.AggrigatorClient")
-    def test_context_fixture_absolutized_and_tinted(self, MockClient, *_):
+    def test_context_fixture_proxied_and_tinted(self, MockClient, *_):
         MockClient.return_value.get_event.return_value = AGG_EVENT
         url = reverse("core-portal:upcoming-events-detail", args=["evt-1"])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         fixture = resp.context["fixture"]
-        self.assertTrue(fixture["home"]["logo_url"].startswith("http"))
+        # Logo points at MDProject's same-origin proxy, not the aggregator.
+        self.assertEqual(
+            fixture["home"]["logo_url"],
+            reverse("team-logo", kwargs={"team_id": "h"}),
+        )
         self.assertIn("tint", fixture["home"])
         self.assertIn("tint", fixture["away"])
         self.assertEqual(fixture["home"]["tint"], "#1E40AF")

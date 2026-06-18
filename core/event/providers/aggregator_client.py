@@ -57,27 +57,29 @@ def _parse_max_age(cache_control_header: str | None) -> int | None:
         return None
 
 
-def absolutize_logo_url(url: str | None) -> str | None:
-    """Resolve a possibly-relative aggregator logo URL to an absolute,
-    browser-reachable one.
+_LOGO_PATH_RE = re.compile(r"/v1/teams/(?P<team_id>[^/]+)/logo/?$")
 
-    The aggregator emits a *relative* ``/v1/teams/{id}/logo`` when its own
-    ``AGG_PUBLIC_BASE_URL`` is unset; a browser would resolve that against
-    MDProject's origin (→ 404). Prefix it with the aggregator's public
-    origin: prefer ``AGG_PUBLIC_BASE`` (browser-facing), else fall back to
-    the server-to-server ``AGGRIGATOR_BASE_URL`` (correct for local dev and
-    single-origin deploys). Absolute URLs and non-URLs pass through
-    unchanged, so this is idempotent.
+
+def proxy_logo_url(url: str | None) -> str | None:
+    """Rewrite an aggregator team-logo URL to MDProject's same-origin proxy
+    endpoint (``core.event.views.logos.team_logo``).
+
+    The aggregator's logo route is key-gated, and a browser ``<img>`` can't
+    attach the service key — so we never point the browser at the aggregator.
+    Any aggregator logo URL (relative ``/v1/teams/{id}/logo`` or absolute) is
+    matched by path and rewritten to ``reverse("team-logo")``; that endpoint
+    serves the bytes itself (local mirror, else a keyed server-side fetch).
+    URLs that aren't aggregator logos, and empty/None, pass through unchanged
+    — so this is safe to apply idempotently to every team's ``logo_url``.
     """
-    if not url or not url.startswith("/"):
+    if not url:
         return url
-    from django.conf import settings
+    match = _LOGO_PATH_RE.search(url)
+    if not match:
+        return url
+    from django.urls import reverse
 
-    base = (
-        (getattr(settings, "AGG_PUBLIC_BASE", "") or "")
-        or getattr(settings, "AGGRIGATOR_BASE_URL", "")
-    ).rstrip("/")
-    return f"{base}{url}" if base else url
+    return reverse("team-logo", kwargs={"team_id": match.group("team_id")})
 
 
 def _cache_key(method: str, url: str, params: dict) -> str:

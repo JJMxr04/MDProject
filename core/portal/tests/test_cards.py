@@ -52,9 +52,9 @@ class FixtureFromDictTests(SimpleTestCase):
             "league": {"name": "NBA"},
             "start_time": "2030-01-01T19:30:00+00:00",
             "is_live": False, "is_finalized": False,
-            # Absolute URL so fixture_from_dict's absolutize_logo_url is a
-            # no-op (the relative->absolute path is covered by
-            # AbsolutizeLogoUrlTests); this test is about winner/scores.
+            # Non-logo URL so fixture_from_dict's proxy_logo_url is a no-op
+            # (the aggregator-logo rewrite is covered by ProxyLogoUrlTests);
+            # this test is about winner/scores.
             "home_team": {"name": "Mavericks", "logo_url": "http://agg/m.png"},
             "away_team": {"name": "Celtics", "logo_url": None},
             "home_score": None, "away_score": None,

@@ -25,7 +25,7 @@ from django.views.decorators.http import require_GET
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
-    absolutize_logo_url,
+    proxy_logo_url,
 )
 from core.match.decorators import player_in_match_required
 from core.match.models import Match
@@ -49,17 +49,18 @@ CACHE_TTL = 30  # seconds; matches plan §2.4.2 table
 
 def _shape_for_popup(item: dict) -> dict:
     """Tiny adapter — popup JS uses ``event_id`` everywhere; aggregator's
-    schema field is ``id``. Add the alias; absolutize team logos at the
-    source (the popup renders client-side and must not rebuild URLs against
-    MDProject's origin); and resolve the matchup tints from each team's
-    primary_color so the JS only applies the already-computed values.
+    schema field is ``id``. Add the alias; rewrite team logos to MDProject's
+    same-origin proxy endpoint at the source (the popup renders client-side,
+    so a relative ``/logos/teams/{id}`` resolves against MDProject's origin —
+    which is exactly where we now serve them); and resolve the matchup tints
+    from each team's primary_color so the JS only applies the values.
     """
     home = dict(item.get("home_team") or {})
     away = dict(item.get("away_team") or {})
     if home:
-        home["logo_url"] = absolutize_logo_url(home.get("logo_url"))
+        home["logo_url"] = proxy_logo_url(home.get("logo_url"))
     if away:
-        away["logo_url"] = absolutize_logo_url(away.get("logo_url"))
+        away["logo_url"] = proxy_logo_url(away.get("logo_url"))
     home_tint, away_tint = resolve_matchup_tints(
         home.get("primary_color"), away.get("primary_color")
     )

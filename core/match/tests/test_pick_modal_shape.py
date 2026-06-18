@@ -1,12 +1,12 @@
-"""_shape_for_popup absolutizes logos + adds matchup tints."""
-from django.test import SimpleTestCase, override_settings
+"""_shape_for_popup rewrites logos to the proxy + adds matchup tints."""
+from django.test import SimpleTestCase
+from django.urls import reverse
 
 from core.match.views.available_events import _shape_for_popup
 
 
-@override_settings(AGG_PUBLIC_BASE="http://agg.test")
 class ShapeForPopupTests(SimpleTestCase):
-    def test_absolutizes_logos_and_adds_tints(self):
+    def test_rewrites_logos_to_proxy_and_adds_tints(self):
         item = {
             "id": "evt-9",
             "home_team": {"name": "Mavs", "logo_url": "/v1/teams/h/logo",
@@ -16,8 +16,14 @@ class ShapeForPopupTests(SimpleTestCase):
         }
         out = _shape_for_popup(item)
         self.assertEqual(out["event_id"], "evt-9")
-        self.assertEqual(out["home_team"]["logo_url"], "http://agg.test/v1/teams/h/logo")
-        self.assertEqual(out["away_team"]["logo_url"], "http://agg.test/v1/teams/a/logo")
+        self.assertEqual(
+            out["home_team"]["logo_url"],
+            reverse("team-logo", kwargs={"team_id": "h"}),
+        )
+        self.assertEqual(
+            out["away_team"]["logo_url"],
+            reverse("team-logo", kwargs={"team_id": "a"}),
+        )
         self.assertEqual(out["home_tint"], "#1E40AF")
         self.assertEqual(out["away_tint"], "#DC2626")
 
