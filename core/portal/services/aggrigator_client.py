@@ -242,7 +242,7 @@ def event_context(event_id: str) -> dict:
     body = _get(
         f"/v1/analytics/events/{event_id}/context",
     )
-    return body if isinstance(body, dict) else {}
+    return _proxy_team_logos(body) if isinstance(body, dict) else {}
 
 
 def event_historical_stats(event_id: str) -> dict:
@@ -252,7 +252,7 @@ def event_historical_stats(event_id: str) -> dict:
     body = _get(
         f"/v1/analytics/events/{event_id}/historical-stats",
     )
-    return body if isinstance(body, dict) else {}
+    return _proxy_team_logos(body) if isinstance(body, dict) else {}
 
 
 def event_best_prices(event_id: str) -> dict:
