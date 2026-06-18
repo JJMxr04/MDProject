@@ -43,3 +43,6 @@ celerybeat-schedule.*
 
 # Local media uploads (S3 is the source of truth)
 media/
+
+# AI-generated plans/specs live in /Users/joem/dev/PBL/plans/MDProject, not in-repo
+docs/superpowers/
