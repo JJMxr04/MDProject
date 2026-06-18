@@ -14,7 +14,6 @@
 <div class="page-layout">
 <div class="page-layout__main">
 
-    {# ── Hero: matchup + countdown + win-probability bars ───────────── #}
     <header class="card-ui evt-hero">
         <div class="card-ui__body">
             {% include "portal/components/_event_matchup.html" with fixture=fixture %}
@@ -53,8 +52,6 @@
         </div>
     </header>
 
-    {# ── CSS-only segmented tabs (no JS → CSP-safe). Overview always shows;
-         Odds / Analytics render only when populated. ─────────────────── #}
     <input class="seg-tabs__radio" type="radio" name="evt-seg" id="seg-a" checked>
     {% if has_odds %}<input class="seg-tabs__radio" type="radio" name="evt-seg" id="seg-b">{% endif %}
     {% if has_analytics %}<input class="seg-tabs__radio" type="radio" name="evt-seg" id="seg-c">{% endif %}
@@ -65,7 +62,6 @@
         {% if has_analytics %}<label class="seg-tabs__label" for="seg-c">Analytics</label>{% endif %}
     </div>
 
-    {# ── Pane A — Overview: top markets + at-a-glance snapshot ───────── #}
     <div class="seg-pane" id="pane-a">
         <section class="card-ui">
             <div class="card-ui__body evt-overview">
@@ -136,7 +132,6 @@
         </section>
     </div>
 
-    {# ── Pane B — Odds: full market depth + model vs market ──────────── #}
     {% if has_odds %}
     <div class="seg-pane" id="pane-b">
         <section class="card-ui">
@@ -309,7 +304,6 @@
     </div>
     {% endif %}
 
-    {# ── Pane C — Analytics: H2H + form + season to date ─────────────── #}
     {% if has_analytics %}
     <div class="seg-pane" id="pane-c">
         {% if h2h_aggregate.played or h2h_last_5 %}
@@ -368,9 +362,8 @@
     </div>
     {% endif %}
 
-</div>{# /.page-layout__main #}
+</div>
 
-{# ── Right rail: Event Info + Challenge CTA ─────────────────────────── #}
 <aside class="page-layout__rail">
     <section class="rail-panel evt-info">
         <h2 class="rail-panel__title">Event info</h2>
@@ -395,7 +388,7 @@
     </section>
 </aside>
 
-</div>{# /.page-layout #}
+</div>
 {% endblock content %}
 
 {% block css %}

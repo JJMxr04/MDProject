@@ -53,12 +53,12 @@
             <time class="matchup__time">{{ match.start_date|date:"M j, Y" }}{% if match.end_date %} – {{ match.end_date|date:"M j" }}{% endif %}</time>
         </div>
         <div class="matchup__teams">
-            <div class="matchup__team matchup__team--home">
+            <div class="matchup__team matchup__team--home"{% if match.player_1.home_color %} style="--team-tint: {{ match.player_1.home_color }};"{% endif %}>
                 {% include "portal/components/_avatar.html" with user=match.player_1 size=44 %}
                 <span class="matchup__name">{% if match.player_1_id == request.user.id %}You{% else %}{{ match.player_1.username }}{% endif %}</span>
             </div>
             <div class="matchup__center"><span class="matchup__vs">VS</span></div>
-            <div class="matchup__team matchup__team--away">
+            <div class="matchup__team matchup__team--away"{% if match.opponent.away_color %} style="--team-tint: {{ match.opponent.away_color }};"{% endif %}>
                 {% if match.opponent %}
                     {% include "portal/components/_avatar.html" with user=match.opponent size=44 %}
                     <span class="matchup__name">{{ match.opponent.username }}</span>
@@ -80,7 +80,7 @@
     {% include "portal/components/_empty_state.html" with icon="controller" title="No matches yet" body="Create a public match or accept an invite from a friend." action_label="Browse public matches" action_href="/web/portal/match/public/" %}
 {% endif %}
 
-</div>{# /.page-layout__main #}
+</div>
 
 <aside class="page-layout__rail">
     <section class="rail-panel">
@@ -91,5 +91,5 @@
     </section>
 </aside>
 
-</div>{# /.page-layout #}
+</div>
 {% endblock content %}

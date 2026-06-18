@@ -73,9 +73,6 @@
         </button>
       </form>
     </li>
-    {# Two-factor (phase 15): reset is lost-device recovery; enrolling can only
-       be done by the account holder, so the self-enroll link shows on your
-       own row only. #}
     <li>
       <form method="post"
             action="{% url 'admin:core_user_user_reset_2fa' original.pk %}"

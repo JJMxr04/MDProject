@@ -81,7 +81,6 @@
     <h1>{{ tournament.name }}</h1>
     <p>Start Date: {{ tournament.start_date }}</p>
     <p>End Date: {{ tournament.end_date }}</p>
-    <!-- Add more fields as needed -->
 
     <div class="tournament-bracket">
         {% regroup tournament.rounds.all|dictsortreversed:"level_num" by level_num as round_groups %}

@@ -2,18 +2,15 @@
 {% load i18n admin_urls static admin_list %}
 
 {% block title %}
-    <!-- Custom title if needed -->
     {{ block.super }}
 {% endblock %}
 
 {% block content %}
-    <!-- Your custom content here -->
     <div id="content-main">
         {% block object-tools %}
             <ul class="object-tools">
                 {% block object-tools-items %}
                     {% change_list_object_tools %}
-                    <!-- Additional custom object tools if necessary -->
                 {% endblock %}
             </ul>
         {% endblock %}

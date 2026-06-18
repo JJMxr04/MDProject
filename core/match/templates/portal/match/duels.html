@@ -63,7 +63,6 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         <label class="seg-tabs__label" for="seg-c">Finished</label>
     </div>
 
-    {# ---- Pane A: incoming challenges + sent ---- #}
     <div class="seg-pane" id="pane-a">
         {% if challenges %}
         <div class="vs-grid">
@@ -119,7 +118,6 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         {% endif %}
     </div>
 
-    {# ---- Pane B: in progress ---- #}
     <div class="seg-pane" id="pane-b">
         {% if accepted_rows %}
         <div class="vs-grid">
@@ -139,7 +137,6 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         {% endif %}
     </div>
 
-    {# ---- Pane C: finished ---- #}
     <div class="seg-pane" id="pane-c">
         {% if finished_rows %}
         <div class="vs-grid">
@@ -159,8 +156,8 @@ render, so it wraps the conditional alert sections.{% endcomment %}
         {% endif %}
     </div>
 
-</div>{# /#invite-list #}
-</div>{# /.page-layout__main #}
+</div>
+</div>
 
 <aside class="page-layout__rail">
     <section class="rail-panel">
@@ -204,9 +201,8 @@ render, so it wraps the conditional alert sections.{% endcomment %}
     </section>
 </aside>
 
-</div>{# /.page-layout #}
+</div>
 
-<!-- Create-duel modal: hosts the duel-builder island (shell.js toggles .is-open) -->
 <div class="modal-ui" id="duel-create-modal" role="dialog" aria-modal="true" aria-labelledby="duel-create-modal-title" data-modal>
     <div class="modal-ui__content">
         <header class="modal-ui__header">

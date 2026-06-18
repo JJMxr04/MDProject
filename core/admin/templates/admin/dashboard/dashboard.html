@@ -187,7 +187,6 @@
 <div class="container">
     <h1 class="mt-4 text-center">Welcome to the Admin Dashboard</h1>
 
-    <!-- Waitlist Signups card -->
     <div class="kanban-card waitlist">
         <div class="kanban-card-header bg-danger">
             <span class="kanban-card-title text-white">Waitlist Signups</span>
@@ -197,7 +196,6 @@
         </div>
     </div>
 
-    <!-- User Registrations card -->
     <div class="kanban-card user-registrations">
         <div class="kanban-card-header bg-primary">
             <span class="kanban-card-title text-white">User Registrations</span>
@@ -207,7 +205,6 @@
         </div>
     </div>
 
-    <!-- Total Users card -->
     <div class="kanban-card">
         <div class="kanban-card-header bg-success">
             <span class="kanban-card-title text-white">Total Users</span>
@@ -217,7 +214,6 @@
         </div>
     </div>
 
-    <!-- Total Tournaments card -->
     <div class="kanban-card">
         <div class="kanban-card-header bg-info">
             <span class="kanban-card-title text-white">Total Tournaments</span>
@@ -227,14 +223,12 @@
         </div>
     </div>
 
-    <!-- Date Range and Chart Type selection -->
     <div class="card mb-4">
         <div class="card-header bg-light">
             <h4 class="mb-0">Date Range and Chart Type</h4>
         </div>
         <div class="card-body">
             <div class="row date-chart-selection">
-                <!-- Date Range card -->
                 <div class="col-lg-6 col-md-12 mb-3">
                     <form method="get">
                         <label for="date_range">Select Date Range:</label>
@@ -248,7 +242,6 @@
                         <input type="hidden" name="chart_type" value="{{ chart_type }}">
                     </form>
                 </div>
-                <!-- Chart Type card -->
                 <div class="col-lg-6 col-md-12 mb-3">
                     <form method="get">
                         <label for="chart_type">Select Chart Type:</label>
@@ -263,7 +256,6 @@
         </div>
     </div>
 
-    <!-- Chart -->
     <div class="card mb-4">
         <div class="card-header bg-light">
             <h4 class="mb-0">Chart</h4>
@@ -276,7 +268,6 @@
     </div>
 </div>
 
-<!-- Chart.js script -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('myChart').getContext('2d');

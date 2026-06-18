@@ -133,7 +133,6 @@
         <button class="upload-button" data-action="open-upload">Upload A Pick</button>
     {% endif %}
 
-    <!-- Match Information -->
     <div class="game-info">
         <h2>Match Information</h2>
         <p><strong>Format:</strong> {{ match.format_label }} ({{ match.games_per_player }} games each + Golden Game)</p>
@@ -156,12 +155,10 @@
 
     <hr>
 
-    <!-- Golden Game Section -->
     {% if golden_game %}
         {% include "portal/match/_game_card.html" with game=golden_game slot_label="Golden Game" dom_id="golden-game-id" is_golden=True %}
     {% endif %}
 
-    <!-- Per-player game cards -->
     <div class="player-games-container">
         <div class="player-games">
             <h3>{{ match.player_1.username }}'s Games</h3>
@@ -189,8 +186,8 @@
     </div>
 
     {% csrf_token %}
-</div>{# /.match-detail-body #}
-</div>{# /.page-layout__main #}
+</div>
+</div>
 
 <aside class="page-layout__rail">
     {% if your_record %}
@@ -226,7 +223,7 @@
 
     {% include "portal/match/_scout_card.html" with opponent=scout_opponent scouting=scouting entitled=scouting_entitled pending=scouting_pending %}
 </aside>
-</div>{# /.page-layout #}
+</div>
 
 {{ available_events|json_script:"available-events-data" }}
 

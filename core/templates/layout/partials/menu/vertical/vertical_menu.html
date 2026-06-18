@@ -1,5 +1,4 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-  <!-- ! Hide app brand if navbar-full -->
   {% if not navbar_full %}
   <div class="app-brand demo">
     <a href="{% url 'index' %}" class="app-brand-link">
@@ -58,7 +57,6 @@
         </li>
       </ul>
     </li>
-    <!-- Layouts -->
     <li class="menu-item {% if '/layouts/' in request.path  %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -92,7 +90,6 @@
         </li>
       </ul>
     </li>
-    <!-- Front Pages -->
     <li class="menu-item">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class='menu-icon tf-icons bx bx-store'></i>
@@ -168,7 +165,6 @@
         <span class="badge bg-label-primary fs-tiny rounded-pill ms-auto">PRO</span>
       </a>
     </li>
-    <!-- Account -->
     <li class="menu-item {% if '/account_settings/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -192,7 +188,6 @@
         </li>
       </ul>
     </li>
-    <!-- Auth -->
     <li class="menu-item {% if '/auth/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
@@ -216,7 +211,6 @@
         </li>
       </ul>
     </li>
-    <!-- Misc -->
     <li class="menu-item {% if '/misc/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -246,7 +240,6 @@
         <div class="text-truncate" data-i18n="Card">Card</div>
       </a>
     </li>
-    <!-- UI -->
     <li class="menu-item {% if '/ui/' in request.path %}active open{% endif %}">
       <a href=" javascript:void(0)" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-box"></i>
@@ -350,7 +343,6 @@
         </li>
       </ul>
     </li>
-    <!-- Extended UI -->
     <li class="menu-item {% if '/extended_ui/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0)" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-copy"></i>
@@ -369,7 +361,6 @@
         </li>
       </ul>
     </li>
-    <!-- Icons -->
     <li class="menu-item {% if '/boxicons/' in request.path %}active{% endif %}">
       <a href="{% url 'icons-boxicons' %}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-crown"></i>
@@ -381,7 +372,6 @@
       <span class="menu-header-text">Forms & Tables</span>
     </li>
 
-    <!-- Form -->
     <li class="menu-item {% if '/forms/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0)" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-detail"></i>
@@ -401,7 +391,6 @@
       </ul>
     </li>
 
-    <!-- Form Layouts -->
     <li class="menu-item {% if '/form/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0)" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-detail"></i>

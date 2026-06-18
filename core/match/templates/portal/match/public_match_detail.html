@@ -9,7 +9,6 @@
     <h1><strong>Match Request Details</strong></h1>
     <p>Match ID: {{ match.id }}</p>
     
-    <!-- Player Cards -->
     <div class="player-cards">
         <div class="player-card">
             <h2>{{ match.player_1.username }} {% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}</h2>
@@ -27,7 +26,6 @@
 
     {% include "portal/match/_scout_card.html" with opponent=scout_opponent scouting=scouting entitled=scouting_entitled pending=scouting_pending %}
 
-    <!-- Match Information -->
     <div class="game-info">
         <h2>Match Information</h2>
         <p><strong>Start Date:</strong> {{ match.start_date }}</p>
@@ -40,7 +38,6 @@
     </button>
 </div>
 
-<!-- Add this right after the opening match-detail div -->
 <div id="loading-overlay" style="display: none;">
     <div class="loading-spinner"></div>
     <p>Processing...</p>
