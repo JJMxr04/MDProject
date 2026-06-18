@@ -34,7 +34,6 @@ States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
 
         {% if potd_user_pick %}
             {% if potd_user_pick.result == 'PENDING' %}
-                {# ── LOCKED IN ───────────────────────────────────── #}
                 <div class="potd-hype__locked">
                     <span class="potd-hype__locked-badge">🔥 LOCKED IN{% if potd_streak %} &mdash; {{ potd_streak }}-DAY STREAK{% endif %}</span>
                     <p class="potd-hype__locked-pick">You&rsquo;re on <strong>{{ potd_user_pick_label }}</strong>{% if crowd.threshold_met and crowd.user_side_pct != None %} &mdash; you + {{ crowd.user_side_pct }}% of today&rsquo;s picks{% endif %}.</p>
@@ -50,7 +49,6 @@ States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
                 {% endif %}
                 <p class="potd-hype__note">Results land after the game settles.</p>
             {% elif potd_user_pick.result == 'WON' %}
-                {# ── RESULT: WON ─────────────────────────────────── #}
                 <div class="potd-hype__result potd-hype__result--won">
                     <span class="potd-hype__result-headline">YOU WON 🎉</span>
                     <p>Streak extended &mdash; nice read on <strong>{{ potd_user_pick_label }}</strong>.</p>
@@ -68,11 +66,9 @@ States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
             {% endif %}
 
         {% elif potd_locked %}
-            {# ── MISSED ──────────────────────────────────────────── #}
             <p class="potd-hype__closed">Today&rsquo;s pick is closed &mdash; the game has started. Come back tomorrow.</p>
 
         {% else %}
-            {# ── OPEN ────────────────────────────────────────────── #}
             <div class="potd-hype__countdown potd-hype__countdown--lead" data-countdown-to="{{ potd.lock_time|date:'c' }}" data-status="upcoming" aria-live="polite">
                 <span class="potd-hype__cd-label">Picks close in</span>
                 <span class="potd-hype__cd-unit"><b data-unit="d">--</b><i>d</i></span>
