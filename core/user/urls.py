@@ -1,7 +1,8 @@
-from .views import UserProfileUpdateView
-from django.urls import path, include
+from django.urls import include, path
+
 import core.user.views as views
 
+from .views import UserProfileUpdateView
 
 app_name = 'core-portal'
 

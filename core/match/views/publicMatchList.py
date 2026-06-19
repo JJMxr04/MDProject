@@ -1,15 +1,14 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator
-from core.match.models import Match  # Assuming you have a Match model
-from django.contrib.auth.decorators import login_required
 import json
 
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import get_object_or_404
 
 from core.mail.forms import InviteForm, MatchInviteForm
 from core.mail.models import Invite
+from core.match.models import Match  # Assuming you have a Match model
 from core.ratelimit import rate_limit
 from core.user.models import User
 
@@ -163,10 +162,11 @@ def create_public_match_view(request):
 def match_availability_view(request):
     """Pre-submit availability check for the create-match UI (D-5 #2):
     "N games available in this window" before the user commits."""
+    from django.utils import timezone
+
     from core.game.models import Game
     from core.game.models.game import FixtureUnavailable
     from core.match import formats
-    from django.utils import timezone
 
     match_format = formats.normalize_format(request.GET.get('format'))
     needed = formats.min_distinct_events(match_format)
@@ -183,7 +183,7 @@ def match_availability_view(request):
         'needed': needed,
         'viable': available >= needed,
     })
-    
+
 
 
 @login_required(login_url='/auth/login/')
@@ -286,4 +286,4 @@ def accept_public_match_view(request, match_id):
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'success'})
-    
+

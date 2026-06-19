@@ -20,7 +20,12 @@ from core.match.tests.factories import (
 )
 from core.metrics.models import ProductEvent
 from core.potd.models import (
-    POTD_TZ, DailyPick, DailyPickResult, PickError, PickOfDay, potd_today,
+    POTD_TZ,
+    DailyPick,
+    DailyPickResult,
+    PickError,
+    PickOfDay,
+    potd_today,
 )
 from core.potd.services import CurationError, curate_pick_of_day, pick_candidate
 

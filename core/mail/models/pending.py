@@ -23,7 +23,6 @@ from django.utils import timezone
 
 from core.user.models import User
 
-
 PENDING_INVITE_EXPIRY = timedelta(days=14)
 
 _TOKEN_SALT = "core.mail.pending-invite"

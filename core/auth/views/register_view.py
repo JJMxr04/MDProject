@@ -1,11 +1,12 @@
 import logging
 
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import login
+from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
+
 from core.auth.forms.register_form import RegisterForm
-from django.contrib.auth import login
-from django.contrib import messages
 from core.auth.models import email
 from core.ratelimit import rate_limit
 

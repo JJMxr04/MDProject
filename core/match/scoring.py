@@ -12,7 +12,7 @@ are admin-editable; flipping a value here is a code change + redeploy.
 from __future__ import annotations
 
 from datetime import timedelta
-from typing import Optional, Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Tuple
 
 from django.utils import timezone
 

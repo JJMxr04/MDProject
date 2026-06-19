@@ -36,6 +36,7 @@ def reconcile_subscriptions() -> dict:
     import stripe
 
     from core.billing import stripe_client  # noqa: F401  (configures the SDK)
+
     # The canonical "mirror a Stripe subscription into local state" lives next
     # to the webhook that drives it; reuse it so reconcile and webhook can't
     # diverge.

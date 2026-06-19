@@ -19,7 +19,6 @@ from datetime import timedelta
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-
 from procrastinate.contrib.django.models import ProcrastinateJob
 
 from core.event.models.odds.selection import SettlementStatus

@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils import timezone
 
 from core.auth import twofa

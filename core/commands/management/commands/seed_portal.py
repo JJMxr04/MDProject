@@ -24,7 +24,6 @@ from core.tournament.models.tournament import (
 )
 from core.user.models import User
 
-
 FIRST_NAMES = [
     "Alex", "Sam", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Drew",
     "Avery", "Quinn", "Skyler", "Peyton", "Reese", "Harper", "Rowan", "Sage",

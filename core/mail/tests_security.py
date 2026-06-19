@@ -12,8 +12,6 @@ from core.mail.models import Notification
 from core.user.models import User
 
 
-
-
 def _make_user(suffix: str) -> User:
     return User.objects.create_user(
         username=f"n_{suffix}",

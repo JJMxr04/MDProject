@@ -1,21 +1,29 @@
+import logging
 import uuid
 from datetime import datetime, timedelta
+
 from django.test import TestCase
-from core.tournament.models.tournament import Tournament, Round, TournamentManager, RoundManager
+
+from core.event.models.sport import Sport
+from core.tournament.models.tournament import Round, RoundManager, Tournament, TournamentManager
+
 # from core.tournament.unit_tests.tests.tournament_test_1 import tournament_test_1
 from core.user.models import User
-from core.event.models.sport import Sport
+
 from .tests import tournament_test_2
-import logging
+
 logger = logging.getLogger(__name__)
-from core.tournament.unit_tests.tests.Support import Support
-from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
-from core.tournament.unit_tests.tests.tourney_checks import TournamentChecks
-import unittest
-from core.tournament.models.tournament import Player
 import logging
 import math
 import time
+import unittest
+
+from core.tournament.models.tournament import Player
+from core.tournament.unit_tests.tests.Support import Support
+from core.tournament.unit_tests.tests.tourney_checks import TournamentChecks
+from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
+
+
 class TournamentCreationTestCase(TestCase):
     databases = ['default', 'test_mirror']
     # Level 6

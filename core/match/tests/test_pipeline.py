@@ -17,8 +17,8 @@ from datetime import timedelta
 from django.test import TestCase
 from django.utils import timezone
 
-from core.event.odds.settlement import settle_event
 from core.event.models.odds.selection import SettlementStatus
+from core.event.odds.settlement import settle_event
 from core.game.models import Game
 from core.game.models.bet import Bet
 from core.match.models import Match

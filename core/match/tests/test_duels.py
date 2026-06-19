@@ -188,6 +188,7 @@ class DuelSendViewTests(TestCase):
 
     def test_send_endpoint_creates_invite(self):
         import json
+
         from django.urls import reverse
         resp = self.client.post(
             reverse("core-portal:portal-match-duel-send"),
@@ -203,6 +204,7 @@ class DuelSendViewTests(TestCase):
 
     def test_send_endpoint_rejects_three_way(self):
         import json
+
         from django.urls import reverse
         market = make_market(self.event)
         home = make_selection(market, selection_type="HOME")
@@ -248,6 +250,7 @@ class DuelPageTests(TestCase):
 
     def test_events_endpoint_shapes_upcoming_events(self):
         from unittest.mock import MagicMock, patch
+
         from django.urls import reverse
 
         client = MagicMock()
@@ -578,5 +581,6 @@ class DuelRowFixtureTests(TestCase):
 
 def _past():
     from datetime import timedelta
+
     from django.utils import timezone
     return timezone.now() - timedelta(hours=1)

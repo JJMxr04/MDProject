@@ -1,5 +1,6 @@
 from core.abstract.pagination import AbstractPagination
 
+
 class MatchPagination(AbstractPagination):
     page_size = 10
     page_size_query_param = 'page_size'

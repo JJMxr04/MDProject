@@ -8,10 +8,10 @@ from django.test import TestCase
 
 from core.match.tests.factories import make_user
 from core.potd.models import DailyPick, DailyPickResult
-from core.potd.views import potd_card_context
 
 # Reuse the POTD factory from the main suite.
 from core.potd.tests.test_potd import make_potd
+from core.potd.views import potd_card_context
 
 TPL = Template('{% include "portal/potd/_potd_hype.html" %}')
 

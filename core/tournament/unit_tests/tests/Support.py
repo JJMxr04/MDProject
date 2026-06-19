@@ -1,22 +1,24 @@
+import json
 import os
+import uuid
+
 from django import setup
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.serializers import serialize
-import uuid
-from rest_framework.response import Response
-from rest_framework import status
 from django.core.management import call_command
+from django.core.serializers import serialize
 from django.http import Http404
-import json
+from rest_framework import status
+from rest_framework.response import Response
+
+from core.event.models.event import Event
+from core.event.models.sport import Sport
 
 # Importing various serializers and models from different Django apps
 from core.event.serializers.event import EventSerializer, TeamScoreSerializer
-from core.game.serializers.game import GameSerializer
-from core.event.models.event import Event
-from core.event.models.sport import Sport
 from core.game.models import Game
-from core.user.models import User
+from core.game.serializers.game import GameSerializer
 from core.match.models import Match
+from core.user.models import User
 from core.user.serializers import UserSerializer
 
 # Instantiating Sport model
@@ -24,23 +26,26 @@ sport_model = Sport()
 
 # Importing cron jobs for scheduled tasks
 from core.event.crons.sportUpdate import SportCron
+
 sport_cron = SportCron()
 
 from core.event.crons.eventUpdate import EventCron
 from core.event.crons.teamUpdate import TeamCron
-from core.event.serializers.team import TeamSerializer
-from core.event.serializers.sport import SportSerializer
 from core.event.models import Team
+from core.event.serializers.sport import SportSerializer
+from core.event.serializers.team import TeamSerializer
+
 event_cron = EventCron()
 team_cron = TeamCron()
 
 # Importing datetime to manipulate date and time
 from datetime import datetime, timedelta
-
 from io import StringIO
-from django.core.management import call_command
-from django.core.exceptions import ImproperlyConfigured
+
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.core.management import call_command
+
 
 # Class containing various utility functions
 class Support:

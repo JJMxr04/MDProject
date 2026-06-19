@@ -1,8 +1,7 @@
 from rest_framework import routers
 
-from core.admin.viewsets.waitlist import WaitlistEntryViewSet, WaitlistEntryApprovalViewSet
 from core.admin.viewsets.admin_stats import AdminStatsViewSet
-
+from core.admin.viewsets.waitlist import WaitlistEntryApprovalViewSet, WaitlistEntryViewSet
 
 router = routers.SimpleRouter()
 

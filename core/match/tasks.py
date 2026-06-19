@@ -14,8 +14,8 @@ import logging
 from datetime import timedelta
 
 from django.conf import settings
-
-from procrastinate import RetryStrategy, exceptions as procrastinate_exceptions
+from procrastinate import RetryStrategy
+from procrastinate import exceptions as procrastinate_exceptions
 from procrastinate.contrib.django import app
 
 logger = logging.getLogger(__name__)

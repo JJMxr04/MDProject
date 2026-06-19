@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models.waitlist import WaitlistEntry
+
 from core.mail.models import Emails
+
+from .models.waitlist import WaitlistEntry
 
 
 class WaitlistEntryAdmin(admin.ModelAdmin):

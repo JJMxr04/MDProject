@@ -10,7 +10,6 @@ from core.user.urls import urlpatterns as userUrls
 from . import views
 from .urls_analytics import urlpatterns as analyticsUrls
 
-
 app_name = 'core-portal'
 
 urlpatterns = [

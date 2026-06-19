@@ -5,7 +5,7 @@ from django.test import TestCase
 from PIL import Image
 
 from core.user.models import User, UserAvatar
-from core.user.serializers import UserSerializer, UserMeSerializer
+from core.user.serializers import UserMeSerializer, UserSerializer
 
 
 def _png_upload(name="a.png"):

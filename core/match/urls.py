@@ -1,6 +1,8 @@
-from . import views
-from django.urls import path, include
+from django.urls import include, path
+
 from core.event.urls import urlpatterns as eventUrls
+
+from . import views
 
 app_name = 'core-match'
 

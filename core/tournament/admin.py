@@ -10,6 +10,7 @@ from core.user.models import User
 
 from .models.tournament import Player, Round, Tournament
 
+
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
     list_display = ['name', 'start_date', 'state', 'max_accepted_players', 'levels', 'winner', 'final_round',
@@ -56,7 +57,7 @@ class TournamentAdmin(admin.ModelAdmin):
             if failed_invites_count > 0:
                 messages.error(request, f"{failed_invites_count} players failed to be invited.")
             else:
-                messages.success(request, f"All players invited successfully.")
+                messages.success(request, "All players invited successfully.")
 
             return HttpResponseRedirect(
                 reverse('admin:%s_%s_change' % (self.model._meta.app_label, self.model._meta.model_name),

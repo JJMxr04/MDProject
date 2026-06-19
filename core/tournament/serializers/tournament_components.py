@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from core.tournament.models.tournament import Tournament, InvitedPlayer, Player
+
+from core.tournament.models.tournament import InvitedPlayer, Player, Tournament
 from core.user.serializers import PublicUserSerializer
+
 
 class InviteSerializer(serializers.ModelSerializer):
     player = PublicUserSerializer()

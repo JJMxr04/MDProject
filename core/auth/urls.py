@@ -1,13 +1,14 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views.register_view import RegisterView
-from .views.waitlist_view import WaitListView
+from django.urls import path
+
+from core.auth.views import twofa as twofa_views
+from core.auth.views.activation_view import ActivateUserView, activate_yoour_account
+
 from .views import waitlist_view
 from .views.login_view import LoginView
+from .views.register_view import RegisterView
 from .views.unsubscribe import unsubscribe_view
-from django.contrib.auth import views as auth_views
-from core.auth.views.activation_view import ActivateUserView, activate_yoour_account
-from core.auth.views import twofa as twofa_views
+from .views.waitlist_view import WaitListView
 
 app_name = 'core-auth'
 
@@ -30,5 +31,5 @@ urlpatterns = [
     # (linked from every notification email footer; see core.mail.unsubscribe).
     path('unsubscribe/<str:token>/', unsubscribe_view, name='unsubscribe'),
 
-    
+
 ]

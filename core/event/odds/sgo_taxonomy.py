@@ -16,7 +16,6 @@ from __future__ import annotations
 
 from typing import NamedTuple
 
-
 # ---- bet types --------------------------------------------------------------
 
 #: Maps SGO ``betTypeID`` to our ``MarketCategory`` value.

@@ -1,8 +1,10 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator
-from core.match.models import Match  # Assuming you have a Match model
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Q
+from django.shortcuts import render
+
+from core.match.models import Match  # Assuming you have a Match model
+
 
 @login_required(login_url='/auth/login/')
 def my_match_list_view(request):
@@ -37,7 +39,7 @@ def my_match_list_view(request):
     if search_query:
         matches = matches.filter(player_1__username__icontains=search_query) | \
                   matches.filter(player_2__username__icontains=search_query)
-    
+
     if state:
         matches = matches.filter(match_state=state)
 
@@ -57,9 +59,9 @@ def my_match_list_view(request):
     # hero): viewer-relative outcome pill, both players' rank flair, and the
     # running score for each side.
     user = request.user
+    from core.match.scoring import score_match
     from core.portal.cards import match_outcome
     from core.ranking.standings import divisions_for, levels_for
-    from core.match.scoring import score_match
 
     object_list = matches_page.object_list
 
@@ -102,5 +104,5 @@ def my_match_list_view(request):
         'total_pages': paginator.num_pages,
         'current_page': int(page)
     }
-    
+
     return render(request, 'portal/match/my_match_list.html', context)

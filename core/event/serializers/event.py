@@ -4,7 +4,6 @@ from core.event.models import Event
 
 from .market import MarketSerializer
 
-
 # SGO sportID -> public slug used by the Flutter client.
 SPORT_SLUG_MAP = {
     "BASEBALL": "baseball",

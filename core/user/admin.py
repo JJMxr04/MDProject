@@ -13,21 +13,26 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.views.decorators.http import require_POST
 
+from core.abstract.image_security import process_image, validate_image_file
+from core.auth import twofa
+from core.billing.services import aggrigator_internal
 from core.billing.services.customer import (
     StripeCustomerError,
+)
+from core.billing.services.customer import (
     create_customer as stripe_create_customer,
+)
+from core.billing.services.customer import (
     reconnect_customer as stripe_reconnect_customer,
 )
-from core.billing.services import aggrigator_internal
 from core.billing.services.subscription_sync import (
     SubscriptionSyncError,
+)
+from core.billing.services.subscription_sync import (
     refresh_from_stripe as subscription_refresh_from_stripe,
 )
-from core.auth import twofa
-from core.abstract.image_security import validate_image_file, process_image
 
 from .models import User, UserAvatar
-
 
 # ---- click-to-reveal helpers ----
 #

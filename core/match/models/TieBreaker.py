@@ -11,10 +11,13 @@ gone: matches never end in a draw and never use randomness — see
 """
 
 import uuid
+
 from django.db import models
-from core.abstract.models import AbstractModel, AbstractManager
-from core.user.models import User
+
+from core.abstract.models import AbstractManager, AbstractModel
 from core.game.models import Game
+from core.user.models import User
+
 
 class TieBreakerManager(AbstractManager):
 

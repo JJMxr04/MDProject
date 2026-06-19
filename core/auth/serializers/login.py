@@ -1,10 +1,12 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.settings import api_settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
-from core.user.serializers import UserSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.settings import api_settings
+
 from core.user.models import User
+from core.user.serializers import UserSerializer
+
 
 class LoginSerializer(TokenObtainPairSerializer):
     portal_password = serializers.CharField(write_only=True)

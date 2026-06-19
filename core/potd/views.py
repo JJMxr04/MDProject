@@ -18,10 +18,13 @@ from django.views.decorators.http import require_POST
 
 from core.event.odds.humanize import humanize_selection
 from core.potd.models import (
-    DailyPick, DailyPickResult, PickError, PickOfDay, potd_today,
+    DailyPick,
+    DailyPickResult,
+    PickError,
+    PickOfDay,
+    potd_today,
 )
 from core.ratelimit import rate_limit
-
 
 # Card ordering: home side, then the draw (3-way soccer lines), then away.
 _SELECTION_ORDER = {"HOME": 0, "DRAW": 1, "AWAY": 2}

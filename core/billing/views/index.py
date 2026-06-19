@@ -4,11 +4,10 @@ from __future__ import annotations
 
 import logging
 
+import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
-import stripe
 
 from core.billing import stripe_client  # noqa: F401
 from core.billing.entitlement import user_can_access_analytics
