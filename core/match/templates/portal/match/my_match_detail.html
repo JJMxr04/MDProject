@@ -14,6 +14,9 @@
             display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
             text-align: center;
         }
+        .match-hero__flair {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-1);
+        }
         .match-hero__score { font-size: var(--text-3xl); font-weight: var(--weight-bold); line-height: 1; }
         .match-hero__side.is-winner { color: var(--state-success); }
         .match-hero__side.is-winner::after {
@@ -91,7 +94,28 @@
         }
 
         @media (max-width: 640px) {
-            .match-hero__scoreline { grid-template-columns: 1fr; gap: var(--space-3); }
+            .match-hero { padding: var(--space-4); }
+
+            /* Keep the head-to-head reading left-to-right on phones. The shared
+               .vs-card rule (cards.css) collapses to a single column at this
+               width; override it here so avatars, scores and the status badge
+               stay side by side instead of stacking into one tall column. */
+            .match-hero .vs-card {
+                grid-template-columns: 1fr auto 1fr;
+                gap: var(--space-2); padding: var(--space-4) var(--space-2);
+                margin-bottom: var(--space-3);
+            }
+            .match-hero .vs-card .avatar { --avatar-size: 52px !important; }
+            .match-hero .vs-card__name { font-size: var(--text-sm); overflow-wrap: anywhere; }
+            .match-hero .vs-card__glyph { font-size: var(--text-xl); }
+
+            .match-hero__scoreline {
+                grid-template-columns: 1fr auto 1fr;
+                gap: var(--space-2); margin-top: var(--space-2);
+            }
+            .match-hero__side { gap: var(--space-1); }
+            .match-hero__score { font-size: var(--text-2xl); }
+
             .player-games-container { flex-direction: column; }
         }
     </style>
@@ -112,13 +136,13 @@
         {% include "portal/components/_player_vs.html" with home_player=home_player away_player=away_player %}
         <div class="match-hero__scoreline">
             <div class="match-hero__side {% if match.winner == match.player_1 %}is-winner{% endif %}">
-                {% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}
+                <div class="match-hero__flair">{% include "portal/components/_player_flair.html" with level=player_1_level division=player_1_division %}</div>
                 <div class="match-hero__score">{{ match.player_1_score }}</div>
             </div>
             {% include "portal/components/_badge.html" with state=match.match_state %}
             <div class="match-hero__side {% if match.winner == match.player_2 %}is-winner{% endif %}">
                 {% if match.player_2 %}
-                    {% include "portal/components/_player_flair.html" with level=player_2_level division=player_2_division %}
+                    <div class="match-hero__flair">{% include "portal/components/_player_flair.html" with level=player_2_level division=player_2_division %}</div>
                     <div class="match-hero__score">{{ match.player_2_score }}</div>
                 {% endif %}
             </div>
