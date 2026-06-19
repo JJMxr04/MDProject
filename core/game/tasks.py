@@ -10,7 +10,6 @@ queueing lock, and the job counts the picker's picks at send time.
 from __future__ import annotations
 
 from django.conf import settings
-
 from procrastinate import RetryStrategy
 from procrastinate.contrib.django import app
 

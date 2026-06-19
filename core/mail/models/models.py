@@ -1,13 +1,12 @@
 # yourapp/emails.py
 
-from django.db import transaction
+import os
 
+from django.db import transaction
 from procrastinate import exceptions as procrastinate_exceptions
 
-from core.mail.tasks import send_email
-
 from core.mail.models.notifications import Notification
-import os
+from core.mail.tasks import send_email
 
 
 class Emails:

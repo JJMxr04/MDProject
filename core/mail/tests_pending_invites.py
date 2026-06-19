@@ -37,7 +37,6 @@ from core.mail.models import Invite, PendingInvite
 from core.metrics.models import ProductEvent
 from core.user.models import User
 
-
 PASSWORD = "Str0ng-passw0rd!42"
 
 

@@ -12,30 +12,34 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CoreRoot.settings")
 setup()
 
 # Import necessary Django models, serializers, and other modules
-from core.match.models import Match
-from core.mail import views
-from core.auth.models import email
-from core.user.models import User
-from core.event.crons.eventUpdate import EventCron
-from core.event.crons.sportUpdate import SportCron
-from core.event.serializers.team import TeamSerializer
-from core.tournament.serializers.tournament import TournamentSerializer, RoundSerializer
-from core.event.models.event import Event
-from core.event.models.team import Team
-from core.game.models.game import Game
-from core.event.models.sport import Sport
-from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
-from django.http import Http404
+import json
+import os
 from datetime import datetime, timedelta
-from .Support import Support
+
+from django.http import Http404
+
+from core.auth.models import email
+
 # from tests.test2 import eventTest
 from core.auth.models.waitlist import WaitlistEntry
+from core.event.crons.eventUpdate import EventCron
+from core.event.crons.sportUpdate import SportCron
+from core.event.models.event import Event
+from core.event.models.sport import Sport
+from core.event.models.team import Team
+from core.event.serializers.event import EventSerializer
+from core.event.serializers.team import TeamSerializer
+from core.game.models.game import Game
+from core.mail import views
+from core.match.models import Match
+
 # from .tourneyTestHelpFuncs import TourneyTestHelp
 from core.match.serializers.match import MatchSerializer
-from core.event.serializers.event import EventSerializer
+from core.tournament.models.tournament import InvitedPlayer, Player, Round, Tournament
+from core.tournament.serializers.tournament import RoundSerializer, TournamentSerializer
+from core.user.models import User
 
-import os
-import json
+from .Support import Support
 
 # Get the full path of the current file
 current_file_path = __file__
@@ -45,6 +49,7 @@ current_file_directory = os.path.dirname(current_file_path)
 base_test_path = os.path.abspath(current_file_directory)
 
 from uuid import UUID
+
 
 class UUIDEncoder(json.JSONEncoder):
     def default(self, obj):

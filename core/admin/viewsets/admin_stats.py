@@ -1,12 +1,15 @@
-from rest_framework import viewsets, status
+import calendar
+
+from django.db.models import Count, Q
+from django.db.models.functions import ExtractMonth, ExtractYear
+from rest_framework import status, viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+
+from core.admin.serializers.admin_stats import AdminStatsSerializer
 from core.auth.models.waitlist import WaitlistEntry
 from core.user.models import User
-from core.admin.serializers.admin_stats import AdminStatsSerializer
-from django.db.models import Count, Q
-from django.db.models.functions import ExtractYear, ExtractMonth
-import calendar
+
 
 class AdminStatsViewSet(viewsets.ViewSet):
     permission_classes = (IsAdminUser, IsAuthenticated)

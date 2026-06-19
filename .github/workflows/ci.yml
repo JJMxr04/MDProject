@@ -1,0 +1,84 @@
+name: CI
+
+# Runs on every PR (lint + test gate) and on every push to main.
+# On a push to main, the deploy job also runs — but only after lint and
+# test pass, so a green main is what gets shipped to Coolify.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  # Cancel superseded runs on the same ref so only the latest commit is tested.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff==0.14.4
+      - name: Ruff lint
+        run: ruff check .
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: mdproject
+          POSTGRES_PASSWORD: mdproject
+          POSTGRES_DB: mdproject_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mdproject"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      # DEBUG=True relaxes the production guards in settings.py (SECRET_KEY /
+      # ALLOWED_HOSTS) and adds `testserver` to ALLOWED_HOSTS for the test client.
+      DEBUG: "True"
+      SECRET_KEY: ci-not-a-secret
+      DATABASE_URL: postgres://mdproject:mdproject@localhost:5432/mdproject_test
+      ALLOWED_HOSTS: localhost,127.0.0.1,testserver
+      SECURE_SSL_REDIRECT: "False"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run migrations check
+        run: python manage.py migrate --noinput
+      - name: Run tests
+        run: python manage.py test --verbosity=2
+
+  deploy:
+    needs: [lint, test]
+    # Only deploy from main, and only on a real push (i.e. after a merge) —
+    # never on a pull_request event.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify deploy
+        env:
+          COOLIFY_URL: ${{ secrets.COOLIFY_URL }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          # Comma-separated resource UUIDs (e.g. mdproject-web,mdproject-worker).
+          COOLIFY_RESOURCE_UUID: ${{ secrets.COOLIFY_RESOURCE_UUID }}
+        run: |
+          curl --fail --show-error --silent \
+            -H "Authorization: Bearer ${COOLIFY_TOKEN}" \
+            "${COOLIFY_URL}/api/v1/deploy?uuid=${COOLIFY_RESOURCE_UUID}&force=false"

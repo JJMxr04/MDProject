@@ -92,7 +92,8 @@ def curate_pick_of_day(date=None):
     task's retry strategy gets a real failure to chew on.
     """
     from core.event.providers.aggregator_client import (
-        AggrigatorClient, AggrigatorError,
+        AggrigatorClient,
+        AggrigatorError,
     )
     from core.event.services.aggregator_chain import ChainBuildError, ensure_chain
 
@@ -148,6 +149,7 @@ def _schedule_closing_nudge(potd):
     """One-shot 'closes in 2h' nudge (Phase 7 schedule_at pattern). The
     queueing lock makes re-curation/re-runs idempotent."""
     from procrastinate import exceptions as procrastinate_exceptions
+
     from core.potd.tasks import potd_closing_nudge
 
     nudge_at = potd.lock_time - timedelta(hours=2)
@@ -171,6 +173,7 @@ def send_closing_nudge(potd_id):
     yesterday, haven't picked today. In-app always; email only if opted in
     (``Emails._notify`` handles the gate)."""
     from django.contrib.auth import get_user_model
+
     from core.mail.models import Emails
 
     potd = PickOfDay.objects.select_related(

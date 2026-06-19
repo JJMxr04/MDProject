@@ -11,7 +11,6 @@ from django.core.management.base import BaseCommand
 from core.event.models import League, Sport
 from core.event.providers import get_events_client
 
-
 # leagueID -> default refresh cadence (minutes). Numbers come from the budget
 # math in refactor-plan.md §1; tune via admin once we have real usage data.
 DEFAULT_ACTIVE_LEAGUES: dict[str, int] = {

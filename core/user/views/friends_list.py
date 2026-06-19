@@ -1,11 +1,13 @@
-from django.db import models
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db import models
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from core.user.models import User
+
 from core.mail.models import Invite
 from core.ratelimit import rate_limit
+from core.user.models import User
+
 
 @login_required
 def friend_search(request):

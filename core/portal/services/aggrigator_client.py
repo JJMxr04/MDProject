@@ -98,6 +98,8 @@ def _get(
     # core/middleware/profile_passthrough.py for the response swap.
     from core.middleware.profile_passthrough import (
         add_capture,
+    )
+    from core.middleware.profile_passthrough import (
         is_active as _profile_active,
     )
     effective_params: dict[str, Any] = dict(params or {})

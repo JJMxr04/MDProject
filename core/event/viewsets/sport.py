@@ -1,12 +1,11 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from core.event.serializers.sport import SportSerializer
-from core.event.models import Sport
-from core.abstract.viewsets import AbstractViewSet
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from core.abstract.viewsets import AbstractViewSet
+from core.event.models import Sport
 from core.event.pagination.pagination import SportPagination
-
-
+from core.event.serializers.sport import SportSerializer
 
 
 class SportViewSet(AbstractViewSet):

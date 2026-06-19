@@ -1,9 +1,11 @@
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.shortcuts import render, redirect, get_object_or_404
-from core.auth.models.waitlist import WaitlistEntry
+
 from core.auth.forms import WaitListForm
+from core.auth.models.waitlist import WaitlistEntry
 from core.ratelimit import rate_limit
+
 
 class WaitListView(View):
     form_class = WaitListForm

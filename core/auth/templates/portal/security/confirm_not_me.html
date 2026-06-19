@@ -1,0 +1,36 @@
+{% extends "portal/base_app.html" %}
+
+{% block title %}Secure your account{% endblock title %}
+
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1 class="page-header__title">Secure your account</h1>
+        <p class="page-header__subtitle">Confirm before we lock everyone out.</p>
+    </div>
+</header>
+
+<section class="card-ui" style="max-width: 560px;">
+    <header class="card-ui__header">
+        <h2>Was this not you?</h2>
+    </header>
+    <div class="card-ui__body">
+        <p class="twofa-meta">
+            This will immediately sign you out on <strong>every device — including
+            this one</strong> — and start a password reset so you can choose a new
+            password. Anyone currently signed in to your account will be locked out.
+        </p>
+        <div class="login-activity__actions">
+            <form method="post" action="{% url 'core-auth:security-not-me' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-ui btn-ui--danger">
+                    Yes, sign out everywhere &amp; reset my password
+                </button>
+            </form>
+            <a class="btn-ui btn-ui--secondary" href="{% url 'core-auth:2fa-security' %}?tab=sessions">Cancel</a>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block css %}{% include "portal/security/_styles.html" %}{% endblock css %}

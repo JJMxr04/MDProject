@@ -23,7 +23,6 @@ from django.urls import path
 
 from . import views
 
-
 # No ``app_name`` here — these patterns are mounted *into* the
 # ``core-portal`` namespace from ``core/portal/urls.py``. Setting
 # ``app_name`` here would either create a nested namespace (breaking

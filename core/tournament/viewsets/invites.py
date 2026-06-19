@@ -1,11 +1,13 @@
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from core.tournament.serializers.tournament import InviteSerializer
-from core.tournament.models.tournament import Tournament, InvitedPlayer
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from core.mail.models import Emails
 from django.utils import timezone
+from rest_framework import status, viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from core.mail.models import Emails
+from core.tournament.models.tournament import InvitedPlayer, Tournament
+from core.tournament.serializers.tournament import InviteSerializer
+
 
 class InviteViewSet(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)  # Note the comma to make it a tuple

@@ -1,6 +1,9 @@
 from django.contrib import admin
-from .models.waitlist import WaitlistEntry
+
 from core.mail.models import Emails
+
+from .models import LoginEvent
+from .models.waitlist import WaitlistEntry
 
 
 class WaitlistEntryAdmin(admin.ModelAdmin):
@@ -51,3 +54,22 @@ class WaitlistEntryAdmin(admin.ModelAdmin):
     revoke_entries.short_description = "Revoke selected entries"
 
 admin.site.register(WaitlistEntry, WaitlistEntryAdmin)
+
+
+@admin.register(LoginEvent)
+class LoginEventAdmin(admin.ModelAdmin):
+    list_display = ("created_at", "user", "event_type", "device_label",
+                    "country", "ip_address", "is_new_device", "is_new_location")
+    list_filter = ("event_type", "is_new_device", "is_new_location", "country")
+    search_fields = ("user__email", "user__username", "ip_address", "device_label")
+    date_hierarchy = "created_at"
+
+    # Forensic record — staff review only, never edit.
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

@@ -13,7 +13,6 @@ from core.event.models import Event
 from core.event.odds.service import get_event_odds
 from core.event.serializers.event import EventSerializer, EventWithMarketsSerializer
 
-
 SPORT_ID_BY_SLUG = {
     "soccer": 1,
     "basketball": 2,

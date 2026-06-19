@@ -306,7 +306,8 @@ class GameManager(AbstractManager):
         caller can't tell viable from broken, so don't pretend zero).
         """
         from core.event.providers.aggregator_client import (
-            AggrigatorClient, AggrigatorError,
+            AggrigatorClient,
+            AggrigatorError,
         )
 
         now = timezone.now()
@@ -346,7 +347,9 @@ class GameManager(AbstractManager):
         "N games available in this window".
         """
         from core.match.formats import (
-            format_label, format_window, min_distinct_events,
+            format_label,
+            format_window,
+            min_distinct_events,
         )
 
         if window_end is None:
@@ -386,7 +389,8 @@ class GameManager(AbstractManager):
             else first with non-null odds). Either player can override.
         """
         from core.event.providers.aggregator_client import (
-            AggrigatorClient, AggrigatorError,
+            AggrigatorClient,
+            AggrigatorError,
         )
 
         now = timezone.now()
@@ -443,7 +447,8 @@ class GameManager(AbstractManager):
         so the raise rolls back the partial match.
         """
         from core.event.services.aggregator_chain import (
-            ensure_chain, ChainBuildError,
+            ChainBuildError,
+            ensure_chain,
         )
 
         now = timezone.now()

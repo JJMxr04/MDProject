@@ -8,7 +8,7 @@ from django.db import models
 from django.http import Http404
 from django.utils import timezone
 
-from core.abstract.models import AbstractModel, AbstractManager
+from core.abstract.models import AbstractManager, AbstractModel
 from core.mail.models import Emails
 from core.match.models.match import Match
 from core.user.models import User

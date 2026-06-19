@@ -1,11 +1,12 @@
+from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from rest_framework.permissions import AllowAny
-from rest_framework import status
+
 from core.api.throttling import AuthSensitiveRateThrottle
-from core.auth.serializers import RegisterSerializer
-from core.auth.models.waitlist import WaitlistEntry
 from core.auth.models import email
+from core.auth.models.waitlist import WaitlistEntry
+from core.auth.serializers import RegisterSerializer
 
 
 # NOTE: not currently routed (core/routers.py registration is commented

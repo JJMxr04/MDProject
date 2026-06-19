@@ -1,7 +1,6 @@
 from rest_framework import routers
+
 from core.match.viewsets.match import MatchViewSet, MyMatchViewSet
-
-
 
 router = routers.SimpleRouter()
 

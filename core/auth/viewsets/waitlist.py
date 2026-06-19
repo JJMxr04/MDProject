@@ -1,6 +1,7 @@
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+
 from core.api.throttling import AuthSensitiveRateThrottle
 from core.auth.models.waitlist import WaitlistEntry
 from core.auth.serializers.waitlist import WaitlistEntrySerializer

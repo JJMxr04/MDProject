@@ -11,7 +11,6 @@ covers everything that happened during the window.
 from __future__ import annotations
 
 from django.db import transaction
-
 from procrastinate import exceptions as procrastinate_exceptions
 
 

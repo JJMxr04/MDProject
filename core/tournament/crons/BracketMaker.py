@@ -1,6 +1,9 @@
 from datetime import timedelta
+
 from django.utils import timezone
-from core.tournament.models.tournament import Round, Tournament, Player
+
+from core.tournament.models.tournament import Player, Round, Tournament
+
 
 class BracketMaker():
 

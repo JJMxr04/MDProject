@@ -1,8 +1,9 @@
 # mail/admin.py
 
 from django.contrib import admin
-from .models import Invite
-from .models import Notification
+
+from .models import Invite, Notification
+
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
@@ -20,16 +21,16 @@ class NotificationAdmin(admin.ModelAdmin):
 class InviteAdmin(admin.ModelAdmin):
     # Fields to display in the list view
     list_display = ('id', 'obj_id', 'player', 'sender', 'type', 'accepted', 'state', 'invited_date', 'accepted_date')
-    
+
     # Filters to allow admins to filter invites by certain fields
     list_filter = ('type', 'accepted', 'state', 'invited_date', 'accepted_date')
-    
+
     # Enable search by related usernames, obj_id, and invite type
     search_fields = ('player__username', 'sender__username', 'obj_id', 'type')
-    
+
     # Fields to be displayed when viewing or editing an individual invite
     fields = ('obj_id', 'player', 'sender', 'type', 'accepted', 'accepted_date', 'invited_date', 'state')
-    
+
     # Read-only fields that cannot be modified from the admin interface
     readonly_fields = ('id', 'accepted_date', 'invited_date')
 

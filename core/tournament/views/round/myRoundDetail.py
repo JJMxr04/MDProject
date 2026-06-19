@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from core.tournament.models.tournament import Round
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render
+
+from core.tournament.models.tournament import Round
+
 
 @login_required(login_url='/auth/login/')
 def my_round_detail_view(request, round_id):

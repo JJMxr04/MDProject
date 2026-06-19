@@ -1,5 +1,5 @@
-from .register import RegisterViewSet
+from .activation import ActivateUserViewSet
 from .login import LoginViewSet
 from .refresh import RefreshViewSet
-from .activation import ActivateUserViewSet
+from .register import RegisterViewSet
 from .waitlist import WaitlistEntryViewSet

@@ -1,26 +1,32 @@
 import json
-import uuid
-from datetime import datetime, timedelta
-from django.test import TestCase
-from core.tournament.models.tournament import Tournament, Round, TournamentManager, RoundManager
-# from core.tournament.unit_tests.tests.tournament_test_1 import tournament_test_1
-from core.user.models import User
-from core.event.models.sport import Sport
+
 # from .tests import tournament_test_1
 import logging
+import uuid
+from datetime import datetime, timedelta
+
+from django.test import TestCase
+
+from core.event.models.sport import Sport
+from core.tournament.models.tournament import Round, RoundManager, Tournament, TournamentManager
+
+# from core.tournament.unit_tests.tests.tournament_test_1 import tournament_test_1
+from core.user.models import User
+
 logger = logging.getLogger(__name__)
-from core.tournament.unit_tests.tests.Support import Support
-from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
-import unittest
-from core.tournament.models.tournament import Player
 import logging
 import math
 import time
-
-from core.match.serializers.match import MatchSerializer
-from core.tournament.serializers.tournament import RoundSerializer, TournamentSerializer
+import unittest
 from uuid import UUID
+
 from core.event.models.event import Event
+from core.match.serializers.match import MatchSerializer
+from core.tournament.models.tournament import Player
+from core.tournament.serializers.tournament import RoundSerializer, TournamentSerializer
+from core.tournament.unit_tests.tests.Support import Support
+from core.tournament.unit_tests.tests.Tourney_Simulator_1 import TourneyTest
+
 
 class UUIDEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -329,12 +335,12 @@ class TournamentChecks(TestCase):
             return
         self.roundRecusion(round.prev_round_1,level +1,tournament=tournament)
         self.roundRecusion(round.prev_round_2,level+1,tournament=tournament)
-        print(f'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
         print(f'Round Recursion {round}')
         print(json.dumps(RoundSerializer(round).data,indent=4, cls=UUIDEncoder))
         # print(f'Round Recursion - Match {round}')
         # print(json.dumps(MatchSerializer(round.match).data, indent=4, cls=UUIDEncoder))
-        print(f'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
         expected_level = level
         actual_level = round.level_num

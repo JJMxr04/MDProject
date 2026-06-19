@@ -1,4 +1,5 @@
 import os
+
 import django
 
 # Set the environment variable for Django settings module
@@ -6,12 +7,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CoreRoot.settings')
 
 # Initialize Django
 django.setup()
+from core.event.crons.eventUpdate import EventCron
 from core.event.crons.sportUpdate import SportCron
 from core.event.models.sport import Sport
-from core.event.crons.eventUpdate import EventCron
+from core.match.crons.matchUpdate import MatchCron
 from core.tournament.crons.BracketMaker import BracketMaker
 from core.tournament.crons.TournamentReminder import Tournament2DayReminder
-from core.match.crons.matchUpdate import MatchCron
 
 sportCron = SportCron()
 eventCron = EventCron()

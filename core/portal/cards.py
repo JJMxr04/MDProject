@@ -11,7 +11,6 @@ from django.utils.dateparse import parse_datetime
 
 from core.event.providers.aggregator_client import proxy_logo_url
 
-
 # Provider status_type values that map to a non-playing state. The aggregator
 # emits "postponed"/"canceled" (one L); local Events use the same strings.
 _POSTPONED_STATUSES = {"postponed", "delayed"}

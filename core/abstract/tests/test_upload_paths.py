@@ -3,8 +3,8 @@ import uuid
 
 from django.test import SimpleTestCase
 
-from core.user.models import user_avatar_upload_path
 from core.event.models.team import logo_upload_path
+from core.user.models import user_avatar_upload_path
 
 UUID_WEBP = re.compile(r"^[0-9a-f]{32}\.webp$")
 

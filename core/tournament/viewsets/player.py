@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+
 from core.tournament.models.tournament import Player
 from core.tournament.serializers.tournament import PlayerSerializer
+
 
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()

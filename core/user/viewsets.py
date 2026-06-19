@@ -1,13 +1,12 @@
-from rest_framework.permissions import IsAuthenticated
-from core.user.serializers import UserSerializer,PublicUserSerializer, UserMeSerializer
-from core.user.models import User
-from core.abstract.viewsets import AbstractViewSet
-from rest_framework.permissions import IsAdminUser
+from rest_framework import status, viewsets
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import viewsets
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.parsers import MultiPartParser, FormParser
+
+from core.abstract.viewsets import AbstractViewSet
+from core.user.models import User
+from core.user.serializers import PublicUserSerializer, UserMeSerializer, UserSerializer
 
 
 class UserViewSet(AbstractViewSet):

@@ -11,7 +11,6 @@ from core.event.models import Event, Market
 from core.event.odds.service import get_event_odds
 from core.event.serializers.market import MarketSerializer
 
-
 # scope_subject sugar: ?scope_subject=game maps to game-level categories,
 # ?scope_subject=team to per-team prop categories. Kept narrow on purpose —
 # PROPS_PLAYER is intentionally not enabled in v1.

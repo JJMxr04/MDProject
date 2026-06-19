@@ -78,6 +78,18 @@ def security_view(request):
         "confirmed_at": device.created_at if device else None,
         "backup_codes_remaining": twofa.backup_codes_remaining(request.user),
     }
+    # Local import: keeps the login-security models off the auth-view import path.
+    from core.auth.services import login_security
+
+    current_key = request.session.session_key
+    sessions = login_security.active_sessions_for_user(request.user, current_key)
+    context["active_sessions"] = sessions
+    context["active_session_count"] = len(sessions)
+    context["recent_activity"] = login_security.recent_activity_for_user(request.user)
+    context["current_session_key"] = current_key
+    # Which tab opens first ("2fa" default, or "sessions"/"activity" via ?tab=).
+    tab = request.GET.get("tab")
+    context["active_tab"] = tab if tab in ("2fa", "sessions", "activity") else "2fa"
     return render(request, "portal/security/index.html", context)
 
 

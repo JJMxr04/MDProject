@@ -3,8 +3,13 @@ import hashlib
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+
 from core.user.forms import UserProfileForm
-from core.user.models import User, UserAvatar  # custom user (app label core_user), not django.contrib.auth.User
+from core.user.models import (  # custom user (app label core_user), not django.contrib.auth.User
+    User,
+    UserAvatar,
+)
+
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User

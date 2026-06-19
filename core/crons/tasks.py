@@ -23,7 +23,9 @@ during the dual-write phase (plan §9 phase 2). Phase 4 cleanup deletes them.
 from __future__ import annotations
 
 import logging
+from datetime import timedelta
 
+from django.utils import timezone
 from procrastinate import RetryStrategy
 from procrastinate.contrib.django import app
 
@@ -106,3 +108,22 @@ def reconcile_subscriptions_cron(timestamp: int):
     from core.billing.services.reconcile import reconcile_subscriptions
 
     reconcile_subscriptions()
+
+
+def _purge_login_events_older_than(days: int) -> int:
+    """Delete LoginEvent rows older than ``days``. KnownLoginFingerprint is
+    intentionally untouched — it's the long-lived detection baseline."""
+    from core.auth.models import LoginEvent
+
+    cutoff = timezone.now() - timedelta(days=days)
+    deleted, _ = LoginEvent.objects.filter(created_at__lt=cutoff).delete()
+    return deleted
+
+
+@app.periodic(cron="30 3 * * *")
+@app.task(name="core.crons.purge_login_events", queue="default", retry=CRON_RETRY)
+def purge_login_events(timestamp: int):
+    # 90-day retention on detailed login records (spec D-4). Runs 03:30 daily,
+    # off-peak and clear of the midnight match/tournament crons.
+    count = _purge_login_events_older_than(90)
+    logger.info("purge_login_events: deleted %s rows", count)

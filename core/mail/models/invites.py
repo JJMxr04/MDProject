@@ -1,16 +1,14 @@
 import uuid
 from datetime import timedelta
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
 from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
-from core.user.models import User
-from core.abstract.models import AbstractManager
 
+from core.abstract.models import AbstractManager
+from core.user.models import User
 
 from .models import Emails
-
-
 
 INVITE_TYPE_CHOICES = (
     ('tournament', 'Tournament'),
