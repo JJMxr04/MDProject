@@ -19,7 +19,8 @@ Where the data comes from
   re-probe a dead aggregator.
 - **Periodic schedule** — the registered cron tasks on the Procrastinate
   app (declared via ``@app.periodic`` decorators).
-- **Recent jobs** — ``procrastinate_jobs`` rows ordered by attempt time.
+- **Recent jobs** — ``procrastinate_jobs`` rows ordered by their most
+  recent ``procrastinate_events`` timestamp.
 """
 
 from __future__ import annotations
@@ -27,7 +28,7 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 
@@ -60,33 +61,46 @@ class StatusItem:
 
 # ---- Worker (Procrastinate) ------------------------------------------------
 
-# A worker is considered alive if at least one Procrastinate job has
-# transitioned out of "doing" (succeeded/failed) within this window. The
-# window is generous because the only periodic tasks fire daily — between
-# fires there's nothing to observe. For a busier app this would be tighter.
-_WORKER_LIVENESS_WINDOW = timedelta(hours=25)
+# Liveness comes from ``procrastinate_workers.last_heartbeat`` — a running
+# 3.x worker registers a row and refreshes it every few seconds, so a recent
+# heartbeat is the authoritative "worker is up" signal. Job throughput over
+# the last 25h (succeeded/failed events) is secondary context: the periodic
+# tasks fire daily, so between fires there's nothing finishing to observe and
+# the heartbeat is what actually tells us the process is alive.
+_HEARTBEAT_FRESH_INTERVAL = "5 minutes"
 
 
 def get_worker_status(timeout: float = 1.0) -> StatusItem:
     """Check whether a Procrastinate worker is alive.
 
-    Procrastinate has no Celery-style control channel. We use the
-    ``procrastinate_jobs`` table as an indirect heartbeat: any job
-    finishing recently means the worker is running. If none of the
-    periodic tasks have fired yet (fresh deploy), we degrade to UNKNOWN
+    Procrastinate has no Celery-style control channel. Procrastinate 3.x
+    workers do, however, write a ``procrastinate_workers`` row and refresh
+    ``last_heartbeat`` while running — that's the primary signal here. We
+    also surface recent job throughput (``procrastinate_events`` rows of
+    type succeeded/failed) and any in-flight jobs as context. With no
+    heartbeat and no recent activity (fresh deploy) we degrade to UNKNOWN
     rather than DOWN to avoid spurious red banners.
     """
     started = time.monotonic()
     try:
         with connection.cursor() as cur:
             cur.execute(
-                """
+                f"""
                 SELECT
-                    COUNT(*) FILTER (WHERE status IN ('succeeded','failed')) AS finished,
-                    MAX(attempted_at) FILTER (WHERE status IN ('succeeded','failed')) AS last_finish,
-                    COUNT(*) FILTER (WHERE status = 'doing') AS in_flight
-                FROM procrastinate_jobs
-                WHERE attempted_at > NOW() - INTERVAL '25 hours'
+                    (SELECT COUNT(*) FROM procrastinate_workers
+                       WHERE last_heartbeat > NOW() - INTERVAL '{_HEARTBEAT_FRESH_INTERVAL}')
+                        AS live_workers,
+                    (SELECT MAX(last_heartbeat) FROM procrastinate_workers)
+                        AS last_heartbeat,
+                    (SELECT COUNT(*) FROM procrastinate_jobs WHERE status = 'doing')
+                        AS in_flight,
+                    (SELECT COUNT(*) FROM procrastinate_events
+                       WHERE type IN ('succeeded','failed')
+                         AND at > NOW() - INTERVAL '25 hours')
+                        AS finished_recent,
+                    (SELECT MAX(at) FROM procrastinate_events
+                       WHERE type IN ('succeeded','failed'))
+                        AS last_finish
                 """
             )
             row = cur.fetchone()
@@ -95,46 +109,81 @@ def get_worker_status(timeout: float = 1.0) -> StatusItem:
             state=State.UNKNOWN,
             label="worker state unknown",
             detail=(
-                f"{type(exc).__name__}: {exc} — procrastinate_jobs table "
-                "may not exist yet (run `manage.py migrate`)."
+                f"{type(exc).__name__}: {exc} — procrastinate tables may not "
+                "exist yet (run `manage.py migrate`)."
             ),
         )
 
-    finished = row[0] or 0
-    last_finish = row[1]
+    live_workers = row[0] or 0
+    last_heartbeat = row[1]
     in_flight = row[2] or 0
+    finished_recent = row[3] or 0
+    last_finish = row[4]
     elapsed_ms = int((time.monotonic() - started) * 1000)
 
-    if finished == 0 and in_flight == 0:
+    now = datetime.now(tz=timezone.utc)
+
+    def _age(ts) -> tuple[Optional[float], str]:
+        if ts is None:
+            return None, "—"
+        secs = (now - ts).total_seconds()
+        return secs, (f"{int(secs)}s ago" if secs < 3600 else f"{int(secs / 3600)}h ago")
+
+    hb_age_s, hb_str = _age(last_heartbeat)
+    _, last_finish_str = _age(last_finish)
+
+    extra = {
+        "elapsed_ms": elapsed_ms,
+        "live_workers": live_workers,
+        "in_flight": in_flight,
+        "finished_recent": finished_recent,
+        "heartbeat_age_seconds": hb_age_s,
+    }
+
+    if live_workers > 0:
         return StatusItem(
-            state=State.UNKNOWN,
-            label="no recent job activity",
+            state=State.OK,
+            label=f"worker alive ({live_workers} live, {in_flight} in flight)",
             detail=(
-                f"No procrastinate_jobs finished in the last 25h "
-                f"({elapsed_ms}ms probe). Fresh deploy, or no scheduled "
-                "task has fired yet."
+                f"last heartbeat {hb_str}; {finished_recent} jobs finished in 25h "
+                f"(last {last_finish_str}, {elapsed_ms}ms probe)"
             ),
-            extra={"elapsed_ms": elapsed_ms},
+            extra=extra,
         )
 
-    if last_finish is None:
-        last_str = "—"
-        age_s = None
-    else:
-        now = datetime.now(tz=timezone.utc)
-        age_s = (now - last_finish).total_seconds()
-        last_str = f"{int(age_s)}s ago" if age_s < 3600 else f"{int(age_s/3600)}h ago"
+    if last_heartbeat is not None:
+        # A worker registered but stopped beating its heart — crashed,
+        # OOM-killed, or the service is stopped.
+        return StatusItem(
+            state=State.DOWN,
+            label="worker heartbeat stale",
+            detail=(
+                f"newest procrastinate_workers heartbeat is {hb_str} "
+                f"(> {_HEARTBEAT_FRESH_INTERVAL}); the worker service may be "
+                "down — check the mdproject-worker logs."
+            ),
+            extra=extra,
+        )
+
+    if finished_recent > 0 or in_flight > 0:
+        return StatusItem(
+            state=State.OK,
+            label=f"worker active ({finished_recent} finished/25h, {in_flight} in flight)",
+            detail=(
+                f"no heartbeat row, but jobs are moving (last finished "
+                f"{last_finish_str}, {elapsed_ms}ms probe)"
+            ),
+            extra=extra,
+        )
 
     return StatusItem(
-        state=State.OK,
-        label=f"worker alive ({finished} finished, {in_flight} in flight)",
-        detail=f"last finished job: {last_str} ({elapsed_ms}ms probe)",
-        extra={
-            "elapsed_ms": elapsed_ms,
-            "finished": finished,
-            "in_flight": in_flight,
-            "last_finish_age_seconds": age_s,
-        },
+        state=State.UNKNOWN,
+        label="no recent job activity",
+        detail=(
+            f"no worker heartbeat and no job finished in 25h ({elapsed_ms}ms probe). "
+            "Fresh deploy, or no scheduled task has fired yet."
+        ),
+        extra=extra,
     )
 
 
@@ -294,8 +343,8 @@ def get_beat_schedule() -> list[dict]:
 
     "Enabled" is always True — Procrastinate has no enable/disable toggle
     for periodic tasks; comment out the @app.periodic decorator if you
-    need to disable one. ``last_run_at`` and ``total_runs`` come from the
-    procrastinate_periodic_defers / procrastinate_jobs tables.
+    need to disable one. ``last_run_at`` and ``total_runs`` are derived
+    from the procrastinate_jobs / procrastinate_events tables.
     """
     try:
         from procrastinate.contrib.django import app
@@ -311,20 +360,26 @@ def get_beat_schedule() -> list[dict]:
         return []
 
     # Pull last-run + count per task in one query — avoids N round-trips
-    # for a small list. Procrastinate writes one row per defer in
-    # procrastinate_periodic_defers; the matching job row in
-    # procrastinate_jobs carries the final status.
+    # for a small list. Procrastinate 3.x keeps no ``periodic_id`` or
+    # ``attempted_at`` on procrastinate_jobs (those were celery-isms): job
+    # timing lives in procrastinate_events.at, and procrastinate_periodic_defers
+    # is pruned to ~one row per task on each fire, so it can't give a lifetime
+    # count. We aggregate jobs by task_name instead. ``total`` therefore counts
+    # every run (cron defers + manual "Run now"), which is what an operator
+    # watching this page wants to see.
     stats_by_task = {}
     try:
         with connection.cursor() as cur:
             cur.execute(
                 """
-                SELECT task_name,
-                       COUNT(*) AS total,
-                       MAX(attempted_at) AS last_run
-                FROM procrastinate_jobs
-                WHERE periodic_id IS NOT NULL
-                GROUP BY task_name
+                SELECT j.task_name,
+                       COUNT(DISTINCT j.id) AS total,
+                       MAX(e.at) FILTER (
+                           WHERE e.type IN ('succeeded','failed','started')
+                       ) AS last_run
+                FROM procrastinate_jobs j
+                LEFT JOIN procrastinate_events e ON e.job_id = j.id
+                GROUP BY j.task_name
                 """
             )
             for task_name, total, last_run in cur.fetchall():
@@ -362,9 +417,12 @@ def get_recent_results(limit: int = 25) -> list[dict]:
         with connection.cursor() as cur:
             cur.execute(
                 """
-                SELECT task_name, id, status, attempted_at, args, attempts
-                FROM procrastinate_jobs
-                ORDER BY attempted_at DESC NULLS LAST
+                SELECT j.task_name, j.id, j.status, MAX(e.at) AS last_at,
+                       j.args, j.attempts
+                FROM procrastinate_jobs j
+                LEFT JOIN procrastinate_events e ON e.job_id = j.id
+                GROUP BY j.id
+                ORDER BY last_at DESC NULLS LAST
                 LIMIT %s
                 """,
                 [limit],
@@ -377,18 +435,18 @@ def get_recent_results(limit: int = 25) -> list[dict]:
 
     now = datetime.now(tz=timezone.utc)
     out = []
-    for task_name, job_id, status, attempted_at, args, attempts in rows:
+    for task_name, job_id, status, last_at, args, attempts in rows:
         age_s = None
-        if attempted_at is not None:
+        if last_at is not None:
             try:
-                age_s = (now - attempted_at).total_seconds()
+                age_s = (now - last_at).total_seconds()
             except Exception:  # noqa: BLE001
                 age_s = None
         out.append({
             "task_name": task_name or "?",
             "task_id": str(job_id),
             "status": (status or "").upper(),
-            "date_done": attempted_at,
+            "date_done": last_at,
             "age_seconds": age_s,
             "result_excerpt": (str(args)[:120] if args else None),
             "is_failure": (status or "").lower() == "failed",

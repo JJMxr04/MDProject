@@ -84,15 +84,37 @@
             <span class="badge-ui badge-ui--muted">{{ market_types|length }}</span>
         </header>
         <div class="card-ui__body">
-            {% if market_types %}
+            {% if markets_matrix %}
                 <p class="text-muted small">
-                    Distinct market types currently available across all events.
+                    Markets offered per league. A ✓ marks a market that league currently offers.
                 </p>
-                <div class="markets-grid">
-                    {% for m in market_types %}
-                        <span class="avail-pill avail-pill--ok">{{ m }}</span>
-                    {% endfor %}
-                </div>
+                {% for block in markets_matrix %}
+                    <div class="markets-sport-block">
+                        <h3 class="markets-sport-block__title">{{ block.sport_name }}</h3>
+                        <div class="avail-table-wrap">
+                            <table class="avail-table avail-table--matrix avail-matrix">
+                                <thead>
+                                    <tr>
+                                        <th class="avail-matrix__corner">League</th>
+                                        {% for col in block.columns %}
+                                            <th class="avail-matrix__col"><span>{{ col }}</span></th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in block.rows %}
+                                        <tr>
+                                            <td class="avail-matrix__league">{{ row.league }}</td>
+                                            {% for on in row.cells %}
+                                                <td>{% if on %}<span class="avail-pill avail-pill--ok"><i class="bi bi-check-lg"></i></span>{% else %}<span class="avail-matrix__no">—</span>{% endif %}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
                 {% include "portal/components/_empty_state.html" with icon="bar-chart-line" title="No markets available." body="The aggregator hasn't ingested any markets yet." %}
             {% endif %}
@@ -130,9 +152,11 @@
     .bookmaker-tile.is-inactive { opacity: .55; }
     .bookmaker-tile__name { font-weight: var(--weight-semibold); }
 
-    .markets-grid {
-        display: flex; flex-wrap: wrap; gap: .35rem;
-        margin-top: var(--space-2);
+    .markets-sport-block { margin-top: var(--space-4); }
+    .markets-sport-block:first-of-type { margin-top: var(--space-2); }
+    .markets-sport-block__title {
+        font-size: .95rem; font-weight: var(--weight-semibold);
+        color: var(--text-primary); margin: 0 0 var(--space-2);
     }
 
     .avail-pill {
@@ -167,6 +191,23 @@
     }
     .avail-table--matrix td:not(:first-child),
     .avail-table--matrix th:not(:first-child) { text-align: center; }
+
+    .avail-matrix { width: 100%; table-layout: fixed; }
+    .avail-matrix__corner, .avail-matrix__league {
+        text-align: left; white-space: nowrap; width: 9rem;
+    }
+    .avail-matrix__league { font-weight: var(--weight-semibold); }
+    .avail-matrix th.avail-matrix__col {
+        text-align: center; vertical-align: bottom;
+        padding: .4rem .35rem;
+        font-size: .68rem; line-height: 1.15;
+        font-weight: var(--weight-semibold);
+        text-transform: none; letter-spacing: 0;
+        color: var(--text-secondary);
+        white-space: normal; word-break: break-word; overflow-wrap: anywhere;
+    }
+    .avail-matrix td { text-align: center; }
+    .avail-matrix__no { color: var(--text-muted, #9ca3af); }
 
     .banner { padding: .55rem .85rem; border-radius: var(--radius-sm, 6px); font-size: .9rem; }
     .banner--warn { background: var(--fill-warning-bg); color: var(--fill-warning-text); }
