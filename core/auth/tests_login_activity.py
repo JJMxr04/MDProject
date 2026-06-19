@@ -189,6 +189,7 @@ class LoginEventAdminTests(TestCase):
 
     def test_login_event_changelist_is_reachable_and_readonly(self):
         from django.contrib import admin as dj_admin
+
         from core.auth.models import LoginEvent
         self.assertIn(LoginEvent, dj_admin.site._registry)
         options = dj_admin.site._registry[LoginEvent]

@@ -20,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.shortcuts import render
 
+from core.event.odds.market_labels import build_sport_matrix
 from core.event.providers.aggregator_client import AggrigatorClient, AggrigatorError
 
 logger = logging.getLogger(__name__)
@@ -29,12 +30,29 @@ CACHE_TTL = 300  # 5 min — sports/leagues/bookmakers/markets change rarely
 
 @login_required(login_url="/auth/login/")
 def availability_view(request):
-    sports, leagues, bookmakers, market_types, agg_unreachable = _load_catalog()
+    sports, leagues, bookmakers, market_types, markets_by_sport, agg_unreachable = _load_catalog()
 
     # Build a {sport_id: count} for the leagues display.
     leagues_by_sport: dict[str, list[dict]] = {}
     for lg in leagues:
         leagues_by_sport.setdefault(lg.get("sport_id") or "", []).append(lg)
+
+    # Per-sport spreadsheet: humanized market columns + real per-league coverage.
+    markets_matrix = []
+    for sport in sports:
+        sid = sport.get("id") if isinstance(sport, dict) else None
+        if not sid:
+            continue
+        matrix = build_sport_matrix(
+            leagues_by_sport.get(sid, []),
+            markets_by_sport.get(sid, []),
+        )
+        if matrix["columns"]:
+            markets_matrix.append({
+                "sport_name": sport.get("name") or sid,
+                "columns": matrix["columns"],
+                "rows": matrix["rows"],
+            })
 
     return render(
         request,
@@ -44,6 +62,7 @@ def availability_view(request):
             "leagues_by_sport": leagues_by_sport,
             "bookmakers": bookmakers,
             "market_types": market_types,
+            "markets_matrix": markets_matrix,
             "aggregator_unreachable": agg_unreachable,
         },
     )
@@ -77,7 +96,7 @@ def _safe_sort(items, attr="name"):
     )
 
 
-def _cached_fallback() -> tuple[list, list, list, list, bool]:
+def _cached_fallback() -> tuple[list, list, list, list, dict, bool]:
     """Last-known-good cache values + unreachable=True. Used both when
     the aggregator throws and when the cache itself blows up."""
     return (
@@ -85,26 +104,30 @@ def _cached_fallback() -> tuple[list, list, list, list, bool]:
         _safe_cache_get("portal:availability:leagues", []) or [],
         _safe_cache_get("portal:availability:bookmakers", []) or [],
         _safe_cache_get("portal:availability:markets", []) or [],
+        _safe_cache_get("portal:availability:markets_by_sport", {}) or {},
         True,
     )
 
 
 def _load_catalog():
-    """Returns ``(sports, leagues, bookmakers, market_types, unreachable_flag)``.
+    """Returns ``(sports, leagues, bookmakers, market_types, markets_by_sport, unreachable_flag)``.
 
-    Cached briefly. On aggregator OR cache failure returns
-    last-known-good values if cached, else empty lists +
-    ``unreachable=True`` so the page can show a banner instead of
-    crashing."""
+    ``markets_by_sport`` maps each sport id to that sport's sorted list of
+    market types (``get_market_types(sport_id=...)``). Cached briefly. On
+    aggregator OR cache failure returns last-known-good values if cached,
+    else empty containers + ``unreachable=True`` so the page can show a
+    banner instead of crashing."""
     sports = _safe_cache_get("portal:availability:sports")
     leagues = _safe_cache_get("portal:availability:leagues")
     bookmakers = _safe_cache_get("portal:availability:bookmakers")
     market_types = _safe_cache_get("portal:availability:markets")
+    markets_by_sport = _safe_cache_get("portal:availability:markets_by_sport")
     if (
         sports is not None and leagues is not None
         and bookmakers is not None and market_types is not None
+        and markets_by_sport is not None
     ):
-        return sports, leagues, bookmakers, market_types, False
+        return sports, leagues, bookmakers, market_types, markets_by_sport, False
 
     client = AggrigatorClient()
     try:
@@ -112,6 +135,11 @@ def _load_catalog():
         leagues = _safe_sort(client.get_leagues())
         bookmakers = _safe_sort(client.get_bookmakers())
         market_types = sorted(client.get_market_types() or [])
+        markets_by_sport = {
+            sport["id"]: sorted(client.get_market_types(sport_id=sport["id"]) or [])
+            for sport in sports
+            if isinstance(sport, dict) and sport.get("id")
+        }
     except AggrigatorError as exc:
         logger.warning("aggregator unreachable for availability page: %s", exc)
         return _cached_fallback()
@@ -123,4 +151,5 @@ def _load_catalog():
     _safe_cache_set("portal:availability:leagues", leagues, CACHE_TTL)
     _safe_cache_set("portal:availability:bookmakers", bookmakers, CACHE_TTL)
     _safe_cache_set("portal:availability:markets", market_types, CACHE_TTL)
-    return sports, leagues, bookmakers, market_types, False
+    _safe_cache_set("portal:availability:markets_by_sport", markets_by_sport, CACHE_TTL)
+    return sports, leagues, bookmakers, market_types, markets_by_sport, False
