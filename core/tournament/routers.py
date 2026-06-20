@@ -1,9 +1,10 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework import routers
-from core.tournament.viewsets.tournament import TournamentViewSet
-from core.tournament.viewsets.round import RoundViewSet
+
 from core.tournament.viewsets.invites import InviteViewSet
 from core.tournament.viewsets.player import PlayerViewSet
+from core.tournament.viewsets.round import RoundViewSet
+from core.tournament.viewsets.tournament import TournamentViewSet
 
 router = routers.SimpleRouter()
 router.register(r'rounds', RoundViewSet, basename='round')

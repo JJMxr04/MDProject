@@ -1,6 +1,8 @@
-from django.db import models
-from core.user.models import User
 import uuid
+
+from django.db import models
+
+from core.user.models import User
 
 
 class NotificationManager(models.Manager):

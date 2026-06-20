@@ -1,3 +1,3 @@
-from .register import RegisterSerializer
-from .login import LoginSerializer
 from .activation import ActivateSerializer
+from .login import LoginSerializer
+from .register import RegisterSerializer

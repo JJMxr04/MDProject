@@ -1,5 +1,6 @@
+from django.urls import include, path
+
 from . import views
-from django.urls import path, include
 
 app_name = 'core-portal-tournament'
 

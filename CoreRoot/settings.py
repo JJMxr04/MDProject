@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 import os
-from dotenv import load_dotenv
 from datetime import timedelta
+from pathlib import Path
+
 import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
+
 
 def get_token_serializer():
     from core.user.serializers import CustomTokenObtainPairSerializer
@@ -931,7 +933,8 @@ STRIPE_API_VERSION = os.environ.get("STRIPE_API_VERSION", "2025-07-30.basil")
 # Empty / unset = leave the Plan row alone (the previous value stands).
 _raw_platform_cost = (os.environ.get("PLATFORM_COST") or "").strip()
 if _raw_platform_cost:
-    from decimal import Decimal as _D, InvalidOperation as _InvalidOp
+    from decimal import Decimal as _D
+    from decimal import InvalidOperation as _InvalidOp
     try:
         PLATFORM_COST_CENTS = int(round(_D(_raw_platform_cost) * 100))
     except (_InvalidOp, ValueError):

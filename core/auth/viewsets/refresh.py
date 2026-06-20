@@ -1,9 +1,8 @@
-from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny
-from rest_framework import status
-from rest_framework import viewsets
-from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
+from rest_framework.response import Response
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.views import TokenRefreshView
 
 
 class RefreshViewSet(viewsets.ViewSet, TokenRefreshView):

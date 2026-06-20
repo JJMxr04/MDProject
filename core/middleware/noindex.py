@@ -12,7 +12,6 @@ two stay in sync.
 
 from __future__ import annotations
 
-
 # Anything starting with one of these is fair game for indexing.
 _PUBLIC_PREFIXES = (
     "/about/",

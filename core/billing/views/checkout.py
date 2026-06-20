@@ -11,6 +11,7 @@ from __future__ import annotations
 import logging
 import time
 
+import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -18,8 +19,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-
-import stripe
 
 # Configure stripe SDK at module import.
 from core.billing import stripe_client  # noqa: F401

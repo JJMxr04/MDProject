@@ -13,7 +13,6 @@ from django.urls import path
 
 from core.billing import views
 
-
 urlpatterns = [
     path("", views.billing_index, name="billing-index"),
     path("upgrade/", views.upgrade_page, name="billing-upgrade"),

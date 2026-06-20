@@ -1,11 +1,11 @@
 import hashlib
 
 from rest_framework import serializers
-
-from core.user.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from core.abstract.image_security import process_image, validate_image_file
 from core.abstract.serializers import AbstractSerializer
-from core.abstract.image_security import validate_image_file, process_image
+from core.user.models import User
 
 
 class AvatarBytesField(serializers.Field):

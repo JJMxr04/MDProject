@@ -1,8 +1,9 @@
 import re
 
 from django import forms
+
+from core.abstract.image_security import process_image, validate_image_file
 from core.user.models import User
-from core.abstract.image_security import validate_image_file, process_image
 
 _HEX_RE = re.compile(r"^#[0-9A-Fa-f]{6}$")
 

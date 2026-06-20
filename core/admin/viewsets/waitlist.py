@@ -1,13 +1,14 @@
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import action
 
 from core.abstract.pagination import AbstractPagination
+from core.admin.serializers.waitlist import WaitlistEntryApprovalSerializer, WaitlistEntrySerializer
 from core.auth.models.waitlist import WaitlistEntry
-from core.admin.serializers.waitlist import WaitlistEntrySerializer, WaitlistEntryApprovalSerializer
-from rest_framework.filters import SearchFilter, OrderingFilter
+
 
 class WaitlistEntryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,IsAuthenticated)

@@ -1,8 +1,10 @@
-from django.core.signing import TimestampSigner, SignatureExpired, BadSignature
-from django.shortcuts import render, redirect
-from django.views import View
-from core.user.models import User
+from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.views import View
+
+from core.user.models import User
+
 
 class ActivateUserView(View):
     def get(self, request, token, *args, **kwargs):
@@ -16,12 +18,12 @@ class ActivateUserView(View):
             user.activated_link = True
             user.save()
             return render(request, "activation_email/thank_you.html")
-        
+
         except BadSignature:
             return HttpResponse("Invalid activation link.", status=400)
-        
+
         except SignatureExpired:
             return HttpResponse("Activation link has expired.", status=400)
-        
+
 def activate_yoour_account(request):
     return render(request, 'authorization/activation_email.html')

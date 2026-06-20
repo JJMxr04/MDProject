@@ -13,7 +13,6 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-
 MATCH_FORMATS = {
     "BLITZ": {"label": "Blitz", "days": 2, "games_per_player": 2},
     "CLASSIC": {"label": "Classic", "days": 4, "games_per_player": 3},

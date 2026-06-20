@@ -1,14 +1,16 @@
+import os
+import random
+import string
 import uuid
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
+
+from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group, PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import Http404
-from core.abstract.models import AbstractModel, AbstractManager
 from django.utils.functional import cached_property
-import os
-from django.contrib.auth.hashers import make_password, check_password
-import random
-import string
+
+from core.abstract.models import AbstractManager, AbstractModel
 
 
 def user_avatar_upload_path(instance, filename):
@@ -194,15 +196,15 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
         """Add a new friend"""
         if user != self:
             self.friends.add(user)
-            
+
     def remove_friend(self, user):
         """Remove a friend"""
         self.friends.remove(user)
-    
+
     def get_friends(self):
         """Return QuerySet of all friends"""
         return self.friends.all()
-    
+
     def is_friend(self, user):
         """Check if given user is a friend"""
         return self.friends.filter(id=user.id).exists()
@@ -211,7 +213,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
         if not self.friend_code:
             self.friend_code = self.generate_friend_code()
         super().save(*args, **kwargs)
-    
+
     @staticmethod
     def generate_friend_code():
         """Generate a random 8-character friend code"""
@@ -221,7 +223,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
             # Check if code already exists
             if not User.objects.filter(friend_code=code).exists():
                 return code
-    
+
     @classmethod
     def find_by_friend_code(cls, code):
         """Find a user by their friend code"""

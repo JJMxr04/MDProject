@@ -1,11 +1,10 @@
 from django.contrib import admin, messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import Http404
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
-
-from django.http import Http404
 
 from core.admin.status import (
     check_aggregator,

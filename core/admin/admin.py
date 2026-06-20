@@ -1,16 +1,19 @@
-from django.contrib import admin
-from django.urls import path
-from django.contrib.admin.views.decorators import staff_member_required
-from django.template.response import TemplateResponse
-from django.utils import timezone
-from django.db.models import Count
-from django.db.models.functions import ExtractMonth, ExtractDay
-from core.user.models import User
-from core.tournament.models.tournament import Tournament
 import calendar
-from core.auth.models.waitlist import WaitlistEntry
+
+from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Count
+from django.db.models.functions import ExtractDay, ExtractMonth
+from django.template.response import TemplateResponse
+from django.urls import path
+from django.utils import timezone
+
 from core.admin.status import check_redis, get_worker_status
 from core.auth import twofa
+from core.auth.models.waitlist import WaitlistEntry
+from core.tournament.models.tournament import Tournament
+from core.user.models import User
+
 
 @staff_member_required
 def custom_admin_view(request):

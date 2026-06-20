@@ -23,7 +23,6 @@ from __future__ import annotations
 
 from django.shortcuts import redirect
 
-
 # Paths that, when accessed anonymously, redirect to ``/``.
 # Order matters — match longest-first. ``/admin/login/`` is explicitly
 # allowed through so the admin login form remains reachable.

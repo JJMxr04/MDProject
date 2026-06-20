@@ -1,12 +1,14 @@
 from django import forms
+
 from core.mail.models import Invite
 from core.user.models import User
+
 
 class InviteForm(forms.ModelForm):
     class Meta:
         model = Invite
         fields = ['obj_id', 'player', 'sender', 'type', 'accepted', 'invited_date']
-        
+
     def __init__(self, *args, **kwargs):
         super(InviteForm, self).__init__(*args, **kwargs)
         self.fields['obj_id'].widget.attrs.update({'class': 'form-control'})

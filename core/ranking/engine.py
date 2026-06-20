@@ -16,7 +16,6 @@ from __future__ import annotations
 from core.ranking import constants
 from core.ranking.models import PlayerProgress, Season, SeasonParticipation, XpEvent
 
-
 # --------------------------------------------------------------- public API
 
 

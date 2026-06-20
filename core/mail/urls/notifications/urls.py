@@ -1,5 +1,6 @@
+from django.urls import include, path
 from rest_framework import routers
-from django.urls import path, include
+
 import core.mail.views as views
 
 app_name = 'core-mail'

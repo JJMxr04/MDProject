@@ -1,17 +1,17 @@
 
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import path, include
+from django.urls import include, path
+
 from core.admin.admin import custom_admin_view
 from core.auth.views.password_reset import BrandedPasswordResetView
 from core.billing.views.webhook import stripe_webhook
-from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.event.views.logos import team_logo as team_logo_view
+from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.user.views.avatar import user_avatar as user_avatar_view
 from core.views import csp_report, healthz, portal_or_404, robots_txt
-from django.contrib.auth import views as auth_views
 
 # Admin 2FA (plan §7.3 item 9 phase 1): swap the admin site class so login
 # demands a TOTP code. Flag-gated — flipping it before staff have enrolled
@@ -58,8 +58,8 @@ urlpatterns = [
     path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name='authorization/password-reset-sent.html'),name='password_reset_done'),
     path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(template_name='authorization/password-reset-form.html'),name='password_reset_confirm'),
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='authorization/password-reset-complete.html'),name='password_reset_complete'),
-    
-    
+
+
 
 ]
 

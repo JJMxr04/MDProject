@@ -20,7 +20,6 @@ from django.utils import timezone
 from core.event.models import Event, Market, Selection
 from core.user.models import User
 
-
 POTD_TZ = ZoneInfo("America/New_York")
 
 

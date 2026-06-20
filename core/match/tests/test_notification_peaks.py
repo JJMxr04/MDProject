@@ -13,7 +13,6 @@ from datetime import timedelta
 
 from django.test import TestCase
 from django.utils import timezone
-
 from procrastinate.contrib.django.models import ProcrastinateJob
 
 from core.event.odds.settlement import propagate_to_matches

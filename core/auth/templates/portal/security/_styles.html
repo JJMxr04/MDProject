@@ -34,6 +34,30 @@
     .twofa-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: flex-end; }
     .field-error { color: var(--state-danger); font-size: var(--text-sm); margin-bottom: var(--space-3); }
 
+    /* CSS-only segmented tabs (no JS → CSP-safe). Self-contained here so the
+       Security page doesn't have to pull in the whole cards.css component sheet. */
+    .seg-tabs { display: flex; gap: var(--space-2); border-bottom: 1px solid var(--border-default); margin-bottom: var(--space-4); }
+    .seg-tabs__radio { position: absolute; opacity: 0; pointer-events: none; }
+    .seg-tabs__label { padding: var(--space-2) var(--space-3); cursor: pointer; font-weight: var(--weight-semibold);
+        color: var(--text-secondary); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .seg-pane { display: none; }
+    #seg-a:checked ~ .seg-tabs label[for="seg-a"],
+    #seg-b:checked ~ .seg-tabs label[for="seg-b"],
+    #seg-c:checked ~ .seg-tabs label[for="seg-c"] { color: var(--brand-blue-dark); border-bottom-color: var(--brand-yellow); }
+    #seg-a:checked ~ #pane-a, #seg-b:checked ~ #pane-b, #seg-c:checked ~ #pane-c { display: block; }
+    .seg-tabs__count { background: var(--surface-muted); color: var(--text-secondary); font-size: var(--text-xs);
+        font-weight: var(--weight-bold); border-radius: 999px; padding: 0 6px; margin-left: 4px; }
+
+    /* Login & device activity list */
+    .login-activity { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-direction: column; gap: var(--space-2); }
+    .login-activity__row { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; padding: var(--space-3); border: 1px solid var(--border-subtle, var(--border-strong)); border-radius: var(--radius-md); font-size: var(--text-sm); }
+    .login-activity__device { font-weight: var(--weight-semibold); }
+    .login-activity__where, .login-activity__when { color: var(--text-secondary); }
+    .login-activity__when { margin-left: auto; }
+    .login-activity__type { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .04em; color: var(--text-secondary); }
+    .login-activity__type--failed { color: var(--state-danger); }
+    .login-activity__actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4); }
+
     @media (max-width: 768px) {
         .settings-layout { grid-template-columns: 1fr; }
     }

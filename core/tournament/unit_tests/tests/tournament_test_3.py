@@ -1,12 +1,13 @@
-from core.tournament.unit_tests.tests.Tourney_Simulator_3 import TourneyTest
-import unittest
-from core.tournament.models.tournament import Player
+import asyncio
 import logging
 import math
-from django.utils import timezone
+import unittest
 from datetime import datetime, timedelta
 
-import asyncio
+from django.utils import timezone
+
+from core.tournament.models.tournament import Player
+from core.tournament.unit_tests.tests.Tourney_Simulator_3 import TourneyTest
 
 logger = logging.getLogger(__name__)
 class tournament_test_3():

@@ -1,17 +1,18 @@
 import time
+import uuid
 
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from core.match.models import Match
-from core.tournament.models.tournament import Round
-from core.event.serializers.event import EventSerializer
+from django.utils import timezone
+
 from core.event.models import Event
+from core.event.serializers.event import EventSerializer
 from core.game.models import Game
 from core.game.serializers import GameSerializer
-from django.utils import timezone
-import uuid
 from core.mail.models import Emails
+from core.match.models import Match
+from core.tournament.models.tournament import Round
 
 
 @receiver(post_save, sender=Match)

@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from core.mail.models import Notification
+
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:

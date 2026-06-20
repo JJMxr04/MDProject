@@ -1,22 +1,22 @@
 # views.py
-from django.shortcuts import render, redirect
-from core.mail.forms import InviteForm
-from django.utils import timezone
+import json
 
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.timezone import now
-from django.contrib.auth.decorators import login_required
-from core.mail.models import Notification, Invite, PendingInvite, Emails
+from django.views.decorators.http import require_GET, require_POST
+
+from core.mail.forms import InviteForm
+from core.mail.models import Emails, Invite, Notification, PendingInvite
 from core.mail.models.invites import InviteExpired
 from core.mail.serializers.notification import NotificationSerializer
 from core.ratelimit import rate_limit
 from core.user.models import User
-from django.views.decorators.http import require_GET, require_POST
-from django.http import JsonResponse
-import json
 
 
 @login_required(login_url='/auth/login/')

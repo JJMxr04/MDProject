@@ -3,9 +3,10 @@ from datetime import date
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from core.user.models import User
-from core.auth.models.waitlist import WaitlistEntry
+
 from core.auth.models import email
+from core.auth.models.waitlist import WaitlistEntry
+from core.user.models import User
 
 # Paradise Sports is an 18+ only service.
 MINIMUM_AGE = 18

@@ -1,8 +1,11 @@
+import uuid
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils import timezone
-import uuid
+
 from core.mail.models import Emails
+
 
 class WaitlistEntryManager(models.Manager):
     def create_entry(self, email, full_name, description="", phone_number="", registered=False, activated=False, admin_granted_access=False):

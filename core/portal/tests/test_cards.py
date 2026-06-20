@@ -5,8 +5,8 @@ import uuid
 
 from django.test import SimpleTestCase, TestCase
 
-from core.portal import cards
 from core.match.tests.factories import make_event, make_league, make_team, make_user
+from core.portal import cards
 
 
 class StatusTests(SimpleTestCase):

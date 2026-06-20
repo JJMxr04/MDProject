@@ -6,9 +6,9 @@ from datetime import date
 
 from django.test import TestCase
 
+from core.match.tests.factories import make_user
 from core.potd.models import DailyPick, DailyPickResult
 from core.potd.tests.test_potd import make_potd
-from core.match.tests.factories import make_user
 from core.ranking import constants, engine
 from core.ranking.models import PlayerProgress, Season, SeasonParticipation, XpEvent
 

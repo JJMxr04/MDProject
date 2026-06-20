@@ -30,7 +30,6 @@ from django.urls import reverse
 from core.billing.decorators import require_paid
 from core.portal.services import aggrigator_client
 
-
 # ---- Permanent redirects --------------------------------------------------
 # Event detail + upcoming list moved out of /analytics/ on 2026-05-21 —
 # the events page is now the canonical surface and analytics renders

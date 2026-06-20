@@ -225,7 +225,7 @@ def _apply_subscription(user: User, sub_obj: dict) -> None:
         aggrigator_internal.sync_entitlement(
             user, tier=tier, status=sub.status, features=features,
         )
-    except aggrigator_internal.ParadiseError as exc:
+    except aggrigator_internal.ParadiseError:
         # Don't fail the whole webhook on aggrigator hiccup — Stripe
         # will retry the event, and the next attempt will re-sync. We
         # raise so the outer handler records the error.

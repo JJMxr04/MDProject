@@ -1,0 +1,35 @@
+# Starter config — intentionally lenient so the lint gate passes on the current
+# codebase. Tighten `select` over time (add B, UP, etc.) and remove ignores as
+# you clean up. Run locally with: ruff check .
+target-version = "py312"
+line-length = 100
+
+extend-exclude = [
+    "*/migrations/*",
+    "venv",
+    "staticfiles",
+    "media",
+]
+
+[lint]
+# E/W = pycodestyle, F = pyflakes (real bugs: unused imports, undefined names),
+# I = import sorting.
+select = ["E", "W", "F", "I"]
+
+# Ratchet backlog: these are real findings left over after the initial safe
+# autofix. They're ignored so the gate is green TODAY. Remove a code from this
+# list, run `ruff check --fix .` (+ manual cleanup), confirm tests pass, commit.
+# Counts are from the first pass on 2026-06-18.
+ignore = [
+    "E501", # line-too-long (noisy on existing code)
+    "F401", # unused-import x346 — DO NOT blanket-fix: many are side-effecting
+            #   (signal/admin/app registration). Remove per-file with tests green.
+    "E402", # import-not-at-top x129 — common+legit in settings.py / scripts that
+            #   configure before importing. Better handled via per-file-ignores.
+    "F841", # unused-variable x44 (the unsafe-to-autofix remainder)
+    "E711", # `== None` should be `is None` x30
+    "E702", # multiple-statements-semicolon x5
+    "E741", # ambiguous-variable-name x2
+    "F811", # redefined-while-unused x2
+    "E731", # lambda-assignment x1
+]

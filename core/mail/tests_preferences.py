@@ -1,7 +1,8 @@
 """Email preference + unsubscribe tests (plan §7.5 item 4).
 
 Engagement emails route through ``Emails._notify``: in-app Notification
-always writes; the email job only defers when ``User.email_notifications``
+always writes (unless the caller passes ``in_app=False``, as the invite
+emails do); the email job only defers when ``User.email_notifications``
 is on, and its context carries the signed unsubscribe URL.
 """
 
@@ -25,7 +26,7 @@ class NotifyPreferenceTests(TestCase):
         user = make_user("optin")
         before = _email_jobs().count()
 
-        Emails.send_match_invite(user, "rival")
+        Emails.send_opponent_pick_notification(user, "rival")
 
         self.assertTrue(Notification.objects.filter(user=user).exists())
         jobs = _email_jobs()
@@ -41,7 +42,7 @@ class NotifyPreferenceTests(TestCase):
         user.save(update_fields=["email_notifications"])
         before = _email_jobs().count()
 
-        Emails.send_match_invite(user, "rival")
+        Emails.send_opponent_pick_notification(user, "rival")
 
         self.assertTrue(Notification.objects.filter(user=user).exists())
         self.assertEqual(_email_jobs().count(), before)

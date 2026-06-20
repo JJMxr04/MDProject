@@ -1,7 +1,6 @@
 from rest_framework import routers
+
 from core.game.viewsets.game import GameViewSet
-
-
 
 router = routers.SimpleRouter()
 

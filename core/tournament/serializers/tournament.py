@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from core.tournament.models.tournament import Tournament, Round, InvitedPlayer, Player
-from core.user.serializers import PublicUserSerializer
+
 from core.match.serializers.match import MatchSerializer
+from core.tournament.models.tournament import InvitedPlayer, Player, Round, Tournament
+from core.user.serializers import PublicUserSerializer
 
 
 class PlayerSerializer(serializers.ModelSerializer):

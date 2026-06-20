@@ -1,35 +1,22 @@
-from django.shortcuts import render, get_object_or_404, redirect
+import json
+import uuid
+from datetime import datetime, timedelta
+
+import pytz  # Make sure to import pytz for timezone handling
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from core.match.models import Match, TieBreaker
-from core.match.serializers.match import MatchSerializer
-from core.game.models import Game
-from core.game.models.game import PickError
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from django.views.decorators.http import require_POST
+
 from core.event.models import Event
 from core.event.serializers.event import EventSerializer, EventWithMarketsSerializer
-from django.contrib.auth.decorators import login_required
-import json
-
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.shortcuts import get_object_or_404
-import json
-from django.utils import timezone
-
-from datetime import datetime, timedelta
-import pytz  # Make sure to import pytz for timezone handling
-
-import uuid
-
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from core.game.models import Game
+from core.game.models.game import PickError
+from core.match.decorators import player_in_game_required, player_in_match_required
+from core.match.models import Match, TieBreaker
 from core.match.serializers.match import MatchSerializer
-from core.event.serializers.event import EventSerializer
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-from datetime import timedelta
-import json
 
-from core.match.decorators import player_in_match_required, player_in_game_required
 
 @login_required(login_url='/auth/login/')
 @player_in_match_required
@@ -367,7 +354,7 @@ def player_2_select_outcome(request, game_id):
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    
+
 
 @require_POST
 @login_required(login_url='/auth/login/')

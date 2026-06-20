@@ -5,10 +5,10 @@ from django.test import TestCase
 
 from core.match.tests.factories import make_user
 from core.potd.models import DailyPick
-from core.potd.views import CROWD_THRESHOLD, potd_card_context
 
 # Reuse the POTD factory from the main suite.
 from core.potd.tests.test_potd import make_potd
+from core.potd.views import CROWD_THRESHOLD, potd_card_context
 
 
 class CrowdContextTests(TestCase):

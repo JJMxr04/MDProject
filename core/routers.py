@@ -1,8 +1,15 @@
+from django.urls import include, path
 from rest_framework import routers
-from django.urls import path, include
-from core.user.viewsets import UserViewSet, UserMeViewSet
-from core.auth.viewsets import RegisterViewSet, LoginViewSet, RefreshViewSet, ActivateUserViewSet, WaitlistEntryViewSet
+
+from core.auth.viewsets import (
+    ActivateUserViewSet,
+    LoginViewSet,
+    RefreshViewSet,
+    RegisterViewSet,
+    WaitlistEntryViewSet,
+)
 from core.tournament.viewsets.tournament import TournamentViewSet  # Add this import
+from core.user.viewsets import UserMeViewSet, UserViewSet
 
 router = routers.SimpleRouter()
 

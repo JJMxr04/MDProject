@@ -14,17 +14,30 @@
 <div class="settings-layout">
     {% include "portal/components/_settings_rail.html" with active="security" %}
 
-    <section class="card-ui">
+    <div class="security-tabs">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags == 'error' %}field-error{% else %}twofa-meta{% endif %}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% comment %}CSS-only tabs (seg-tabs, shared portal pattern — CSP-safe).
+        seg-a = 2FA, seg-b = Sessions, seg-c = Recent activity.{% endcomment %}
+        <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-a" {% if active_tab == "2fa" %}checked{% endif %}>
+        <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-b" {% if active_tab == "sessions" %}checked{% endif %}>
+        <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-c" {% if active_tab == "activity" %}checked{% endif %}>
+
+        <div class="seg-tabs" role="tablist">
+            <label class="seg-tabs__label" for="seg-a">Two-factor</label>
+            <label class="seg-tabs__label" for="seg-b">Active sessions{% if active_session_count %}<span class="seg-tabs__count">{{ active_session_count }}</span>{% endif %}</label>
+            <label class="seg-tabs__label" for="seg-c">Recent activity</label>
+        </div>
+
+    <section class="seg-pane card-ui" id="pane-a">
         <header class="card-ui__header">
             <h2>Two-factor authentication</h2>
         </header>
         <div class="card-ui__body">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="{% if message.tags == 'error' %}field-error{% else %}twofa-meta{% endif %}" role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-
             {% if twofa_enabled %}
                 <div class="twofa-status">
                     <span class="twofa-pill twofa-pill--on"><i class="bi bi-shield-check" aria-hidden="true"></i> On</span>
@@ -70,6 +83,81 @@
             {% endif %}
         </div>
     </section>
+
+    <section class="seg-pane card-ui" id="pane-b">
+        <header class="card-ui__header">
+            <h2>Active sessions</h2>
+        </header>
+        <div class="card-ui__body">
+            <p class="twofa-meta">
+                You're currently signed in on
+                <strong>{{ active_session_count }} device{{ active_session_count|pluralize }}</strong>.
+                Sign out any you don't recognize.
+            </p>
+            <ul class="login-activity">
+                {% for s in active_sessions %}
+                <li class="login-activity__row">
+                    <span class="login-activity__device">{{ s.device_label }}</span>
+                    <span class="login-activity__where">{{ s.country|default:"—" }}{% if s.ip_address %} · {{ s.ip_address }}{% endif %}</span>
+                    <span class="login-activity__when">
+                        {% if s.last_login_at %}Signed in {{ s.last_login_at|date:"M j, Y H:i" }}{% endif %}
+                    </span>
+                    {% if s.is_current %}
+                        <span class="twofa-pill twofa-pill--on">This device</span>
+                    {% else %}
+                        <form method="post" action="{% url 'core-auth:revoke-session-confirm' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="session_key" value="{{ s.session_key }}">
+                            <button type="submit" class="btn-ui btn-ui--secondary btn-ui--sm">Sign out</button>
+                        </form>
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li class="twofa-meta">No other active sessions.</li>
+                {% endfor %}
+            </ul>
+            <p class="twofa-meta" style="margin-top: var(--space-4);">
+                Don't recognize a session? Sign out of every other device, or use
+                "This wasn't me" to sign out everywhere and reset your password.
+            </p>
+            <div class="login-activity__actions">
+                <form method="post" action="{% url 'core-auth:logout-others' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-ui btn-ui--secondary">
+                        Sign out of all other sessions
+                    </button>
+                </form>
+                <a class="btn-ui btn-ui--danger" href="{% url 'core-auth:security-not-me-confirm' %}">This wasn't me</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="seg-pane card-ui" id="pane-c">
+        <header class="card-ui__header">
+            <h2>Recent activity</h2>
+        </header>
+        <div class="card-ui__body">
+            <p class="twofa-meta">
+                Recent successful and failed sign-ins to your account.
+            </p>
+            <ul class="login-activity">
+                {% for ev in recent_activity %}
+                <li class="login-activity__row">
+                    <span class="login-activity__device">{{ ev.device_label|default:"Unknown device" }}</span>
+                    <span class="login-activity__where">{{ ev.country|default:"—" }}{% if ev.ip_address %} · {{ ev.ip_address }}{% endif %}</span>
+                    <span class="login-activity__when">{{ ev.created_at|date:"M j, Y H:i" }}</span>
+                    <span class="login-activity__type login-activity__type--{{ ev.event_type }}">{{ ev.get_event_type_display }}</span>
+                    {% if ev.is_new_device or ev.is_new_location %}
+                        <span class="twofa-pill">New {% if ev.is_new_device %}device{% else %}location{% endif %}</span>
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li class="twofa-meta">No login activity recorded yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    </div>
 </div>
 {% endblock content %}
 
