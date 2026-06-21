@@ -1,0 +1,78 @@
+# Security scanning, separate from ci.yml (lint/test/deploy) so the gate reads
+# on its own. Every job exits non-zero on any finding; once marked as required
+# status checks (Settings -> Branches) they block the merge.
+# Jobs:
+#   - pip-audit: dependency CVE scan of the pinned requirements.
+#   - semgrep:   OWASP Top 10 + Python/Django/JS SAST (XSS, SQLi, command injection,
+#                SSRF, plus DOM sinks in the portal's vanilla JS).
+#   - bandit:    Python-specific checks (raw SQL, mark_safe, eval/exec, weak crypto).
+#   - gitleaks:  committed secret/token scan over full history.
+name: security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"  # Mondays 06:00 UTC
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pip-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit requirements
+        run: pip-audit -r requirements.txt --strict
+
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install semgrep
+        run: pip install semgrep
+      - name: Semgrep scan
+        # --error makes the job fail on any finding. OSS rule packs only, no login.
+        run: |
+          semgrep scan --error --metrics off --disable-version-check \
+            --config p/python --config p/django --config p/javascript \
+            --config p/secrets --config p/owasp-top-ten --config p/ci \
+            --exclude '**/migrations/**' --exclude '**/tests/**' \
+            --exclude staticfiles --exclude media .
+
+  bandit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install bandit
+        run: pip install bandit
+      - name: Bandit scan
+        run: bandit -r . -x '**/tests/**,**/migrations/**,**/staticfiles/**,**/media/**'
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so historical leaks are caught
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          # Free for personal-account repos; no GITLEAKS_LICENSE needed.
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
