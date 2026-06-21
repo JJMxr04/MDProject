@@ -179,9 +179,15 @@ def analytics_picks(request):
     league = request.GET.get("league") or None
     hours_ahead = _parse_window(request.GET.get("hours_ahead"))
     try:
+        # nosemgrep: python.django.security.nan-injection.nan-injection -- NaN/inf rejected by the guard below
         threshold_pp = float(request.GET.get("threshold_pp") or 3.0)
-    except ValueError:
+    except (TypeError, ValueError):
         threshold_pp = 3.0
+    else:
+        # Reject NaN/inf (NaN-injection): NaN compares false to everything and
+        # would silently break the downstream edge filter.
+        if threshold_pp != threshold_pp or threshold_pp in (float("inf"), float("-inf")):
+            threshold_pp = 3.0
     payload = aggrigator_client.picks(
         threshold_pp=threshold_pp, league=league, hours_ahead=hours_ahead,
     )
@@ -285,6 +291,7 @@ def analytics_bets(request):
             else:
                 # Redirect post-redirect-get so refresh doesn't resubmit.
                 from django.http import HttpResponseRedirect
+                # nosemgrep: python.django.security.injection.open-redirect.open-redirect -- request.path is the server-set URL path (no scheme/host); safe self-redirect
                 return HttpResponseRedirect(request.path)
 
     status_filter = request.GET.get("status") or "all"

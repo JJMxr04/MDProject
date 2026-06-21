@@ -23,6 +23,7 @@
         </div>
       {% endif %}
 
+      {# nosemgrep: python.django.security.django-no-csrf-token.django-no-csrf-token -- csrf_token is present on the next line; rule misfires #}
       <form method="post" action="{% url 'core-auth:login' %}" novalidate>
         {% csrf_token %}
         <div class="form-field">

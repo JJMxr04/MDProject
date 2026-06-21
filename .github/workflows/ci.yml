@@ -128,7 +128,11 @@ jobs:
       - name: Install bandit
         run: pip install bandit
       - name: Bandit scan
-        run: bandit -r . -x '**/tests/**,**/migrations/**,**/staticfiles/**,**/media/**'
+        # Excludes: test modules (incl. module-level tests*.py / *_tests),
+        # migrations, collected static/media, any local venv, and the demo-data
+        # seed commands (non-crypto `random` is intentional there).
+        run: >-
+          bandit -r . -x '**/tests/**,**/tests.py,**/tests_*.py,**/test_*.py,**/unit_tests/**,**/migrations/**,**/staticfiles/**,**/media/**,**/venv/**,**/.venv/**,**/commands/seed_portal.py,**/commands/randomize_team_colors.py'
 
   gitleaks:
     if: github.event_name != 'push' || github.ref != 'refs/heads/main'

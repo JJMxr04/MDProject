@@ -25,7 +25,7 @@ from core.user.models import User
 
 PENDING_INVITE_EXPIRY = timedelta(days=14)
 
-_TOKEN_SALT = "core.mail.pending-invite"
+_TOKEN_SALT = "core.mail.pending-invite"  # nosec B105 -- signing-salt namespace, not a secret
 
 
 class PendingInviteManager(models.Manager):

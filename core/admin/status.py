@@ -85,10 +85,10 @@ def get_worker_status(timeout: float = 1.0) -> StatusItem:
     try:
         with connection.cursor() as cur:
             cur.execute(
-                f"""
+                """
                 SELECT
                     (SELECT COUNT(*) FROM procrastinate_workers
-                       WHERE last_heartbeat > NOW() - INTERVAL '{_HEARTBEAT_FRESH_INTERVAL}')
+                       WHERE last_heartbeat > NOW() - %s::interval)
                         AS live_workers,
                     (SELECT MAX(last_heartbeat) FROM procrastinate_workers)
                         AS last_heartbeat,
@@ -101,7 +101,8 @@ def get_worker_status(timeout: float = 1.0) -> StatusItem:
                     (SELECT MAX(at) FROM procrastinate_events
                        WHERE type IN ('succeeded','failed'))
                         AS last_finish
-                """
+                """,
+                [_HEARTBEAT_FRESH_INTERVAL],
             )
             row = cur.fetchone()
     except Exception as exc:  # noqa: BLE001

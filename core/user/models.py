@@ -1,5 +1,5 @@
 import os
-import random
+import secrets
 import string
 import uuid
 
@@ -219,7 +219,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
         """Generate a random 8-character friend code"""
         while True:
             # Generate code: 8 characters, uppercase letters and numbers
-            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+            code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(8))
             # Check if code already exists
             if not User.objects.filter(friend_code=code).exists():
                 return code

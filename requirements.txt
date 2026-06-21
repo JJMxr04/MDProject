@@ -1,4 +1,4 @@
-Django==5.2.14
+Django==5.2.15
 psycopg2-binary==2.9.9
 pillow==12.2.0
 djangorestframework==3.17.1
@@ -23,7 +23,7 @@ django-storages==1.14.6
 django-jazzmin==3.0.4
 django-crispy-forms==2.6
 crispy-bootstrap5==2024.2
-cryptography==46.0.7
+cryptography==48.0.1
 argon2-cffi==25.1.0
 stripe==12.4.0
 django-anymail[resend]==13.0

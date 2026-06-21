@@ -67,7 +67,9 @@ def _reveal(masked: str, full: str, *, suffix_html: str = '') -> str:
         '<button type="button" style="font-size:11px;padding:1px 6px" '
         'onclick="{}">copy</button>{}'
         '</div></details>',
-        masked, full, mark_safe(_COPY_BTN_JS), mark_safe(suffix_html),
+        # Only the static _COPY_BTN_JS constant and admin-built suffix_html are
+        # marked safe; the sensitive values use format_html's escaped {}.
+        masked, full, mark_safe(_COPY_BTN_JS), mark_safe(suffix_html),  # nosec
     )
 
 

@@ -37,6 +37,6 @@ class RegisterViewSet(ViewSet):
 
         return Response({
             "user": serializer.data,
-            "refresh": 'confirm your email',
-            "token": 'confirm your email'
+            "refresh": 'confirm your email',  # nosec B105 -- human-readable placeholder, not a credential
+            "token": 'confirm your email'  # nosec B105 -- human-readable placeholder, not a credential
         }, status=status.HTTP_201_CREATED)

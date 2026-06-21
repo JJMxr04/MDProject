@@ -20,6 +20,7 @@
                     account emails (password resets, activation) are unaffected.
                 </p>
                 <form method="post" action="">
+                    {% csrf_token %}
                     <input type="hidden" name="action" value="resubscribe">
                     <button type="submit" class="ps-btn ps-btn--primary">Changed my mind — resubscribe</button>
                 </form>

@@ -301,6 +301,7 @@
 {% endif %}
 
 <div class="scard">
+  {# nosemgrep: python.django.security.django-no-csrf-token.django-no-csrf-token -- csrf_token is present on the next line; rule misfires #}
   <form method="post" class="setup-form">
     {% csrf_token %}
     <label for="webhook_url"><strong>Webhook URL</strong></label>
