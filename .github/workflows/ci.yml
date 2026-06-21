@@ -1,20 +1,36 @@
 name: CI
 
-# Runs on every PR (lint + test gate) and on every push to main.
-# On a push to main, the deploy job also runs — but only after lint and
-# test pass, so a green main is what gets shipped to Coolify.
+# One workflow per repo so a single run covers lint, tests, security scans, and
+# deploy — instead of two workflow files firing separate runs on the same event.
+#
+# Trigger model ("main is validated by its PR, every other branch on push"):
+#   - pull_request: runs lint + test + security (this is what gates main).
+#   - push to a non-main branch: runs lint + test + security.
+#   - push to main (a merge): only the deploy job runs. main is NOT re-tested
+#     here — it was already validated by the PR's required status checks.
+#     >>> This relies on branch protection: require the lint/test/security checks
+#         and "require a PR before merging" on main, so main can't advance with a
+#         red or unchecked commit. Without that, deploy would ship unvalidated.
+#   - schedule (weekly): runs the security scans only, to catch new CVEs / leaks
+#     against unchanged code.
 on:
   pull_request:
   push:
-    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"  # Mondays 06:00 UTC
 
 concurrency:
   # Cancel superseded runs on the same ref so only the latest commit is tested.
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   lint:
+    # PRs and non-main pushes. Skipped on the merge-push to main and on schedule.
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +43,7 @@ jobs:
         run: ruff check .
 
   test:
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -65,11 +82,71 @@ jobs:
       - name: Run tests
         run: python manage.py test --verbosity=2
 
+  # --- Security scans (block on any finding) ---------------------------------
+  # Run on PRs, non-main pushes, and the weekly schedule; skipped on push-to-main.
+
+  pip-audit:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit requirements
+        run: pip-audit -r requirements.txt --strict
+
+  semgrep:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install semgrep
+        run: pip install semgrep
+      - name: Semgrep scan
+        # --error makes the job fail on any finding. OSS rule packs only, no login.
+        run: |
+          semgrep scan --error --metrics off --disable-version-check \
+            --config p/python --config p/django --config p/javascript \
+            --config p/secrets --config p/owasp-top-ten --config p/ci \
+            --exclude '**/migrations/**' --exclude '**/tests/**' \
+            --exclude staticfiles --exclude media .
+
+  bandit:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install bandit
+        run: pip install bandit
+      - name: Bandit scan
+        run: bandit -r . -x '**/tests/**,**/migrations/**,**/staticfiles/**,**/media/**'
+
+  gitleaks:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so historical leaks are caught
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          # Free for personal-account repos; no GITLEAKS_LICENSE needed.
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+
+  # --- Deploy ----------------------------------------------------------------
   deploy:
-    needs: [lint, test]
-    # Only deploy from main, and only on a real push (i.e. after a merge) —
-    # never on a pull_request event.
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Only on a real push to main (i.e. after a merge). No `needs:` — main was
+    # already validated by the PR's required checks (see header), so just ship.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Coolify deploy
