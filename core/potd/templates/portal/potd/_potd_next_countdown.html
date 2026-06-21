@@ -1,0 +1,15 @@
+{% comment %}
+Countdown to when the next day's Pick of the Day goes live (00:10 NY). Shown
+once today's pick is done — settled (won/lost/void) or closed/missed — so the
+card always points the player at the next free pick. Needs `potd_next_at`.
+{% endcomment %}
+{% if potd_next_at %}
+<div class="potd-hype__countdown potd-hype__countdown--next"
+     data-countdown-to="{{ potd_next_at|date:'c' }}" data-status="upcoming"
+     data-countdown-done="Today&rsquo;s pick is live &mdash; refresh" aria-live="polite">
+    <span class="potd-hype__cd-label">Next pick in</span>
+    <span class="potd-hype__cd-unit"><b data-unit="h">--</b><i>h</i></span>
+    <span class="potd-hype__cd-unit"><b data-unit="m">--</b><i>m</i></span>
+    <span class="potd-hype__cd-unit"><b data-unit="s">--</b><i>s</i></span>
+</div>
+{% endif %}

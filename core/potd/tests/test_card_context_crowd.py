@@ -48,6 +48,8 @@ class CrowdContextTests(TestCase):
         self.assertEqual(crowd["user_side_pct"], 9)   # round(100/11)
 
     def test_no_potd_returns_minimal_context(self):
-        # Sanity: the early-return branch is unchanged (no POTD today).
+        # No POTD today → minimal context, but still carries the countdown to
+        # the next pick so the empty-state card can render.
         ctx = potd_card_context(make_user("viewer"))
-        self.assertIn("potd", ctx)
+        self.assertIsNone(ctx["potd"])
+        self.assertIsNotNone(ctx["potd_next_at"])

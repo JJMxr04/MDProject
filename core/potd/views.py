@@ -22,6 +22,7 @@ from core.potd.models import (
     DailyPickResult,
     PickError,
     PickOfDay,
+    next_potd_available,
     potd_today,
 )
 from core.ratelimit import rate_limit
@@ -75,7 +76,13 @@ def potd_card_context(user):
     round-trip on dashboard render."""
     potd = PickOfDay.objects.for_today()
     if potd is None:
-        return {"potd": None}
+        # No pick curated yet today — still surface the countdown so the card
+        # can show when the next one opens.
+        return {
+            "potd": None,
+            "potd_streak": user.potd_current_streak,
+            "potd_next_at": next_potd_available(),
+        }
     selections = sorted(
         potd.market.selections.select_related(
             "market", "market__event",
@@ -100,6 +107,9 @@ def potd_card_context(user):
         "potd_locked": potd.is_locked,
         "potd_streak": user.potd_current_streak,
         "crowd": _crowd_split(potd, options, user_pick),
+        # When the next day's pick goes live — the card counts down to this
+        # once today's pick is settled or closed.
+        "potd_next_at": next_potd_available(),
     }
 
 

@@ -23,8 +23,11 @@ class DashboardPotdHypeTests(TestCase):
         # The old buried hero widget is gone.
         self.assertNotContains(resp, "turn-hero__potd")
 
-    def test_dashboard_without_potd_is_fine(self):
-        # No POTD today → partial renders nothing, page still 200.
+    def test_dashboard_without_potd_shows_next_pick_countdown(self):
+        # No POTD today → the empty-state card still renders with a countdown
+        # to the next pick, but no pickable selections.
         resp = self.client.get(reverse("core-portal:portal-dashboard"))
         self.assertEqual(resp.status_code, 200)
-        self.assertNotContains(resp, "potd-hype")
+        self.assertContains(resp, "potd-hype--empty")
+        self.assertContains(resp, "data-countdown-to")
+        self.assertNotContains(resp, 'data-action="potd-pick"')

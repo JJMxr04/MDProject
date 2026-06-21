@@ -70,6 +70,16 @@
 .potd-hype__countdown.is-urgent .potd-hype__cd-unit b { color: var(--brand-yellow); }
 .potd-hype__countdown.is-urgent { animation: potd-pulse 1.4s ease-in-out infinite; }
 @keyframes potd-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .72; } }
+/* "Next pick" countdown is secondary info (today's pick is done) — dial it
+   back so it reads quieter than the live "picks close in" timer, with a hair
+   line above it to set it off from the result/closed copy. */
+.potd-hype__countdown--next {
+    margin-top: var(--space-1);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    opacity: .82;
+}
+.potd-hype__countdown--next .potd-hype__cd-unit b { font-size: var(--text-base); }
 
 /* ── Crowd split ────────────────────────────────────────────── */
 .potd-hype__crowd { display: flex; flex-direction: column; gap: 6px; }
