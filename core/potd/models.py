@@ -28,6 +28,20 @@ def potd_today():
     return timezone.now().astimezone(POTD_TZ).date()
 
 
+def next_potd_available():
+    """When the next day's Pick of the Day goes live, as an aware datetime.
+
+    The product day rolls over at NY midnight and the curation cron seeds the
+    fresh pick at 00:10 NY, so that's the moment a new pick is actually
+    pickable — what the dashboard counts down to once today's pick is settled
+    or closed."""
+    now_ny = timezone.now().astimezone(POTD_TZ)
+    target = now_ny.replace(hour=0, minute=10, second=0, microsecond=0)
+    if target <= now_ny:
+        target += timedelta(days=1)
+    return target
+
+
 class PickError(Exception):
     """User-facing pick validation failure (mirrors core.game.PickError)."""
 
