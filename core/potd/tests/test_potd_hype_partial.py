@@ -26,6 +26,8 @@ class PotdHypePartialTests(TestCase):
         html = _render(make_user("v"))
         self.assertIn("data-countdown-to", html)
         self.assertIn('data-action="potd-pick"', html)
+        # The "pick now" state stays focused on the CTA — no next-pick timer.
+        self.assertNotIn("potd-hype__countdown--next", html)
 
     def test_crowd_bar_hidden_below_threshold(self):
         potd, home, away = make_potd()
@@ -48,6 +50,8 @@ class PotdHypePartialTests(TestCase):
         html = _render(v)
         self.assertIn("LOCKED IN", html)
         self.assertNotIn('data-action="potd-pick"', html)
+        # Pending pick → also count down to the next pick.
+        self.assertIn("potd-hype__countdown--next", html)
 
     def test_won_result_state(self):
         potd, home, away = make_potd()
@@ -57,9 +61,21 @@ class PotdHypePartialTests(TestCase):
         html = _render(v)
         self.assertIn("YOU WON", html)
         self.assertNotIn('data-action="potd-pick"', html)
+        # Settled pick → count down to the next pick.
+        self.assertIn("potd-hype__countdown--next", html)
 
     def test_missed_state_when_locked_without_pick(self):
         make_potd(lock_in=timedelta(hours=-1))   # already kicked off
         html = _render(make_user("v"))
         self.assertNotIn('data-action="potd-pick"', html)
         self.assertIn("back tomorrow", html.lower())
+        # Closed/missed → count down to the next pick.
+        self.assertIn("potd-hype__countdown--next", html)
+
+    def test_no_potd_shows_empty_card_with_next_countdown(self):
+        # No pick curated today → empty-state card with the next-pick timer
+        # and no pickable selections.
+        html = _render(make_user("v"))
+        self.assertIn("potd-hype--empty", html)
+        self.assertIn("potd-hype__countdown--next", html)
+        self.assertNotIn('data-action="potd-pick"', html)

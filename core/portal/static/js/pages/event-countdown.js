@@ -30,7 +30,7 @@
         function render() {
             var diff = target - Date.now();
             if (diff <= 0) {
-                el.textContent = "Starting now";
+                el.textContent = el.dataset.countdownDone || "Starting now";
                 clearInterval(timer);
                 return;
             }

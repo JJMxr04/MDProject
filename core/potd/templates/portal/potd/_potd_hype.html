@@ -65,8 +65,11 @@ States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
                 </div>
             {% endif %}
 
+            {% include "portal/potd/_potd_next_countdown.html" %}
+
         {% elif potd_locked %}
             <p class="potd-hype__closed">Today&rsquo;s pick is closed &mdash; the game has started. Come back tomorrow.</p>
+            {% include "portal/potd/_potd_next_countdown.html" %}
 
         {% else %}
             <div class="potd-hype__countdown potd-hype__countdown--lead" data-countdown-to="{{ potd.lock_time|date:'c' }}" data-status="upcoming" aria-live="polite">
@@ -103,6 +106,24 @@ States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
             <p class="potd-hype__fineprint">One free pick a day. Picking daily builds your streak &mdash; wins climb the leaderboard.</p>
         {% endif %}
 
+        <div class="potd-hype__links">
+            <a href="{% url 'core-portal:potd-my-picks' %}" class="btn-ui btn-ui--ghost btn-ui--sm">My picks</a>
+            <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
+        </div>
+    </div>
+</section>
+
+{% else %}
+{# No pick curated for today yet — show the eyebrow + a countdown to the next one. #}
+<section class="potd-hype potd-hype--empty" id="potd-card">
+    <div class="potd-hype__glow" aria-hidden="true"></div>
+    <div class="potd-hype__inner">
+        <div class="potd-hype__top">
+            <span class="potd-hype__eyebrow"><i class="bi bi-star-fill" aria-hidden="true"></i> Pick of the Day</span>
+            {% if potd_streak %}<span class="potd-hype__streak">🔥 {{ potd_streak }}-day streak</span>{% endif %}
+        </div>
+        <p class="potd-hype__closed">No pick is open right now &mdash; the next one drops soon.</p>
+        {% include "portal/potd/_potd_next_countdown.html" %}
         <div class="potd-hype__links">
             <a href="{% url 'core-portal:potd-my-picks' %}" class="btn-ui btn-ui--ghost btn-ui--sm">My picks</a>
             <a href="{% url 'core-portal:potd-leaderboard' %}" class="btn-ui btn-ui--ghost btn-ui--sm">Leaderboard</a>
