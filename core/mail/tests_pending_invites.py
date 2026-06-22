@@ -270,13 +270,14 @@ class RegisterViewInviteFlowTests(TestCase):
         )
 
     def test_get_with_valid_token_sets_session_and_prefills_email(self):
-        resp = self.client.get(
-            self.URL, {"invite": self.pending.token}, secure=True,
-        )
+        # token is a signed value that re-encodes the current timestamp on every
+        # access, so capture it once rather than regenerating it for the assert.
+        token = self.pending.token
+        resp = self.client.get(self.URL, {"invite": token}, secure=True)
 
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(
-            self.client.session.get(PENDING_INVITE_SESSION_KEY), self.pending.token,
+            self.client.session.get(PENDING_INVITE_SESSION_KEY), token,
         )
         self.assertContains(resp, "invited@test.local")
 
