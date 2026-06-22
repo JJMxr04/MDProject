@@ -81,6 +81,17 @@ case "$ROLE" in
     # see COOLIFY.md §"Worker sizing". Low email/settlement/cron volume, so
     # 2 is plenty. Setting that env var in Coolify now has NO effect;
     # change here + redeploy.
+    #
+    # Self-heal missed periodic state on every worker (re)start. Procrastinate's
+    # in-process scheduler does NOT back-fill ticks missed while the worker was
+    # down (periodic.py MAX_DELAY = 10 min — anything older than that on startup
+    # is ignored, not replayed), so a worker that wasn't alive at 00:10 NY would
+    # otherwise skip the whole day's Pick of the Day until the next deploy. Run
+    # the same idempotent get-or-create bootstrap the web role runs; backgrounded
+    # so it never delays job processing, isolated so a slow dependency can't hang.
+    echo "[entrypoint] bootstrapping periodic state (idempotent, backgrounded)..."
+    python manage.py bootstrap_periodic &
+
     exec python manage.py procrastinate worker \
         --concurrency 2
     ;;
