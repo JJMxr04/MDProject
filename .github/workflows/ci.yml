@@ -3,14 +3,15 @@ name: CI
 # One workflow per repo so a single run covers lint, tests, security scans, and
 # deploy — instead of two workflow files firing separate runs on the same event.
 #
-# Trigger model ("main is validated by its PR, every other branch on push"):
-#   - pull_request: runs lint + test + security (this is what gates main).
-#   - push to a non-main branch: runs lint + test + security.
-#   - push to main (a merge): only the deploy job runs. main is NOT re-tested
-#     here — it was already validated by the PR's required status checks.
-#     >>> This relies on branch protection: require the lint/test/security checks
-#         and "require a PR before merging" on main, so main can't advance with a
-#         red or unchecked commit. Without that, deploy would ship unvalidated.
+# Trigger model ("deploy only ships green code; CI is the gate, not branch
+# protection"):
+#   - pull_request: runs lint + test + security.
+#   - push to any branch (incl. main): runs lint + test + security.
+#   - push to main (a merge): the SAME checks run, then deploy runs only if they
+#     all pass (deploy `needs:` them). Branch protection / required reviewers are
+#     Pro-only on a private repo and add nothing for a solo admin (GitHub won't
+#     let you approve your own PR), so the green-CI gate — not a protection rule
+#     — is what stops a broken commit from reaching prod.
 #   - schedule (weekly): runs the security scans only, to catch new CVEs / leaks
 #     against unchanged code.
 on:
@@ -30,8 +31,8 @@ permissions:
 
 jobs:
   lint:
-    # PRs and non-main pushes. Skipped on the merge-push to main and on schedule.
-    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
+    # PRs and any push (incl. main). Skipped only on the weekly schedule.
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +45,8 @@ jobs:
         run: ruff check .
 
   test:
-    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
+    # PRs and any push (incl. main). Skipped only on the weekly schedule.
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -84,10 +86,10 @@ jobs:
         run: python manage.py test --verbosity=2
 
   # --- Security scans (block on any finding) ---------------------------------
-  # Run on PRs, non-main pushes, and the weekly schedule; skipped on push-to-main.
+  # Run on PRs, every push (incl. main), and the weekly schedule. On push-to-main
+  # they gate the deploy job below.
 
   pip-audit:
-    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -100,7 +102,6 @@ jobs:
         run: pip-audit -r requirements.txt --strict
 
   semgrep:
-    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -119,7 +120,6 @@ jobs:
             --exclude staticfiles --exclude media .
 
   bandit:
-    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -136,7 +136,6 @@ jobs:
           bandit -r . -x '**/tests/**,**/tests.py,**/tests_*.py,**/test_*.py,**/unit_tests/**,**/migrations/**,**/staticfiles/**,**/media/**,**/venv/**,**/.venv/**,**/commands/seed_portal.py,**/commands/randomize_team_colors.py'
 
   gitleaks:
-    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -151,8 +150,11 @@ jobs:
 
   # --- Deploy ----------------------------------------------------------------
   deploy:
-    # Only on a real push to main (i.e. after a merge). No `needs:` — main was
-    # already validated by the PR's required checks (see header), so just ship.
+    # Only on a real push to main (i.e. after a merge), AND only if every check
+    # passed. `needs:` makes the green-CI gate the thing that guards prod, since
+    # branch protection is Pro-only on a private repo (see header). If any needed
+    # job fails, deploy is skipped and nothing ships.
+    needs: [lint, test, pip-audit, semgrep, bandit, gitleaks]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
