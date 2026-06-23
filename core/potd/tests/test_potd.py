@@ -432,3 +432,42 @@ class ClosingNudgeTests(TestCase):
         user.save()
 
         self.assertEqual(send_closing_nudge(str(potd.pk)), 0)
+
+
+class CurateCronScheduleTests(TestCase):
+    """The curate cron must fire just *after* the NY product-day starts.
+
+    Procrastinate evaluates @app.periodic cron strings in UTC (croniter over
+    epoch floats — no tz support), while curation derives its target day from
+    ``potd_today()`` = the America/New_York date. A naive ``10 0 * * *`` fires
+    at 00:10 UTC = ~8pm NY the *prior* evening, so it curates yesterday and the
+    actual NY day has no pick for ~20h (the "card shows countdown forever" bug).
+    The cron must land in the early morning of the day it curates, in BOTH DST
+    regimes.
+    """
+
+    def test_curate_cron_fires_early_in_target_ny_day(self):
+        import croniter
+        from zoneinfo import ZoneInfo
+
+        from procrastinate.contrib.django import app
+
+        import core.potd.tasks  # noqa: F401 — ensure periodic registration
+
+        cron = app.periodic_registry.periodic_tasks[
+            ("core.potd.curate_pick_of_day", "")
+        ].cron
+
+        for day in ("2026-06-15", "2026-01-15"):  # EDT (summer) and EST (winter)
+            y, m, d = (int(p) for p in day.split("-"))
+            base = datetime(y, m, d, 12, tzinfo=ZoneInfo("UTC")).timestamp()
+            fire_ts = croniter.croniter(cron).get_next(float, start_time=base)
+            fire_ny = datetime.fromtimestamp(fire_ts, POTD_TZ)
+            self.assertLess(
+                fire_ny.hour, 6,
+                msg=(
+                    f"curate cron {cron!r} fires at NY {fire_ny:%Y-%m-%d %H:%M %Z}; "
+                    "it must fire in the early morning of the product-day it "
+                    "curates, not the prior evening"
+                ),
+            )

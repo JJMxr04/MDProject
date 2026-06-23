@@ -7,8 +7,8 @@ from core.auth.views.activation_view import ActivateUserView, activate_yoour_acc
 
 from .views import waitlist_view
 from .views.login_view import LoginView
-from .views.register_view import RegisterView
 from .views.password_change import password_change_view
+from .views.register_view import RegisterView
 from .views.unsubscribe import unsubscribe_view
 from .views.waitlist_view import WaitListView
 

@@ -105,7 +105,7 @@ def send_security_email(user, event: str) -> None:
         "enabled": "Two-factor authentication was enabled",
         "disabled": "Two-factor authentication was disabled",
         "regenerated": "Your backup codes were regenerated",
-        "password_changed": "Your password was changed",
+        "password_changed": "Your password was changed",  # nosec B105 -- user-facing email headline, not a credential
     }
     headline = headlines.get(event, "Your two-factor settings changed")
     try:

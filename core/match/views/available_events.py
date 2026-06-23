@@ -24,7 +24,6 @@ from django.utils.dateparse import parse_datetime
 from django.views.decorators.http import require_GET
 
 from core import timeprefs
-
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,

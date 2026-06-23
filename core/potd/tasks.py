@@ -18,8 +18,14 @@ logger = logging.getLogger(__name__)
 CURATION_RETRY = RetryStrategy(max_attempts=5, linear_wait=300)
 
 
-# 00:10 NY — just after the product-day boundary, before anyone's awake.
-@app.periodic(cron="10 0 * * *")
+# ~00:10 NY — just after the product-day boundary, before anyone's awake.
+# Procrastinate evaluates @app.periodic crons in UTC (croniter over epoch
+# floats; no tz support), but curation targets the America/New_York date via
+# potd_today(). 05:10 UTC lands at 00:10 EST / 01:10 EDT — i.e. just inside the
+# new NY product-day in BOTH DST regimes. A naive "10 0 * * *" (00:10 UTC) fires
+# ~8pm NY the PRIOR evening, curating yesterday and leaving today with no pick
+# for ~20h (the "card shows the countdown forever" bug).
+@app.periodic(cron="10 5 * * *")
 @app.task(name="core.potd.curate_pick_of_day", queue="default", retry=CURATION_RETRY)
 def curate_pick_of_day_cron(timestamp: int):
     from core.potd.services import curate_pick_of_day
