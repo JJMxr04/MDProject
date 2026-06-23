@@ -1,8 +1,8 @@
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 <tr>
   <td>
-    <div class="small text-muted">{{ ev.start_time|to_dt|date:"D, j M" }}</div>
-    <div>{{ ev.start_time|to_dt|date:"H:i" }} UTC</div>
+    <div class="small text-muted">{{ ev.start_time|to_dt|usertime:"date" }}</div>
+    <div>{{ ev.start_time|to_dt|usertime:"time" }} </div>
   </td>
   <td>
     {% if ev.league_id %}

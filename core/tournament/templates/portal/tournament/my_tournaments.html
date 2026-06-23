@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static portal_state portal_qs %}
+{% load static portal_state portal_qs usertime %}
 
 {% block title %}Tournaments{% endblock title %}
 
@@ -71,7 +71,7 @@
                         <small class="text-muted">—</small>
                     {% endif %}
                 </td>
-                <td>{{ t.start_date|date:"M j, Y" }}</td>
+                <td>{{ t.start_date|usertime:"date" }}</td>
                 <td>{% include "portal/components/_badge.html" with state=t.state %}</td>
                 <td class="text-end"><i class="bi bi-chevron-right" aria-hidden="true" style="color:var(--text-secondary);"></i></td>
             </tr>

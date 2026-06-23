@@ -24,6 +24,7 @@ import qrcode.image.svg
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -72,7 +73,14 @@ def _post_login_redirect(user, next_url: str | None):
 
 @login_required
 def security_view(request):
-    """The Security rail page — current 2FA state + enable/disable/regen."""
+    """The Security rail page — 2FA state, sessions, recent activity, password."""
+    return render(request, "portal/security/index.html", _security_context(request))
+
+
+def _security_context(request, password_form=None, active_tab=None):
+    """Build the Security-page context. ``password_form`` is the bound
+    ``PasswordChangeForm`` on a failed change-password POST; ``None`` yields a
+    fresh unbound form for the normal page render."""
     device = twofa.confirmed_totp(request.user)
     context = {
         "active": "security",
@@ -89,10 +97,11 @@ def security_view(request):
     context["active_session_count"] = len(sessions)
     context["recent_activity"] = login_security.recent_activity_for_user(request.user)
     context["current_session_key"] = current_key
-    # Which tab opens first ("2fa" default, or "sessions"/"activity" via ?tab=).
-    tab = request.GET.get("tab")
-    context["active_tab"] = tab if tab in ("2fa", "sessions", "activity") else "2fa"
-    return render(request, "portal/security/index.html", context)
+    # Which tab opens first: explicit override wins, then ?tab=, then default "2fa".
+    tab = active_tab or request.GET.get("tab")
+    context["active_tab"] = tab if tab in ("2fa", "sessions", "activity", "password") else "2fa"
+    context["password_form"] = password_form or PasswordChangeForm(request.user)
+    return context
 
 
 # ----------------------------------------------------------- portal: setup

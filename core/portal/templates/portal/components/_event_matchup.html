@@ -1,3 +1,4 @@
+{% load usertime %}
 {% comment %}Team-vs-team matchup core. ctx: fixture (cards.fixture_from_*).
 Renders league badge, time, both teams (logo+name+score), a status-aware
 center, and a winner pill when final.{% endcomment %}
@@ -7,7 +8,7 @@ center, and a winner pill when final.{% endcomment %}
         {% if fixture.league_name %}<span class="matchup__league">{{ fixture.league_name }}</span>{% endif %}
         {% if fixture.start_time %}
         <time class="matchup__time" datetime="{{ fixture.start_time|date:'c' }}">
-            {{ fixture.start_time|date:"M j · g:i A" }}
+            {{ fixture.start_time|usertime:"datetime" }}
         </time>
         {% endif %}
     </div>

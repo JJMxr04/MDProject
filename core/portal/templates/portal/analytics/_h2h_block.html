@@ -1,4 +1,4 @@
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 <details class="border rounded mb-2">
   <summary class="px-3 py-2 d-flex justify-content-between align-items-center">
     <span class="fw-semibold">vs {{ block.opponent_name }}</span>
@@ -26,7 +26,7 @@
       <tbody>
       {% for e in block.events %}
         <tr>
-          <td><small class="text-muted">{{ e.start_time|to_dt|date:"j M Y"|default:"—" }}</small></td>
+          <td><small class="text-muted">{{ e.start_time|to_dt|usertime:"date"|default:"—" }}</small></td>
           <td class="small">{{ e.venue }}</td>
           <td class="text-center">{{ e.score }}</td>
           <td class="text-center">

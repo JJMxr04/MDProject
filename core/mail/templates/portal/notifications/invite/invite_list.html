@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static portal_state %}
+{% load static portal_state usertime %}
 
 {% block title %}Invites{% endblock title %}
 
@@ -45,9 +45,9 @@
                 {% endif %}
                 <div class="small text-muted">
                     {% include "portal/components/_badge.html" with state=invite.effective_state %}
-                    &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
+                    &nbsp;&middot;&nbsp; {{ invite.invited_date|usertime:"datetime"|default:"—" }}
                     {% if invite.effective_state == 'sent' and invite.expires_at %}
-                        &nbsp;&middot;&nbsp; {% if invite.payload.duel %}kickoff{% else %}expires{% endif %} {{ invite.expires_at|date:"M j, g:i A" }}
+                        &nbsp;&middot;&nbsp; {% if invite.payload.duel %}kickoff{% else %}expires{% endif %} {{ invite.expires_at|usertime:"datetime" }}
                     {% endif %}
                 </div>
             </div>
@@ -92,9 +92,9 @@
                 </div>
                 <div class="small text-muted">
                     {% include "portal/components/_badge.html" with state=invite.effective_state %}
-                    &nbsp;&middot;&nbsp; {{ invite.invited_date|date:"M j, Y · g:i A"|default:"—" }}
+                    &nbsp;&middot;&nbsp; {{ invite.invited_date|usertime:"datetime"|default:"—" }}
                     {% if invite.effective_state == 'sent' and invite.expires_at %}
-                        &nbsp;&middot;&nbsp; expires {{ invite.expires_at|date:"M j, g:i A" }}
+                        &nbsp;&middot;&nbsp; expires {{ invite.expires_at|usertime:"datetime" }}
                     {% endif %}
                 </div>
             </div>

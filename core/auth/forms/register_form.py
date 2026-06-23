@@ -4,8 +4,10 @@ from datetime import date
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
+from core import timeprefs
 from core.auth.models import email
 from core.auth.models.waitlist import WaitlistEntry
+from core.timeprefs import timezone_choices
 from core.user.models import User
 
 # Paradise Sports is an 18+ only service.
@@ -27,12 +29,33 @@ class RegisterForm(UserCreationForm):
         label='I confirm that I am 18 years of age or older.',
         error_messages={'required': 'You must confirm that you are 18 or older to register.'},
     )
+    # Browser-auto-detected at signup by static/js/timezone-detect.js, which
+    # selects the matching <option> on load; the user can correct it. A plain
+    # CharField (not ChoiceField) with a Select widget so a value our list
+    # doesn't carry normalizes to UTC instead of blocking signup.
+    timezone = forms.CharField(
+        required=False,
+        label='Your timezone',
+        initial='UTC',
+        help_text='We detected this automatically — change it if it\'s wrong.',
+        widget=forms.Select(attrs={'data-timezone-detect': '1'}),
+    )
     # register_as_writer = forms.BooleanField(required=False, label='Register as a writer', initial=False)
 
     class Meta:
         model = User
         # fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'register_as_writer')
-        fields = ('username', 'email', 'first_name', 'last_name', 'date_of_birth', 'password1', 'password2', )
+        fields = ('username', 'email', 'first_name', 'last_name', 'date_of_birth', 'password1', 'password2', 'timezone', )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Choices set here (not at class-definition time) so the IANA list is
+        # built lazily/cached via timeprefs, not on every import.
+        self.fields['timezone'].widget.choices = timezone_choices()
+
+    def clean_timezone(self):
+        # Security M4 / spec §2: allowlist-validate; missing or bogus → UTC.
+        return timeprefs.normalize_timezone(self.cleaned_data.get('timezone'))
 
     def clean_email(self):
         email_address = self.cleaned_data.get('email')

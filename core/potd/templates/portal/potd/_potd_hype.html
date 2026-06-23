@@ -1,4 +1,4 @@
-{% load static %}
+{% load static usertime %}
 {% comment %}
 Shared Pick-of-the-Day "hype" card. Used on the dashboard (top of the feed)
 and pinned to the top of the Pick of the Day page.
@@ -29,7 +29,7 @@ States: OPEN (pick now) · LOCKED IN (picked, pending) · RESULT (won/lost/void)
             <span class="potd-hype__team">{{ potd.event.away_team.name_medium|default:"Away" }}</span>
         </a>
         <p class="potd-hype__meta">{{ potd.event.league.name }} &middot;
-            <time data-localize datetime="{{ potd.lock_time|date:'c' }}">{{ potd.lock_time }}</time>
+            <time datetime="{{ potd.lock_time|date:'c' }}">{{ potd.lock_time|usertime:"datetime" }}</time>
         </p>
 
         {% if potd_user_pick %}

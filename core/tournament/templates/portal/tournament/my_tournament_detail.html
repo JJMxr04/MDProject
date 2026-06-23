@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static portal_state %}
+{% load static portal_state usertime %}
 
 {% block title %}{{ tournament.name }}{% endblock title %}
 
@@ -11,13 +11,13 @@
         <h1 class="page-header__title">{{ tournament.name }}</h1>
         <p class="page-header__subtitle">
             {% include "portal/components/_badge.html" with state=tournament.state %}
-            &nbsp;&middot;&nbsp; Starts {{ tournament.start_date|date:"M j, Y · g:i A" }}
+            &nbsp;&middot;&nbsp; Starts {{ tournament.start_date|usertime:"datetime" }}
         </p>
     </div>
 </header>
 
 <section class="grid-stats mb-6">
-    {% include "portal/components/_stat_card.html" with label="Start date" value=tournament.start_date|date:"M j" icon="calendar" %}
+    {% include "portal/components/_stat_card.html" with label="Start date" value=tournament.start_date|usertime:"date" icon="calendar" %}
     {% include "portal/components/_stat_card.html" with label="Max players" value=tournament.max_accepted_players icon="people" %}
     {% include "portal/components/_stat_card.html" with label="Levels" value=tournament.levels|floatformat:0 icon="layers" %}
     {% if tournament.winner %}

@@ -92,6 +92,11 @@
                     </div>
                 </div>
 
+                <div class="grid-profile-two">
+                    {% include "portal/components/_field.html" with field=form.timezone hint="All times across the app are shown in this zone." %}
+                    {% include "portal/components/_field.html" with field=form.clock_format hint="12-hour (3:00 PM) or 24-hour (15:00)." %}
+                </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn-ui btn-ui--primary">Save changes</button>
                     <a class="btn-ui btn-ui--ghost" href="{% url 'core-portal:portal-dashboard' %}">Cancel</a>

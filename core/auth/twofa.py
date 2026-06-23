@@ -96,7 +96,7 @@ def disable_2fa(user) -> None:
 
 def send_security_email(user, event: str) -> None:
     """Defer a transactional 2FA security email. ``event`` is one of
-    ``enabled`` / ``disabled`` / ``regenerated``.
+    ``enabled`` / ``disabled`` / ``regenerated`` / ``password_changed``.
 
     Best-effort: a mail failure must never block the security action itself,
     so deferral errors are logged and swallowed.
@@ -105,6 +105,7 @@ def send_security_email(user, event: str) -> None:
         "enabled": "Two-factor authentication was enabled",
         "disabled": "Two-factor authentication was disabled",
         "regenerated": "Your backup codes were regenerated",
+        "password_changed": "Your password was changed",
     }
     headline = headlines.get(event, "Your two-factor settings changed")
     try:

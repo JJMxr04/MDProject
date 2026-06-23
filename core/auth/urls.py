@@ -8,6 +8,7 @@ from core.auth.views.activation_view import ActivateUserView, activate_yoour_acc
 from .views import waitlist_view
 from .views.login_view import LoginView
 from .views.register_view import RegisterView
+from .views.password_change import password_change_view
 from .views.unsubscribe import unsubscribe_view
 from .views.waitlist_view import WaitListView
 
@@ -27,6 +28,7 @@ urlpatterns = [
     path('security/revoke-session/', security_activity.revoke_one_session, name='revoke-session'),
     path('security/not-me/confirm/', security_activity.not_me_confirm, name='security-not-me-confirm'),
     path('security/not-me/', security_activity.not_me, name='security-not-me'),
+    path('security/change-password/', password_change_view, name='change-password'),
     # path('login/', auth_views.LoginView.as_view(template_name='authorization/login.html'), name='login'),
     path('login/', LoginView.as_view(template_name='authorization/login.html'), name='login'),
     path('register/', RegisterView.as_view(template_name='authorization/register.html'), name='register'),

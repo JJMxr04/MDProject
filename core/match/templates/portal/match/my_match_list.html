@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static portal_state portal_qs %}
+{% load static portal_state portal_qs usertime %}
 
 {% block title %}My matches{% endblock title %}
 
@@ -50,7 +50,7 @@
     <a class="vs-mini" href="{% url 'core-portal:portal-my-match-detail' match.id %}">
         <div class="matchup__head">
             <span class="matchup__league">{{ match.format_label }}</span>
-            <time class="matchup__time">{{ match.start_date|date:"M j, Y" }}{% if match.end_date %} – {{ match.end_date|date:"M j" }}{% endif %}</time>
+            <time class="matchup__time">{{ match.start_date|usertime:"date" }}{% if match.end_date %} – {{ match.end_date|usertime:"date" }}{% endif %}</time>
         </div>
 
         <div class="vs-mini__card"{% if match.player_1.home_color or match.player_2.away_color %} style="{% if match.player_1.home_color %}--home-tint: {{ match.player_1.home_color }};{% endif %}{% if match.player_2.away_color %}--away-tint: {{ match.player_2.away_color }};{% endif %}"{% endif %}>

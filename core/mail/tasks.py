@@ -9,11 +9,34 @@ from django.utils.html import strip_tags
 from procrastinate import RetryStrategy
 from procrastinate.contrib.django import app
 
+from core import timeprefs
+
 logger = logging.getLogger(__name__)
 
 
 def _stderr(msg):
     print(msg, file=sys.stderr, flush=True)
+
+
+def recipient_time_context(recipient):
+    """Activate the recipient's stored timezone + clock format for the email
+    render, so every ``|usertime`` in the body comes out in their zone/clock.
+
+    Resolves prefs by recipient email — no call-site changes needed, every
+    email auto-localizes. Unknown address (or non-user recipient) → UTC / 12h.
+    Always restored on exit (try/finally in time_context) so a worker thread
+    never carries one recipient's zone into the next job (Security H3).
+    """
+    from core.user.models import User
+
+    prefs = (
+        User.objects.filter(email=recipient)
+        .values_list("timezone", "clock_format")
+        .first()
+    )
+    tz, clock = prefs if prefs else (timeprefs.DEFAULT_TIMEZONE,
+                                     timeprefs.DEFAULT_CLOCK_FORMAT)
+    return timeprefs.time_context(tz, clock)
 
 
 # Procrastinate equivalent of Celery's max_retries=3, default_retry_delay=30.
@@ -42,7 +65,10 @@ def send_email(subject, recipient, template_path, context):
             "subject": subject,
             **(context or {}),
         }
-        html_content = render_to_string(template_path, ctx)
+        # Render inside the recipient's timezone/clock so every |usertime in
+        # the template localizes to them (spec §5 — emails are in scope).
+        with recipient_time_context(recipient):
+            html_content = render_to_string(template_path, ctx)
         text_content = strip_tags(html_content)
 
         # RFC 8058 one-click unsubscribe headers — Gmail/Yahoo require them

@@ -227,7 +227,7 @@ const PickModal = (function () {
                 ${ev.start_time ? `
                 <div class="pickevent-card__time">
                     <i class="bi bi-clock" aria-hidden="true"></i>
-                    ${escapeHtml(formatEventTime(ev.start_time))}
+                    ${escapeHtml(ev.start_time_display || formatEventTime(ev.start_time))}
                 </div>` : ''}
             </button>
         `).join('');
@@ -283,7 +283,7 @@ const PickModal = (function () {
             chips.push(`<span class="pm-chip is-league">${escapeHtml(ev.league.name)}</span>`);
         }
         if (ev.start_time) {
-            chips.push(`<span class="pm-chip"><i class="bi bi-clock me-1"></i>${escapeHtml(formatEventTime(ev.start_time))}</span>`);
+            chips.push(`<span class="pm-chip"><i class="bi bi-clock me-1"></i>${escapeHtml(ev.start_time_display || formatEventTime(ev.start_time))}</span>`);
         }
         // Live or finalized score badge.
         if (ev.is_live && ev.home_score != null && ev.away_score != null) {
@@ -843,12 +843,5 @@ document.addEventListener('click', (e) => {
             openGamePopupById(el.dataset.gameId);
             break;
     }
-});
-
-/* Game cards render event start times in the visitor's locale — replaces
-   the old inline document.write(new Date(...).toLocaleString()). */
-document.querySelectorAll('time[data-localize]').forEach(t => {
-    const dt = new Date(t.getAttribute('datetime'));
-    if (!isNaN(dt)) t.textContent = dt.toLocaleString();
 });
 

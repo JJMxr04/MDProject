@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static humanize_pick %}
+{% load static humanize_pick usertime %}
 
 {% block title %}{{ event.home_team.name|default:"TBD" }} vs {{ event.away_team.name|default:"TBD" }}{% endblock title %}
 
@@ -372,8 +372,8 @@
             {% if event.sport %}<div class="evt-info__row"><dt>Sport</dt><dd>{{ event.sport.name|capfirst }}</dd></div>{% endif %}
             {% if event.season_label %}<div class="evt-info__row"><dt>Season</dt><dd>{{ event.season_label }}</dd></div>{% endif %}
             {% if event.start_time %}
-                <div class="evt-info__row"><dt>Date</dt><dd>{{ event.start_time|date:"D, M j" }}</dd></div>
-                <div class="evt-info__row"><dt>Time</dt><dd>{{ event.start_time|date:"g:i A" }}</dd></div>
+                <div class="evt-info__row"><dt>Date</dt><dd>{{ event.start_time|usertime:"date" }}</dd></div>
+                <div class="evt-info__row"><dt>Time</dt><dd>{{ event.start_time|usertime:"time" }}</dd></div>
             {% endif %}
             {% if fixture.status %}<div class="evt-info__row"><dt>Status</dt><dd>{{ fixture.status|capfirst }}</dd></div>{% endif %}
         </dl>

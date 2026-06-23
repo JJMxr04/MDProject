@@ -1,5 +1,5 @@
 {% extends "portal/analytics/base_analytics.html" %}
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 
 {% block content %}
 <div class="container-fluid py-3">
@@ -166,7 +166,7 @@
           <tbody>
           {% for r in form_last_10 %}
             <tr>
-              <td><small class="text-muted">{{ r.start_time|to_dt|date:"j M Y"|default:"—" }}</small></td>
+              <td><small class="text-muted">{{ r.start_time|to_dt|usertime:"date"|default:"—" }}</small></td>
               <td class="small">{{ r.venue }}</td>
               <td>
                 {% if r.opponent_id %}

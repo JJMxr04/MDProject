@@ -1,5 +1,5 @@
 {% extends "portal/base_app.html" %}
-{% load static %}
+{% load static usertime %}
 
 {% block title %}Security{% endblock title %}
 
@@ -22,15 +22,17 @@
         {% endif %}
 
         {% comment %}CSS-only tabs (seg-tabs, shared portal pattern — CSP-safe).
-        seg-a = 2FA, seg-b = Sessions, seg-c = Recent activity.{% endcomment %}
+        seg-a = 2FA, seg-b = Sessions, seg-c = Recent activity, seg-d = Password.{% endcomment %}
         <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-a" {% if active_tab == "2fa" %}checked{% endif %}>
         <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-b" {% if active_tab == "sessions" %}checked{% endif %}>
         <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-c" {% if active_tab == "activity" %}checked{% endif %}>
+        <input class="seg-tabs__radio" type="radio" name="security-seg" id="seg-d" {% if active_tab == "password" %}checked{% endif %}>
 
         <div class="seg-tabs" role="tablist">
             <label class="seg-tabs__label" for="seg-a">Two-factor</label>
             <label class="seg-tabs__label" for="seg-b">Active sessions{% if active_session_count %}<span class="seg-tabs__count">{{ active_session_count }}</span>{% endif %}</label>
             <label class="seg-tabs__label" for="seg-c">Recent activity</label>
+            <label class="seg-tabs__label" for="seg-d">Password</label>
         </div>
 
     <section class="seg-pane card-ui" id="pane-a">
@@ -42,7 +44,7 @@
                 <div class="twofa-status">
                     <span class="twofa-pill twofa-pill--on"><i class="bi bi-shield-check" aria-hidden="true"></i> On</span>
                     <span class="twofa-meta">
-                        Enabled {{ confirmed_at|date:"M j, Y" }} ·
+                        Enabled {{ confirmed_at|usertime:"date" }} ·
                         {{ backup_codes_remaining }} backup code{{ backup_codes_remaining|pluralize }} left
                     </span>
                 </div>
@@ -100,7 +102,7 @@
                     <span class="login-activity__device">{{ s.device_label }}</span>
                     <span class="login-activity__where">{{ s.country|default:"—" }}{% if s.ip_address %} · {{ s.ip_address }}{% endif %}</span>
                     <span class="login-activity__when">
-                        {% if s.last_login_at %}Signed in {{ s.last_login_at|date:"M j, Y H:i" }}{% endif %}
+                        {% if s.last_login_at %}Signed in {{ s.last_login_at|usertime:"datetime" }}{% endif %}
                     </span>
                     {% if s.is_current %}
                         <span class="twofa-pill twofa-pill--on">This device</span>
@@ -145,7 +147,7 @@
                 <li class="login-activity__row">
                     <span class="login-activity__device">{{ ev.device_label|default:"Unknown device" }}</span>
                     <span class="login-activity__where">{{ ev.country|default:"—" }}{% if ev.ip_address %} · {{ ev.ip_address }}{% endif %}</span>
-                    <span class="login-activity__when">{{ ev.created_at|date:"M j, Y H:i" }}</span>
+                    <span class="login-activity__when">{{ ev.created_at|usertime:"datetime" }}</span>
                     <span class="login-activity__type login-activity__type--{{ ev.event_type }}">{{ ev.get_event_type_display }}</span>
                     {% if ev.is_new_device or ev.is_new_location %}
                         <span class="twofa-pill">New {% if ev.is_new_device %}device{% else %}location{% endif %}</span>
@@ -155,6 +157,47 @@
                 <li class="twofa-meta">No login activity recorded yet.</li>
                 {% endfor %}
             </ul>
+        </div>
+    </section>
+
+    <section class="seg-pane card-ui" id="pane-d">
+        <header class="card-ui__header">
+            <h2>Change password</h2>
+        </header>
+        <div class="card-ui__body">
+            <p class="twofa-meta">
+                Choose a strong password you don't use anywhere else. Changing it
+                signs you out of every other device.
+            </p>
+            <form method="post" action="{% url 'core-auth:change-password' %}" class="twofa-form">
+                {% csrf_token %}
+                {% if password_form.non_field_errors %}
+                    <div class="field-error" role="alert">{{ password_form.non_field_errors }}</div>
+                {% endif %}
+
+                <label for="id_old_password">Current password</label>
+                <input class="twofa-input" type="password" id="id_old_password"
+                       name="old_password" autocomplete="current-password" required>
+                {% if password_form.old_password.errors %}
+                    <div class="field-error" role="alert">{{ password_form.old_password.errors }}</div>
+                {% endif %}
+
+                <label for="id_new_password1">New password</label>
+                <input class="twofa-input" type="password" id="id_new_password1"
+                       name="new_password1" autocomplete="new-password" required>
+                {% if password_form.new_password1.errors %}
+                    <div class="field-error" role="alert">{{ password_form.new_password1.errors }}</div>
+                {% endif %}
+
+                <label for="id_new_password2">Confirm new password</label>
+                <input class="twofa-input" type="password" id="id_new_password2"
+                       name="new_password2" autocomplete="new-password" required>
+                {% if password_form.new_password2.errors %}
+                    <div class="field-error" role="alert">{{ password_form.new_password2.errors }}</div>
+                {% endif %}
+
+                <button type="submit" class="btn-ui btn-ui--primary">Change password</button>
+            </form>
         </div>
     </section>
     </div>

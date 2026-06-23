@@ -1,4 +1,4 @@
-{% load humanize_pick %}
+{% load humanize_pick usertime %}
 {% comment %}
 Per-game card. Renders one Game (regular slot or golden).
 
@@ -20,7 +20,7 @@ Required context:
         <h3>{{ slot_label }}</h3>
         <h4><strong>
             {% if event.league %}{{ event.league.name }}{% endif %}{% if event.sport %} — {{ event.sport.name }}{% endif %}
-            <time data-localize datetime="{{ event.start_time|date:'c' }}">{{ event.start_time|date:"M j, Y · g:i A" }}</time>
+            <time datetime="{{ event.start_time|date:'c' }}">{{ event.start_time|usertime:"datetime" }}</time>
         </strong></h4>
         <a href="{% url 'core-portal:upcoming-events-detail' event.id %}"
            class="game-card__event-link"

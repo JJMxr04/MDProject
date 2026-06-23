@@ -1,5 +1,5 @@
 {% extends "portal/analytics/base_analytics.html" %}
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 
 {% block content %}
 <div class="container-fluid py-3">
@@ -10,7 +10,7 @@
       <h1 class="h3 mb-0">Upcoming</h1>
       <p class="text-muted mb-0">
         {% if window_from %}
-          {{ window_from|to_dt|date:"j M H:i" }} — {{ window_to|to_dt|date:"j M H:i" }} UTC
+          {{ window_from|to_dt|usertime:"datetime" }} — {{ window_to|to_dt|usertime:"datetime" }} 
         {% endif %}
       </p>
     </div>

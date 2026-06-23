@@ -1,4 +1,5 @@
 {% extends "portal/base_app.html" %}
+{% load usertime %}
 
 {% block title %}Sign out device{% endblock title %}
 
@@ -16,7 +17,7 @@
     <div class="card-ui__body">
         <p class="twofa-meta">
             This signs out <strong>{{ device_label }}</strong>{% if country %} ({{ country }}){% endif %}{% if last_login_at %},
-            last active {{ last_login_at|date:"M j, Y H:i" }}{% endif %}.
+            last active {{ last_login_at|usertime:"datetime" }}{% endif %}.
             That device will need to log in again. Your current device stays signed in.
         </p>
         <div class="login-activity__actions">

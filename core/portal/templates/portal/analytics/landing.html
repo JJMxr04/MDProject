@@ -1,5 +1,5 @@
 {% extends "portal/analytics/base_analytics.html" %}
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 
 {% block content %}
 <div class="container-fluid py-3">
@@ -28,7 +28,7 @@
                 <span><strong>{{ lg.event_count }}</strong> events</span>
                 <span><strong>{{ lg.team_count }}</strong> teams</span>
                 {% if lg.last_event_at %}
-                  <span>Last: {{ lg.last_event_at|to_dt|date:"j M Y" }}</span>
+                  <span>Last: {{ lg.last_event_at|to_dt|usertime:"date" }}</span>
                 {% endif %}
               </div>
               {% if lg.seasons_available %}

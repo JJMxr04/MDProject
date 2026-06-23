@@ -1,5 +1,5 @@
 {% extends "portal/analytics/base_analytics.html" %}
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 
 {% block content %}
 <div class="container-fluid py-3">
@@ -56,7 +56,7 @@
           <tbody>
           {% for b in bets %}
             <tr>
-              <td><small class="text-muted">{{ b.placed_at|to_dt|date:"j M Y H:i" }}</small></td>
+              <td><small class="text-muted">{{ b.placed_at|to_dt|usertime:"datetime" }}</small></td>
               <td>
                 {% if b.event_id %}
                   <a href="{% url 'core-portal:upcoming-events-detail' event_id=b.event_id %}"

@@ -177,6 +177,10 @@ MIDDLEWARE = [
     # OTP device verification — must follow AuthenticationMiddleware.
     # Populates request.user.is_verified(); OTPAdminSite relies on it.
     'django_otp.middleware.OTPMiddleware',
+    # Activates request.user's timezone + clock format so every server-rendered
+    # datetime comes out in their zone/clock (backend is the single source of
+    # truth). Must follow AuthenticationMiddleware. See core.timeprefs.
+    'core.middleware.timezone_preference.TimezonePreferenceMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',

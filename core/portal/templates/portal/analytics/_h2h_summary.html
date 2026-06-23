@@ -1,4 +1,4 @@
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 <div class="col-12">
   <div class="card">
     <div class="card-header"><strong>Head-to-head</strong></div>
@@ -73,7 +73,7 @@
             <tbody>
             {% for h in h2h_last_5 %}
               <tr>
-                <td><small class="text-muted">{{ h.start_time|to_dt|date:"j M Y" }}</small></td>
+                <td><small class="text-muted">{{ h.start_time|to_dt|usertime:"date" }}</small></td>
                 <td>{{ h.home_team.name|default:"—" }}</td>
                 <td class="text-center">
                   {% if h.winner_code == 3 %}

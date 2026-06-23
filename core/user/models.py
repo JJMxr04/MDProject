@@ -167,6 +167,20 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     home_color = models.CharField(max_length=9, null=True, blank=True)
     away_color = models.CharField(max_length=9, null=True, blank=True)
 
+    # --- Time-display preferences (timezone + clock design). Every datetime
+    # shown to this user — web and email — is converted to this IANA zone and
+    # rendered in this clock format by core.timeprefs. ``timezone`` is captured
+    # (browser-auto-detected) at signup; both are editable in Settings.
+    # Validation lives in the forms / core.timeprefs.normalize_*; the columns
+    # themselves just store the chosen string. Defaults keep existing rows and
+    # admin/superuser creation valid (UTC / 12-hour).
+    timezone = models.CharField(max_length=64, default='UTC')
+    clock_format = models.CharField(
+        max_length=3,
+        choices=[('12h', '12-hour'), ('24h', '24-hour')],
+        default='12h',
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

@@ -20,7 +20,10 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from django.views.decorators.http import require_GET
+
+from core import timeprefs
 
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
@@ -74,6 +77,18 @@ def _shape_for_popup(item: dict) -> dict:
     return out
 
 
+def _with_display_time(item: dict) -> dict:
+    """Add ``start_time_display`` — the start time pre-formatted in the viewing
+    user's timezone + clock format (backend is authoritative; the popup JS
+    inserts the string verbatim instead of localizing). Applied per request,
+    NEVER cached, so the cross-user events cache can't bleed one user's zone
+    into another's (spec §3, cached fragments).
+    """
+    iso = item.get("start_time")
+    dt = parse_datetime(iso) if isinstance(iso, str) else iso
+    return {**item, "start_time_display": timeprefs.format_datetime(dt, "datetime")}
+
+
 def build_available_events(match: Match) -> list[dict]:
     """Returns the list of event dicts the popup hydrates from."""
     if not match.end_date:
@@ -82,7 +97,7 @@ def build_available_events(match: Match) -> list[dict]:
     cache_key = f"portal:events:match:{match.id}"
     cached = cache.get(cache_key)
     if cached is not None:
-        return cached
+        return [_with_display_time(it) for it in cached]
 
     starts_after_dt = timezone.now() + OWNER_DEADLINE_BUFFER
     # Pull the upper bound in so a pick can still finish + settle inside the
@@ -113,7 +128,8 @@ def build_available_events(match: Match) -> list[dict]:
 
     items = [_shape_for_popup(it) for it in (body.get("items") or [])]
     cache.set(cache_key, items, timeout=CACHE_TTL)
-    return items
+    # Display strings are added on return (not stored) — see _with_display_time.
+    return [_with_display_time(it) for it in items]
 
 
 @require_GET

@@ -1,4 +1,4 @@
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 {% if fixtures %}
   <div class="table-responsive">
     <table class="table table-hover align-middle">
@@ -14,7 +14,7 @@
       <tbody>
       {% for f in fixtures %}
         <tr>
-          <td><small class="text-muted">{{ f.start_time|to_dt|date:"j M Y"|default:"—" }}</small></td>
+          <td><small class="text-muted">{{ f.start_time|to_dt|usertime:"date"|default:"—" }}</small></td>
           <td>
             {% if f.home_team %}
               <a href="{% url 'core-portal:analytics-team' team_id=f.home_team.id %}"

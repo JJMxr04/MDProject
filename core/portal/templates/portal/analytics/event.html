@@ -1,5 +1,5 @@
 {% extends "portal/analytics/base_analytics.html" %}
-{% load portal_lookup %}
+{% load portal_lookup usertime %}
 {% load static %}
 
 {% block content %}
@@ -19,7 +19,7 @@
         {{ event.away_team.name|default:event.away_team.team_id }}
       </h1>
       <p class="text-muted mb-0">
-        {% if event.start_time %}{{ event.start_time|to_dt|date:"j M Y · H:i" }} UTC{% endif %}
+        {% if event.start_time %}{{ event.start_time|to_dt|usertime:"datetime" }} {% endif %}
         {% if event.league_id %}
           · <a href="{% url 'core-portal:analytics-league' league_id=event.league_id %}"
                 class="text-decoration-none">{{ event.league_id }}</a>
@@ -112,7 +112,7 @@
               {% if live_odds.fetched_at %}
                 <div class="card-footer transparency-tell mb-0">
                   Live odds last refreshed by the ingest cron — data freshness depends on the league's cadence.
-                  Fetched at {{ live_odds.fetched_at|to_dt|date:"j M H:i" }} UTC.
+                  Fetched at {{ live_odds.fetched_at|to_dt|usertime:"datetime" }} .
                 </div>
               {% endif %}
             </div>
@@ -198,7 +198,7 @@
                   <tbody>
                   {% for h in h2h_last_5 %}
                     <tr>
-                      <td><small class="text-muted">{{ h.start_time|to_dt|date:"j M Y" }}</small></td>
+                      <td><small class="text-muted">{{ h.start_time|to_dt|usertime:"date" }}</small></td>
                       <td>{{ h.home_team.name|default:"—" }}</td>
                       <td class="text-center">
                         {% if h.winner_code == 3 %}

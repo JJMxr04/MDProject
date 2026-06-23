@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
 
+from core import timeprefs
 from core.event.serializers.event import EventSerializer
 from core.event.serializers.market import MarketSerializer
 from core.event.serializers.selection import SelectionSerializer
@@ -54,9 +55,17 @@ def event_markets(request, game_id):
     side_1_user = game.owner or game.match.player_1
     side_2_user = game.player_2 or game.match.player_2
 
+    # Backend-authoritative display string (viewer's tz + clock) so the popup
+    # JS inserts it verbatim instead of localizing to the browser zone.
+    event_data = EventSerializer(game.event).data if game.event else None
+    if event_data is not None:
+        event_data["start_time_display"] = timeprefs.format_datetime(
+            game.event.start_time, "datetime"
+        )
+
     return JsonResponse(
         {
-            "event": EventSerializer(game.event).data if game.event else None,
+            "event": event_data,
             "locked_market": (
                 MarketSerializer(locked_market).data if locked_market else None
             ),
