@@ -447,9 +447,9 @@ class CurateCronScheduleTests(TestCase):
     """
 
     def test_curate_cron_fires_early_in_target_ny_day(self):
-        import croniter
         from zoneinfo import ZoneInfo
 
+        import croniter
         from procrastinate.contrib.django import app
 
         import core.potd.tasks  # noqa: F401 — ensure periodic registration
