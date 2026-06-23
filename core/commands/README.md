@@ -114,7 +114,10 @@ migrations replay).
   liveness, and recent jobs — and has a **Run now** button per task.
 - **If crons "aren't running":** confirm the **worker service is deployed and
   up**. The web service alone does *not* run them.
-- Times follow `PROCRASTINATE_TIMEZONE` (`America/New_York`).
+- Cron times are **UTC** — Procrastinate evaluates `@app.periodic` in UTC (no
+  timezone option). e.g. `0 0 * * *` = 00:00 UTC ≈ 20:00 `America/New_York`. A
+  task needing a true NY boundary bakes the offset into its cron (e.g.
+  `core.potd` → `10 5 * * *`).
 
 ---
 

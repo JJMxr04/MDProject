@@ -3,7 +3,6 @@ import os
 import sys
 
 from django.apps import AppConfig
-from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +56,7 @@ class CronsConfig(AppConfig):
                     f"  - {pt.task.name:<48}  cron={pt.cron}"
                 )
         lines.append(
-            f"[{role}] timezone={getattr(settings, 'PROCRASTINATE_TIMEZONE', 'UTC')}"
+            f"[{role}] cron timezone=UTC (Procrastinate evaluates @app.periodic in UTC)"
         )
         lines.append("=" * 64)
         for line in lines:

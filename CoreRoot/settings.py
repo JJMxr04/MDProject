@@ -502,8 +502,11 @@ LOGOUT_REDIRECT_URL = '/'
 # `python manage.py procrastinate worker`. It uses the same Postgres
 # connection as Django (DATABASES['default']) via procrastinate.contrib.django.
 # Periodic tasks are declared with @app.periodic(cron=...) decorators on
-# the task functions themselves; there's no central schedule dict.
-PROCRASTINATE_TIMEZONE = "America/New_York"
+# the task functions themselves; there's no central schedule dict. Cron
+# expressions are evaluated in UTC — Procrastinate has no timezone option
+# (croniter over epoch floats), so the former PROCRASTINATE_TIMEZONE setting
+# was a no-op. A task needing an America/New_York wall-clock boundary bakes the
+# UTC offset into its cron (see core.potd.tasks → "10 5 * * *" ≈ 00:10 NY).
 
 CACHES = {
     "default": {

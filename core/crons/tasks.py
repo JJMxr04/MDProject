@@ -46,10 +46,13 @@ bracketMaker = BracketMaker()
 CRON_RETRY = RetryStrategy(max_attempts=3, linear_wait=60)
 
 
-# All three crons fire at midnight America/New_York. Procrastinate's @periodic
-# is in UTC by default; PROCRASTINATE_TIMEZONE in settings shifts that. The
-# cron expression "0 0 * * *" matches the previous Celery schedule (daily @
-# 00:00 NY time). `pass_context=False` because none of these need job metadata.
+# These crons fire at 00:00 UTC daily. Procrastinate evaluates @app.periodic
+# cron expressions in UTC — there is no timezone option (the former
+# PROCRASTINATE_TIMEZONE setting was a no-op), so "0 0 * * *" is 00:00 UTC ≈
+# 20:00 America/New_York the prior evening, NOT NY midnight. That's acceptable
+# here: these tasks key off UTC dates / timezone.now() (TIME_ZONE='UTC'), not an
+# NY product-day. A task that needs a true NY wall-clock boundary must bake the
+# offset into its cron (see core.potd.tasks → "10 5 * * *" ≈ 00:10 NY).
 @app.periodic(cron="0 0 * * *")
 @app.task(name="core.crons.complete_matches_cron", queue="default", retry=CRON_RETRY)
 def complete_matches_cron(timestamp: int):

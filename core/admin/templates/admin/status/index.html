@@ -173,7 +173,7 @@
       {% for row in beat_schedule %}
       <tr>
         <td class="mono"><strong>{{ row.name }}</strong></td>
-        <td class="mono muted">{{ row.task }}</td>
+        <td class="mono muted"><a href="{% url 'admin:procrastinate_procrastinatejob_changelist' %}?task_name={{ row.task|urlencode }}">{{ row.task }}</a></td>
         <td class="mono">{{ row.schedule }}</td>
         <td>
           {% if row.enabled %}
@@ -227,7 +227,11 @@
     </p>
   </div>
 
-  <h2>Recent task results (latest 25)</h2>
+  <h2>Recent task results (latest 25)
+    <a href="{% url 'admin:procrastinate_procrastinatejob_changelist' %}"
+       style="font-size:.78rem;font-weight:600;text-transform:none;letter-spacing:0;">
+      View full history in task admin →</a>
+  </h2>
   <table class="status-table">
     <thead>
       <tr>
