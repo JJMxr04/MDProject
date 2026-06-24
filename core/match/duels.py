@@ -22,6 +22,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 from core.event.models import Selection
+from core.event.odds.humanize import humanize_selection
 
 
 class DuelError(Exception):
@@ -98,8 +99,8 @@ def send_duel(challenger, opponent, event_id: str, selection_id: str):
         # re-querying the chain (labels are stable; odds may drift but the
         # sides don't — no money is staked, D-14 #3).
         "event_label": _event_label(event),
-        "challenger_label": (selection.label or selection.type or "")[:128],
-        "opponent_label": (opposite.label or opposite.type or "")[:128],
+        "challenger_label": humanize_selection(selection)[:128],
+        "opponent_label": humanize_selection(opposite)[:128],
         "kickoff": event.start_time.isoformat(),
     }
 
@@ -219,8 +220,14 @@ _ROW_PREFETCH = (
     "games__event__home_team",
     "games__event__away_team",
     "games__event__league",
-    "games__bet__owner_outcome",
-    "games__bet__player_2_outcome",
+    # The outcome's full market chain so ``humanize_selection`` renders the
+    # plain-English pick (team names) without an extra query per row.
+    "games__bet__owner_outcome__market__event__home_team",
+    "games__bet__owner_outcome__market__event__away_team",
+    "games__bet__owner_outcome__market__subject_team",
+    "games__bet__player_2_outcome__market__event__home_team",
+    "games__bet__player_2_outcome__market__event__away_team",
+    "games__bet__player_2_outcome__market__subject_team",
 )
 
 
@@ -308,8 +315,8 @@ def duel_row(match, user) -> dict:
         "opponent_name": opponent.username if opponent else "—",
         "event_label": _event_label(event) if event else "",
         "fixture": fixture_from_event(event),
-        "your_side": your_sel.label if your_sel else "",
-        "opponent_side": opp_sel.label if opp_sel else "",
+        "your_side": humanize_selection(your_sel) if your_sel else "",
+        "opponent_side": humanize_selection(opp_sel) if opp_sel else "",
         "status": status,  # won | lost | draw | open
         "kickoff": match.end_date,
     }

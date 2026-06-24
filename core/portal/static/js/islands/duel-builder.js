@@ -20,6 +20,7 @@ function marketLabel(m) {
 window.Alpine.data('duel-builder', () => ({
   state: 'loading', // 'loading' | 'ready' | 'error'
   friends: [],
+  friendQuery: '',
   events: [],
   selectedFriendId: '',
   selectedFriendName: '',
@@ -49,6 +50,12 @@ window.Alpine.data('duel-builder', () => ({
   get isError() { return this.state === 'error'; },
   get hasFriends() { return this.friends.length > 0; },
   get noFriends() { return this.friends.length === 0; },
+  get filteredFriends() {
+    const q = this.friendQuery.trim().toLowerCase();
+    if (!q) return this.friends;
+    return this.friends.filter((f) => (f.username || '').toLowerCase().includes(q));
+  },
+  get noFilteredFriends() { return this.hasFriends && this.filteredFriends.length === 0; },
   get hasEvents() { return this.events.length > 0; },
   get noEvents() { return this.events.length === 0; },
   get showFriendStep() { return !this.selectedFriendId; },
@@ -70,6 +77,7 @@ window.Alpine.data('duel-builder', () => ({
   resetFriend() {
     this.selectedFriendId = '';
     this.selectedFriendName = '';
+    this.friendQuery = '';
     this.resetEvent();
   },
 
@@ -106,7 +114,9 @@ window.Alpine.data('duel-builder', () => ({
             label: marketLabel(m),
             sides: priced.map((s) => ({
               selection_id: s.selection_id,
-              label: s.label,
+              // display_label is the plain-English pick (team names); the raw
+              // s.label is "home home" / "away away" for moneyline.
+              label: s.display_label || s.label,
               odds: s.odds.american,
             })),
           };

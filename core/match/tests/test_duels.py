@@ -49,6 +49,17 @@ class DuelSendTests(TestCase):
         self.assertEqual(invite.expires_at, self.event.start_time)
         self.assertEqual(invite.player, self.opponent)
 
+    def test_send_captures_humanized_side_labels(self):
+        """Invite-card labels are the plain-English pick, not the raw
+        'home home' / 'away away' moneyline label."""
+        self.home.label = "home home"
+        self.home.save()
+        self.away.label = "away away"
+        self.away.save()
+        invite = duels.send_duel(self.challenger, self.opponent, self.event.id, self.home.id)
+        self.assertEqual(invite.payload["challenger_label"], "Home Team Test to win")
+        self.assertEqual(invite.payload["opponent_label"], "Away Team Test to win")
+
     def test_three_way_market_is_rejected(self):
         market = make_market(self.event, category=MarketCategory.MONEYLINE)
         home = make_selection(market, selection_type="HOME")
@@ -327,12 +338,27 @@ class DuelRecordTests(TestCase):
         match, home, away = self._duel()
         chal_row = duels.duel_row(match, self.challenger)
         opp_row = duels.duel_row(match, self.opponent)
-        self.assertEqual(chal_row["your_side"], home.label)
-        self.assertEqual(chal_row["opponent_side"], away.label)
+        # Sides render as plain-English picks (team names), not the raw
+        # aggregator label — which for moneyline is "home home" / "away away".
+        self.assertEqual(chal_row["your_side"], "Home Team Test to win")
+        self.assertEqual(chal_row["opponent_side"], "Away Team Test to win")
         self.assertEqual(chal_row["status"], "open")
         # Same match, opposite perspective → sides swap.
-        self.assertEqual(opp_row["your_side"], away.label)
+        self.assertEqual(opp_row["your_side"], "Away Team Test to win")
         self.assertEqual(opp_row["opponent_name"], self.challenger.username)
+
+    def test_duel_row_does_not_leak_raw_side_label(self):
+        """Regression: moneyline picks must never surface the raw 'home home'
+        / 'away away' aggregator label."""
+        match, home, away = self._duel()
+        home.label = "home home"
+        home.save()
+        away.label = "away away"
+        away.save()
+        row = duels.duel_row(match, self.challenger)
+        self.assertNotIn("home home", row["your_side"])
+        self.assertNotIn("away away", row["opponent_side"])
+        self.assertEqual(row["your_side"], "Home Team Test to win")
 
     def test_finished_and_accepted_lists_split_by_state(self):
         self._duel(SettlementStatus.WON, SettlementStatus.LOST)  # finished

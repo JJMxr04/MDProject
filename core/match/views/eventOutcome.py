@@ -35,6 +35,7 @@ from django.core.cache import cache
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_GET
 
+from core.event.odds.humanize import humanize_payload
 from core.event.providers.aggregator_client import (
     AggrigatorClient,
     AggrigatorError,
@@ -63,6 +64,9 @@ def _shape_for_popup(body: dict, event_id: str) -> dict:
         for s in m.get("selections") or []:
             s2 = dict(s)
             s2["selection_id"] = s.get("id")
+            # Plain-English pick (team names) so consumers never surface the
+            # raw aggregator label — "home home" / "away away" for moneyline.
+            s2["display_label"] = humanize_payload(body, m, s)
             sels.append(s2)
         m2["selections"] = sels
         aliased_markets.append(m2)

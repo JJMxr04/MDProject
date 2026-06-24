@@ -84,6 +84,17 @@ class ScoutUserQueryTests(TestCase):
         self.assertEqual(markets["total"]["picks"], 2)
         self.assertEqual(len(out["recent_form"]), 7)
 
+    def test_recent_form_label_is_humanized(self):
+        """Recent-form tooltips show the plain-English pick, not the raw
+        'home home' moneyline label."""
+        for _ in range(scouting.MIN_PICKS):
+            sel = self._add_pick(sel_type="HOME", status=SettlementStatus.WON)
+            sel.label = "home home"
+            sel.save()
+        out = scouting.scout_user(self.user)
+        labels = {f["label"] for f in out["recent_form"]}
+        self.assertEqual(labels, {"Home Team Test to win"})
+
     def test_markets_breakdown_applies_floor(self):
         W, L = SettlementStatus.WON, SettlementStatus.LOST
         # Moneyline: 4 decided (3W/1L) — above the floor, win_rate shown.

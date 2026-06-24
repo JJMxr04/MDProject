@@ -35,17 +35,6 @@ document.addEventListener('click', (e) => {
     submitPotdPick(el.dataset.selectionId);
 });
 
-/* Kickoff times render in the visitor's locale (same pattern as the match
-   detail page). */
-document.querySelectorAll('#potd-card time[data-localize]').forEach(t => {
-    const dt = new Date(t.getAttribute('datetime'));
-    if (!isNaN(dt)) {
-        t.textContent = dt.toLocaleString(undefined, {
-            month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
-        });
-    }
-});
-
 /* One-time post-pick celebration: the pick flow reloads the page, so fire the
    glow on the freshly-rendered locked-in card, then clear the flag. */
 (function () {

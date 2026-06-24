@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from core.api.auth import V1_AUTHENTICATION_CLASSES
 from core.event.models import Selection
+from core.event.odds.humanize import humanize_selection
 
 
 class SlipsView(APIView):
@@ -29,7 +30,15 @@ class SlipsView(APIView):
             return Response({"detail": "legs is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         selection_ids = [leg.get("selection_id") for leg in legs_in if leg.get("selection_id")]
-        selections = {s.id: s for s in Selection.objects.filter(id__in=selection_ids).select_related("market")}
+        selections = {
+            s.id: s
+            for s in Selection.objects.filter(id__in=selection_ids).select_related(
+                "market",
+                "market__event__home_team",
+                "market__event__away_team",
+                "market__subject_team",
+            )
+        }
 
         if len(selections) != len(selection_ids):
             missing = [sid for sid in selection_ids if sid not in selections]
@@ -44,7 +53,9 @@ class SlipsView(APIView):
                 "selection_id": sel.id,
                 "market_id": sel.market_id,
                 "type": sel.type,
-                "label": sel.label,
+                # Plain-English pick (team names), not the raw aggregator label
+                # ("home home" / "away away" for moneyline).
+                "label": humanize_selection(sel),
                 "decimal_odds": float(sel.decimal_odds),
             })
 

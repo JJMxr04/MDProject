@@ -223,10 +223,19 @@ render, so it wraps the conditional alert sections.{% endcomment %}
                 <div>
                     <h2 class="duel-step">1 · Choose a friend</h2>
                     <template x-if="hasFriends">
-                        <div class="duel-grid">
-                            <template x-for="f in friends" :key="f.id">
-                                <button type="button" class="duel-chip" :data-id="f.id" :data-name="f.username" @click="selectFriend" x-text="f.username"></button>
-                            </template>
+                        <div>
+                            <input type="search" class="duel-search" x-model="friendQuery"
+                                   placeholder="Search friends…" aria-label="Search friends" autocomplete="off">
+                            <div class="duel-list" role="listbox" aria-label="Friends">
+                                <template x-for="f in filteredFriends" :key="f.id">
+                                    <button type="button" class="friend-row" role="option" :data-id="f.id" :data-name="f.username" @click="selectFriend">
+                                        <img class="friend-row__avatar" :src="f.avatar" :alt="f.username" loading="lazy">
+                                        <span class="friend-row__name" x-text="f.username"></span>
+                                        <span class="friend-row__chevron" aria-hidden="true">›</span>
+                                    </button>
+                                </template>
+                            </div>
+                            <p class="duel-meta" x-show="noFilteredFriends">No friends match “<span x-text="friendQuery"></span>”.</p>
                         </div>
                     </template>
                     <p class="duel-meta" x-show="noFriends">Add a friend first — duels are friend-to-friend.</p>
@@ -322,9 +331,12 @@ render, so it wraps the conditional alert sections.{% endcomment %}
     .duel-flash { padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-4); font-size: var(--text-sm); }
     .duel-flash.success { background: var(--state-success, #1f8a4c); color: #fff; }
     .duel-flash.error { background: var(--state-danger); color: #fff; }
-    .duel-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-    .duel-chip { padding: var(--space-2) var(--space-4); border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface-card); cursor: pointer; font-weight: var(--weight-medium); }
-    .duel-chip:hover { background: var(--surface-muted); }
+    .duel-search { width: 100%; box-sizing: border-box; padding: var(--space-3); margin-bottom: var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); font-size: var(--text-sm); }
+    .friend-row { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); cursor: pointer; text-align: left; }
+    .friend-row:hover { background: var(--surface-muted); }
+    .friend-row__avatar { width: 32px; height: 32px; border-radius: 999px; object-fit: cover; flex: 0 0 auto; background: var(--surface-muted); }
+    .friend-row__name { flex: 1 1 auto; font-weight: var(--weight-medium); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .friend-row__chevron { color: var(--text-secondary); font-size: var(--text-lg); line-height: 1; flex: 0 0 auto; }
     .duel-list { display: flex; flex-direction: column; gap: var(--space-2); max-height: 460px; overflow-y: auto; }
     .duel-row { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface-card); cursor: pointer; text-align: left; }
     .duel-row:hover { background: var(--surface-muted); }

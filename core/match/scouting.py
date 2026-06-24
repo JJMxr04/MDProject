@@ -21,6 +21,7 @@ from decimal import Decimal
 from django.db.models import Q
 
 from core.event.models.odds.selection import SelectionType, SettlementStatus
+from core.event.odds.humanize import humanize_selection
 
 MIN_PICKS = 5
 RECENT_N = 10
@@ -79,7 +80,13 @@ def scout_user(user) -> dict:
             "match",
             "bet",
             "bet__owner_outcome", "bet__owner_outcome__market__event__league",
+            "bet__owner_outcome__market__event__home_team",
+            "bet__owner_outcome__market__event__away_team",
+            "bet__owner_outcome__market__subject_team",
             "bet__player_2_outcome", "bet__player_2_outcome__market__event__league",
+            "bet__player_2_outcome__market__event__home_team",
+            "bet__player_2_outcome__market__event__away_team",
+            "bet__player_2_outcome__market__subject_team",
         )
     )
 
@@ -190,7 +197,7 @@ def _recent_form(settled) -> list[dict]:
         {
             "type": s.type,
             "result": s.settlement_status,
-            "label": s.label,
+            "label": humanize_selection(s),
         }
         for s, _ in ordered[:RECENT_N]
     ]
