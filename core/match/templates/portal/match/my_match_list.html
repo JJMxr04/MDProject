@@ -53,7 +53,7 @@
             <time class="matchup__time">{{ match.start_date|usertime:"date" }}{% if match.end_date %} – {{ match.end_date|usertime:"date" }}{% endif %}</time>
         </div>
 
-        <div class="vs-mini__card"{% if match.player_1.home_color or match.player_2.away_color %} style="{% if match.player_1.home_color %}--home-tint: {{ match.player_1.home_color }};{% endif %}{% if match.player_2.away_color %}--away-tint: {{ match.player_2.away_color }};{% endif %}"{% endif %}>
+        <div class="vs-mini__card"{% if match.home_tint or match.away_tint %} style="{% if match.home_tint %}--home-tint: {{ match.home_tint }};{% endif %}{% if match.away_tint %}--away-tint: {{ match.away_tint }};{% endif %}"{% endif %}>
             <div class="vs-mini__side">
                 {% include "portal/components/_avatar.html" with user=match.player_1 size=56 %}
                 <span class="vs-mini__name">{% if match.player_1_id == request.user.id %}You{% else %}{{ match.player_1.username }}{% endif %}</span>

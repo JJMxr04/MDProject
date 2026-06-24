@@ -17,13 +17,6 @@
     </button>
 </header>
 
-{% comment %}Hero: feature the most relevant duel — first incoming challenge,
-else first in-progress, else first finished.{% endcomment %}
-{% if accepted_rows %}
-    {% include "portal/components/_vs_card.html" with duel=accepted_rows.0 my_win_rate=duel_record.win_rate %}
-{% elif finished_rows %}
-    {% include "portal/components/_vs_card.html" with duel=finished_rows.0 my_win_rate=duel_record.win_rate %}
-{% endif %}
 
 {% comment %}#invite-list carries the config invite_list.js reads. It must always
 render, so it wraps the conditional alert sections.{% endcomment %}

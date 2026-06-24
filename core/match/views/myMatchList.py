@@ -60,7 +60,7 @@ def my_match_list_view(request):
     # running score for each side.
     user = request.user
     from core.match.scoring import score_match
-    from core.portal.cards import match_outcome
+    from core.portal.cards import match_outcome, resolve_matchup_tints
     from core.ranking.standings import divisions_for, levels_for
 
     object_list = matches_page.object_list
@@ -86,6 +86,13 @@ def my_match_list_view(request):
         # query, so call it once and unpack — the player_1_score/player_2_score
         # model properties would each run it again (two queries per match).
         match.p1_score, match.p2_score, _ = score_match(match)
+        # Side-gradient tints, resolved the same way as the match-detail hero
+        # and other matchup cards: validates the hex and falls back to the CSS
+        # default blue/red when both players picked near-identical colors.
+        match.home_tint, match.away_tint = resolve_matchup_tints(
+            match.player_1.home_color if match.player_1 else None,
+            match.player_2.away_color if match.player_2 else None,
+        )
 
     quick_filters = [
         {"label": "All",         "value": "",          "is_active": state == ""},
