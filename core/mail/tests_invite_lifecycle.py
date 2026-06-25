@@ -21,14 +21,18 @@ from __future__ import annotations
 import json
 from datetime import timedelta
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 from procrastinate.contrib.django.models import ProcrastinateJob
 
 from core.mail.models import Invite, Notification
 from core.mail.models.invites import INVITE_EXPIRY_DEFAULT, InviteExpired
-from core.match.tests.factories import make_user
+from core.match.tests.factories import (
+    make_golden_seed_selection,
+    make_user,
+    mock_golden_seed,
+)
 from core.metrics.models import ProductEvent
 
 
@@ -118,35 +122,62 @@ class InviteExpiryTests(TestCase):
 
 
 class DefaultExpiryTests(TestCase):
-    def test_match_invite_blitz_payload_expires_with_format_window(self):
+    # A challenge a friend hasn't answered within a day is stale — all
+    # non-tournament invites churn on a 1-day fuse regardless of format.
+    def test_match_invite_blitz_payload_expires_in_one_day(self):
         sender = make_user("blitz_s")
         player = make_user("blitz_p")
-        invite = Invite.objects.create_invite(
-            obj_id=None, player=player, invite_type="match", sender=sender,
-            payload={"format": "BLITZ"},
-        )
+        # Match invites pass through the creatability choke-point — seed the
+        # catalog so create_invite doesn't reject before we can check expiry.
+        with mock_golden_seed(make_golden_seed_selection()):
+            invite = Invite.objects.create_invite(
+                obj_id=None, player=player, invite_type="match", sender=sender,
+                payload={"format": "BLITZ"},
+            )
         self.assertEqual(
-            invite.expires_at, invite.invited_date + timedelta(days=2)
+            invite.expires_at, invite.invited_date + timedelta(days=1)
         )
 
-    def test_match_invite_default_payload_expires_with_marathon_window(self):
+    def test_match_invite_default_payload_expires_in_one_day(self):
         sender = make_user("mara_s")
         player = make_user("mara_p")
-        invite = Invite.objects.create_invite(
-            obj_id=None, player=player, invite_type="match", sender=sender,
-        )
+        with mock_golden_seed(make_golden_seed_selection()):
+            invite = Invite.objects.create_invite(
+                obj_id=None, player=player, invite_type="match", sender=sender,
+            )
         self.assertEqual(
-            invite.expires_at, invite.invited_date + timedelta(days=7)
+            invite.expires_at, invite.invited_date + timedelta(days=1)
         )
 
-    def test_friend_invite_gets_fixed_default_window(self):
+    def test_friend_invite_expires_in_one_day(self):
         sender = make_user("fwin_s")
         player = make_user("fwin_p")
         invite = _friend_invite(sender, player)
         self.assertEqual(
             invite.expires_at, invite.invited_date + INVITE_EXPIRY_DEFAULT
         )
-        self.assertEqual(INVITE_EXPIRY_DEFAULT, timedelta(days=14))
+        self.assertEqual(INVITE_EXPIRY_DEFAULT, timedelta(days=1))
+
+
+@override_settings(USE_AGGRIGATOR=False)
+class DeadOnArrivalTests(TestCase):
+    def test_no_email_for_already_expired_invite(self):
+        """A caller-supplied past ``expires_at`` must not trigger a
+        dead-on-arrival invite email — the recipient could never act on it."""
+        sender = make_user("doa_s")
+        player = make_user("doa_p")
+        before = _email_jobs().count()
+        _friend_invite(
+            sender, player, expires_at=timezone.now() - timedelta(hours=1),
+        )
+        self.assertEqual(_email_jobs().count(), before)
+
+    def test_live_invite_still_emails(self):
+        sender = make_user("live_s")
+        player = make_user("live_p")
+        before = _email_jobs().count()
+        _friend_invite(sender, player)
+        self.assertEqual(_email_jobs().count(), before + 1)
 
 
 class ExpireStaleTests(TestCase):
@@ -302,13 +333,21 @@ class InviteListViewTests(TestCase):
         outgoing = _friend_invite(user, other)
 
         self.client.force_login(user)
+
+        # Default view is the Received box: incoming present in context, and
+        # its accept/decline controls render. Both querysets are always built.
         resp = self.client.get(
             reverse("core-portal:invite-list"), secure=True
         )
-
         self.assertEqual(resp.status_code, 200)
         self.assertIn(incoming, list(resp.context["invites"]))
         self.assertIn(outgoing, list(resp.context["outgoing_invites"]))
         self.assertNotIn(outgoing, list(resp.context["invites"]))
-        # Outgoing 'sent' rows render the sender-side Cancel button.
-        self.assertContains(resp, "Cancel")
+        self.assertContains(resp, "Decline")
+
+        # The Sent box renders the sender-side Cancel control.
+        resp_sent = self.client.get(
+            reverse("core-portal:invite-list"), {"box": "sent"}, secure=True
+        )
+        self.assertEqual(resp_sent.status_code, 200)
+        self.assertContains(resp_sent, "Cancel")

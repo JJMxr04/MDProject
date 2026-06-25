@@ -113,13 +113,15 @@ class MatchInviteAcceptTests(TestCase):
     def test_second_accept_is_rejected_and_no_duplicate_match(self):
         sender = make_user("msender")
         receiver = make_user("mreceiver")
-        invite = Invite.objects.create_invite(
-            obj_id=None, player=receiver, invite_type="match", sender=sender,
-        )
         golden = make_golden_seed_selection()
 
         self.client.force_login(receiver)
         with mock_golden_seed(golden):
+            # create_invite now runs the creatability gate, so the catalog
+            # must be seeded around it too — not just around accept.
+            invite = Invite.objects.create_invite(
+                obj_id=None, player=receiver, invite_type="match", sender=sender,
+            )
             resp1 = _accept(self.client, invite.id)
             resp2 = _accept(self.client, invite.id)
 
@@ -132,9 +134,10 @@ class MatchInviteAcceptTests(TestCase):
     def test_manager_state_guard_blocks_non_sent_invite(self):
         sender = make_user("gsender")
         receiver = make_user("greceiver")
-        invite = Invite.objects.create_invite(
-            obj_id=None, player=receiver, invite_type="match", sender=sender,
-        )
+        with mock_golden_seed(make_golden_seed_selection()):
+            invite = Invite.objects.create_invite(
+                obj_id=None, player=receiver, invite_type="match", sender=sender,
+            )
         invite.state = "accepted"
         invite.save()
 

@@ -206,7 +206,8 @@ class Emails:
 
     @classmethod
     def send_match_invite(cls, user, opponent_name, format_label=None):
-        subject = "Your have Been Invited to Join a Match"
+        descriptor = f"{format_label} match" if format_label else "match"
+        subject = f"{opponent_name} invited you to a {descriptor}"
         template_path = "invite/matchInvite.html"
         context = {
             'username': user.username,
@@ -365,29 +366,34 @@ class Emails:
                          template_path=template_path, context=context)
 
     @classmethod
-    def send_match_acceptance_confirmation(cls, user, opponent_name):
+    def send_match_acceptance_confirmation(cls, user, opponent_name, *, kind_label="match"):
         """Sender-side: the user who SENT the invite gets notified that
         their opponent accepted. ``user`` is the sender; ``opponent_name``
-        is the accepter's username.
+        is the accepter's username. ``kind_label`` distinguishes the contest
+        type — "duel", "BLITZ match", etc. — so the subject/notification reads
+        specifically instead of always saying "match".
         """
-        subject = f"{opponent_name} accepted your match invite — you're now in a match!"
+        subject = f"{opponent_name} accepted your {kind_label} invite — you're in!"
         template_path = "invite/matchAccept.html"
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
+            'kind_label': kind_label,
         }
         cls._notify(user, subject, template_path, context)
 
     @classmethod
-    def send_match_started_to_accepter(cls, user, opponent_name):
+    def send_match_started_to_accepter(cls, user, opponent_name, *, kind_label="match"):
         """Accepter-side: the user who just ACCEPTED an invite gets
-        confirmation that the match is on. ``user`` is the accepter;
-        ``opponent_name`` is the sender's username.
+        confirmation that the contest is on. ``user`` is the accepter;
+        ``opponent_name`` is the sender's username. ``kind_label`` names the
+        contest type ("duel", "MARATHON match", …).
         """
-        subject = f"You're now in a match with {opponent_name}"
+        subject = f"You're in — your {kind_label} with {opponent_name} is on"
         template_path = "invite/matchAccepted.html"
         context = {
             'username': user.username,
             'opponent_name': opponent_name,
+            'kind_label': kind_label,
         }
         cls._notify(user, subject, template_path, context)

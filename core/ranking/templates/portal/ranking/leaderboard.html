@@ -11,10 +11,25 @@
     </div>
 </header>
 
-<div class="lb-tabs">
-    <a class="lb-tab {% if scope != 'global' %}is-active{% endif %}"
-       href="?scope=season{% if chosen_season %}&season={{ chosen_season.slug }}{% endif %}">Season</a>
-    <a class="lb-tab {% if scope == 'global' %}is-active{% endif %}" href="?scope=global">Global</a>
+<div class="filter-bar">
+    <div class="seg-bar" role="tablist" aria-label="Leaderboard scope">
+        <a class="seg-bar__item {% if scope != 'global' %}is-active{% endif %}"
+           href="?scope=season{% if chosen_season %}&season={{ chosen_season.slug }}{% endif %}">Season</a>
+        <a class="seg-bar__item {% if scope == 'global' %}is-active{% endif %}"
+           href="?scope=global">Global</a>
+    </div>
+    {% if scope != 'global' and seasons %}
+    <form method="get" class="lb-season">
+        <input type="hidden" name="scope" value="season">
+        <select name="season" class="field-input" data-autosubmit aria-label="Season">
+            {% for s in seasons %}
+            <option value="{{ s.slug }}" {% if s.slug == chosen_season.slug %}selected{% endif %}>
+                {{ s.name }}{% if s.status == 'ACTIVE' %} (live){% endif %}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+    {% endif %}
 </div>
 
 {% if scope == 'global' %}
@@ -45,30 +60,14 @@
 </section>
 {% else %}
 <section class="card-ui">
-    <header class="card-ui__header">
-        <h2>{% if chosen_season %}{{ chosen_season.name }}{% else %}Season{% endif %}</h2>
-        <div class="lb-filters">
-            {% if seasons %}
-            <form method="get" class="lb-filter-form">
-                <input type="hidden" name="scope" value="season">
-                <select name="season" onchange="this.form.submit()">
-                    {% for s in seasons %}
-                    <option value="{{ s.slug }}" {% if s.slug == chosen_season.slug %}selected{% endif %}>
-                        {{ s.name }}{% if s.status == 'ACTIVE' %} (live){% endif %}
-                    </option>
-                    {% endfor %}
-                </select>
-            </form>
-            {% endif %}
-        </div>
-    </header>
+    <header class="card-ui__header"><h2>{% if chosen_season %}{{ chosen_season.name }}{% else %}Season{% endif %}</h2></header>
     <div class="card-ui__body">
         {% if divisions|length > 1 %}
-        <div class="lb-divisions">
-            <a class="lb-pill {% if not active_division %}is-active{% endif %}"
+        <div class="seg-bar seg-bar--scroll lb-divisions" role="tablist" aria-label="Filter by division">
+            <a class="seg-bar__item {% if not active_division %}is-active{% endif %}"
                href="?scope=season&season={{ chosen_season.slug }}">All divisions</a>
             {% for d in divisions %}
-            <a class="lb-pill {% if active_division == d %}is-active{% endif %}"
+            <a class="seg-bar__item {% if active_division == d %}is-active{% endif %}"
                href="?scope=season&season={{ chosen_season.slug }}&division={{ d }}">Division {{ d }}</a>
             {% endfor %}
         </div>
@@ -105,26 +104,21 @@
 
 {% block css %}
 <style>
-    .lb-tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
-    .lb-tab { padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary); font-weight: var(--weight-medium); }
-    .lb-tab.is-active { background: var(--brand-yellow); color: var(--text-on-accent); }
-    .lb-filters { margin-left: auto; }
-    .lb-filter-form select { padding: var(--space-1) var(--space-2); border: 1px solid var(--border-strong); border-radius: var(--radius-md); }
-    .lb-divisions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3); }
-    .lb-pill { padding: var(--space-1) var(--space-3); border-radius: 999px; border: 1px solid var(--border-strong); text-decoration: none; color: var(--text-secondary); font-size: var(--text-xs); }
-    .lb-pill.is-active { background: var(--brand-blue-dark); color: #fff; border-color: var(--brand-blue-dark); }
+    /* Page-specific bits only — the segmented controls use the shared
+       .seg-bar / .filter-bar classes from global.css. */
+    .lb-season { flex: 0 0 auto; margin-left: auto; width: 220px; max-width: 100%; }
+    .lb-divisions { margin-bottom: var(--space-3); }
+    @container (max-width: 560px) {
+        .lb-season { flex: 1 1 100%; margin-left: 0; width: auto; }
+    }
     .lb-table { width: 100%; border-collapse: collapse; }
     .lb-table th, .lb-table td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--border-strong); }
     .lb-table th { font-size: var(--text-xs); color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
     .lb-rank { font-weight: var(--weight-semibold); color: var(--text-secondary); }
     .lb-empty { color: var(--text-secondary); text-align: center; padding: var(--space-5); }
-    .card-ui__header { display: flex; align-items: center; gap: var(--space-3); }
-    /* Mobile: let the wide standings table scroll sideways (parent .card-ui
-       gets overflow-x:auto from global.css) rather than crushing columns. */
+    /* Mobile: let the wide standings table scroll sideways rather than crush. */
     @media (max-width: 768px) {
         .lb-table { min-width: 580px; }
-        .lb-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .lb-filters { margin-left: 0; }
     }
 </style>
 {% endblock css %}

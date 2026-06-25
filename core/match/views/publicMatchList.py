@@ -77,7 +77,6 @@ def public_match_list_view(request):
 # (plan §7.5 item 3). Runs after login_required so it keys on the user.
 @rate_limit("create-match", 30, 3600, per="user")
 def create_public_match_view(request):
-    from core.game.models import Game
     from core.game.models.game import FixtureUnavailable, GoldenGameUnavailable
     from core.match import formats
 
@@ -133,23 +132,22 @@ def create_public_match_view(request):
             if existing:
                 return JsonResponse({'status': 'success', 'invite_id': existing.id})
 
-            # Fixture-availability check at creation (D-5 #2) — a Blitz
-            # invite into an empty midweek window is rejected here with a
-            # useful message instead of failing at accept time.
-            try:
-                Game.objects.assert_window_viable(match_format=match_format)
-            except FixtureUnavailable as exc:
-                return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
-
             # Create the invite — the format rides on the payload and the
             # accept path threads it into create_match (Phase 5 §2).
-            invite = Invite.objects.create_invite(
-                obj_id=None,
-                sender=owner,
-                player=player_2,  # Add the invited player
-                invite_type='match',
-                payload={'format': match_format},
-            )
+            # create_invite is the single creatability choke-point: a Blitz
+            # invite into an empty midweek window (or one with no Golden Game
+            # seed) is rejected here instead of emailing the recipient a
+            # challenge that fails at accept time.
+            try:
+                invite = Invite.objects.create_invite(
+                    obj_id=None,
+                    sender=owner,
+                    player=player_2,  # Add the invited player
+                    invite_type='match',
+                    payload={'format': match_format},
+                )
+            except (FixtureUnavailable, GoldenGameUnavailable) as exc:
+                return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
 
             return JsonResponse({'status': 'success', 'invite_id': invite.id})
 

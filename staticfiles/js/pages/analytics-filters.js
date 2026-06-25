@@ -1,9 +1,4 @@
-document.addEventListener('change', (e) => {
-  const el = e.target;
-  if (el.matches('[data-autosubmit]') && el.form) {
-    el.form.requestSubmit ? el.form.requestSubmit() : el.form.submit();
-  }
-});
+// [data-autosubmit] change handling now lives globally in portal/shell.js.
 
 document.addEventListener('submit', (e) => {
   const f = e.target;

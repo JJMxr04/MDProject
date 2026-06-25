@@ -28,7 +28,12 @@ def portal_dashboard(request):
         .distinct()
     )
 
-    pending_invites = Invite.objects.filter(player=user, state="sent")
+    # Only actionable invites: a 'sent' row past its ``expires_at`` is
+    # effectively expired (the nightly cron just hasn't churned it yet) and
+    # must not inflate the badge or the to-do list.
+    pending_invites = Invite.objects.filter(player=user, state="sent").filter(
+        Q(expires_at__isnull=True) | Q(expires_at__gt=now)
+    )
 
     stats = {
         "active_match_count": active_match_count,

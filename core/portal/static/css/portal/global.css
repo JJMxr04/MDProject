@@ -529,29 +529,126 @@ a:hover { color: var(--brand-blue-bright); }
 .pager__btn[aria-disabled="true"] { opacity: .4; pointer-events: none; }
 .pager__pages { font-size: var(--text-sm); color: var(--text-secondary); }
 
-/* ── Filter bar ───────────────────────────────────────────── */
+/* ── Filter bar ───────────────────────────────────────────────
+   Status filters are a full-width segmented "category bar" (.seg-bar);
+   search + dates live in a glass popover (.filter-pop — native
+   <details>, with only outside-click/Esc behaviour added in shell.js).
+   The bar is a container (container-type), so it reflows on its OWN
+   width rather than the viewport — the fixed 248px sidebar can no
+   longer push it past a viewport breakpoint (the original "won't
+   shrink below 584px" bug). At ≤560px it stacks: seg-bar on top, a
+   full-width search/filter button below — a proper mobile layout. */
 .filter-bar {
-  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  container-type: inline-size;
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
+  padding: var(--space-2);
   background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg);
   margin-bottom: var(--space-5);
 }
-.filter-bar__tabs { display: flex; gap: var(--space-1); flex-wrap: wrap; }
-.filter-bar__tab {
-  padding: var(--space-1) var(--space-3);
-  background: transparent; border: 1px solid transparent; border-radius: var(--radius-pill);
-  color: var(--text-secondary); font-size: var(--text-sm); font-weight: var(--weight-medium);
-  cursor: pointer;
-  /* Tabs can be <button> (form filters) or <a> (nav, e.g. Browse public). */
-  text-decoration: none;
-  display: inline-flex; align-items: center; gap: var(--space-1);
+/* Pages with no status filters render just the glass control — drop the
+   card chrome so it reads as a lone "Filter" button, not an empty bar. */
+.filter-bar--solo { background: transparent; border: 0; padding: 0; }
+
+/* ── Segmented category bar ───────────────────────────────────
+   Equal segments with a sliding "pill" on the active one. These stay
+   <button type="submit">: filtering is server-side (paginated
+   querysets), so each segment re-queries — a CSS :checked/<label>
+   toggle can't do that. The look is identical to a radio segmented
+   control; the behaviour is a real form submit. */
+.seg-bar {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; gap: 2px; padding: 3px;
+  background: var(--surface-muted); border-radius: var(--radius-pill);
 }
-.filter-bar__tab:hover { background: var(--surface-muted); color: var(--text-primary); }
-.filter-bar__tab.is-active {
-  background: var(--brand-yellow); color: var(--text-on-accent); font-weight: var(--weight-semibold);
+.seg-bar__item {
+  flex: 1 1 0; min-width: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  border: 0; border-radius: var(--radius-pill);
+  background: transparent; color: var(--text-secondary);
+  font-family: inherit; font-size: var(--text-sm); font-weight: var(--weight-medium);
+  line-height: 1.2; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+  cursor: pointer; text-decoration: none;
+  transition: background var(--motion-fast), color var(--motion-fast);
 }
-.filter-bar__controls { display: flex; flex: 1 1 320px; min-width: 0; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
-.filter-bar__controls .field { margin: 0; flex: 1 1 9rem; min-width: 0; }
+.seg-bar__item:hover { color: var(--text-primary); }
+.seg-bar__item.is-active {
+  background: var(--surface-card); color: var(--text-primary);
+  font-weight: var(--weight-semibold); box-shadow: var(--shadow-sm);
+}
+
+/* Scrolling variant — for a variable/long set (e.g. sports). Segments take
+   their natural width and grow to fill when there's room; when there are too
+   many to fit they scroll sideways instead of squashing or wrapping. */
+.seg-bar--scroll {
+  flex-wrap: nowrap; overflow-x: auto;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.seg-bar--scroll::-webkit-scrollbar { display: none; }
+.seg-bar--scroll .seg-bar__item { flex: 1 0 auto; }
+
+/* Tools zone: the glass popover, pinned to the end */
+.filter-bar__tools { flex: 0 0 auto; margin-left: auto; }
+.filter-bar__tools:first-child { margin-left: 0; }   /* no-seg pages */
+
+/* ── Glass filter popover (native <details>) ──────────────── */
+.filter-pop { position: relative; }
+.filter-pop__trigger {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  height: 40px; padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-md);
+  background: var(--surface-card); color: var(--text-primary);
+  font-family: inherit; font-size: var(--text-sm); font-weight: var(--weight-medium);
+  cursor: pointer; list-style: none; user-select: none; white-space: nowrap;
+  transition: background var(--motion-fast), border-color var(--motion-fast);
+}
+.filter-pop__trigger::-webkit-details-marker { display: none; }
+.filter-pop__trigger:hover { background: var(--surface-muted); }
+.filter-pop[open] .filter-pop__trigger { background: var(--surface-muted); border-color: var(--border-brand); }
+.filter-pop__trigger > i { font-size: 16px; }
+.filter-pop__trigger .bi-chevron-down { margin-left: auto; font-size: 12px; color: var(--text-secondary); transition: transform var(--motion-fast); }
+.filter-pop[open] .filter-pop__trigger .bi-chevron-down { transform: rotate(180deg); }
+/* label: hidden when the glass sits beside a seg-bar (icon-only); shown when
+   it stands alone (no-seg pages) and on the stacked mobile layout */
+.filter-pop__label { display: none; }
+.filter-bar__tools:first-child .filter-pop__label { display: inline; }
+/* active-filters dot */
+.filter-pop__dot {
+  width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto;
+  background: var(--brand-yellow); box-shadow: 0 0 0 2px var(--surface-card);
+}
+
+.filter-pop__panel {
+  position: absolute; right: 0; top: calc(100% + var(--space-2)); z-index: 1200;
+  width: min(320px, calc(100vw - 2 * var(--space-4)));
+  display: flex; flex-direction: column; gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+/* No-seg pages anchor the glass at the left, so open the panel rightward. */
+.filter-bar__tools:first-child .filter-pop__panel { right: auto; left: 0; }
+.filter-pop__panel .field { margin: 0; }
+.filter-pop__dates { display: flex; gap: var(--space-3); }
+.filter-pop__dates .field { flex: 1 1 0; min-width: 0; }
+.filter-pop__foot { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-1); }
+.filter-pop__foot .btn-ui { flex: 1 1 auto; justify-content: center; }
+.filter-pop__clear {
+  flex: 0 0 auto; font-size: var(--text-sm);
+  color: var(--text-secondary); text-decoration: none;
+}
+.filter-pop__clear:hover { color: var(--text-primary); text-decoration: underline; }
+
+/* ── Stacked mobile layout — driven by the bar's OWN width ──── */
+@container (max-width: 560px) {
+  .seg-bar { flex: 1 1 100%; }
+  .filter-bar__tools { flex: 1 1 100%; margin-left: 0; }
+  .filter-pop, .filter-pop__trigger { width: 100%; }
+  .filter-pop__trigger { justify-content: flex-start; }
+  .filter-pop__label { display: inline; }              /* show "Search & filter" */
+  .filter-pop__panel { left: 0; right: 0; width: auto; }  /* full-width sheet */
+}
 
 /* ── Modal ────────────────────────────────────────────────── */
 .modal-ui {
@@ -700,20 +797,10 @@ a:hover { color: var(--brand-blue-bright); }
   .bottom-nav { background: var(--surface-card); }
 }
 
-/* ── Filter bar: stack cleanly on small screens ───────────── */
-@media (max-width: 768px) {
-  .filter-bar { flex-direction: column; align-items: stretch; }
-  /* tabs become a horizontal scroller instead of wrapping/overflowing */
-  .filter-bar__tabs {
-    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; padding-bottom: 2px;
-  }
-  .filter-bar__tabs::-webkit-scrollbar { display: none; }
-  .filter-bar__tab { white-space: nowrap; flex: 0 0 auto; }
-  .filter-bar__controls { flex: 1 1 auto; flex-wrap: wrap; }
-  .filter-bar__controls .field { flex: 1 1 100%; }
-  .filter-bar__controls .btn-ui { width: 100%; justify-content: center; }
-}
+/* Filter bar responsiveness is now width-driven, not viewport-driven:
+   the nav zone scrolls and the date inputs sit in an out-of-flow
+   popover, so the bar reflows by its own width with no breakpoint
+   needed. (See the ── Filter bar ── block above.) */
 
 /* ── Wide tables: horizontal scroll instead of overflow ───── */
 @media (max-width: 768px) {

@@ -21,7 +21,7 @@ this module rides a unique REMOTE_ADDR.
 from __future__ import annotations
 
 from datetime import timedelta
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from django.test import TestCase, override_settings
 from django.urls import reverse
@@ -34,6 +34,10 @@ from core.auth.views.register_view import (
     REFERRAL_SESSION_KEY,
 )
 from core.mail.models import Invite, PendingInvite
+from core.match.tests.factories import (
+    make_golden_seed_selection,
+    mock_golden_seed,
+)
 from core.metrics.models import ProductEvent
 from core.user.models import User
 
@@ -176,7 +180,10 @@ class ConsumeForUserTests(TestCase):
             username="cons_newbie", email="consumed@test.local", password=PASSWORD,
         )
 
-        consumed = PendingInvite.objects.consume_for_user(user)
+        # The match invite only materializes if a match is creatable now —
+        # seed the catalog so the send-time gate passes.
+        with mock_golden_seed(make_golden_seed_selection()):
+            consumed = PendingInvite.objects.consume_for_user(user)
 
         self.assertEqual(consumed, 2)
         # Friend edge in both directions (symmetric M2M).
@@ -208,6 +215,40 @@ class ConsumeForUserTests(TestCase):
             ).count(),
             2,
         )
+
+    def test_match_invite_skipped_when_uncreatable_friendship_kept(self):
+        """At signup the original window may no longer hold fixtures — the
+        match invite is skipped (no dead invite) but the friendship still
+        lands and the pending row is stamped consumed."""
+        match_inviter = make_user("skip_match_inviter")
+        match_pending, _ = PendingInvite.objects.create_pending(
+            inviter=match_inviter,
+            email="skip@test.local",
+            invite_type="match",
+            payload={"format": "BLITZ"},
+        )
+        user = User.objects.create_user(
+            username="skip_newbie", email="skip@test.local", password=PASSWORD,
+        )
+
+        # Empty catalog → the creatability choke-point raises → invite skipped.
+        empty_client = MagicMock()
+        empty_client.list_events.return_value = {"items": []}
+        with patch(
+            "core.event.providers.aggregator_client.AggrigatorClient",
+            return_value=empty_client,
+        ):
+            consumed = PendingInvite.objects.consume_for_user(user)
+
+        self.assertEqual(consumed, 1)
+        self.assertTrue(match_inviter.is_friend(user))
+        self.assertFalse(
+            Invite.objects.filter(
+                type="match", sender=match_inviter, player=user
+            ).exists()
+        )
+        match_pending.refresh_from_db()
+        self.assertIsNotNone(match_pending.consumed_at)
 
     def test_second_call_consumes_nothing(self):
         inviter = make_user("cons_twice_inviter")
@@ -293,12 +334,15 @@ class RegisterViewInviteFlowTests(TestCase):
     ):
         self.client.get(self.URL, {"invite": self.pending.token}, secure=True)
 
-        resp = self.client.post(
-            self.URL,
-            register_data("invited@test.local", username="invitee"),
-            secure=True,
-            REMOTE_ADDR="10.0.0.11",
-        )
+        # Seed the catalog so the match invite passes the send-time
+        # creatability gate during consume-on-register.
+        with mock_golden_seed(make_golden_seed_selection()):
+            resp = self.client.post(
+                self.URL,
+                register_data("invited@test.local", username="invitee"),
+                secure=True,
+                REMOTE_ADDR="10.0.0.11",
+            )
 
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp["Location"], reverse("core-auth:activation-email"))

@@ -18,6 +18,8 @@ D-14 decisions baked in here:
 
 from __future__ import annotations
 
+from datetime import timedelta
+
 from django.db.models import Q
 from django.utils import timezone
 
@@ -104,13 +106,15 @@ def send_duel(challenger, opponent, event_id: str, selection_id: str):
         "kickoff": event.start_time.isoformat(),
     }
 
+    # Accept allowed up to kickoff (D-14 #3), but capped at the 1-day invite
+    # fuse — an unanswered duel challenge churns like any other invite.
     invite = Invite.objects.create_invite(
         obj_id=None,
         player=opponent,
         invite_type="match",
         sender=challenger,
         payload=payload,
-        expires_at=event.start_time,  # D-14 #3: accept allowed up to kickoff
+        expires_at=min(event.start_time, timezone.now() + timedelta(days=1)),
     )
     track(challenger, "duel_sent", invite_id=str(invite.pk), event_id=event.id)
     return invite

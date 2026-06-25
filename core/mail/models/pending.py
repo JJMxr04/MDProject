@@ -14,6 +14,7 @@ same consumption idea, but it only creates the friend edge and does NOT
 bypass the waitlist.
 """
 
+import logging
 import uuid
 from datetime import timedelta
 
@@ -22,6 +23,8 @@ from django.db import models, transaction
 from django.utils import timezone
 
 from core.user.models import User
+
+logger = logging.getLogger(__name__)
 
 PENDING_INVITE_EXPIRY = timedelta(days=14)
 
@@ -79,14 +82,30 @@ class PendingInviteManager(models.Manager):
             # regardless of type (D-4b). M2M is symmetric: one add suffices.
             inviter.add_friend(user)
             if pending.invite_type == 'match':
-                from core.mail.models.invites import Invite
-                Invite.objects.create_invite(
-                    obj_id=None,
-                    player=user,
-                    invite_type='match',
-                    sender=inviter,
-                    payload=pending.payload or {},
+                from core.game.models.game import (
+                    FixtureUnavailable,
+                    GoldenGameUnavailable,
                 )
+                from core.mail.models.invites import Invite
+                # create_invite is the single creatability choke-point. At
+                # signup the original window may no longer hold fixtures —
+                # swallow the gate raise and skip the un-acceptable match
+                # invite (the friendship above still lands) rather than
+                # strand the new user with a dead invite.
+                try:
+                    Invite.objects.create_invite(
+                        obj_id=None,
+                        player=user,
+                        invite_type='match',
+                        sender=inviter,
+                        payload=pending.payload or {},
+                    )
+                except (FixtureUnavailable, GoldenGameUnavailable):
+                    logger.info(
+                        "pending invite %s: match no longer creatable at "
+                        "signup — friendship kept, match invite skipped",
+                        pending.pk,
+                    )
             pending.consumed_at = timezone.now()
             pending.save(update_fields=['consumed_at'])
             consumed += 1

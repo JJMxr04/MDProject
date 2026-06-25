@@ -16,27 +16,47 @@
 </header>
 
 <form method="get" class="filter-bar">
-    <div class="filter-bar__controls">
-        <div class="field">
-            <input type="text" name="search" class="field-input" placeholder="Search by team or league…" value="{{ search_query }}">
-        </div>
-        <div class="field">
-            <select name="sport" class="field-input" aria-label="Sport">
-                <option value="">All sports</option>
-                {% for sport in sports %}
-                    <option value="{{ sport.id }}" {% if selected_sport == sport.id|stringformat:"s" %}selected{% endif %}>
-                        {{ sport.name|capfirst }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="field">
-            <input type="date" name="start_date" class="field-input" value="{{ start_date }}" aria-label="Earliest date">
-        </div>
-        <div class="field">
-            <input type="date" name="end_date" class="field-input" value="{{ end_date }}" aria-label="Latest date">
-        </div>
-        <button type="submit" class="btn-ui btn-ui--secondary btn-ui--sm">Apply</button>
+    {# carries the chosen sport when Apply (not a sport segment) is the submitter #}
+    <input type="hidden" name="sport" value="{{ selected_sport }}">
+    <div class="seg-bar seg-bar--scroll" role="tablist" aria-label="Filter by sport">
+        <button type="submit" name="sport" value=""
+                class="seg-bar__item {% if not selected_sport %}is-active{% endif %}"
+                aria-pressed="{{ selected_sport|yesno:'false,true' }}">All sports</button>
+        {% for sport in sports %}
+            <button type="submit" name="sport" value="{{ sport.id }}"
+                    class="seg-bar__item {% if selected_sport == sport.id|stringformat:'s' %}is-active{% endif %}"
+                    aria-pressed="{% if selected_sport == sport.id|stringformat:'s' %}true{% else %}false{% endif %}">{{ sport.name|capfirst }}</button>
+        {% endfor %}
+    </div>
+    <div class="filter-bar__tools">
+        <details class="filter-pop">
+            <summary class="filter-pop__trigger" aria-label="Search and date filters">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <span class="filter-pop__label">Search &amp; filter</span>
+                {% if search_query or start_date or end_date %}<span class="filter-pop__dot" aria-hidden="true"></span>{% endif %}
+                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+            </summary>
+            <div class="filter-pop__panel">
+                <div class="field">
+                    <label class="field-label" for="fb-search">Search</label>
+                    <input id="fb-search" type="text" name="search" class="field-input" placeholder="Search by team or league…" value="{{ search_query }}">
+                </div>
+                <div class="filter-pop__dates">
+                    <div class="field">
+                        <label class="field-label" for="fb-start">From</label>
+                        <input id="fb-start" type="date" name="start_date" class="field-input" value="{{ start_date }}" aria-label="Earliest date">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="fb-end">To</label>
+                        <input id="fb-end" type="date" name="end_date" class="field-input" value="{{ end_date }}" aria-label="Latest date">
+                    </div>
+                </div>
+                <div class="filter-pop__foot">
+                    <button type="submit" class="btn-ui btn-ui--primary btn-ui--sm">Apply</button>
+                    <a class="filter-pop__clear" href="{{ request.path }}">Clear</a>
+                </div>
+            </div>
+        </details>
     </div>
 </form>
 

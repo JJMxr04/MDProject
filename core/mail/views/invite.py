@@ -37,15 +37,28 @@ def create_invite(request):
             # bypasses InviteManager.create_invite() and the email never
             # goes out — same trap that hit the waitlist signup form.
             # ``accepted`` is never client-settable — a pre-accepted invite
-            # row is a mass-assignment hole.
-            Invite.objects.create_invite(
-                obj_id=None,
-                player=cleaned.get('player'),
-                invite_type=cleaned.get('type'),
-                sender=request.user,
-                accepted=False,
-                invited_date=timezone.now(),
+            # row is a mass-assignment hole. create_invite is the single
+            # creatability choke-point: a match invite that can't be built
+            # right now is rejected here so the sender sees why instead of
+            # stranding the recipient with an un-acceptable invite.
+            from django.contrib import messages
+
+            from core.game.models.game import (
+                FixtureUnavailable,
+                GoldenGameUnavailable,
             )
+            try:
+                Invite.objects.create_invite(
+                    obj_id=None,
+                    player=cleaned.get('player'),
+                    invite_type=cleaned.get('type'),
+                    sender=request.user,
+                    accepted=False,
+                    invited_date=timezone.now(),
+                )
+            except (FixtureUnavailable, GoldenGameUnavailable) as exc:
+                messages.error(request, str(exc))
+                return redirect('core-portal:portal-public-match-list')
             return redirect('core-portal:invite-success')
     else:
         form = InviteForm()
@@ -143,13 +156,23 @@ def invite_by_email(request):
             type=invite_type, state='sent',
         ).first()
         if pending is None:
-            Invite.objects.create_invite(
-                obj_id=None,
-                player=existing_user,
-                invite_type=invite_type,
-                sender=request.user,
-                payload=payload,
+            # create_invite is the single creatability choke-point — a match
+            # invite that can't be built right now is rejected here rather
+            # than emailing an un-acceptable challenge.
+            from core.game.models.game import (
+                FixtureUnavailable,
+                GoldenGameUnavailable,
             )
+            try:
+                Invite.objects.create_invite(
+                    obj_id=None,
+                    player=existing_user,
+                    invite_type=invite_type,
+                    sender=request.user,
+                    payload=payload,
+                )
+            except (FixtureUnavailable, GoldenGameUnavailable) as exc:
+                return JsonResponse({'error': str(exc)}, status=400)
         return JsonResponse({
             'success': 'They already have an account — a regular invite was sent.',
             'existing_user': True,
@@ -185,6 +208,11 @@ def success_invite(request):
 @login_required(login_url='/auth/login/')
 def invite_list(request):
     user = request.user
+    box = request.GET.get('box', 'received')
+    if box not in ('received', 'sent'):
+        box = 'received'
+    search_query = request.GET.get('q', '').strip()
+
     incoming = (
         Invite.objects.filter(player=user)
         .select_related('sender')
@@ -195,9 +223,22 @@ def invite_list(request):
         .select_related('player')
         .order_by('-invited_date')
     )
+
+    # Counts shown on the segments stay unfiltered by the search.
+    received_count = incoming.count()
+    sent_count = outgoing.count()
+
+    if search_query:
+        incoming = incoming.filter(sender__username__icontains=search_query)
+        outgoing = outgoing.filter(player__username__icontains=search_query)
+
     content = {
         'invites': incoming,
         'outgoing_invites': outgoing,
+        'box': box,
+        'search_query': search_query,
+        'received_count': received_count,
+        'sent_count': sent_count,
     }
 
     return render(request, 'portal/notifications/invite/invite_list.html', content)

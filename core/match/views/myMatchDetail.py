@@ -364,8 +364,7 @@ def rematch_view(request, match_id):
     pre-filled invite — same format, roles swapped (the clicker becomes the
     sender), normal accept flow from there.
     """
-    from core.game.models import Game
-    from core.game.models.game import FixtureUnavailable
+    from core.game.models.game import FixtureUnavailable, GoldenGameUnavailable
     from core.mail.models import Invite
 
     match = get_object_or_404(
@@ -404,20 +403,19 @@ def rematch_view(request, match_id):
             'message': f'You already have a challenge waiting for {opponent.username}.',
         })
 
-    # Same-format fixture check (D-5 #2) — tonight's rematch needs a
-    # viable window right now, not when the original match was created.
+    # create_invite is the single creatability choke-point — tonight's
+    # rematch needs a viable window AND a golden seed right now (not when the
+    # original match was created), or no invite email goes out.
     try:
-        Game.objects.assert_window_viable(match_format=match.format)
-    except FixtureUnavailable as exc:
+        invite = Invite.objects.create_invite(
+            obj_id=None,
+            sender=request.user,
+            player=opponent,
+            invite_type='match',
+            payload={'format': match.format, 'rematch_of': str(match.id)},
+        )
+    except (FixtureUnavailable, GoldenGameUnavailable) as exc:
         return JsonResponse({'status': 'error', 'message': str(exc)}, status=400)
-
-    invite = Invite.objects.create_invite(
-        obj_id=None,
-        sender=request.user,
-        player=opponent,
-        invite_type='match',
-        payload={'format': match.format, 'rematch_of': str(match.id)},
-    )
     return JsonResponse({
         'status': 'success', 'invite_id': str(invite.id),
         'message': f'Rematch invite sent to {opponent.username}.',

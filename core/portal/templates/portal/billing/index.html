@@ -157,10 +157,20 @@
     </div>
   {% endif %}
 
-  {% if invoices %}
+  {% if total_invoices %}
     <div class="card shadow-sm mt-4">
       <div class="card-body">
         <h2 class="h5 mb-3">Invoice history</h2>
+        <form method="get" class="filter-bar filter-bar--solo mb-3">
+          <div class="seg-bar" role="tablist" aria-label="Filter by status">
+            {% for f in invoice_filters %}
+              <button type="submit" name="status" value="{{ f.value }}"
+                      class="seg-bar__item {% if f.is_active %}is-active{% endif %}"
+                      aria-pressed="{{ f.is_active|yesno:'true,false' }}">{{ f.label }}</button>
+            {% endfor %}
+          </div>
+        </form>
+        {% if invoices %}
         <div class="table-responsive">
           <table class="table table-sm align-middle mb-0">
             <thead class="text-muted small">
@@ -213,9 +223,12 @@
           </table>
         </div>
         <p class="text-muted small mt-3 mb-0">
-          Showing the most recent {{ invoices|length }} invoice{{ invoices|length|pluralize }}.
+          Showing {{ invoices|length }} of {{ total_invoices }} recent invoice{{ total_invoices|pluralize }}.
           Older invoices are in the Stripe-hosted billing portal.
         </p>
+        {% else %}
+        <p class="text-muted small mt-3 mb-0">No invoices match this status. <a href="{{ request.path }}">Clear</a></p>
+        {% endif %}
       </div>
     </div>
   {% endif %}

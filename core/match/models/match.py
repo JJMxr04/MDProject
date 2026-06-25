@@ -15,6 +15,27 @@ from core.user.models import User
 
 
 class MatchManager(AbstractManager):
+    def assert_match_creatable(self, match_format=None):
+        """Pre-send gate: raise if a match in ``match_format`` couldn't be
+        built right now — either no pickable fixtures in the window
+        (``FixtureUnavailable``) or no Golden Game seed in the catalog
+        (``GoldenGameUnavailable``).
+
+        Run before sending a match invite so we never email a challenge the
+        recipient can't accept (the bug this fixes: invite sent, then accept
+        blocked at ``create_match`` time). Mirrors the public-branch gates in
+        ``create_match``. The window restarts at accept, so this is a strong
+        signal rather than a guarantee — the 1-day invite expiry keeps the gap
+        small. Cheap check (``assert_window_viable``, DB-only) runs first so an
+        empty catalog fails fast without the aggregator round-trip.
+        """
+        match_format = formats.normalize_format(match_format)
+        window_end = timezone.now() + formats.format_window(match_format)
+        Game.objects.assert_window_viable(
+            match_format=match_format, window_end=window_end,
+        )
+        Game.objects.find_golden_candidate(window_end=window_end)
+
     def create_match(self, player_1, player_2=None, start_date=None,
                      match_type="public", match_format=None):
         """Create a match in the given format (BLITZ/CLASSIC/MARATHON —

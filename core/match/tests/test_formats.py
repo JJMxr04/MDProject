@@ -98,15 +98,15 @@ class InviteFormatThreadingTests(TestCase):
     def test_accept_invite_threads_format_into_match(self):
         p1 = make_user("inviter")
         p2 = make_user("invitee")
-        invite = Invite.objects.create_invite(
-            obj_id=None,
-            player=p2,
-            invite_type="match",
-            sender=p1,
-            payload={"format": "BLITZ"},
-        )
         sel = make_golden_seed_selection()
         with mock_golden_seed(sel):
+            invite = Invite.objects.create_invite(
+                obj_id=None,
+                player=p2,
+                invite_type="match",
+                sender=p1,
+                payload={"format": "BLITZ"},
+            )
             Invite.objects.accept_invite(invite)
 
         match = Match.objects.get()

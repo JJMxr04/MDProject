@@ -11,11 +11,44 @@
     </div>
 </header>
 
+<form method="get" class="filter-bar">
+    {# carries the active box when Search (not a box segment) is the submitter #}
+    <input type="hidden" name="box" value="{{ box }}">
+    <div class="seg-bar" role="tablist" aria-label="Filter invites">
+        <button type="submit" name="box" value="received"
+                class="seg-bar__item {% if box == 'received' %}is-active{% endif %}"
+                aria-pressed="{% if box == 'received' %}true{% else %}false{% endif %}">Received{% if received_count %} ({{ received_count }}){% endif %}</button>
+        <button type="submit" name="box" value="sent"
+                class="seg-bar__item {% if box == 'sent' %}is-active{% endif %}"
+                aria-pressed="{% if box == 'sent' %}true{% else %}false{% endif %}">Sent{% if sent_count %} ({{ sent_count }}){% endif %}</button>
+    </div>
+    <div class="filter-bar__tools">
+        <details class="filter-pop">
+            <summary class="filter-pop__trigger" aria-label="Search invites by username">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <span class="filter-pop__label">Search</span>
+                {% if search_query %}<span class="filter-pop__dot" aria-hidden="true"></span>{% endif %}
+                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+            </summary>
+            <div class="filter-pop__panel">
+                <div class="field">
+                    <label class="field-label" for="fb-q">Username</label>
+                    <input id="fb-q" type="text" name="q" class="field-input" placeholder="Search by username…" value="{{ search_query }}">
+                </div>
+                <div class="filter-pop__foot">
+                    <button type="submit" class="btn-ui btn-ui--primary btn-ui--sm">Search</button>
+                    <a class="filter-pop__clear" href="{{ request.path }}">Clear</a>
+                </div>
+            </div>
+        </details>
+    </div>
+</form>
+
 <div id="invite-list"
      data-url-template="{% url 'core-portal:invite-accept' 'PLACEHOLDER' %}"
      data-csrf="{{ csrf_token }}">
 
-<h2 class="h5 mb-2">Received</h2>
+{% if box == 'received' %}
 {% if invites %}
 <div class="card-ui mb-4">
     <ul class="list-group list-group-flush" style="margin:0;">
@@ -67,11 +100,13 @@
         {% endfor %}
     </ul>
 </div>
+{% elif search_query %}
+    {% include "portal/components/_empty_state.html" with icon="search" title="No matches" body="No received invites from a username matching your search." %}
 {% else %}
     {% include "portal/components/_empty_state.html" with icon="envelope-open" title="No invites." body="Friends can invite you to matches — your inbox will show them here." %}
 {% endif %}
 
-<h2 class="h5 mb-2 mt-4">Sent</h2>
+{% else %}
 {% if outgoing_invites %}
 <div class="card-ui">
     <ul class="list-group list-group-flush" style="margin:0;">
@@ -81,7 +116,11 @@
             <div class="flex-grow-1">
                 <div class="fw-semibold">
                     {% if invite.type == "match" %}
-                        You challenged {{ invite.player.username }} to a {{ invite.format_label|default:"" }} match
+                        {% if invite.payload.duel %}
+                            ⚔️ You challenged {{ invite.player.username }} to a duel
+                        {% else %}
+                            You challenged {{ invite.player.username }} to a {{ invite.format_label|default:"" }} match
+                        {% endif %}
                     {% elif invite.type == "tournament" %}
                         You invited {{ invite.player.username }} to a tournament
                     {% elif invite.type == "friend" %}
@@ -110,8 +149,11 @@
         {% endfor %}
     </ul>
 </div>
+{% elif search_query %}
+    {% include "portal/components/_empty_state.html" with icon="search" title="No matches" body="No sent invites to a username matching your search." %}
 {% else %}
     {% include "portal/components/_empty_state.html" with icon="send" title="Nothing sent." body="Challenge a friend from the Friends page — your outgoing invites will show here." %}
+{% endif %}
 {% endif %}
 
 </div>

@@ -7,7 +7,10 @@ flow runs without touching the aggregator.
 
 from __future__ import annotations
 
+from datetime import timedelta
+
 from django.test import TestCase, override_settings
+from django.utils import timezone
 
 from core.event.models import MarketCategory
 from core.event.models.odds.selection import SettlementStatus
@@ -45,9 +48,20 @@ class DuelSendTests(TestCase):
         self.assertTrue(invite.payload["duel"])
         self.assertEqual(invite.payload["selection_id"], self.home.id)
         self.assertEqual(invite.payload["opposite_selection_id"], self.away.id)
-        # Expires at kickoff (D-14 #3).
-        self.assertEqual(invite.expires_at, self.event.start_time)
+        # Kickoff is 2 days out, so the 1-day fuse caps it (D-14 #3 +
+        # 1-day invite churn): expires ~24h from now, well before kickoff.
+        self.assertLess(invite.expires_at, self.event.start_time)
+        expected = timezone.now() + timedelta(days=1)
+        self.assertLess(abs((invite.expires_at - expected).total_seconds()), 10)
         self.assertEqual(invite.player, self.opponent)
+
+    def test_send_expires_at_kickoff_when_event_is_within_a_day(self):
+        """When kickoff is sooner than the 1-day fuse, the invite expires at
+        kickoff — you can't accept a duel after the game starts."""
+        soon = make_event(self.league, start_time=timezone.now() + timedelta(hours=6))
+        _, home, _ = make_two_way_market(soon)
+        invite = duels.send_duel(self.challenger, self.opponent, soon.id, home.id)
+        self.assertEqual(invite.expires_at, soon.start_time)
 
     def test_send_captures_humanized_side_labels(self):
         """Invite-card labels are the plain-English pick, not the raw
@@ -82,6 +96,33 @@ class DuelSendTests(TestCase):
     def test_self_duel_is_rejected(self):
         with self.assertRaises(duels.DuelError):
             duels.send_duel(self.challenger, self.challenger, self.event.id, self.home.id)
+
+    def test_rejected_send_creates_no_invite_or_email(self):
+        """send_duel validates the event/market/friendship BEFORE create_invite
+        emails — a duel that can't be set up sends nothing (the duel analogue
+        of the match creatability gate)."""
+        from procrastinate.contrib.django.models import ProcrastinateJob
+
+        def _emails():
+            return ProcrastinateJob.objects.filter(
+                task_name="core.mail.send_email"
+            ).count()
+
+        market = make_market(self.event, category=MarketCategory.MONEYLINE)
+        home = make_selection(market, selection_type="HOME")
+        make_selection(market, selection_type="DRAW")
+        make_selection(market, selection_type="AWAY")
+        before = _emails()
+
+        with self.assertRaises(duels.DuelError):
+            duels.send_duel(self.challenger, self.opponent, self.event.id, home.id)
+
+        self.assertFalse(
+            Invite.objects.filter(
+                sender=self.challenger, player=self.opponent
+            ).exists()
+        )
+        self.assertEqual(_emails(), before)
 
 
 @override_settings(USE_AGGRIGATOR=False)

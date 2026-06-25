@@ -28,10 +28,13 @@ INVITE_STATE_CHOICES = (
     ('expired', 'Expired'),
 )
 
-# Default expiry window per invite type. Match invites instead default to
-# their format's window (a stale Tuesday invite to a weekend Blitz is
-# meaningless) — see ``default_expiry``.
-INVITE_EXPIRY_DEFAULT = timedelta(days=14)
+# Default expiry window. Match and friend invites churn on a tight 1-day
+# fuse — an unanswered challenge goes stale fast (and a long window let
+# un-fulfillable invites linger past the point the fixture catalog can still
+# build the match). Tournament invites keep a generous window; duels pass an
+# explicit ``expires_at`` of min(1 day, kickoff) — see ``send_duel``.
+INVITE_EXPIRY_DEFAULT = timedelta(days=1)
+TOURNAMENT_INVITE_EXPIRY = timedelta(days=14)
 
 
 class InviteExpired(Exception):
@@ -42,12 +45,11 @@ class InviteExpired(Exception):
 class InviteManager(AbstractManager):
     @staticmethod
     def default_expiry(invite_type, payload, invited_date):
-        """Expiry stamp for a new invite: format window for match invites,
-        a generous fixed window for everything else."""
-        if invite_type == 'match':
-            from core.match import formats
-            fmt = formats.normalize_format((payload or {}).get('format'))
-            return invited_date + formats.format_window(fmt)
+        """Expiry stamp for a new invite: a 1-day fuse for match + friend
+        invites, a generous fixed window for tournaments. Duels override this
+        with an explicit ``expires_at`` (min of 1 day and kickoff)."""
+        if invite_type == 'tournament':
+            return invited_date + TOURNAMENT_INVITE_EXPIRY
         return invited_date + INVITE_EXPIRY_DEFAULT
 
     def create_invite(self, obj_id, player, invite_type, sender,
@@ -55,6 +57,16 @@ class InviteManager(AbstractManager):
                       payload=None, expires_at=None):
         invited_date = invited_date or timezone.now()
         payload = payload or {}
+        # Single choke-point for the send-time creatability gate: a regular
+        # match invite is only worth creating/emailing if a match in that
+        # format could actually be built right now (fixtures + a Golden Game
+        # seed). Without this the recipient gets an invite that fails at
+        # accept time. Duels validate their own event chain upstream, so they
+        # skip this. Raises FixtureUnavailable / GoldenGameUnavailable — every
+        # caller surfaces it (or, for best-effort paths, swallows it).
+        if invite_type == 'match' and not payload.get('duel'):
+            from core.match.models import Match
+            Match.objects.assert_match_creatable(payload.get('format'))
         if expires_at is None:
             expires_at = self.default_expiry(invite_type, payload, invited_date)
         invite = self.create(
@@ -68,22 +80,28 @@ class InviteManager(AbstractManager):
             payload=payload,
             expires_at=expires_at,
         )
-        if invite_type == 'match':
-            if (payload or {}).get('duel'):
-                Emails.send_duel_invite(player, sender.username, payload)
-            else:
-                Emails.send_match_invite(
-                    player, sender.username,
-                    format_label=invite.format_label,
-                )
+        # Don't email an invite the recipient can never act on. Fresh invites
+        # are always in the future; this guards a caller-supplied past
+        # ``expires_at`` (e.g. a duel whose kickoff has already slipped) from
+        # sending a dead-on-arrival notification.
+        dead_on_arrival = expires_at is not None and expires_at <= timezone.now()
+        if not dead_on_arrival:
+            if invite_type == 'match':
+                if (payload or {}).get('duel'):
+                    Emails.send_duel_invite(player, sender.username, payload)
+                else:
+                    Emails.send_match_invite(
+                        player, sender.username,
+                        format_label=invite.format_label,
+                    )
 
-        if invite_type == 'tournament':
-            from core.tournament.models import Tournament
-            tournament = Tournament.objects.get(id=obj_id)
-            Emails.send_tournament_invite(player, tournament)
+            if invite_type == 'tournament':
+                from core.tournament.models import Tournament
+                tournament = Tournament.objects.get(id=obj_id)
+                Emails.send_tournament_invite(player, tournament)
 
-        if invite_type == 'friend':
-            Emails.send_friend_invite(player, sender.username)
+            if invite_type == 'friend':
+                Emails.send_friend_invite(player, sender.username)
 
         from core.metrics.models import track
         track(sender, "invite_sent", invite_type=invite_type, invite_id=str(invite.pk))
@@ -170,10 +188,21 @@ class InviteManager(AbstractManager):
                     player_2=invite.player,
                     match_format=payload.get('format'),
                 )
-            # Notify both sides — the sender (their invite was accepted)
-            # and the accepter (they just joined a match).
-            Emails.send_match_acceptance_confirmation(invite.sender, invite.player.username)
-            Emails.send_match_started_to_accepter(invite.player, invite.sender.username)
+            # Notify both sides — the sender (their invite was accepted) and
+            # the accepter (they just joined). Label the contest specifically
+            # (duel vs the chosen format) so neither side just reads "match".
+            if payload.get('duel'):
+                kind_label = 'duel'
+            else:
+                from core.match import formats
+                fmt = formats.format_label(payload.get('format'))
+                kind_label = f"{fmt} match" if fmt else "match"
+            Emails.send_match_acceptance_confirmation(
+                invite.sender, invite.player.username, kind_label=kind_label,
+            )
+            Emails.send_match_started_to_accepter(
+                invite.player, invite.sender.username, kind_label=kind_label,
+            )
         if invite.type == 'tournament':
             from core.tournament.models import Tournament
             from core.tournament.models.tournament import TournamentJoinUnavailable

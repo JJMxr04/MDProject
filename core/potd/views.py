@@ -263,8 +263,26 @@ def my_picks(request):
         t = getattr(ev, side, None) if ev else None
         return getattr(t, "name_medium", None) or "TBD"
 
+    # Filters scope only the table below — the record/streaks above stay lifetime.
+    result_filter = request.GET.get("result", "")
+    start_date = request.GET.get("start_date", "")
+    end_date = request.GET.get("end_date", "")
+    _RESULT_BY_KEY = {
+        "won": DailyPickResult.WON,
+        "lost": DailyPickResult.LOST,
+        "pending": DailyPickResult.PENDING,
+    }
+    visible = picks
+    if result_filter in _RESULT_BY_KEY:
+        target = _RESULT_BY_KEY[result_filter]
+        visible = [p for p in visible if p.result == target]
+    if start_date:
+        visible = [p for p in visible if p.potd.date.isoformat() >= start_date]
+    if end_date:
+        visible = [p for p in visible if p.potd.date.isoformat() <= end_date]
+
     rows = []
-    for p in picks:
+    for p in visible:
         label, kind = _RESULT_META.get(p.result, ("—", "muted"))
         rows.append({
             "date": p.potd.date,
@@ -288,5 +306,14 @@ def my_picks(request):
         "win_current": cur_win_streak,
         "win_best": best_win_streak,
         "rows": rows,
+        "result_filter": result_filter,
+        "start_date": start_date,
+        "end_date": end_date,
+        "quick_filters": [
+            {"label": "All",     "value": "",        "is_active": not result_filter},
+            {"label": "Won",     "value": "won",     "is_active": result_filter == "won"},
+            {"label": "Lost",    "value": "lost",    "is_active": result_filter == "lost"},
+            {"label": "Pending", "value": "pending", "is_active": result_filter == "pending"},
+        ],
     }
     return render(request, "portal/potd/my_picks.html", context)

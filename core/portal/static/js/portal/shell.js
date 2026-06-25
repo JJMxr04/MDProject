@@ -1,4 +1,4 @@
-/* Portal shell interactions: sidebar toggle, modal open/close. */
+/* Portal shell interactions: sidebar toggle, modal open/close, filter popovers. */
 (function () {
   document.addEventListener('click', function (event) {
     var target = event.target;
@@ -39,6 +39,23 @@
     } else if (modal && target === modal) {
       modal.classList.remove('is-open');
     }
+
+    // Filter popover (<details class="filter-pop">): close any open one when
+    // the click lands outside it. A click on its own summary/panel is inside
+    // the <details>, so it stays open (native toggle still handles open/close).
+    document.querySelectorAll('details.filter-pop[open]').forEach(function (d) {
+      if (!d.contains(target)) d.removeAttribute('open');
+    });
+  });
+
+  // Auto-submit a form when a [data-autosubmit] control changes (e.g. a filter
+  // <select>). Inline onchange handlers are blocked by the strict CSP
+  // (script-src 'self', no unsafe-inline), so filters opt in via this attribute.
+  document.addEventListener('change', function (e) {
+    var el = e.target;
+    if (el.matches && el.matches('[data-autosubmit]') && el.form) {
+      el.form.requestSubmit ? el.form.requestSubmit() : el.form.submit();
+    }
   });
 
   // ESC closes open modals and the mobile menu
@@ -49,6 +66,12 @@
       });
       var mm = document.querySelector('[data-mobile-menu].is-open');
       if (mm) mm.classList.remove('is-open');
+      // Close filter popovers and return focus to their trigger.
+      document.querySelectorAll('details.filter-pop[open]').forEach(function (d) {
+        d.removeAttribute('open');
+        var summary = d.querySelector('summary');
+        if (summary) summary.focus();
+      });
     }
   });
 })();
