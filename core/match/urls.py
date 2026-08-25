@@ -14,8 +14,7 @@ urlpatterns = [
     path('public/<uuid:match_id>/', views.public_match_detail_view, name='portal-public-match-detail'),
     path('<uuid:match_id>/', views.my_match_detail_view, name='portal-my-match-detail'),
     path('<uuid:match_id>/upload_pick/', views.upload_pick, name='portal-upload_pick'),
-    # SGO eventIDs are alphanumeric strings; ``<str:>`` (was ``<int:>`` per
-    # plan §7.7 #1).
+    # SGO eventIDs are alphanumeric strings; ``<str:>`` (was ``<int:>``).
     path('event/<str:event_id>/outcomes/', views.event_outcomes, name='portal-match-event-outcomes'),
     path('<uuid:match_id>/available_events/',
          views.available_events_for_match,
@@ -27,11 +26,11 @@ urlpatterns = [
     # Either player can hit it; the manager routes owner_outcome vs
     # player_2_outcome based on which side of the match they're on.
     path('game/<uuid:game_id>/pick_locked/', views.pick_on_locked_slot, name='portal-match-game-pick-locked'),
-    # Pre-submit fixture-availability check for the create-match UI (D-5 #2).
+    # Pre-submit fixture-availability check for the create-match UI.
     path('availability/', views.match_availability_view, name='portal-match-availability'),
-    # Rematch: pre-filled same-format invite, roles swapped (Phase 5 §5).
+    # Rematch: pre-filled same-format invite, roles swapped.
     path('<uuid:match_id>/rematch/', views.rematch_view, name='portal-match-rematch'),
-    # Duel: send a single-game opposite-side challenge (phase 14).
+    # Duel: send a single-game opposite-side challenge.
     path('duels/', views.duels_page_view, name='portal-duels'),
     path('duel/events/', views.duel_events_view, name='portal-match-duel-events'),
     path('duel/send/', views.send_duel_view, name='portal-match-duel-send'),

@@ -1,4 +1,4 @@
-"""Checkout + Customer Portal flow (Phase 10 verify).
+"""Checkout + Customer Portal flow.
 
 End-to-end coverage of the redirect-to-Stripe flow with Stripe mocked: the
 upgrade page's Subscribe button, ``start_checkout`` session creation + its

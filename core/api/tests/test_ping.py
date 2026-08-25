@@ -1,4 +1,4 @@
-"""Foundation smoke tests for the v1 spine (plan 10 — Phase 0 gate).
+"""Foundation smoke tests for the v1 spine.
 
 Proves: IsAuthenticated default, the success/error envelope shape, and CSRF
 enforcement on a session-authed unsafe method.

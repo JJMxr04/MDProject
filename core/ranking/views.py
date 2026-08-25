@@ -1,4 +1,4 @@
-"""Leaderboard pages (phase 8 increment 4) — season + global, server-rendered."""
+"""Leaderboard pages — season + global, server-rendered."""
 
 from __future__ import annotations
 

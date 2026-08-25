@@ -2,8 +2,7 @@
 
 Single shot — call once on deploy. The 8 leagues we cover on the Amateur tier
 (MLB, NBA, NCAAB, NCAAF, NFL, NHL, MLS, UEFA_CHAMPIONS_LEAGUE) get
-``active=True`` by default with cadences tuned per
-``api-switch/sports_game/refactor-plan.md §1``.
+``active=True`` by default with cadences tuned per real usage data.
 """
 
 from django.core.management.base import BaseCommand
@@ -12,7 +11,7 @@ from core.event.models import League, Sport
 from core.event.providers import get_events_client
 
 # leagueID -> default refresh cadence (minutes). Numbers come from the budget
-# math in refactor-plan.md §1; tune via admin once we have real usage data.
+# math worked out earlier; tune via admin once we have real usage data.
 DEFAULT_ACTIVE_LEAGUES: dict[str, int] = {
     "NFL": 720,
     "NBA": 360,

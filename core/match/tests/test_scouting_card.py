@@ -1,4 +1,4 @@
-"""Phase 9 — opponent scouting.
+"""Opponent scouting.
 
 ``scout_user`` computes tendencies from a user's actual MATCH picks (MDProject
 gameplay — Game/Bet/Selection), and the match-detail page PRO-gates the card.

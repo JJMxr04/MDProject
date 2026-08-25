@@ -1,7 +1,7 @@
-"""Match-domain Procrastinate tasks (plan Phase 7 #3).
+"""Match-domain Procrastinate tasks.
 
 "Match settles tonight" — a one-shot scheduled at ``end_date - N hours``
-when the match is accepted. Uses the format-aware end_date from Phase 5:
+when the match is accepted. Uses the format-aware end_date:
 a Blitz accepted Friday fires Sunday afternoon, which is the point.
 
 Auto-discovered via procrastinate's Django integration (installed-app
@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 @app.task(name="core.match.settles_tonight", queue="default",
           retry=RetryStrategy(max_attempts=2, linear_wait=120))
 def match_settles_tonight(match_id: str):
-    """Execution-time guards (plan Phase 7 #3): a match that already
+    """Execution-time guards: a match that already
     completed — or never got an opponent — sends nothing."""
     from core.mail.models import Emails
     from core.match.models import Match

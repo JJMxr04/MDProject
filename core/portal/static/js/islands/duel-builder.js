@@ -1,4 +1,4 @@
-// duel-builder island — "Duel a friend" in three taps (phase 14).
+// duel-builder island — "Duel a friend" in three taps.
 //
 // Flow: pick a friend → pick an upcoming event → pick a two-way market side.
 // Tapping a side POSTs the challenge. Reuses the friends API, the per-event

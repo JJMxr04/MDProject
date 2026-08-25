@@ -1,4 +1,4 @@
-"""Phase 2: /api/v1/matches/ security + behavior.
+"""/api/v1/matches/ security + behavior.
 
 Detail/list are participant-scoped (non-participant -> 404), with a per-action
 cross-user negative test on retrieve. (The old ``tiebreaker`` submit action

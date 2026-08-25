@@ -2,7 +2,7 @@
 the full ``Sport → League → Team → Event → Market → Selection`` chain for a
 selection the user just picked.
 
-Per plan §2.4.3. Called by ``upload_pick`` / ``player_2_select_outcome`` *before*
+Called by ``upload_pick`` / ``player_2_select_outcome`` *before*
 ``Game.objects.upload_pick`` so the local DB has the rows that legacy code
 ``Selection.objects.get(pk=selection_id)`` expects.
 
@@ -129,7 +129,7 @@ def _find_selection(
     return None, None
 
 
-# ---- upserts (per plan §2.4.3 chain order) -------------------------------
+# ---- upserts (chain order) -------------------------------
 
 
 def _upsert_sport(event_env: dict) -> Sport | None:

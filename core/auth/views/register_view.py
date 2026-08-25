@@ -13,7 +13,7 @@ from core.ratelimit import rate_limit
 logger = logging.getLogger(__name__)
 
 # Session keys for the invite/referral hand-off between GET (?invite= /
-# ?ref=) and the POST that creates the account (plan Phase 4 §3).
+# ?ref=) and the POST that creates the account.
 PENDING_INVITE_SESSION_KEY = 'pending_invite_token'
 REFERRAL_SESSION_KEY = 'referral_friend_code'
 
@@ -24,7 +24,7 @@ class RegisterView(View):
 
     def get(self, request):
         form = self.form_class()
-        # Email-token invite (Phase 4 §3): stash the token for the POST and
+        # Email-token invite: stash the token for the POST and
         # prefill the email so the waitlist bypass keys on the right address.
         token = request.GET.get('invite')
         if token:
@@ -52,7 +52,7 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
     # Anonymous, sends an activation email, and the waitlist-approval form
-    # error makes approval status probeable — brake it (plan §7.5 item 3).
+    # error makes approval status probeable — brake it.
     @method_decorator(rate_limit("auth-register", 5, 3600))
     def post(self, request):
         form = self.form_class(request.POST)

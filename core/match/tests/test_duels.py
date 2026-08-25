@@ -1,4 +1,4 @@
-"""Phase 14 — duels: send validation, accept shape, settlement (win/draw).
+"""Duels: send validation, accept shape, settlement (win/draw).
 
 A duel is one game, two players, opposite sides, settling when the event ends.
 ensure_chain returns the local Selection with USE_AGGRIGATOR off, so the whole
@@ -48,8 +48,8 @@ class DuelSendTests(TestCase):
         self.assertTrue(invite.payload["duel"])
         self.assertEqual(invite.payload["selection_id"], self.home.id)
         self.assertEqual(invite.payload["opposite_selection_id"], self.away.id)
-        # Kickoff is 2 days out, so the 1-day fuse caps it (D-14 #3 +
-        # 1-day invite churn): expires ~24h from now, well before kickoff.
+        # Kickoff is 2 days out, so the 1-day fuse caps it (the
+        # 1-day invite-churn window): expires ~24h from now, well before kickoff.
         self.assertLess(invite.expires_at, self.event.start_time)
         expected = timezone.now() + timedelta(days=1)
         self.assertLess(abs((invite.expires_at - expected).total_seconds()), 10)

@@ -116,16 +116,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'axes',  # brute-force lockout on auth views (S-9)
-    # Admin 2FA (plan §7.3 item 9 phase 1) — TOTP devices + OTPAdminSite.
+    'axes',  # brute-force lockout on auth views
+    # Admin 2FA — TOTP devices + OTPAdminSite.
     # Enforcement is flag-gated via ADMIN_REQUIRE_OTP (see CoreRoot/urls.py);
     # apps/middleware stay on unconditionally so devices can be enrolled
     # BEFORE the flag flips (otherwise: instant admin lockout).
     'django_otp',
     'django_otp.plugins.otp_totp',
-    # Static (backup) codes — single-use recovery tokens issued at enrollment
-    # (phase 15, D-15b). Recovery is backup-codes + admin device reset; no
-    # email-based 2FA reset.
+    # Static (backup) codes — single-use recovery tokens issued at enrollment.
+    # Recovery is backup-codes + admin device reset; no email-based 2FA reset.
     'django_otp.plugins.otp_static',
     "django_celery_results",  # Dead post-Procrastinate cutover; kept so old core_crons migrations replay on fresh DBs.
     "django_celery_beat",     # Dead post-Procrastinate cutover; kept for the same reason.
@@ -150,10 +149,10 @@ INSTALLED_APPS = [
     'core.web',
     'core.portal',
     'core.billing',
-    'core.metrics',  # In-house product analytics (roadmap Phase 3) — ProductEvent + track()
-    'core.potd',  # Pick of the Day + streaks (roadmap Phase 6)
-    'core.ranking',  # Seasons, ranks, XP/leveling, leaderboards (roadmap Phase 8)
-    'core.api',  # Portal JSON API (v1) — secure islands surface (plan js-portal-security)
+    'core.metrics',  # In-house product analytics — ProductEvent + track()
+    'core.potd',  # Pick of the Day + streaks
+    'core.ranking',  # Seasons, ranks, XP/leveling, leaderboards
+    'core.api',  # Portal JSON API (v1) — secure islands surface
 
     # Custom admin app configuration
     'core.admin.CoreAdminConfig',
@@ -165,7 +164,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # CSP header (S-7) — enforced (see CONTENT_SECURITY_POLICY below). Sits high
+    # CSP header — enforced (see CONTENT_SECURITY_POLICY below). Sits high
     # so the header is attached to every response.
     'csp.middleware.CSPMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -199,7 +198,7 @@ MIDDLEWARE = [
     # portal HTML response with the captured aggrigator flame graph(s).
     # See core/middleware/profile_passthrough.py.
     'core.middleware.profile_passthrough.ProfilePassthroughMiddleware',
-    # django-axes (S-9) — MUST be last: it wraps the auth flow and returns the
+    # django-axes — MUST be last: it wraps the auth flow and returns the
     # lockout response. Needs request.user, so it sits after AuthenticationMiddleware.
     'axes.middleware.AxesMiddleware',
 ]
@@ -238,7 +237,7 @@ TEMPLATES = [
     },
 ]
 
-# Reject framing by other origins. Per plan §2.3 (A05). Was 'ALLOWALL', a
+# Reject framing by other origins (OWASP A05). Was 'ALLOWALL', a
 # clickjacking risk. Switch to 'SAMEORIGIN' if any first-party iframe surface
 # turns up; otherwise leave as DENY.
 X_FRAME_OPTIONS = 'DENY'
@@ -356,8 +355,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Argon2 is the modern Django-recommended hasher; PBKDF2 stays second so
 # existing hashes still verify. Django automatically re-hashes a user's
-# password to the first hasher on their next successful login. Per plan §2.3
-# (A02). Requires ``argon2-cffi`` (already pulled in transitively by other
+# password to the first hasher on their next successful login (OWASP A02).
+# Requires ``argon2-cffi`` (already pulled in transitively by other
 # packages; explicit pin is in requirements.txt).
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -429,7 +428,7 @@ REST_FRAMEWORK = {
     'DEFAULT_TOKEN_CLASSES': (
         'CoreRoot.settings.get_token_serializer',
     ),
-    # Throttle RATES only (fixes S-9, API side). The throttle CLASSES are applied
+    # Throttle RATES only. The throttle CLASSES are applied
     # per-view via core.api.base.V1ViewMixin (user/anon) and opt-in classes
     # (LiveOddsRateThrottle, AuthSensitiveRateThrottle) — NOT globally, so the
     # legacy /api/ endpoints' behavior is unchanged until they migrate. Counters
@@ -451,7 +450,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # ---------------------------------------------------------------------------
-# django-axes (S-9) — brute-force / credential-stuffing brake on the
+# django-axes — brute-force / credential-stuffing brake on the
 # server-rendered auth views (login + admin login). Locks the (IP, username)
 # pair after AXES_FAILURE_LIMIT failures for AXES_COOLOFF_TIME, then auto-clears.
 # The v1 JSON API is throttled separately (core/api/throttling.py).
@@ -572,7 +571,7 @@ AGG_IMG_ORIGIN = (
     or os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001").strip()
 )
 
-# Content-Security-Policy (S-7) — django-csp, ENFORCED.
+# Content-Security-Policy — django-csp, ENFORCED.
 #
 # All scripts/styles/fonts/images are self-hosted (Bootstrap, bootstrap-icons,
 # Alpine CSP build, Chart.js, Inter all vendored), and the portal/public surface
@@ -874,11 +873,11 @@ JAZZMIN_SETTINGS = {
 
 
 # ---------------------------------------------------------------------------
-# Aggregator integration (plan §7.4 cutover)
+# Aggregator integration
 #
-# Phase 2 (dual-write): leave USE_AGGRIGATOR=False; both pipelines run.
-# Phase 3 (cutover):    flip USE_AGGRIGATOR=True; legacy crons disabled.
-# Phase 4 (cleanup):    remove the dead SGO ingestion code from this repo.
+# Dual-write: leave USE_AGGRIGATOR=False; both pipelines run.
+# Cutover:    flip USE_AGGRIGATOR=True; legacy crons disabled.
+# Cleanup:    remove the dead SGO ingestion code from this repo.
 #
 # Read endpoints on the aggregator are public — no auth needed on the
 # outbound HTTP client. AGGRIGATOR_WEBHOOK_SECRET is the HMAC signing secret
@@ -888,7 +887,7 @@ JAZZMIN_SETTINGS = {
 
 USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "true", "yes")
 
-# Admin 2FA enforcement (plan §7.3 item 9 phase 1). When true, the Django
+# Admin 2FA enforcement. When true, the Django
 # admin uses OTPAdminSite — staff must enter a TOTP code at login, and a
 # user with NO enrolled device cannot log in to admin at all. Rollout order
 # matters (same transitional-flag pattern as AGG_REQUIRE_KEY_FOR_READS):
@@ -898,14 +897,14 @@ USE_AGGRIGATOR = os.environ.get("USE_AGGRIGATOR", "False").lower() in ("1", "tru
 #   3. set ADMIN_REQUIRE_OTP=true and redeploy.
 ADMIN_REQUIRE_OTP = os.environ.get("ADMIN_REQUIRE_OTP", "").strip().lower() in ("1", "true", "yes", "on")
 
-# Label shown in authenticator apps for enrolled TOTP devices (phase 15).
+# Label shown in authenticator apps for enrolled TOTP devices.
 # django_otp reads this for the otpauth:// issuer field.
 OTP_TOTP_ISSUER = os.environ.get("OTP_TOTP_ISSUER", "Paradise Sports")
 AGGRIGATOR_BASE_URL = os.environ.get("AGGRIGATOR_BASE_URL", "http://localhost:8001")
 AGGRIGATOR_WEBHOOK_SECRET = os.environ.get("AGGRIGATOR_WEBHOOK_SECRET", "")
 
-# Single service-tenant key for ALL outbound aggregator calls (plan §6.4,
-# roadmap Phase 2). Minted once by the aggregator's
+# Single service-tenant key for ALL outbound aggregator calls.
+# Minted once by the aggregator's
 # scripts/provision_service_tenant.py; per-user keys are no longer issued
 # or stored. Per-user data calls (bets) assert the acting user via
 # X-Acting-User: <User.public_id> — only this key may assert.
@@ -914,7 +913,7 @@ AGGRIGATOR_SERVICE_KEY = os.environ.get("AGGRIGATOR_SERVICE_KEY", "").strip()
 # HMAC secret for the OUTBOUND Paradise channel (MDProject → aggrigator
 # /v1/internal/*). Same value as the aggrigator's AGG_PARADISE_SECRET.
 # Separate from AGGRIGATOR_WEBHOOK_SECRET on purpose — opposite
-# directions, separate trust scopes. See subscription-plan/07-security.md.
+# directions, separate trust scopes.
 PARADISE_SECRET = os.environ.get("PARADISE_SECRET", "")
 
 # ---------------------------------------------------------------------------
@@ -951,16 +950,15 @@ if _raw_platform_cost:
 else:
     PLATFORM_COST_CENTS = None
 
-# (Phase 16 / D-16d removed the ANALYTICS_FREE_FOR_ALL kill switch + fake
-# paywall. The analytics dashboard is free; billing uses normal Stripe gating,
-# and PRO gating is reserved for opponent scouting — Phase 9.)
+# (The ANALYTICS_FREE_FOR_ALL kill switch + fake paywall were removed.
+# The analytics dashboard is free; billing uses normal Stripe gating,
+# and PRO gating is reserved for opponent scouting.)
 
-# Pick-email coalescing window (plan §7.1 #5): the first pick in a match
+# Pick-email coalescing window: the first pick in a match
 # queues a summary email this many seconds out; further picks inside the
 # window are absorbed into that one send.
 PICK_EMAIL_DEBOUNCE_SECONDS = int(os.environ.get("PICK_EMAIL_DEBOUNCE_SECONDS", "180"))
-# "Match settles tonight" one-shot fires this many hours before end_date
-# (plan Phase 7 #3).
+# "Match settles tonight" one-shot fires this many hours before end_date.
 MATCH_SETTLES_SOON_HOURS = int(os.environ.get("MATCH_SETTLES_SOON_HOURS", "6"))
 
 # Fail fast in production if aggregator is enabled but the webhook secret

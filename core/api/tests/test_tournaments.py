@@ -1,4 +1,4 @@
-"""Phase 3: /api/v1/tournaments/ security + behavior (S-16).
+"""/api/v1/tournaments/ security + behavior.
 
 List/detail and the nested rounds action are participant-scoped
 (non-participant -> 404). Each endpoint ships a cross-user denial, a list-scope

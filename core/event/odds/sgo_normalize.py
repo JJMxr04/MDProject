@@ -7,12 +7,12 @@ Stage 1 (this file): pure functions that take an SGO event payload and produce
 ``EventSpec`` / ``MarketSpec`` / ``SelectionSpec`` / ``BookmakerQuoteSpec``
 dataclasses describing what *would* be written.
 
-Stage 2 (Phase 3): a sibling ``ingest_sgo`` that takes those specs and runs
+Stage 2: a sibling ``ingest_sgo`` that takes those specs and runs
 ``Selection.objects.update_or_create(...)`` etc. against the new Django models.
 
 Keeping the pure layer separate means:
 - We can exercise the pipeline today against ``/Users/joem/dev/sports-scores``
-  fixtures (the simulator) before Phase 2 lands the model migrations.
+  fixtures (the simulator) before the model migrations land.
 - The conversion rules — type generation, line extraction, side classification —
   are unit-testable without a database.
 """
@@ -540,7 +540,7 @@ def build_market_id(
     Format: ``"{event_id}-{kind}-{scope_slug}[-{stat_id}][-{stat_entity_id}][-{line}][-{side_lower}]"``.
     Example: ``"mXCZTRJnbX8ib64z1h3D-ou-ft-points-all-44_5"``.
 
-    Per plan §7.7 #3: ``statID`` and ``statEntityID`` are now *always* in the
+    ``statID`` and ``statEntityID`` are now *always* in the
     id when present, not just when ``side_marker`` happens to be set. Two
     distinct groups like ``(points, 1h, eo, home)`` vs ``(points, 1h, eo, away)``
     used to collide on ``"-eo-h1"``; they now produce

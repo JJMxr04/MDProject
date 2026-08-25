@@ -1,4 +1,4 @@
-"""Duel challenge UI + send endpoint (phase 14).
+"""Duel challenge UI + send endpoint.
 
 - ``duels_page_view`` renders the duel hub: a "Create duel" modal (the
   duel-builder island), incoming challenges to accept/decline, and the user's
@@ -52,7 +52,7 @@ def duels_page_view(request):
         duels.finished_duels(user), DUEL_PAGE_SIZE,
     ).get_page(request.GET.get("fpage"))
 
-    # Scout the challenger before accepting (phase 9). PRO gets a card per
+    # Scout the challenger before accepting. PRO gets a card per
     # incoming challenge; FREE gets one upsell for the section (not one per
     # row) + a single paywall_viewed signal.
     from core.billing.entitlement import user_can_access_analytics

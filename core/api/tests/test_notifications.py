@@ -1,4 +1,4 @@
-"""Phase 1 pilot: /api/v1/notifications/ security + behavior (plan 07/10).
+"""/api/v1/notifications/ security + behavior.
 
 Covers the binding negative test ("User B → 404 for User A's object"),
 list-scope, the unread badge count, and the read/clear lifecycle: reading or

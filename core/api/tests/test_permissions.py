@@ -1,8 +1,8 @@
 """Unit tests for the v1 IsPaid permission.
 
 Mirrors the @require_paid entitlement gate: entitled subscription allows,
-non-entitled denies. (Phase 16/D-16d removed the ANALYTICS_FREE_FOR_ALL kill
-switch; IsPaid is now the PRO gate for opponent scouting — Phase 9.)
+non-entitled denies. (The ANALYTICS_FREE_FOR_ALL kill
+switch was removed; IsPaid is now the PRO gate for opponent scouting.)
 """
 
 from __future__ import annotations

@@ -127,7 +127,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     )
     friend_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
-    # --- Pick of the Day streaks (plan Phase 6). Streak = consecutive
+    # --- Pick of the Day streaks. Streak = consecutive
     # product days (NY calendar) with a pick — advanced/reset inside
     # DailyPickManager.record_pick, never recomputed from history.
     potd_current_streak = models.PositiveIntegerField(default=0)
@@ -141,7 +141,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     # unsubscribe link in every engagement email (core.mail.unsubscribe).
     email_notifications = models.BooleanField(default=True)
 
-    # --- Billing / Aggrigator integration (see subscription-plan/02-data-model.md §"core_user.User additions"). ---
+    # --- Billing / Aggrigator integration ---
     # Stripe Customer object id (``cus_...``). Captured from the
     # checkout.session.completed webhook on first paid checkout; empty
     # for users who never upgraded.
@@ -151,7 +151,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     # the aggrigator's ``tenant_user.external_user_id`` column (which is
     # this User's ``public_id``).
     aggrigator_external_id = models.UUIDField(null=True, blank=True, unique=True)
-    # LEGACY since the service-key cutover (plan §6.4, roadmap Phase 2):
+    # LEGACY since the service-key cutover:
     # outbound auth now rides the single AGGRIGATOR_SERVICE_KEY setting and
     # nothing in the request path reads or writes this field anymore. Kept
     # (a) to avoid a migration on a hot table, (b) as the storage slot for
@@ -159,7 +159,7 @@ class User(AbstractBaseUser, AbstractModel, PermissionsMixin):
     # escape hatch. Safe to drop in a later cleanup migration.
     aggrigator_api_key = models.CharField(max_length=80, blank=True, default='')
 
-    # --- Matchup avatar tints (matchup-colors-mobile design §7). Users pick
+    # --- Matchup avatar tints. Users pick
     # their own home + away colors; their avatar in a match-detail hero uses
     # the color for the side they're on. NULL → template/CSS fall back to the
     # standard brand-blue (home) / state-danger (away). max_length=9 mirrors

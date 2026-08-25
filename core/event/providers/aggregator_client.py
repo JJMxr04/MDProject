@@ -1,7 +1,7 @@
 """Outbound HTTP client used by MDProject to read from the aggregator.
 
 The Django portal previously read events/bookmakers/markets/odds out of its
-local DB. After the cutover (plan §7.4), it calls the aggregator instead for
+local DB. After the cutover, it calls the aggregator instead for
 *new-event discovery* — already-selected events stay local. This module
 implements the same surface as the legacy ``SportsGameOddsClient`` so the
 ``providers/__init__.py`` factory can swap to it in a single line.
@@ -121,8 +121,8 @@ class AggrigatorClient:
         self.timeout = timeout
         self.session = requests.Session()
 
-        # Authenticate every read with the single service-tenant key
-        # (roadmap Phase 2). Settings is the source of truth; fall back to
+        # Authenticate every read with the single service-tenant key.
+        # Settings is the source of truth; fall back to
         # the OS env only when settings is empty. Mirrors the portal client.
         from django.conf import settings
 

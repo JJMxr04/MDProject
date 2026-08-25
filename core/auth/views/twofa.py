@@ -1,6 +1,6 @@
-"""Self-service 2FA: enrollment, recovery, and the login second-step (phase 15).
+"""Self-service 2FA: enrollment, recovery, and the login second-step.
 
-Two entry points share one flow (D-15a): the portal Security rail and the
+Two entry points share one flow: the portal Security rail and the
 admin "set up 2FA" banner both link to ``2fa-setup``. Staff are portal users —
 one flow, two doors.
 

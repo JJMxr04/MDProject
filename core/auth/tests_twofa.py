@@ -1,4 +1,4 @@
-"""Phase 15 — self-service 2FA: enrollment, login second-step, recovery.
+"""Self-service 2FA: enrollment, login second-step, recovery.
 
 Covers the security-critical paths: a confirmed device demands a code at the
 next login (password alone no longer works), backup codes are single-use,
@@ -228,7 +228,7 @@ class JwtBypassClosedTests(TestCase):
     def test_no_password_only_jwt_obtain_route_is_exposed(self):
         """A routed SimpleJWT token-obtain (or the legacy LoginViewSet) would
         let an enrolled user trade password→JWT and skip 2FA entirely. Assert
-        none is wired (phase 15 §5: closed by absence)."""
+        none is wired (closed by absence)."""
         from django.urls import get_resolver
         from rest_framework_simplejwt.views import TokenViewBase
 

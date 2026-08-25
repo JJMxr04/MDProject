@@ -4,8 +4,7 @@
 # odds API: TeamScoreSerializer, SportCron, TeamCron, Sport.objects.get_by_key,
 # Event.objects.get_event_state, the Match.player_*_game_N FK shape, and
 # Game.objects.update_by_id. Every one of those was deleted across the
-# api-switch refactors (refactor-plan.md, odds-system-plan.md,
-# game-match-audit-plan.md) and there are no live callers — see the fully
+# api-switch refactors and there are no live callers — see the fully
 # commented-out core/tournament/tests.py.
 #
 # Re-enable the imports below only after rewriting Support.py + the

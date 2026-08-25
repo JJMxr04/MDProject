@@ -104,7 +104,7 @@ def activate_season(season: Season) -> None:
 
 
 def _standings_key(p: SeasonParticipation):
-    # Season points first; tiebreakers win rate → wins → fewer games (D-8).
+    # Season points first; tiebreakers win rate → wins → fewer games.
     return (-p.season_points, -p.win_rate, -p.wins, p.games_played)
 
 

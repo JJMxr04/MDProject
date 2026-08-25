@@ -10,9 +10,8 @@ package) so MDProject doesn't take a Python-level dependency on the
 aggrigator codebase. The receiver's verify side does the work; we just
 need to produce bytes-identical signatures.
 
-See ``subscription-plan/04-internal-api.md`` for the contract and
-``07-security.md`` for the threat model (timestamp window blocks replay,
-constant-time compare blocks timing oracle).
+The threat model: timestamp window blocks replay,
+constant-time compare blocks timing oracle.
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 """Procrastinate tasks (post-Celery cutover).
 
-Event ingestion, odds refresh, and settlement moved to the aggregator service
-(see ``aggrigator-plan/plan/plan.md`` §7.1). This module now only carries the
+Event ingestion, odds refresh, and settlement moved to the aggregator service.
+This module now only carries the
 match/tournament tasks MDProject still owns.
 
 Removed in the aggregator cutover:
@@ -17,7 +17,7 @@ Removed in the Procrastinate cutover:
 The legacy SGO ingestion modules (``core.event.sportsgameodds``,
 ``core.event.crons.eventUpdate``, ``core.event.odds.sgo_*``,
 ``core.event.odds.service``, ``core.event.odds.settlement``) remain on disk
-during the dual-write phase (plan §9 phase 2). Phase 4 cleanup deletes them.
+during the dual-write phase. A later cleanup pass deletes them.
 """
 
 from __future__ import annotations
@@ -74,7 +74,7 @@ def tournament_cron_2_day_reminder(timestamp: int):
 @app.periodic(cron="0 0 * * *")
 @app.task(name="core.crons.expire_invites_cron", queue="default", retry=CRON_RETRY)
 def expire_invites_cron(timestamp: int):
-    """Flip overdue ``sent`` invites to ``expired`` (plan Phase 4 §2).
+    """Flip overdue ``sent`` invites to ``expired``.
 
     The accept path also checks expiry lazily, so this is list-view
     bookkeeping, not the correctness gate — a missed run can't let a stale
@@ -87,7 +87,7 @@ def expire_invites_cron(timestamp: int):
         logger.info("expire_invites_cron: flipped %d invites to expired", flipped)
 
 
-# Season lifecycle (roadmap Phase 8): close ended seasons (freeze final_rank,
+# Season lifecycle: close ended seasons (freeze final_rank,
 # award badges + finish bonuses, apply promotion/relegation), activate the next
 # DRAFT, warn when none is scheduled. Daily at midnight NY like the rest.
 @app.periodic(cron="0 0 * * *")
@@ -126,7 +126,7 @@ def _purge_login_events_older_than(days: int) -> int:
 @app.periodic(cron="30 3 * * *")
 @app.task(name="core.crons.purge_login_events", queue="default", retry=CRON_RETRY)
 def purge_login_events(timestamp: int):
-    # 90-day retention on detailed login records (spec D-4). Runs 03:30 daily,
+    # 90-day retention on detailed login records. Runs 03:30 daily,
     # off-peak and clear of the midnight match/tournament crons.
     count = _purge_login_events_older_than(90)
     logger.info("purge_login_events: deleted %s rows", count)

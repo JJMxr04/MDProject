@@ -1,4 +1,4 @@
-"""django-axes brute-force lockout proof (S-9).
+"""django-axes brute-force lockout proof.
 
 Asserts that repeated failed logins on the server-rendered login view lock the
 (IP, username) pair, and that the lockout then blocks even a correct password

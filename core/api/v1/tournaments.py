@@ -1,4 +1,4 @@
-"""``/api/v1/tournaments/`` — participant-scoped tournament list/detail (S-16).
+"""``/api/v1/tournaments/`` — participant-scoped tournament list/detail.
 
 Every queryset is filtered to tournaments the requester is enrolled in
 (``players__player``), so a non-participant id 404s before any permission runs.

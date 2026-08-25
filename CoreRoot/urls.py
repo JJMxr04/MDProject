@@ -13,7 +13,7 @@ from core.event.views.webhooks.sportsgameodds import SportsGameOddsWebhookView
 from core.user.views.avatar import user_avatar as user_avatar_view
 from core.views import csp_report, healthz, portal_or_404, robots_txt
 
-# Admin 2FA (plan §7.3 item 9 phase 1): swap the admin site class so login
+# Admin 2FA: swap the admin site class so login
 # demands a TOTP code. Flag-gated — flipping it before staff have enrolled
 # devices locks everyone out of /admin (see ADMIN_REQUIRE_OTP in settings).
 if settings.ADMIN_REQUIRE_OTP:
@@ -27,11 +27,11 @@ urlpatterns = [
     path('admin/', include(('core.admin.urls', 'core-admin'), namespace='core-admin')),
     path('admin/', admin.site.urls),
     path('api/', include(('core.event.api_urls', 'core-event-api'), namespace='core-event-api')),
-    # Secure portal JSON surface for the Alpine islands (plan js-portal-security).
+    # Secure portal JSON surface for the Alpine islands.
     # Session-first auth, IsAuthenticated default, envelope + request_id, scoped
     # throttles — all bound via core.api.base.V1ViewMixin.
     path('api/v1/', include('core.api.urls')),
-    # Inbound webhook from the aggregator service (plan §4). HMAC-signed
+    # Inbound webhook from the aggregator service. HMAC-signed
     # payloads update Event/Market/Selection state and run the existing
     # match-completion / game-reopen hooks.
     path('sportgameodds/webhook', SportsGameOddsWebhookView.as_view(),
@@ -42,7 +42,7 @@ urlpatterns = [
     path('', include(('core.web.urls', 'core-web'), namespace='core-web')),
     path('auth/', include(('core.auth.urls', 'core-auth'), namespace='core-auth')),
     path("robots.txt", robots_txt, name="robots_txt"),
-    # CSP violation report sink (report-only phase of S-7).
+    # CSP violation report sink (report-only phase).
     path("csp-report/", csp_report, name="csp-report"),
     # Container health probe — Coolify / docker / k8s readiness check.
     path("healthz", healthz, name="healthz"),

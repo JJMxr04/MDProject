@@ -7,7 +7,7 @@
 # The body uses the old Match shape (player_1_game_N FKs) and the old pick API
 # (Game.objects.update_by_id, event_id as 32-char hex, player_choice as team
 # name). Both are gone — picks are now Game.objects.upload_pick(current_user=,
-# match=, event_id=int, selection_id=int) per game-match-audit-plan.md §5.1.
+# match=, event_id=int, selection_id=int).
 #
 # To revive: rewrite Support.py against the SofaScore client + new Selection-
 # based picks, regenerate fixtures with BigInt event ids, then update each

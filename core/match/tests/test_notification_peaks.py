@@ -1,4 +1,4 @@
-"""Phase 7 — notifications at emotional peaks, each firing exactly once.
+"""Notifications at emotional peaks, each firing exactly once.
 
 1. Golden-game picks route through the debounced (match, picker) summary.
 2. "Your golden pick hit" fires once across BOTH settlement paths (signal

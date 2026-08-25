@@ -1,4 +1,4 @@
-"""Pick-of-the-Day curation (plan Phase 6).
+"""Pick-of-the-Day curation.
 
 Nightly: choose the day's most prominent fixture from the aggregator
 catalog and mirror it locally. Heuristic = highest-profile league first
@@ -146,7 +146,8 @@ def curate_pick_of_day(date=None):
 
 
 def _schedule_closing_nudge(potd):
-    """One-shot 'closes in 2h' nudge (Phase 7 schedule_at pattern). The
+    """One-shot 'closes in 2h' nudge, using the same schedule_at pattern as
+    the other notification tasks. The
     queueing lock makes re-curation/re-runs idempotent."""
     from procrastinate import exceptions as procrastinate_exceptions
 

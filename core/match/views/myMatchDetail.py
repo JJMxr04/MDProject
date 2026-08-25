@@ -46,7 +46,7 @@ def my_match_detail_view(request, match_id):
     ]
 
     # Catalog of pickable events for this match's window. Source-of-truth is
-    # the aggregator (when USE_AGGRIGATOR=True) — see plan §2.4.2 and
+    # the aggregator (when USE_AGGRIGATOR=True) — see
     # core/match/views/available_events.py for the proxy + cache layer.
     from core.match.views.available_events import build_available_events
     events_ser = build_available_events(match)
@@ -93,7 +93,7 @@ def my_match_detail_view(request, match_id):
     ):
         _g.fixture = fixture_from_event(_g.event)
 
-    # Rank flair for the match header (phase 8) — level + current-season
+    # Rank flair for the match header — level + current-season
     # division for both players, one query each.
     from core.ranking.standings import divisions_for, levels_for
     p2_id = match.player_2_id
@@ -122,7 +122,7 @@ def my_match_detail_view(request, match_id):
     player_1_record = _record(_progs.get(match.player_1_id))
     player_2_record = _record(_progs.get(p2_id))
 
-    # Opponent scouting (phase 9) — the one PRO feature. From the viewer's POV
+    # Opponent scouting — the one PRO feature. From the viewer's POV
     # the opponent is the other player. PRO users get their tendencies; FREE
     # users get a teaser + upsell (and a paywall_viewed signal — the headline
     # willingness-to-pay metric now the fake paywall is gone).
@@ -212,7 +212,7 @@ def my_match_detail_view(request, match_id):
 @login_required(login_url='/auth/login/')
 @player_in_match_required
 def upload_pick(request, match_id):
-    """Pick-submit endpoint. After cutover (plan §2.4.3) the chain
+    """Pick-submit endpoint. After cutover, the chain
     (Sport→League→Team→Event→Market→Selection + per-book quotes) is fetched
     from the aggregator *first* — never trust the client's odds value — then
     ``Match.objects.upload_pick`` links the Selection to the user's empty
@@ -360,7 +360,7 @@ def player_2_select_outcome(request, game_id):
 @login_required(login_url='/auth/login/')
 @player_in_match_required
 def rematch_view(request, match_id):
-    """Rematch CTA (Phase 5 §5): two clicks from the completion screen to a
+    """Rematch CTA: two clicks from the completion screen to a
     pre-filled invite — same format, roles swapped (the clicker becomes the
     sender), normal accept flow from there.
     """
@@ -384,7 +384,7 @@ def rematch_view(request, match_id):
 
     opponent = match.player_2 if request.user == match.player_1 else match.player_1
 
-    # The CTA itself is the loop metric (Phase 3 taxonomy) — fire before
+    # The CTA itself is the loop metric — fire before
     # the idempotency check so repeat intent still counts.
     from core.metrics.models import track
     track(request.user, "rematch_clicked",

@@ -13,7 +13,7 @@ class Emails:
     @staticmethod
     def _match_url(match_id):
         """Absolute URL of the match detail page — result emails link it so
-        the rematch CTA (Phase 5 §5) is one click away."""
+        the rematch CTA is one click away."""
         if not match_id:
             return None
         from django.conf import settings
@@ -219,7 +219,7 @@ class Emails:
 
     @classmethod
     def send_duel_invite(cls, user, challenger_name, payload):
-        """Phase 14: ``challenger_name`` dares ``user`` to take the other side
+        """``challenger_name`` dares ``user`` to take the other side
         of a single game. Accepting locks ``user`` onto the opposite outcome."""
         payload = payload or {}
         subject = f"{challenger_name} challenged you to a duel"
@@ -236,8 +236,8 @@ class Emails:
 
     @classmethod
     def send_duel_result(cls, user, opponent_name, outcome, match_id=None):
-        """Phase 14: a duel settled. ``outcome`` is ``won`` / ``lost`` / ``draw``
-        (push/void → draw, D-14 #2). dedupe_key guards the bulk + signal
+        """A duel settled. ``outcome`` is ``won`` / ``lost`` / ``draw``
+        (push/void → draw). dedupe_key guards the bulk + signal
         settlement paths from double-sending."""
         subjects = {
             "won": f"You won your duel against {opponent_name} 🏆",
@@ -259,7 +259,7 @@ class Emails:
 
     @classmethod
     def send_season_started(cls, user, season_name):
-        """Phase 8: a new ranked season just opened — points reset, the race
+        """A new ranked season just opened — points reset, the race
         is back to zero."""
         subject = f"{season_name} has begun — a new season starts now"
         template_path = "ranking/seasonStarted.html"
@@ -283,7 +283,7 @@ class Emails:
     @classmethod
     def send_invite_declined(cls, user, decliner_name, invite_type):
         """Sender-side: the user who SENT the invite learns it was declined
-        (Phase 4 §2 — decline used to be silent). ``user`` is the sender."""
+        (decline used to be silent). ``user`` is the sender."""
         noun = "friend request" if invite_type == 'friend' else f"{invite_type} invite"
         subject = f"{decliner_name} declined your {noun}"
         template_path = "invite/inviteDeclined.html"
@@ -296,7 +296,7 @@ class Emails:
 
     @classmethod
     def send_golden_hit(cls, user, opponent_name, your_score, their_score, match_id=None):
-        """Peak #2 (plan Phase 7): the user's Golden Game pick settled WON —
+        """Peak #2: the user's Golden Game pick settled WON —
         the tiebreaker is theirs if the match ends level. Exactly-once is
         enforced upstream (Bet.golden_hit_notified_at claim); the dedupe key
         is belt-and-braces for concurrent deliveries."""
@@ -316,7 +316,7 @@ class Emails:
 
     @classmethod
     def send_match_settles_tonight(cls, user, opponent_name, match_id=None):
-        """Peak #3 (plan Phase 7): the match window closes in a few hours —
+        """Peak #3: the match window closes in a few hours —
         last call for picks and the result lands tonight."""
         subject = f"Your match with {opponent_name} settles tonight"
         template_path = "match/settlesTonight.html"
@@ -332,7 +332,7 @@ class Emails:
 
     @classmethod
     def send_potd_closing_nudge(cls, user, potd):
-        """Streak-protection nudge (plan Phase 6): the user picked yesterday
+        """Streak-protection nudge: the user picked yesterday
         and today's Pick of the Day locks in ~2 hours. One per (day, user) —
         the dedupe key guards re-runs of the nudge task."""
         home = getattr(potd.event.home_team, "name_medium", None) or "Home"
@@ -351,7 +351,7 @@ class Emails:
 
     @classmethod
     def send_signup_invite(cls, email, inviter_name, signup_url, format_label=None):
-        """Invite-to-non-user (Phase 4 §3). Transactional — the recipient
+        """Invite-to-non-user. Transactional — the recipient
         has no account (and no ``email_notifications`` preference), so this
         bypasses ``_notify`` like the waitlist mails do. Volume is capped by
         the create-invite rate budget upstream."""

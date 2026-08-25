@@ -1,4 +1,4 @@
-"""Phase 8 increment 1 — progression backbone: model validation + the
+"""Progression backbone: model validation + the
 points/XP/Elo crediting engine.
 """
 

@@ -1,4 +1,4 @@
-"""Phase 8 increment 4 — leaderboard standings + the page view."""
+"""Leaderboard standings + the page view."""
 
 from __future__ import annotations
 

@@ -7,8 +7,8 @@ path, so each match is credited exactly once. The ledger guard
 
 Three counters move together at one chokepoint: season points (if a season is
 active), career global points, and the XP ledger. Elo (seasonal + all-time)
-updates too but doesn't order any leaderboard v1. Duels are ladder-exempt
-(D-14 #4): XP only, no points, no rating, no W/L on the permanent track.
+updates too but doesn't order any leaderboard v1. Duels are ladder-exempt:
+XP only, no points, no rating, no W/L on the permanent track.
 """
 
 from __future__ import annotations
@@ -92,7 +92,7 @@ def record_match_result(match) -> None:
 def grant_duel_xp(match) -> None:
     """Duels are ladder-exempt: the winner gets a small XP award, nothing
     else (no points, no rating, no permanent W/L). Idempotent; draws award
-    nobody (D-14 #2)."""
+    nobody."""
     if match.winner_id is None:
         return
     if XpEvent.objects.filter(match=match, source=XpEvent.Source.DUEL_WON).exists():

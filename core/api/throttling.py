@@ -1,4 +1,4 @@
-"""Scoped throttles for the v1 surface (plan 03 — Throttling; fixes S-9 API side).
+"""Scoped throttles for the v1 surface.
 
 Rates live in ``settings.REST_FRAMEWORK['DEFAULT_THROTTLE_RATES']`` so they can be
 tuned per-environment without a code change:

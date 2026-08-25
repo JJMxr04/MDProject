@@ -1,4 +1,4 @@
-"""The Section 4 loop metrics, computed from ProductEvent rows.
+"""Loop metrics, computed from ProductEvent rows.
 
     python manage.py metrics_report [--days 14]
 
@@ -10,7 +10,7 @@ Three blocks:
      a ``session_start`` within 72h after completion. Matches completed
      less than 72h ago are excluded (their window is still open).
 
-plan.md Section 4: monetization tuning is pointless until ~30%+ of
+Monetization tuning is pointless until ~30%+ of
 testers return in week two — this is the instrument that tells us.
 """
 
@@ -28,7 +28,7 @@ RETURN_WINDOW = timedelta(hours=72)
 
 
 class Command(BaseCommand):
-    help = "D1/D7 retention, picks/user/week, both-players-return (plan Section 4)"
+    help = "D1/D7 retention, picks/user/week, both-players-return"
 
     def add_arguments(self, parser):
         parser.add_argument(

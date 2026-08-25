@@ -55,7 +55,7 @@ def analytics_upcoming_redirect(request):
 def _acting(request):
     """The aggregator-side identity for per-user data calls: User.public_id
     (= tenant_user.external_user_id). Shared-data calls don't need it —
-    the service key in the client covers auth (plan §6.4)."""
+    the service key in the client covers auth."""
     return request.user.public_id
 
 

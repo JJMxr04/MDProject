@@ -507,7 +507,7 @@ class UserAdmin(BaseUserAdmin):
     @method_decorator(require_POST)
     def reset_2fa_view(self, request, user_id: uuid.UUID):
         """Remove a user's TOTP + backup-code devices — the lost-device
-        recovery path (D-15b). Enrollment can't be done on a user's behalf
+        recovery path. Enrollment can't be done on a user's behalf
         (they must scan), so the admin capability is reset, not enable. Sends
         the user the standard 2FA-disabled security email."""
         if not request.user.is_staff:

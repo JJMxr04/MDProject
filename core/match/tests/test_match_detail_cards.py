@@ -23,7 +23,7 @@ from core.match.tests.factories import (
 
 
 class MatchHeaderLevelFlairTests(TestCase):
-    """Phase 8 polish — players carry a level chip on the match-detail header."""
+    """Players carry a level chip on the match-detail header."""
 
     def test_header_shows_opponent_level_chip(self):
         from core.ranking.models import PlayerProgress

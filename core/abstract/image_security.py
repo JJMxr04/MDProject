@@ -1,8 +1,7 @@
 """Single source of truth for hardening every image upload.
 
 Validate real bytes → cap size/pixels → re-encode to WEBP (drops polyglots,
-EXIF/GPS, ICC, comments) → callers store under a random UUID key. See
-plans/images and logos/security/plan/03-design.md.
+EXIF/GPS, ICC, comments) → callers store under a random UUID key.
 """
 
 from io import BytesIO

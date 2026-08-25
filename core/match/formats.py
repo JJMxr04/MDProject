@@ -1,11 +1,11 @@
-"""Match format presets (plan Phase 5, D-5).
+"""Match format presets.
 
 Replaces the old hardcodes (5 games / 1-week window in match.py). A format
 fixes the match shape at creation time — the invite carries it, accepting
-is consent, and there is no mid-match renegotiation (D-5 #4).
+is consent, and there is no mid-match renegotiation.
 
 Window and game count are per-player: every preset adds one shared Golden
-Game on top (the explicit tiebreaker, D-5 #1), so the minimum distinct
+Game on top (the explicit tiebreaker), so the minimum distinct
 events a window must offer is ``games_per_player + 1``.
 """
 
@@ -49,5 +49,5 @@ def games_per_player(fmt: str) -> int:
 
 
 def min_distinct_events(fmt: str) -> int:
-    """Fixture-availability bar (D-5 #2): regular slots + the Golden Game."""
+    """Fixture-availability bar: regular slots + the Golden Game."""
     return games_per_player(fmt) + 1

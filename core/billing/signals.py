@@ -6,11 +6,10 @@ Wired in via ``BillingConfig.ready()``.
    and create a FREE Subscription row. Failures here are non-fatal: the
    user still exists; the next analytics page hit (defensive call in
    ``@require_paid``) or a re-run of the backfill script will catch them.
-   See subscription-plan/04-internal-api.md §7a.
 
 2. **Plan post_save** — push the catalog row to Stripe (Product +
    Price). Empty stub here; the catalog sync ships in a follow-up
-   commit alongside the stripe-python install. See file 03 §2.
+   commit alongside the stripe-python install.
 """
 
 from __future__ import annotations
@@ -66,8 +65,8 @@ def provision_aggrigator_on_signup(sender, instance, created, **kwargs):
         logger.exception('failed to create FREE Subscription for %s', instance.pk)
 
     # Aggrigator mirror — only if integration is enabled. Creates the
-    # tenant USER row (per-user bet attribution, plan §6.4); since the
-    # service-key cutover (roadmap Phase 2) the per-user API key the
+    # tenant USER row (per-user bet attribution); since the
+    # service-key cutover the per-user API key the
     # provision endpoint returns is deliberately NOT stored — all
     # outbound auth rides the single service key in aggrigator_client.
     if not getattr(settings, 'USE_AGGRIGATOR', False):

@@ -1,4 +1,4 @@
-"""Tunable weights for the progression system (phase 8, D-8).
+"""Tunable weights for the progression system.
 
 Everything that decides "how much" lives here so re-tuning never needs a
 migration (``XpEvent.source`` is an enum, so the ledger replays cleanly). Three
@@ -15,7 +15,7 @@ signal for provisional placement and future features.
 
 from __future__ import annotations
 
-# --- format weighting (D-5 #3): longer commitment out-earns spam -----------
+# --- format weighting: longer commitment out-earns spam -----------
 # Mirrors the XP completion ratios (Blitz 50 : Classic 80 : Marathon 120).
 FORMAT_WEIGHT = {
     "BLITZ": 1.0,

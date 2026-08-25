@@ -95,7 +95,7 @@ a:hover { color: var(--brand-blue-bright); }
   border-top: 1px solid var(--border-strong);
 }
 
-/* Progression flair (phase 8): level chip + badge pills. */
+/* Progression flair: level chip + badge pills. */
 .lvl-chip {
   display: inline-flex; align-items: center;
   padding: 1px var(--space-2); border-radius: 999px;
@@ -713,7 +713,7 @@ a:hover { color: var(--brand-blue-bright); }
 .mt-6 { margin-top: var(--space-6) !important; }
 .mb-6 { margin-bottom: var(--space-6) !important; }
 
-/* ── Opponent scouting card (phase 9) — reused on match detail, public
+/* ── Opponent scouting card — reused on match detail, public
    accept screen, and duel challenges. ─────────────────────────────────── */
 .scout-card { margin-bottom: var(--space-4); }
 .scout-card .card-ui__header { display: flex; align-items: center; justify-content: space-between; }

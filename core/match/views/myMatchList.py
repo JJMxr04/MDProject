@@ -65,7 +65,7 @@ def my_match_list_view(request):
 
     object_list = matches_page.object_list
 
-    # Rank flair (phase 8): level + current-season division for BOTH players —
+    # Rank flair: level + current-season division for BOTH players —
     # the mini now shows each side symmetrically, not just the opponent. One
     # query each for the whole page.
     player_ids = set()

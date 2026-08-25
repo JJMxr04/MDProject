@@ -1,11 +1,11 @@
-"""``/api/v1/matches/`` — participant-scoped match detail (S-15 family).
+"""``/api/v1/matches/`` — participant-scoped match detail.
 
 Every queryset is filtered to matches where the requester is ``player_1`` or
 ``player_2``, so a non-participant id 404s before any permission runs (existence
 not leaked). ``IsPlayerInMatch`` is declared as a belt-and-braces object check.
 
 Read-only list/detail. The old ``tiebreaker`` action (submit a total guess)
-was removed with D-5 #1 — the Golden Game pick IS the tiebreaker now; there
+was removed — the Golden Game pick IS the tiebreaker now; there
 is nothing extra to submit.
 """
 

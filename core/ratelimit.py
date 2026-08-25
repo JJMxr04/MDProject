@@ -4,7 +4,7 @@ The DRF surface gets throttling via ``core.api.throttling`` + ``V1ViewMixin``;
 the portal's function/class views (auth forms, invite creation) sit outside
 DRF and previously had none — an anonymous caller could submit the waitlist
 form (one outbound email per POST) or blast match/friend invites without
-limit (plan §7.5 item 3).
+limit.
 
 Counters live in the Django default cache (DatabaseCache) so the limits are
 shared across gunicorn workers and replicas, same as the DRF throttles.

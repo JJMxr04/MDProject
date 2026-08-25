@@ -66,7 +66,7 @@ def send_email(subject, recipient, template_path, context):
             **(context or {}),
         }
         # Render inside the recipient's timezone/clock so every |usertime in
-        # the template localizes to them (spec §5 — emails are in scope).
+        # the template localizes to them (emails are in scope).
         with recipient_time_context(recipient):
             html_content = render_to_string(template_path, ctx)
         text_content = strip_tags(html_content)

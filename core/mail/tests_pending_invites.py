@@ -1,4 +1,4 @@
-"""Tests for PendingInvite (invite-to-non-user, plan Phase 4 §3, D-4b).
+"""Tests for PendingInvite (invite-to-non-user).
 
 Covers:
 - Manager: create_pending idempotency (per inviter+email, within the

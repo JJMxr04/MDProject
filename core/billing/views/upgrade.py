@@ -35,7 +35,7 @@ def upgrade_page(request):
         "subscription": sub,
         # Show different CTA copy if the user previously had a paid sub
         # (so we don't say "Start free trial" to someone who already
-        # consumed theirs — file 06 §5).
+        # consumed theirs).
         "had_prior_paid_sub": _had_prior_paid_sub(request.user),
         # A payer stranded on FREE gets a "refresh" banner instead of being
         # nudged to check out (and pay) a second time.

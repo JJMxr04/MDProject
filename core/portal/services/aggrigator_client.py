@@ -5,7 +5,7 @@ list — never raises on transport failure; on error returns an empty
 shape and logs the cause. Portal templates render an empty-state when
 the result is empty, so a flaky aggrigator never blanks the page.
 
-Auth (plan §6.4, roadmap Phase 2): every call carries the single
+Auth: every call carries the single
 service-tenant key (``settings.AGGRIGATOR_SERVICE_KEY``); the aggregator
 authenticates the *service*, not the subscriber — tier gating lives in
 MDProject's ``@require_paid``. Per-user data (bets) additionally asserts
@@ -398,7 +398,6 @@ def event_detail(event_id: str) -> dict:
     teams / scores / status. Pairs with probabilities + best-prices for
     the Tonight detail panel.
 
-    No tenant key required — /v1/events/{id} is intentionally public
-    (see subscription-plan/05-access-control.md §3)."""
+    No tenant key required — /v1/events/{id} is intentionally public."""
     body = _get(f"/v1/events/{event_id}")
     return body if isinstance(body, dict) else {}

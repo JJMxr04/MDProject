@@ -103,7 +103,7 @@ class Bet(AbstractModel):
     player_2_picked_at = models.DateTimeField(null=True, blank=True)
 
     # Golden Game only: stamped when the "your golden pick hit" peak
-    # notification fired (plan Phase 7 #2). The atomic claim on this column
+    # notification fired. The atomic claim on this column
     # is the exactly-once guard — settlement replays / re-saves / the bulk
     # path re-walking the event can't re-fire it.
     golden_hit_notified_at = models.DateTimeField(null=True, blank=True)

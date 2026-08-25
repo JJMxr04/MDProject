@@ -1,7 +1,7 @@
 """SportsGameOdds oddID taxonomy.
 
-An SGO oddID decomposes as ``"{statID}-{statEntityID}-{periodID}-{betTypeID}-{sideID}"``
-(see ``api-switch/sports_game/odds-system-plan.md``). This module provides the
+An SGO oddID decomposes as ``"{statID}-{statEntityID}-{periodID}-{betTypeID}-{sideID}"``.
+This module provides the
 splitter plus the three small lookup tables that map SGO components onto our
 existing ``MarketCategory`` / ``MarketScope`` / ``SelectionType`` enums.
 

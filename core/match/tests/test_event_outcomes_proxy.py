@@ -1,4 +1,4 @@
-"""Tests for the ``event_outcomes`` proxy view (plan §2.4.2)."""
+"""Tests for the ``event_outcomes`` proxy view."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ class EventOutcomesProxyTests(TestCase):
 
     def test_url_pattern_accepts_string_event_id(self):
         # Pre-fix this URL was <int:event_id> and would 404 alphanumeric
-        # SGO eventIDs (plan §7.7 #1). The view should resolve.
+        # SGO eventIDs. The view should resolve.
         from django.urls import resolve
         match = resolve(self.url)
         self.assertEqual(match.kwargs["event_id"], self.event_id)

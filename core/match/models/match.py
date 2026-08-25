@@ -39,10 +39,10 @@ class MatchManager(AbstractManager):
     def create_match(self, player_1, player_2=None, start_date=None,
                      match_type="public", match_format=None):
         """Create a match in the given format (BLITZ/CLASSIC/MARATHON —
-        D-5 #4: fixed at creation, no renegotiation).
+        fixed at creation, no renegotiation).
 
         Raises ``FixtureUnavailable`` when the format's window holds fewer
-        distinct pickable events than the format needs (D-5 #2), and
+        distinct pickable events than the format needs, and
         ``GoldenGameUnavailable`` when the Golden Game can't seed — either
         way nothing is written.
 
@@ -56,7 +56,7 @@ class MatchManager(AbstractManager):
         end_date = start_date + formats.format_window(match_format)
         from core.metrics.models import track
 
-        # Fixture-availability gate (D-5 #2) — applies to both branches.
+        # Fixture-availability gate — applies to both branches.
         Game.objects.assert_window_viable(
             match_format=match_format, window_end=end_date,
         )
@@ -106,7 +106,7 @@ class MatchManager(AbstractManager):
         match.match_state = "accepted"
         match.player_2 = player_2
         # The window restarts at accept — its length comes from the format
-        # fixed at creation (D-5 #4).
+        # fixed at creation.
         match.end_date = timezone.now() + formats.format_window(match.format)
 
         for slot in range(1, match.games_per_player + 1):
@@ -123,7 +123,7 @@ class MatchManager(AbstractManager):
         match.tiebreaker = TieBreaker.objects.create(golden_game=golden_game)
         match.save()
 
-        # "Settles tonight" one-shot (plan Phase 7 #3) — deferred inside
+        # "Settles tonight" one-shot — deferred inside
         # this transaction so a rolled-back accept schedules nothing.
         from core.match.tasks import schedule_settles_tonight
         schedule_settles_tonight(match)
@@ -149,7 +149,7 @@ class MatchManager(AbstractManager):
 
     @transaction.atomic
     def create_duel(self, invite):
-        """Build the degenerate match for an accepted duel invite (phase 14).
+        """Build the degenerate match for an accepted duel invite.
 
         A duel is one Game (slot 1, owner = challenger, not golden) whose Bet
         already holds BOTH sides: the challenger's selection and the other
@@ -296,7 +296,7 @@ class MatchManager(AbstractManager):
             format=match.format,
         )
 
-        # Progression credit (phase 8): points / XP / Elo, exactly once. Runs
+        # Progression credit: points / XP / Elo, exactly once. Runs
         # inside the row-locked completion path. Never break completion on a
         # ranking bug.
         try:
@@ -366,11 +366,11 @@ class MatchManager(AbstractManager):
     # ------------------------------------------------------------- duels
 
     def _complete_duel_if_ready(self, match):
-        """Finalize a duel once its deciding market has settled (phase 14).
+        """Finalize a duel once its deciding market has settled.
 
         The single Bet holds both sides in one two-way market, so the sides
         settle together. Winner = whichever side's selection WON; PUSH / VOID /
-        postponed (neither WON) completes as a draw (``winner=None``, D-14 #2).
+        postponed (neither WON) completes as a draw (``winner=None``).
         Stays open while the selections are still PENDING.
         """
         game = (
@@ -402,7 +402,7 @@ class MatchManager(AbstractManager):
 
         self._notify_duel_result(match)
 
-        # Ladder-exempt (D-14 #4): winner gets a small XP award only — no
+        # Ladder-exempt: winner gets a small XP award only — no
         # points, no rating. Draws award nobody.
         try:
             from core.ranking.engine import grant_duel_xp
@@ -463,7 +463,7 @@ class Match(AbstractModel):
     match_state = models.CharField(max_length=10, default="created")
     match_type = models.CharField(max_length=10, default="public")
 
-    # Format preset fixed at creation (D-5 #4) — window length and game
+    # Format preset fixed at creation — window length and game
     # count derive from it (core.match.formats). Pre-format matches were
     # all the 5-games/7-day shape, i.e. exactly MARATHON.
     format = models.CharField(

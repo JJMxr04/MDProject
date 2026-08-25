@@ -805,7 +805,7 @@ document.addEventListener('DOMContentLoaded', PickModal.init);
 function openUploadPopup()           { PickModal.openForUpload(); }
 function openGamePopupById(gameId)   { PickModal.openForGame(gameId); }
 
-/* ── Rematch (Phase 5 §5): same format, roles swapped ─────────────── */
+/* ── Rematch: same format, roles swapped ─────────────── */
 function sendRematch(el) {
     el.disabled = true;
     fetch(el.dataset.url, {

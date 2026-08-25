@@ -1,4 +1,4 @@
-"""Phase 8 increment 2 — season lifecycle: close, freeze ranks, badges +
+"""Season lifecycle: close, freeze ranks, badges +
 finish bonuses, promotion/relegation, activation, missing-season warning.
 """
 

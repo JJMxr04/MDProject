@@ -1,4 +1,4 @@
-"""Procrastinate tasks for Pick of the Day (plan Phase 6).
+"""Procrastinate tasks for Pick of the Day.
 
 Auto-discovered via procrastinate's Django integration (installed-app
 ``tasks.py``), same as core.mail.tasks / core.game.tasks.
@@ -47,7 +47,7 @@ def sync_results_cron(timestamp: int):
     if changed:
         logger.info("PotD results synced: %d picks settled", changed)
 
-    # Credit newly-WON picks with season/global points + XP (phase 8). Runs
+    # Credit newly-WON picks with season/global points + XP. Runs
     # after the bulk result sync (which skips signals); idempotent per pick.
     try:
         from core.ranking.engine import credit_settled_potd

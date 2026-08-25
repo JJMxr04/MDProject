@@ -1,7 +1,7 @@
 """Debounced Procrastinate deferral — at most one queued job per lock key.
 
 The coalescing primitive behind "your opponent made N picks" summaries
-(plan §7.1 #5) and the Phase 7 notification peaks: callers fire it on
+and the notification peaks: callers fire it on
 every triggering action, but while a job holding the same queueing lock
 is still waiting to run, repeat defers are dropped. The one queued job
 runs after ``delay_seconds`` and reads current state, so it naturally

@@ -1,5 +1,5 @@
 """Tests for ``ensure_chain_from_aggregator`` — the get-or-create chain
-builder used by the pick-submit views (plan §2.4.3).
+builder used by the pick-submit views.
 
 Stubs the aggregator client; we only care about the local DB writes.
 """

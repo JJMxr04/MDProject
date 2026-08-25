@@ -5,12 +5,11 @@ Exists instead of a one-liner on ``Subscription`` because
 ``Subscription.DoesNotExist`` (only ``AttributeError``). Centralizing the
 access protects every caller from that latent 500.
 
-Phase 16 (D-16d) removed the platform-wide ``ANALYTICS_FREE_FOR_ALL`` kill
-switch and made the analytics dashboard free; this check now reflects the
-real Stripe entitlement only, and the PRO-gated surface is opponent scouting
-(Phase 9). The name is kept for now; generalize to ``is_pro`` /
-``plan.features`` when a second gated feature lands (subscription-plan
-open-questions §6).
+The platform-wide ``ANALYTICS_FREE_FOR_ALL`` kill
+switch was removed and the analytics dashboard is now free; this check now reflects the
+real Stripe entitlement only, and the PRO-gated surface is opponent scouting.
+The name is kept for now; generalize to ``is_pro`` /
+``plan.features`` when a second gated feature lands.
 
 The ``Subscription.is_entitled_to_analytics`` property remains for templates
 and code that already has a ``Subscription`` instance in hand.

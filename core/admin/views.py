@@ -127,7 +127,7 @@ def backfill_logos(request):
 @staff_member_required
 @require_http_methods(["POST"])
 def sync_team_data(request):
-    """Enqueue a full team-data sync from the aggregator (design §5).
+    """Enqueue a full team-data sync from the aggregator.
 
     Defers ``sync_team_data_task`` onto the Procrastinate queue — the worker
     pages through the aggregator's /v1/teams and overwrites names + colors +

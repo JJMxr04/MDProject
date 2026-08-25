@@ -1,6 +1,6 @@
 """/api/v1/analytics/events/<id>/ — event analytics (free, auth-only).
 
-Phase 16 (D-16d) made the analytics dashboard free: this endpoint requires
+The analytics dashboard is free: this endpoint requires
 auth (anon -> 401) but no PRO entitlement (any authenticated user -> 200).
 The aggregator helpers are patched so every test is hermetic.
 """
@@ -57,7 +57,7 @@ class EventAnalyticsApiTests(V1APITestCase):
         self.assert_error_envelope(resp, code="not_authenticated")
 
     def test_authenticated_returns_200_no_subscription_needed(self):
-        # Analytics is free (D-16d): any authenticated user, no sub, gets 200.
+        # Analytics is free: any authenticated user, no sub, gets 200.
         self.client.force_authenticate(self.user)
         with _stub_aggrigator():
             resp = self.client.get(self.url)

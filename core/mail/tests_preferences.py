@@ -1,4 +1,4 @@
-"""Email preference + unsubscribe tests (plan §7.5 item 4).
+"""Email preference + unsubscribe tests.
 
 Engagement emails route through ``Emails._notify``: in-app Notification
 always writes (unless the caller passes ``in_app=False``, as the invite

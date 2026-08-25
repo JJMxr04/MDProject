@@ -1,5 +1,5 @@
 """Sync team display data (names + colors + stat_entity_id) from the
-aggregator into MDProject's Team rows (design §4).
+aggregator into MDProject's Team rows.
 
 Update-only: a team present upstream but absent locally is skipped (it
 enters via the event webhook, then later syncs refresh it). Full overwrite

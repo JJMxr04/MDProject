@@ -39,7 +39,7 @@ def custom_admin_view(request):
         'worker_status': get_worker_status(),
         'checked_at': timezone.localtime(),
         # Nudge staff to self-enroll in 2FA so ADMIN_REQUIRE_OTP can be flipped
-        # without hand-walking each admin through the raw device model (phase 15).
+        # without hand-walking each admin through the raw device model.
         'needs_2fa_setup': not twofa.has_2fa(request.user),
     }
     return TemplateResponse(request, "admin/dashboard/dashboard.html", context)
