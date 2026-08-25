@@ -6,7 +6,7 @@ front (public create views + manager) and acceptance keeps its existing
 atomic raise. The private create+accept path now rolls back the Match row
 too instead of leaking a stray ``created`` match.
 
-With format presets (D-5 #2) the gate is the fixture-availability check:
+With format presets, the gate is the fixture-availability check:
 ``assert_window_viable`` runs FIRST in ``create_match`` and raises
 ``FixtureUnavailable`` ("Only N games available in this window …") when the
 window holds fewer distinct priced events than the format needs

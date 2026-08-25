@@ -1,4 +1,4 @@
-"""Pick of the Day views (plan Phase 6).
+"""Pick of the Day views.
 
 - ``make_pick``: one-tap pick endpoint hit from the dashboard card.
 - ``leaderboard``: daily winners + streak + total-wins boards.

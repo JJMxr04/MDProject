@@ -9,9 +9,6 @@ short-circuits to a 200 no-op.
 Dispatch maps the event type to a handler. Unknown events 200 (so Stripe
 stops retrying) but get logged so we notice if a new event type starts
 showing up.
-
-See subscription-plan/03-stripe-integration.md §3-4 + 06-user-flows.md
-for the full state machine.
 """
 
 from __future__ import annotations

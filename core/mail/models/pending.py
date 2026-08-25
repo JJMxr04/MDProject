@@ -1,4 +1,4 @@
-"""Invite-to-non-user (plan Phase 4 §3, D-4b).
+"""Invite-to-non-user.
 
 A ``PendingInvite`` targets an *email address*, not a User row. The invite
 email carries a signed signup URL; when the recipient registers with that
@@ -79,7 +79,7 @@ class PendingInviteManager(models.Manager):
                 pending.save(update_fields=['consumed_at'])
                 continue
             # The friend edge always — the invite is a friendship claim
-            # regardless of type (D-4b). M2M is symmetric: one add suffices.
+            # regardless of type. M2M is symmetric: one add suffices.
             inviter.add_friend(user)
             if pending.invite_type == 'match':
                 from core.game.models.game import (
@@ -133,7 +133,7 @@ class PendingInvite(models.Model):
     )
     invite_type = models.CharField(max_length=20, default='friend')
     # Mirrors Invite.payload — for match invites, the format the materialized
-    # Invite will carry (Phase 5 §2).
+    # Invite will carry.
     payload = models.JSONField(default=dict, blank=True)
     expires_at = models.DateTimeField()
     consumed_at = models.DateTimeField(null=True, blank=True)

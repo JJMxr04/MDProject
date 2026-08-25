@@ -1,4 +1,4 @@
-"""Invite lifecycle tests (Phase 4 §2): expiry, cancel, decline, state
+"""Invite lifecycle tests: expiry, cancel, decline, state
 bookkeeping, and the invite-list view.
 
 Covers:

@@ -219,7 +219,7 @@ def mock_golden_seed(selection: Selection, *, extra_events: int = 8):
     patching the source modules at call time is sufficient.
 
     The listing carries ``extra_events`` synthetic priced events after the
-    seed event so the fixture-availability gate (D-5 #2 — needs
+    seed event so the fixture-availability gate (needs
     ``games_per_player + 1`` distinct events) passes for every format. The
     seed event comes first, so ``find_golden_candidate`` still locks the
     intended market."""

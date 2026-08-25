@@ -1,7 +1,7 @@
 """``available_events_for_match`` — server-side helper for the pick popup.
 
 Returns the catalog of events a user can pick from for one match's window.
-Source-of-truth is the aggregator's ``GET /v1/events`` (plan §2.4.2). Two
+Source-of-truth is the aggregator's ``GET /v1/events``. Two
 callers:
 
 - ``my_match_detail_view`` calls ``build_available_events(match)`` to populate
@@ -36,8 +36,8 @@ from core.portal.cards import resolve_matchup_tints
 logger = logging.getLogger(__name__)
 
 
-# Owner-side deadline: pick must be ≥ 8h before event start (per
-# Game.objects.upload_pick rules / api-switch/game-match-audit-plan.md §5.1).
+# Owner-side deadline: pick must be ≥ 8h before event start
+# (per Game.objects.upload_pick rules).
 OWNER_DEADLINE_BUFFER = timedelta(hours=8)
 # Headroom for an event to FINISH and settle before the match window closes.
 # The aggregator gives us only a ``start_time`` (no end/duration), so we
@@ -46,7 +46,7 @@ OWNER_DEADLINE_BUFFER = timedelta(hours=8)
 # late-starting event clears the start-time bound but wouldn't settle until
 # after the match itself ended — acute on the short Blitz (2-day) window.
 EVENT_COMPLETION_BUFFER = timedelta(hours=6)
-CACHE_TTL = 30  # seconds; matches plan §2.4.2 table
+CACHE_TTL = 30  # seconds
 
 
 def _shape_for_popup(item: dict) -> dict:
@@ -81,7 +81,7 @@ def _with_display_time(item: dict) -> dict:
     user's timezone + clock format (backend is authoritative; the popup JS
     inserts the string verbatim instead of localizing). Applied per request,
     NEVER cached, so the cross-user events cache can't bleed one user's zone
-    into another's (spec §3, cached fragments).
+    into another's (cached fragments).
     """
     iso = item.get("start_time")
     dt = parse_datetime(iso) if isinstance(iso, str) else iso

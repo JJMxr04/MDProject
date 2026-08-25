@@ -1,4 +1,4 @@
-"""Phase 8 increment 3 — POTD feeds points/XP (not Elo)."""
+"""POTD feeds points/XP (not Elo)."""
 
 from __future__ import annotations
 

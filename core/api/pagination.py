@@ -1,6 +1,6 @@
-"""Envelope-aware pagination (plan 03 — Validation, filtering, pagination).
+"""Envelope-aware pagination.
 
-Pagination is mandatory on every v1 collection (D11). Page-number paging,
+Pagination is mandatory on every v1 collection. Page-number paging,
 default ``page_size=20`` (10–20 band), max 100. The paginated response is itself
 an envelope (``{"data": [...], "meta": {...pagination}}``); the
 ``EnvelopeJSONRenderer`` then fills in ``meta.request_id`` / ``meta.generated_at``.

@@ -1,4 +1,4 @@
-"""Pick of the Day (plan Phase 6).
+"""Pick of the Day.
 
 One free curated game per day — everyone picks within a single locked
 market (mirroring the Golden Game UX), streaks count consecutive *days
@@ -148,7 +148,7 @@ class DailyPickManager(models.Manager):
               selection_id=selection.pk,
               streak=locked_user.potd_current_streak)
 
-        # Progression credit (phase 8): participation points + XP + streak
+        # Progression credit: participation points + XP + streak
         # milestone. Never break a pick on a ranking bug.
         try:
             from core.ranking.engine import record_potd_pick

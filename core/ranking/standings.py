@@ -1,6 +1,6 @@
-"""Leaderboard queries (phase 8 increment 4).
+"""Leaderboard queries.
 
-Season standings are points-ordered with the D-8 tiebreakers; a live season
+Season standings are points-ordered with the standard tiebreakers; a live season
 ranks on the fly, a closed one renders from the frozen ``final_rank``. The
 global board is the career-points sum. An eligibility floor keeps a single
 lucky match from squatting at #1.
@@ -51,7 +51,7 @@ def divisions_for(user_ids) -> dict:
 
 
 def _season_sort_key(p: SeasonParticipation):
-    # season points → win rate → wins → fewer games (D-8).
+    # season points → win rate → wins → fewer games.
     return (-p.season_points, -p.win_rate, -p.wins, p.games_played)
 
 

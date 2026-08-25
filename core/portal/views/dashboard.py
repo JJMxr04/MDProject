@@ -56,7 +56,7 @@ def portal_dashboard(request):
     next_tournament = upcoming_tournaments.filter(start_date__gte=now).first() \
         or upcoming_tournaments.first()
 
-    # ── recent activity (simple match-derived feed for Phase 1) ─
+    # ── recent activity (simple match-derived feed) ─
     activity = _recent_activity(user, since=now - timedelta(days=14), limit=10)
 
     # ── first-run check ────────────────────────────────────────
@@ -67,11 +67,11 @@ def portal_dashboard(request):
     )
     checklist = _first_run_checklist(user) if is_first_run else None
 
-    # ── Pick of the Day card (plan Phase 6) ────────────────────
+    # ── Pick of the Day card ────────────────────
     from core.potd.views import potd_card_context
     potd_context = potd_card_context(user)
 
-    # ── Progression widget (plan Phase 8) ──────────────────────
+    # ── Progression widget ──────────────────────
     from core.ranking.standings import progress_card_context
     progress_context = progress_card_context(user)
 

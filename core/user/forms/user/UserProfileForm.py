@@ -53,7 +53,7 @@ class UserProfileForm(forms.ModelForm):
         self.fields['clock_format'].required = False
 
     def clean_timezone(self):
-        # Security M4 / spec §4: present → allowlist-validate (bogus → UTC);
+        # Present → allowlist-validate (bogus → UTC);
         # omitted → keep the user's current zone.
         value = self.cleaned_data.get('timezone')
         if not value:

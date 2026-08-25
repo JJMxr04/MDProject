@@ -72,7 +72,7 @@ def score_match(match: "Match") -> Tuple[int, int, bool]:
     """Compute (player_1_score, player_2_score, fully_decided) for a Match.
 
     Regular picks score the match; the Golden Game contributes NO points —
-    it is the explicit tiebreaker (D-5 #1, see ``golden_winner_side``).
+    it is the explicit tiebreaker (see ``golden_winner_side``).
 
     A slot is "locked" when the match end-date has passed OR the slot's
     event has reached a terminal state — at that point no further picks

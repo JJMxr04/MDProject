@@ -1,4 +1,4 @@
-"""Opponent scouting — tendencies from a user's actual match picks (Phase 9).
+"""Opponent scouting — tendencies from a user's actual match picks.
 
 Built from MDProject gameplay data — the picks users make in matches — NOT the
 aggregator's bet-tracking table (that's the parked external-wager feature and

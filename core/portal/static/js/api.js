@@ -1,8 +1,8 @@
-// api.js — the client-side security spine for the islands (plan 06).
+// api.js — the client-side security spine for the islands.
 //
 // Single fetch helper for every island. Responsibilities:
 //   - same-origin credentials only (never `include` — no cross-origin cookie leak)
-//   - X-CSRFToken on every unsafe method (satisfies SessionAuthentication; S-2)
+//   - X-CSRFToken on every unsafe method (satisfies SessionAuthentication)
 //   - unwrap the {data, meta} envelope; throw ApiError({code,message,details,status})
 //   - on 401, dispatch `pbl:auth-expired` (toast -> reload; never silent re-auth)
 //   - escape() — the single XSS chokepoint for any manual DOM work

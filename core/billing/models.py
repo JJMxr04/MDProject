@@ -2,8 +2,7 @@
 
 The catalog (``Plan``) is the source of truth for what we sell; the
 ``stripe_product_id`` / ``stripe_price_id`` columns are populated when
-the catalog-sync signal pushes the row to Stripe (see
-``subscription-plan/03-stripe-integration.md`` §2).
+the catalog-sync signal pushes the row to Stripe.
 
 A ``Subscription`` exists for every user — FREE-tier rows are local-only
 (no Stripe IDs). The status field mirrors Stripe verbatim so the gate
@@ -108,9 +107,9 @@ class Subscription(AbstractModel):
         card doesn't blank a paid surface overnight. ``unpaid`` + ``canceled``
         revoke immediately.
 
-        (Phase 16/D-16d removed the ``ANALYTICS_FREE_FOR_ALL`` kill switch and
-        made the analytics dashboard free; this flag now gates opponent
-        scouting — Phase 9. The ``analytics`` feature key is retained as the
+        (The ``ANALYTICS_FREE_FOR_ALL`` kill switch was removed and
+        the analytics dashboard is free; this flag now gates opponent
+        scouting. The ``analytics`` feature key is retained as the
         PRO marker until generalized to ``is_pro``/``plan.features``.)
         """
         if self.plan.features.get('analytics') is not True:

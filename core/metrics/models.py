@@ -1,15 +1,15 @@
-"""In-house product analytics (roadmap Phase 3 §3, decision D-3).
+"""In-house product analytics.
 
 One append-only table + one helper. No third-party analytics — GlitchTip
 is errors-only and the aggregator never sees page views, so the loop
 metrics (D1/D7 retention, picks/user/week, both-players-return) have to
 be computed from rows we own. Queryable in SQL forever.
 
-Taxonomy v1 (plan roadmap Phase 3): session_start (daily-deduped),
+Taxonomy v1: session_start (daily-deduped),
 pick_made, match_created, match_accepted, match_completed, invite_sent,
-invite_accepted, rematch_clicked (Phase 5), paywall_viewed,
+invite_accepted, rematch_clicked, paywall_viewed,
 paywall_upgrade_clicked, checkout_started, checkout_completed,
-potd_picked (Phase 6).
+potd_picked.
 """
 
 from __future__ import annotations

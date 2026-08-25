@@ -14,8 +14,7 @@ class WaitListView(View):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
-    # Anonymous endpoint that sends an email per submission — brake it
-    # (plan §7.5 item 3).
+    # Anonymous endpoint that sends an email per submission — brake it.
     @method_decorator(rate_limit("auth-waitlist", 5, 3600))
     def post(self, request):
         form = WaitListForm(request.POST)

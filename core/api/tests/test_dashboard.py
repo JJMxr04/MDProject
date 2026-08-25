@@ -1,4 +1,4 @@
-"""Phase 2: /api/v1/dashboard/stats/ — per-user scoped counts."""
+"""/api/v1/dashboard/stats/ — per-user scoped counts."""
 
 from __future__ import annotations
 

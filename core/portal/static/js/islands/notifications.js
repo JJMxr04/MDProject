@@ -1,4 +1,4 @@
-// notifications island — the bell dropdown (plan 06/07, Phase 1 pilot).
+// notifications island — the bell dropdown.
 //
 // Replaces the old vanilla notifications.js. Talks ONLY to /api/v1/notifications/
 // via the shared api.js (CSRF, envelope, escaping). Renders loading/error/empty/

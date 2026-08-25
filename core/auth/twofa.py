@@ -1,8 +1,8 @@
-"""Two-factor (TOTP) enrollment + recovery helpers (phase 15).
+"""Two-factor (TOTP) enrollment + recovery helpers.
 
-Hand-rolled on django-otp primitives (decision D-15a) — no
+Hand-rolled on django-otp primitives — no
 ``django-two-factor-auth``. One confirmed ``TOTPDevice`` per enrolled user
-plus one ``StaticDevice`` holding ten single-use backup codes (D-15b).
+plus one ``StaticDevice`` holding ten single-use backup codes.
 
 Every state change (enable / disable / regenerate) sends a transactional
 security email through the existing ``core.mail.send_email`` task — like a

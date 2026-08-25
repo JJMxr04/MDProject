@@ -1,4 +1,4 @@
-"""Pick of the Day (plan Phase 6): curation, picking, streaks, results,
+"""Pick of the Day: curation, picking, streaks, results,
 leaderboard, nudge targeting."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-"""Rate-limit + enumeration tests for the public auth surface (plan §7.5 item 3).
+"""Rate-limit + enumeration tests for the public auth surface.
 
 The waitlist and register form views are anonymous and send an email per
 submission; before this they had no throttle and their duplicate/approval

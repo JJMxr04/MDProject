@@ -116,11 +116,11 @@ def accept_invite(request, invite_id):
 
 @require_POST
 @login_required(login_url='/auth/login/')
-# Shares the create-invite budget — email invites are still invites
-# (plan Phase 4 §3: throttle through the existing budget).
+# Shares the create-invite budget — email invites are still invites:
+# throttle through the existing budget.
 @rate_limit("create-invite", 30, 3600, per="user")
 def invite_by_email(request):
-    """Invite someone who may not have an account yet (Phase 4 §3, D-4b).
+    """Invite someone who may not have an account yet.
 
     POST JSON: {"email": ..., "invite_type": "friend"|"match",
     "format": "BLITZ"|...}. If the email already belongs to a user, this

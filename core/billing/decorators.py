@@ -11,16 +11,16 @@ Three things this does, in order:
    the aggregator (signup signal crashed, DB restore, account predates
    billing), provision the tenant *user* row now so per-user data calls
    (bets, X-Acting-User) can attribute to them. Since the service-key
-   cutover (plan §6.4, roadmap Phase 2) NO per-user API key is issued or
+   cutover NO per-user API key is issued or
    stored — auth rides the single service key in aggrigator_client.
 
 The decorator is intentionally permissive about the third step: a
 transient aggrigator failure renders the page in an empty-state instead
 of 500ing. The user retries by refreshing.
 
-Phase 16 (D-16d) removed the kill switch + fake paywall and made the
+The kill switch + fake paywall were removed and made the
 analytics dashboard free; this decorator is now unapplied, kept ready for
-the opponent-scouting gate (Phase 9). See subscription-plan/05-access-control.md §1.
+the opponent-scouting gate.
 """
 
 from __future__ import annotations

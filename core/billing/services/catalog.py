@@ -13,8 +13,6 @@ Idempotency:
   old price (Stripe's behavior, not ours); new Checkouts use the new one.
 
 The FREE plan is skipped — it's local-only and never appears in Stripe.
-
-See subscription-plan/03-stripe-integration.md §2.
 """
 
 from __future__ import annotations

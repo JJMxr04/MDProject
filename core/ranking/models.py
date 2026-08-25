@@ -46,7 +46,7 @@ class Season(models.Model):
         super().save(*args, **kwargs)
 
     def clean(self):
-        # Cadence is operator data (D-8): any dates allowed, but the ranges
+        # Cadence is operator data: any dates allowed, but the ranges
         # of live seasons must not overlap and only one may be ACTIVE.
         if self.end_date and self.start_date and self.end_date <= self.start_date:
             raise ValidationError({"end_date": "End date must be after the start date."})

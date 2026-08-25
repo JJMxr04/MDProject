@@ -1,4 +1,4 @@
-/* Pick of the Day dashboard card (plan Phase 6) — one-tap pick.
+/* Pick of the Day dashboard card — one-tap pick.
    CSP-safe delegation, same pattern as the other portal pages. */
 
 function submitPotdPick(selectionId) {

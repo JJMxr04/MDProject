@@ -4,7 +4,7 @@ let cmFriendId = null;
 let cmFriendUsername = null;
 let cmFormat = (document.querySelector('input[name=cm_format]:checked') || {}).value || 'MARATHON';
 
-/* ── Format presets (Phase 5, D-5 #2): pre-submit availability check ── */
+/* ── Format presets: pre-submit availability check ── */
 function checkCmAvailability() {
     const box = document.querySelector('.cm-format');
     const note = document.getElementById('cmAvailability');

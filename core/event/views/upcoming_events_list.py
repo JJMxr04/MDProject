@@ -1,8 +1,8 @@
 """Upcoming-events grid, server-rendered.
 
-Source-of-truth for events: aggregator's ``GET /v1/events`` (plan §2.4.2).
+Source-of-truth for events: aggregator's ``GET /v1/events``.
 The aggregator now ships ``sport``, ``league``, ``home_team``, ``away_team``
-nested in each event (plan v2 portal redesign), so the template reads the
+nested in each event, so the template reads the
 same `{{ event.sport.name }}` / `{{ event.home_team.name }}` it always did.
 
 Failure modes:

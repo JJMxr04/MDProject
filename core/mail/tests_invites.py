@@ -1,4 +1,4 @@
-"""Regression tests for invite acceptance (plan §7.5 items 1–2).
+"""Regression tests for invite acceptance.
 
 Covers:
 - Tournament invite accept actually enrolls the user (was: confirmation
@@ -154,7 +154,7 @@ class PrivateMatchInviteCreationTests(TestCase):
     def _create(self, user, player_value):
         self.client.force_login(user)
         url = reverse(self.URL_NAME)
-        # Private creates now run the fixture-availability gate (D-5 #2),
+        # Private creates now run the fixture-availability gate,
         # which lists events from the aggregator — mock it like accepts do.
         with mock_golden_seed(make_golden_seed_selection()):
             return self.client.post(

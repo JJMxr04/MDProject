@@ -14,7 +14,7 @@ from core.event.models.odds.quote import OddsQuote
 
 
 class SelectionMovementView(APIView):
-    # S-3/D4: locked to authenticated callers + `user` throttle (was AllowAny).
+    # Locked to authenticated callers + `user` throttle (was AllowAny).
     authentication_classes = V1_AUTHENTICATION_CLASSES
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]

@@ -1,4 +1,4 @@
-"""Pick-email coalescing (plan §7.1 #5, Phase 3 §2).
+"""Pick-email coalescing.
 
 Filling several slots in one sitting queues exactly ONE debounced
 summary job per (match, picker); the job emails one "made N picks"

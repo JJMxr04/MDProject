@@ -26,7 +26,7 @@ def friend_search(request):
         sender=request.user, type='friend', state='sent',
     ).select_related('player').order_by('-invited_date')
 
-    # Tokenless referral variant of the signup invite (plan Phase 4 §3):
+    # Tokenless referral variant of the signup invite:
     # signing up through this link creates the friend edge automatically.
     from django.urls import reverse
     referral_link = request.build_absolute_uri(
@@ -55,12 +55,12 @@ def friend_search(request):
     return render(request, 'portal/user/friend_search.html', context)
 
 @login_required(login_url='/auth/login/')
-# Friend requests notify the target — cap per user (plan §7.5 item 3).
+# Friend requests notify the target — cap per user.
 @rate_limit("friend-request", 30, 3600, per="user")
 def add_friend_action(request, user_id):
     """Send a *friend request* — bilateral friendship only happens after the
     target user accepts. Replaces the old "click Add → instantly friends"
-    flow which trusted strangers (issues-part-2 §1)."""
+    flow which trusted strangers."""
     if request.method != 'POST':
         return redirect('core-portal:friend_search')
 

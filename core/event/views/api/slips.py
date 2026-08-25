@@ -17,7 +17,7 @@ class SlipsView(APIView):
     snapshot with current odds and the combined decimal. We don't persist the
     slip here; that's a future feature."""
 
-    # S-3/D4: POST /api/slips was anonymous; now authenticated (session+JWT) +
+    # POST /api/slips was anonymous; now authenticated (session+JWT) +
     # `user` throttle. SessionAuthentication enforces CSRF on the POST for
     # cookie-authed callers; JWT callers are exempt as usual.
     authentication_classes = V1_AUTHENTICATION_CLASSES

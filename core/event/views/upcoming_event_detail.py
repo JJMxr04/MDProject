@@ -1,6 +1,6 @@
 """Upcoming-event detail page, server-rendered.
 
-After the aggregator cutover (plan §2.4.2 / §7.4), this view proxies to
+After the aggregator cutover, this view proxies to
 ``GET /v1/events/{id}?include=markets`` instead of reading the local DB.
 Mirrors the failure modes of ``upcoming_events_list``:
 
@@ -71,15 +71,15 @@ def upcoming_event_detail(request, event_id):
     is_finalized = bool(body.get("is_finalized"))
 
     # Analytics block — H2H, form, season-to-date PLUS the model-vs-market
-    # edge table. Phase 16 (D-16d) made the analytics dashboard FREE — the
+    # edge table. The analytics dashboard is FREE — the
     # block renders for everyone (the model-vs-market edge degrades gracefully
     # to empty while the model is parked). PRO gating now lives on opponent
-    # scouting (Phase 9), not here.
+    # scouting, not here.
     is_entitled = True
     analytics_ctx: dict = {}
     if is_entitled:
-        # Shared catalog data — the client's service key covers auth
-        # (plan §6.4); no per-user provisioning needed anymore.
+        # Shared catalog data — the client's service key covers auth;
+        # no per-user provisioning needed anymore.
         context = analytics_client.event_context(event_id)
         historical_stats = analytics_client.event_historical_stats(event_id)
         analytics_ctx = {

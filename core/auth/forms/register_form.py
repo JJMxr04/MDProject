@@ -54,13 +54,13 @@ class RegisterForm(UserCreationForm):
         self.fields['timezone'].widget.choices = timezone_choices()
 
     def clean_timezone(self):
-        # Security M4 / spec §2: allowlist-validate; missing or bogus → UTC.
+        # Allowlist-validate; missing or bogus → UTC.
         return timeprefs.normalize_timezone(self.cleaned_data.get('timezone'))
 
     def clean_email(self):
         email_address = self.cleaned_data.get('email')
-        # A live friend invite to this email IS the access grant (plan
-        # Phase 4 §3, D-4b) — being asked-for by an existing player
+        # A live friend invite to this email IS the access grant —
+        # being asked-for by an existing player
         # bypasses the waitlist. Referral links (?ref=<friend_code>) do
         # NOT bypass it; only explicit email invites do.
         from core.mail.models import PendingInvite

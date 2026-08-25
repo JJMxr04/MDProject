@@ -37,7 +37,7 @@ def public_match_list_view(request):
     paginator = Paginator(matches, 10)  # Show 10 matches per page
     matches_page = paginator.get_page(page)
 
-    # Creator flair (phase 8): level + current-season division, one query each.
+    # Creator flair: level + current-season division, one query each.
     from core.ranking.standings import divisions_for, levels_for
     creator_ids = [m.player_1_id for m in matches_page.object_list]
     levels = levels_for(creator_ids)
@@ -73,8 +73,8 @@ def public_match_list_view(request):
     return render(request, 'portal/match/public_match_list.html', context)
 @require_POST
 @login_required(login_url='/auth/login/')
-# Each private create fires an invite email — cap the blast radius per user
-# (plan §7.5 item 3). Runs after login_required so it keys on the user.
+# Each private create fires an invite email — cap the blast radius per user.
+# Runs after login_required so it keys on the user.
 @rate_limit("create-match", 30, 3600, per="user")
 def create_public_match_view(request):
     from core.game.models.game import FixtureUnavailable, GoldenGameUnavailable
@@ -86,7 +86,7 @@ def create_public_match_view(request):
 
         match_type = request.POST.get('type')  # Accessing cleaned data from form
         player = request.POST.get('player')  # Optional field, may be None
-        # Format preset (D-5 #4): fixed here, displayed on the invite,
+        # Format preset: fixed here, displayed on the invite,
         # accept = consent. Unknown values normalize to the default.
         match_format = formats.normalize_format(request.POST.get('format'))
         owner = request.user
@@ -133,7 +133,7 @@ def create_public_match_view(request):
                 return JsonResponse({'status': 'success', 'invite_id': existing.id})
 
             # Create the invite — the format rides on the payload and the
-            # accept path threads it into create_match (Phase 5 §2).
+            # accept path threads it into create_match.
             # create_invite is the single creatability choke-point: a Blitz
             # invite into an empty midweek window (or one with no Golden Game
             # seed) is rejected here instead of emailing the recipient a
@@ -158,7 +158,7 @@ def create_public_match_view(request):
 @require_GET
 @login_required(login_url='/auth/login/')
 def match_availability_view(request):
-    """Pre-submit availability check for the create-match UI (D-5 #2):
+    """Pre-submit availability check for the create-match UI:
     "N games available in this window" before the user commits."""
     from django.utils import timezone
 
@@ -212,7 +212,7 @@ def public_match_detail_view(request, match_id):
     levels = levels_for(ids)
     divisions = divisions_for(ids)
 
-    # Scout the opponent before joining (phase 9) — the creator (player_1) for a
+    # Scout the opponent before joining — the creator (player_1) for a
     # prospective joiner. PRO sees tendencies; FREE sees the upsell + a
     # paywall_viewed signal.
     viewer = request.user

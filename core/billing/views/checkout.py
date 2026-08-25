@@ -47,7 +47,7 @@ def start_checkout(request):
 
     user = request.user
 
-    # Re-subscribers don't get a fresh trial (file 06 §5). Stripe-side
+    # Re-subscribers don't get a fresh trial. Stripe-side
     # enforcement: we just omit trial_period_days when they've had a
     # paid sub before.
     prior_paid = Subscription.objects.filter(

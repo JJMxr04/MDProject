@@ -1,10 +1,11 @@
-"""``/api/v1/friends/`` — the requester's friend list (S-23).
+"""``/api/v1/friends/`` — the requester's friend list.
 
 The collection is the requester's own ``friends`` M2M, so it can never surface
 another user's edges. ``destroy`` resolves the friend from that scoped queryset
 first (a non-friend public_id 404s before anything mutates), then removes the
-edge — the explicit ownership assert S-23 asked for. ``create`` adds a friend by
-friend code (kept symmetric with the existing M2M semantics).
+edge — the explicit ownership assert this endpoint was built around.
+``create`` adds a friend by friend code (kept symmetric with the existing M2M
+semantics).
 """
 
 from rest_framework import mixins, status, viewsets

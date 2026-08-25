@@ -1,7 +1,7 @@
 """One-shot backfill: mirror every existing MDProject User into the
-aggrigator as a FREE tenant_user (per-user bet attribution, plan §6.4).
+aggrigator as a FREE tenant_user (per-user bet attribution).
 
-Since the service-key cutover (roadmap Phase 2) NO per-user API key is
+Since the service-key cutover NO per-user API key is
 stored — outbound auth rides the single service key in aggrigator_client,
 and per-user data calls assert X-Acting-User. This command only ensures
 the tenant_user rows exist.

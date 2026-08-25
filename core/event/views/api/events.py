@@ -34,7 +34,7 @@ def _parse_bool(value):
 
 
 class EventListView(APIView):
-    # S-3/D4: was AllowAny (anonymous). Locked to authenticated callers (portal
+    # Was AllowAny (anonymous). Locked to authenticated callers (portal
     # session cookie or future JWT) + the `user` throttle scope. No anonymous
     # caller exists in the codebase (audited).
     authentication_classes = V1_AUTHENTICATION_CLASSES
@@ -76,7 +76,7 @@ class EventListView(APIView):
         # Filter on Event.league_id directly. The previous filter referenced
         # ``unique_tournament_id``, a SofaScore-era attribute that was never
         # defined on the SGO-shaped Event model — every ?league= request
-        # raised. Fix per plan §7.7.
+        # raised.
         league = request.query_params.get("league")
         if league:
             qs = qs.filter(league_id=league)
@@ -99,7 +99,7 @@ class EventListView(APIView):
 
 
 class EventDetailView(APIView):
-    # S-3/D4: locked down (see EventListView).
+    # Locked down (see EventListView).
     authentication_classes = V1_AUTHENTICATION_CLASSES
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]

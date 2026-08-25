@@ -15,7 +15,7 @@ from .views.waitlist_view import WaitListView
 app_name = 'core-auth'
 
 urlpatterns = [
-    # Two-factor (phase 15): enrollment + recovery (login-required) and the
+    # Two-factor: enrollment + recovery (login-required) and the
     # login second step (anonymous, gated by a pending-session entry).
     path('2fa/', twofa_views.security_view, name='2fa-security'),
     path('2fa/setup/', twofa_views.setup_view, name='2fa-setup'),

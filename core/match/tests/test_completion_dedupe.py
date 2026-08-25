@@ -1,4 +1,4 @@
-"""Duplicate-send fixes for match completion (plan §7.1 #4, Phase 3 §1).
+"""Duplicate-send fixes for match completion.
 
 Three layers under test:
   1. ``maybe_complete_match`` runs ``calculate_winner`` exactly once even

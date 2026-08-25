@@ -19,7 +19,7 @@ def event_markets(request, game_id):
 
     Bet.market is derived now (via owner_outcome.market) — there is no single
     "market" per Game; both sides may have picked different markets on the
-    same event per api-switch/game-match-audit-plan.md §0 (2c).
+    same event.
 
     Adds:
       - ``locked_market``: when the slot pre-locks a specific market (Golden

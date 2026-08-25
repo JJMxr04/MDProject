@@ -1,4 +1,4 @@
-"""Match format presets (Phase 5, D-5) — end-to-end behavior.
+"""Match format presets — end-to-end behavior.
 
 Covers: each preset's shape (games per player + shared Golden Game, window
 length), the fixture-availability rejection message, format threading

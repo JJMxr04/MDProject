@@ -1,16 +1,15 @@
 """The v1 view spine — every ``/api/v1/`` view inherits ``V1ViewMixin``.
 
-It binds the security defaults in one auditable place (plan 02 — central
-``core/api/``):
+It binds the security defaults in one auditable place:
 
-- **AuthN:** session-cookie first, JWT second (``V1_AUTHENTICATION_CLASSES`` —
-  fixes S-1). SessionAuthentication enforces CSRF on unsafe methods.
+- **AuthN:** session-cookie first, JWT second (``V1_AUTHENTICATION_CLASSES``).
+  SessionAuthentication enforces CSRF on unsafe methods.
 - **AuthZ:** ``IsAuthenticated`` deny-by-default; resource views add object-level
   permissions from ``core.api.permissions`` on top.
 - **Envelope:** ``EnvelopeJSONRenderer`` (success) + ``custom_exception_handler``
   (errors) — both scoped to v1 here, so the legacy ``/api/`` endpoints are
   untouched.
-- **Throttle:** ``user`` / ``anon`` scopes (rates in settings; fixes S-9 API side).
+- **Throttle:** ``user`` / ``anon`` scopes (rates in settings).
 - **Pagination:** envelope-aware page-number paginator.
 
 These are set as class attributes (not the global DRF defaults) so this mixin is

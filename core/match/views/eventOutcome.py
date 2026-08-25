@@ -1,8 +1,7 @@
 """``event_outcomes`` — per-event markets fetch for the upload-pick popup.
 
-Proxies to the aggregator's ``GET /v1/events/{id}`` (with markets included)
-per plan §2.4.2. The aggregator side has been enriched (plan v2 portal
-redesign) so:
+Proxies to the aggregator's ``GET /v1/events/{id}`` (with markets included).
+The aggregator side has been enriched so:
 
 - each ``event`` ships nested ``sport`` / ``league`` / ``home_team`` /
   ``away_team`` objects
@@ -17,10 +16,10 @@ proxy boundary so the popup works uniformly across both code paths
 (``/event/.../outcomes/`` here and ``/game/.../market/`` from
 ``eventMarket.py``).
 
-URL signature: ``<str:event_id>`` (was ``<int:event_id>`` — fixed per plan
-§7.7 #1; SGO eventIDs are alphanumeric strings, never ints).
+URL signature: ``<str:event_id>`` (was ``<int:event_id>`` — fixed;
+SGO eventIDs are alphanumeric strings, never ints).
 
-Failure modes (plan §2.4.2 matrix):
+Failure modes:
 - aggregator down / 5xx / timeout → 503 with a short JSON body
 - aggregator 404 → 404
 - aggregator returns partial data → forward as-is

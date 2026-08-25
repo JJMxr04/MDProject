@@ -1,4 +1,4 @@
-"""Peak notification #2 (plan Phase 7): "your golden pick hit".
+"""Peak notification #2: "your golden pick hit".
 
 One shared helper called from BOTH settlement paths — the per-selection
 ``post_save`` signal (``core/game/signals.py``) and the bulk

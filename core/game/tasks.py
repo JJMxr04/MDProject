@@ -1,4 +1,4 @@
-"""Pick-notification coalescing (plan §7.1 #5, roadmap Phase 3 §2).
+"""Pick-notification coalescing.
 
 Filling five slots in one sitting used to fire five "your opponent made a
 pick" emails. Picks now schedule one debounced summary per
@@ -33,8 +33,8 @@ def send_pick_summary(match_id, picker_id, recipient_id):
         return 0
 
     # Count at send time so every pick made during the debounce window is
-    # covered by this one email. Includes the picker's golden-game side
-    # (plan Phase 7 #1) — the golden slot is ownerless, its sides map to
+    # covered by this one email. Includes the picker's golden-game side —
+    # the golden slot is ownerless, its sides map to
     # the match players (owner_outcome ≡ player_1).
     pick_count = Game.objects.filter(
         match_id=match_id, owner=picker, is_golden=False,

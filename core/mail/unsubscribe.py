@@ -1,4 +1,4 @@
-"""Signed unsubscribe tokens for engagement emails (plan §7.5 item 4).
+"""Signed unsubscribe tokens for engagement emails.
 
 The token carries the user's ``public_id`` signed with SECRET_KEY — the link
 works logged-out, can't be forged, and doesn't expose a guessable id. No

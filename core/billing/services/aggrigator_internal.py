@@ -16,8 +16,6 @@ Failure modes:
 - Missing ``PARADISE_SECRET`` raises ``ImproperlyConfigured`` at sign
   time — surfaced to operator, not silently dropped.
 - Missing ``AGGRIGATOR_BASE_URL`` raises ``ImproperlyConfigured`` too.
-
-See ``subscription-plan/04-internal-api.md``.
 """
 
 from __future__ import annotations

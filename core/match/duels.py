@@ -1,10 +1,10 @@
-"""Duels — single-game, opposite-side challenges (phase 14).
+"""Duels — single-game, opposite-side challenges.
 
 The smallest PvP unit: one game, two players, opposite sides, settles when the
 event ends. The challenger picks an event *and* an outcome up front; accepting
 puts the opponent on the other side automatically — no pick phase.
 
-D-14 decisions baked in here:
+Key decisions baked in here:
   1. "Opposite" must be unambiguous → v1 restricts duels to markets with
      exactly two priced selections (TOTAL over/under, SPREAD home/away, two-way
      MONEYLINE). Soccer 3-way moneyline is excluded.
@@ -38,7 +38,8 @@ def _priced_selections(market):
 def opposite_selection(selection: Selection) -> Selection:
     """The other priced selection in ``selection``'s market.
 
-    Enforces D-14 #1: the market must have exactly two priced selections, and
+    Enforces the two-priced-selections rule: the market must have exactly two
+    priced selections, and
     the chosen one must be among them. Raises ``DuelError`` otherwise — the
     message is shown to the challenger.
     """
@@ -64,7 +65,7 @@ def send_duel(challenger, opponent, event_id: str, selection_id: str):
         Event chain exists before the invite is even accepted (same pattern the
         Golden Game uses at accept time).
       - the event must be in the future (you can't duel a game that kicked off),
-      - the market must be two-way (D-14 #1),
+      - the market must be two-way,
       - the opponent must be a friend (v1 — email-invitee duels can come later).
 
     Returns the created ``Invite`` (type ``match``, ``payload.duel = True``,
@@ -81,7 +82,7 @@ def send_duel(challenger, opponent, event_id: str, selection_id: str):
 
     try:
         # mirror_full_market: duels need the market's opposite side locally so
-        # ``opposite_selection`` can resolve it (D-14 #1).
+        # ``opposite_selection`` can resolve it.
         selection = ensure_chain(event_id, selection_id, mirror_full_market=True)
     except ChainBuildError as exc:
         raise DuelError("Couldn't load that event — please try again.") from exc
@@ -99,14 +100,14 @@ def send_duel(challenger, opponent, event_id: str, selection_id: str):
         "opposite_selection_id": opposite.id,
         # Display strings captured at send so the invite card renders without
         # re-querying the chain (labels are stable; odds may drift but the
-        # sides don't — no money is staked, D-14 #3).
+        # sides don't — no money is staked).
         "event_label": _event_label(event),
         "challenger_label": humanize_selection(selection)[:128],
         "opponent_label": humanize_selection(opposite)[:128],
         "kickoff": event.start_time.isoformat(),
     }
 
-    # Accept allowed up to kickoff (D-14 #3), but capped at the 1-day invite
+    # Accept allowed up to kickoff, but capped at the 1-day invite
     # fuse — an unanswered duel challenge churns like any other invite.
     invite = Invite.objects.create_invite(
         obj_id=None,
@@ -262,7 +263,7 @@ def duel_record(user) -> dict:
 
     ``won``  — completed, winner is the user.
     ``lost`` — completed, winner is the other player.
-    ``draw`` — completed, no winner (push/void/postponed, D-14 #2).
+    ``draw`` — completed, no winner (push/void/postponed).
     ``open`` — not yet completed (still ``accepted``).
     Draw and open both have ``winner=None`` — split on ``match_state``.
     """

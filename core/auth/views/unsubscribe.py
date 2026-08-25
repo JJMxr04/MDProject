@@ -1,4 +1,4 @@
-"""Unsubscribe endpoint for engagement emails (plan §7.5 item 4).
+"""Unsubscribe endpoint for engagement emails.
 
 Token-authenticated (signed ``public_id``, see core.mail.unsubscribe), so it
 works logged-out straight from an email footer. CSRF-exempt because RFC 8058

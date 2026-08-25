@@ -10,7 +10,7 @@ class TeamSerializer(serializers.ModelSerializer):
         read_only_fields = ["created", "updated", "public_id"]
 
     def get_fields(self):
-        # S-17 (mass-assignment): TeamSerializer is read-only in use (only read
+        # Mass-assignment guard: TeamSerializer is read-only in use (only read
         # via `.data` in tests; no write path). Force every field read-only so
         # `fields='__all__'` can't accept arbitrary input if it's ever wired to a
         # write endpoint. Reads are unaffected.

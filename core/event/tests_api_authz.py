@@ -1,4 +1,4 @@
-"""S-3/D4: the legacy /api/ event endpoints must require authentication.
+"""The legacy /api/ event endpoints must require authentication.
 
 Proves anonymous callers are denied (was AllowAny) and an authenticated caller
 gets past the auth gate. USE_AGGRIGATOR is disabled so creating the test user

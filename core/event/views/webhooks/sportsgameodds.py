@@ -1,6 +1,6 @@
 """Inbound webhook handler at ``/sportgameodds/webhook``.
 
-Receives state updates from the new aggregator service (plan §4). Verifies the
+Receives state updates from the new aggregator service. Verifies the
 HMAC-SHA256 signature, dedupes by ``idempotency_key``, upserts Event +
 Markets + Selections from the schema-v1 envelope, and triggers the existing
 match-completion / game-reopen hooks the aggregator's lifecycle decisions

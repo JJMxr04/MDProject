@@ -92,7 +92,7 @@ function closeRemoveModal() {
     document.getElementById('removeFriendModal').hidden = true;
 }
 
-/* ── Referral link + invite-by-email (plan Phase 4 §3) ─────────── */
+/* ── Referral link + invite-by-email ─────────── */
 function copyReferralLink() {
     const link = document.getElementById('referral-link').value;
     navigator.clipboard.writeText(link)

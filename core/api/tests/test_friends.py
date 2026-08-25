@@ -1,8 +1,7 @@
-"""Phase 2: /api/v1/friends/ security + behavior.
+"""/api/v1/friends/ security + behavior.
 
 List is scoped to the requester's own M2M; add-by-code and remove are exercised
-with the binding cross-user negative test (User B cannot remove User A's edge —
-S-23).
+with the binding cross-user negative test (User B cannot remove User A's edge).
 """
 
 from __future__ import annotations
@@ -82,7 +81,7 @@ class FriendApiTests(V1APITestCase):
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_cross_user_cannot_remove_others_friend(self):
-        # S-23: carol tries to remove bob from alice's list (via bob's url) ->
+        # carol tries to remove bob from alice's list (via bob's url) ->
         # 404, because the queryset is carol's own friends, not alice's. The
         # alice<->bob edge must survive.
         self.assert_denies_cross_user(

@@ -26,7 +26,7 @@ def _csv(request, key):
 
 
 class EventMarketsView(APIView):
-    # S-3/D4: locked to authenticated callers + `user` throttle (was AllowAny).
+    # Locked to authenticated callers + `user` throttle (was AllowAny).
     authentication_classes = V1_AUTHENTICATION_CLASSES
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]

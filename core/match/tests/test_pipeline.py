@@ -172,7 +172,7 @@ class WindowClosedWithUnpickedSlotsTests(TestCase):
 
 
 class VoidedEventReopensSlotTests(TestCase):
-    """Settlement-plan §5: cancellation triggers reopen_games_for_voided_event."""
+    """Cancellation triggers reopen_games_for_voided_event."""
 
     def test_cancellation_clears_outcome_when_window_open(self):
         from core.event.models import Event

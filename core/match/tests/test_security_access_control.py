@@ -1,12 +1,12 @@
-"""Cross-user access-control (IDOR) denial tests — Phase 0 security fixes.
+"""Cross-user access-control (IDOR) denial tests.
 
 Each test asserts that a logged-in user who is NOT the owner/participant of an
-object is denied (404/403), per the findings register:
+object is denied (404/403):
 
-- S-4b  public_match_detail_view leaks any match by id
-- S-5   player_2_select_outcome / pick_on_locked_slot / event_markets leak/act
-        on games the requester isn't a player in
-- S-15  player_in_game_required decorator logic
+- public_match_detail_view leaks any match by id
+- player_2_select_outcome / pick_on_locked_slot / event_markets leak/act
+  on games the requester isn't a player in
+- player_in_game_required decorator logic
 
 We build the object graph directly (Match.objects.create + Game.objects.create_game)
 rather than via Match.objects.create_match — the latter seeds a Golden Game by
@@ -75,7 +75,7 @@ class PublicMatchDetailAccessTests(TestCase):
 
 
 class GameEndpointAccessTests(TestCase):
-    """S-5 / S-15: game-scoped endpoints must reject non-players (403 from the
+    """Game-scoped endpoints must reject non-players (403 from the
     player_in_game_required decorator) before doing anything."""
 
     def setUp(self):

@@ -19,7 +19,7 @@ class NotificationManager(models.Manager):
 
         Ownership-scoped: filtering by (id, user) means another user's id
         matches no row -> DoesNotExist -> the view returns 404 (existence not
-        leaked). See findings.md S-13 (IDOR).
+        leaked) — closes an IDOR.
         """
         notification = self.filter(id=id, user=user).first()
         if notification is None:

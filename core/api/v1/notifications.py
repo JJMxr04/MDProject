@@ -1,4 +1,4 @@
-"""``/api/v1/notifications/`` — Phase 1 pilot island (plan 07/10).
+"""``/api/v1/notifications/`` — pilot island.
 
 The lowest-blast-radius page, used to prove the secure pattern end to end:
 
@@ -49,7 +49,7 @@ class NotificationViewSet(
         return Response({"count": Notification.objects.unread(request.user).count()})
 
     def partial_update(self, request, *args, **kwargs):
-        """Mark read — deletes the notification (S-13)."""
+        """Mark read — deletes the notification."""
         notification = self.get_object()  # 404 for a non-owned id (scoped qs)
         notification.mark_read()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -81,7 +81,7 @@ def portal_or_404(request, exception=None):
 @csrf_exempt
 @require_POST
 def csp_report(request):
-    """CSP violation report sink (S-7).
+    """CSP violation report sink.
 
     The Content-Security-Policy-Report-Only header points its ``report-uri``
     here so we can watch what a strict ``script-src 'self'`` policy *would*

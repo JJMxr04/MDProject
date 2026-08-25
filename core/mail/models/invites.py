@@ -18,7 +18,7 @@ INVITE_TYPE_CHOICES = (
     ('friend', 'Friend'),
 )
 
-# Invite lifecycle (plan Phase 4 §2). 'sent' is the only actionable state;
+# Invite lifecycle. 'sent' is the only actionable state;
 # everything else is terminal and kept for the invite-list history.
 INVITE_STATE_CHOICES = (
     ('sent', 'Sent'),
@@ -157,7 +157,7 @@ class InviteManager(AbstractManager):
         if invite.state != 'sent':
             raise self.model.DoesNotExist("Invite already handled.")
 
-        # Lazy expiry check (Phase 4 §2) — the nightly cron flips stale rows
+        # Lazy expiry check — the nightly cron flips stale rows
         # too, but an accept between cron runs must not slip through. The
         # raise aborts this transaction; accept_invite persists the flip.
         if invite.expires_at and invite.expires_at <= timezone.now():
@@ -174,7 +174,7 @@ class InviteManager(AbstractManager):
             from core.match.models import Match
             payload = invite.payload or {}
             if payload.get('duel'):
-                # Duel (phase 14): one game, sides set at accept, settles at
+                # Duel: one game, sides set at accept, settles at
                 # event end. May raise DuelError if the event vanished from the
                 # catalog — @transaction.atomic rolls the invite state back.
                 Match.objects.create_duel(invite)
@@ -182,7 +182,7 @@ class InviteManager(AbstractManager):
                 # May raise GoldenGameUnavailable / FixtureUnavailable —
                 # @transaction.atomic rolls back the invite state above so the
                 # user can retry. The format rides on the invite payload
-                # (D-5 #4: accept = consent to the displayed format).
+                # (accept = consent to the displayed format).
                 Match.objects.create_match(
                     player_1=invite.sender,
                     player_2=invite.player,
@@ -220,7 +220,7 @@ class InviteManager(AbstractManager):
         if invite.type == 'friend':
             # Friendship is created at acceptance time, not at invite-
             # creation time. User.friends is symmetric — one add writes
-            # both directions (the single friend-storage truth, D-4a).
+            # both directions (the single friend-storage truth).
             invite.sender.add_friend(invite.player)
 
         from core.metrics.models import track
@@ -230,7 +230,7 @@ class InviteManager(AbstractManager):
     @transaction.atomic
     def decline_invite(self, invite):
         """Player declines: terminal state + the sender is notified through
-        the ``Emails._notify`` chokepoint (Phase 4 §2 — decline used to be a
+        the ``Emails._notify`` chokepoint (decline used to be a
         silent row delete)."""
         invite = self.select_for_update().get(pk=invite.pk)
         if invite.state != 'sent':
@@ -244,7 +244,7 @@ class InviteManager(AbstractManager):
 
     @transaction.atomic
     def cancel_invite(self, invite):
-        """Sender withdraws an outgoing invite (Phase 4 §2). No email — the
+        """Sender withdraws an outgoing invite. No email — the
         recipient just sees the invite leave their actionable list."""
         invite = self.select_for_update().get(pk=invite.pk)
         if invite.state != 'sent':
@@ -274,7 +274,7 @@ class Invite(models.Model):
     invited_date = models.DateTimeField(null=True)
     state = models.CharField(max_length=20, default='sent', choices=INVITE_STATE_CHOICES)
     # Type-specific extras — match invites carry {'format': 'BLITZ'|...,
-    # 'rematch_of': '<match uuid>'} (Phase 5 §2). Never trusted blindly:
+    # 'rematch_of': '<match uuid>'}. Never trusted blindly:
     # readers normalize (e.g. formats.normalize_format).
     payload = models.JSONField(default=dict, blank=True)
     # Past this stamp the invite can't be accepted (lazy check at accept +

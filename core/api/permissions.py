@@ -1,4 +1,4 @@
-"""Object-level permissions for the v1 surface (plan 03/04 — AuthZ).
+"""Object-level permissions for the v1 surface.
 
 Deny by default. Lists are scoped at the queryset (``OwnedQuerysetMixin``);
 detail/update/delete add one of these object-level checks AND fetch the object
@@ -19,8 +19,8 @@ class IsPaid(BasePermission):
 
     Mirrors the portal ``@require_paid`` gate: defers to
     ``user_can_access_analytics`` (the user's Subscription entitlement).
-    Currently unapplied — analytics is free (Phase 16/D-16d); this is the
-    gate for the opponent-scouting endpoint (Phase 9).
+    Currently unapplied — analytics is free; this is the
+    gate for the opponent-scouting endpoint.
     """
 
     def has_permission(self, request, view):

@@ -1,4 +1,4 @@
-"""S-13: notification mark-read IDOR denial test.
+"""Notification mark-read IDOR denial test.
 
 A user must not be able to delete another user's notification by id.
 """

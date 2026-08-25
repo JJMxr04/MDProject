@@ -9,7 +9,7 @@ Today the factory dispatches based on settings:
   aggregator at ``AGGRIGATOR_BASE_URL``)
 - otherwise → legacy direct ``SportsGameOddsClient``
 
-During Phase 2 of the cutover (plan §9) both code paths exist; flipping the
+During the cutover both code paths exist; flipping the
 flag in env is the cutover.
 """
 

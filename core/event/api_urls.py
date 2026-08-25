@@ -9,7 +9,7 @@ app_name = "core-event-api"
 
 # Event.id is a CharField (SGO eventID, e.g. "mXCZTRJnbX8ib64z1h3D"); use <str:>.
 # Selection.id is a 160-char synthesized string. Old route used <int:> which
-# 404'd on every real selection — fix is part of plan §7.7.
+# 404'd on every real selection.
 urlpatterns = [
     path("events", EventListView.as_view(), name="event-list"),
     path("events/<str:event_id>", EventDetailView.as_view(), name="event-detail"),

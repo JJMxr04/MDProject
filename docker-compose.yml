@@ -33,7 +33,7 @@ services:
       retries: 10
 
   # Not consumed by the app yet — pre-provisioned for the cache/throttle-store
-  # migration (plan §7.4): Django's cache backend and the DRF throttle store
+  # migration: Django's cache backend and the DRF throttle store
   # will move onto it. No auth locally.
   redis:
     image: redis:7.4-alpine

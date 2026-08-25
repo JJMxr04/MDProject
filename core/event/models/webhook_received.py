@@ -1,7 +1,7 @@
 """Append-only audit + idempotency log for inbound aggregator webhooks.
 
 A row per accepted delivery. The unique ``idempotency_key`` short-circuits
-duplicate retries from the aggregator (plan §4.6).
+duplicate retries from the aggregator.
 """
 
 from __future__ import annotations

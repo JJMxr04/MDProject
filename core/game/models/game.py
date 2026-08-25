@@ -30,7 +30,7 @@ class GoldenGameUnavailable(Exception):
 class FixtureUnavailable(Exception):
     """Raised by ``Game.objects.assert_window_viable`` when the window
     doesn't hold enough distinct pickable events for the requested match
-    format (D-5 #2): fewer distinct events with priced markets than
+    format: fewer distinct events with priced markets than
     ``games_per_player + 1`` (the Golden Game needs its own event too).
 
     Message is user-facing — views surface it verbatim in the portal toast.
@@ -56,7 +56,7 @@ class GameManager(AbstractManager):
         Returns the Game row that was updated.
         Raises PickError on validation failures.
 
-        Rules (from api-switch/game-match-audit-plan.md §5.1):
+        Rules:
           - Owner must be picking ≥ 8h before event start.
           - Opponent must pick before event start.
           - No two slots in the same Match may share the same (event, market).
@@ -168,7 +168,7 @@ class GameManager(AbstractManager):
         empty_slot.save(update_fields=["event"])
         Bet.objects.set_owner_outcome(empty_slot.bet, selection)
 
-        # Debounced summary instead of one email per pick (plan §7.1 #5) —
+        # Debounced summary instead of one email per pick —
         # filling 5 slots in a sitting produces one "made N picks" email.
         from core.game.tasks import schedule_pick_summary
         schedule_pick_summary(
@@ -284,7 +284,7 @@ class GameManager(AbstractManager):
             else:
                 TieBreaker.objects.set_player_2_total(tiebreaker, tiebreaker_total)
 
-        # Golden picks notify too (plan Phase 7 #1) — through the same
+        # Golden picks notify too — through the same
         # debounced (match, picker) summary as regular picks, so a session
         # of 5 regulars + the golden still produces ONE email.
         opponent = match.player_2 if is_player_1 else match.player_1
@@ -339,7 +339,7 @@ class GameManager(AbstractManager):
         return count
 
     def assert_window_viable(self, *, match_format, window_start=None, window_end=None):
-        """Fixture-availability gate (D-5 #2) — reject creation when the
+        """Fixture-availability gate — reject creation when the
         window holds fewer distinct pickable events than the format needs
         (``games_per_player + 1``, the +1 being the Golden Game).
 
