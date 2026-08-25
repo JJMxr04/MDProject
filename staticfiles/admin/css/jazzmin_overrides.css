@@ -1,9 +1,0 @@
-/* Jazzmin admin overrides. Loaded via JAZZMIN_SETTINGS.custom_css. */
-
-/* Hide the entire avatar/icon block in the sidebar user-panel. With the
- * `user_avatar` setting removed (see settings.py), Jazzmin would render
- * a generic font-awesome user-circle here — we don't want that either.
- * The .info div (with the username + link) stays visible. */
-.user-panel .image {
-    display: none !important;
-}

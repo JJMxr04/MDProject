@@ -11,8 +11,8 @@ Stage 2: a sibling ``ingest_sgo`` that takes those specs and runs
 ``Selection.objects.update_or_create(...)`` etc. against the new Django models.
 
 Keeping the pure layer separate means:
-- We can exercise the pipeline today against ``/Users/joem/dev/sports-scores``
-  fixtures (the simulator) before the model migrations land.
+- We can exercise the pipeline today against the simulator's captured
+  fixtures before the model migrations land.
 - The conversion rules — type generation, line extraction, side classification —
   are unit-testable without a database.
 """

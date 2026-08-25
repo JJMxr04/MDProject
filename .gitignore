@@ -36,6 +36,11 @@ Thumbs.db
 # Editor
 *.swp
 *.swo
+.vscode/
+.idea/
+
+# Django collectstatic output — baked into the image at Docker build time
+staticfiles/
 
 # Celery beat shelf (runtime state, not source)
 celerybeat-schedule

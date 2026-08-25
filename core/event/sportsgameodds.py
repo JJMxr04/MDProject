@@ -1,7 +1,7 @@
 """SportsGameOdds API client.
 
-Modeled on the fixture-saving client at
-``/Users/joem/dev/sports-scores/api/sports_game.py``, adapted for Django: env
+Modeled on the fixture-saving client from an earlier prototype
+(``sports-scores/api/sports_game.py``), adapted for Django: env
 vars come through ``os.environ``, throttling/quota state sits in the Django
 cache so multiple Celery workers share it.
 
